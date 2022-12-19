@@ -1,0 +1,43 @@
+
+<div class="container-fluid">
+    <div class="Heading">
+        <h1>Admin Role CRUD Operation</h1>
+
+        <div class="btn1">
+            <button class="btn btn-primary" id="insert" (click)="addAdmin()">Insert</button>
+        </div>
+
+    <table class="table table-striped">
+   <tr id="head">
+    <th>Role Id</th>
+    <th>Role Active</th>
+    <th>Role Name</th>
+    <th>Role description</th>
+    <th>createdBy</th>
+    <th>createdOn</th>
+    <th>modifiedBy</th>
+    <th>modifiedOn</th>
+    <th>Update</th>
+    <th>Delete</th>
+    <th>View</th>
+   </tr> 
+    <tr *ngFor="let emp of _employee">
+       <!--<li>{{emp | json}}</li>--> 
+    <td>{{emp.roleId}}</td>
+     <td>{{emp.active}}</td>
+     <td>{{emp.roleName}}</td>
+     <td>{{emp.roleDescription}}</td>
+     <td>{{emp.createdBy}}</td>
+     <td>{{emp.createdOn}}</td>
+     <td>{{emp.modifiedBy}}</td>
+     <td>{{emp.modifiedOn}}</td>
+     <td> <button type="button"  id="btn1" (click)="updateAdminRole(emp.roleName)">Update</button></td>
+     <td> <button type="button"  id="btn1" (click)="deletAdminRole(emp.roleName)">Delete</button></td>
+     <td> <button type="button"  id="btn1"(click)="viewAdminRole(emp.roleName)">View</button></td>
+
+    </tr>
+
+</table>
+
+
+</div>
