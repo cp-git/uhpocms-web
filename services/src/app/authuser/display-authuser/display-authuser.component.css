@@ -1,0 +1,39 @@
+
+
+
+.Heading h1{
+    border: 1px groove grey;
+    text-align: center;
+}
+
+table{
+    border: 1px groove black;
+    margin-top: 10px;
+    
+}
+
+table tr{
+    text-align: center;
+    height: 40px;
+    
+}
+
+table th{
+    text-align: center;
+    margin-top: 10px;
+    border: 1px groove grey;
+}
+
+table td{
+    border: 1px  groove black;
+}
+
+
+
+#head{
+    border: 1px groove red;
+    background-color: dodgerblue;
+    color: white;
+    font-size: 12px;
+}
+
