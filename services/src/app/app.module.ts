@@ -19,6 +19,10 @@ import { CreateInstituteAdminComponent } from './instituteadminrole/create-insti
 import { DisplayInstituteAdminComponent } from './instituteadminrole/display-institute-admin/display-institute-admin.component';
 import { UpdateInstituteAdminComponent } from './instituteadminrole/update-institute-admin/update-institute-admin.component';
 import { ViewInstituteAdminComponent } from './instituteadminrole/view-institute-admin/view-institute-admin.component';
+import { DisplayDepartmentComponent } from './admindepartment/display-department/display-department.component';
+import { UpdateDepartmentComponent } from './admindepartment/update-department/update-department.component';
+import { ViewDepartmentComponent } from './admindepartment/view-department/view-department.component';
+import { InsertDepartmentComponent } from './admindepartment/insert-department/insert-department.component';
 
 
 
@@ -37,8 +41,13 @@ import { ViewInstituteAdminComponent } from './instituteadminrole/view-institute
     CreateInstituteAdminComponent,
     DisplayInstituteAdminComponent,
     UpdateInstituteAdminComponent,
-    ViewInstituteAdminComponent
+    ViewInstituteAdminComponent,
+    DisplayDepartmentComponent,
+    UpdateDepartmentComponent,
+    ViewDepartmentComponent,
+    InsertDepartmentComponent
   ],
+  
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -25,4 +25,8 @@ export class LoginComponentComponent implements OnInit{
     this._route.navigate(['displayInstituteAdmin'])
   }
 
+  RedirectToAdminDept()
+  {
+    this._route.navigate(['dept'])
+  }
 }

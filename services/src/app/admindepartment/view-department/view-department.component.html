@@ -1,0 +1,50 @@
+<div class="container">
+    <h3>Details of department : {{department.name}}</h3>
+    <table class="table table-striped" border="1px">
+        <thead class="bg-primary">
+            <tr>
+                <th>Type</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{department.id}}</td>
+            </tr>
+            <tr>
+                <th>Department Name</th>
+                <td>{{department.name}}</td>
+            </tr>
+            <tr>
+                <th>Department Description</th>
+                <td>{{department.description}}</td>
+            </tr>
+            <tr>
+                <th>CreatedBy</th>
+                <td>{{department.createdBy}}</td>
+            </tr>
+            <tr>
+                <th>CreatedOn</th>
+                <td>{{department.createdOn}}</td>
+            </tr>
+            <tr>
+                <th>ModifiedBy</th>
+                <td>{{department.modifiedBy}}</td>
+            </tr>
+            <tr>
+                <th>ModifiedOn</th>
+                <td>{{department.modifiedOn}}</td>
+            </tr>
+            <tr>
+                <th>InstitutionId</th>
+                <td>{{department.institutionId_id}}</td>
+            </tr>
+            <tr>
+                <th>IsActive</th>
+                <td>{{department.active}}</td>
+            </tr>
+        </tbody>
+        <button id="back" class="btn btn-primary" (click)="backToDisplay()">Back</button>
+    </table>
+</div>
