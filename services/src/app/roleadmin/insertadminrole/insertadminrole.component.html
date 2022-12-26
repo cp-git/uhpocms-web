@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="Heading">
+    <h1>Admin Form</h1>
+    <h4>Add new Admin Role...!</h4>
+    </div>
+    <form #adduserform="ngForm" (ngSubmit)="addrole()">
+
+
+        <div class="form-group" id="txt1">
+            <label for="Name">Role:</label>
+            <input type="text" #roleName="ngModel" class="form-control" required [(ngModel)]="admin.roleName"  name="roleName" >
+           
+        </div>
+
+        <div *ngIf="roleName.invalid && roleName.touched">
+           <a>Invalid Role Name please enter admin,student,coadmin,teacher</a> 
+         </div>
+
+        
+        
+
+        <div class="form-group" id="txt1">
+            <label for="price">Role Description</label>
+            <input type="text" #roleDescription="ngModel" class="form-control" required [(ngModel)]="admin.roleDescription" name="role_desc">
+        </div>
+
+        <div *ngIf="roleDescription.invalid && roleDescription.touched">
+            <a>Invalid Role Description</a> 
+          </div>
+        
+        <div class="form-group" id="txt1">
+            <label for="about">Active User</label>
+            <input type="text"  #active="ngModel" class="form-control" required [(ngModel)]="admin.active" name="role_active">
+        </div>
+
+        <div *ngIf="active.invalid && active.touched">
+            <a>Invalid Role Active Status</a> 
+          </div>
+        
+       
+        <button type="submit" class="btn btn-success" id="btn1">Submit</button>&nbsp;&nbsp;
+        <button type="submit" class="btn btn-primary" (click)="goBack()">back</button>
+
+    </form>
+    
+
+   
+
+</div>

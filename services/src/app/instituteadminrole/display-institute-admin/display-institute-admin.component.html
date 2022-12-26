@@ -1,0 +1,72 @@
+
+<div class="container-fluid">
+    <div class="Heading">
+        <h1>INSTITUTE ADMIN CRUD OPERATIONS</h1>
+
+        <div class="btn1">
+            <button class="btn btn-primary" id="insert" (click)="_addInstituteAdmin()">Insert</button>
+        </div>
+
+    <table class="table table-striped">
+   <tr id="head">
+    <th> Id</th>
+    <th>Active Status</th>
+    <th>Address1</th>
+    <th>Address2</th>
+    <th>City</th>
+    <th>Department</th>
+    <th>Email</th>
+    <th>Gender</th>
+    <th>State</th>
+    <th>Zip</th>
+    <th>Created By</th>
+    <th>Created Date</th>
+    <th>DOB</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Institution Id</th>
+   
+    <th>Mobile Number</th>
+    <th>Updated By</th>
+    <th>Updated Date</th>
+    <th>Profile Pics </th>
+    <th>User Id </th>
+    <th>User Role</th>
+    <th colspan="3">Actions</th>
+   </tr> 
+    <tr *ngFor="let insAdmin of _instituteAdmin">
+        <td>{{insAdmin.adminId}}</td>
+        <td>{{insAdmin.activeUser}}</td>
+        <td>{{insAdmin.adminAddress1}}</td>
+        <td>{{insAdmin.adminAddress2}}</td>
+        <td>{{insAdmin.adminCity}}</td>
+        <td>{{insAdmin.adminDepartment}}</td>
+        <td>{{insAdmin.adminEmail}}</td>
+        <td>{{insAdmin.adminGender}}</td>
+        <td>{{insAdmin.adminState}}</td>
+        <td>{{insAdmin.adminZip}}</td>
+        <td>{{insAdmin.createdBy}}</td>
+        <td>{{insAdmin.createdOn}}</td>
+        <td>{{insAdmin.dob}}</td>
+        <td>{{insAdmin.firstName}}</td>
+        <td>{{insAdmin.lastName}}</td>
+        <td>{{insAdmin.institutionId}}</td>
+        <td>{{insAdmin.mobilePhone}}</td>
+        <td>{{insAdmin.modifiedBy}}</td>
+        <td>{{insAdmin.modifiedOn}}</td>
+        <td>{{insAdmin.profilePics}}</td>
+        <td>{{insAdmin.userId}}</td>
+        <td>{{insAdmin.userRole}}</td>
+       
+ 
+     <td> <button type="button"  id="btn1"  class="btn btn-primary" (click)="_updateInstituteAdmin(insAdmin.firstName)">Update</button></td>
+     <td> <button type="button"  id="btn1"  class="btn btn-primary" (click)="_deletInstituteAdmin(insAdmin.firstName)">Delete</button></td>
+     <td> <button type="button"  id="btn1" class="btn btn-primary" (click)="_viewInstituteAdmin(insAdmin.firstName)">View</button></td>
+
+    </tr>
+
+</table>
+
+
+</div>
+
