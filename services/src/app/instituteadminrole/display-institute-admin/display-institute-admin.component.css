@@ -1,11 +1,7 @@
 .Heading{
     width: 107%;
     }
-    .Heading h1{
-        border: 1px groove grey;
-        text-align: center;
-    }
-    
+  
     table{
         border: 1px groove black;
         margin-top: 10px;
@@ -39,4 +35,9 @@
         font-size: 12px;
     }
     
-    
+    .container {
+        padding-right: 0px; 
+        padding-left: 0px;
+        margin-right: 0px;
+        margin-left: 0px;
+    }

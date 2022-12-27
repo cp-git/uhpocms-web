@@ -12,7 +12,9 @@ export class DisplayInstituteAdminComponent {
 
   _instituteAdmin : InstituteAdmin[] = [];
 
-  constructor(private  _instituteAdminService:InstituteAdminServiceService, private _route:Router ){}
+  _instituteAdminObject!: new () => InstituteAdmin; ;
+
+  constructor(private  _instituteAdminService:InstituteAdminServiceService, private _route:Router){}
 
   ngOnInit() : void
   {
@@ -22,6 +24,7 @@ export class DisplayInstituteAdminComponent {
      }
     
     )
+
   }
 
 
@@ -31,9 +34,21 @@ export class DisplayInstituteAdminComponent {
   }
 
   _updateInstituteAdmin(firstName:string){
-    console.log("Welcome..")
-      this._route.navigate(['/updateInstitutionAdmin',firstName])
-   
+ 
+    this._instituteAdminService._getInstituteAdminList(firstName)
+    .subscribe(data => {
+      console.log(data)
+      this._instituteAdminObject = data;
+      this._instituteAdminService._updateInstituteAdminList(firstName,data).subscribe(data => {
+        console.log(data)
+        alert("Data is Updated..")
+        this._route.navigate(['displayInstituteAdmin'])
+
+        
+      }, error => console.log(error));
+
+    }, error => console.log(error));
+
   }
 
  

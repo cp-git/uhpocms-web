@@ -23,6 +23,7 @@ import { DisplayDepartmentComponent } from './admindepartment/display-department
 import { UpdateDepartmentComponent } from './admindepartment/update-department/update-department.component';
 import { ViewDepartmentComponent } from './admindepartment/view-department/view-department.component';
 import { InsertDepartmentComponent } from './admindepartment/insert-department/insert-department.component';
+import { TestComponent } from './instituteadminrole/test/test.component';
 
 
 
@@ -45,7 +46,8 @@ import { InsertDepartmentComponent } from './admindepartment/insert-department/i
     DisplayDepartmentComponent,
     UpdateDepartmentComponent,
     ViewDepartmentComponent,
-    InsertDepartmentComponent
+    InsertDepartmentComponent,
+    TestComponent
   ],
   
   imports: [
