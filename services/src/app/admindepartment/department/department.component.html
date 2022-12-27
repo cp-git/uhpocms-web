@@ -1,0 +1,29 @@
+<h1>Department Administration</h1>
+<table border="1">
+    <tr>
+        <th>id</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Active</th>
+        <th>Institue</th>
+        <th>Add</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </tr>
+    <tr *ngFor="let dept of departments">
+        <td><input [(ngModel)]="dept.id" type="number" value="{{dept.id}}" disabled /></td>
+        <td><input [(ngModel)]="dept.name" type="text" value="{{dept.name}}" /></td>
+        <td><input [(ngModel)]="dept.description" type="text" value="{{dept.description}}" /></td>
+        <td><input [(ngModel)]="dept.active" type="checkbox" checked disabled="{{dept.active}}" /></td>
+        <td><select [(ngModel)]="dept.institutionId_id">
+                <option>Select</option>
+                <option *ngFor="let inst of adminInstitutions" value="{{inst.adminInstitutionId}}"
+                    [selected]="dept.institutionId_id==inst.adminInstitutionId?true:null">
+                    {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}</option>
+            </select></td>
+        <td><button id="add" (click)="addDepartment(dept)">Add</button></td>
+        <td><button id="upd" (click)="updateDepartment()">Update</button></td>
+        <td><button id="del" (click)="deleteDepartment()">Delete</button></td>
+    </tr>
+
+</table>
