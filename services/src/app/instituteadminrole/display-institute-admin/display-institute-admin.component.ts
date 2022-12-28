@@ -33,13 +33,14 @@ export class DisplayInstituteAdminComponent {
     this._route.navigate(['/addInstitutionAdmin'])
   }
 
-  _updateInstituteAdmin(firstName:string){
+  _updateInstituteAdmin(firstName:string,_instituteAdmin:InstituteAdmin){
  
     this._instituteAdminService._getInstituteAdminList(firstName)
     .subscribe(data => {
       console.log(data)
       this._instituteAdminObject = data;
-      this._instituteAdminService._updateInstituteAdminList(firstName,data).subscribe(data => {
+
+      this._instituteAdminService._updateInstituteAdminList(firstName,_instituteAdmin).subscribe(data => {
         console.log(data)
         alert("Data is Updated..")
         this._route.navigate(['displayInstituteAdmin'])

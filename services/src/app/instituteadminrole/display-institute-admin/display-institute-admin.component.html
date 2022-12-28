@@ -9,8 +9,7 @@
         </div>
 
 
-        <form #adduserform="ngForm" style="
-width: 150em;">
+        <form #adduserform="ngForm" style="width: 150em;">
             <table>
                 <tr id="head">
                     <th> Id</th>
@@ -38,7 +37,9 @@ width: 150em;">
                     <th>User Role</th>
                     <th colspan="3">Actions</th>
                 </tr>
-                <tr *ngFor="let _instituteAdmin of _instituteAdmin">
+               
+                <tr *ngFor="let _instituteAdmin of _instituteAdmin" >
+                  
                     <td>
                         <div class="form-group">
 
@@ -198,13 +199,14 @@ width: 150em;">
                     </td>
                     <td>
                         <button type="button" class="btn btn-success" id="btn1"
-                            (click)="_updateInstituteAdmin(_instituteAdmin.firstName)">Update</button>
+                            (click)="_updateInstituteAdmin(_instituteAdmin.firstName,_instituteAdmin)">Update</button>
                     </td>
                     <td>
-                        <button type="submit" class="btn btn-success" id="btn1">Delete</button>
+                        <button type="submit" class="btn btn-success" id="btn1" (click)="_deletInstituteAdmin(_instituteAdmin.firstName)">Delete</button>
                     </td>
-
+             
                 </tr>
+            
             </table>
         </form>
 
