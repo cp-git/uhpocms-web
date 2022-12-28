@@ -27,17 +27,14 @@ export class DepartmentService {
     return this._http.post<Department>(`${this.baseUrl}/department`, department);
   }
 
-  // deleteDepartment(name: string): Observable<any> {
-  //   return this._http.delete<Department>(`${this.baseUrl}/department/` + name);
-  // }
+  deleteDepartment(name: string): Observable<any> {
+    return this._http.delete<Department>(`${this.baseUrl}/department/` + name);
+  }
 
-  // getDepartmentByName(name: string): Observable<Department> {
-  //   return this._http.get<Department>(`${this.baseUrl}/getdept/` + name);
-  // }
 
-  // updateDepartment(name: string, department: Department) {
-  //   return this._http.put<Department>(`${this.baseUrl}/department/` + name, department);
-  // }
+  updateDepartment(name: string, department: Department) {
+    return this._http.put<Department>(`${this.baseUrl}/department/` + name, department);
+  }
 
 
 }

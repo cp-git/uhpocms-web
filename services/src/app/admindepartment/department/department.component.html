@@ -1,5 +1,5 @@
 <h1>Department Administration</h1>
-<table border="1">
+<table class="container" border="1px">
     <tr>
         <th>id</th>
         <th>Name</th>
@@ -9,6 +9,21 @@
         <th>Add</th>
         <th>Update</th>
         <th>Delete</th>
+    </tr>
+    <tr [hidden]="isEmpty">
+        <td><input [(ngModel)]="department.id" type="number" value="{{department.id}}" disabled /></td>
+        <td><input [(ngModel)]="department.name" type="text" value="{{department.name}}" /></td>
+        <td><input [(ngModel)]="department.description" type="text" value="{{department.description}}" /></td>
+        <td><input [(ngModel)]="department.active" type="checkbox" checked /></td>
+        <td><select [(ngModel)]="department.institutionId_id">
+                <option>Select</option>
+                <option *ngFor="let inst of adminInstitutions" value="{{inst.adminInstitutionId}}"
+                    [selected]="department.institutionId_id==inst.adminInstitutionId?true:null">
+                    {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}</option>
+            </select></td>
+        <td><button id="add" (click)="addDepartment(department)">Add</button></td>
+        <td><button id="upd" (click)="updateDepartment(department)">Update</button></td>
+        <td><button id="del" (click)="deleteDepartment(department)">Delete</button></td>
     </tr>
     <tr *ngFor="let dept of departments">
         <td><input [(ngModel)]="dept.id" type="number" value="{{dept.id}}" disabled /></td>
@@ -22,8 +37,8 @@
                     {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}</option>
             </select></td>
         <td><button id="add" (click)="addDepartment(dept)">Add</button></td>
-        <td><button id="upd" (click)="updateDepartment()">Update</button></td>
-        <td><button id="del" (click)="deleteDepartment()">Delete</button></td>
+        <td><button id="upd" (click)="updateDepartment(dept)">Update</button></td>
+        <td><button id="del" (click)="deleteDepartment(dept)">Delete</button></td>
     </tr>
 
 </table>
