@@ -76,15 +76,11 @@ export class DepartmentComponent implements OnInit {
     this._deptService.insertDepartment(this.department).subscribe(
       response => {
         this.department = response;
-
-        this.backupDept.push(this.department);
+        this.departments[this.departments.indexOf(dept)] = this.backupDept[this.backupDept.findIndex(data => data.id == dept.id)];
+        this.departments.push(this.department);
         alert("Added Successfuly");
 
-        // beacause of two way binding values are changed therefore assigning backupDept to departments
-        this.departments = [];
-        this.backupDept.forEach(dept => {
-          this.departments.push(Object.assign({}, dept))
-        })
+
 
         if (this.departments.length > 0) {
           this.isHidden = true;
@@ -115,6 +111,7 @@ export class DepartmentComponent implements OnInit {
       response => {
         this.department = response;
         this.departments[this.departments.indexOf(dept)] = this.department;
+        this.backupDept[this.departments.indexOf(dept)] = this.department;
         alert("Updated Successfuly");
       },
       error => {
