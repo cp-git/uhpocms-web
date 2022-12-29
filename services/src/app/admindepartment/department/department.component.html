@@ -10,7 +10,7 @@
         <th>Update</th>
         <th>Delete</th>
     </tr>
-    <tr [hidden]="isEmpty">
+    <tr [hidden]="isHidden">
         <td><input [(ngModel)]="department.id" type="number" value="{{department.id}}" disabled /></td>
         <td><input [(ngModel)]="department.name" type="text" value="{{department.name}}" /></td>
         <td><input [(ngModel)]="department.description" type="text" value="{{department.description}}" /></td>

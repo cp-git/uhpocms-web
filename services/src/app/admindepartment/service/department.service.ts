@@ -36,5 +36,8 @@ export class DepartmentService {
     return this._http.put<Department>(`${this.baseUrl}/department/` + name, department);
   }
 
+  getDepartmentByName(name: string) {
+    return this._http.get<Department>(`${this.baseUrl}/getdept/` + name);
+  }
 
 }
