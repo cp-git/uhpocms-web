@@ -75,12 +75,15 @@ export class DepartmentComponent implements OnInit {
     // inserting department
     this._deptService.insertDepartment(this.department).subscribe(
       response => {
+        this.department = ({} as Department);
         this.department = response;
-        this.departments[this.departments.indexOf(dept)] = this.backupDept[this.backupDept.findIndex(data => data.id == dept.id)];
+
+        // replacing value from backup to departments
+        this.departments[this.departments.indexOf(dept)] = (Object.assign({}, this.backupDept[this.backupDept.findIndex(data => data.id == dept.id)]));
+
         this.departments.push(this.department);
+        this.backupDept.push(Object.assign({}, this.department));
         alert("Added Successfuly");
-
-
 
         if (this.departments.length > 0) {
           this.isHidden = true;
@@ -109,9 +112,10 @@ export class DepartmentComponent implements OnInit {
     // updating department with name
     this._deptService.updateDepartment(dept.name, this.department).subscribe(
       response => {
+        this.department = ({} as Department);
         this.department = response;
         this.departments[this.departments.indexOf(dept)] = this.department;
-        this.backupDept[this.departments.indexOf(dept)] = this.department;
+        this.backupDept[this.departments.indexOf(dept)] = Object.assign({}, this.department);
         alert("Updated Successfuly");
       },
       error => {
@@ -127,8 +131,10 @@ export class DepartmentComponent implements OnInit {
     // calling service mathod to delete department
     this._deptService.deleteDepartment(dept.name).subscribe(
       response => {
+        alert(this.departments.indexOf(dept))
         this.departments.splice(this.departments.indexOf(dept), 1);
         this.backupDept.splice(this.departments.indexOf(dept), 1);
+
         alert(dept.name + " department deleted successfuly");
         this.displayEmptyRow();
       },
@@ -140,13 +146,13 @@ export class DepartmentComponent implements OnInit {
 
   // for fetching department using department name
   getDepartment(name: string) {
+    this.department = ({} as Department);
     this._deptService.getDepartmentByName("science").subscribe(
       response => {
         this.department = response;
       },
       error => {
         this.department = ({} as Department);
-
       }
     );
     return this.department;
