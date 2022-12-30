@@ -28,7 +28,6 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Institution Id</th>
-
                     <th>Mobile Number</th>
                     <th>Updated By</th>
                     <th>Updated Date</th>
@@ -37,111 +36,111 @@
                     <th>User Role</th>
                     <th colspan="3">Actions</th>
                 </tr>
-               
-                <tr *ngFor="let _instituteAdmin of _instituteAdmin" >
-                  
+                <!-- <tr [ngIf]="!isHidden" >
+                    
+ 
                     <td>
                         <div class="form-group">
 
                             <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminId"
-                                name="adminId" readonly>
+                                name="{{_instituteAdmin.adminId}}" readonly>
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
 
                             <input type="checkbox" class="form-control" required [(ngModel)]="_instituteAdmin.activeUser"
-                                name="activeUser" disabled>
+                                name="{{_instituteAdmin.activeUser}}" disabled>
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
 
                             <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminAddress1"
-                                name="adminAddress1">
+                                name="{{_instituteAdmin.adminAddress1}}">
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
 
                             <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminAddress2"
-                                name="adminAddress2">
+                                name="{{_instituteAdmin.adminAddress2}}">
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
 
                             <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminCity"
-                                name="adminCity">
+                                name="{{_instituteAdmin.adminCity}}">
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
 
                             <input type="text" class="form-control" required
-                                [(ngModel)]="_instituteAdmin.adminDepartment" name="adminDepartment">
+                                [(ngModel)]="_instituteAdmin.adminDepartment" name="{{_instituteAdmin.adminDepartment}}">
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
 
                             <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminEmail"
-                                name="adminEmail">
+                                name="{{_instituteAdmin.adminEmail}}">
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
                             <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminGender"
-                                name="adminGender">
+                                name="{{_instituteAdmin.adminGender}}">
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
 
                             <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminState"
-                                name="adminState">
+                                name="{{_instituteAdmin.adminState}}">
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
 
                             <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminZip"
-                                name="adminZip">
+                                name="{{_instituteAdmin.adminZip}}">
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
 
                             <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.createdBy"
-                                name="createdBy">
+                                name="{{_instituteAdmin.createdBy}}">
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
 
                             <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.createdOn"
-                                name="createdOn">
+                                name="{{_instituteAdmin.createdOn}}">
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
 
                             <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.dob"
-                                name="dob">
+                                name="{{_instituteAdmin.dob}}">
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
 
                             <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.firstName"
-                                name="firstName">
+                                name="{{_instituteAdmin.firstName}}">
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
 
                             <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.lastName"
-                                name="lastName">
+                                name="{{_instituteAdmin.lastName}}">
                         </div>
                     </td>
                     <td>
@@ -149,53 +148,54 @@
                         <div class="form-group">
 
                             <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.institutionId"
-                                name="institutionId">
+                                name="{{_instituteAdmin.institutionId}}">
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
 
                             <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.mobilePhone"
-                                name="mobilePhone">
+                                name="{{_instituteAdmin.mobilePhone}}">
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
 
                             <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.modifiedBy"
-                                name="modifiedBy">
+                                name="{{_instituteAdmin.modifiedBy}}">
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
 
                             <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.modifiedOn"
-                                name="modifiedOn">
+                                name="{{_instituteAdmin.modifiedOn}}">
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
 
                             <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.profilePics"
-                                name="profilePics">
+                                name="{{_instituteAdmin.profilePics}}">
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
 
                             <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.userId"
-                                name="userId">
+                                name="{{_instituteAdmin.userId}}">
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
 
                             <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.userRole"
-                                name="userRole">
+                                name="{{_instituteAdmin.userRole}}">
                         </div>
                     </td>
                     <td>
-                        <button type="submit" class="btn btn-success" id="btn1">Add</button>
+                        <button type="submit" class="btn btn-success" id="btn1"
+                        (click)="_addInstituteAdmin(_instituteAdmin)">Add</button>
                     </td>
                     <td>
                         <button type="button" class="btn btn-success" id="btn1"
@@ -205,8 +205,180 @@
                         <button type="submit" class="btn btn-success" id="btn1" (click)="_deletInstituteAdmin(_instituteAdmin.firstName)">Delete</button>
                     </td>
              
+                </tr> -->
+                <tr *ngFor="let _instituteAdmin of _instituteAdminArray">
+
+
+                    <td>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminId"
+                                name="{{_instituteAdmin.adminId}}" readonly>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+
+                            <input type="checkbox" class="form-control" required
+                                [(ngModel)]="_instituteAdmin.activeUser" name="{{_instituteAdmin.activeUser}}" disabled>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminAddress1"
+                                name="{{_instituteAdmin.adminAddress1}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminAddress2"
+                                name="{{_instituteAdmin.adminAddress2}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminCity"
+                                name="{{_instituteAdmin.adminCity}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" required
+                                [(ngModel)]="_instituteAdmin.adminDepartment"
+                                name="{{_instituteAdmin.adminDepartment}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminEmail"
+                                name="{{_instituteAdmin.adminEmail}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminGender"
+                                name="{{_instituteAdmin.adminGender}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminState"
+                                name="{{_instituteAdmin.adminState}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminZip"
+                                name="{{_instituteAdmin.adminZip}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.createdBy"
+                                name="{{_instituteAdmin.createdBy}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.createdOn"
+                                name="{{_instituteAdmin.createdOn}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.dob"
+                                name="{{_instituteAdmin.dob}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.firstName"
+                                name="{{_instituteAdmin.firstName}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.lastName"
+                                name="{{_instituteAdmin.lastName}}">
+                        </div>
+                    </td>
+                    <td>
+
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.institutionId"
+                                name="{{_instituteAdmin.institutionId}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.mobilePhone"
+                                name="{{_instituteAdmin.mobilePhone}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.modifiedBy"
+                                name="{{_instituteAdmin.modifiedBy}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.modifiedOn"
+                                name="{{_instituteAdmin.modifiedOn}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.profilePics"
+                                name="{{_instituteAdmin.profilePics}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.userId"
+                                name="{{_instituteAdmin.userId}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.userRole"
+                                name="{{_instituteAdmin.userRole}}">
+                        </div>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-success" id="btn1"
+                            (click)="_addInstituteAdmin(_instituteAdmin)">Add</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-success" id="btn1"
+                            (click)="_updateInstituteAdmin(_instituteAdmin.firstName,_instituteAdmin)">Update</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-success" id="btn1"
+                            (click)="_deletInstituteAdmin(_instituteAdmin.firstName)">Delete</button>
+                    </td>
+
                 </tr>
-            
+
             </table>
         </form>
 
