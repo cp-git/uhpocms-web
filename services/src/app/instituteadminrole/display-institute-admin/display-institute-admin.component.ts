@@ -16,7 +16,7 @@ export class DisplayInstituteAdminComponent {
 
   _instituteAdminObj = new InstituteAdmin();
 
-  _instituteAdmin: InstituteAdmin;
+  _instituteAdmin = new InstituteAdmin();
 
   _instituteAdminObjCopy: InstituteAdmin[] = [];
 
@@ -26,14 +26,14 @@ export class DisplayInstituteAdminComponent {
 
 
   constructor(private _instituteAdminService: InstituteAdminServiceService, private _route: Router) {
-    this._instituteAdmin = new InstituteAdmin();
+    
   }
 
   ngOnInit(): void {
     this._getAllList();
   }
 
-//get all data frmo database
+//get all data frmo databasea
   _getAllList() {
     this._instituteAdminService._getAllInstituteAdminList().subscribe(
       data => {

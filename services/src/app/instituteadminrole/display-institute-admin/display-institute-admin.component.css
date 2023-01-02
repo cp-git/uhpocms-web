@@ -41,3 +41,8 @@
         margin-right: 0px;
         margin-left: 0px;
     }
+
+    #btn2{
+        background-color: red;
+        border-color: red;
+    }
