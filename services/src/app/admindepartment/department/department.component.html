@@ -1,47 +1,52 @@
-<h1>Department Administration</h1>
-<table class="container table table-striped" border="1px">
-    <thead>
-        <tr>
-            <th>id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Active</th>
-            <th>Institue</th>
-            <th>Add</th>
-            <th>Update</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr [hidden]="isHidden">
-            <td><input [(ngModel)]="department.id" type="number" value="{{department.id}}" disabled /></td>
-            <td><input [(ngModel)]="department.name" type="text" value="{{department.name}}" /></td>
-            <td><input [(ngModel)]="department.description" type="text" value="{{department.description}}" /></td>
-            <td><input [(ngModel)]="department.active" type="checkbox" checked /></td>
-            <td><select [(ngModel)]="department.institutionId_id">
-                    <option>Select</option>
-                    <option *ngFor="let inst of adminInstitutions" value="{{inst.adminInstitutionId}}"
-                        [selected]="department.institutionId_id==inst.adminInstitutionId?true:null">
-                        {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}</option>
-                </select></td>
-            <td><button id="add" (click)="addDepartment(department)">Add</button></td>
-            <td><button id="upd" (click)="updateDepartment(department)">Update</button></td>
-            <td><button id="del" (click)="deleteDepartment(department)">Delete</button></td>
-        </tr>
-        <tr *ngFor="let dept of departments">
-            <td><input [(ngModel)]="dept.id" type="number" value="{{dept.id}}" disabled /></td>
-            <td><input [(ngModel)]="dept.name" type="text" value="{{dept.name}}" /></td>
-            <td><input [(ngModel)]="dept.description" type="text" value="{{dept.description}}" /></td>
-            <td><input [(ngModel)]="dept.active" type="checkbox" checked disabled="{{dept.active}}" /></td>
-            <td><select [(ngModel)]="dept.institutionId_id">
-                    <option>Select</option>
-                    <option *ngFor="let inst of adminInstitutions" value="{{inst.adminInstitutionId}}"
-                        [selected]="dept.institutionId_id==inst.adminInstitutionId?true:null">
-                        {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}</option>
-                </select></td>
-            <td><button id="add" (click)="addDepartment(dept)">Add</button></td>
-            <td><button id="upd" (click)="updateDepartment(dept)">Update</button></td>
-            <td><button id="del" (click)="deleteDepartment(dept)">Delete</button></td>
-        </tr>
-    </tbody>
-</table>
+<div class="container">
+    <h1>Department Administration</h1>
+    <table class="table" border="1px">
+        <thead>
+            <tr>
+                <th>Sr.No.</th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Active</th>
+                <th>Institue</th>
+                <th>Add</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr [hidden]="isHidden">
+                <td>1</td>
+                <td><input [(ngModel)]="department.id" type="number" value="{{department.id}}" disabled /></td>
+                <td><input [(ngModel)]="department.name" type="text" value="{{department.name}}" /></td>
+                <td><input [(ngModel)]="department.description" type="text" value="{{department.description}}" /></td>
+                <td><input [(ngModel)]="department.active" type="checkbox" checked /></td>
+                <td><select [(ngModel)]="department.institutionId_id">
+                        <option>Select</option>
+                        <option *ngFor="let inst of adminInstitutions" value="{{inst.adminInstitutionId}}"
+                            [selected]="department.institutionId_id==inst.adminInstitutionId?true:null">
+                            {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}</option>
+                    </select></td>
+                <td><button id="addbtn" (click)="addDepartment(department)">Add</button></td>
+                <td><button id="updatebtn" (click)="updateDepartment(department)">Update</button></td>
+                <td><button id="deletebtn" (click)="deleteDepartment(department)">Delete</button></td>
+            </tr>
+            <tr *ngFor="let dept of departments; let i=index">
+                <td>{{i+1}}</td>
+                <td><input [(ngModel)]="dept.id" type="number" value="{{dept.id}}" disabled /></td>
+                <td><input [(ngModel)]="dept.name" type="text" value="{{dept.name}}" /></td>
+                <td><input [(ngModel)]="dept.description" type="text" value="{{dept.description}}" /></td>
+                <td><input [(ngModel)]="dept.active" type="checkbox" checked disabled="{{dept.active}}" /></td>
+                <td><select [(ngModel)]="dept.institutionId_id">
+                        <option>Select</option>
+                        <option *ngFor="let inst of adminInstitutions" value="{{inst.adminInstitutionId}}"
+                            [selected]="dept.institutionId_id==inst.adminInstitutionId?true:null">
+                            {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}</option>
+                    </select></td>
+                <td><button class="addbtn" id="addbtn" (click)="addDepartment(dept)"> Add</button></td>
+                <td><button class="updatebtn" id="updatebtn" (click)="updateDepartment(dept)">Update</button></td>
+                <td><button class="deletebtn" id="deletebtn" (click)="deleteDepartment(dept)">Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -65,35 +65,40 @@ export class DepartmentComponent implements OnInit {
   // for inserting new department in table
   addDepartment(dept: Department) {
 
-    // assigning value 
-    this.department = ({} as Department);
-    this.department.name = dept.name;
-    this.department.description = dept.description;
-    this.department.active = dept.active;
-    this.department.institutionId_id = dept.institutionId_id;
+    if (this.backupDept.findIndex(data => data.name === (dept.name)) >= 0) {
+      alert("Department name already exist. please enter another.");
 
-    // inserting department
-    this._deptService.insertDepartment(this.department).subscribe(
-      response => {
-        this.department = ({} as Department);
-        this.department = response;
+    } else {
 
-        // replacing value from backup to departments
-        this.departments[this.departments.indexOf(dept)] = (Object.assign({}, this.backupDept[this.backupDept.findIndex(data => data.id == dept.id)]));
+      // assigning value 
+      this.department = ({} as Department);
+      this.department.name = dept.name;
+      this.department.description = dept.description;
+      this.department.active = dept.active;
+      this.department.institutionId_id = dept.institutionId_id;
 
-        this.departments.push(this.department);
-        this.backupDept.push(Object.assign({}, this.department));
-        alert("Added Successfuly");
+      // inserting department
+      this._deptService.insertDepartment(this.department).subscribe(
+        response => {
+          this.department = ({} as Department);
+          this.department = response;
 
-        if (this.departments.length > 0) {
-          this.isHidden = true;
+          // replacing value from backup to departments
+          this.departments[this.departments.indexOf(dept)] = (Object.assign({}, this.backupDept[this.backupDept.findIndex(data => data.id == dept.id)]));
+
+          this.departments.push(this.department);
+          this.backupDept.push(Object.assign({}, this.department));
+          alert("Added Successfuly");
+
+          if (this.departments.length > 0) {
+            this.isHidden = true;
+          }
+        },
+        error => {
+          alert("not able to add data \n" + JSON.stringify(error.error));
         }
-      },
-      error => {
-        alert("not able to add data \n" + JSON.stringify(error.error));
-      }
-    );
-
+      );
+    }
   }
 
 
