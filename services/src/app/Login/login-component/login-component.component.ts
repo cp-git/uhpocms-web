@@ -6,27 +6,26 @@ import { Router } from '@angular/router';
   templateUrl: './login-component.component.html',
   styleUrls: ['./login-component.component.css']
 })
-export class LoginComponentComponent implements OnInit{
+export class LoginComponentComponent implements OnInit {
 
-  constructor(private _route:Router){}
+  constructor(private _route: Router) { }
   ngOnInit(): void {
     throw new Error('Method not implemented.');
   }
 
-  RedirectRole(){
+  RedirectRole() {
     this._route.navigate(['RoleAdminHome'])
   }
 
-  RedirectTOAuth(){
+  RedirectTOAuth() {
     this._route.navigate(['authuser'])
   }
 
-  RedirectTOInsProfile(){
+  RedirectTOInsProfile() {
     this._route.navigate(['displayInstituteAdmin'])
   }
 
-  RedirectToAdminDept()
-  {
-    this._route.navigate(['dept'])
+  RedirectToAdminDept() {
+    this._route.navigate(['department'])
   }
 }

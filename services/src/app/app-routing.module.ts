@@ -1,9 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DisplayDepartmentComponent } from './admindepartment/display-department/display-department.component';
-import { InsertDepartmentComponent } from './admindepartment/insert-department/insert-department.component';
-import { UpdateDepartmentComponent } from './admindepartment/update-department/update-department.component';
-import { ViewDepartmentComponent } from './admindepartment/view-department/view-department.component';
+import { DepartmentComponent } from './admindepartment/department/department.component';
 import { DisplayAuthuserComponent } from './authuser/display-authuser/display-authuser.component';
 import { InsertAuthUserComponent } from './authuser/insert-auth-user/insert-auth-user.component';
 import { UpdateAuthUserComponent } from './authuser/update-auth-user/update-auth-user.component';
@@ -19,32 +16,33 @@ import { ViewadminroleComponent } from './roleadmin/viewadminrole/viewadminrole.
 
 const routes: Routes = [
   //admin role routes
-  {path:'RoleAdminHome',component:DisplayAdminroleComponent},
-  {path:'addAdminRole',component:InsertadminroleComponent},
-  {path:'updateAdminRole/:roleName',component:UpdateadminroleComponent},
-  {path:'updateAdminRole',component:UpdateadminroleComponent},
-  {path:'viewAdminData/:roleName',component:ViewadminroleComponent},
-  {path:'viewAdminData',component:ViewadminroleComponent},
+  { path: 'RoleAdminHome', component: DisplayAdminroleComponent },
+  { path: 'addAdminRole', component: InsertadminroleComponent },
+  { path: 'updateAdminRole/:roleName', component: UpdateadminroleComponent },
+  { path: 'updateAdminRole', component: UpdateadminroleComponent },
+  { path: 'viewAdminData/:roleName', component: ViewadminroleComponent },
+  { path: 'viewAdminData', component: ViewadminroleComponent },
 
   //auth user routes
-  {path:'authuser',component:DisplayAuthuserComponent},
-  {path:'viewauthData/:authUserName',component:ViewauthUserComponent},
-  {path:'viewauthData',component:ViewauthUserComponent},
-  {path:'addAuthUser',component:InsertAuthUserComponent},
-  {path:'updateuser/:authUserName',component:UpdateAuthUserComponent},
+  { path: 'authuser', component: DisplayAuthuserComponent },
+  { path: 'viewauthData/:authUserName', component: ViewauthUserComponent },
+  { path: 'viewauthData', component: ViewauthUserComponent },
+  { path: 'addAuthUser', component: InsertAuthUserComponent },
+  { path: 'updateuser/:authUserName', component: UpdateAuthUserComponent },
 
   //login route
-  {path:'',component:LoginComponentComponent},
+  { path: '', component: LoginComponentComponent },
 
- //instituteadmin routes
-  {path:'displayInstituteAdmin',component:DisplayInstituteAdminComponent},
-  
+  //instituteadmin routes
+  { path: 'displayInstituteAdmin', component: DisplayInstituteAdminComponent },
+  { path: 'viewInstitutionAdmin/:firstName', component: ViewInstituteAdminComponent },
+  { path: 'updateInstitutionAdmin/:firstName', component: UpdateInstituteAdminComponent },
+  { path: 'addInstitutionAdmin', component: CreateInstituteAdminComponent },
+
 
   //admindepartment routes
-  { path: 'dept', component: DisplayDepartmentComponent },
-  { path: 'dept/insertdept', component: InsertDepartmentComponent },
-  { path: 'dept/updatedept/:deptName', component: UpdateDepartmentComponent },
-  { path: 'dept/viewdept/:deptName', component: ViewDepartmentComponent },
+  { path: 'department', component: DepartmentComponent }
+
 
 ];
 

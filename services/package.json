@@ -5,7 +5,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+
 	"war": "ng build --base-href /uhpoc/",
+
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
