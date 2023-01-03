@@ -25,3 +25,22 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+# How to Generate WAR File
+Step 1:
+
+  goto **services** folder.
+  
+Step 2:
+
+execute **ng build** command 
+
+Step 3:
+
+execute **npm run war**
+
+Step 4:
+
+go to root folder and execute **mvn clean package**
+
+**uhpoc.war** file generated and available under target folder.
