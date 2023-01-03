@@ -15,8 +15,9 @@ import { InsertAuthUserComponent } from './authuser/insert-auth-user/insert-auth
 import { UpdateAuthUserComponent } from './authuser/update-auth-user/update-auth-user.component';
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
 
-import { CreateInstituteAdminComponent } from './instituteadminrole/create-institute-admin/create-institute-admin.component';
+
 import { DisplayInstituteAdminComponent } from './instituteadminrole/display-institute-admin/display-institute-admin.component';
+
 import { UpdateInstituteAdminComponent } from './instituteadminrole/update-institute-admin/update-institute-admin.component';
 import { ViewInstituteAdminComponent } from './instituteadminrole/view-institute-admin/view-institute-admin.component';
 import { DepartmentComponent } from './admindepartment/department/department.component';
@@ -24,6 +25,8 @@ import { DepartmentComponent } from './admindepartment/department/department.com
 // import { UpdateDepartmentComponent } from './admindepartment/update-department/update-department.component';
 // import { ViewDepartmentComponent } from './admindepartment/view-department/view-department.component';
 // import { InsertDepartmentComponent } from './admindepartment/insert-department/insert-department.component';
+
+
 
 
 
@@ -39,11 +42,18 @@ import { DepartmentComponent } from './admindepartment/department/department.com
     InsertAuthUserComponent,
     UpdateAuthUserComponent,
     LoginComponentComponent,
-    CreateInstituteAdminComponent,
+
     DisplayInstituteAdminComponent,
-    UpdateInstituteAdminComponent,
-    ViewInstituteAdminComponent,
-    DepartmentComponent
+
+    DepartmentComponent,
+
+ 
+    DisplayDepartmentComponent,
+    UpdateDepartmentComponent,
+    ViewDepartmentComponent,
+    InsertDepartmentComponent
+
+
   ],
 
   imports: [
