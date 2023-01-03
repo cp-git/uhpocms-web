@@ -56,3 +56,9 @@ input[type='number'] {
     text-align: center;
     color: white;
 }
+
+
+.heading {
+    color: blueviolet;
+    font-family: 'Times New Roman', Times, serif;
+}

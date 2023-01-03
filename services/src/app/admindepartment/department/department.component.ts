@@ -14,8 +14,8 @@ export class DepartmentComponent implements OnInit {
   backupDept: Department[] = [];
 
   // for extra row when there is no data
-  isHidden: boolean = true;
-
+  isHidden: boolean = false;
+  hideId: boolean = false;
   department: Department;
 
   // array of admin institution 
@@ -41,12 +41,12 @@ export class DepartmentComponent implements OnInit {
 
         // when data not available
         if (this.departments.length > 0) {
-          this.isHidden = true;
+          this.isHidden = false;
         }
       },
       error => {
         this.displayEmptyRow();
-        alert("No data in table \n" + JSON.stringify(error.error));
+        console.log("No data in table \n" + JSON.stringify(error.error));
       }
     );
 
@@ -91,7 +91,7 @@ export class DepartmentComponent implements OnInit {
           alert("Added Successfuly");
 
           if (this.departments.length > 0) {
-            this.isHidden = true;
+            this.isHidden = false;
           }
         },
         error => {
@@ -136,7 +136,6 @@ export class DepartmentComponent implements OnInit {
     // calling service mathod to delete department
     this._deptService.deleteDepartment(dept.name).subscribe(
       response => {
-        alert(this.departments.indexOf(dept))
         this.departments.splice(this.departments.indexOf(dept), 1);
         this.backupDept.splice(this.departments.indexOf(dept), 1);
 
@@ -167,7 +166,8 @@ export class DepartmentComponent implements OnInit {
   // for displaying empty when there is no data on ui
   private displayEmptyRow() {
     if (this.departments.length <= 0) {
-      this.isHidden = false;
+      this.isHidden = true;
+      this.department = ({} as Department);
     }
   }
 
