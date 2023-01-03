@@ -4,7 +4,7 @@
 
     <div class="container">
         <div class="Heading">
-            <h1>INSTITUTE ADMIN CRUD OPERATIONS</h1>
+            <h1> INSTITUTE ADMIN </h1>
 
         </div>
 
@@ -12,7 +12,7 @@
         <form #adduserform="ngForm" style="width: 150em;">
             <table>
                 <tr id="head">
-                    <th> Id</th>
+                    
                     <th>Active Status</th>
                     <th>Address1</th>
                     <th>Address2</th>
@@ -27,8 +27,7 @@
                     <th>Last Name</th>
                     <th>Institution Id</th>
                     <th>Mobile Number</th>
-                    <th>Updated By</th>
-                    <th>Updated Date</th>
+                    
                     <th>Profile Pics </th>
                     <th>User Id </th>
                     <th>User Role</th>
@@ -37,13 +36,7 @@
                 <tr *ngIf="isHidden" >
                     
  
-                    <td>
-                        <div class="form-group">
-
-                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminId"
-                                name="_instituteAdmin.adminId" readonly>
-                        </div>
-                    </td>
+                   
                     <td>
                         <div class="form-group">
 
@@ -143,20 +136,7 @@
                                 name="_instituteAdmin.mobilePhone">
                         </div>
                     </td>
-                    <td>
-                        <div class="form-group">
-
-                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.modifiedBy"
-                                name="_instituteAdmin.modifiedBy">
-                        </div>
-                    </td>
-                    <td>
-                        <div class="form-group">
-
-                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.modifiedOn"
-                                name="_instituteAdmin.modifiedOn">
-                        </div>
-                    </td>
+                  
                     <td>
                         <div class="form-group">
 
@@ -194,13 +174,6 @@
                 <tr *ngFor="let _instituteAdmin of _instituteAdminArray">
 
 
-                    <td>
-                        <div class="form-group">
-
-                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminId"
-                                name="{{_instituteAdmin.adminId}}" readonly>
-                        </div>
-                    </td>
                     <td>
                         <div class="form-group">
 
@@ -301,20 +274,7 @@
                                 name="{{_instituteAdmin.mobilePhone}}">
                         </div>
                     </td>
-                    <td>
-                        <div class="form-group">
-
-                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.modifiedBy"
-                                name="{{_instituteAdmin.modifiedBy}}">
-                        </div>
-                    </td>
-                    <td>
-                        <div class="form-group">
-
-                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.modifiedOn"
-                                name="{{_instituteAdmin.modifiedOn}}">
-                        </div>
-                    </td>
+                   
                     <td>
                         <div class="form-group">
 

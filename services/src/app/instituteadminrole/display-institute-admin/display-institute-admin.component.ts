@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AdminInstitution } from '../admin-institution';
 import { InstituteAdmin } from '../institute-admin';
 import { InstituteAdminServiceService } from '../institute-admin-service.service';
 
@@ -20,8 +21,10 @@ export class DisplayInstituteAdminComponent {
 
   _instituteAdminObjCopy: InstituteAdmin[] = [];
 
+  _adminInstitutions: AdminInstitution[] = [];
   // for extra row when there is no data
   isHidden: boolean = true;
+  selected: any;
 
 
 
@@ -31,8 +34,11 @@ export class DisplayInstituteAdminComponent {
 
   ngOnInit(): void {
     this._getAllList();
+    this._getAllAdminInstitutions();
   }
 
+
+ 
 //get all data frmo databasea
   _getAllList() {
     this._instituteAdminService._getAllInstituteAdminList().subscribe(
@@ -47,6 +53,9 @@ export class DisplayInstituteAdminComponent {
         // this._instituteAdminObjCopy.push(Object.assign({}, institute))
       })
 
+
+      //get all institution ids
+     
     //  if (this._instituteAdminArray.length > 0) {
     //     this.isHidden = true;
     //  }
@@ -54,6 +63,14 @@ export class DisplayInstituteAdminComponent {
     //  )
   }
 
+  _getAllAdminInstitutions()
+  {
+    this._instituteAdminService._getAllAdminInstitution().subscribe(
+      data => {
+        this._adminInstitutions = data;
+      }
+    )
+  }
 
 //insert a data in database
   _addInstituteAdmin(_instituteAdminObject: InstituteAdmin) {
@@ -107,7 +124,7 @@ export class DisplayInstituteAdminComponent {
 
         this._instituteAdminService._updateInstituteAdminList(firstName, _instituteAdmin).subscribe(data => {
           console.log(data)
-          alert("Data is Updated..")
+          alert("Data Updated Successfully")
           this._route.navigate(['displayInstituteAdmin'])
 
 
@@ -126,7 +143,7 @@ export class DisplayInstituteAdminComponent {
       .subscribe(
         data => {
           location.reload();
-          alert("Data Deleted...")
+          alert("Data Deleted Successfully")
           this._route.navigate(['displayInstituteAdmin'])
 
         },
