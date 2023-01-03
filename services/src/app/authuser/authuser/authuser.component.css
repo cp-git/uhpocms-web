@@ -1,0 +1,91 @@
+
+.Heading{
+    width: 107%;
+    }
+    table{
+        border: 1px groove black;
+        margin-top: 10px;
+        font-size: 12px;
+    }
+    table tr{
+        text-align: center;
+        height: 40px;
+    }
+    table th{
+        text-align: center;
+        margin-top: 10px;
+        border: 1px groove grey;
+    }
+    table td{
+        border: 1px  groove black;
+    }
+    #head{
+        border: 1px groove red;
+        background-color: dodgerblue;
+        color: white;
+        font-size: 12px;
+    }
+    .container {
+        padding-right: 0px;
+        padding-left: 0px;
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+    #btn2{
+        background-color: red;
+        border-color: red;
+    }
+    table th {
+        background-color: #566787;
+        text-align: center;
+        color: white;
+    }
+    table td {
+        text-align: center;
+    }
+    button {
+        border-radius: 12px;
+        padding: 1px 8px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+    input {
+        border-radius: 8px;
+    }
+    select {
+        border-radius: 8px;
+        padding: 2px 8px;
+    }
+    input[type='number'] {
+        width: 80px;
+    }
+    /* using classes */
+    .addbtn {
+        background-color: #28A745;
+        text-align: center;
+        color: white;
+    }
+    .addbtn:hover {
+        background-color: #299242;
+        color: white;
+    }
+    .updatebtn {
+        background-color: #28A745;
+        text-align: center;
+        color: white;
+    }
+    .updatebtn:hover {
+        background-color: #299242;
+        color: white;
+    }
+    .deletebtn {
+        background-color: red;
+        text-align: center;
+        color: white;
+    }
+    .form-group {
+        margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    }

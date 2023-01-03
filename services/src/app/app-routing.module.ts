@@ -1,10 +1,8 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DepartmentComponent } from './admindepartment/department/department.component';
-import { DisplayAuthuserComponent } from './authuser/display-authuser/display-authuser.component';
-import { InsertAuthUserComponent } from './authuser/insert-auth-user/insert-auth-user.component';
-import { UpdateAuthUserComponent } from './authuser/update-auth-user/update-auth-user.component';
-import { ViewauthUserComponent } from './authuser/viewauth-user/viewauth-user.component';
+import { AuthuserComponent } from './authuser/authuser/authuser.component';
+
 import { DisplayInstituteAdminComponent } from './instituteadminrole/display-institute-admin/display-institute-admin.component';
 
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
@@ -24,20 +22,15 @@ const routes: Routes = [
   { path: 'viewAdminData', component: ViewadminroleComponent },
 
   //auth user routes
-  { path: 'authuser', component: DisplayAuthuserComponent },
-  { path: 'viewauthData/:authUserName', component: ViewauthUserComponent },
-  { path: 'viewauthData', component: ViewauthUserComponent },
-  { path: 'addAuthUser', component: InsertAuthUserComponent },
-  { path: 'updateuser/:authUserName', component: UpdateAuthUserComponent },
+  { path: 'authuser', component: AuthuserComponent },
+
 
   //login route
   { path: '', component: LoginComponentComponent },
 
   //instituteadmin routes
   { path: 'displayInstituteAdmin', component: DisplayInstituteAdminComponent },
-  { path: 'viewInstitutionAdmin/:firstName', component: ViewInstituteAdminComponent },
-  { path: 'updateInstitutionAdmin/:firstName', component: UpdateInstituteAdminComponent },
-  { path: 'addInstitutionAdmin', component: CreateInstituteAdminComponent },
+  
 
 
   //admindepartment routes
