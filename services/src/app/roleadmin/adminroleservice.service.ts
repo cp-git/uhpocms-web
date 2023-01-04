@@ -8,26 +8,26 @@ import { Admin } from './admin';
 })
 export class AdminroleserviceService {
 
-  constructor(private _http:HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
-  fetchadminlist():Observable<any>{
-    return this._http.get<any>("http://localhost:8090/uhpocms/role?name=all");
+  fetchadminlist(): Observable<any> {
+    return this._http.get<any>("http://localhost:8090/adminrole/uhpocms/role?name=all");
   }
 
-  addAdminRole(admin:Admin): Observable<any> {
-    return this._http.post<any>("http://localhost:8090/uhpocms/role",admin);
+  addAdminRole(admin: Admin): Observable<any> {
+    return this._http.post<any>("http://localhost:8090/adminrole/uhpocms/role", admin);
   }
 
   deleteAdmin(roleName: string): Observable<any> {
-    return this._http.delete<any>("http://localhost:8090/uhpocms/role/"+roleName);
+    return this._http.delete<any>("http://localhost:8090/adminrole/uhpocms/role/" + roleName);
   }
 
-  getAdminlist(roleName:string): Observable<any> {
-    return this._http.get<any>("http://localhost:8090/uhpocms/role/"+roleName);
+  getAdminlist(roleName: string): Observable<any> {
+    return this._http.get<any>("http://localhost:8090/adminrole/uhpocms/role/" + roleName);
   }
 
-  updateadminlist(roleName:string,admin:Admin): Observable<Object> {
-    
-    return this._http.put<any>("http://localhost:8090/uhpocms/role/"+roleName,admin);
+  updateadminlist(roleName: string, admin: Admin): Observable<Object> {
+
+    return this._http.put<any>("http://localhost:8090/adminrole/uhpocms/role/" + roleName, admin);
   }
 }
