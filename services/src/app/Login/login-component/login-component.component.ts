@@ -14,7 +14,7 @@ export class LoginComponentComponent implements OnInit {
   }
 
   RedirectRole() {
-    this._route.navigate(['RoleAdminHome'])
+    this._route.navigate(['adminrole'])
   }
 
   RedirectTOAuth() {
