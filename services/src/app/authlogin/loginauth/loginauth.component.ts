@@ -21,7 +21,7 @@ export class LoginauthComponent {
     this._auth.loginDataAuthUser(this.authUser)
       .subscribe(data => {
         console.log(data)
-        alert("Data Added Successfully");
+        alert("User Successfully Logged In..");
         this._route.navigate(['demo']);
 
       }, error => console.log(error));
