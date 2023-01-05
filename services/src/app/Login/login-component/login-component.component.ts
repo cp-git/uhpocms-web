@@ -28,4 +28,8 @@ export class LoginComponentComponent implements OnInit {
   RedirectToAdminDept() {
     this._route.navigate(['department'])
   }
+
+  _Back(){
+    this._route.navigate([''])
+  }
 }

@@ -1,6 +1,7 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DepartmentComponent } from './admindepartment/department/department.component';
+import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
 import { DisplayInstituteAdminComponent } from './instituteadminrole/display-institute-admin/display-institute-admin.component';
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
@@ -15,7 +16,9 @@ const routes: Routes = [
 
 
   //login route
-  { path: '', component: LoginComponentComponent },
+  { path: 'demo', component: LoginComponentComponent },
+
+  {path:'',component:LoginauthComponent},
 
   //instituteadmin routes
   { path: 'displayInstituteAdmin', component: DisplayInstituteAdminComponent },

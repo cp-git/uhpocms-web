@@ -11,6 +11,7 @@ import { DisplayInstituteAdminComponent } from './instituteadminrole/display-ins
 import { DepartmentComponent } from './admindepartment/department/department.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
+import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 
 
 
@@ -21,7 +22,8 @@ import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
     LoginComponentComponent,
     DisplayInstituteAdminComponent,
     DepartmentComponent,
-    AdminroleComponent
+    AdminroleComponent,
+    LoginauthComponent
   ],
 
   imports: [
