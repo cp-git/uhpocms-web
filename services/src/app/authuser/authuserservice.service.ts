@@ -30,4 +30,8 @@ export class AuthuserserviceService {
     
     return this._http.put<any>("http://localhost:8090/authuser/uhpocms/authuser/"+authUserName,authuser);
   }
+
+  loginDataAuthUser(authuser:Authuser): Observable<any> {
+    return this._http.post<any>("http://localhost:8090/uhpocms/login",authuser);
+  }
 }
