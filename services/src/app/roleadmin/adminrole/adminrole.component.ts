@@ -71,7 +71,7 @@ export class AdminroleComponent {
       .subscribe(
         data => {
           alert("Data Deleted...")
-          location.reload();
+         location.reload();
           this._route.navigate(['RoleAdminHome'])
 
         },
