@@ -12,7 +12,7 @@
         <form #adduserform="ngForm" style="width: 150em;">
             <table>
                 <tr id="head">
-                    
+
                     <th>Active Status</th>
                     <th>Address1</th>
                     <th>Address2</th>
@@ -27,21 +27,21 @@
                     <th>Last Name</th>
                     <th>Institution Id</th>
                     <th>Mobile Number</th>
-                    
+
                     <th>Profile Pics </th>
                     <th>User Id </th>
                     <th>User Role</th>
                     <th colspan="3">Actions</th>
                 </tr>
-                <tr *ngIf="isHidden" >
-                    
- 
-                   
+                <tr *ngIf="isHidden">
+
+
+
                     <td>
                         <div class="form-group">
 
-                            <input type="checkbox" class="form-control" required [(ngModel)]="_instituteAdmin.activeUser"
-                                name="_instituteAdmin.activeUser" >
+                            <input type="checkbox" class="form-control" required
+                                [(ngModel)]="_instituteAdmin.activeUser" name="_instituteAdmin.activeUser">
                         </div>
                     </td>
                     <td>
@@ -95,11 +95,11 @@
                     <td>
                         <div class="form-group">
 
-                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminZip"
+                            <input type="number" class="form-control" required [(ngModel)]="_instituteAdmin.adminZip"
                                 name="_instituteAdmin.adminZip">
                         </div>
                     </td>
-                   
+
                     <td>
                         <div class="form-group">
 
@@ -132,11 +132,11 @@
                     <td>
                         <div class="form-group">
 
-                            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.mobilePhone"
+                            <input type="number" class="form-control" required [(ngModel)]="_instituteAdmin.mobilePhone"
                                 name="_instituteAdmin.mobilePhone">
                         </div>
                     </td>
-                  
+
                     <td>
                         <div class="form-group">
 
@@ -160,16 +160,17 @@
                     </td>
                     <td>
                         <button type="submit" class="btn btn-success" id="btn1"
-                        (click)="_addInstituteAdmin(_instituteAdmin)">Add</button>
+                            (click)="_addInstituteAdmin(_instituteAdmin)">Add</button>
                     </td>
                     <td>
                         <button type="button" class="btn btn-success" id="btn1"
                             (click)="_updateInstituteAdmin(_instituteAdmin.firstName,_instituteAdmin)">Update</button>
                     </td>
                     <td>
-                        <button type="submit" class="btn btn-success" id="btn2" (click)="_deletInstituteAdmin(_instituteAdmin.firstName)">Delete</button>
+                        <button type="submit" class="btn btn-success" id="btn2"
+                            (click)="_deletInstituteAdmin(_instituteAdmin.firstName)">Delete</button>
                     </td>
-             
+
                 </tr>
                 <tr *ngFor="let _instituteAdmin of _instituteAdminArray">
 
@@ -237,7 +238,7 @@
                                 name="{{_instituteAdmin.adminZip}}">
                         </div>
                     </td>
-                    
+
                     <td>
                         <div class="form-group">
 
@@ -274,7 +275,7 @@
                                 name="{{_instituteAdmin.mobilePhone}}">
                         </div>
                     </td>
-                   
+
                     <td>
                         <div class="form-group">
 

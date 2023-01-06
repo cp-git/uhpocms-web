@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
-import { DisplayInstituteAdminComponent } from './instituteadminrole/display-institute-admin/display-institute-admin.component';
+import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-institute-admin/display-institute-admin.component';
 import { DepartmentComponent } from './admindepartment/department/department.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
