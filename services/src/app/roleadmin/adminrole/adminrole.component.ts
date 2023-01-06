@@ -13,6 +13,8 @@ import { AdminroleserviceService } from '../adminroleservice.service';
 export class AdminroleComponent {
   admin = new Admin();
   _adminRole: Admin[] = [];
+
+  isHidden : boolean = true;
   constructor(private _service: AdminroleserviceService, private _activatedRoute: ActivatedRoute, private _route: Router) { }
 
   roleName!: string;
@@ -44,6 +46,9 @@ export class AdminroleComponent {
       data => {
         console.log("Response Received...");
         this._adminRole = data;
+        if(this._adminRole.length>0){
+          this.isHidden=false;
+        }
 
       },
 

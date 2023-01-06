@@ -12,6 +12,8 @@ export class AuthuserComponent implements OnInit {
 
   authUser = new Authuser();
   _authUser: Authuser[] = [];
+
+  isHidden: boolean = true;
   constructor(private _service: AuthuserserviceService, private _activeRoute: ActivatedRoute, private _route: Router) { }
 
   authUserName!: string;
@@ -73,6 +75,9 @@ export class AuthuserComponent implements OnInit {
       data => {
         console.log("Response Receved...");
         this._authUser = data;
+        if(this._authUser.length>0){
+          this.isHidden=false;
+        }
       },
 
       Error => console.log("exception")

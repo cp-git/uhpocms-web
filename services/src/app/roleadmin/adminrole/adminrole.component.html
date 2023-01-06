@@ -4,7 +4,7 @@
     <table class="table" border="1px">
         <thead>
             <tr>
-                <th>sr.no </th>
+                
                 <th>Role Name</th>
                 <th>Role description</th>
                 <th>Role Active</th>
@@ -14,8 +14,17 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let role of _adminRole,let i=index">
-                <td>{{i+1}}</td>
+            <tr *ngIf="isHidden">
+                
+                <td><input type="text" [(ngModel)]="admin.roleName" value=""></td>
+                <td><input type="text" [(ngModel)]="admin.roleDescription" value=""> </td>
+                <td><input type="checkbox" [(ngModel)]="admin.active" checked ></td>
+                <td> <button class="addbtn" id="add1" (click)="addrole(admin)">Add</button></td>
+                <td> <button class="updatebtn" id="upd1" (click)="updateAdminRole(admin)">Update</button></td>
+                <td> <button class="deletebtn" id="del1" (click)="deleteAdminRole(admin.roleName)">Delete</button></td>
+            </tr>
+            <tr *ngFor="let role of _adminRole">
+                
                 <td><input type="text" [(ngModel)]="role.roleName" value=""></td>
 
                 <td><input type="text" [(ngModel)]="role.roleDescription" value=""> </td>
