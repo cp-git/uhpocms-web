@@ -42,6 +42,7 @@ export class AuthuserComponent implements OnInit {
   }
 
   updateAuthUsers(user: Authuser) {
+
     if (this._backupUser.findIndex(data => data.authUserName === (user.authUserName)) < 0) {
       alert("authuser not exist for update. please enter another.");
 
@@ -81,6 +82,7 @@ export class AuthuserComponent implements OnInit {
         this._authUser.forEach(user => {
           this._backupUser.push(Object.assign({}, user))
         })
+
       },
 
       Error => console.log("exception")

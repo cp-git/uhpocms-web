@@ -23,7 +23,6 @@
                 <td><input [(ngModel)]="department.description" type="text" value="{{department.description}}" /></td>
                 <td><input [(ngModel)]="department.active" type="checkbox" checked /></td>
                 <td><select [(ngModel)]="department.institutionId_id">
-                        <option>Select</option>
                         <option *ngFor="let inst of adminInstitutions" value="{{inst.adminInstitutionId}}"
                             [selected]="department.institutionId_id==inst.adminInstitutionId?true:null">
                             {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}</option>
@@ -39,7 +38,7 @@
                 <td><input [(ngModel)]="dept.description" type="text" value="{{dept.description}}" /></td>
                 <td><input [(ngModel)]="dept.active" type="checkbox" checked disabled="{{dept.active}}" /></td>
                 <td><select [(ngModel)]="dept.institutionId_id">
-                        <option>Select</option>
+
                         <option *ngFor="let inst of adminInstitutions" value="{{inst.adminInstitutionId}}"
                             [selected]="dept.institutionId_id==inst.adminInstitutionId?true:null">
                             {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}</option>
