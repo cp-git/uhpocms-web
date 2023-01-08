@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DepartmentComponent } from './admindepartment/department/department.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
-import { DisplayInstituteAdminComponent } from './instituteadminrole/display-institute-admin/display-institute-admin.component';
+import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-institute-admin/display-institute-admin.component';
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
 
@@ -18,7 +18,7 @@ const routes: Routes = [
   //login route
   { path: 'demo', component: LoginComponentComponent },
 
-  {path:'',component:LoginauthComponent},
+  { path: '', component: LoginauthComponent },
 
   //instituteadmin routes
   { path: 'displayInstituteAdmin', component: DisplayInstituteAdminComponent },
@@ -32,7 +32,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

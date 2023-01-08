@@ -30,4 +30,8 @@ export class AdminroleserviceService {
 
     return this._http.put<any>("http://localhost:8090/adminrole/uhpocms/role/" + roleName, admin);
   }
+
+  getAdmin(roleName: string): Observable<Admin> {
+    return this._http.get<Admin>("http://localhost:8090/adminrole/uhpocms/role/" + roleName);
+  }
 }
