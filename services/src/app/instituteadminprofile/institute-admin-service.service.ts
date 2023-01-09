@@ -13,8 +13,8 @@ export class InstituteAdminServiceService {
 
 
   constructor(private _http: HttpClient) {
-    this._baseUrl = "http://localhost:8090/institute/uhpocms/profile";
-    this._admininstitutionUrl ="http://localhost:8090/admininstitution/uhpocms/institution";
+    this._baseUrl = "http://localhost:8090/insadmin/uhpocms/profile";
+    this._admininstitutionUrl ="http://localhost:8090/admininstitute/uhpocms/institution";
   }
 
   _getAllAdminInstitution():Observable<any>

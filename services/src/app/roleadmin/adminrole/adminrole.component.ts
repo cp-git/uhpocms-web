@@ -14,7 +14,12 @@ export class AdminroleComponent {
   admin = new Admin();
   _adminRole: Admin[] = [];
 
+
   isHidden : boolean = true;
+
+  _backupRole: Admin[] = [];
+  isExist: number = -1;
+
   constructor(private _service: AdminroleserviceService, private _activatedRoute: ActivatedRoute, private _route: Router) { }
 
   roleName!: string;
@@ -29,7 +34,6 @@ export class AdminroleComponent {
     this._service.addAdminRole(this.admin).subscribe(
       data => {
         // console.log(data);
-
         alert("Role added Successfully");
         this.ngOnInit();
 
@@ -46,28 +50,36 @@ export class AdminroleComponent {
       data => {
         console.log("Response Received...");
         this._adminRole = data;
+
         if(this._adminRole.length>0){
           this.isHidden=false;
         }
 
-      },
+        this._adminRole.forEach(role => {
+          this._backupRole.push(Object.assign({}, role))
+        })
 
+      },
       error => console.log("exception")
     )
   }
 
   updateAdminRole(role: Admin) {
-    alert(JSON.stringify(role));
-    this.admin.roleName = role.roleName;
-    this.admin.roleDescription = role.roleDescription;
-    this.admin.active = role.active;
-    this._service.updateadminlist(this.admin.roleName, this.admin).subscribe(
-      data => {
-        console.log(data)
-        alert("Data Updated...")
-        this.ngOnInit();
 
-      }, error => console.log(error));
+    if (this._backupRole.findIndex(data => data.roleName === (role.roleName)) < 0) {
+      alert("roleName not exist for update. please enter another.");
+
+    } else {
+      this.admin.roleName = role.roleName;
+      this.admin.roleDescription = role.roleDescription;
+      this.admin.active = role.active;
+      this._service.updateadminlist(this.admin.roleName, this.admin).subscribe(
+        data => {
+          // console.log(data)
+          alert("Data Updated...")
+          this.ngOnInit();
+        }, error => console.log(error));
+    }
   }
 
 
@@ -76,7 +88,7 @@ export class AdminroleComponent {
       .subscribe(
         data => {
           alert("Data Deleted...")
-          location.reload();
+         location.reload();
           this._route.navigate(['RoleAdminHome'])
 
         },
@@ -84,5 +96,17 @@ export class AdminroleComponent {
 
   }
 
+
+  getAdminRole(roleName: string) {
+
+    this._service.getAdmin(roleName).subscribe(
+      response => {
+        this.admin = response;
+
+      }
+    )
+    return this.admin;
+
+  }
 
 }

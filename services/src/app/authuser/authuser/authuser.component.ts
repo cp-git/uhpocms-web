@@ -13,7 +13,11 @@ export class AuthuserComponent implements OnInit {
   authUser = new Authuser();
   _authUser: Authuser[] = [];
 
+
   isHidden: boolean = true;
+
+  _backupUser: Authuser[] = [];
+
   constructor(private _service: AuthuserserviceService, private _activeRoute: ActivatedRoute, private _route: Router) { }
 
   authUserName!: string;
@@ -35,7 +39,7 @@ export class AuthuserComponent implements OnInit {
       data => {
         // console.log(data);
         alert("authuser added Successfully");
-    
+
         this.ngOnInit();
       },
       erorr => alert("Please enter valid details ")
@@ -43,41 +47,53 @@ export class AuthuserComponent implements OnInit {
   }
 
   updateAuthUsers(user: Authuser) {
-    alert(JSON.stringify(user));
-  
-    this.authUser.authUserId = user.authUserId;
-    this.authUser.authUserName = user.authUserName;
-    this.authUser.authUserPassword = user.authUserPassword;
-    this.authUser.authUserFirstName = user.authUserFirstName;
-    this.authUser.authUserLastName = user.authUserLastName;
-    this.authUser.authUserEmail = user.authUserEmail;
-    this.authUser.authUserDateJoined = user.authUserDateJoined;
-    this.authUser.authUserIsStaff = user.authUserIsStaff;
-    this.authUser.authUserIsActive = user.authUserIsActive;
-    this.authUser.authUserIsSuperUser = user.authUserIsSuperUser;
 
-    console.log(this.authUser);
+    if (this._backupUser.findIndex(data => data.authUserName === (user.authUserName)) < 0) {
+      alert("authuser not exist for update. please enter another.");
 
-    this._service.updateAuthUser(user.authUserName,
-      this.authUser).subscribe(
-        data => {
-          console.log(data)
-          alert("Data Updated...")
-          this.ngOnInit();
-        },
-        error => {
-          console.log(error);
-        });
+    } else {
+
+      this.authUser.authUserId = user.authUserId;
+      this.authUser.authUserName = user.authUserName;
+      this.authUser.authUserPassword = user.authUserPassword;
+      this.authUser.authUserFirstName = user.authUserFirstName;
+      this.authUser.authUserLastName = user.authUserLastName;
+      this.authUser.authUserEmail = user.authUserEmail;
+      this.authUser.authUserDateJoined = user.authUserDateJoined;
+      this.authUser.authUserIsStaff = user.authUserIsStaff;
+      this.authUser.authUserIsActive = user.authUserIsActive;
+      this.authUser.authUserIsSuperUser = user.authUserIsSuperUser;
+
+      console.log(this.authUser);
+
+      this._service.updateAuthUser(user.authUserName,
+        this.authUser).subscribe(
+          data => {
+            console.log(data)
+            alert("Data Updated...")
+            this.ngOnInit();
+          },
+          error => {
+            console.log(error);
+          });
+    }
   }
-  
+
   ngOnInit(): void {
     this._service.authUserList().subscribe(
       data => {
         console.log("Response Receved...");
         this._authUser = data;
+
         if(this._authUser.length>0){
           this.isHidden=false;
         }
+
+        this._authUser.forEach(user => {
+          this._backupUser.push(Object.assign({}, user))
+        })
+
+
       },
 
       Error => console.log("exception")
@@ -86,7 +102,7 @@ export class AuthuserComponent implements OnInit {
 
   deleteAuthUser(user: Authuser) {
 
-    alert("in method")
+    // alert("in method")
     this._service.deleteAuthUser(user.authUserName)
       .subscribe(
         data => {

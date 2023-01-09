@@ -124,7 +124,7 @@ export class DepartmentComponent implements OnInit {
         alert("Updated Successfuly");
       },
       error => {
-        alert("not able to update data \n" + JSON.stringify(error.error));
+        alert("Department Name not exist for update ");
       }
     );
   }
@@ -168,6 +168,7 @@ export class DepartmentComponent implements OnInit {
     if (this.departments.length <= 0) {
       this.isHidden = true;
       this.department = ({} as Department);
+      this.department.active = true;
     }
   }
 

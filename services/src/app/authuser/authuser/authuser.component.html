@@ -1,9 +1,8 @@
 <div class="container-fluid">
-    <div class="Heading">
-        <h1  class="p-3 mb-2 bg-white text-dark">User Administration</h1>
-			<h2>Active User</h2>
-			<div style="overflow-x:auto;">
-       
+	<div class="Heading">
+		<h1 class="p-3 mb-2 bg-white text-dark">User Administration</h1>
+		<div style="overflow-x:auto;">
+
 
 	<table class="table table-striped">
 		<tr class="p-3 mb-2 bg-success text-white">
@@ -41,26 +40,26 @@
 
 		</tr>
 
-		<tr *ngFor="let user of _authUser" >
-			<td><input type="text" [(ngModel)]="user.authUserName" value=""></td>
-			<td><input type="text" [(ngModel)]="user.authUserPassword" value="*****"></td>
-			<td><input type="text" [(ngModel)]="user.authUserFirstName" value="First Name"></td>
-			<td><input type="text" [(ngModel)]="user.authUserLastName" value="Last Name">
-			</td>
-			<td><input type="text" [(ngModel)]=" user.authUserEmail" value="gmail"></td>
-			<td><input type="text" [(ngModel)]=" user.authUserDateJoined" value="Date">
-			</td>
-			<td><input type="checkbox" [(ngModel)]=" user.authUserIsActive" checked disabled></td>
-			<td><input type="checkbox" [(ngModel)]=" user.authUserIsStaff" checked></td>
-			<td><input type="checkbox" [(ngModel)]=" user.authUserIsSuperUser" checked>
-			</td>
-			<td><button id="add1" class="btn btn-primary"  (click)="addauthUser(user)">Add</button></td>
-			<td><button id="upd1" class="btn btn-primary" (click)="updateAuthUsers(user)">Update</button></td>
-			<td><button id="del1" class="btn btn-danger" (click)="deleteAuthUser(user)">Delete</button></td>
+				<tr *ngFor="let user of _authUser">
+					<td><input type="text" [(ngModel)]="user.authUserName" value=""></td>
+					<td><input type="text" [(ngModel)]="user.authUserPassword" value="*****"></td>
+					<td><input type="text" [(ngModel)]="user.authUserFirstName" value="First Name"></td>
+					<td><input type="text" [(ngModel)]="user.authUserLastName" value="Last Name">
+					</td>
+					<td><input type="text" [(ngModel)]=" user.authUserEmail" value="gmail"></td>
+					<td><input type="text" [(ngModel)]=" user.authUserDateJoined" value="Date">
+					</td>
+					<td><input type="checkbox" [(ngModel)]=" user.authUserIsActive" checked disabled></td>
+					<td><input type="checkbox" [(ngModel)]=" user.authUserIsStaff" checked></td>
+					<td><input type="checkbox" [(ngModel)]=" user.authUserIsSuperUser" checked>
+					</td>
+					<td><button id="add" class="addbtn" (click)="addauthUser(user)">Add</button></td>
+					<td><button id="upd" class="updatebtn" (click)="updateAuthUsers(user)">Update</button></td>
+					<td><button id="del" class="deletebtn" (click)="deleteAuthUser(user)">Delete</button></td>
 
 
-		</tr>
+				</tr>
 
-	</table>
-	</div>
+			</table>
+		</div>
 	</div>
