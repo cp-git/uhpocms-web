@@ -21,7 +21,7 @@
                         disabled /></td>
                 <td><input [(ngModel)]="department.name" type="text" value="{{department.name}}" /></td>
                 <td><input [(ngModel)]="department.description" type="text" value="{{department.description}}" /></td>
-                <td><input [(ngModel)]="department.active" type="checkbox" checked /></td>
+                <td><input [(ngModel)]="department.active" type="checkbox" checked disabled /></td>
                 <td><select [(ngModel)]="department.institutionId_id">
                         <option *ngFor="let inst of adminInstitutions" value="{{inst.adminInstitutionId}}"
                             [selected]="department.institutionId_id==inst.adminInstitutionId?true:null">

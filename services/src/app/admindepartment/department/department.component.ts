@@ -168,6 +168,7 @@ export class DepartmentComponent implements OnInit {
     if (this.departments.length <= 0) {
       this.isHidden = true;
       this.department = ({} as Department);
+      this.department.active = true;
     }
   }
 
