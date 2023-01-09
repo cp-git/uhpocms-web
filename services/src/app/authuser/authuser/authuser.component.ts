@@ -12,7 +12,12 @@ export class AuthuserComponent implements OnInit {
 
   authUser = new Authuser();
   _authUser: Authuser[] = [];
+
+
+  isHidden: boolean = true;
+
   _backupUser: Authuser[] = [];
+
   constructor(private _service: AuthuserserviceService, private _activeRoute: ActivatedRoute, private _route: Router) { }
 
   authUserName!: string;
@@ -79,9 +84,15 @@ export class AuthuserComponent implements OnInit {
       data => {
         console.log("Response Receved...");
         this._authUser = data;
+
+        if(this._authUser.length>0){
+          this.isHidden=false;
+        }
+
         this._authUser.forEach(user => {
           this._backupUser.push(Object.assign({}, user))
         })
+
 
       },
 

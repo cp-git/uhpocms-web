@@ -13,8 +13,13 @@ import { AdminroleserviceService } from '../adminroleservice.service';
 export class AdminroleComponent {
   admin = new Admin();
   _adminRole: Admin[] = [];
+
+
+  isHidden : boolean = true;
+
   _backupRole: Admin[] = [];
   isExist: number = -1;
+
   constructor(private _service: AdminroleserviceService, private _activatedRoute: ActivatedRoute, private _route: Router) { }
 
   roleName!: string;
@@ -45,9 +50,15 @@ export class AdminroleComponent {
       data => {
         console.log("Response Received...");
         this._adminRole = data;
+
+        if(this._adminRole.length>0){
+          this.isHidden=false;
+        }
+
         this._adminRole.forEach(role => {
           this._backupRole.push(Object.assign({}, role))
         })
+
       },
       error => console.log("exception")
     )
