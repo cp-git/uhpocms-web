@@ -12,6 +12,7 @@ import { DepartmentComponent } from './admindepartment/department/department.com
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
+import { QuizComponent } from './quiz/quiz.component';
 
 
 
@@ -23,7 +24,8 @@ import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
     DisplayInstituteAdminComponent,
     DepartmentComponent,
     AdminroleComponent,
-    LoginauthComponent
+    LoginauthComponent,
+    QuizComponent
   ],
 
   imports: [
