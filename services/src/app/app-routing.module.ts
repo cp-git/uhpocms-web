@@ -6,7 +6,7 @@ import { AuthuserComponent } from './authuser/authuser/authuser.component';
 import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-institute-admin/display-institute-admin.component';
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
-
+import { QuestionComponent } from './teacherquestion/question/question.component';
 
 const routes: Routes = [
   //admin role routes
@@ -14,7 +14,8 @@ const routes: Routes = [
   //auth user routes
   { path: 'authuser', component: AuthuserComponent },
 
-
+//question routes
+ {path: 'question' , component :QuestionComponent},
   //login route
   { path: 'demo', component: LoginComponentComponent },
 
