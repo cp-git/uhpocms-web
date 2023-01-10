@@ -29,7 +29,7 @@ export class AppComponent {
     // // // this.loadCourses();
     // this.loadCategories();
     // this.loadModules();
-    alert("ehre" + sessionStorage.getItem("quiz"));
+    //alert("ehre" + sessionStorage.getItem("quiz"));
   }
 
   loadAdminInstitution() {
@@ -37,7 +37,7 @@ export class AppComponent {
       response => {
         this.adminInstitutions = response;
         sessionStorage.setItem("admininstitution", JSON.stringify(this.adminInstitutions));
-
+        // alert("here" + JSON.stringify(this.adminInstitutions));
       },
       error => {
         sessionStorage.setItem("admininstitution", "");

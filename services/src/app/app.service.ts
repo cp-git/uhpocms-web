@@ -34,27 +34,27 @@ export class AppService {
   }
 
   fetchAllInstitution(): Observable<any> {
-    alert(this.baseUrl + this.adminInstitutionWar + this.adminInstitutionURL)
+    // alert(this.baseUrl + this.adminInstitutionWar + this.adminInstitutionURL)
     return this._http.get<any>(this.baseUrl + this.adminInstitutionWar + this.adminInstitutionURL);
   }
 
   fetchAllQuizs(): Observable<Quiz[]> {
-    alert(this.baseUrl + this.quizWar + this.quizURL)
+    // alert(this.baseUrl + this.quizWar + this.quizURL)
     return this._http.get<Quiz[]>(this.baseUrl + this.quizWar + this.quizURL);
   }
 
   fetchAllCourses(): Observable<Course[]> {
-    alert(this.baseUrl + this.courseWar + this.courseURL)
+    // alert(this.baseUrl + this.courseWar + this.courseURL)
     return this._http.get<Course[]>(this.baseUrl + this.courseWar + this.courseURL);
   }
 
   fetchAllCategories(): Observable<Category[]> {
-    alert(this.baseUrl + this.categoryWar + this.categoryURL);
+    // alert(this.baseUrl + this.categoryWar + this.categoryURL);
     return this._http.get<Category[]>(this.baseUrl + this.categoryWar + this.categoryURL);
   }
 
   fetchAllModules(): Observable<Module[]> {
-    alert(this.baseUrl + this.moduleWar + this.moduleURL)
+    // alert(this.baseUrl + this.moduleWar + this.moduleURL)
     return this._http.get<Module[]>(this.baseUrl + this.moduleWar + this.moduleURL);
   }
 
