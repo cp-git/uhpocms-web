@@ -14,7 +14,6 @@ import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +22,7 @@ import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
     DisplayInstituteAdminComponent,
     DepartmentComponent,
     AdminroleComponent,
-    LoginauthComponent
+    LoginauthComponent,
   ],
 
   imports: [
