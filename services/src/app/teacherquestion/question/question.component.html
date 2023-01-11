@@ -1,53 +1,51 @@
+<h1>Question Administration</h1>
+<table class="table" border="1">
+	<tr>
+		<th>Figure</th>
+		<th>Content</th>
+		<th>Explanation</th>
+		<th>OrderNo</th>
+		<th>isMCQ</th>
+		<th>Quiz Id</th>
+		<th>Category</th>
+		<th>isActive</th>
+		<th>Add</th>
+		<th>Update</th>
+		<th>Delete</th>
+	</tr>
+	<tr *ngFor="let que of _question">
+		<td><input type="text" [(ngModel)]="que.questionFigure" value="Figure" /></td>
+		<td><input type="text" [(ngModel)]="que.questionContent" value="Content" /></td>
+		<td><input type="text" [(ngModel)]="que.questionExplanation" value="Explanization" /></td>
+		<td>
+			<select [(ngModel)]="que.questionOrderNo" value="OrderNo">
+				<option>Select</option>
+				<option selected> 1</option>
+				<option> 2</option>
+				<option> 3</option>
+			</select>
+		</td>
+		<td><input [(ngModel)]="que.questionIsMCQ" type="checkbox" /></td>
+		<td>
+			<select [(ngModel)]="que.questionQuizId" value="quizId">
+				<option>Select</option>
+				<option>1</option>
+				<option selected>2</option>
+				<option>3</option>
+			</select>
+		</td>
+		<td>
+			<select [(ngModel)]="que.questionCategoryId" value="CategoryId">
+				<option>Select</option>
+				<option> 1</option>
+				<option>2</option>
+				<option selected>3</option>
+			</select>
+		</td>
+		<td><input [(ngModel)]="que.questionIsActive" type="checkbox" /></td>
 
-		<h1>Question Administration</h1>
-		<table class = "table" border="1">
-		<tr>
-			<th>Figure</th>
-			<th>Content</th>
-			<th>Explanation</th>
-			<th>OrderNo</th>
-			<th>isMCQ</th>
-			<th>Quiz Id</th>
-			<th>Category</th>
-			<th>isActive</th>
-			<th>Add</th>
-			<th>Update</th>
-			<th>Delete</th>
-		</tr>
-		<tr *ngFor = "let que of _question">
-			<td><input type="text" [(ngModel)] = "que.questionFigure" value="Figure" /></td>
-			<td><input type="text" [(ngModel)] = "que.questionContent" value="Content" /></td>
-			<td><input type="text" [(ngModel)] = "que.questionExplanation" value="Explanization" /></td>
-			<td>
-				<select [(ngModel)] = "que.questionOrderNo" value = "OrderNo">
-					<option>Select</option>
-					<option selected> 1</option>
-					<option> 2</option>
-					<option> 3</option>
-				</select>
-			</td>
-			<td><input [(ngModel)] = "que.questionIsMCQ" type="checkbox"  /></td>
-			<td>
-				<select [(ngModel)] = "que.questionQuizId" value = "quizId">
-					<option>Select</option>
-					<option >1</option>
-					<option selected>2</option>
-					<option>3</option>
-				</select>
-			</td>
-			<td>
-				<select [(ngModel)] = "que.questionCategoryId" value = "CategoryId">
-					<option>Select</option>
-					<option> 1</option>
-					<option>2</option>
-					<option selected>3</option>
-				</select>
-			</td>
-			<td><input [(ngModel)] = "que.questionIsActive" type="checkbox" /></td>
-		
-			<td><button class = "add1" (click)="insertQuestion(que)">Add</button></td>
-			<td><button Class = "upd1" >Update</button></td>
-			<td><button Class = "del1" >Delete</button></td>
-		</tr>
-    </table>
-
+		<td><button class="add1" (click)="insertQuestion(que)">Add</button></td>
+		<td><button Class="upd1" (click)="updateQuestion(que)">Update</button></td>
+		<td><button Class="del1" (click)="deleteQuestion(que)">Delete</button></td>
+	</tr>
+</table>
