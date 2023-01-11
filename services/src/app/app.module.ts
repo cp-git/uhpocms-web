@@ -15,7 +15,6 @@ import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 import { QuestionComponent } from './teacherquestion/question/question.component';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +24,7 @@ import { QuestionComponent } from './teacherquestion/question/question.component
     DepartmentComponent,
     AdminroleComponent,
     LoginauthComponent,
+     teacherquestion
     QuestionComponent
   ],
 
