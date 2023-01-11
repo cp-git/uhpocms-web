@@ -177,6 +177,7 @@ export class DepartmentComponent implements OnInit {
   private loadAdminInstitutions() {
     this.sessionData = sessionStorage.getItem("admininstitution");
     this.data = JSON.parse(this.sessionData);
+    
     for (var inst in this.data) {
       this.adminInstitutions.push(this.data[inst]);
     }

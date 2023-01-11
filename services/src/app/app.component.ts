@@ -25,10 +25,10 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.loadAdminInstitution();
-    // this.loadQuizs();
-    // // // this.loadCourses();
-    // this.loadCategories();
-    // this.loadModules();
+    this.loadQuizs();
+    // // this.loadCourses();
+    this.loadCategories();
+    this.loadModules();
     //alert("ehre" + sessionStorage.getItem("quiz"));
   }
 
