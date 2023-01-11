@@ -24,7 +24,6 @@ import { QuestionComponent } from './teacherquestion/question/question.component
     DepartmentComponent,
     AdminroleComponent,
     LoginauthComponent,
-     teacherquestion
     QuestionComponent
   ],
 
