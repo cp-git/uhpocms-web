@@ -5,6 +5,7 @@ import { Category } from './class/category';
 import { Course } from './class/course';
 import { Module } from './class/module';
 import { Quiz } from './class/quiz';
+import { InstituteAdmin } from './instituteadminprofile/institute-admin';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -18,6 +19,7 @@ export class AppComponent {
   quizs: Quiz[] = [];
   courses: Course[] = [];
   modules: Module[] = [];
+  instituteProfiles: InstituteAdmin[] = [];
 
   constructor(private _appService: AppService) {
 
@@ -29,6 +31,7 @@ export class AppComponent {
     // // this.loadCourses();
     this.loadCategories();
     this.loadModules();
+    this.loadInstituteProfile();
     //alert("ehre" + sessionStorage.getItem("quiz"));
   }
 
@@ -86,6 +89,17 @@ export class AppComponent {
       },
       error => {
         sessionStorage.setItem("module", "");
+      }
+    );
+  }
+  loadInstituteProfile() {
+    this._appService.fetchAllInstituteProfile().subscribe(
+      response => {
+        this.instituteProfiles = response;
+        sessionStorage.setItem("instituteprofile", JSON.stringify(this.instituteProfiles));
+      },
+      error => {
+        sessionStorage.setItem("instituteprofile", "");
       }
     );
   }

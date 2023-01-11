@@ -13,8 +13,7 @@ import { AuthuserComponent } from './authuser/authuser/authuser.component';
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 import { QuestionComponent } from './teacherquestion/question/question.component';
-
-
+import { EmailComponent } from './email/email/email.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,8 +23,8 @@ import { QuestionComponent } from './teacherquestion/question/question.component
     DepartmentComponent,
     AdminroleComponent,
     LoginauthComponent,
-     teacherquestion
-    QuestionComponent
+    QuestionComponent,
+    EmailComponent
   ],
 
   imports: [
