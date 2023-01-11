@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Injectable } from '@angular/core'
+import { Router } from '@angular/router'
 import { Observable } from 'rxjs';
 import { Department } from '../department';
 import { AdminInstitution } from 'app/admindepartment/admin-institution/admin-institution';
