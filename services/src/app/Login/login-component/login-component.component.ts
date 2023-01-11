@@ -29,6 +29,10 @@ export class LoginComponentComponent implements OnInit {
     this._route.navigate(['department'])
   }
 
+  RedirectToQuiz() {
+    this._route.navigate(['quiz'])
+  }
+
   _Back(){
     this._route.navigate([''])
   }

@@ -5,6 +5,7 @@ import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
 import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-institute-admin/display-institute-admin.component';
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
+import { QuizComponent } from './quiz/quiz.component';
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
 
 
@@ -26,7 +27,12 @@ const routes: Routes = [
 
 
   //admindepartment routes
-  { path: 'department', component: DepartmentComponent }
+  { path: 'department', component: DepartmentComponent },
+
+
+   //quiz routes
+   { path: 'quiz', component: QuizComponent }
+
 
 
 ];

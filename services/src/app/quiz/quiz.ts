@@ -17,7 +17,7 @@ export class Quiz {
        courseidId!: number;
        moduleId!: number;
        categoryId!: number;
-       isActive!: boolean;
+       active!: boolean;
        modifiedBy!: string;
        createdBy!: string;
        createdOn!: Date;

@@ -24,36 +24,70 @@
         </thead>
         <tbody>
             <tr *ngIf="isHidden">
-                <td>1</td>
-                <td *ngIf="hideId"><input [(ngModel)]="department.id" type="number" value="{{department.id}}"
-                        disabled /></td>
-                <td><input [(ngModel)]="department.name" type="text" value="{{department.name}}" /></td>
-                <td><input [(ngModel)]="department.description" type="text" value="{{department.description}}" /></td>
-                <td><input [(ngModel)]="department.active" type="checkbox" checked disabled /></td>
-                <td><select [(ngModel)]="department.institutionId_id">
+                
+                <td ><input [(ngModel)]="_quiz.title" type="text" value="{{_quiz.title}}"/></td>
+                <td><input [(ngModel)]="_quiz.description" type="text" value="{{_quiz.description}}" /></td>
+                <td><input [(ngModel)]="_quiz.url" type="text" value="{{_quiz.url}}" /></td>
+                <td><input [(ngModel)]="_quiz.randomOrder" type="checkbox" value="{{_quiz.randomOrder}}" /></td>
+                <td><input [(ngModel)]="_quiz.maxQuestions" type="text" value="{{_quiz.maxQuestions}}" /></td>
+                <td><input [(ngModel)]="_quiz.answersAtEnd" type="checkbox" value="{{_quiz.answersAtEnd}}" /></td>
+                <td><input [(ngModel)]="_quiz.examPaper" type="checkbox" value="{{_quiz.examPaper}}" /></td>
+                <td><input [(ngModel)]="_quiz.singleAttempt" type="checkbox" value="{{_quiz.singleAttempt}}" /></td>
+                <td><input [(ngModel)]="_quiz.passMark" type="text" value="{{_quiz.passMark}}" /></td>
+                <td><input [(ngModel)]="_quiz.successText" type="text" value="{{_quiz.successText}}" /></td>
+                <td><input [(ngModel)]="_quiz.failText" type="text" value="{{_quiz.failText}}" /></td>
+                <td><input [(ngModel)]="_quiz.draft" type="checkbox" value="{{_quiz.draft}}" /></td>
+                <td><input [(ngModel)]="_quiz.quizOrderNo" type="text" value="{{_quiz.quizOrderNo}}" /></td>
+               
+                <td><select [(ngModel)]="_quiz.courseidId">
+                        <option *ngFor="let _course of _courseArray" value="{{_course.courseId}}"
+                            [selected]="_quiz.courseidId==_course.courseId?true:null">
+                            {{_course.courseName}} - {{_course.courseId}}</option>
+                    </select></td>
+                <td><input [(ngModel)]="_quiz.moduleId" type="text" value="{{_quiz.moduleId}}" /></td>
+                <td><input [(ngModel)]="_quiz.categoryId" type="text" value="{{_quiz.categoryId}}" /></td>
+                <td><input [(ngModel)]="_quiz.active" type="checkbox" value="{{_quiz.active}}" disabled/></td>
+                <!-- <td><select [(ngModel)]="department.institutionId_id">
                         <option *ngFor="let inst of adminInstitutions" value="{{inst.adminInstitutionId}}"
                             [selected]="department.institutionId_id==inst.adminInstitutionId?true:null">
                             {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}</option>
-                    </select></td>
-                <td><button class="addbtn" id="addbtn" (click)="addDepartment(department)">Add</button></td>
-                <td><button class="updatebtn" id="updatebtn" (click)="updateDepartment(department)">Update</button></td>
-                <td><button class="deletebtn" id="deletebtn" (click)="deleteDepartment(department)">Delete</button></td>
+                    </select></td> -->
+                <td><button class="addbtn" id="addbtn" (click)="addQuiz(_quiz)">Add</button></td>
+                <td><button class="updatebtn" id="updatebtn" (click)="updateQuiz(_quiz)">Update</button></td>
+                <td><button class="deletebtn" id="deletebtn" (click)="deleteQuiz(_quiz)">Delete</button></td>
             </tr>
-            <tr *ngFor="let dept of departments; let i=index">
-                <td>{{i+1}}</td>
-                <td *ngIf="hideId"><input [(ngModel)]="dept.id" type="number" value="{{dept.id}}" disabled /></td>
-                <td><input [(ngModel)]="dept.name" type="text" value="{{dept.name}}" /></td>
-                <td><input [(ngModel)]="dept.description" type="text" value="{{dept.description}}" /></td>
-                <td><input [(ngModel)]="dept.active" type="checkbox" checked disabled="{{dept.active}}" /></td>
-                <td><select [(ngModel)]="dept.institutionId_id">
-
+            <tr *ngFor="let _quiz of _quizArray">
+                
+                <td ><input [(ngModel)]="_quiz.title" type="text" value="{{_quiz.title}}"/></td>
+                <td><input [(ngModel)]="_quiz.description" type="text" value="{{_quiz.description}}" /></td>
+                <td><input [(ngModel)]="_quiz.url" type="text" value="{{_quiz.url}}" /></td>
+                <td><input [(ngModel)]="_quiz.randomOrder" type="checkbox" value="{{_quiz.randomOrder}}" /></td>
+                <td><input [(ngModel)]="_quiz.maxQuestions" type="text" value="{{_quiz.maxQuestions}}" /></td>
+                <td><input [(ngModel)]="_quiz.answersAtEnd" type="checkbox" value="{{_quiz.answersAtEnd}}" /></td>
+                <td><input [(ngModel)]="_quiz.examPaper" type="checkbox" value="{{_quiz.examPaper}}" /></td>
+                <td><input [(ngModel)]="_quiz.singleAttempt" type="checkbox" value="{{_quiz.singleAttempt}}" /></td>
+                <td><input [(ngModel)]="_quiz.passMark" type="text" value="{{_quiz.passMark}}" /></td>
+                <td><input [(ngModel)]="_quiz.successText" type="text" value="{{_quiz.successText}}" /></td>
+                <td><input [(ngModel)]="_quiz.failText" type="text" value="{{_quiz.failText}}" /></td>
+                <td><input [(ngModel)]="_quiz.draft" type="checkbox" value="{{_quiz.draft}}" /></td>
+                <td><input [(ngModel)]="_quiz.quizOrderNo" type="text" value="{{_quiz.quizOrderNo}}" /></td>
+                <!-- <td><input [(ngModel)]="_quiz.courseidId" type="text" value="{{_quiz.courseidId}}" /></td> -->
+                <td><select [(ngModel)]="_quiz.courseidId">
+                    <option *ngFor="let _course of _courseArray" value="{{_course.courseId}}"
+                        [selected]="_quiz.courseidId == _course.courseId ? true:null">
+                        {{_course.courseName}} - {{_course.courseId}}</option>
+                </select></td>
+                <td><input [(ngModel)]="_quiz.moduleId" type="text" value="{{_quiz.moduleId}}" /></td>
+                <td><input [(ngModel)]="_quiz.categoryId" type="text" value="{{_quiz.categoryId}}" /></td>
+                <td><input [(ngModel)]="_quiz.active" type="checkbox" value="{{_quiz.active}}" disabled /></td>
+                <!-- <td><select [(ngModel)]="department.institutionId_id">
                         <option *ngFor="let inst of adminInstitutions" value="{{inst.adminInstitutionId}}"
-                            [selected]="dept.institutionId_id==inst.adminInstitutionId?true:null">
+                            [selected]="department.institutionId_id==inst.adminInstitutionId?true:null">
                             {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}</option>
-                    </select></td>
-                <td><button class="addbtn" id="addbtn" (click)="addDepartment(dept)"> Add</button></td>
-                <td><button class="updatebtn" id="updatebtn" (click)="updateDepartment(dept)">Update</button></td>
-                <td><button class="deletebtn" id="deletebtn" (click)="deleteDepartment(dept)">Delete</button></td>
+                    </select></td> -->
+                <td><button class="addbtn" id="addbtn" (click)="addQuiz(_quiz)">Add</button></td>
+                <td><button class="updatebtn" id="updatebtn" (click)="updateQuiz(_quiz)">Update</button></td>
+                <td><button class="deletebtn" id="deletebtn" (click)="deleteQuiz(_quiz)">Delete</button></td>
             </tr>
         </tbody>
     </table>
