@@ -1,0 +1,64 @@
+table th {
+    background-color: #566787;
+    text-align: center;
+    color: white;
+}
+
+table td {
+    text-align: center;
+}
+
+button {
+    border-radius: 12px;
+    padding: 1px 8px;
+
+}
+
+input {
+    border-radius: 8px;
+}
+
+select {
+    border-radius: 8px;
+    padding: 2px 8px;
+}
+
+input[type='number'] {
+    width: 80px;
+}
+
+
+/* using classes */
+.add1 {
+    background-color: #28a745;
+    text-align: center;
+    color: white;
+}
+
+.add1:hover {
+    background-color: #299242;
+    color: white;
+}
+
+.upd1 {
+    background-color: #28a745;
+    text-align: center;
+    color: white;
+}
+
+.upd1:hover {
+    background-color: #299242;
+    color: white;
+}
+
+.del1 {
+    background-color: red;
+    text-align: center;
+    color: white;
+}
+
+
+.heading {
+    color: blueviolet;
+    font-family: 'Times New Roman', Times, serif;
+}
