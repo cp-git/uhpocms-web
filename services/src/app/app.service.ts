@@ -32,6 +32,7 @@ export class AppService {
   private readonly instituteProfileWar: string = "instituteadmin";
   private readonly instituteProfileURL: string = "/uhpocms/profile?firstName=all";
 
+
   constructor(private _http: HttpClient) {
 
   }
