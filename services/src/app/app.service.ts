@@ -6,6 +6,7 @@ import { Category } from './class/category';
 import { Course } from './class/course';
 import { Module } from './class/module';
 import { Quiz } from './class/quiz';
+import { InstituteAdmin } from './instituteadminprofile/institute-admin';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,10 @@ export class AppService {
 
   private readonly moduleWar: string = "module";
   private readonly moduleURL: string = "/uhpocms/module?name=all";
+
+  private readonly instituteProfileWar: string = "instituteadmin";
+  private readonly instituteProfileURL: string = "/uhpocms/profile?firstName=all";
+
 
   constructor(private _http: HttpClient) {
 
@@ -56,6 +61,11 @@ export class AppService {
   fetchAllModules(): Observable<Module[]> {
     // alert(this.baseUrl + this.moduleWar + this.moduleURL)
     return this._http.get<Module[]>(this.baseUrl + this.moduleWar + this.moduleURL);
+  }
+
+  fetchAllInstituteProfile(): Observable<InstituteAdmin[]> {
+    //alert(this.baseUrl + this.instituteProfileWar + this.instituteProfileURL)
+    return this._http.get<InstituteAdmin[]>(this.baseUrl + this.instituteProfileWar + this.instituteProfileURL);
   }
 
 

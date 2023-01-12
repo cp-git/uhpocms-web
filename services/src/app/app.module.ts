@@ -27,6 +27,8 @@ import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermod
     LoginauthComponent,
     QuestionComponent,
     TeachermoduleComponent
+    QuestionComponent
+
   ],
 
   imports: [
