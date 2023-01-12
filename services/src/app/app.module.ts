@@ -25,6 +25,7 @@ import { EmailComponent } from './email/email/email.component';
     LoginauthComponent,
     QuestionComponent,
     EmailComponent
+
   ],
 
   imports: [
