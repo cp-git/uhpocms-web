@@ -14,6 +14,7 @@ export class EmailComponent {
   instituteAdmin: InstituteAdmin[] = [];
   sessionData: any;
   profileData: any;
+
   constructor(private _emailService: EmailService) {
     this.email = new Email();
     this.loadEmails();
@@ -28,11 +29,55 @@ export class EmailComponent {
       response => {
         // assigning received data to emails
         this.emails = response;
+        this.toggleExtraEmptyRow();
       },
       error => {
         alert("Data not found");
       }
     );
+  }
+
+
+  addEmail(toCreateEmail: Email) {
+
+    toCreateEmail.emailId = null;
+
+    this._emailService.insertEmail(toCreateEmail).subscribe(
+      response => {
+        this.email = response;
+        this.ngOnInit();
+        alert("Data added successfuly");
+      },
+      error => {
+        alert("Failed to add");
+      }
+    )
+  }
+
+  updateEmail(toUpdateEmail: Email) {
+
+    this._emailService.updateEmail(toUpdateEmail).subscribe(
+      response => {
+        this.email = response;
+        this.ngOnInit();
+        alert("Data updated successfuly");
+      },
+      error => {
+        alert("Failed to update");
+      }
+    )
+  }
+
+  deleteEmail(emailTitle: string) {
+    this._emailService.deleteEmail(emailTitle).subscribe(
+      response => {
+        this.ngOnInit();
+        alert(emailTitle + " deleted successfuly");
+      },
+      error => {
+        alert("Failed to delete");
+      }
+    )
   }
 
   private loadEmails() {
@@ -44,33 +89,13 @@ export class EmailComponent {
 
     }
   }
+  private toggleExtraEmptyRow() {
+    if (this.emails.length <= 0) {
 
-  addEmail(toCreateEmail: Email) {
-
-    toCreateEmail.emailId = null;
-
-    this._emailService.insertEmail(toCreateEmail).subscribe(
-      response => {
-        this.email = response;
-        this.ngOnInit();
-      },
-      error => {
-        alert("failed to add");
-      }
-    )
+      this.email = ({} as Email);
+      this.email.emailIsActive = true;
+      this.emails.push(this.email);
+    }
   }
 
-  updateEmail(toUpdateEmail: Email) {
-    alert(JSON.stringify(toUpdateEmail))
-    
-    this._emailService.updateEmail(toUpdateEmail).subscribe(
-      response => {
-        this.email = response;
-        this.ngOnInit();
-      },
-      error => {
-        alert("failed to update");
-      }
-    )
-  }
 }

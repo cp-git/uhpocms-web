@@ -6,6 +6,7 @@ import { Course } from './class/course';
 import { Module } from './class/module';
 import { Quiz } from './class/quiz';
 import { InstituteAdmin } from './instituteadminprofile/institute-admin';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -28,11 +29,11 @@ export class AppComponent {
   ngOnInit(): void {
     this.loadAdminInstitution();
     this.loadQuizs();
-    // // this.loadCourses();
+    // this.loadCourses();
     this.loadCategories();
     this.loadModules();
     this.loadInstituteProfile();
-    //alert("ehre" + sessionStorage.getItem("quiz"));
+    //alert(sessionStorage.getItem("instituteprofile"));
   }
 
   loadAdminInstitution() {

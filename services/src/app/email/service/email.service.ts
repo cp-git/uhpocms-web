@@ -18,7 +18,10 @@ export class EmailService {
   }
 
   updateEmail(email: Email) {
-    alert(JSON.stringify(email))
     return this._http.put<Email>(this.baseURL + '/' + email.title, email);
+  }
+
+  deleteEmail(emailTitle: string) {
+    return this._http.delete<Email>(this.baseURL + '/' + emailTitle);
   }
 }

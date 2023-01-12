@@ -32,7 +32,11 @@ export class LoginComponentComponent implements OnInit {
   RedirectToQuestion() {
     this._route.navigate(['question'])
   }
-  _Back(){
+  RedirectToEmail() {
+    this._route.navigate(['email'])
+  }
+
+  _Back() {
     this._route.navigate([''])
   }
 }
