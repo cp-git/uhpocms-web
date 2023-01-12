@@ -92,6 +92,7 @@ export class AppComponent {
       }
     );
   }
+
   loadInstituteProfile() {
     this._appService.fetchAllInstituteProfile().subscribe(
       response => {
