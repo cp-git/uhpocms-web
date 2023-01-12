@@ -62,6 +62,7 @@ export class EmailComponent {
 
   updateEmail(toUpdateEmail: Email) {
     alert(JSON.stringify(toUpdateEmail))
+    
     this._emailService.updateEmail(toUpdateEmail).subscribe(
       response => {
         this.email = response;
