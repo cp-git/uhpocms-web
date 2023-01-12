@@ -1,0 +1,82 @@
+<div class="container">
+    <h1>Module Administration</h1>
+
+    <table class="table" border="1px">
+        <thead>
+            <tr>
+                <th>Sr.No</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>IsActive</th>
+                <th>StartDate</th>
+                <th>EndDate</th>
+                <th>Course</th>
+                <th>ModuleOrderNo</th>
+                <th>CourseId_id</th>
+                <th>Add</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="isVisible">
+                <td>1</td>
+                <td><input type="text" [(ngModel)]="module.moduleName" value=""></td>
+
+                <td><input type="text" [(ngModel)]="module.moduleDescription" value=""> </td>
+
+                <td><input type="checkbox" [(ngModel)]="module.moduleIsActive" checked></td>
+
+                <td><input type="text" [(ngModel)]="module.moduleStartDate" value="2022-11-12" /></td>
+
+                <td><input type="text" [(ngModel)]="module.moduleEndDate" value="2022-12-12" /></td>
+
+
+                <td><input type="number" [(ngModel)]="module.moduleCourse" value=1 /></td>
+                <td><input type="number" [(ngModel)]="module.moduleOrderNo" value=1 /></td>
+
+                <td>
+                    <select [(ngModel)]="module.courseId_id" value=1>
+                        <option>Select</option>
+                        <option selected> 1</option>
+                        <option> 2</option>
+                        <option> 3</option>
+                    </select>
+                </td>
+                <td> <button class="addbtn" id="add1" (click)="addmodule(module)">Add</button></td>
+                <td> <button class="updatebtn" id="upd1" (click)="updatemodule(module)">Update</button></td>
+                <td> <button class="deletebtn" id="del1" (click)="deletemodule(module.moduleName)">Delete</button></td>
+
+            </tr>
+
+            <tr *ngFor="let module of _teacherModule,let i=index">
+                <td>{{i+1}}</td>
+                <td><input type="text" [(ngModel)]="module.moduleName" value=""></td>
+
+                <td><input type="text" [(ngModel)]="module.moduleDescription" value=""> </td>
+
+                <td><input type="checkbox" [(ngModel)]="module.moduleIsActive" checked disabled></td>
+
+                <td><input type="text" [(ngModel)]="module.moduleStartDate" value="2022-11-12" /></td>
+
+                <td><input type="text" [(ngModel)]="module.moduleEndDate" value="2022-12-12" /></td>
+
+                <td><input type="number" [(ngModel)]="module.moduleCourse" value=1 /></td>
+
+                <td><input type="number" [(ngModel)]="module.moduleOrderNo" value=1 /></td>
+                <td>
+                    <select [(ngModel)]="module.courseId_id" value=1>
+                        <option>Select</option>
+                        <option selected> 1</option>
+                        <option> 2</option>
+                        <option> 3</option>
+                    </select>
+                </td>
+
+                <td> <button class="addbtn" id="add1" (click)="addmodule(module)">Add</button></td>
+                <td> <button class="updatebtn" id="upd1" (click)="updatemodule(module)">Update</button></td>
+                <td> <button class="deletebtn" id="del1" (click)="deletemodule(module.moduleName)">Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

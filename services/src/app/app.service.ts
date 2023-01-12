@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs';
 import { AdminInstitution } from './class/admin-institution';
 import { Category } from './class/category';
