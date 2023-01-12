@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-login-component',
@@ -32,10 +32,14 @@ export class LoginComponentComponent implements OnInit {
   RedirectToQuestion() {
     this._route.navigate(['question'])
   }
+
   RedirectToEmail() {
     this._route.navigate(['email'])
   }
 
+  RedirectToModule() {
+    this._route.navigate(['teachermodule'])
+  }
   _Back() {
     this._route.navigate([''])
   }

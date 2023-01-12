@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core'
+import { BrowserModule } from '@angular/platform-browser'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms'
 
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
 import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-institute-admin/display-institute-admin.component';
@@ -14,6 +14,9 @@ import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 import { QuestionComponent } from './teacherquestion/question/question.component';
 import { EmailComponent } from './email/email/email.component';
+import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +27,9 @@ import { EmailComponent } from './email/email/email.component';
     AdminroleComponent,
     LoginauthComponent,
     QuestionComponent,
-    EmailComponent
+    EmailComponent,
+    TeachermoduleComponent,
+    QuestionComponent
 
   ],
 

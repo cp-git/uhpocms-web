@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 import { AppService } from './app.service';
 import { AdminInstitution } from './class/admin-institution';
 import { Category } from './class/category';
@@ -6,7 +6,6 @@ import { Course } from './class/course';
 import { Module } from './class/module';
 import { Quiz } from './class/quiz';
 import { InstituteAdmin } from './instituteadminprofile/institute-admin';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -98,6 +97,7 @@ export class AppComponent {
     this._appService.fetchAllInstituteProfile().subscribe(
       response => {
         this.instituteProfiles = response;
+        alert();
         sessionStorage.setItem("instituteprofile", JSON.stringify(this.instituteProfiles));
       },
       error => {
