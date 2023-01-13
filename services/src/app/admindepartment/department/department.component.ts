@@ -19,6 +19,7 @@ export class DepartmentComponent implements OnInit {
   department: Department;
 
   // array of admin institution 
+
   adminInstitutions: AdminInstitution[] = [];
   sessionData: any;
   data: any;
@@ -176,10 +177,15 @@ export class DepartmentComponent implements OnInit {
   }
   private loadAdminInstitutions() {
     this.sessionData = sessionStorage.getItem("admininstitution");
+    alert("in loadadminInstitute" + this.sessionData);
     this.data = JSON.parse(this.sessionData);
+    alert("this.data...." + this.data);
+
 
     for (var inst in this.data) {
+
       this.adminInstitutions.push(this.data[inst]);
+      alert(this.data[inst]);
     }
   }
 

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Category } from 'app/class/category';
+import { Quiz } from 'app/class/quiz';
 import { Question } from '../question';
 import { QuestionService } from '../question.service';
 
@@ -11,9 +13,24 @@ import { QuestionService } from '../question.service';
 export class QuestionComponent implements OnInit {
   question = new Question();
   _question: Question[] = [];
-  constructor(private _service: QuestionService, private _activeRoute: ActivatedRoute, private _route: Router) { }
+
+  backupQuesiton = new Map();
+
+  //Creating array 
+  category: Category[] = [];
+  sessionData: any;
+  data: any;
+
+  //Empty row
+  isHidden: boolean = true;
 
 
+
+  quiz: Quiz[] = [];
+
+  constructor(private _service: QuestionService, private _activeRoute: ActivatedRoute, private _route: Router) {
+    this.loadCategories(), this.loadQuiz();
+  }
   insertQuestion(que: Question) {
     alert(JSON.stringify(que));
     this.question.questionFigure = que.questionFigure;
@@ -24,21 +41,26 @@ export class QuestionComponent implements OnInit {
     this.question.questionQuizId = que.questionQuizId;
     this.question.questionCategoryId = que.questionCategoryId;
     this.question.questionIsActive = que.questionIsActive;
+
+    var questionId = que.questionId;
+    que.questionId = null;
+
     this._service.addQuestion(this.question).subscribe(
-
-
-
       data => {
         alert(JSON.stringify(que));
+        // this.ngOnInit();
+        if (this.backupQuesiton.size > 0) {
+          this._question[this._question.indexOf(que)] = (Object.assign({}, this.backupQuesiton.get(questionId)))
+        }
+        this._question.push(this.question);
+        this.backupQuesiton.set(this.question.questionId, (Object.assign({}, this.question)))
         alert("Question added Successfully")
-        this.ngOnInit();
+
       },
       error =>
         alert("please enter valid details")
 
     )
-
-
   }
 
   updateQuestion(que: Question) {
@@ -55,39 +77,56 @@ export class QuestionComponent implements OnInit {
     this._service.updatedQuestion(this.question.questionFigure, this.question).subscribe(
       data => {
 
-        alert("here" + JSON.stringify(data))
+        this.backupQuesiton.set(this.question.questionFigure, (Object.assign({}, this.question)))
+        // alert("here" + JSON.stringify(data))
         alert("updated successfully")
-        this.ngOnInit();
+        // this.ngOnInit();
       },
       error => alert("please enter valid details")
-
     )
   }
 
   deleteQuestion(que: Question) {
     this._service.deleteQuestion(que.questionFigure).subscribe(
-
       data => {
+        this._question.splice(this._question.indexOf(que), 1);
+        this.backupQuesiton.delete(que.questionFigure)
         alert("question is deleted" + JSON.stringify(que.questionFigure))
-        this.ngOnInit();
+        // this.ngOnInit();
 
       },
       error => alert("Failed to delete Question")
-
-
     )
 
   }
-
-
-
   ngOnInit(): void {
     this._service.questionList().subscribe(
       data => {
         console.log("Response");
+        this._question.forEach(questionData => { this.backupQuesiton.set(questionData.questionId, (Object.assign({}, questionData))) })
         this._question = data;
       },
       Error => console.log("exception")
     )
+  }
+
+  private loadCategories() {
+    this.sessionData = sessionStorage.getItem("category");
+
+    this.data = JSON.parse(this.sessionData);
+
+    for (var inst in this.data) {
+
+      this.category.push(this.data[inst]);
+    }
+  }
+
+  private loadQuiz() {
+    this.sessionData = sessionStorage.getItem("quiz");
+
+    this.data = JSON.parse(this.sessionData);
+    for (var qiz in this.data) {
+      this.quiz.push(this.data[qiz])
+    }
   }
 }
