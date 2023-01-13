@@ -29,7 +29,7 @@
 			<select [(ngModel)]="que.questionQuizId" value="{{que.questionQuizId}}">
 				<option *ngFor=" let qiz of quiz" value="{{qiz.quizId}}"
 					[selected]="que.questionQuizId == qiz.quizId?true:null">
-					{{qiz.quizId}}</option>
+					{{qiz.title}}</option>
 			</select>
 		</td>
 		<td>

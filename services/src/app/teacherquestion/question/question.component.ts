@@ -14,6 +14,8 @@ export class QuestionComponent implements OnInit {
   question = new Question();
   _question: Question[] = [];
 
+  backupQuesiton = new Map();
+
   //Creating array 
   category: Category[] = [];
   sessionData: any;
@@ -21,6 +23,7 @@ export class QuestionComponent implements OnInit {
 
   //Empty row
   isHidden: boolean = true;
+
 
 
   quiz: Quiz[] = [];
@@ -38,11 +41,21 @@ export class QuestionComponent implements OnInit {
     this.question.questionQuizId = que.questionQuizId;
     this.question.questionCategoryId = que.questionCategoryId;
     this.question.questionIsActive = que.questionIsActive;
+
+    var questionId = que.questionId;
+    que.questionId = null;
+
     this._service.addQuestion(this.question).subscribe(
       data => {
         alert(JSON.stringify(que));
+        // this.ngOnInit();
+        if (this.backupQuesiton.size > 0) {
+          this._question[this._question.indexOf(que)] = (Object.assign({}, this.backupQuesiton.get(questionId)))
+        }
+        this._question.push(this.question);
+        this.backupQuesiton.set(this.question.questionId, (Object.assign({}, this.question)))
         alert("Question added Successfully")
-        this.ngOnInit();
+
       },
       error =>
         alert("please enter valid details")
@@ -64,9 +77,10 @@ export class QuestionComponent implements OnInit {
     this._service.updatedQuestion(this.question.questionFigure, this.question).subscribe(
       data => {
 
-        alert("here" + JSON.stringify(data))
+        this.backupQuesiton.set(this.question.questionFigure, (Object.assign({}, this.question)))
+        // alert("here" + JSON.stringify(data))
         alert("updated successfully")
-        this.ngOnInit();
+        // this.ngOnInit();
       },
       error => alert("please enter valid details")
     )
@@ -75,8 +89,10 @@ export class QuestionComponent implements OnInit {
   deleteQuestion(que: Question) {
     this._service.deleteQuestion(que.questionFigure).subscribe(
       data => {
+        this._question.splice(this._question.indexOf(que), 1);
+        this.backupQuesiton.delete(que.questionFigure)
         alert("question is deleted" + JSON.stringify(que.questionFigure))
-        this.ngOnInit();
+        // this.ngOnInit();
 
       },
       error => alert("Failed to delete Question")
@@ -87,6 +103,7 @@ export class QuestionComponent implements OnInit {
     this._service.questionList().subscribe(
       data => {
         console.log("Response");
+        this._question.forEach(questionData => { this.backupQuesiton.set(questionData.questionId, (Object.assign({}, questionData))) })
         this._question = data;
       },
       Error => console.log("exception")
