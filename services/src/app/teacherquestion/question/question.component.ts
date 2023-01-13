@@ -18,21 +18,20 @@ export class QuestionComponent implements OnInit {
 
   //Creating array 
   category: Category[] = [];
+  quiz: Quiz[] = [];
+
   sessionData: any;
   data: any;
 
   //Empty row
   isHidden: boolean = true;
 
-
-
-  quiz: Quiz[] = [];
-
   constructor(private _service: QuestionService, private _activeRoute: ActivatedRoute, private _route: Router) {
     this.loadCategories(), this.loadQuiz();
   }
   insertQuestion(que: Question) {
-    alert(JSON.stringify(que));
+    // alert(JSON.stringify(que));
+    this.question = ({} as Question);
     this.question.questionFigure = que.questionFigure;
     this.question.questionContent = que.questionContent;
     this.question.questionExplanation = que.questionExplanation;
@@ -42,18 +41,21 @@ export class QuestionComponent implements OnInit {
     this.question.questionCategoryId = que.questionCategoryId;
     this.question.questionIsActive = que.questionIsActive;
 
-    var questionId = que.questionId;
-    que.questionId = null;
+    this.question.questionId = null;
 
     this._service.addQuestion(this.question).subscribe(
       data => {
-        alert(JSON.stringify(que));
+        // alert(JSON.stringify(que));
         // this.ngOnInit();
+        this.question = data;
         if (this.backupQuesiton.size > 0) {
-          this._question[this._question.indexOf(que)] = (Object.assign({}, this.backupQuesiton.get(questionId)))
+          this._question[this._question.indexOf(que)] = (Object.assign({}, this.backupQuesiton.get(que.questionId)));
         }
         this._question.push(this.question);
         this.backupQuesiton.set(this.question.questionId, (Object.assign({}, this.question)))
+        if (this._question.length > 0) {
+          this.isHidden = false;
+        }
         alert("Question added Successfully")
 
       },
@@ -77,7 +79,8 @@ export class QuestionComponent implements OnInit {
     this._service.updatedQuestion(this.question.questionFigure, this.question).subscribe(
       data => {
 
-        this.backupQuesiton.set(this.question.questionFigure, (Object.assign({}, this.question)))
+        this.question = data;
+        this.backupQuesiton.set(this.question.questionId, (Object.assign({}, this.question)))
         // alert("here" + JSON.stringify(data))
         alert("updated successfully")
         // this.ngOnInit();
@@ -90,8 +93,12 @@ export class QuestionComponent implements OnInit {
     this._service.deleteQuestion(que.questionFigure).subscribe(
       data => {
         this._question.splice(this._question.indexOf(que), 1);
-        this.backupQuesiton.delete(que.questionFigure)
-        alert("question is deleted" + JSON.stringify(que.questionFigure))
+        this.backupQuesiton.delete(que.questionId)
+        alert("question is deleted")
+        if (this._question.length <= 0) {
+          this.isHidden = true;
+          this.question = ({} as Question);
+        }
         // this.ngOnInit();
 
       },
@@ -102,9 +109,13 @@ export class QuestionComponent implements OnInit {
   ngOnInit(): void {
     this._service.questionList().subscribe(
       data => {
-        console.log("Response");
-        this._question.forEach(questionData => { this.backupQuesiton.set(questionData.questionId, (Object.assign({}, questionData))) })
         this._question = data;
+        // console.log("Response");
+        this._question.forEach(questionData => { this.backupQuesiton.set(questionData.questionId, (Object.assign({}, questionData))) })
+
+        if (this._question.length > 0) {
+          this.isHidden = false;
+        }
       },
       Error => console.log("exception")
     )
