@@ -46,6 +46,7 @@ export class EmailComponent {
     var emailId = toCreateEmail.emailId;
 
     toCreateEmail.emailId = null;
+    alert(JSON.stringify(toCreateEmail))
     this._emailService.insertEmail(toCreateEmail).subscribe(
       response => {
 
