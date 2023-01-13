@@ -181,6 +181,7 @@ export class DepartmentComponent implements OnInit {
     this.data = JSON.parse(this.sessionData);
     alert("this.data...." + this.data);
 
+
     for (var inst in this.data) {
 
       this.adminInstitutions.push(this.data[inst]);

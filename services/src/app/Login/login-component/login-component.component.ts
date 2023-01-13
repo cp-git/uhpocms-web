@@ -33,6 +33,10 @@ export class LoginComponentComponent implements OnInit {
     this._route.navigate(['question'])
   }
 
+  RedirectToEmail() {
+    this._route.navigate(['email'])
+  }
+
   RedirectToModule() {
     this._route.navigate(['teachermodule'])
   }

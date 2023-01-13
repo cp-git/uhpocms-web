@@ -1,0 +1,156 @@
+<div class="container-fluid">
+    <div class="header1">
+        <h1 class="heading">Email Administration</h1>
+    </div>
+    <table class="table" border="1">
+        <thead>
+            <tr>
+                <th>Sr.No.</th>
+                <!-- <th>EmailId</th> -->
+                <th>Title</th>
+                <th>Subject</th>
+                <th>Content</th>
+                <th>status</th>
+                <th>readStatus</th>
+                <th>attachFile</th>
+                <th>emailIsActive</th>
+                <th>emailFormId</th>
+                <th>Add</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="isHidden">
+                <td>1</td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" [(ngModel)]="email.title" value="{{email.title}}" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group"><input class="form-control" type="text" [(ngModel)]="email.subject"
+                            value="{{email.subject}}" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group"><input class="form-control" type="text" [(ngModel)]="email.content"
+                            value="{{email.content}}" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="checkbox" [(ngModel)]="email.status"
+                            checked=" {{email.status}" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="checkbox" [(ngModel)]="email.readStatus"
+                            checked=" {{email.readStatus}}" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" [(ngModel)]="email.attachFile" value="subject" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="checkbox" [(ngModel)]="email.emailIsActive"
+                            checked=" {{email.emailIsActive}}" disabled />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <select [(ngModel)]="email.emailFormId" class="form-control">
+                            <option *ngFor=" let profile of instituteAdmin" value="{{profile.adminId}}"
+                                [selected]="profile.adminId===email.emailFormId?true:null">{{profile.firstName}}
+                                {{profile.lastName}}
+                            </option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <button class="form-control addbtn" id="addbtn" (click)="addEmail(email)">Add</button>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <button class="form-control updatebtn" id="updbtn" (click)="updateEmail(email)">Update</button>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <button class="form-control deletebtn" id="delbtn" (click)="deleteEmail(email)">Delete</button>
+                    </div>
+                </td>
+            </tr>
+            <tr *ngFor="let emailData of emails,let i=index">
+                <td>{{i+1}}</td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" [(ngModel)]="emailData.title"
+                            value="{{emailData.title}}" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group"><input class="form-control" type="text" [(ngModel)]="emailData.subject"
+                            value="{{emailData.subject}}" /></div>
+                </td>
+                <td>
+                    <div class="form-group"><input class="form-control" type="text" [(ngModel)]="emailData.content"
+                            value="{{emailData.content}}" /></div>
+                </td>
+                <td>
+                    <div class="form-group"><input class="form-control" type="checkbox" [(ngModel)]="emailData.status"
+                            checked="{{emailData.status}}" /></div>
+                </td>
+                <td>
+                    <div class="form-group"><input class="form-control" type="checkbox"
+                            [(ngModel)]="emailData.readStatus" checked=" {{emailData.readStatus}}" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group"><input class="form-control" type="text" [(ngModel)]="emailData.attachFile"
+                            value="{{emailData.attachFile}}" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group"><input class="form-control" type="checkbox"
+                            [(ngModel)]="emailData.emailIsActive" checked="{{emailData.emailIsActive}}" disabled />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <select [(ngModel)]="emailData.emailFormId" class="form-control">
+                            <option *ngFor=" let profile of instituteAdmin" value="{{profile.adminId}}"
+                                [selected]="profile.adminId===emailData.emailFormId?true:null">{{profile.firstName}}
+                                {{profile.lastName}}
+                            </option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <button class="form-control addbtn" id="addbtn" (click)="addEmail(emailData)">Add</button>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <button class="form-control updatebtn" id="updbtn"
+                            (click)="updateEmail(emailData)">Update</button>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <button class="form-control deletebtn" id="delbtn"
+                            (click)="deleteEmail(emailData )">Delete</button>
+                    </div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>

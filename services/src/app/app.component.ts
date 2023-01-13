@@ -97,7 +97,6 @@ export class AppComponent {
     this._appService.fetchAllInstituteProfile().subscribe(
       response => {
         this.instituteProfiles = response;
-        alert();
         sessionStorage.setItem("instituteprofile", JSON.stringify(this.instituteProfiles));
       },
       error => {
