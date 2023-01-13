@@ -29,7 +29,7 @@ export class DisplayInstituteAdminComponent {
 
 
   constructor(private _instituteAdminService: InstituteAdminServiceService, private _route: Router) {
-    
+
   }
 
   ngOnInit(): void {
@@ -38,8 +38,8 @@ export class DisplayInstituteAdminComponent {
   }
 
 
- 
-//get all data frmo databasea
+
+  //get all data frmo databasea
   _getAllList() {
     this._instituteAdminService._getAllInstituteAdminList().subscribe(
       data => {
@@ -54,8 +54,8 @@ export class DisplayInstituteAdminComponent {
       })
 
 
-      //get all institution ids
-     
+    //get all institution ids
+
     //  if (this._instituteAdminArray.length > 0) {
     //     this.isHidden = true;
     //  }
@@ -63,8 +63,7 @@ export class DisplayInstituteAdminComponent {
     //  )
   }
 
-  _getAllAdminInstitutions()
-  {
+  _getAllAdminInstitutions() {
     this._instituteAdminService._getAllAdminInstitution().subscribe(
       data => {
         this._adminInstitutions = data;
@@ -72,7 +71,7 @@ export class DisplayInstituteAdminComponent {
     )
   }
 
-//insert a data in database
+  //insert a data in database
   _addInstituteAdmin(_instituteAdminObject: InstituteAdmin) {
     let _addInstituteObj = new InstituteAdmin();
     _addInstituteObj.activeUser = _instituteAdminObject.activeUser;
@@ -114,7 +113,7 @@ export class DisplayInstituteAdminComponent {
     )
   }
 
-//update a data in database
+  //update a data in database
   _updateInstituteAdmin(firstName: string, _instituteAdmin: InstituteAdmin) {
 
     this._instituteAdminService._getInstituteAdminList(firstName)
@@ -136,7 +135,7 @@ export class DisplayInstituteAdminComponent {
 
 
 
-//delete a data in database
+  //delete a data in database
 
   _deletInstituteAdmin(firstName: string) {
     this._instituteAdminService._deleteInstituteAdminList(firstName)

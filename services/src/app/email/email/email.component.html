@@ -18,9 +18,9 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let email of emails, let i=index">
-            <td>{{i+1}}</td>
-            <td><input type="text" [(ngModel)]="email.title" value="title" /></td>
+        <tr *ngIf="isHidden">
+            <td>1</td>
+            <td><input type="text" [(ngModel)]="email.title" value="{{email.title}}" /></td>
             <td><input type="text" [(ngModel)]="email.subject" value="subject" /></td>
             <td><input type="text" [(ngModel)]="email.content" value="subject" /></td>
             <td><input type="checkbox" [(ngModel)]="email.status" checked="{{email.status}}" /></td>
@@ -36,7 +36,28 @@
                 </select></td>
             <td><button class="addbtn" id="addbtn" (click)="addEmail(email)">Add</button></td>
             <td><button class="updatebtn" id="updbtn" (click)="updateEmail(email)">Update</button></td>
-            <td><button class="deletebtn" id="delbtn" (click)="deleteEmail(email.title)">Delete</button></td>
+            <td><button class="deletebtn" id="delbtn" (click)="deleteEmail(email )">Delete</button></td>
+        </tr>
+        <tr *ngFor="let emailData of emails,let i=index">
+            <td>{{i+1}}</td>
+            <td><input type="text" [(ngModel)]="emailData.title" value="{{emailData.title}}" /></td>
+            <td><input type="text" [(ngModel)]="emailData.subject" value="subject" /></td>
+            <td><input type="text" [(ngModel)]="emailData.content" value="subject" /></td>
+            <td><input type="checkbox" [(ngModel)]="emailData.status" checked="{{emailData.status}}" /></td>
+            <td><input type="checkbox" [(ngModel)]="emailData.readStatus" checked=" {{emailData.readStatus}}" /></td>
+            <td><input type="text" [(ngModel)]="emailData.attachFile" value="subject" /></td>
+            <td><input type="checkbox" [(ngModel)]="emailData.emailIsActive" checked=" {{emailData.emailIsActive}}"
+                    disabled />
+            </td>
+            <td><select [(ngModel)]="emailData.emailFormId">
+                    <option *ngFor=" let profile of instituteAdmin" value="{{profile.adminId}}"
+                        [selected]="profile.adminId===emailData.emailFormId?true:null">{{profile.firstName}}
+                        {{profile.lastName}}
+                    </option>
+                </select></td>
+            <td><button class="addbtn" id="addbtn" (click)="addEmail(emailData)">Add</button></td>
+            <td><button class="updatebtn" id="updbtn" (click)="updateEmail(emailData)">Update</button></td>
+            <td><button class="deletebtn" id="delbtn" (click)="deleteEmail(emailData )">Delete</button></td>
         </tr>
 
     </tbody>

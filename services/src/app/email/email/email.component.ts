@@ -1,4 +1,6 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component } from '@angular/core';
+import { Route, Router } from '@angular/router';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 import { Email } from '../email';
 import { EmailService } from '../service/email.service';
@@ -9,15 +11,16 @@ import { EmailService } from '../service/email.service';
   styleUrls: ['./email.component.css']
 })
 export class EmailComponent {
-  emails: Email[] = [];
+  emails: Email[] = []; // for all email data
+  backupEmails = new Map();
   email: Email;
-  instituteAdmin: InstituteAdmin[] = [];
+  instituteAdmin: InstituteAdmin[] = []; // for dropdown data
   sessionData: any;
   profileData: any;
-
-  constructor(private _emailService: EmailService) {
+  isHidden: boolean = false;
+  constructor(private _emailService: EmailService, private _route: Router) {
     this.email = new Email();
-    this.loadEmails();
+    this.loadInstituteProfile();
   }
 
   ngOnInit(): void {
@@ -29,6 +32,7 @@ export class EmailComponent {
       response => {
         // assigning received data to emails
         this.emails = response;
+        this.emails.forEach(emailData => { this.backupEmails.set(emailData.emailId, (Object.assign({}, emailData))) });
         this.toggleExtraEmptyRow();
       },
       error => {
@@ -39,19 +43,29 @@ export class EmailComponent {
 
 
   addEmail(toCreateEmail: Email) {
+    var emailId = toCreateEmail.emailId;
 
     toCreateEmail.emailId = null;
-
     this._emailService.insertEmail(toCreateEmail).subscribe(
       response => {
+
         this.email = response;
-        this.ngOnInit();
+        //  this.ngOnInit();
+        if (this.backupEmails.size > 0) {
+          this.emails[this.emails.indexOf(toCreateEmail)] = (Object.assign({}, this.backupEmails.get(emailId)));
+        }
+        this.emails.push(this.email);
+        this.backupEmails.set(this.email.emailId, (Object.assign({}, this.email)));
         alert("Data added successfuly");
+        if (this.emails.length > 0) {
+          this.isHidden = false;
+        }
       },
       error => {
         alert("Failed to add");
       }
     )
+
   }
 
   updateEmail(toUpdateEmail: Email) {
@@ -59,20 +73,31 @@ export class EmailComponent {
     this._emailService.updateEmail(toUpdateEmail).subscribe(
       response => {
         this.email = response;
-        this.ngOnInit();
+        this.backupEmails.set(this.email.title, (Object.assign({}, this.email)));
+        // this.ngOnInit();
         alert("Data updated successfuly");
+
+        if (this.emails.length > 0) {
+          this.isHidden = false;
+        }
       },
       error => {
         alert("Failed to update");
       }
     )
+
   }
 
-  deleteEmail(emailTitle: string) {
-    this._emailService.deleteEmail(emailTitle).subscribe(
+  deleteEmail(toDeleteEmail: Email) {
+    this._emailService.deleteEmail(toDeleteEmail.title).subscribe(
       response => {
-        this.ngOnInit();
-        alert(emailTitle + " deleted successfuly");
+
+        this.emails.splice(this.emails.indexOf(toDeleteEmail), 1);
+        this.backupEmails.delete(toDeleteEmail.emailId)
+        // this.ngOnInit();
+        alert(toDeleteEmail.title + " deleted successfuly");
+
+        this.toggleExtraEmptyRow();
       },
       error => {
         alert("Failed to delete");
@@ -80,22 +105,24 @@ export class EmailComponent {
     )
   }
 
-  private loadEmails() {
+  private loadInstituteProfile() {
     this.sessionData = sessionStorage.getItem("instituteprofile");
     this.profileData = JSON.parse(this.sessionData);
 
     for (var inst in this.profileData) {
       this.instituteAdmin.push(this.profileData[inst]);
-
     }
   }
   private toggleExtraEmptyRow() {
     if (this.emails.length <= 0) {
-
       this.email = ({} as Email);
       this.email.emailIsActive = true;
-      this.emails.push(this.email);
+      this.isHidden = true;
     }
+  }
+
+  homePage() {
+    this._route.navigate(['demo'])
   }
 
 }
