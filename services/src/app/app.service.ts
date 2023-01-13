@@ -22,7 +22,7 @@ export class AppService {
   private readonly quizURL: string = "/uhpocms/quiz?title=all";
 
   private readonly courseWar: string = "course";
-  private readonly courseURL: string = "/uhpocms/quiz?title=all";
+  private readonly courseURL: string = "/uhpocms/course?name=all";
 
   private readonly categoryWar: string = "category";
   private readonly categoryURL: string = "/uhpocms/category?category=all";

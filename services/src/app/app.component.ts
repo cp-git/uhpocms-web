@@ -28,7 +28,7 @@ export class AppComponent {
   ngOnInit(): void {
     this.loadAdminInstitution();
     this.loadQuizs();
-    // this.loadCourses();
+    this.loadCourses();
     this.loadCategories();
     this.loadModules();
     this.loadInstituteProfile();
@@ -63,6 +63,7 @@ export class AppComponent {
     this._appService.fetchAllCourses().subscribe(
       response => {
         this.courses = response;
+        // alert("here" + JSON.stringify(this.courses));
         sessionStorage.setItem("course", JSON.stringify(this.courses));
       },
       error => {
@@ -97,7 +98,7 @@ export class AppComponent {
     this._appService.fetchAllInstituteProfile().subscribe(
       response => {
         this.instituteProfiles = response;
-        alert();
+        // alert();
         sessionStorage.setItem("instituteprofile", JSON.stringify(this.instituteProfiles));
       },
       error => {

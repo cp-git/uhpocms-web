@@ -26,7 +26,7 @@ export class TeachermoduleserviceService {
     return this._http.get<any>("http://localhost:8090/module/uhpocms/module/" + moduleName);
   }
 
-  updateModuleList(moduleName: string, module: Module): Observable<Object> {
+  updateModuleList(moduleName: string, module: Module): Observable<any> {
 
     return this._http.put<any>("http://localhost:8090/module/uhpocms/module/" + moduleName, module);
   }

@@ -13,7 +13,7 @@ export class InstituteAdminServiceService {
 
 
   constructor(private _http: HttpClient) {
-    this._baseUrl = "http://localhost:8090/institituteadmin/uhpocms/profile";
+    this._baseUrl = "http://localhost:8090/instituteadmin/uhpocms/profile";
     this._admininstitutionUrl = "http://localhost:8090/admininstitution/uhpocms/institution";
   }
 
