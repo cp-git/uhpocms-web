@@ -27,10 +27,8 @@ import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermod
     AdminroleComponent,
     LoginauthComponent,
     QuestionComponent,
-    EmailComponent,
     TeachermoduleComponent,
-    QuestionComponent
-
+    EmailComponent
   ],
 
   imports: [
