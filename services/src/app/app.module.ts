@@ -14,6 +14,7 @@ import { DepartmentComponent } from './admindepartment/department/department.com
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 import { QuestionComponent } from './teacherquestion/question/question.component';
+import { EmailComponent } from './email/email/email.component';
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
 
@@ -28,6 +29,7 @@ import { AuthuserComponent } from './authuser/authuser/authuser.component';
     AdminroleComponent,
     LoginauthComponent,
     TeachermoduleComponent,
+    EmailComponent
     QuestionComponent
   ],
 

@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs';
-import { AdminInstitution } from './class/admin-institution';
 import { Category } from './class/category';
 import { Course } from './class/course';
 import { Module } from './class/module';

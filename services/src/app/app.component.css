@@ -4,6 +4,7 @@
     background-color: aqua;
 }
 
+
 table th {
     background-color: #566787;
     text-align: center;
@@ -15,7 +16,15 @@ table th {
     background-color: #566787;
     text-align: center;
     color: white;
+
+
 }
+
+
+
+
+
+
 
 table tr {
     display: table;
@@ -30,6 +39,7 @@ table td {
 #chk {
     width: 40px;
     height: 30px;
+
 }
 
 #add {
@@ -40,6 +50,7 @@ table td {
 #updatebtn {
     background-color: dodgerblue;
 }
+
 
 #add {
     background-color: green;
