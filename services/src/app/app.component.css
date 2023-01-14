@@ -23,16 +23,13 @@ table th {
 
 
 
-}
+
 
 
 table tr {
     display: table;
     table-layout: fixed;
     width: 100%;
-
-
-
 }
 
 table td {
