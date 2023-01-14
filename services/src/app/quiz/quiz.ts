@@ -1,6 +1,6 @@
 export class Quiz {
        quizId!: number;
-       title!: String;
+       title!: string;
        description!: String;
        url!: String;
        randomOrder!: boolean;
@@ -14,7 +14,7 @@ export class Quiz {
        failText!: string;
        draft!: boolean;
        quizOrderNo!: number;
-       courseidId!: number;
+       courseId!: number;
        moduleId!: number;
        categoryId!: number;
        active!: boolean;

@@ -1,4 +1,4 @@
-<div class="container">
+<div >
     <h1 class="heading">Quiz Administration</h1>
     <table class="table" border="1px">
         <thead>
@@ -6,20 +6,23 @@
                 <th>Title</th>
                 <th>Description</th>
                 <th>Url</th>
-                <th>Random Order</th>
+                <th>Quiz Random Order</th>
                 <th>Max Questions</th>
                 <th>Answers At End</th>
-                <th>Exam Paper</th>
+                <th>Quiz Exam Paper</th>
                 <th>Single Attempt</th>
                 <th>Pass Mark</th>
                 <th>Success Text</th>
                 <th>Fail Text</th>
                 <th>Draft</th>
                 <th>Quiz Order No</th>
-                <th>Course Id</th>
-                <th>Module Id</th>
-                <th>Category Id</th>
+                <th>Course Name</th>
+                <th>Module Name</th>
+                <th>Category Name</th>
                 <th>isActive</th>
+                <th>Add</th>
+                <th>Update</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -39,22 +42,39 @@
                 <td><input [(ngModel)]="_quiz.draft" type="checkbox" value="{{_quiz.draft}}" /></td>
                 <td><input [(ngModel)]="_quiz.quizOrderNo" type="text" value="{{_quiz.quizOrderNo}}" /></td>
                
-                <td><select [(ngModel)]="_quiz.courseidId">
+                <!-- <td><select [(ngModel)]="_quiz.courseidId">
                         <option *ngFor="let _course of _courseArray" value="{{_course.courseId}}"
                             [selected]="_quiz.courseidId==_course.courseId?true:null">
                             {{_course.courseName}} - {{_course.courseId}}</option>
                     </select></td>
                 <td><input [(ngModel)]="_quiz.moduleId" type="text" value="{{_quiz.moduleId}}" /></td>
-                <td><input [(ngModel)]="_quiz.categoryId" type="text" value="{{_quiz.categoryId}}" /></td>
-                <td><input [(ngModel)]="_quiz.active" type="checkbox" value="{{_quiz.active}}" disabled/></td>
+                <td><input [(ngModel)]="_quiz.categoryId" type="text" value="{{_quiz.categoryId}}" /></td> -->
+                <td><select [(ngModel)]="_quiz.courseId">
+                    <option *ngFor="let course of _courseArray" value="{{course.courseId}}"
+                        [selected]="_quiz.courseId == course.courseId ">
+                        {{course.courseName}}</option>
+                </select></td>
+                <!-- <td><input [(ngModel)]="_quiz.moduleId" type="text" value="{{_quiz.moduleId}}" /></td> -->
+                <td><select [(ngModel)]="_quiz.moduleId">
+                    <option *ngFor="let module of _moduleArray" value="{{module.moduleId}}"
+                        [selected]="_quiz.moduleId == module.moduleId ">
+                        {{module.moduleName}}</option>
+                </select></td>
+                <!-- <td><input [(ngModel)]="_quiz.categoryId" type="text" value="{{_quiz.categoryId}}" /></td> -->
+                <td><select [(ngModel)]="_quiz.categoryId">
+                    <option *ngFor="let category of _categoryArray" value="{{category.categoryId}}"
+                        [selected]="_quiz.categoryId == category.categoryId ">
+                         {{category.categoryName}}</option>
+                </select></td>
+                <td><input [(ngModel)]="_quiz.active" type="checkbox" value="{{_quiz.active}}"  /></td>
                 <!-- <td><select [(ngModel)]="department.institutionId_id">
                         <option *ngFor="let inst of adminInstitutions" value="{{inst.adminInstitutionId}}"
                             [selected]="department.institutionId_id==inst.adminInstitutionId?true:null">
                             {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}</option>
                     </select></td> -->
                 <td><button class="addbtn" id="addbtn" (click)="addQuiz(_quiz)">Add</button></td>
-                <td><button class="updatebtn" id="updatebtn" (click)="updateQuiz(_quiz)">Update</button></td>
-                <td><button class="deletebtn" id="deletebtn" (click)="deleteQuiz(_quiz)">Delete</button></td>
+                <td><button class="updatebtn" id="updatebtn" (click)="updateQuiz(_quiz,_quiz.title)">Update</button></td>
+                <td><button class="deletebtn" id="deletebtn" (click)="deleteQuiz(_quiz,_quiz.title)">Delete</button></td>
             </tr>
             <tr *ngFor="let _quiz of _quizArray">
                 
@@ -72,22 +92,28 @@
                 <td><input [(ngModel)]="_quiz.draft" type="checkbox" value="{{_quiz.draft}}" /></td>
                 <td><input [(ngModel)]="_quiz.quizOrderNo" type="text" value="{{_quiz.quizOrderNo}}" /></td>
                 <!-- <td><input [(ngModel)]="_quiz.courseidId" type="text" value="{{_quiz.courseidId}}" /></td> -->
-                <td><select [(ngModel)]="_quiz.courseidId">
-                    <option *ngFor="let _course of _courseArray" value="{{_course.courseId}}"
-                        [selected]="_quiz.courseidId == _course.courseId ? true:null">
-                        {{_course.courseName}} - {{_course.courseId}}</option>
+                <td><select [(ngModel)]="_quiz.courseId">
+                    <option *ngFor="let course of _courseArray" value="{{course.courseId}}"
+                        [selected]="_quiz.courseId == course.courseId ? true:null">
+                        {{course.courseName}}</option>
                 </select></td>
-                <td><input [(ngModel)]="_quiz.moduleId" type="text" value="{{_quiz.moduleId}}" /></td>
-                <td><input [(ngModel)]="_quiz.categoryId" type="text" value="{{_quiz.categoryId}}" /></td>
+                <!-- <td><input [(ngModel)]="_quiz.moduleId" type="text" value="{{_quiz.moduleId}}" /></td> -->
+                <td><select [(ngModel)]="_quiz.moduleId">
+                    <option *ngFor="let module of _moduleArray" value="{{module.moduleId}}"
+                        [selected]="_quiz.moduleId == module.moduleId ? true:null">
+                        {{module.moduleName}}</option>
+                </select></td>
+                <!-- <td><input [(ngModel)]="_quiz.categoryId" type="text" value="{{_quiz.categoryId}}" /></td> -->
+                <td><select [(ngModel)]="_quiz.categoryId">
+                    <option *ngFor="let category of _categoryArray" value="{{category.categoryId}}"
+                        [selected]="_quiz.categoryId == category.categoryId ? true:null">
+                         {{category.categoryName}}</option>
+                </select></td>
                 <td><input [(ngModel)]="_quiz.active" type="checkbox" value="{{_quiz.active}}" disabled /></td>
-                <!-- <td><select [(ngModel)]="department.institutionId_id">
-                        <option *ngFor="let inst of adminInstitutions" value="{{inst.adminInstitutionId}}"
-                            [selected]="department.institutionId_id==inst.adminInstitutionId?true:null">
-                            {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}</option>
-                    </select></td> -->
+                
                 <td><button class="addbtn" id="addbtn" (click)="addQuiz(_quiz)">Add</button></td>
-                <td><button class="updatebtn" id="updatebtn" (click)="updateQuiz(_quiz)">Update</button></td>
-                <td><button class="deletebtn" id="deletebtn" (click)="deleteQuiz(_quiz)">Delete</button></td>
+                <td><button class="updatebtn" id="updatebtn" (click)="updateQuiz(_quiz,_quiz.title)">Update</button></td>
+                <td><button class="deletebtn" id="deletebtn" (click)="deleteQuiz(_quiz,_quiz.title)">Delete</button></td>
             </tr>
         </tbody>
     </table>

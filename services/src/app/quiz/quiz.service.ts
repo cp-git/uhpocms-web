@@ -12,7 +12,7 @@ export class QuizService {
   
 
   constructor(private _http: HttpClient) {
-    this._baseUrl = "http://localhost:8090/quiz/uhpocms/quiz";
+    this._baseUrl = "http://localhost:8080/uhpocms/quiz";
  
   }
 
@@ -30,11 +30,11 @@ export class QuizService {
     return this._http.post<any>(this._baseUrl + "/" , quiz);
   }
 
-  _updateInstituteAdminList(title : string, quiz:Quiz): Observable<any>{
+  _updateQuiz(title : string, quiz:Quiz): Observable<any>{
     return this._http.put<any>(this._baseUrl + "/" +title , quiz);
   }
 
-  _deleteInstituteAdminList(title : string):Observable<any>
+  _deleteQuiz(title : string):Observable<any>
   {
     return this._http.delete<any>(this._baseUrl +"/" +title);
   }
