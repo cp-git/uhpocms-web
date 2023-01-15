@@ -30,8 +30,8 @@ const routes: Routes = [
   { path: 'department', component: DepartmentComponent },
 
 
-   //quiz routes
-   { path: 'quiz', component: QuizComponent }
+  //quiz routes
+  { path: 'quiz', component: QuizComponent }
 
 
 
@@ -39,8 +39,8 @@ const routes: Routes = [
 
 @NgModule({
 
-  imports: [RouterModule.forRoot(routes),RouterModule.forRoot(routes, {useHash: true})
-  
+  imports: [RouterModule.forRoot(routes), RouterModule.forRoot(routes, { useHash: true })
+
   ],
 
   exports: [RouterModule]

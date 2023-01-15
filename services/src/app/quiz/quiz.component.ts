@@ -8,7 +8,7 @@ import { CourseService } from 'app/course/course.service';
 import { Module } from 'app/module/module';
 import { ModuleService } from 'app/module/module.service';
 import { Quiz } from './quiz';
-import { QuizService } from './quiz.service';
+import { QuizService } from './service/quiz.service';
 
 @Component({
   selector: 'app-quiz',
@@ -16,69 +16,88 @@ import { QuizService } from './quiz.service';
   styleUrls: ['./quiz.component.css']
 })
 export class QuizComponent {
-  
+
 
   _quizArray: Quiz[] = [];
   _quiz: Quiz = new Quiz;
-  _courseArray :Course[] =[];
-  _course: Course =new Course;
-  _moduleArray :Module[] =[];
+  _courseArray: Course[] = [];
+  _course: Course = new Course;
+  _moduleArray: Module[] = [];
   _module: Module = new Module;
-  _categoryArray :Category[] =[];
+  _categoryArray: Category[] = [];
   _category: Category = new Category;
-  
-  isHidden:boolean = false;
-  constructor(private _quizService: QuizService, private _route: Router,private _courseService :CourseService,private _categoryService:CategoryService,private _moduleService : ModuleService) {
-    
-  }
-
-  ngOnInit(): void {
-  
+  _quizMap = new Map();
+  _courseMap = new Map();
+  _categoryMap = new Map();
+  _moduleMap = new Map();
+  isHidden: boolean = false;
+  constructor(private _quizService: QuizService, private _route: Router, private _courseService: CourseService, private _categoryService: CategoryService, private _moduleService: ModuleService) {
     this.getAllQuizzes();
     this.getAllCourses();
     this.getAllCategorys();
     this.getAllModules();
+
+    console.log("Cons called");
   }
 
-  getAllQuizzes(){
+  ngOnInit(): void {
+
+
+    this._quizMap;
+    this._categoryMap;
+    this._courseMap;
+    this._moduleMap;
+    console.log(this._quizMap)
+
+  }
+
+  getAllQuizzes() {
     this._quizService._getAllQuizzes().subscribe(
       data => {
         this._quizArray = data;
         console.log(data);
-        if(data.length == 0)
-        {
+        this._quizArray.forEach(_quizData => { this._quizMap.set(_quizData.quizId, (Object.assign({}, _quizData))) });
+        if (data.length == 0) {
           this.isHidden = true;
         }
+      },
+      error => {
+        alert("Quiz data not found")
       }
     )
   }
 
-  getAllCourses(){
+  getAllCourses() {
     this._courseService._getAllCourses().subscribe(
-    data=> {
-      this._courseArray = data;
-    })
-  }
-  getAllCategorys()
-  {
-    this._categoryService._getAllCategorys().subscribe(
-    data =>{
-    this._categoryArray = data;
-  
-    }
-    )
-  }
-
-  getAllModules()
-  {
-    this._moduleService._getAllModules().subscribe(
-      data=>{
-        this._moduleArray = data;
+      data => {
+        this._courseArray = data;
+        this._courseArray.forEach(_courseObj => {
+          this._courseMap.set(_courseObj.courseId, (Object.assign({}, _courseObj)))
+        })
       }
     )
   }
-  addQuiz(quiz:Quiz)
-  {
+  getAllCategorys() {
+    this._categoryService._getAllCategorys().subscribe(
+      data => {
+        this._categoryArray = data;
+        this._categoryArray.forEach(_categoryObj => { this._categoryMap.set(_categoryObj.categoryId, Object.assign({}, _categoryObj)) })
+      }
+    )
+  }
+
+  getAllModules() {
+    this._moduleService._getAllModules().subscribe(
+      data => {
+        this._moduleArray = data;
+        this._moduleArray.forEach(_moduleObj => {
+          this._moduleMap.set(_moduleObj.moduleId, Object.assign({}, _moduleObj))
+
+        })
+      }
+    )
+  }
+  addQuiz(quiz: Quiz) {
     let quizObj = new Quiz;
     quizObj.title = quiz.title;
     quizObj.description = quiz.description;
@@ -99,47 +118,68 @@ export class QuizComponent {
     quizObj.active = true;
 
     this._quizService._addQuiz(quizObj).subscribe(
-      data=>{
-      console.log(data);
-      alert("Quiz Added Successfully");
-      location.reload();
-      }
-    )
-
-
-
-  }
-
-
-  updateQuiz(quiz : Quiz,title:string)
-  {
-    this._quizService._getQuizByTitle(title)
-    .subscribe(
-      data=>{
-        this._quiz = data;
-
-        this._quizService._updateQuiz(title,quiz)
-        .subscribe(data=>
-          {
-            alert("Data Updated Successfully")
-            this._route.navigate(['quiz'])
-          });
-    });
-   
-
-  }
-  
-  deleteQuiz(quiz :Quiz,title:string)
-  {
-    this._quizService._deleteQuiz(title)
-    .subscribe(
-      data=>{
-        alert("Data Deleted Successfully")
+      data => {
+        console.log(data);
+        if (this._quizMap.size > 0) {
+          this._quizArray[this._quizArray.indexOf(quiz)] = (Object.assign({}, this._quizMap.get(quiz.quizId)));
+        }
+        this._quizArray.push(this._quiz)
+        this._quizMap.set(this._quiz.quizId, (Object.assign({}, this._quiz)));
+        alert("Quiz Added Successfully");
         location.reload();
       }
+      ,
+      error => {
+        alert("Failed to add quiz data")
+      }
     )
-   
 
 
+
+  }
+
+
+  updateQuiz(quiz: Quiz, title: string) {
+    this._quizService._getQuizByTitle(title)
+      .subscribe(
+        data => {
+          this._quiz = data;
+          this._quizService._updateQuiz(title, quiz)
+            .subscribe(data => {
+              this._quizMap.set(this._quiz.quizId, (Object.assign({}, data)));
+
+              alert("Data Updated Successfully")
+              this._route.navigate(['quiz'])
+            }
+              ,
+              error => {
+                alert("Failed to update quiz data")
+              });
+        });
+
+
+  }
+
+  deleteQuiz(quiz: Quiz, title: string) {
+
+    this._quizService._deleteQuiz(title)
+      .subscribe(
+        data => {
+          this._quizArray.splice(this._quizArray.indexOf(quiz, 0))
+
+          this._quizMap.delete(quiz.quizId)
+          alert("Data Deleted Successfully")
+          location.reload();
+        },
+        error => {
+          alert("Failed to delete quiz data")
+        }
+      )
+
+
+
+  }
+  _backFunc() {
+    this._route.navigate(['demo'])
   }
 }
