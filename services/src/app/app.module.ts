@@ -29,7 +29,7 @@ import { AuthuserComponent } from './authuser/authuser/authuser.component';
     AdminroleComponent,
     LoginauthComponent,
     TeachermoduleComponent,
-    EmailComponent
+    EmailComponent,
     QuestionComponent
   ],
 
