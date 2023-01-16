@@ -1,0 +1,63 @@
+.header1 h1 {
+    border: 1px groove red;
+    text-align: center;
+    background-color: aqua;
+}
+
+
+table th {
+    background-color: #566787;
+    text-align: center;
+    color: white;
+    border: 1px groove black;
+}
+
+.table-header th {
+    background-color: #566787;
+    text-align: center;
+    color: white;
+
+
+}
+
+
+
+
+
+
+
+table tr {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+
+table td {
+    border: 1px groove black;
+}
+
+#chk {
+    width: 40px;
+    height: 30px;
+
+}
+
+#add {
+    background-color: green;
+    color: white;
+}
+
+#updatebtn {
+    background-color: dodgerblue;
+}
+
+
+#add {
+    background-color: green;
+    color: white;
+}
+
+.institutionadd {
+    background-color: green;
+    color: white;
+}

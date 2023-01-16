@@ -19,10 +19,14 @@ export class DepartmentComponent implements OnInit {
   department: Department;
 
   // array of admin institution 
+
   adminInstitutions: AdminInstitution[] = [];
+  sessionData: any;
+  data: any;
 
   constructor(private _deptService: DepartmentService) {
     this.department = new Department();
+    this.loadAdminInstitutions();
   }
 
   ngOnInit(): void {
@@ -46,19 +50,19 @@ export class DepartmentComponent implements OnInit {
       },
       error => {
         this.displayEmptyRow();
-        console.log("No data in table \n" + JSON.stringify(error.error));
+        console.log("No data in table ");
       }
     );
 
 
-    this._deptService.fetchAllInstitutions().subscribe(
-      response => {
-        this.adminInstitutions = (response);
-      },
-      error => {
-        alert("Not able to fetch data \n" + JSON.stringify(error.error));
-      }
-    );
+    // this._deptService.fetchAllInstitutions().subscribe(
+    //   response => {
+    //     this.adminInstitutions = (response);
+    //   },
+    //   error => {
+    //     alert("Not able to fetch data \n" + JSON.stringify(error.error));
+    //   }
+    // );
   }
 
 
@@ -169,6 +173,19 @@ export class DepartmentComponent implements OnInit {
       this.isHidden = true;
       this.department = ({} as Department);
       this.department.active = true;
+    }
+  }
+  private loadAdminInstitutions() {
+    this.sessionData = sessionStorage.getItem("admininstitution");
+    alert("in loadadminInstitute" + this.sessionData);
+    this.data = JSON.parse(this.sessionData);
+    alert("this.data...." + this.data);
+
+
+    for (var inst in this.data) {
+
+      this.adminInstitutions.push(this.data[inst]);
+      alert(this.data[inst]);
     }
   }
 

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Injectable } from '@angular/core'
+import { Router } from '@angular/router'
 import { Observable } from 'rxjs';
 import { Department } from '../department';
 import { AdminInstitution } from 'app/admindepartment/admin-institution/admin-institution';
@@ -10,7 +10,7 @@ import { AdminInstitution } from 'app/admindepartment/admin-institution/admin-in
 })
 export class DepartmentService {
 
-  private baseUrl: string = "http://localhost:8090/admindept/uhpocms";
+  private baseUrl: string = "http://localhost:8090/department/uhpocms";
 
   constructor(private _http: HttpClient) {
   }
@@ -20,7 +20,7 @@ export class DepartmentService {
   }
 
   fetchAllInstitutions(): Observable<AdminInstitution[]> {
-    return this._http.get<AdminInstitution[]>(`http://localhost:8090/admindept/uhpocms/institution?name=all`);
+    return this._http.get<AdminInstitution[]>(`http://localhost:8090/admininstitution/uhpocms/institution?name=all`);
   }
 
   insertDepartment(department: Department): Observable<Department> {
