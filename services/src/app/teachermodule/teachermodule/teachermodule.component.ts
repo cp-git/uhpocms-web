@@ -142,4 +142,8 @@ export class TeachermoduleComponent {
     }
     //alert(this.courses);
   }
+
+  Home() {
+    this._route.navigate(['demo'])
+  }
 }

@@ -7,7 +7,7 @@ import { AdminroleserviceService } from '../adminroleservice.service';
 @Component({
   selector: 'app-adminrole',
   templateUrl: './adminrole.component.html',
-  styleUrls: ['./adminrole.component.css']
+  styleUrls: ['../../app.component.css']
 })
 
 export class AdminroleComponent {
@@ -15,7 +15,7 @@ export class AdminroleComponent {
   _adminRole: Admin[] = [];
 
 
-  isHidden : boolean = true;
+  isHidden: boolean = true;
 
   _backupRole: Admin[] = [];
   isExist: number = -1;
@@ -51,8 +51,8 @@ export class AdminroleComponent {
         console.log("Response Received...");
         this._adminRole = data;
 
-        if(this._adminRole.length>0){
-          this.isHidden=false;
+        if (this._adminRole.length > 0) {
+          this.isHidden = false;
         }
 
         this._adminRole.forEach(role => {
@@ -88,7 +88,7 @@ export class AdminroleComponent {
       .subscribe(
         data => {
           alert("Data Deleted...")
-         location.reload();
+          location.reload();
           this._route.navigate(['RoleAdminHome'])
 
         },
@@ -107,6 +107,10 @@ export class AdminroleComponent {
     )
     return this.admin;
 
+  }
+
+  Home() {
+    this._route.navigate(['demo'])
   }
 
 }

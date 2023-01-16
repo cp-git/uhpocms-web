@@ -71,7 +71,8 @@
                         <select [(ngModel)]="module.courseId_id" class="form-control">
                             <option *ngFor="let course of courses" value="{{course.courseId}}"
                                 [selected]="module.courseId_id==course.courseId?true:null">
-                                {{course.courseName}} - {{course.courseId}}</option>
+                                {{course.courseName}} - {{course.courseId}}
+                            </option>
                         </select>
                     </div>
                 </td>
@@ -148,7 +149,8 @@
                         <select [(ngModel)]="module.courseId_id" class="form-control">
                             <option *ngFor="let course of courses" value="{{course.courseId}}"
                                 [selected]="module.courseId_id==course.courseId?true:null">
-                                {{course.courseName}} - {{course.courseId}}</option>
+                                {{course.courseName}} - {{course.courseId}}
+                            </option>
                         </select>
                     </div>
                 </td>
@@ -174,4 +176,6 @@
 
         </tbody>
     </table>
+
+    <button class="btn btn-primary" (click)="Home()">Back</button>
 </div>

@@ -139,5 +139,11 @@ export class QuestionComponent implements OnInit {
     for (var qiz in this.data) {
       this.quiz.push(this.data[qiz])
     }
+
+
+  }
+
+  Home() {
+    this._route.navigate(['demo']);
   }
 }

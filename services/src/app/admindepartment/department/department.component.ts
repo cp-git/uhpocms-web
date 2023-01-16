@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdminInstitution } from '../admin-institution/admin-institution';
 import { Department } from '../department';
 import { DepartmentService } from '../service/department.service';
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
-  styleUrls: ['./department.component.css']
+  styleUrls: ['../../app.component.css']
 })
 export class DepartmentComponent implements OnInit {
 
@@ -24,7 +25,7 @@ export class DepartmentComponent implements OnInit {
   sessionData: any;
   data: any;
 
-  constructor(private _deptService: DepartmentService) {
+  constructor(private _deptService: DepartmentService, private _route: Router) {
     this.department = new Department();
     this.loadAdminInstitutions();
   }
@@ -187,6 +188,10 @@ export class DepartmentComponent implements OnInit {
       this.adminInstitutions.push(this.data[inst]);
       alert(this.data[inst]);
     }
+  }
+
+  Home() {
+    this._route.navigate(['demo'])
   }
 
 }

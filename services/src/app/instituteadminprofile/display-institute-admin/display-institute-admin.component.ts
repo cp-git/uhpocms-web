@@ -7,7 +7,7 @@ import { InstituteAdminServiceService } from '../institute-admin-service.service
 @Component({
   selector: 'app-display-institute-admin',
   templateUrl: './display-institute-admin.component.html',
-  styleUrls: ['./display-institute-admin.component.css']
+  styleUrls: ['../../app.component.css']
 })
 export class DisplayInstituteAdminComponent {
 
@@ -148,6 +148,10 @@ export class DisplayInstituteAdminComponent {
         },
         error => console.log(error));
 
+  }
+
+  Home() {
+    this._route.navigate(['demo'])
   }
 
 }
