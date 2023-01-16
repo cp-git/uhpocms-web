@@ -1,5 +1,5 @@
 export class Module {
-    moduleId!: number | undefined;
+    moduleId!: number | null;
     moduleName!: string;
     moduleDescription!: string;
     moduleIsActive!: boolean;

@@ -5,7 +5,6 @@
 }
 
 
-
 table th {
     background-color: #566787;
     text-align: center;
@@ -18,7 +17,12 @@ table th {
     text-align: center;
     color: white;
 
+
 }
+
+
+
+
 
 
 
@@ -26,8 +30,6 @@ table tr {
     display: table;
     table-layout: fixed;
     width: 100%;
-
-
 }
 
 table td {
