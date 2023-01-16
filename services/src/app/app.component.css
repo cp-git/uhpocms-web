@@ -42,22 +42,6 @@ table td {
 
 }
 
-#add {
-    background-color: green;
-    color: white;
-}
-
-#updatebtn {
-    background-color: dodgerblue;
-}
-
-
-#add {
-    background-color: green;
-    color: white;
-}
-
-.institutionadd {
-    background-color: green;
-    color: white;
+#deptHeader {
+    background-color: grey;
 }

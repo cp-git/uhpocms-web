@@ -1,7 +1,9 @@
-<div class="container">
-    <h1 class="heading">Department Administration</h1>
+<div class="container-fluid">
+    <div class="header1">
+        <h1>Department Administration</h1>
+    </div>
     <table class="table" border="1px">
-        <thead>
+        <thead id="deptHeader">
             <tr>
                 <th>Sr.No.</th>
                 <th *ngIf="hideId">Id</th>
@@ -16,38 +18,98 @@
         </thead>
         <tbody>
             <tr *ngIf="isHidden">
-                <td>1</td>
-                <td *ngIf="hideId"><input [(ngModel)]="department.id" type="number" value="{{department.id}}"
-                        disabled /></td>
-                <td><input [(ngModel)]="department.name" type="text" value="{{department.name}}" /></td>
-                <td><input [(ngModel)]="department.description" type="text" value="{{department.description}}" /></td>
-                <td><input [(ngModel)]="department.active" type="checkbox" checked disabled /></td>
-                <td><select [(ngModel)]="department.institutionId_id">
-                        <option *ngFor="let inst of adminInstitutions" value="{{inst.adminInstitutionId}}"
-                            [selected]="department.institutionId_id==inst.adminInstitutionId?true:null">
-                            {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}</option>
-                    </select></td>
-                <td><button class="addbtn" id="addbtn" (click)="addDepartment(department)">Add</button></td>
-                <td><button class="updatebtn" id="updatebtn" (click)="updateDepartment(department)">Update</button></td>
-                <td><button class="deletebtn" id="deletebtn" (click)="deleteDepartment(department)">Delete</button></td>
+                <td>
+                    <div class="form-group">
+                        1
+                    </div>
+                </td>
+                <td *ngIf="hideId">
+
+                    <div class="form-group">
+                        <input class="form-control" [(ngModel)]="department.id" type="number" value="{{department.id}}"
+                            disabled />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" [(ngModel)]="department.name" type="text"
+                            value="{{department.name}}" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" [(ngModel)]="department.description" type="text"
+                            value="{{department.description}}" />
+                    </div>
+                </td>
+
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" [(ngModel)]="department.active" type="checkbox" checked disabled />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <select class="form-control" [(ngModel)]="department.institutionId_id">
+                            <option *ngFor="let inst of adminInstitutions" value="{{inst.adminInstitutionId}}"
+                                [selected]="department.institutionId_id==inst.adminInstitutionId?true:null">
+                                {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}
+                            </option>
+                        </select>
+                    </div>
+                </td>
+                <td><button class="btn btn-primary" id="addbtn" (click)="addDepartment(department)">Add</button></td>
+                <td><button class="btn btn-success" id="updatebtn"
+                        (click)="updateDepartment(department)">Update</button></td>
+                <td><button class="btn btn-danger" id="deletebtn" (click)="deleteDepartment(department)">Delete</button>
+                </td>
             </tr>
             <tr *ngFor="let dept of departments; let i=index">
                 <td>{{i+1}}</td>
-                <td *ngIf="hideId"><input [(ngModel)]="dept.id" type="number" value="{{dept.id}}" disabled /></td>
-                <td><input [(ngModel)]="dept.name" type="text" value="{{dept.name}}" /></td>
-                <td><input [(ngModel)]="dept.description" type="text" value="{{dept.description}}" /></td>
-                <td><input [(ngModel)]="dept.active" type="checkbox" checked disabled="{{dept.active}}" /></td>
-                <td><select [(ngModel)]="dept.institutionId_id">
+                <td *ngIf="hideId">
+                    <div class="form-group">
+                        <input class="form-control" [(ngModel)]="dept.id" type="number" value="{{dept.id}}" disabled />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" [(ngModel)]="dept.name" type="text" value="{{dept.name}}" />
+                    </div>
+                </td>
 
-                        <option *ngFor="let inst of adminInstitutions" value="{{inst.adminInstitutionId}}"
-                            [selected]="dept.institutionId_id==inst.adminInstitutionId?true:null">
-                            {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}</option>
-                    </select></td>
-                <td><button class="addbtn" id="addbtn" (click)="addDepartment(dept)"> Add</button></td>
-                <td><button class="updatebtn" id="updatebtn" (click)="updateDepartment(dept)">Update</button></td>
-                <td><button class="deletebtn" id="deletebtn" (click)="deleteDepartment(dept)">Delete</button></td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" [(ngModel)]="dept.description" type="text"
+                            value="{{dept.description}}" />
+                    </div>
+
+                </td>
+
+
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" [(ngModel)]="dept.active" type="checkbox" checked
+                            disabled="{{dept.active}}" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <select class="form-control" [(ngModel)]="dept.institutionId_id">
+
+                            <option *ngFor="let inst of adminInstitutions" value="{{inst.adminInstitutionId}}"
+                                [selected]="dept.institutionId_id==inst.adminInstitutionId?true:null">
+                                {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}
+                            </option>
+                        </select>
+                    </div>
+                </td>
+                <td><button class="btn btn-primary" (click)="addDepartment(dept)"> Add</button></td>
+                <td><button class="btn btn-success" id="updatebtn" (click)="updateDepartment(dept)">Update</button></td>
+                <td><button class="btn btn-danger" id="deletebtn" (click)="deleteDepartment(dept)">Delete</button></td>
             </tr>
         </tbody>
     </table>
+
+    <td><button class="btn btn-primary" (click)="Home()">Back</button></td>
 
 </div>

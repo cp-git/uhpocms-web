@@ -34,7 +34,7 @@ const routes: Routes = [
 
 
   //quiz routes
-  { path: 'quiz', component: QuizComponent }
+  { path: 'quiz', component: QuizComponent },
 
 
   //teacherModule routes

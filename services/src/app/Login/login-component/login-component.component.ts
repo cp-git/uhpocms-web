@@ -34,7 +34,7 @@ export class LoginComponentComponent implements OnInit {
     this._route.navigate(['quiz'])
   }
 
-  _Back(){
+
 
   RedirectToQuestion() {
     this._route.navigate(['question'])

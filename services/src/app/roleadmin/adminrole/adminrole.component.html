@@ -1,10 +1,14 @@
-<div class="container">
-    <h1>Role Administration</h1>
+<div class="container-fluid">
+
+    <div class="header1">
+        <h1>Role Admin</h1>
+    </div>
+
 
     <table class="table" border="1px">
         <thead>
             <tr>
-                
+
                 <th>Role Name</th>
                 <th>Role description</th>
                 <th>Role Active</th>
@@ -15,27 +19,54 @@
         </thead>
         <tbody>
             <tr *ngIf="isHidden">
-                
-                <td><input type="text" [(ngModel)]="admin.roleName" value=""></td>
-                <td><input type="text" [(ngModel)]="admin.roleDescription" value=""> </td>
-                <td><input type="checkbox" [(ngModel)]="admin.active" checked ></td>
-                <td> <button class="addbtn" id="add1" (click)="addrole(admin)">Add</button></td>
-                <td> <button class="updatebtn" id="upd1" (click)="updateAdminRole(admin)">Update</button></td>
-                <td> <button class="deletebtn" id="del1" (click)="deleteAdminRole(admin.roleName)">Delete</button></td>
+
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" [(ngModel)]="admin.roleName" value="">
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" [(ngModel)]="admin.roleDescription" value="">
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="checkbox" [(ngModel)]="admin.active" checked>
+                    </div>
+                </td>
+                <td> <button class="btn btn-primary" (click)="addrole(admin)">Add</button></td>
+                <td> <button class="btn btn-success" (click)="updateAdminRole(admin)">Update</button></td>
+                <td> <button class="btn btn-danger" (click)="deleteAdminRole(admin.roleName)">Delete</button></td>
             </tr>
             <tr *ngFor="let role of _adminRole">
-                
-                <td><input type="text" [(ngModel)]="role.roleName" value=""></td>
 
-                <td><input type="text" [(ngModel)]="role.roleDescription" value=""> </td>
+                <td>
+                    <div class="form-group">
+                        <input type="text" class="form-control" [(ngModel)]="role.roleName" value="">
+                    </div>
+                </td>
 
-                <td><input type="checkbox" [(ngModel)]="role.active" checked disabled></td>
+                <td>
+                    <div class="form-group">
+                        <input type="text" class="form-control" [(ngModel)]="role.roleDescription" value="">
+                    </div>
+                </td>
+
+                <td>
+                    <div class="form-group">
+                        <input type="checkbox" class="form-control" [(ngModel)]="role.active" checked disabled>
+                    </div>
+                </td>
 
 
-                <td> <button class="addbtn" id="add1" (click)="addrole(role)">Add</button></td>
-                <td> <button class="updatebtn" id="upd1" (click)="updateAdminRole(role)">Update</button></td>
-                <td> <button class="deletebtn" id="del1" (click)="deleteAdminRole(role.roleName)">Delete</button></td>
+                <td> <button class="btn btn-primary" id="add1" (click)="addrole(role)">Add</button></td>
+                <td> <button class="btn btn-success" id="upd1" (click)="updateAdminRole(role)">Update</button></td>
+                <td> <button class="btn btn-danger" id="del1" (click)="deleteAdminRole(role.roleName)">Delete</button>
+                </td>
             </tr>
         </tbody>
     </table>
+
+    <td> <button class="btn btn-primary" (click)="Home()">Back</button></td>
 </div>

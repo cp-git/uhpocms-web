@@ -1,17 +1,15 @@
 <div class="container-fluid">
 
+    <div class="header1">
+        <h1> INSTITUTE ADMIN </h1>
+
+    </div>
 
 
-    <div class="container">
-        <div class="Heading">
-            <h1> INSTITUTE ADMIN </h1>
-
-        </div>
-
-
-        <form #adduserform="ngForm" style="width: 150em;">
-            <table>
-                <tr id="head">
+    <form #adduserform="ngForm">
+        <table class="table table-striped">
+            <thead class="table-header">
+                <tr>
 
                     <th>Active Status</th>
                     <th>Address1</th>
@@ -33,6 +31,9 @@
                     <th>User Role</th>
                     <th colspan="3">Actions</th>
                 </tr>
+            </thead>
+
+            <tbody>
                 <tr *ngIf="isHidden">
 
 
@@ -40,7 +41,7 @@
                     <td>
                         <div class="form-group">
 
-                            <input type="checkbox" class="form-control" required
+                            <input type="checkbox" id="chk" class="form-control" required
                                 [(ngModel)]="_instituteAdmin.activeUser" name="_instituteAdmin.activeUser">
                         </div>
                     </td>
@@ -298,22 +299,24 @@
                         </div>
                     </td>
                     <td>
-                        <button type="submit" class="btn btn-success" id="btn1"
-                            (click)="_addInstituteAdmin(_instituteAdmin)">Add</button>
+                        <button class="btn btn-primary" (click)="_addInstituteAdmin(_instituteAdmin)">Add</button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-success" id="btn1"
+                        <button class="btn btn-success"
                             (click)="_updateInstituteAdmin(_instituteAdmin.firstName,_instituteAdmin)">Update</button>
                     </td>
                     <td>
-                        <button type="submit" class="btn btn-success" id="btn2"
+                        <button class="btn btn-danger"
                             (click)="_deletInstituteAdmin(_instituteAdmin.firstName)">Delete</button>
                     </td>
 
                 </tr>
+            </tbody>
 
-            </table>
-        </form>
+        </table>
+    </form>
 
-    </div>
+    <button class="btn btn-primary" (click)="Home()">Back To homePage</button>
+
+
 </div>

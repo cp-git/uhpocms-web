@@ -6,7 +6,7 @@ import { AuthuserserviceService } from '../authuserservice.service';
 @Component({
   selector: 'app-authuser',
   templateUrl: './authuser.component.html',
-  styleUrls: ['./authuser.component.css']
+  styleUrls: ['../../app.component.css']
 })
 export class AuthuserComponent implements OnInit {
 
@@ -85,8 +85,8 @@ export class AuthuserComponent implements OnInit {
         console.log("Response Receved...");
         this._authUser = data;
 
-        if(this._authUser.length>0){
-          this.isHidden=false;
+        if (this._authUser.length > 0) {
+          this.isHidden = false;
         }
 
         this._authUser.forEach(user => {
@@ -113,6 +113,10 @@ export class AuthuserComponent implements OnInit {
         },
         error => console.log(error));
 
+  }
+
+  Home() {
+    this._route.navigate(['demo'])
   }
 
 }

@@ -59,7 +59,8 @@
 						value="{{question.questionQuizId}}">
 						<option *ngFor=" let qiz of quiz" value="{{qiz.quizId}}"
 							[selected]="question.questionQuizId == qiz.quizId?true:null">
-							{{qiz.title}}</option>
+							{{qiz.title}}
+						</option>
 					</select>
 				</div>
 			</td>
@@ -145,7 +146,8 @@
 					<select [(ngModel)]="que.questionQuizId" class="form-control" value="{{que.questionQuizId}}">
 						<option *ngFor=" let qiz of quiz" value="{{qiz.quizId}}"
 							[selected]="que.questionQuizId == qiz.quizId?true:null">
-							{{qiz.title}}</option>
+							{{qiz.title}}
+						</option>
 					</select>
 				</div>
 			</td>
@@ -185,4 +187,6 @@
 			</td>
 		</tr>
 	</table>
+
+	<button class="btn btn-primary" (click)="Home()">Back</button>
 </div>
