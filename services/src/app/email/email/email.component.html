@@ -73,17 +73,19 @@
                 </td>
                 <td>
                     <div class="form-group">
-                        <button class="form-control addbtn" id="addbtn" (click)="addEmail(email)">Add</button>
+                        <button class="form-control btn btn-primary" id="addbtn" (click)="addEmail(email)">Add</button>
                     </div>
                 </td>
                 <td>
                     <div class="form-group">
-                        <button class="form-control updatebtn" id="updbtn" (click)="updateEmail(email)">Update</button>
+                        <button class="form-control btn btn-success" id="updbtn"
+                            (click)="updateEmail(email)">Update</button>
                     </div>
                 </td>
                 <td>
                     <div class="form-group">
-                        <button class="form-control deletebtn" id="delbtn" (click)="deleteEmail(email)">Delete</button>
+                        <button class="form-control btn btn-danger" id="delbtn"
+                            (click)="deleteEmail(email)">Delete</button>
                     </div>
                 </td>
             </tr>
@@ -134,18 +136,19 @@
                 </td>
                 <td>
                     <div class="form-group">
-                        <button class="form-control addbtn" id="addbtn" (click)="addEmail(emailData)">Add</button>
+                        <button class="form-control btn btn-primary" id="addbtn"
+                            (click)="addEmail(emailData)">Add</button>
                     </div>
                 </td>
                 <td>
                     <div class="form-group">
-                        <button class="form-control updatebtn" id="updbtn"
+                        <button class="form-control btn btn-success" id="updbtn"
                             (click)="updateEmail(emailData)">Update</button>
                     </div>
                 </td>
                 <td>
                     <div class="form-group">
-                        <button class="form-control deletebtn" id="delbtn"
+                        <button class="form-control btn btn-danger" id="delbtn"
                             (click)="deleteEmail(emailData )">Delete</button>
                     </div>
                 </td>
@@ -153,4 +156,6 @@
 
         </tbody>
     </table>
+
+    <button class="btn btn-primary" (click)="homePage()">Back</button>
 </div>
