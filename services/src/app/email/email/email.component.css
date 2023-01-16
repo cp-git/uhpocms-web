@@ -10,11 +10,6 @@ table td {
     text-align: center;
 }
 
-button {
-    border-radius: 12px;
-    padding: 1px 8px;
-
-}
 
 input {
     border-radius: 8px;
@@ -57,10 +52,4 @@ input[type='number'] {
     background-color: red;
     text-align: center;
     color: white;
-}
-
-
-.heading {
-    color: blueviolet;
-    font-family: 'Times New Roman', Times, serif;
 }
