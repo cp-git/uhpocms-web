@@ -13,6 +13,7 @@ import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-
 import { DepartmentComponent } from './admindepartment/department/department.component';
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
+import { QuizComponent } from './quiz/quiz.component';
 import { QuestionComponent } from './teacherquestion/question/question.component';
 import { EmailComponent } from './email/email/email.component';
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
@@ -28,6 +29,7 @@ import { AuthuserComponent } from './authuser/authuser/authuser.component';
     DepartmentComponent,
     AdminroleComponent,
     LoginauthComponent,
+    QuizComponent
     TeachermoduleComponent,
     EmailComponent,
     QuestionComponent

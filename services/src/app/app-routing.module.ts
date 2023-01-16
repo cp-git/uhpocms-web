@@ -6,6 +6,7 @@ import { AuthuserComponent } from './authuser/authuser/authuser.component';
 import { EmailComponent } from './email/email/email.component';
 import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-institute-admin/display-institute-admin.component';
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
+import { QuizComponent } from './quiz/quiz.component';
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
 import { QuestionComponent } from './teacherquestion/question/question.component';
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
@@ -30,6 +31,11 @@ const routes: Routes = [
 
   //admindepartment routes
   { path: 'department', component: DepartmentComponent },
+
+
+  //quiz routes
+  { path: 'quiz', component: QuizComponent }
+
 
   //teacherModule routes
   { path: 'teachermodule', component: TeachermoduleComponent },
