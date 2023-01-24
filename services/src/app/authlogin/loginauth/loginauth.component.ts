@@ -10,14 +10,14 @@ import { Authuser } from '../authuser';
 })
 export class LoginauthComponent {
 
-  authUser=new Authuser();
-  constructor(private _auth:AuthuserserviceService, private _route:Router){}
+  authUser = new Authuser();
+  constructor(private _auth: AuthuserserviceService, private _route: Router) { }
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+
   }
 
-  userLogin(){
-   
+  userLogin() {
+
     this._auth.loginDataAuthUser(this.authUser)
       .subscribe(data => {
         console.log(data)
@@ -25,8 +25,8 @@ export class LoginauthComponent {
         this._route.navigate(['demo']);
 
       }, error => console.log(error));
-  
-  
+
+
   }
 
 }

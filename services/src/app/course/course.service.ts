@@ -1,21 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-
+import { environment } from 'environments/environment.development';
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
 
+  private courseUrl: string = environment.courseUrl;
 
-  private _baseUrl: string;
+  constructor(private _http: HttpClient) { }
 
-  constructor(private _http: HttpClient) {
-    this._baseUrl = "http://localhost:8090/course/uhpocms/course";
-   }
-
-   _getAllCourses():Observable<any>
-   {
-     return this._http.get<any>(this._baseUrl+ "?name=all");
-   }
+  _getAllCourses(): Observable<any> {
+    return this._http.get<any>(`${this.courseUrl}/course?name=all`);
+  }
 }

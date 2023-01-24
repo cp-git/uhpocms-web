@@ -2,32 +2,33 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Question } from './question';
-
+import { environment } from 'environments/environment.development';
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionService {
 
-  constructor(private _http:HttpClient) { }
-  
-  questionList():Observable<any>{
-    return this._http.get<any>("http://localhost:8090/question/uhpocms/question?figure=all");
+  private readonly questionUrl: string = environment.questionUrl + "/question";
+  constructor(private _http: HttpClient) { }
+
+  questionList(): Observable<any> {
+    return this._http.get<any>(`${this.questionUrl}?figure=all`);
   }
 
-  addQuestion(question:Question): Observable<any> {
-    return this._http.post<any>("http://localhost:8090/question/uhpocms/question",question);
+  addQuestion(question: Question): Observable<any> {
+    return this._http.post<any>(`${this.questionUrl}`, question);
   }
 
- deleteQuestion(questionFigure: string): Observable<any> {
-    return this._http.delete<any>("http://localhost:8090/question/uhpocms/question/"+questionFigure);
+  deleteQuestion(questionFigure: string): Observable<any> {
+    return this._http.delete<any>(`${this.questionUrl}/` + questionFigure);
   }
 
-  getQuestion(questionFigure:string): Observable<any> {
-    return this._http.get<any>("http://localhost:8090/question/uhpocms/question/"+questionFigure);
+  getQuestion(questionFigure: string): Observable<any> {
+    return this._http.get<any>(`${this.questionUrl}/` + questionFigure);
   }
 
-  updatedQuestion(questionFigure:string,question:Question): Observable<any> {
-    
-    return this._http.put<any>("http://localhost:8090/question/uhpocms/question/"+questionFigure,question);
+  updatedQuestion(questionFigure: string, question: Question): Observable<any> {
+
+    return this._http.put<any>(`${this.questionUrl}/` + questionFigure, question);
   }
 }
