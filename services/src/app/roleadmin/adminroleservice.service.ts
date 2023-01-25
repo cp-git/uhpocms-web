@@ -8,8 +8,10 @@ import { environment } from 'environments/environment.development';
 })
 export class AdminroleserviceService {
 
-  private readonly adminRoleUrl: string = environment.adminRoleUrl + "/role";
-  constructor(private _http: HttpClient) { }
+  private readonly adminRoleUrl: string;
+  constructor(private _http: HttpClient) {
+    this.adminRoleUrl = environment.adminRoleUrl + "/role"
+  }
 
   fetchadminlist(): Observable<any> {
     return this._http.get<any>(`${this.adminRoleUrl}/?name=all`);

@@ -7,8 +7,10 @@ import { environment } from 'environments/environment.development';
 })
 export class CategoryService {
 
-  private readonly categoryUrl: string = environment.categoryUrl;
-  constructor(private _http: HttpClient) { }
+  private readonly categoryUrl: string;
+  constructor(private _http: HttpClient) {
+    this.categoryUrl = environment.categoryUrl;
+  }
 
   _getAllCategorys(): Observable<any> {
     return this._http.get<any>(`${this.categoryUrl}/category?category = all`);

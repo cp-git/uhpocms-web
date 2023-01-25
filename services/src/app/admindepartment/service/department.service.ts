@@ -12,10 +12,13 @@ import { environment } from 'environments/environment.development';
 })
 export class DepartmentService {
 
-  private readonly departmentUrl: string = environment.departmentUrl;
-  private readonly adminInstitutionUrl: string = environment.adminInstitutionUrl;
+  private readonly departmentUrl: string;
+  private readonly adminInstitutionUrl: string;
 
   constructor(private _http: HttpClient) {
+
+    this.departmentUrl = environment.departmentUrl;
+    this.adminInstitutionUrl = environment.adminInstitutionUrl;
   }
 
   fetchAllDepartments(): Observable<Department[]> {

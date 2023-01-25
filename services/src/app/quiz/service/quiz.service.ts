@@ -8,10 +8,12 @@ import { environment } from 'environments/environment.development';
 })
 export class QuizService {
 
-  private quizUrl: string = environment.quizUrl + "/quiz";
+  private quizUrl: string;
 
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {
+    this.quizUrl = environment.quizUrl + "/quiz";
+  }
 
   _getAllQuizzes(): Observable<any> {
     return this._http.get<any>(`${this.quizUrl}?title=all`);

@@ -8,9 +8,11 @@ import { environment } from 'environments/environment.development';
 })
 export class AuthuserserviceService {
 
-  private readonly authUserUrl: string = environment.authUserUrl;
+  private readonly authUserUrl: string;
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {
+    this.authUserUrl = environment.authUserUrl;
+  }
 
   authUserList(): Observable<any> {
     return this._http.get<any>(`${this.authUserUrl}/authuser?username=all`);

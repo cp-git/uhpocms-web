@@ -6,9 +6,11 @@ import { environment } from 'environments/environment.development';
   providedIn: 'root'
 })
 export class EmailService {
-  private readonly emailUrl = environment.emailUrl + "/email";
+  private readonly emailUrl;
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {
+    this.emailUrl = environment.emailUrl + "/email";
+  }
 
   fetchAllEmails() {
     return this._http.get<Email[]>(`${this.emailUrl}?title=all`);

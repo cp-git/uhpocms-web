@@ -8,8 +8,10 @@ import { environment } from 'environments/environment.development';
 })
 export class QuestionService {
 
-  private readonly questionUrl: string = environment.questionUrl + "/question";
-  constructor(private _http: HttpClient) { }
+  private readonly questionUrl: string;
+  constructor(private _http: HttpClient) {
+    this.questionUrl = environment.questionUrl + "/question";
+  }
 
   questionList(): Observable<any> {
     return this._http.get<any>(`${this.questionUrl}?figure=all`);

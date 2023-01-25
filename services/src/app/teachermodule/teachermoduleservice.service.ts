@@ -8,8 +8,10 @@ import { environment } from 'environments/environment.development';
 })
 export class TeachermoduleserviceService {
 
-  private readonly moduleUrl: string = environment.moduleUrl + "/module";
-  constructor(private _http: HttpClient) { }
+  private readonly moduleUrl: string;
+  constructor(private _http: HttpClient) {
+    this.moduleUrl = environment.moduleUrl + "/module";
+  }
 
   fetchModuleList(): Observable<any> {
     return this._http.get<any>(`${this.moduleUrl}/?name=all`);

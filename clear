@@ -1,0 +1,259 @@
+[1mdiff --git a/services/src/app/admindepartment/service/department.service.ts b/services/src/app/admindepartment/service/department.service.ts[m
+[1mindex 26373df..616ef68 100644[m
+[1m--- a/services/src/app/admindepartment/service/department.service.ts[m
+[1m+++ b/services/src/app/admindepartment/service/department.service.ts[m
+[36m@@ -12,10 +12,13 @@[m [mimport { environment } from 'environments/environment.development';[m
+ })[m
+ export class DepartmentService {[m
+ [m
+[31m-  private readonly departmentUrl: string = environment.departmentUrl;[m
+[31m-  private readonly adminInstitutionUrl: string = environment.adminInstitutionUrl;[m
+[32m+[m[32m  private readonly departmentUrl: string;[m
+[32m+[m[32m  private readonly adminInstitutionUrl: string;[m
+ [m
+   constructor(private _http: HttpClient) {[m
+[32m+[m
+[32m+[m[32m    this.departmentUrl = environment.departmentUrl;[m
+[32m+[m[32m    this.adminInstitutionUrl = environment.adminInstitutionUrl;[m
+   }[m
+ [m
+   fetchAllDepartments(): Observable<Department[]> {[m
+[1mdiff --git a/services/src/app/app.service.ts b/services/src/app/app.service.ts[m
+[1mindex aa6370e..4e5db39 100644[m
+[1m--- a/services/src/app/app.service.ts[m
+[1m+++ b/services/src/app/app.service.ts[m
+[36m@@ -6,65 +6,59 @@[m [mimport { Course } from './class/course';[m
+ import { Module } from './class/module';[m
+ import { Quiz } from './class/quiz';[m
+ import { InstituteAdmin } from './instituteadminprofile/institute-admin';[m
+[32m+[m[32mimport { environment } from 'environments/environment.development';[m
+ [m
+ @Injectable({[m
+   providedIn: 'root'[m
+ })[m
+ export class AppService {[m
+ [m
+[31m-  private readonly baseUrl: string = "http://localhost:8090/";[m
+[31m-[m
+[31m-  private readonly adminInstitutionWar: string = "admininstitution";[m
+[31m-  private readonly adminInstitutionURL: string = "/uhpocms/institution?name=all";[m
+[31m-[m
+[31m-  private readonly quizWar: string = "quiz";[m
+[31m-  private readonly quizURL: string = "/uhpocms/quiz?title=all";[m
+[31m-[m
+[31m-  private readonly courseWar: string = "course";[m
+[31m-  private readonly courseURL: string = "/uhpocms/course?name=all";[m
+[31m-[m
+[31m-  private readonly categoryWar: string = "category";[m
+[31m-  private readonly categoryURL: string = "/uhpocms/category?category=all";[m
+[31m-[m
+[31m-  private readonly moduleWar: string = "module";[m
+[31m-  private readonly moduleURL: string = "/uhpocms/module?name=all";[m
+[31m-[m
+[31m-  private readonly instituteProfileWar: string = "instituteadmin";[m
+[31m-  private readonly instituteProfileURL: string = "/uhpocms/profile?firstName=all";[m
+[32m+[m[32m  private readonly adminInstitutionURL: string;[m
+[32m+[m[32m  private readonly quizURL: string;[m
+[32m+[m[32m  private readonly courseURL: string;[m
+[32m+[m[32m  private readonly categoryURL: string;[m
+[32m+[m[32m  private readonly moduleURL: string;[m
+[32m+[m[32m  private readonly instituteProfileURL: string;[m
+ [m
+ [m
+   constructor(private _http: HttpClient) {[m
+ [m
+[32m+[m[32m    this.adminInstitutionURL = `${environment.adminInstitutionUrl}/institution?name=all`;[m
+[32m+[m[32m    this.quizURL = `${environment.quizUrl}/quiz?title=all`;[m
+[32m+[m[32m    this.courseURL = `${environment.courseUrl}/course?name=all`;[m
+[32m+[m[32m    this.categoryURL = `${environment.categoryUrl}/category?category=all`;[m
+[32m+[m[32m    this.moduleURL = `${environment.moduleUrl}/module?name=all`;[m
+[32m+[m[32m    this.instituteProfileURL = `${environment.instituteAdmin}/profile?firstName=all`;[m
+   }[m
+ [m
+   fetchAllInstitution(): Observable<any> {[m
+[31m-    // alert(this.baseUrl + this.adminInstitutionWar + this.adminInstitutionURL)[m
+[31m-    return this._http.get<any>(this.baseUrl + this.adminInstitutionWar + this.adminInstitutionURL);[m
+[32m+[m[32m    // alert(this.adminInstitutionURL)[m
+[32m+[m[32m    return this._http.get<any>(this.adminInstitutionURL);[m
+   }[m
+ [m
+   fetchAllQuizs(): Observable<Quiz[]> {[m
+     // alert(this.baseUrl + this.quizWar + this.quizURL)[m
+[31m-    return this._http.get<Quiz[]>(this.baseUrl + this.quizWar + this.quizURL);[m
+[32m+[m[32m    return this._http.get<Quiz[]>(this.quizURL);[m
+   }[m
+ [m
+   fetchAllCourses(): Observable<Course[]> {[m
+     // alert(this.baseUrl + this.courseWar + this.courseURL)[m
+[31m-    return this._http.get<Course[]>(this.baseUrl + this.courseWar + this.courseURL);[m
+[32m+[m[32m    return this._http.get<Course[]>(this.courseURL);[m
+   }[m
+ [m
+   fetchAllCategories(): Observable<Category[]> {[m
+     // alert(this.baseUrl + this.categoryWar + this.categoryURL);[m
+[31m-    return this._http.get<Category[]>(this.baseUrl + this.categoryWar + this.categoryURL);[m
+[32m+[m[32m    return this._http.get<Category[]>(this.categoryURL);[m
+   }[m
+ [m
+   fetchAllModules(): Observable<Module[]> {[m
+     // alert(this.baseUrl + this.moduleWar + this.moduleURL)[m
+[31m-    return this._http.get<Module[]>(this.baseUrl + this.moduleWar + this.moduleURL);[m
+[32m+[m[32m    return this._http.get<Module[]>(this.moduleURL);[m
+   }[m
+ [m
+   fetchAllInstituteProfile(): Observable<InstituteAdmin[]> {[m
+     //alert(this.baseUrl + this.instituteProfileWar + this.instituteProfileURL)[m
+[31m-    return this._http.get<InstituteAdmin[]>(this.baseUrl + this.instituteProfileWar + this.instituteProfileURL);[m
+[32m+[m[32m    return this._http.get<InstituteAdmin[]>(this.instituteProfileURL);[m
+   }[m
+ [m
+ [m
+[1mdiff --git a/services/src/app/authuser/authuserservice.service.ts b/services/src/app/authuser/authuserservice.service.ts[m
+[1mindex 7c46e39..f489378 100644[m
+[1m--- a/services/src/app/authuser/authuserservice.service.ts[m
+[1m+++ b/services/src/app/authuser/authuserservice.service.ts[m
+[36m@@ -8,9 +8,11 @@[m [mimport { environment } from 'environments/environment.development';[m
+ })[m
+ export class AuthuserserviceService {[m
+ [m
+[31m-  private readonly authUserUrl: string = environment.authUserUrl;[m
+[32m+[m[32m  private readonly authUserUrl: string;[m
+ [m
+[31m-  constructor(private _http: HttpClient) { }[m
+[32m+[m[32m  constructor(private _http: HttpClient) {[m
+[32m+[m[32m    this.authUserUrl = environment.authUserUrl;[m
+[32m+[m[32m  }[m
+ [m
+   authUserList(): Observable<any> {[m
+     return this._http.get<any>(`${this.authUserUrl}/authuser?username=all`);[m
+[1mdiff --git a/services/src/app/category/category.service.ts b/services/src/app/category/category.service.ts[m
+[1mindex 9f1fa32..b9ec3a3 100644[m
+[1m--- a/services/src/app/category/category.service.ts[m
+[1m+++ b/services/src/app/category/category.service.ts[m
+[36m@@ -7,8 +7,10 @@[m [mimport { environment } from 'environments/environment.development';[m
+ })[m
+ export class CategoryService {[m
+ [m
+[31m-  private readonly categoryUrl: string = environment.categoryUrl;[m
+[31m-  constructor(private _http: HttpClient) { }[m
+[32m+[m[32m  private readonly categoryUrl: string;[m
+[32m+[m[32m  constructor(private _http: HttpClient) {[m
+[32m+[m[32m    this.categoryUrl = environment.categoryUrl;[m
+[32m+[m[32m  }[m
+ [m
+   _getAllCategorys(): Observable<any> {[m
+     return this._http.get<any>(`${this.categoryUrl}/category?category = all`);[m
+[1mdiff --git a/services/src/app/course/course.service.ts b/services/src/app/course/course.service.ts[m
+[1mindex 5410a96..16c9e67 100644[m
+[1m--- a/services/src/app/course/course.service.ts[m
+[1m+++ b/services/src/app/course/course.service.ts[m
+[36m@@ -9,7 +9,9 @@[m [mexport class CourseService {[m
+ [m
+   private courseUrl: string = environment.courseUrl;[m
+ [m
+[31m-  constructor(private _http: HttpClient) { }[m
+[32m+[m[32m  constructor(private _http: HttpClient) {[m
+[32m+[m[32m    this.courseUrl = environment.courseUrl;[m
+[32m+[m[32m  }[m
+ [m
+   _getAllCourses(): Observable<any> {[m
+     return this._http.get<any>(`${this.courseUrl}/course?name=all`);[m
+[1mdiff --git a/services/src/app/email/service/email.service.ts b/services/src/app/email/service/email.service.ts[m
+[1mindex a88652e..288e986 100644[m
+[1m--- a/services/src/app/email/service/email.service.ts[m
+[1m+++ b/services/src/app/email/service/email.service.ts[m
+[36m@@ -6,9 +6,11 @@[m [mimport { environment } from 'environments/environment.development';[m
+   providedIn: 'root'[m
+ })[m
+ export class EmailService {[m
+[31m-  private readonly emailUrl = environment.emailUrl + "/email";[m
+[32m+[m[32m  private readonly emailUrl;[m
+ [m
+[31m-  constructor(private _http: HttpClient) { }[m
+[32m+[m[32m  constructor(private _http: HttpClient) {[m
+[32m+[m[32m    this.emailUrl = environment.emailUrl + "/email";[m
+[32m+[m[32m  }[m
+ [m
+   fetchAllEmails() {[m
+     return this._http.get<Email[]>(`${this.emailUrl}?title=all`);[m
+[1mdiff --git a/services/src/app/quiz/service/quiz.service.ts b/services/src/app/quiz/service/quiz.service.ts[m
+[1mindex 88d47c4..2454f89 100644[m
+[1m--- a/services/src/app/quiz/service/quiz.service.ts[m
+[1m+++ b/services/src/app/quiz/service/quiz.service.ts[m
+[36m@@ -8,10 +8,12 @@[m [mimport { environment } from 'environments/environment.development';[m
+ })[m
+ export class QuizService {[m
+ [m
+[31m-  private quizUrl: string = environment.quizUrl + "/quiz";[m
+[32m+[m[32m  private quizUrl: string;[m
+ [m
+ [m
+[31m-  constructor(private _http: HttpClient) { }[m
+[32m+[m[32m  constructor(private _http: HttpClient) {[m
+[32m+[m[32m    this.quizUrl = environment.quizUrl + "/quiz";[m
+[32m+[m[32m  }[m
+ [m
+   _getAllQuizzes(): Observable<any> {[m
+     return this._http.get<any>(`${this.quizUrl}?title=all`);[m
+[1mdiff --git a/services/src/app/roleadmin/adminroleservice.service.ts b/services/src/app/roleadmin/adminroleservice.service.ts[m
+[1mindex f662dc2..6a7d3d1 100644[m
+[1m--- a/services/src/app/roleadmin/adminroleservice.service.ts[m
+[1m+++ b/services/src/app/roleadmin/adminroleservice.service.ts[m
+[36m@@ -8,8 +8,10 @@[m [mimport { environment } from 'environments/environment.development';[m
+ })[m
+ export class AdminroleserviceService {[m
+ [m
+[31m-  private readonly adminRoleUrl: string = environment.adminRoleUrl + "/role";[m
+[31m-  constructor(private _http: HttpClient) { }[m
+[32m+[m[32m  private readonly adminRoleUrl: string;[m
+[32m+[m[32m  constructor(private _http: HttpClient) {[m
+[32m+[m[32m    this.adminRoleUrl = environment.adminRoleUrl + "/role"[m
+[32m+[m[32m  }[m
+ [m
+   fetchadminlist(): Observable<any> {[m
+     return this._http.get<any>(`${this.adminRoleUrl}/?name=all`);[m
+[1mdiff --git a/services/src/app/teachermodule/teachermoduleservice.service.ts b/services/src/app/teachermodule/teachermoduleservice.service.ts[m
+[1mindex e1a6a91..f5f240c 100644[m
+[1m--- a/services/src/app/teachermodule/teachermoduleservice.service.ts[m
+[1m+++ b/services/src/app/teachermodule/teachermoduleservice.service.ts[m
+[36m@@ -8,8 +8,10 @@[m [mimport { environment } from 'environments/environment.development';[m
+ })[m
+ export class TeachermoduleserviceService {[m
+ [m
+[31m-  private readonly moduleUrl: string = environment.moduleUrl + "/module";[m
+[31m-  constructor(private _http: HttpClient) { }[m
+[32m+[m[32m  private readonly moduleUrl: string;[m
+[32m+[m[32m  constructor(private _http: HttpClient) {[m
+[32m+[m[32m    this.moduleUrl = environment.moduleUrl + "/module";[m
+[32m+[m[32m  }[m
+ [m
+   fetchModuleList(): Observable<any> {[m
+     return this._http.get<any>(`${this.moduleUrl}/?name=all`);[m
+[1mdiff --git a/services/src/app/teacherquestion/question.service.ts b/services/src/app/teacherquestion/question.service.ts[m
+[1mindex b71b23b..a0fbeeb 100644[m
+[1m--- a/services/src/app/teacherquestion/question.service.ts[m
+[1m+++ b/services/src/app/teacherquestion/question.service.ts[m
+[36m@@ -8,8 +8,10 @@[m [mimport { environment } from 'environments/environment.development';[m
+ })[m
+ export class QuestionService {[m
+ [m
+[31m-  private readonly questionUrl: string = environment.questionUrl + "/question";[m
+[31m-  constructor(private _http: HttpClient) { }[m
+[32m+[m[32m  private readonly questionUrl: string;[m
+[32m+[m[32m  constructor(private _http: HttpClient) {[m
+[32m+[m[32m    this.questionUrl = environment.questionUrl + "/question";[m
+[32m+[m[32m  }[m
+ [m
+   questionList(): Observable<any> {[m
+     return this._http.get<any>(`${this.questionUrl}?figure=all`);[m
+[1mdiff --git a/services/src/environments/environment.common.ts b/services/src/environments/environment.common.ts[m
+[1mindex 90040ed..c85bdf9 100644[m
+[1m--- a/services/src/environments/environment.common.ts[m
+[1m+++ b/services/src/environments/environment.common.ts[m
+[36m@@ -1,3 +1,3 @@[m
+ export const commonEnv = {[m
+[31m-    baseUrl: 'http://localhost:8090'[m
+[31m-};[m
+\ No newline at end of file[m
+[32m+[m[32m    baseUrl: location.origin[m
+[32m+[m[32m};[m
