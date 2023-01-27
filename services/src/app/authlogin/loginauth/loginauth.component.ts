@@ -17,29 +17,30 @@ export class LoginauthComponent {
   successMessage!: string;
   invalidLogin = false;
   loginSuccess = false;
-  
-  authUser=new Authuser();
-  constructor(private _auth:AuthuserserviceService, private _route:Router, private authenticationService: AuthService){}
+
+  authUser = new Authuser();
+  constructor(private _auth: AuthuserserviceService, private _route: Router, private authenticationService: AuthService) { }
+
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+
   }
 
-  userLogin(){
-   
+  userLogin() {
+
     this._auth.loginDataAuthUser(this.authUser)
       .subscribe(data => {
         console.log(data)
         alert("User Successfully Logged In..");
-        this._route.navigate(['demo']);
+        this._route.navigate(['adminrole']);
 
       }, error => console.log(error));
-  
-  
+
+
   }
 
 
   handleLogin() {
-    this.authenticationService.authenticationService(this.username, this.password).subscribe((result)=> {
+    this.authenticationService.authenticationService(this.username, this.password).subscribe((result) => {
       this.invalidLogin = false;
       this.loginSuccess = true;
       this.successMessage = 'Login Successful.';
@@ -47,7 +48,7 @@ export class LoginauthComponent {
     }, () => {
       this.invalidLogin = true;
       this.loginSuccess = false;
-    });      
+    });
   }
 
 }
