@@ -23,7 +23,7 @@ export class InstituteAdminServiceService {
   }
 
   authenticationService(username: string, password: string) {
-    return this.http.get(`http://localhost:8090/institituteadmin/uhpocms/basicauth`,
+    return this.http.get(`http://localhost:8090/instituteadmin/uhpocms/basicauth`,
       { headers: { authorization: this.createBasicAuthToken(username, password) } }).pipe(map((res) => {
         this.username = username;
         this.password = password;
