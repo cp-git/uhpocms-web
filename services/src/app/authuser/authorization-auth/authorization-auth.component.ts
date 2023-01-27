@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthorizeServiceService } from '../authorize-service.service';
-import { AuthuserserviceService } from '../authuserservice.service';
+import { AuthuserserviceService } from '../service/authuserservice.service';
+
+
 
 @Component({
   selector: 'app-authorization-auth',
@@ -13,7 +14,7 @@ export class AuthorizationAuthComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
 
-  constructor(private _auth: AuthuserserviceService, private _route: Router, private authenticationService: AuthorizeServiceService) { }
+  constructor(private _auth: AuthuserserviceService, private _route: Router) { }
 
   username!: string;
   password!: string;
@@ -24,7 +25,7 @@ export class AuthorizationAuthComponent implements OnInit {
 
 
   handleLogin() {
-    this.authenticationService.authenticationService(this.username, this.password).subscribe((result) => {
+    this._auth.authenticationService(this.username, this.password).subscribe((result) => {
       this.invalidLogin = false;
       this.loginSuccess = true;
       this.successMessage = 'Login Successful.';

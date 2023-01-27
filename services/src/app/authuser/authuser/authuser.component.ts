@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Authuser } from '../authuser';
-import { AuthuserserviceService } from '../authuserservice.service';
+import { AuthuserserviceService } from '../service/authuserservice.service';
+
 
 @Component({
   selector: 'app-authuser',

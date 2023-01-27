@@ -1,25 +1,44 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { Question } from '../question';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TeacherauthServiceService {
+export class QuestionService {
 
   // BASE_PATH: 'http://localhost:8080'
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
 
   public username: String = "uhpocadmin";
   public password: String = "P@55w0rd";
+  constructor(private _http: HttpClient) { }
 
-  constructor(private http: HttpClient, private _route: Router) {
-
+  questionList(): Observable<any> {
+    return this._http.get<any>("http://localhost:8090/question/uhpocms/question?figure=all");
   }
 
+  addQuestion(question: Question): Observable<any> {
+    return this._http.post<any>("http://localhost:8090/question/uhpocms/question", question);
+  }
+
+  deleteQuestion(questionFigure: string): Observable<any> {
+    return this._http.delete<any>("http://localhost:8090/question/uhpocms/question/" + questionFigure);
+  }
+
+  getQuestion(questionFigure: string): Observable<any> {
+    return this._http.get<any>("http://localhost:8090/question/uhpocms/question/" + questionFigure);
+  }
+
+  updatedQuestion(questionFigure: string, question: Question): Observable<any> {
+
+    return this._http.put<any>("http://localhost:8090/question/uhpocms/question/" + questionFigure, question);
+  }
+
+
   authenticationService(username: String, password: String) {
-    return this.http.get(`http://localhost:8090/module/uhpocms/basicauth`,
+    return this._http.get(`http://localhost:8090/module/uhpocms/basicauth`,
       { headers: { authorization: this.createBasicAuthToken(username, password) } }).pipe(map((res) => {
         this.username = username;
         this.password = password;

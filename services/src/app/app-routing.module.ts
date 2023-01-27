@@ -12,6 +12,7 @@ import { QuestionComponent } from './teacherquestion/question/question.component
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 import { AuthorizationAuthComponent } from './authuser/authorization-auth/authorization-auth.component';
 import { AuthorizeTeacherComponent } from './teachermodule/authorize-teacher/authorize-teacher.component';
+import { AuthorizationComponent } from './teacherquestion/authorization/authorization.component';
 
 const routes: Routes = [
   //admin role routes
@@ -47,7 +48,8 @@ const routes: Routes = [
   { path: 'authTeacher', component: AuthorizeTeacherComponent },
 
   //teacherModule routes
-  { path: 'email', component: EmailComponent }
+  { path: 'email', component: EmailComponent },
+  { path: 'questionauth', component: AuthorizationComponent }
 ];
 
 @NgModule({

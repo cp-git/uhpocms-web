@@ -1,15 +1,17 @@
-import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/internal/Observable';
 
-import { TeacherauthServiceService } from './teacherauth-service.service';
+import { Injectable } from '@angular/core';
+import { AuthuserserviceService } from './authuserservice.service';
+import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
+
+import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
   providedIn: 'root'
 })
-export class HttpInterceptorServiceService implements HttpInterceptor {
+export class HttpInceptorServiceService {
 
-  constructor(private authenticationService: TeacherauthServiceService) { }
+
+  constructor(private authenticationService: AuthuserserviceService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.authenticationService.isUserLoggedIn() && req.url.indexOf('basicauth') === -1) {

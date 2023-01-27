@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from 'app/class/category';
 import { Quiz } from 'app/class/quiz';
 import { Question } from '../question';
-import { QuestionService } from '../question.service';
+import { QuestionService } from '../service/question.service';
 
 @Component({
   selector: 'app-question',
