@@ -26,7 +26,8 @@ export class EmailComponent {
   }
 
   ngOnInit(): void {
-    this.getAllEmails();
+
+
   }
 
 

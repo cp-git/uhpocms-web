@@ -20,7 +20,7 @@ export class LoginComponentComponent implements OnInit {
   }
 
   RedirectTOAuth() {
-    this._route.navigate(['authorizationAuth'])
+    this._route.navigate(['authuser'])
   }
 
   RedirectTOInsProfile() {
@@ -39,7 +39,7 @@ export class LoginComponentComponent implements OnInit {
 
 
   RedirectToQuestion() {
-    this._route.navigate(['questionauth'])
+    this._route.navigate(['question'])
   }
 
   RedirectToEmail() {
@@ -47,7 +47,7 @@ export class LoginComponentComponent implements OnInit {
   }
 
   RedirectToModule() {
-    this._route.navigate(['authTeacher'])
+    this._route.navigate(['teachermodule'])
   }
   _Back() {
     this._route.navigate([''])

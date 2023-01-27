@@ -33,20 +33,26 @@ export class QuizComponent {
   isHidden: boolean = false;
   constructor(private _quizService: QuizService, private _route: Router, private _courseService: CourseService, private _categoryService: CategoryService, private _moduleService: ModuleService) {
     this.getAllQuizzes();
-    this.getAllCourses();
-    this.getAllCategorys();
-    this.getAllModules();
 
-    console.log("Cons called");
+
+
   }
 
   ngOnInit(): void {
+    if (sessionStorage.getItem('authenticatedUser') === null) {
+      this._route.navigate(['']);
+    } else {
+      this.getAllQuizzes();
+    }
 
 
     this._quizMap;
     this._categoryMap;
     this._courseMap;
     this._moduleMap;
+    this.getAllCourses();
+    this.getAllCategorys();
+    this.getAllModules();
     console.log(this._quizMap)
 
   }

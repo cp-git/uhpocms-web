@@ -27,7 +27,12 @@ export class TeachermoduleComponent {
 
 
   ngOnInit(): void {
-    this.getAllModules();
+    if (sessionStorage.getItem('authenticatedUser') === null) {
+      this._route.navigate(['']);
+    } else {
+      this.getAllModules();
+    }
+
   }
   constructor(private _service: TeachermoduleserviceService, private _activatedRoute: ActivatedRoute, private _route: Router) {
     this.loadCourses();

@@ -107,6 +107,26 @@ export class QuestionComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    if (sessionStorage.getItem('authenticatedUser') === null) {
+      this._route.navigate(['']);
+    } else {
+      this.getAll();
+    }
+
+  }
+
+  private loadCategories() {
+    this.sessionData = sessionStorage.getItem("category");
+
+    this.data = JSON.parse(this.sessionData);
+
+    for (var inst in this.data) {
+
+      this.category.push(this.data[inst]);
+    }
+  }
+
+  private getAll() {
     this._service.questionList().subscribe(
       data => {
         this._question = data;
@@ -119,17 +139,6 @@ export class QuestionComponent implements OnInit {
       },
       Error => console.log("exception")
     )
-  }
-
-  private loadCategories() {
-    this.sessionData = sessionStorage.getItem("category");
-
-    this.data = JSON.parse(this.sessionData);
-
-    for (var inst in this.data) {
-
-      this.category.push(this.data[inst]);
-    }
   }
 
   private loadQuiz() {

@@ -19,9 +19,7 @@ import { EmailComponent } from './email/email/email.component';
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
 import { HttpInterceptorServiceService } from './authlogin/http-interceptor-service.service';
-import { AuthorizationAuthComponent } from './authuser/authorization-auth/authorization-auth.component';
-import { AuthorizeTeacherComponent } from './teachermodule/authorize-teacher/authorize-teacher.component';
-import { AuthorizationComponent } from './teacherquestion/authorization/authorization.component';
+
 
 @NgModule({
   declarations: [
@@ -35,10 +33,7 @@ import { AuthorizationComponent } from './teacherquestion/authorization/authoriz
     QuizComponent,
     TeachermoduleComponent,
     EmailComponent,
-    QuestionComponent,
-    AuthorizationAuthComponent,
-    AuthorizeTeacherComponent,
-    AuthorizationComponent
+    QuestionComponent
   ],
 
   imports: [

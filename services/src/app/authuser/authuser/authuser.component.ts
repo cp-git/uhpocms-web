@@ -81,24 +81,30 @@ export class AuthuserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._service.authUserList().subscribe(
-      data => {
-        console.log("Response Receved...");
-        this._authUser = data;
-
-        if (this._authUser.length > 0) {
-          this.isHidden = false;
-        }
-
-        this._authUser.forEach(user => {
-          this._backupUser.push(Object.assign({}, user))
-        })
+    if (sessionStorage.getItem('authenticatedUser') === null) {
+      this._route.navigate(['']);
+    } else {
 
 
-      },
+      this._service.authUserList().subscribe(
+        data => {
+          console.log("Response Receved...");
+          this._authUser = data;
 
-      Error => console.log("exception")
-    )
+          if (this._authUser.length > 0) {
+            this.isHidden = false;
+          }
+
+          this._authUser.forEach(user => {
+            this._backupUser.push(Object.assign({}, user))
+          })
+
+
+        },
+
+        Error => console.log("exception")
+      )
+    }
   }
 
   deleteAuthUser(user: Authuser) {
