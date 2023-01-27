@@ -2,36 +2,40 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { Authuser } from './authuser';
-
+import { environment } from 'environments/environment.development';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthuserserviceService {
 
-  constructor(private _http:HttpClient) { }
-  
-  authUserList():Observable<any>{
-    return this._http.get<any>("http://localhost:8090/authuser/uhpocms/authuser?username=all");
+  private readonly authUserUrl: string;
+
+  constructor(private _http: HttpClient) {
+    this.authUserUrl = environment.authUserUrl;
   }
 
-  addAuthUser(authuser:Authuser): Observable<any> {
-    return this._http.post<any>("http://localhost:8090/authuser/uhpocms/authuser",authuser);
+  authUserList(): Observable<any> {
+    return this._http.get<any>(`${this.authUserUrl}/authuser?username=all`);
   }
 
- deleteAuthUser(authUserName: string): Observable<any> {
-    return this._http.delete<any>("http://localhost:8090/authuser/uhpocms/authuser/"+authUserName);
+  addAuthUser(authuser: Authuser): Observable<any> {
+    return this._http.post<any>(`${environment.authUserUrl}/authuser`, authuser);
   }
 
-  getAuthUser(authUserName:string): Observable<any> {
-    return this._http.get<any>("http://localhost:8090/authuser/uhpocms/authuser/"+authUserName);
+  deleteAuthUser(authUserName: string): Observable<any> {
+    return this._http.delete<any>(`${this.authUserUrl}/authuser/` + authUserName);
   }
 
-  updateAuthUser(authUserName:string,authuser:Authuser): Observable<any> {
-    
-    return this._http.put<any>("http://localhost:8090/authuser/uhpocms/authuser/"+authUserName,authuser);
+  getAuthUser(authUserName: string): Observable<any> {
+    return this._http.get<any>(`${this.authUserUrl}/authuser/` + authUserName);
   }
 
-  loginDataAuthUser(authuser:Authuser): Observable<any> {
-    return this._http.post<any>("http://localhost:8090/authuser/uhpocms/login",authuser);
+  updateAuthUser(authUserName: string, authuser: Authuser): Observable<any> {
+
+    return this._http.put<any>(`${this.authUserUrl}/authuser/` + authUserName, authuser);
+  }
+
+  loginDataAuthUser(authuser: Authuser): Observable<any> {
+    return this._http.post<any>(`${this.authUserUrl}/login`, authuser);
   }
 }
