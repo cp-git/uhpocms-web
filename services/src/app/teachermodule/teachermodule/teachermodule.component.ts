@@ -25,6 +25,9 @@ export class TeachermoduleComponent {
   data: any;
 
 
+  ngOnInit(): void {
+    this.getAllModules();
+  }
   constructor(private _service: TeachermoduleserviceService, private _activatedRoute: ActivatedRoute, private _route: Router) {
     this.loadCourses();
 
@@ -49,19 +52,17 @@ export class TeachermoduleComponent {
         this._teacherModule.push(this.module);
         this._backupModule.set(this.module.moduleId, (Object.assign({}, this.module)));
         alert("Module Added successfully");
+        location.reload();
         if (this._teacherModule.length > 0) {
           this.isVisible = false;
         }
-        // this.ngOnInit();
+
       },
       error => alert("Module Name already exists")
     )
   }
 
 
-  ngOnInit(): void {
-    this.getAllModules();
-  }
 
   getAllModules() {
     this._service.fetchModuleList().subscribe(
