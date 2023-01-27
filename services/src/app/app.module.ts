@@ -20,6 +20,7 @@ import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermod
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
 import { HttpInterceptorServiceService } from './authlogin/http-interceptor-service.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,

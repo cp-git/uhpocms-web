@@ -22,11 +22,17 @@ export class EmailComponent {
 
   constructor(private _emailService: EmailService, private _route: Router) {
     this.email = new Email();
-    this.loadInstituteProfile();
+
   }
 
   ngOnInit(): void {
-    this.getAllEmails();
+    this.loadInstituteProfile();
+    if (sessionStorage.getItem('authenticatedUser') == null) {
+      this._route.navigate([''])
+    } else {
+      this.getAllEmails();
+    }
+
   }
 
 

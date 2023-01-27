@@ -9,7 +9,7 @@ import { Router } from '@angular/router'
 export class LoginComponentComponent implements OnInit {
 
 
-  
+
   constructor(private _route: Router) { }
   ngOnInit(): void {
     throw new Error('Method not implemented.');
@@ -40,6 +40,14 @@ export class LoginComponentComponent implements OnInit {
 
   RedirectToQuestion() {
     this._route.navigate(['question'])
+  }
+
+  RedirectToInstituteAdminProfile() {
+    this._route.navigate(['displayInstituteAdmin'])
+  }
+
+  RedirectToEmailLogin() {
+    this._route.navigate(['emaillogin'])
   }
 
   RedirectToEmail() {

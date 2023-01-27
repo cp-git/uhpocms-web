@@ -4,11 +4,12 @@ import { Observable } from 'rxjs/internal/Observable';
 import { AuthService } from './auth.service';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
-export class HttpInterceptorServiceService  implements HttpInterceptor{
+export class HttpInterceptorServiceService implements HttpInterceptor {
 
-  constructor(private authenticationService: AuthService) { }
+    constructor(private authenticationService: AuthService) { }
+
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (this.authenticationService.isUserLoggedIn() && req.url.indexOf('basicauth') === -1) {

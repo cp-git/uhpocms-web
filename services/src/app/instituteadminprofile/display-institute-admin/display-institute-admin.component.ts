@@ -33,8 +33,13 @@ export class DisplayInstituteAdminComponent {
   }
 
   ngOnInit(): void {
-    this._getAllList();
-    this._getAllAdminInstitutions();
+
+    if (sessionStorage.getItem('authenticatedUser') == null) {
+      this._route.navigate(['login'])
+    } else {
+      this._getAllList();
+      this._getAllAdminInstitutions();
+    }
   }
 
 

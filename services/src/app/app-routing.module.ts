@@ -25,6 +25,7 @@ const routes: Routes = [
 
   //instituteadmin routes
   { path: 'displayInstituteAdmin', component: DisplayInstituteAdminComponent },
+  { path: 'login', component: LoginauthComponent },
 
   //admindepartment routes
   { path: 'department', component: DepartmentComponent },
