@@ -19,6 +19,7 @@ export class EmailComponent {
   instituteAdmin: InstituteAdmin[] = []; // for dropdown data
   sessionData: any;
   isHidden: boolean = false;
+  data: any;
 
   constructor(private _emailService: EmailService, private _route: Router) {
     this.email = new Email();
@@ -142,6 +143,16 @@ export class EmailComponent {
 
     // convert string data to json
     this.instituteAdmin = JSON.parse(this.sessionData);
+
+    this.data = JSON.parse(this.sessionData);
+
+
+
+    for (var inst in this.data) {
+
+      this.instituteAdmin.push(this.data[inst]);
+      alert(this.data[inst]);
+    }
 
   }
 
