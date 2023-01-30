@@ -146,12 +146,8 @@ export class EmailComponent {
 
     this.data = JSON.parse(this.sessionData);
 
-
-
     for (var inst in this.data) {
-
       this.instituteAdmin.push(this.data[inst]);
-      alert(this.data[inst]);
     }
 
   }
