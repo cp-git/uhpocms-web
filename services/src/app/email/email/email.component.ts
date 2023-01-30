@@ -26,7 +26,7 @@ export class EmailComponent {
 
   }
 
-
+  ngOnInit(): void {
     this.loadInstituteProfile();
     if (sessionStorage.getItem('authenticatedUser') == null) {
       this._route.navigate(['login'])

@@ -13,17 +13,16 @@ export class EmailService {
 
   public username: String = "uhpocadmin";
   public password: String = "P@55w0rd";
-  constructor(private _http: HttpClient) { }
-
+ 
   private readonly emailUrl;
 
-  constructor(private _http: HttpClient) {
+  constructor(private http: HttpClient) {
     this.emailUrl = environment.emailUrl + "/email";
   }
 
 
   authenticationService(username: String, password: String) {
-    return this._http.get(`http://localhost:8090/email/uhpocms/basicauth`,
+    return this.http.get(`http://localhost:8090/email/uhpocms/basicauth`,
       { headers: { authorization: this.createBasicAuthToken(username, password) } }).pipe(map((res) => {
         this.username = username;
         this.password = password;
@@ -54,19 +53,19 @@ export class EmailService {
 
   fetchAllEmails() {
 
-    return this._http.get<Email[]>(`${this.emailUrl}?title=all`);
+    return this.http.get<Email[]>(`${this.emailUrl}?title=all`);
 
   }
 
   insertEmail(email: Email) {
-    return this._http.post<Email>(`${this.emailUrl}`, email);
+    return this.http.post<Email>(`${this.emailUrl}`, email);
   }
 
   updateEmail(email: Email) {
-    return this._http.put<Email>(`${this.emailUrl}/` + email.title, email);
+    return this.http.put<Email>(`${this.emailUrl}/` + email.title, email);
   }
 
   deleteEmail(emailTitle: string) {
-    return this._http.delete<Email>(`${this.emailUrl}/` + emailTitle);
+    return this.http.delete<Email>(`${this.emailUrl}/` + emailTitle);
   }
 }

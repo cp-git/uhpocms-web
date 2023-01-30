@@ -17,7 +17,7 @@ export class InstituteAdminServiceService {
   public password: string = "Pa55w0rd";
 
 
-  constructor(private _http: HttpClient) {
+  constructor(private http: HttpClient) {
     this._baseUrl = `${environment.instituteAdmin}/profile`;
     this._admininstitutionUrl = `${environment.adminInstitutionUrl}/institution`;
 
