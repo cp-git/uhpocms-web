@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
+import { AuthService } from 'app/authlogin/auth.service';
 
 @Component({
   selector: 'app-login-component',
@@ -10,7 +11,7 @@ export class LoginComponentComponent implements OnInit {
 
 
 
-  constructor(private _route: Router) { }
+  constructor(private _route: Router, private _authService: AuthService) { }
   ngOnInit(): void {
 
   }
@@ -20,7 +21,7 @@ export class LoginComponentComponent implements OnInit {
   }
 
   RedirectTOAuth() {
-    this._route.navigate(['authorizationAuth'])
+    this._route.navigate(['authuser'])
   }
 
   RedirectTOInsProfile() {
@@ -57,7 +58,7 @@ export class LoginComponentComponent implements OnInit {
   RedirectToModule() {
     this._route.navigate(['authTeacher'])
   }
-  _Back() {
-    this._route.navigate([''])
+  logout() {
+    this._authService.logout();
   }
 }

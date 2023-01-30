@@ -31,7 +31,6 @@ export class DepartmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    alert();
     if (sessionStorage.getItem('authenticatedUser') == null) {
       this._route.navigate(['login'])
     } else {
@@ -152,7 +151,10 @@ export class DepartmentComponent implements OnInit {
   private loadAdminInstitutions() {
     this.sessionData = sessionStorage.getItem("admininstitution");
 
-    this.adminInstitutions = JSON.parse(this.sessionData);
+    this.data = JSON.parse(this.sessionData);
+    for (var inst in this.data) {
+      this.adminInstitutions.push(this.data[inst]);
+    }
 
   }
 
