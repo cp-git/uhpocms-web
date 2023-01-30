@@ -15,14 +15,16 @@ export class EmailService {
   public password: String = "P@55w0rd";
 
   private readonly emailUrl;
+  _authUrl: string;
 
   constructor(private http: HttpClient) {
     this.emailUrl = environment.emailUrl + "/email";
+    this._authUrl = `${environment.authUserUrl}/basicauth`;
   }
 
 
   authenticationService(username: String, password: String) {
-    return this.http.get(`http://localhost:8090/email/uhpocms/basicauth`,
+    return this.http.get(this._authUrl,
       { headers: { authorization: this.createBasicAuthToken(username, password) } }).pipe(map((res) => {
         this.username = username;
         this.password = password;

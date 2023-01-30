@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment.development';
 import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
@@ -10,7 +11,7 @@ export class ModuleService {
   private _baseUrl: string;
 
   constructor(private _http: HttpClient) {
-    this._baseUrl = "http://localhost:8090/module/uhpocms/module";
+    this._baseUrl = `${environment.moduleUrl}/module`;
    }
 
    _getAllModules():Observable<any>
