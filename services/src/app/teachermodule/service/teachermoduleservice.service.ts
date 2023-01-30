@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Module } from '../module';
+import { environment } from 'environments/environment.development';
 
 
 @Injectable({
@@ -14,36 +15,43 @@ export class TeachermoduleserviceService {
 
   public username: String = "uhpocadmin";
   public password: String = "P@55w0rd";
+  private _baseUrl: string;
+  _loginUrl: string;
 
-  constructor(private _http: HttpClient) { }
+
+  constructor(private _http: HttpClient) { 
+    this._baseUrl = `${environment.moduleUrl}/module`;
+    this._loginUrl = `${environment.moduleUrl}/basicauth`;
+
+  }
 
   fetchModuleList(): Observable<any> {
-    return this._http.get<any>("http://localhost:8090/module/uhpocms/module?name=all");
+    return this._http.get<any>( this._baseUrl+"?name=all");
   }
 
   addTeacherModule(module: Module): Observable<any> {
-    return this._http.post<any>("http://localhost:8090/module/uhpocms/module", module);
+    return this._http.post<any>(this._baseUrl, module);
   }
 
   deleteModule(moduleName: string): Observable<any> {
-    return this._http.delete<any>("http://localhost:8090/module/uhpocms/module/" + moduleName);
+    return this._http.delete<any>(this._baseUrl+"/" + moduleName);
   }
 
   getModuleList(moduleName: string): Observable<any> {
-    return this._http.get<any>("http://localhost:8090/module/uhpocms/module/" + moduleName);
+    return this._http.get<any>(this._baseUrl+"/" + moduleName);
   }
 
   updateModuleList(moduleName: string, module: Module): Observable<any> {
 
-    return this._http.put<any>("http://localhost:8090/module/uhpocms/module/" + moduleName, module);
+    return this._http.put<any>(this._baseUrl+"/" + moduleName, module);
   }
 
   getModule(moduleName: string): Observable<Module> {
-    return this._http.get<Module>("http://localhost:8090/module/uhpocms/module/" + moduleName);
+    return this._http.get<Module>(this._baseUrl+"/" + moduleName);
   }
 
   authenticationService(username: String, password: String) {
-    return this._http.get(`http://localhost:8090/module/uhpocms/basicauth`,
+    return this._http.get(this._loginUrl,
       { headers: { authorization: this.createBasicAuthToken(username, password) } }).pipe(map((res) => {
         this.username = username;
         this.password = password;

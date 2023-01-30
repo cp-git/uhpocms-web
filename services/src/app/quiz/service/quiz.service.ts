@@ -19,9 +19,12 @@ export class QuizService {
 
   public username: String = "uhpocadmin";
   public password: String = "P@55w0rd";
+  _loginUrl: string;
 
   constructor(private _http: HttpClient) {
     this.quizUrl = environment.quizUrl + "/quiz";
+    this._loginUrl = `${environment.quizUrl}/basicauth`;
+
   }
 
   _getAllQuizzes(): Observable<any> {
@@ -46,7 +49,7 @@ export class QuizService {
   }
 
   authenticationService(username: String, password: String) {
-    return this._http.get(`http://localhost:8090/module/uhpocms/basicauth`,
+    return this._http.get(this._loginUrl,
       { headers: { authorization: this.createBasicAuthToken(username, password) } }).pipe(map((res) => {
         this.username = username;
         this.password = password;

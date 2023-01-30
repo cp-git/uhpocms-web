@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment.development';
 import { map } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { Authuser } from '../authuser';
@@ -15,37 +16,45 @@ export class AuthuserserviceService {
 
   public username: String = "uhpocadmin";
   public password: String = "P@55w0rd";
+  _baseUrl: string;
+  _authUrl: string;
 
-  constructor(private _http: HttpClient) { }
+  _loginUrl: string;
+
+  constructor(private _http: HttpClient) {
+    this._baseUrl = `${environment.authUserUrl}/authuser`;
+    this._authUrl = `${environment.authUserUrl}/basicauth`;
+    this._loginUrl = `${environment.authUserUrl}/login`;
+   }
 
   authUserList(): Observable<any> {
-    return this._http.get<any>("http://localhost:8090/authuser/uhpocms/authuser?username=all");
+    return this._http.get<any>(this._baseUrl+"?username=all");
   }
 
   addAuthUser(authuser: Authuser): Observable<any> {
-    return this._http.post<any>("http://localhost:8090/authuser/uhpocms/authuser", authuser);
+    return this._http.post<any>(this._baseUrl, authuser);
   }
 
   deleteAuthUser(authUserName: string): Observable<any> {
-    return this._http.delete<any>("http://localhost:8090/authuser/uhpocms/authuser/" + authUserName);
+    return this._http.delete<any>(this._baseUrl + authUserName);
   }
 
   getAuthUser(authUserName: string): Observable<any> {
-    return this._http.get<any>("http://localhost:8090/authuser/uhpocms/authuser/" + authUserName);
+    return this._http.get<any>(this._baseUrl + authUserName);
   }
 
   updateAuthUser(authUserName: string, authuser: Authuser): Observable<any> {
 
-    return this._http.put<any>("http://localhost:8090/authuser/uhpocms/authuser/" + authUserName, authuser);
+    return this._http.put<any>(this._baseUrl+ authUserName, authuser);
   }
 
   loginDataAuthUser(authuser: Authuser): Observable<any> {
-    return this._http.post<any>("http://localhost:8090/authuser/uhpocms/login", authuser);
+    return this._http.post<any>(this._loginUrl, authuser);
   }
 
 
   authenticationService(username: String, password: String) {
-    return this._http.get(`http://localhost:8090/authuser/uhpocms/basicauth`,
+    return this._http.get(this._authUrl,
       { headers: { authorization: this.createBasicAuthToken(username, password) } }).pipe(map((res) => {
         this.username = username;
         this.password = password;
