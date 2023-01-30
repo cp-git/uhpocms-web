@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+
+//import { AuthuserserviceService } from 'app/authuser/authuserservice.service';
+
 import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
+
 
 import { AuthService } from '../auth.service';
 import { Authuser } from '../authuser';
@@ -33,7 +37,7 @@ export class LoginauthComponent {
       .subscribe(data => {
         console.log(data)
         alert("User Successfully Logged In..");
-        this._route.navigate(['demo']);
+        this._route.navigate(['adminrole']);
 
       }, error => console.log(error));
 
@@ -41,6 +45,8 @@ export class LoginauthComponent {
 
   }
 
+
+  
 
   handleLogin() {
     this.authenticationService.authenticationService(this.username, this.password).subscribe((result) => {
@@ -52,7 +58,6 @@ export class LoginauthComponent {
       this.invalidLogin = true;
       this.loginSuccess = false;
     });
-
   }
 
 }

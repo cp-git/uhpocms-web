@@ -8,6 +8,8 @@ import { map } from 'rxjs/operators';
 })
 export class AuthService {
 
+
+
   
 
     // BASE_PATH: 'http://localhost:8080'
@@ -55,4 +57,5 @@ export class AuthService {
       if (user === null) return ''
       return user
     }
+
 }

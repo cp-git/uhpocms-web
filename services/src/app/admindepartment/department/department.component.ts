@@ -31,39 +31,12 @@ export class DepartmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    // fetching all departments
-    this._deptService.fetchAllDepartments().subscribe(
-      response => {
-
-        // assigning received data to departments
-        this.departments = response;
-
-        //  cloning array from departments to backupDept
-        this.departments.forEach(dept => {
-          this.backupDept.push(Object.assign({}, dept))
-        })
-
-        // when data not available
-        if (this.departments.length > 0) {
-          this.isHidden = false;
-        }
-      },
-      error => {
-        this.displayEmptyRow();
-        console.log("No data in table ");
-      }
-    );
-
-
-    // this._deptService.fetchAllInstitutions().subscribe(
-    //   response => {
-    //     this.adminInstitutions = (response);
-    //   },
-    //   error => {
-    //     alert("Not able to fetch data \n" + JSON.stringify(error.error));
-    //   }
-    // );
+    alert();
+    if (sessionStorage.getItem('authenticatedUser') == null) {
+      this._route.navigate(['login'])
+    } else {
+      this.getAllDepartments();
+    }
   }
 
 
@@ -179,12 +152,43 @@ export class DepartmentComponent implements OnInit {
   private loadAdminInstitutions() {
     this.sessionData = sessionStorage.getItem("admininstitution");
 
-    this.data = JSON.parse(this.sessionData);
+    this.adminInstitutions = JSON.parse(this.sessionData);
 
-    for (var inst in this.data) {
-      this.adminInstitutions.push(this.data[inst]);
+  }
 
-    }
+  private getAllDepartments() {
+    // fetching all departments
+    this._deptService.fetchAllDepartments().subscribe(
+      response => {
+
+        // assigning received data to departments
+        this.departments = response;
+
+        //  cloning array from departments to backupDept
+        this.departments.forEach(dept => {
+          this.backupDept.push(Object.assign({}, dept))
+        })
+
+        // when data not available
+        if (this.departments.length > 0) {
+          this.isHidden = false;
+        }
+      },
+      error => {
+        this.displayEmptyRow();
+        console.log("No data in table ");
+      }
+    );
+
+
+    // this._deptService.fetchAllInstitutions().subscribe(
+    //   response => {
+    //     this.adminInstitutions = (response);
+    //   },
+    //   error => {
+    //     alert("Not able to fetch data \n" + JSON.stringify(error.error));
+    //   }
+    // );
   }
 
   Home() {

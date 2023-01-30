@@ -14,7 +14,7 @@ export class AdminroleserviceService {
   }
 
   fetchadminlist(): Observable<any> {
-    return this._http.get<any>(`${this.adminRoleUrl}/?name=all`);
+    return this._http.get<any>(`${this.adminRoleUrl}?name=all`);
   }
 
   addAdminRole(admin: Admin): Observable<any> {
