@@ -15,16 +15,17 @@ export class InstituteAdminServiceService {
 
   public username: string = "uhpocadmin";
   public password: string = "Pa55w0rd";
+  _loginUrl: string;
 
 
   constructor(private http: HttpClient) {
     this._baseUrl = `${environment.instituteAdmin}/profile`;
     this._admininstitutionUrl = `${environment.adminInstitutionUrl}/institution`;
-
+    this._loginUrl = `${environment.adminInstitutionUrl}/login`;
   }
 
   authenticationService(username: string, password: string) {
-    return this.http.get(`http://localhost:8090/instituteadmin/uhpocms/basicauth`,
+    return this.http.get(this._loginUrl,
       { headers: { authorization: this.createBasicAuthToken(username, password) } }).pipe(map((res) => {
         this.username = username;
         this.password = password;

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'environments/environment.development';
 import { map } from 'rxjs';
 
 @Injectable({
@@ -14,13 +15,14 @@ export class AuthorizeServiceService {
 
   public username: String = "uhpocadmin";
   public password: String = "P@55w0rd";
+  _authUrl: string;
 
   constructor(private http: HttpClient, private _route: Router) {
-
+    this._authUrl = `${environment.authUserUrl}/basicauth`;
   }
 
   authenticationService(username: String, password: String) {
-    return this.http.get(`http://localhost:8090/authuser/uhpocms/basicauth`,
+    return this.http.get(this._authUrl,
       { headers: { authorization: this.createBasicAuthToken(username, password) } }).pipe(map((res) => {
         this.username = username;
         this.password = password;
