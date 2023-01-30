@@ -20,7 +20,7 @@ export class LoginComponentComponent implements OnInit {
   }
 
   RedirectTOAuth() {
-    this._route.navigate(['authorizationAuth'])
+    this._route.navigate(['authuser'])
   }
 
   RedirectTOInsProfile() {

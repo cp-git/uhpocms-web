@@ -7,6 +7,7 @@ import { Module } from './class/module';
 import { Quiz } from './class/quiz';
 import { InstituteAdmin } from './instituteadminprofile/institute-admin';
 import { environment } from 'environments/environment.development';
+import { AdminInstitution } from './admindepartment/admin-institution/admin-institution';
 
 @Injectable({
   providedIn: 'root'
@@ -31,9 +32,9 @@ export class AppService {
     this.instituteProfileURL = `${environment.instituteAdmin}/profile?firstName=all`;
   }
 
-  fetchAllInstitution(): Observable<any> {
+  fetchAllInstitution(): Observable<AdminInstitution[]> {
     // alert(this.adminInstitutionURL)
-    return this._http.get<any>(this.adminInstitutionURL);
+    return this._http.get<AdminInstitution[]>(this.adminInstitutionURL);
   }
 
   fetchAllQuizs(): Observable<Quiz[]> {

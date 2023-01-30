@@ -13,7 +13,7 @@ export class EmailService {
 
   public username: String = "uhpocadmin";
   public password: String = "P@55w0rd";
- 
+
   private readonly emailUrl;
 
   constructor(private http: HttpClient) {
