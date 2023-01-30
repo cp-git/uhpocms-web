@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Course } from 'app/class/course';
 import { Module } from '../module';
-import { TeachermoduleserviceService } from '../teachermoduleservice.service';
+import { TeachermoduleserviceService } from '../service/teachermoduleservice.service';
+
 
 
 @Component({
@@ -25,6 +26,14 @@ export class TeachermoduleComponent {
   data: any;
 
 
+  ngOnInit(): void {
+    if (sessionStorage.getItem('authenticatedUser') === null) {
+      this._route.navigate(['']);
+    } else {
+      this.getAllModules();
+    }
+
+  }
   constructor(private _service: TeachermoduleserviceService, private _activatedRoute: ActivatedRoute, private _route: Router) {
     this.loadCourses();
 
@@ -49,19 +58,17 @@ export class TeachermoduleComponent {
         this._teacherModule.push(this.module);
         this._backupModule.set(this.module.moduleId, (Object.assign({}, this.module)));
         alert("Module Added successfully");
+        location.reload();
         if (this._teacherModule.length > 0) {
           this.isVisible = false;
         }
-        // this.ngOnInit();
+
       },
       error => alert("Module Name already exists")
     )
   }
 
 
-  ngOnInit(): void {
-    this.getAllModules();
-  }
 
   getAllModules() {
     this._service.fetchModuleList().subscribe(

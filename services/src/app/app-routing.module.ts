@@ -11,11 +11,14 @@ import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
 import { QuestionComponent } from './teacherquestion/question/question.component';
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 
+
 const routes: Routes = [
   //admin role routes
   { path: 'adminrole', component: AdminroleComponent },
   //auth user routes
   { path: 'authuser', component: AuthuserComponent },
+
+
 
   //question routes
   { path: 'question', component: QuestionComponent },
@@ -40,8 +43,11 @@ const routes: Routes = [
   //teacherModule routes
   { path: 'teachermodule', component: TeachermoduleComponent },
 
+
+
   //teacherModule routes
   { path: 'email', component: EmailComponent }
+
 ];
 
 @NgModule({

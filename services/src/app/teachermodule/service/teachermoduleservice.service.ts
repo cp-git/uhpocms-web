@@ -1,48 +1,45 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/internal/Observable';
-import { map } from 'rxjs/internal/operators/map';
-import { Quiz } from '../quiz';
-import { environment } from 'environments/environment.development';
+import { HttpClient } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
+import { Module } from '../module';
+
+
 @Injectable({
   providedIn: 'root'
 })
-export class QuizService {
+export class TeachermoduleserviceService {
 
-
-  
   // BASE_PATH: 'http://localhost:8080'
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
-
-  private quizUrl: string;
-
 
   public username: String = "uhpocadmin";
   public password: String = "P@55w0rd";
 
-  constructor(private _http: HttpClient) {
-    this.quizUrl = environment.quizUrl + "/quiz";
+  constructor(private _http: HttpClient) { }
+
+  fetchModuleList(): Observable<any> {
+    return this._http.get<any>("http://localhost:8090/module/uhpocms/module?name=all");
   }
 
-  _getAllQuizzes(): Observable<any> {
-    return this._http.get<any>(`${this.quizUrl}?title=all`);
+  addTeacherModule(module: Module): Observable<any> {
+    return this._http.post<any>("http://localhost:8090/module/uhpocms/module", module);
   }
 
-  _getQuizByTitle(title: string): Observable<any> {
-    return this._http.get<any>(`${this.quizUrl}/` + title);
+  deleteModule(moduleName: string): Observable<any> {
+    return this._http.delete<any>("http://localhost:8090/module/uhpocms/module/" + moduleName);
   }
 
-
-  _addQuiz(quiz: Quiz): Observable<any> {
-    return this._http.post<any>(`${this.quizUrl}`, quiz);
+  getModuleList(moduleName: string): Observable<any> {
+    return this._http.get<any>("http://localhost:8090/module/uhpocms/module/" + moduleName);
   }
 
-  _updateQuiz(title: string, quiz: Quiz): Observable<any> {
-    return this._http.put<any>(`${this.quizUrl}/` + title, quiz);
+  updateModuleList(moduleName: string, module: Module): Observable<any> {
+
+    return this._http.put<any>("http://localhost:8090/module/uhpocms/module/" + moduleName, module);
   }
 
-  _deleteQuiz(title: string): Observable<any> {
-    return this._http.delete<any>(`${this.quizUrl}/` + title);
+  getModule(moduleName: string): Observable<Module> {
+    return this._http.get<Module>("http://localhost:8090/module/uhpocms/module/" + moduleName);
   }
 
   authenticationService(username: String, password: String) {
@@ -80,5 +77,4 @@ export class QuizService {
     if (user === null) return ''
     return user
   }
-
 }
