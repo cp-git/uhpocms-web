@@ -19,8 +19,12 @@ import { EmailComponent } from './email/email/email.component';
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
 import { HttpInterceptorServiceService } from './authlogin/http-interceptor-service.service';
+
 import { AuthorizationAuthComponent } from './authuser/authorization-auth/authorization-auth.component';
 import { AuthorizeTeacherComponent } from './teachermodule/authorize-teacher/authorize-teacher.component';
+
+
+
 
 @NgModule({
   declarations: [

@@ -13,6 +13,7 @@ import { AuthorizationAuthComponent } from './authuser/authorization-auth/author
 import { AuthorizeTeacherComponent } from './teachermodule/authorize-teacher/authorize-teacher.component';
 import { DepartmentComponent } from './admindepartment/department/department.component';
 
+
 const routes: Routes = [
   //admin role routes
   { path: 'adminrole', component: AdminroleComponent },
@@ -21,7 +22,9 @@ const routes: Routes = [
   //auth user routes
   { path: 'authuser', component: AuthuserComponent },
 
+
   { path: 'authorizationAuth', component: AuthorizationAuthComponent },
+
 
   //question routes
   { path: 'question', component: QuestionComponent },
@@ -42,10 +45,12 @@ const routes: Routes = [
   //teacherModule routes
   { path: 'teachermodule', component: TeachermoduleComponent },
 
+
   { path: 'authTeacher', component: AuthorizeTeacherComponent },
 
   //teacherModule routes
   { path: 'email', component: EmailComponent }
+
 ];
 
 @NgModule({

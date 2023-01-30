@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthuserserviceService } from 'app/authuser/authuserservice.service';
+
+//import { AuthuserserviceService } from 'app/authuser/authuserservice.service';
+
+import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
+
+
 import { AuthService } from '../auth.service';
 import { Authuser } from '../authuser';
 
@@ -10,6 +15,7 @@ import { Authuser } from '../authuser';
   styleUrls: ['./loginauth.component.css']
 })
 export class LoginauthComponent {
+
 
   username!: string;
   password!: string;
@@ -36,8 +42,11 @@ export class LoginauthComponent {
       }, error => console.log(error));
 
 
+
   }
 
+
+  
 
   handleLogin() {
     this.authenticationService.authenticationService(this.username, this.password).subscribe((result) => {

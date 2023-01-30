@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Course } from 'app/class/course';
 import { Module } from '../module';
-import { TeachermoduleserviceService } from '../teachermoduleservice.service';
+import { TeachermoduleserviceService } from '../service/teachermoduleservice.service';
+
 
 
 @Component({
@@ -26,7 +27,16 @@ export class TeachermoduleComponent {
 
 
   ngOnInit(): void {
+
     this.getAllModules();
+
+    if (sessionStorage.getItem('authenticatedUser') === null) {
+      this._route.navigate(['']);
+    } else {
+      this.getAllModules();
+    }
+
+
   }
   constructor(private _service: TeachermoduleserviceService, private _activatedRoute: ActivatedRoute, private _route: Router) {
     this.loadCourses();
