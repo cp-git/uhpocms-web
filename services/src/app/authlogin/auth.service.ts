@@ -10,7 +10,6 @@ export class AuthService {
 
 
 
-  
 
     // BASE_PATH: 'http://localhost:8080'
     USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
@@ -57,5 +56,6 @@ export class AuthService {
       if (user === null) return ''
       return user
     }
+
 
 }

@@ -26,6 +26,7 @@ import { AuthorizeTeacherComponent } from './teachermodule/authorize-teacher/aut
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,

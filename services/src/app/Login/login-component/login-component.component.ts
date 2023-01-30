@@ -42,6 +42,14 @@ export class LoginComponentComponent implements OnInit {
     this._route.navigate(['question'])
   }
 
+  RedirectToInstituteAdminProfile() {
+    this._route.navigate(['displayInstituteAdmin'])
+  }
+
+  RedirectToEmailLogin() {
+    this._route.navigate(['emaillogin'])
+  }
+
   RedirectToEmail() {
     this._route.navigate(['email'])
   }
