@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core'
 import { map } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { InstituteAdmin } from './institute-admin';
-
+import { environment } from 'environments/environment.development';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,9 +17,10 @@ export class InstituteAdminServiceService {
   public password: string = "Pa55w0rd";
 
 
-  constructor(private http: HttpClient) {
-    this._baseUrl = "http://localhost:8090/institituteadmin/uhpocms/profile";
-    this._admininstitutionUrl = "http://localhost:8090/admininstitution/uhpocms/institution";
+  constructor(private _http: HttpClient) {
+    this._baseUrl = `${environment.instituteAdmin}/profile`;
+    this._admininstitutionUrl = `${environment.adminInstitutionUrl}/institution`;
+
   }
 
   authenticationService(username: string, password: string) {

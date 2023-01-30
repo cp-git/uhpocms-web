@@ -42,26 +42,28 @@ export class AdminroleComponent {
     )
   }
 
-
-
-
   ngOnInit(): void {
-    this._service.fetchadminlist().subscribe(
-      data => {
-        console.log("Response Received...");
-        this._adminRole = data;
 
-        if (this._adminRole.length > 0) {
-          this.isHidden = false;
-        }
+    if (sessionStorage.getItem('authenticatedUser') == null) {
+      this._route.navigate(['/login'])
+    } else {
+      this._service.fetchadminlist().subscribe(
+        data => {
+          console.log("Response Received...");
+          this._adminRole = data;
 
-        this._adminRole.forEach(role => {
-          this._backupRole.push(Object.assign({}, role))
-        })
+          if (this._adminRole.length > 0) {
+            this.isHidden = false;
+          }
 
-      },
-      error => console.log("exception")
-    )
+          this._adminRole.forEach(role => {
+            this._backupRole.push(Object.assign({}, role))
+          })
+
+        },
+        error => console.log("exception")
+      )
+    }
   }
 
   updateAdminRole(role: Admin) {

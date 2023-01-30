@@ -1,29 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { map } from 'rxjs';
-import { Email } from '../email';
-import { environment } from 'environments/environment.development';
+
 @Injectable({
   providedIn: 'root'
 })
-export class EmailService {
+export class TeacherauthServiceService {
 
-  private readonly baseURL = "http://localhost:8090/email/uhpocms/email";
+  // BASE_PATH: 'http://localhost:8080'
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
 
   public username: String = "uhpocadmin";
   public password: String = "P@55w0rd";
-  constructor(private _http: HttpClient) { }
 
-  private readonly emailUrl;
+  constructor(private http: HttpClient, private _route: Router) {
 
-  constructor(private _http: HttpClient) {
-    this.emailUrl = environment.emailUrl + "/email";
   }
 
-
   authenticationService(username: String, password: String) {
-    return this._http.get(`http://localhost:8090/email/uhpocms/basicauth`,
+    return this.http.get(`http://localhost:8090/module/uhpocms/basicauth`,
       { headers: { authorization: this.createBasicAuthToken(username, password) } }).pipe(map((res) => {
         this.username = username;
         this.password = password;
@@ -52,21 +48,9 @@ export class EmailService {
     return true
   }
 
-  fetchAllEmails() {
-
-    return this._http.get<Email[]>(`${this.emailUrl}?title=all`);
-
-  }
-
-  insertEmail(email: Email) {
-    return this._http.post<Email>(`${this.emailUrl}`, email);
-  }
-
-  updateEmail(email: Email) {
-    return this._http.put<Email>(`${this.emailUrl}/` + email.title, email);
-  }
-
-  deleteEmail(emailTitle: string) {
-    return this._http.delete<Email>(`${this.emailUrl}/` + emailTitle);
+  getLoggedInUserName() {
+    let user = sessionStorage.getItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME)
+    if (user === null) return ''
+    return user
   }
 }

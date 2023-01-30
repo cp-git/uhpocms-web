@@ -12,7 +12,7 @@ export class LoginComponentComponent implements OnInit {
 
   constructor(private _route: Router) { }
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+
   }
 
   RedirectRole() {
@@ -20,7 +20,7 @@ export class LoginComponentComponent implements OnInit {
   }
 
   RedirectTOAuth() {
-    this._route.navigate(['authuser'])
+    this._route.navigate(['authorizationAuth'])
   }
 
   RedirectTOInsProfile() {
@@ -55,7 +55,7 @@ export class LoginComponentComponent implements OnInit {
   }
 
   RedirectToModule() {
-    this._route.navigate(['teachermodule'])
+    this._route.navigate(['authTeacher'])
   }
   _Back() {
     this._route.navigate([''])
