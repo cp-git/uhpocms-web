@@ -12,6 +12,7 @@ import { Authuser } from '../authuser';
 })
 export class LoginauthComponent {
 
+
   username!: string;
   password!: string;
   errorMessage = 'Invalid Credentials';
@@ -21,8 +22,9 @@ export class LoginauthComponent {
 
   authUser = new Authuser();
   constructor(private _auth: AuthuserserviceService, private _route: Router, private authenticationService: AuthService) { }
+
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+
   }
 
   userLogin() {
@@ -34,6 +36,7 @@ export class LoginauthComponent {
         this._route.navigate(['demo']);
 
       }, error => console.log(error));
+
 
 
   }
@@ -49,6 +52,7 @@ export class LoginauthComponent {
       this.invalidLogin = true;
       this.loginSuccess = false;
     });
+
   }
 
 }

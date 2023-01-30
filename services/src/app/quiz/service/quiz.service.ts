@@ -3,43 +3,46 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
 import { Quiz } from '../quiz';
-
+import { environment } from 'environments/environment.development';
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
 
-  private _baseUrl: string;
+
+  
   // BASE_PATH: 'http://localhost:8080'
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
+
+  private quizUrl: string;
+
 
   public username: String = "uhpocadmin";
   public password: String = "P@55w0rd";
 
   constructor(private _http: HttpClient) {
-    this._baseUrl = "http://localhost:8090/quiz/uhpocms/quiz";
-
+    this.quizUrl = environment.quizUrl + "/quiz";
   }
 
   _getAllQuizzes(): Observable<any> {
-    return this._http.get<any>(this._baseUrl + "?title=all");
+    return this._http.get<any>(`${this.quizUrl}?title=all`);
   }
 
   _getQuizByTitle(title: string): Observable<any> {
-    return this._http.get<any>(this._baseUrl + "/" + title);
+    return this._http.get<any>(`${this.quizUrl}/` + title);
   }
 
 
   _addQuiz(quiz: Quiz): Observable<any> {
-    return this._http.post<any>(this._baseUrl + "/", quiz);
+    return this._http.post<any>(`${this.quizUrl}`, quiz);
   }
 
   _updateQuiz(title: string, quiz: Quiz): Observable<any> {
-    return this._http.put<any>(this._baseUrl + "/" + title, quiz);
+    return this._http.put<any>(`${this.quizUrl}/` + title, quiz);
   }
 
   _deleteQuiz(title: string): Observable<any> {
-    return this._http.delete<any>(this._baseUrl + "/" + title);
+    return this._http.delete<any>(`${this.quizUrl}/` + title);
   }
 
   authenticationService(username: String, password: String) {
