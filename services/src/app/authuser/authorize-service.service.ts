@@ -41,8 +41,9 @@ export class AuthorizeServiceService {
 
   logout() {
     sessionStorage.removeItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME);
-    this.username;
-    this.password;
+    this.username = "";
+    this.password = "";
+    this._route.navigate(['/login']);
   }
 
   isUserLoggedIn() {

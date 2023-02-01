@@ -13,19 +13,23 @@ import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-
 import { DepartmentComponent } from './admindepartment/department/department.component';
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
+
 import { QuizComponent } from './quiz/quiz.component';
 import { QuestionComponent } from './teacherquestion/question/question.component';
 import { EmailComponent } from './email/email/email.component';
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
+import { HomeComponent } from './home/home.component';
+
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatIconModule } from '@angular/material/icon'
+import {MatToolbarModule} from '@angular/material/toolbar';
+
+
 import { HttpInterceptorServiceService } from './authlogin/http-interceptor-service.service';
-
-import { AuthorizationAuthComponent } from './authuser/authorization-auth/authorization-auth.component';
-import { AuthorizeTeacherComponent } from './teachermodule/authorize-teacher/authorize-teacher.component';
-
-
-
-
+import { CourseComponent } from './course/course/course.component';
 
 @NgModule({
   declarations: [
@@ -36,27 +40,37 @@ import { AuthorizeTeacherComponent } from './teachermodule/authorize-teacher/aut
     DepartmentComponent,
     AdminroleComponent,
     LoginauthComponent,
+
     QuizComponent,
+
     TeachermoduleComponent,
     EmailComponent,
     QuestionComponent,
-    AuthorizationAuthComponent,
-    AuthorizeTeacherComponent
+    HomeComponent,
+    CourseComponent
+   
+  
+  
+
   ],
 
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatToolbarModule
   ],
+ 
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorServiceService,
       multi: true
-    }
-  ],
-  bootstrap: [AppComponent]
+    }],
+  bootstrap: [AppComponent],
+  
 })
 export class AppModule { }
