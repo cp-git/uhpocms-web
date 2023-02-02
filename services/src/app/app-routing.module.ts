@@ -12,6 +12,8 @@ import { QuestionComponent } from './teacherquestion/question/question.component
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 
 import { HomeComponent } from './home/home.component';
+import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
+import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
 
 
 
@@ -41,7 +43,17 @@ const routes: Routes = [
   //quiz routes
   { path: 'quiz', component: QuizComponent },
 
- 
+  //inserting  the quiz
+
+  { path: 'createQuiz', component: CreateQuizComponent },
+
+
+  //update Quiz
+
+  { path: 'updateQuiz/:title', component: UpdatequizComponent },
+  { path: 'updateQuiz', component: UpdatequizComponent },
+
+
 
   //teacherModule routes
   { path: 'teachermodule', component: TeachermoduleComponent },
@@ -49,13 +61,13 @@ const routes: Routes = [
   //teacherModule routes
   { path: 'email', component: EmailComponent },
 
- 
-
-   //home route
-   {path: 'home', component: HomeComponent}
 
 
- 
+  //home route
+  { path: 'home', component: HomeComponent }
+
+
+
 ];
 
 @NgModule({
