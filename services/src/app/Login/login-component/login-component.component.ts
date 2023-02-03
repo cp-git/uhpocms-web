@@ -61,4 +61,13 @@ export class LoginComponentComponent implements OnInit {
   logout() {
     this._authService.logout();
   }
+
+  getElementId(elemRef: any) {
+
+    // Get the element's reference
+    let element = elemRef;
+    // Get the Id of the element
+    let elementId = element.value;
+    alert("The button's id is: " + elementId);  // Prompt element's Id
+  }
 }

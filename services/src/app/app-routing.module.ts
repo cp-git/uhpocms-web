@@ -14,7 +14,9 @@ import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermod
 import { HomeComponent } from './home/home.component';
 import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
 import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
-
+import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
+import { CourseComponent } from './course/course/course.component';
+import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
 
 
 const routes: Routes = [
@@ -39,6 +41,7 @@ const routes: Routes = [
   //admindepartment routes
   { path: 'department', component: DepartmentComponent },
 
+  { path: 'department/:id', component: ViewDepartmentComponent },
 
   //quiz routes
   { path: 'quiz', component: QuizComponent },
@@ -46,6 +49,8 @@ const routes: Routes = [
   //inserting  the quiz
 
   { path: 'createQuiz', component: CreateQuizComponent },
+
+  { path: 'course/:id', component: ViewCoursesComponent },
 
 
   //update Quiz

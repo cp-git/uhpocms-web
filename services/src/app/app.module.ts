@@ -32,6 +32,8 @@ import { HttpInterceptorServiceService } from './authlogin/http-interceptor-serv
 import { CourseComponent } from './course/course/course.component';
 import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
 import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
+import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
+import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
     HomeComponent,
     CourseComponent,
     CreateQuizComponent,
-    UpdatequizComponent
+    UpdatequizComponent,
+    ViewDepartmentComponent,
+    ViewCoursesComponent
    
   
   
