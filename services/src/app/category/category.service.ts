@@ -13,6 +13,6 @@ export class CategoryService {
   }
 
   _getAllCategorys(): Observable<any> {
-    return this._http.get<any>(`${this.categoryUrl}/category?category = all`);
+    return this._http.get<any>("http://localhost:8090/category/uhpocms/category?category=all");
   }
 }

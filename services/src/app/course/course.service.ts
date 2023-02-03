@@ -14,6 +14,6 @@ export class CourseService {
   }
 
   _getAllCourses(): Observable<any> {
-    return this._http.get<any>(`${this.courseUrl}/course?name=all`);
+    return this._http.get<any>("http://localhost:8090/course/uhpocms/course?name=all");
   }
 }
