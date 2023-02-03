@@ -12,29 +12,29 @@ import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermod
 import { AuthorizationAuthComponent } from './authuser/authorization-auth/authorization-auth.component';
 import { AuthorizeTeacherComponent } from './teachermodule/authorize-teacher/authorize-teacher.component';
 import { DepartmentComponent } from './admindepartment/department/department.component';
+import { AnnouncementComponent } from './announcement/component/announcement/announcement.component';
+import { CreateAnnouncementComponent } from './announcement/component/create-announcement/create-announcement.component';
 
 
 const routes: Routes = [
   //admin role routes
   { path: 'adminrole', component: AdminroleComponent },
-  //admin role routes
-  { path: 'login', component: LoginauthComponent },
+
   //auth user routes
   { path: 'authuser', component: AuthuserComponent },
 
-
   { path: 'authorizationAuth', component: AuthorizationAuthComponent },
-
 
   //question routes
   { path: 'question', component: QuestionComponent },
+
   //login route
   { path: 'demo', component: LoginComponentComponent },
   { path: '', component: LoginauthComponent },
+  { path: 'login', component: LoginauthComponent },
 
   //instituteadmin routes
   { path: 'displayInstituteAdmin', component: DisplayInstituteAdminComponent },
-  { path: 'login', component: LoginauthComponent },
 
   //admindepartment routes
   { path: 'department', component: DepartmentComponent },
@@ -42,15 +42,22 @@ const routes: Routes = [
   //quiz routes
   { path: 'quiz', component: QuizComponent },
 
-
   //teacherModule routes
   { path: 'teachermodule', component: TeachermoduleComponent },
-
 
   { path: 'authTeacher', component: AuthorizeTeacherComponent },
 
   //teacherModule routes
-  { path: 'email', component: EmailComponent }
+  { path: 'email', component: EmailComponent },
+
+  //announcement router
+  {
+    path: 'announcement', component: AnnouncementComponent, children: [
+      {
+        path: 'add', component: CreateAnnouncementComponent
+      }
+    ]
+  }
 
 ];
 

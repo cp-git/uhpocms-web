@@ -1,0 +1,9 @@
+.dropdown {
+    list-style-type: none;
+}
+
+.dropdown-menu {
+    max-height: 180px;
+    overflow-y: auto;
+    --bs-dropdown-min-width: 20rem;
+}

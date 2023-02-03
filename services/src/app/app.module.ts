@@ -22,9 +22,8 @@ import { HttpInterceptorServiceService } from './authlogin/http-interceptor-serv
 
 import { AuthorizationAuthComponent } from './authuser/authorization-auth/authorization-auth.component';
 import { AuthorizeTeacherComponent } from './teachermodule/authorize-teacher/authorize-teacher.component';
-
-
-
+import { AnnouncementComponent } from './announcement/component/announcement/announcement.component';
+import { CreateAnnouncementComponent } from './announcement/component/create-announcement/create-announcement.component';
 
 
 @NgModule({
@@ -41,7 +40,9 @@ import { AuthorizeTeacherComponent } from './teachermodule/authorize-teacher/aut
     EmailComponent,
     QuestionComponent,
     AuthorizationAuthComponent,
-    AuthorizeTeacherComponent
+    AuthorizeTeacherComponent,
+    AnnouncementComponent,
+    CreateAnnouncementComponent
   ],
 
   imports: [

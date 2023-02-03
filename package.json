@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@ng-bootstrap/ng-bootstrap": "^14.0.1",
+    "@popperjs/core": "^2.11.6",
+    "boostrap": "^2.0.0",
+    "bootstrap": "^5.2.3",
+    "jquery": "^3.6.3",
+    "popper.js": "^1.16.1"
+  }
+}

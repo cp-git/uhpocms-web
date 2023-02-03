@@ -25,9 +25,15 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "../../uhpocms-web/node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "../../uhpocms-web/node_modules/jquery/dist/jquery.min.js",
+              "../../uhpocms-web/node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "../../uhpocms-web/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "../../uhpocms-web/node_modules/popper.js/dist/umd/popper.min.js"
+            ]
           },
           "configurations": {
             "production": {

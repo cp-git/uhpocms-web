@@ -14,4 +14,5 @@ export const environment = {
     quizUrl: `${commonEnv.baseUrl}/quiz/uhpocms`,
     adminRoleUrl: `${commonEnv.baseUrl}/adminrole/uhpocms`,
     questionUrl: `${commonEnv.baseUrl}/question/uhpocms`,
+    announcementUrl: `${commonEnv.baseUrl}/announcement/uhpocms`,
 };
