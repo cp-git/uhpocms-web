@@ -30,6 +30,10 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 
 import { HttpInterceptorServiceService } from './authlogin/http-interceptor-service.service';
 import { CourseComponent } from './course/course/course.component';
+import { CategoryComponent } from './category/UI/category/category.component';
+import { MainComponent } from './category/UI/main/main.component';
+import { AddModuleComponent } from './category/UI/add-module/add-module.component';
+import { AddCategoryComponent } from './category/UI/add-category/add-category.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +51,11 @@ import { CourseComponent } from './course/course/course.component';
     EmailComponent,
     QuestionComponent,
     HomeComponent,
-    CourseComponent
+    CourseComponent,
+    CategoryComponent,
+    MainComponent,
+    AddModuleComponent,
+    AddCategoryComponent
    
   
   

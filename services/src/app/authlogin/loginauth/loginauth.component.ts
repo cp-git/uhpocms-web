@@ -46,14 +46,14 @@ export class LoginauthComponent {
   }
 
 
-  
+
 
   handleLogin() {
     this.authenticationService.authenticationService(this.username, this.password).subscribe((result) => {
       this.invalidLogin = false;
       this.loginSuccess = true;
       this.successMessage = 'Login Successful.';
-      this._route.navigate(['demo']);
+      this._route.navigate(['main']);
     }, () => {
       this.invalidLogin = true;
       this.loginSuccess = false;

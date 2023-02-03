@@ -12,10 +12,20 @@ import { QuestionComponent } from './teacherquestion/question/question.component
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 
 import { HomeComponent } from './home/home.component';
-
-
+import { CategoryComponent } from './category/UI/category/category.component';
+import { MainComponent } from './category/UI/main/main.component';
+import { AddModuleComponent } from './category/UI/add-module/add-module.component';
+import { AddCategoryComponent } from './category/UI/add-category/add-category.component';
 
 const routes: Routes = [
+
+  //category routing
+  { path: 'addCategory', component: AddCategoryComponent },
+  { path: 'addModule', component: AddModuleComponent },
+  { path: 'main', component: MainComponent },
+  { path: 'category', component: CategoryComponent },
+
+
   { path: '', component: HomeComponent },
   //admin role routes
   { path: 'adminrole', component: AdminroleComponent },
@@ -41,7 +51,7 @@ const routes: Routes = [
   //quiz routes
   { path: 'quiz', component: QuizComponent },
 
- 
+
 
   //teacherModule routes
   { path: 'teachermodule', component: TeachermoduleComponent },
@@ -49,13 +59,13 @@ const routes: Routes = [
   //teacherModule routes
   { path: 'email', component: EmailComponent },
 
- 
-
-   //home route
-   {path: 'home', component: HomeComponent}
 
 
- 
+  //home route
+  { path: 'home', component: HomeComponent }
+
+
+
 ];
 
 @NgModule({

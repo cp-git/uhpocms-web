@@ -1,0 +1,71 @@
+<div class="container-fluid">
+    <div class="header1">
+        <h1 class="heading">Category for Quiz</h1>
+    </div>
+    <table class="table" border="1">
+        <thead>
+            <tr>
+                <th>Sr.No.</th>
+                <!-- <th>EmailId</th> -->
+                <th>Category</th>
+                <th>isActive</th>
+
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr *ngIf="isHidden">
+                <td>1</td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" [(ngModel)]="category.categoryName"
+                            value="{{category.categoryName}}" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group"><input class="form-control" type="checkbox" [(ngModel)]="category.active"
+                            checked=" {{category.active}}" />
+                    </div>
+                </td>
+
+
+
+                <td>
+                    <div class="form-group">
+                        <button class="form-control btn btn-danger" (click)="deleteCategory(category)"
+                            id="delbtn">Delete</button>
+                    </div>
+                </td>
+            </tr>
+
+
+
+            <tr *ngFor="let categoryData of categories,let i=index">
+                <td>{{i+1}}</td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" [(ngModel)]="categoryData.categoryName"
+                            value="{{categoryData.categoryName}}" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group"><input class="form-control" type="checkbox"
+                            [(ngModel)]="categoryData.active" checked=" {{categoryData.active}}" disabled />
+                    </div>
+                </td>
+
+
+                <td>
+                    <div class="form-group">
+                        <button class="form-control btn btn-danger" (click)="deleteCategory(categoryData)"
+                            id="delbtn">Delete</button>
+                    </div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <button class="btn-primary" (click)="Back()" id="delbtn">Back</button>
+
+</div>

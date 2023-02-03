@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!-- === Coding by CodingLab | www.codinglabweb.com === -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+
+
+    <!--<title>Login & Registration Form</title>-->
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="forms">
+            <div class="form login">
+                <span class="title">Add Category</span>
+
+
+                <div class="input-field">
+                    <input type="text" placeholder="Category Name" [(ngModel)]="category.categoryName"
+                        value="{{category.categoryName}}">
+
+                </div>
+
+
+                <div class="checkbox-text">
+                    <div class="checkbox-content">
+                        <input type="checkbox" [(ngModel)]="category.active" checked=" {{category.active}}">
+                        <label for="logCheck" class="text">isActive</label>
+                    </div>
+
+
+                </div>
+
+                <div class="input-field button">
+                    <button class="form-control btn btn-primary" (click)="addCategory(category)"
+                        id="addbtn">Submit</button>
+
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>
