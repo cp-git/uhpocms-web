@@ -59,7 +59,7 @@ export class AppService {
 
   fetchAllInstituteProfile(): Observable<InstituteAdmin[]> {
     //alert(this.baseUrl + this.instituteProfileWar + this.instituteProfileURL)
-    return this._http.get<InstituteAdmin[]>(this.instituteProfileURL);
+    return this._http.get<InstituteAdmin[]>(`http://localhost:8090/instituteadmin/uhpocms/profile?firstName=all`);
   }
 
 

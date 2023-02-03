@@ -26,13 +26,13 @@
             ],
             "styles": [
               "src/styles.css",
-              "../../uhpocms-web/node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "../../uhpocms-web/services/node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [
-              "../../uhpocms-web/node_modules/jquery/dist/jquery.min.js",
-              "../../uhpocms-web/node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "../../uhpocms-web/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-              "../../uhpocms-web/node_modules/popper.js/dist/umd/popper.min.js"
+              "../../uhpocms-web/services/node_modules/jquery/dist/jquery.min.js",
+              "../../uhpocms-web/services/node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "../../uhpocms-web/services/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "../../uhpocms-web/services/node_modules/popper.js/dist/umd/popper.min.js"
             ]
           },
           "configurations": {

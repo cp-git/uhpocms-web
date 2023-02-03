@@ -10,9 +10,9 @@
             <thead class="table-dark">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Title</th>
+                    <th scope="col">Subject</th>
                     <th scope="col">Message</th>
-                    <th scope="col">To</th>
+                    <!-- <th scope="col">To</th> -->
                     <th scope="col">Sent By</th>
                     <th scope="col">Delete</th>
                 </tr>
@@ -22,7 +22,7 @@
                     <th scope="row">{{i+1}}</th>
                     <td>{{data.announcementTitle}}</td>
                     <td>{{data.announcementMessage}}</td>
-                    <td>{{data.announcementTo}}</td>
+                    <!-- <td>{{data.announcementTo}}</td> -->
                     <td>{{data.announcementReadby}}</td>
                     <td (click)="deleteAnnouncementByTitle(data.announcementTitle)"><span class="fa fa-trash"></span>
                     </td>

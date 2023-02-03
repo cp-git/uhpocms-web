@@ -1,50 +1,57 @@
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div #modal class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Create Announcement</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form>
-                <div class="modal-body">
 
-                    <div class="mb-3">
-                        <label class="form-label">Title</label>
-                        <input type="text" class="form-control" id="announcementTitle" aria-describedby="emailHelp">
+            <div class="modal-body">
+
+                <div class="mb-3">
+                    <label class="form-label">Subject</label>
+                    <input type="text" [(ngModel)]="announcement.announcementTitle" class="form-control"
+                        id="announcementTitle">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Message</label>
+                    <textarea [(ngModel)]="announcement.announcementMessage" style="height: 121px" class="form-control"
+                        id="announcementMessage"></textarea>
+                </div>
+                <div class="mb-3 row">
+                    <div class="col-6 col-md-4">
+                        <li class="dropdown mb-2">
+                            <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false">Select emails from list
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-menu-light">
+
+                                <input type="text" class="form-control" [ngModel]="searchValue"
+                                    (ngModelChange)="sortEmails($event)">
+                                <div *ngFor="let profile of filteredList">
+                                    <input type="checkbox" style="margin-right: 5px" class="form-check-input"
+                                        [checked]="profileIDs.includes(profile.adminId)"
+                                        (change)="onChange(profile.adminId, $event)" id="{{profile.adminId}}">
+                                    <span></span>
+                                    <label class="form-check-label">{{profile.adminEmail}}</label>
+                                </div>
+                            </ul>
+                        </li>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Message</label>
-                        <textarea style="height: 121px" class="form-control" id="announcementMessage"
-                            aria-describedby="emailHelp"></textarea>
-                    </div>
-                    <div class="mb-3 row">
-                        <div class="col-6 col-md-4">
-                            <li class="dropdown mb-2">
-                                <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
-                                    aria-expanded="false">Select emails from list
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-light">
-                                    <div *ngFor="let profile of instituteAdmins">
-                                        <input type="checkbox" style="margin-right: 5px" class="form-check-input"
-                                            id="{{profile.adminId}}">
-                                        <span></span>
-                                        <label class="form-check-label">{{profile.adminEmail}}</label>
-                                    </div>
-                                </ul>
-                            </li>
-                        </div>
-                    </div>
-                    <!-- <div class="mb-3 form-check">
+                    <!-- {{profileIDs|json}} -->
+                </div>
+                <!-- <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
                         <label class="form-check-label">Check me out</label>
                     </div> -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn btn-info">Add</button>
-                </div>
-            </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" #closeModalBtn class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn btn-info" (click)="sendAnnouncements(announcement)">Send</button>
+            </div>
+
         </div>
     </div>
 </div>
