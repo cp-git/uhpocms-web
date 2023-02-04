@@ -30,6 +30,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 
 import { HttpInterceptorServiceService } from './authlogin/http-interceptor-service.service';
 import { CourseComponent } from './course/course/course.component';
+import { AddcourseComponent } from './course/addcourse/addcourse.component';
+import { UpdatecourseComponent } from './course/updatecourse/updatecourse.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { CourseComponent } from './course/course/course.component';
     EmailComponent,
     QuestionComponent,
     HomeComponent,
-    CourseComponent
+    CourseComponent,
+    AddcourseComponent,
+    UpdatecourseComponent
    
   
   

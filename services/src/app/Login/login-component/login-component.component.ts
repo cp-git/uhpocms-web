@@ -58,7 +58,13 @@ export class LoginComponentComponent implements OnInit {
   RedirectToModule() {
     this._route.navigate(['teachermodule'])
   }
+
+  RedirectToCourse()
+  {
+    this._route.navigate(['course'])
+  }
   logout() {
     this._authService.logout();
   }
+
 }

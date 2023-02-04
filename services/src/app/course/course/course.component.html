@@ -1,1 +1,179 @@
-<p>course works!</p>
+<html>
+    <body>
+        <div class="header">
+            <a href="#default" class="logo">Courses</a>
+            <div class="header-right">
+                
+                <button (click)="Add()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                  </svg>
+                </button>
+                <button (click)="Home()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+                      </svg>
+                </button>
+           
+            </div>
+          </div>
+        <div class="container">
+
+<div class="container-fluid">
+    <div class="header1">
+        <h1 class="heading"></h1>
+    </div>
+    <table class="table" border="1">
+        <thead>
+            <tr>
+                
+                <th>Name</th>
+                <th>Description</th>
+                <th>Code</th>
+                <th>Type</th>
+                <th>Passing Score</th>
+                <th>Institute Name</th>
+                
+               
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="isVisible">
+            
+
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" [(ngModel)]="course.courseName"
+                            value="{{course.courseName}}" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" [(ngModel)]="course.courseDescription"
+                            value="{{course.courseDescription}}" />
+                    </div>
+                </td>
+
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" [(ngModel)]="course.courseCode"
+                            value="{{course.courseCode}}" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" [(ngModel)]="course.courseType"
+                            value="{{course.courseType}}" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="number" [(ngModel)]="course.passingScore"
+                            value="{{course.passingScore}}" />
+                    </div>
+                </td>
+
+                <td>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <!-- <input class="form-control" type="number" [(ngModel)]="course.instId"
+                                value="{{course.instId}}" /> -->
+                        
+                        <select [(ngModel)]="course.instId" class="form-control">
+                            <option *ngFor="let institute of institutions" value="{{course.instId}}"
+                                [selected]="course.instId">
+                                 {{institute.adminInstitutionName}}
+                            </option>
+                        </select>
+                    </div>
+                    </div>
+                </td>
+               
+                <td>
+                    <div class="form-group">
+                        <button class="form-control btn btn-success" id="updbtn"
+                            (click)="updatecourse(course)">Update</button>
+                    </div>
+                </td>
+                <td>
+                    <!-- <div class="form-group">
+                        <button class="form-control btn btn-danger" id="delbtn"
+                            (click)="deletecourse(course)">Delete</button>
+                    </div> -->
+                </td>
+            </tr>
+
+
+
+
+            <tr *ngFor="let course of courses,let i=index">
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" [(ngModel)]="course.courseName"
+                            value="{{course.courseName}}" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" [(ngModel)]="course.courseDescription"
+                            value="{{course.courseDescription}}" />
+                    </div>
+                </td>
+
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" [(ngModel)]="course.courseCode"
+                            value="{{course.courseCode}}" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" [(ngModel)]="course.courseType"
+                            value="{{course.courseType}}" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="number" [(ngModel)]="course.passingScore"
+                            value="{{course.passingScore}}" />
+                    </div>
+                </td>
+
+                <td>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <!-- <input class="form-control" type="number" [(ngModel)]="course.instId"
+                                value="{{course.instId}}" /> -->
+                                <select [(ngModel)]="course.instId" class="form-control">
+                                    <option *ngFor="let institute of institutions" value="{{course.instId}}"
+                                        [selected]="course.instId">
+                                         {{institute.adminInstitutionName}}
+                                    </option>
+                                </select>
+                            </div>
+                       
+                    </div>
+                </td>
+               
+                <td>
+                    <div class="form-group">
+                        <button class="form-control btn btn-success" id="updbtn"
+                            (click)="updatecourse(course)">Update</button>
+                    </div>
+                </td>
+                <td>
+                    <!-- <div class="form-group">
+                        <button class="form-control btn btn-danger" id="delbtn"
+                            (click)="deletecourse(course)">Delete</button>
+                    </div> -->
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <!-- <button class="btn btn-primary" (click)="Home()">Back</button> -->
+</div>
