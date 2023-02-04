@@ -12,6 +12,9 @@ import { QuestionComponent } from './teacherquestion/question/question.component
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 
 import { HomeComponent } from './home/home.component';
+import { CourseComponent } from './course/course/course.component';
+import { AddcourseComponent } from './course/addcourse/addcourse.component';
+import { UpdatecourseComponent } from './course/updatecourse/updatecourse.component';
 
 
 
@@ -52,7 +55,18 @@ const routes: Routes = [
  
 
    //home route
-   {path: 'home', component: HomeComponent}
+   {path: 'home', component: HomeComponent},
+
+   {path: 'course', component: CourseComponent},
+  
+   {path: 'addcourse', component: AddcourseComponent},
+
+   
+   {path: 'updatecourse', component: UpdatecourseComponent}
+
+
+   
+
 
 
  

@@ -1,17 +1,16 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdminInstitution } from 'app/admindepartment/admin-institution/admin-institution';
+import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstitutionSeriveService } from 'app/instituteadminprofile/institution-serive.service';
 import { Course } from '../course';
 import { CourseService } from '../course.service';
 
 @Component({
-  selector: 'app-course',
-  templateUrl: './course.component.html',
-  styleUrls: ['./course.component.css']
+  selector: 'app-addcourse',
+  templateUrl: './addcourse.component.html',
+  styleUrls: ['./addcourse.component.css']
 })
-export class CourseComponent {
-
+export class AddcourseComponent {
   isVisible: boolean = true;
 
   _backupModule = new Map();
@@ -39,12 +38,12 @@ export class CourseComponent {
   }
   ngOnInit(): void {
 
-    this.getAllCourses();
+    
 
     if (sessionStorage.getItem('authenticatedUser') === null) {
       this._route.navigate(['']);
     } else {
-      this.getAllCourses();
+      
       this.getAllInstitutes();
     }
 
@@ -63,30 +62,41 @@ export class CourseComponent {
 
     )
   }
-  getAllCourses() {
-    this._service._getAllCourses().subscribe(
-      data=>{
-        this.courses = data;
+
+  addCourse(course: Course) {
+    //alert(JSON.stringify(module));
+  
+
+    var courseId = course.courseId;
+    // module.moduleId = null;
+    course.courseIsActive = true
+    this._service.addCourse(course).subscribe(
+      data => {
+        //console.log(data);
+        this.course = data;
         
-        this.courses.forEach(courseData => { this._backupModule.set(courseData.courseName, (Object.assign({}, courseData))) });
+        if (this._backupModule.size > 0) {
+          this.courses[this.courses.indexOf(course)] = (Object.assign({}, this._backupModule.get(courseId)));
+        }
+        this.courses.push(this.course);
+        this._backupModule.set(this.course.courseId, (Object.assign({}, this.course)));
+        alert("Course Added successfully");
+        this._route.navigate(['course'])
         if (this.courses.length > 0) {
           this.isVisible = false;
         }
-      }
-
+       
+      },
+      error => alert("Module Name already exists")
     )
   }
-  
-  Add()
-  {
-    this._route.navigate(['addcourse'])
-  }
 
-  updatecourse(course:Course)
-  {
-    this._route.navigate(['updatecourse'])
-  }
-  Home() {
-    this._route.navigate(['demo'])
-  }
+
+
+  back()
+{
+  this._route.navigate(['course']);
+}
+
+
 }

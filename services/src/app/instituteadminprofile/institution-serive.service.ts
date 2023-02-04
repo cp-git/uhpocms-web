@@ -1,16 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'environments/environment.development';
+import { Observable } from 'rxjs/internal/Observable';
+import { map } from 'rxjs/internal/operators/map';
 
-import { map } from 'rxjs';
-import { Course } from './course';
 @Injectable({
   providedIn: 'root'
 })
-export class CourseService {
+export class InstitutionSeriveService {
 
-  private courseUrl: string = environment.courseUrl;
+  private institutionUrl: string = environment.adminInstitutionUrl;
   // BASE_PATH: 'http://localhost:8080'
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
 
@@ -19,34 +18,16 @@ export class CourseService {
   _loginUrl: string;
 
   constructor(private _http: HttpClient) {
-    // this.courseUrl = environment.courseUrl;
-    this._loginUrl = `${environment.courseUrl}/basicauth`;
-    this.courseUrl = "http://localhost:8090/course/uhpocms/course";
+    // this.institutionUrl = environment.institutionUrl;
+    this._loginUrl = `${environment.moduleUrl}/basicauth`;
+    this.institutionUrl = "http://localhost:8090/admininstitution/uhpocms";
 
   }
 
-  _getAllCourses(): Observable<any> {
-    return this._http.get<any>(`${this.courseUrl}?name=all`);
+  _getAllInstitutions(): Observable<any> {
+    return this._http.get<any>(`${this.institutionUrl}/institution?name=all`);
   }
 
-  
-  addCourse(course: Course): Observable<any> {
-    return this._http.post<any>(this.courseUrl, course);
-  }
-
-  deleteModule(courseName: string): Observable<any> {
-    return this._http.delete<any>(this.courseUrl+"/" + courseName);
-  }
-
-  
-  updateCourseList(courseName: string, course : Course): Observable<any> {
-
-    return this._http.put<any>(this.courseUrl+"/" + courseName, course);
-  }
-
-  getCourse(courseName: string): Observable<Course> {
-    return this._http.get<Course>(this.courseUrl+"/" + courseName);
-  }
 
   authenticationService(username: String, password: String) {
     return this._http.get(this._loginUrl,
@@ -83,5 +64,7 @@ export class CourseService {
     if (user === null) return ''
     return user
   }
+  
+  
   
 }
