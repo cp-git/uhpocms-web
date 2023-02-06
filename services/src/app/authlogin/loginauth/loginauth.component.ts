@@ -57,4 +57,7 @@ export class LoginauthComponent {
         }
       );
   }
+  back() {
+    this._route.navigate(['home']);
+  }
 }

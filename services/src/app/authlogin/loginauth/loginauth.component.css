@@ -19,6 +19,12 @@ height: 100%;
 align-content: center;
 }
 
+#backbtn{
+    margin-left: 97%;
+    background-color: transparent;
+    border: none;
+    padding-top: 2%;
+}
 .card{
 height: 370px;
 margin-top: auto;
