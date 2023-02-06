@@ -30,8 +30,15 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 
 import { HttpInterceptorServiceService } from './authlogin/http-interceptor-service.service';
 import { CourseComponent } from './course/course/course.component';
+
+import { CategoryComponent } from './category/UI/category/category.component';
+import { MainComponent } from './category/UI/main/main.component';
+import { AddModuleComponent } from './category/UI/add-module/add-module.component';
+import { AddCategoryComponent } from './category/UI/add-category/add-category.component';
+
 import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
 import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
+
 
 @NgModule({
   declarations: [
@@ -50,6 +57,12 @@ import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
     QuestionComponent,
     HomeComponent,
     CourseComponent,
+
+    CategoryComponent,
+    MainComponent,
+    AddModuleComponent,
+    AddCategoryComponent
+
     CreateQuizComponent,
     UpdatequizComponent
    
