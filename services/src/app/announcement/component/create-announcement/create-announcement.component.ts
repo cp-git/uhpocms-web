@@ -34,7 +34,7 @@ export class CreateAnnouncementComponent {
   public profileIDs: number[] = [];    // for capturing ids of profiles
 
   public searchValue: any;     // for filter list of profiles in tropdown
-  public filteredList: any = [];
+  //public filteredList: any = [];
 
   public selectedRole: any;    // array of student, admin, coadmin, teachers ids
 
@@ -52,7 +52,7 @@ export class CreateAnnouncementComponent {
     this.loadInstitutionProfile();
 
     // for separting orignal and filter list
-    this.filteredList = this.instituteAdmins;
+    //this.filteredList = this.instituteAdmins;
     this.filterRoles = this.instituteAdmins;
     this.sortProfiles();
   }
@@ -122,12 +122,12 @@ export class CreateAnnouncementComponent {
     if (!searchString) {
 
       // all data in filter list
-      this.filteredList = this.instituteAdmins.slice();
+      this.filterRoles = this.instituteAdmins.slice();
       return;
     } else {
 
       // sorting by text entered in search box
-      this.filteredList = this.instituteAdmins.filter(
+      this.filterRoles = this.instituteAdmins.filter(
         (profile) => profile.adminEmail.toLowerCase().indexOf(searchString) > -1
       );
     }
@@ -169,7 +169,7 @@ export class CreateAnnouncementComponent {
     this.modal.nativeElement.style.height = '600px';
     switch (this.selectedRole) {
       case 'All':
-        this.filterRoles = this.filteredList;
+        this.filterRoles = this.instituteAdmins;
         break;
       case 'Teachers':
         this.filterRoles = this.teachers;
