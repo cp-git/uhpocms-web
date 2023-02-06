@@ -34,12 +34,13 @@ export class TeachermoduleComponent {
       this._route.navigate(['']);
     } else {
       this.getAllModules();
+      this.loadCourses();
     }
 
 
   }
   constructor(private _service: TeachermoduleserviceService, private _activatedRoute: ActivatedRoute, private _route: Router) {
-    this.loadCourses();
+   
 
   }
 

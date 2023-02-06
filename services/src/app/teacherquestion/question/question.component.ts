@@ -27,7 +27,7 @@ export class QuestionComponent implements OnInit {
   isHidden: boolean = true;
 
   constructor(private _service: QuestionService, private _activeRoute: ActivatedRoute, private _route: Router) {
-    this.loadCategories(), this.loadQuiz();
+   
   }
   insertQuestion(que: Question) {
     // alert(JSON.stringify(que));
@@ -111,6 +111,8 @@ export class QuestionComponent implements OnInit {
       this._route.navigate(['']);
     } else {
       this.getAll();
+      this.loadCategories()
+      this.loadQuiz()
     }
 
   }

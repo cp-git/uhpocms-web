@@ -27,7 +27,7 @@ export class DepartmentComponent implements OnInit {
 
   constructor(private _deptService: DepartmentService, private _route: Router) {
     this.department = new Department();
-    this.loadAdminInstitutions();
+  
   }
 
   ngOnInit(): void {
@@ -35,6 +35,7 @@ export class DepartmentComponent implements OnInit {
       this._route.navigate(['login'])
     } else {
       this.getAllDepartments();
+      this.loadAdminInstitutions();
     }
   }
 
