@@ -7,3 +7,11 @@
     overflow-y: auto;
     --bs-dropdown-min-width: 20rem;
 }
+
+input[type="checkbox"] {
+    margin: 5px;
+}
+
+.modal-content {
+    height: 560px;
+}

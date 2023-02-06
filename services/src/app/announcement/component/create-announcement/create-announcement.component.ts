@@ -12,59 +12,48 @@ import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 })
 export class CreateAnnouncementComponent {
 
-  // for close modal when sent announcements
-  @ViewChild('closeModalBtn', { static: true })
+  private announcementId: number;     // announcement id to add in to_list table
+  private instituteAdmins: InstituteAdmin[] = [];     // data of institute admin profile for dropdown
+  private sessionData: any;   // for session data
+  private data: any;
+
+  private students: InstituteAdmin[] = [];
+  private admins: InstituteAdmin[] = [];
+  private coadmins: InstituteAdmin[] = [];
+  private teachers: InstituteAdmin[] = [];
+  private otherRoles: InstituteAdmin[] = [];
+  public filterRoles: InstituteAdmin[] = [];
+
+  @ViewChild('closeModalBtn', { static: true })     // for close modal when sent announcements
   closeModalBtn!: ElementRef<any>;
+  @ViewChild('modal', { static: true })
+  modal!: ElementRef<any>;
 
-  // data of institute admin profile for dropdown
-  instituteAdmins: InstituteAdmin[] = [];
 
-  // announcement for sending
-  announcement: Announcement;
+  public announcement: Announcement;     // announcement for sending
+  public profileIDs: number[] = [];    // for capturing ids of profiles
 
-  // for session data
-  sessionData: any;
-  data: any;
-
-  // for capturing ids of profiles
-  profileIDs: number[] = [];
-
-  //public selectedValue: any;
-
-  // for filter list of profiles in tropdown
-  public searchValue: any;
+  public searchValue: any;     // for filter list of profiles in tropdown
   public filteredList: any = [];
 
-  // announcement id to add in to_list table
-  private announcementId: number;
+  public selectedRole: any;    // array of student, admin, coadmin, teachers ids
 
+  public users = new Map();
 
-  // array of student, admin, coadmin, teachers ids
-  selectedRole: any;
-
-  users: Array<any> = [];
-  public students: InstituteAdmin[] = [];
-  public admins: InstituteAdmin[] = [];
-  public coadmins: InstituteAdmin[] = [];
-  public teachers: InstituteAdmin[] = [];
-  public otherRoles: InstituteAdmin[] = [];
-  public filterRoles: InstituteAdmin[] = [];
 
   constructor(private announcementService: AnnouncementService, private router: Router) {
     this.announcement = new Announcement();
     this.announcementId = 0;
-
+    this.selectedRole = "All";
   }
 
   ngOnInit(): void {
-
     // getting institution profile data from session 
     this.loadInstitutionProfile();
-    // console.log(JSON.stringify(this.instituteAdmins));
 
     // for separting orignal and filter list
     this.filteredList = this.instituteAdmins;
-
+    this.filterRoles = this.instituteAdmins;
     this.sortProfiles();
   }
 
@@ -168,26 +157,30 @@ export class CreateAnnouncementComponent {
 
       }
     });
-    this.users.push("students");
-    this.users.push("teachers");
-    this.users.push("admins");
-    this.users.push("coadmins");
-    this.users.push("otherRoles");
+    this.users.set("Students", this.students);
+    this.users.set("Teachers", this.teachers);
+    this.users.set("Admins", this.admins);
+    this.users.set("CoAdmins", this.coadmins);
+    this.users.set("OtherRoles", this.otherRoles);
   }
 
 
   onRoleChange() {
+    this.modal.nativeElement.style.height = '600px';
     switch (this.selectedRole) {
+      case 'All':
+        this.filterRoles = this.filteredList;
+        break;
       case 'Teachers':
         this.filterRoles = this.teachers;
         break;
       case 'Students':
         this.filterRoles = this.students;
         break;
-      case 'Admin':
+      case 'Admins':
         this.filterRoles = this.admins;
         break;
-      case 'CoAdmin':
+      case 'CoAdmins':
         this.filterRoles = this.coadmins;
         break;
       default:
@@ -195,5 +188,17 @@ export class CreateAnnouncementComponent {
         break;
 
     }
+  }
+
+  selectAll(event?: any) {
+
+    if (event.target.checked) {
+      this.filterRoles.forEach(profile => this.profileIDs.push(profile.adminId));
+    } else {
+      this.filterRoles.forEach(profile => {
+        this.profileIDs = this.profileIDs.filter(item => item !== profile.adminId);
+      });
+    }
+
   }
 }

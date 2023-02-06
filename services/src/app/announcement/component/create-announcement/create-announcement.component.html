@@ -20,27 +20,33 @@
                         id="announcementMessage"></textarea>
                 </div>
                 <div class="mb-3 row">
-                    <div class="col-6 col-md-4">
+                    <div class="col-8 col-md-6">
                         <li class="dropdown mb-2">
-                            <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                            <button class="btn btn-secondary dropdown-toggle " data-bs-toggle="dropdown"
                                 aria-expanded="false">Select emails from list
                             </button>
 
                             <ul class="dropdown-menu dropdown-menu-light">
+                                <input type="checkbox" (change)="selectAll($event)">Select All
+                                <select class="form-select" [(ngModel)]="selectedRole" (change)="onRoleChange()">
+                                    <option value="All" selected>All</option>
+                                    <option *ngFor="let role of users.keys()" value="{{role}}">
+                                        {{role}}
+                                    </option>
+                                </select>
 
-                                <input type="text" class="form-control" [ngModel]="searchValue"
+                                <input type="text" class="form-control" [ngModel]="searchValue" placeholder="Search Box"
                                     (ngModelChange)="sortEmails($event)">
-                                <div *ngFor="let profile of filteredList">
-                                    <input type="checkbox" style="margin-right: 5px" class="form-check-input"
-                                        [checked]="profileIDs.includes(profile.adminId)"
+
+                                <div *ngFor="let profile of filterRoles">
+                                    <input type="checkbox" [checked]="profileIDs.includes(profile.adminId)"
                                         (change)="onChange(profile.adminId, $event)" id="{{profile.adminId}}">
-                                    <span></span>
-                                    <label class="form-check-label">{{profile.adminEmail}}</label>
+                                    {{profile.adminEmail}}
                                 </div>
                             </ul>
                         </li>
                     </div>
-                    <!-- {{profileIDs|json}} -->
+
                 </div>
                 <!-- <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
