@@ -4,7 +4,7 @@
 
 html,
 body {
-    background-image: url('../img/university2.jpg');
+    background-image: url('../img/dd4.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     height: max-content;
@@ -29,12 +29,17 @@ input {
 }
 
 #backbtn {
-    margin-left: 1800px;
+    margin-left: 1100px;
 }
 
 .container-fluid {
     height: 100%;
-    align-content: center;
+    /*align-content: center;*/
+}
+
+.Header h3 {
+    font-size: 40px;
+    color: red;
 }
 
 .card {
@@ -143,12 +148,44 @@ label {
     display: block;
 }
 
-input,
-select {
-    height: 40px !important;
+.sub-heading {
+    border: 1px groove grey;
 }
 
 
-#submitbtn {
-    width: 80px;
+.row {
+    margin-top: 15px;
+    margin-left: 20px;
+}
+
+.col-md-6 a {
+    color: black;
+    font-size: 17px;
+}
+
+
+input {
+    height: 35px;
+
+}
+
+select {
+    height: 35px !important;
+
+}
+
+#headdata {
+    background-color: aqua;
+    margin-top: 0px;
+}
+
+
+#btndemo {
+    margin-left: 800px;
+    padding: 10px;
+}
+
+#btndemo button {
+    height: 40px;
+    width: 100px;
 }
