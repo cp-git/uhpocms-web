@@ -34,6 +34,7 @@ import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
 import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
 import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
+import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-cours
     CreateQuizComponent,
     UpdatequizComponent,
     ViewDepartmentComponent,
-    ViewCoursesComponent
+    ViewCoursesComponent,
+    DisplaySchoolComponent
    
   
   

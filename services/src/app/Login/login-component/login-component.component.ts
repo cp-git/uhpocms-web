@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
+import { Department } from 'app/admindepartment/department';
 import { AuthService } from 'app/authlogin/auth.service';
 
 @Component({
@@ -62,12 +63,9 @@ export class LoginComponentComponent implements OnInit {
     this._authService.logout();
   }
 
-  getElementId(elemRef: any) {
-
-    // Get the element's reference
-    let element = elemRef;
-    // Get the Id of the element
-    let elementId = element.value;
-    alert("The button's id is: " + elementId);  // Prompt element's Id
+  RedirectToSchool() {
+    this._route.navigate(['school'])
   }
+
+
 }

@@ -17,6 +17,7 @@ import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
 import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
 import { CourseComponent } from './course/course/course.component';
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
+import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 
 
 const routes: Routes = [
@@ -42,6 +43,8 @@ const routes: Routes = [
   { path: 'department', component: DepartmentComponent },
 
   { path: 'department/:id', component: ViewDepartmentComponent },
+
+  { path: 'school', component: DisplaySchoolComponent },
 
   //quiz routes
   { path: 'quiz', component: QuizComponent },

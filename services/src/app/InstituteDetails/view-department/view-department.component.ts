@@ -13,6 +13,7 @@ export class ViewDepartmentComponent {
   departments: Department[] = [];
   backupDept: Department[] = [];
   id: string | undefined | null;
+
   constructor(
     private readonly deptService: DepartmentService,
     private readonly route: ActivatedRoute
@@ -32,6 +33,8 @@ export class ViewDepartmentComponent {
       }
 
     )
+
+
 
 
   }

@@ -9,28 +9,28 @@ import { CourseService } from 'app/course/course.service';
   styleUrls: ['./view-courses.component.css']
 })
 export class ViewCoursesComponent {
-  // // department array
-  // courses: Course[] = [];
-  // backupCourse: Course[] = [];
-  // id: string | undefined | null;
-  // constructor(
-  //   private readonly courseService: CourseService,
-  //   private readonly route: ActivatedRoute
-  // ) { }
+  //course array
+  courses: Course[] = [];
+  backupCourse: Course[] = [];
+  id: string | undefined | null;
+  constructor(
+    private readonly courseService: CourseService,
+    private readonly route: ActivatedRoute
+  ) { }
 
-  // ngOnInit(): void {
-  //   this.route.paramMap.subscribe(
-  //     (params) => {
-  //       this.id = params.get("id");
-  //       if (this.id) {
-  //         this.courseService.getCourseByInstitutionId(this.id).subscribe(
-  //           (deptdata) => {
-  //             this.courses = deptdata;
-  //           }
-  //         )
-  //       }
-  //     }
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(
+      (params) => {
+        this.id = params.get("id");
+        if (this.id) {
+          this.courseService.getCourseByInstitutionId(this.id).subscribe(
+            (coursedata) => {
+              this.courses = coursedata;
+            }
+          )
+        }
+      }
 
-  //   )
-  // }
+    )
+  }
 }
