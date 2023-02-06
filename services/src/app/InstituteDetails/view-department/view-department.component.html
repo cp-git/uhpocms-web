@@ -1,0 +1,35 @@
+<div class="container-fluid">
+    <div class="header1">
+        <h1>Institute Departments</h1>
+    </div>
+    <table class="table" border="1px">
+        <thead id="deptHeader">
+            <tr>
+
+
+                <th>Department Name</th>
+                <th>Description</th>
+                <th>Created By</th>
+                <th>Created On</th>
+
+
+
+            </tr>
+
+
+        </thead>
+
+
+
+        <tbody>
+            <tr *ngFor="let dept of departments">
+                <td>{{ dept.name }}</td>
+                <td>{{ dept.description }}</td>
+                <td>{{dept.createdBy}}</td>
+                <td>{{dept.createdOn}}</td>
+
+
+
+            </tr>
+        </tbody>
+    </table>
