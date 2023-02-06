@@ -5,18 +5,15 @@ import { Router } from '@angular/router';
 
 import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
 
-
 import { AuthService } from '../auth.service';
 import { Authuser } from '../authuser';
 
 @Component({
   selector: 'app-loginauth',
   templateUrl: './loginauth.component.html',
-  styleUrls: ['./loginauth.component.css']
+  styleUrls: ['./loginauth.component.css'],
 })
 export class LoginauthComponent {
-
-
   username!: string;
   password!: string;
   errorMessage = 'Invalid Credentials';
@@ -25,39 +22,43 @@ export class LoginauthComponent {
   loginSuccess = false;
 
   authUser = new Authuser();
-  constructor(private _auth: AuthuserserviceService, private _route: Router, private authenticationService: AuthService) { }
+  constructor(
+    private _auth: AuthuserserviceService,
+    private _route: Router,
+    private authenticationService: AuthService
+  ) { }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
 
   userLogin() {
-
-    this._auth.loginDataAuthUser(this.authUser)
-      .subscribe(data => {
-        console.log(data)
-        alert("User Successfully Logged In..");
+    this._auth.loginDataAuthUser(this.authUser).subscribe(
+      (data) => {
+        console.log(data);
+        alert('User Successfully Logged In..');
         this._route.navigate(['adminrole']);
-
-      }, error => console.log(error));
-
-
-
+      },
+      (error) => console.log(error)
+    );
   }
-
-
 
 
   handleLogin() {
-    this.authenticationService.authenticationService(this.username, this.password).subscribe((result) => {
-      this.invalidLogin = false;
-      this.loginSuccess = true;
-      this.successMessage = 'Login Successful.';
-      this._route.navigate(['main']);
-    }, () => {
-      this.invalidLogin = true;
-      this.loginSuccess = false;
-    });
+    this.authenticationService
+      .authenticationService(this.username, this.password)
+      .subscribe(
+        (result) => {
+          this.invalidLogin = false;
+          this.loginSuccess = true;
+          this.successMessage = 'Login Successful.';
+          this._route.navigate(['demo']);
+        },
+        () => {
+          this.invalidLogin = true;
+          this.loginSuccess = false;
+        }
+      );
   }
-
+  back() {
+    this._route.navigate(['home']);
+  }
 }

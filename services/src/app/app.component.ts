@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component } from '@angular/core';
 import { AppService } from './app.service';
 import { AdminInstitution } from './class/admin-institution';
 import { Category } from './class/category';
@@ -9,7 +9,7 @@ import { InstituteAdmin } from './instituteadminprofile/institute-admin';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = 'roleAdmin';
@@ -21,9 +21,7 @@ export class AppComponent {
   modules: Module[] = [];
   instituteProfiles: InstituteAdmin[] = [];
 
-  constructor(private _appService: AppService) {
-
-  }
+  constructor(private _appService: AppService) {}
 
   ngOnInit(): void {
     this.loadAdminInstitution();
@@ -37,71 +35,77 @@ export class AppComponent {
 
   loadAdminInstitution() {
     this._appService.fetchAllInstitution().subscribe(
-      response => {
+      (response) => {
         this.adminInstitutions = response;
-        sessionStorage.setItem("admininstitution", JSON.stringify(this.adminInstitutions));
+        sessionStorage.setItem(
+          'admininstitution',
+          JSON.stringify(this.adminInstitutions)
+        );
         // alert("here" + JSON.stringify(this.adminInstitutions));
       },
-      error => {
-        sessionStorage.setItem("admininstitution", "");
+      (error) => {
+        sessionStorage.setItem('admininstitution', '');
       }
     );
   }
 
   loadQuizs() {
     this._appService.fetchAllQuizs().subscribe(
-      response => {
+      (response) => {
         this.quizs = response;
-        sessionStorage.setItem("quiz", JSON.stringify(this.quizs));
+        sessionStorage.setItem('quiz', JSON.stringify(this.quizs));
       },
-      error => {
-        sessionStorage.setItem("quiz", "");
+      (error) => {
+        sessionStorage.setItem('quiz', '');
       }
     );
   }
   loadCourses() {
     this._appService.fetchAllCourses().subscribe(
-      response => {
+      (response) => {
         this.courses = response;
         // alert("here" + JSON.stringify(this.courses));
-        sessionStorage.setItem("course", JSON.stringify(this.courses));
+        sessionStorage.setItem('course', JSON.stringify(this.courses));
       },
-      error => {
-        sessionStorage.setItem("course", "");
+      (error) => {
+        sessionStorage.setItem('course', '');
       }
     );
   }
   loadCategories() {
     this._appService.fetchAllCategories().subscribe(
-      response => {
+      (response) => {
         this.categories = response;
-        sessionStorage.setItem("category", JSON.stringify(this.categories));
+        sessionStorage.setItem('category', JSON.stringify(this.categories));
       },
-      error => {
-        sessionStorage.setItem("category", "");
+      (error) => {
+        sessionStorage.setItem('category', '');
       }
     );
   }
   loadModules() {
     this._appService.fetchAllModules().subscribe(
-      response => {
+      (response) => {
         this.modules = response;
-        sessionStorage.setItem("module", JSON.stringify(this.modules));
+        sessionStorage.setItem('module', JSON.stringify(this.modules));
       },
-      error => {
-        sessionStorage.setItem("module", "");
+      (error) => {
+        sessionStorage.setItem('module', '');
       }
     );
   }
 
   loadInstituteProfile() {
     this._appService.fetchAllInstituteProfile().subscribe(
-      response => {
+      (response) => {
         this.instituteProfiles = response;
-        sessionStorage.setItem("instituteprofile", JSON.stringify(this.instituteProfiles));
+        sessionStorage.setItem(
+          'instituteprofile',
+          JSON.stringify(this.instituteProfiles)
+        );
       },
-      error => {
-        sessionStorage.setItem("instituteprofile", "");
+      (error) => {
+        sessionStorage.setItem('instituteprofile', '');
       }
     );
   }

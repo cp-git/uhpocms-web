@@ -4,13 +4,12 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Admin } from './admin';
 import { environment } from 'environments/environment.development';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AdminroleserviceService {
-
   private readonly adminRoleUrl: string;
   constructor(private _http: HttpClient) {
-    this.adminRoleUrl = environment.adminRoleUrl + "/role"
+    this.adminRoleUrl = environment.adminRoleUrl + '/role';
   }
 
   fetchadminlist(): Observable<any> {
@@ -30,7 +29,6 @@ export class AdminroleserviceService {
   }
 
   updateadminlist(roleName: string, admin: Admin): Observable<Object> {
-
     return this._http.put<any>(`${this.adminRoleUrl}/` + roleName, admin);
   }
 

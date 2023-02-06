@@ -1,5 +1,5 @@
-import { Component, NgModule } from '@angular/core'
-import { RouterModule, Routes } from '@angular/router'
+import { Component, NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { DepartmentComponent } from './admindepartment/department/department.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
@@ -13,6 +13,11 @@ import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermod
 
 import { HomeComponent } from './home/home.component';
 
+import { AddcourseComponent } from './course/addcourse/addcourse.component';
+import { UpdatecourseComponent } from './course/updatecourse/updatecourse.component';
+import { CourseComponent } from './course/displaycourse/course.component';
+
+
 import { CategoryComponent } from './category/UI/category/category.component';
 import { MainComponent } from './category/UI/main/main.component';
 import { AddModuleComponent } from './category/UI/add-module/add-module.component';
@@ -21,7 +26,7 @@ import { AddCategoryComponent } from './category/UI/add-category/add-category.co
 import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
 import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
 import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
-import { CourseComponent } from './course/course/course.component';
+
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 
@@ -55,12 +60,16 @@ const routes: Routes = [
   //admindepartment routes
   { path: 'department', component: DepartmentComponent },
 
+
+  //quiz routes
+  { path: 'quiz', component: QuizComponent },
+
+
   { path: 'department/:id', component: ViewDepartmentComponent },
 
   { path: 'school', component: DisplaySchoolComponent },
 
-  //quiz routes
-  { path: 'quiz', component: QuizComponent },
+
 
 
   //inserting  the quiz
@@ -73,7 +82,8 @@ const routes: Routes = [
   //update Quiz
 
   { path: 'updateQuiz/:title', component: UpdatequizComponent },
- // { path: 'updateQuiz', component: UpdatequizComponent },
+  // { path: 'updateQuiz', component: UpdatequizComponent },
+
 
 
 
@@ -85,21 +95,29 @@ const routes: Routes = [
   { path: 'email', component: EmailComponent },
 
 
-
   //home route
-  { path: 'home', component: HomeComponent }
+  { path: 'home', component: HomeComponent },
+
+  { path: 'course', component: CourseComponent },
+
+
+  { path: 'addcourse', component: AddcourseComponent },
+
+
+  { path: 'updatecourse/:courseName', component: UpdatecourseComponent },
+
+
 
 
 
 ];
 
 @NgModule({
-
-  imports: [RouterModule.forRoot(routes), RouterModule.forRoot(routes, { useHash: true })
-
+  imports: [
+    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { useHash: true }),
   ],
 
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule { }
-

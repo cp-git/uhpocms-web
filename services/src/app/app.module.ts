@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core'
-import { BrowserModule } from '@angular/platform-browser'
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -21,15 +21,16 @@ import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermod
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
 import { HomeComponent } from './home/home.component';
 
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MatIconModule } from '@angular/material/icon'
-import {MatToolbarModule} from '@angular/material/toolbar';
-
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { HttpInterceptorServiceService } from './authlogin/http-interceptor-service.service';
-import { CourseComponent } from './course/course/course.component';
+
+import { AddcourseComponent } from './course/addcourse/addcourse.component';
+import { UpdatecourseComponent } from './course/updatecourse/updatecourse.component';
+import { CourseComponent } from './course/displaycourse/course.component';
 
 import { CategoryComponent } from './category/UI/category/category.component';
 import { MainComponent } from './category/UI/main/main.component';
@@ -61,19 +62,24 @@ import { DisplaySchoolComponent } from './InstituteDetails/display-school/displa
     HomeComponent,
     CourseComponent,
 
+    AddcourseComponent,
+    UpdatecourseComponent,
+
+
     CategoryComponent,
     MainComponent,
     AddModuleComponent,
-    AddCategoryComponent
+    AddCategoryComponent,
 
     CreateQuizComponent,
     UpdatequizComponent,
     ViewDepartmentComponent,
     ViewCoursesComponent,
     DisplaySchoolComponent
-   
-  
-  
+
+
+
+
 
   ],
 
@@ -84,16 +90,16 @@ import { DisplaySchoolComponent } from './InstituteDetails/display-school/displa
     FormsModule,
     BrowserAnimationsModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
   ],
- 
+
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorServiceService,
-      multi: true
-    }],
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
-  
 })
 export class AppModule { }

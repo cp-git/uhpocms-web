@@ -4,10 +4,9 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Authuser } from './authuser';
 import { environment } from 'environments/environment.development';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthuserserviceService {
-
   private readonly authUserUrl: string;
 
   constructor(private _http: HttpClient) {
@@ -19,11 +18,16 @@ export class AuthuserserviceService {
   }
 
   addAuthUser(authuser: Authuser): Observable<any> {
-    return this._http.post<any>(`${environment.authUserUrl}/authuser`, authuser);
+    return this._http.post<any>(
+      `${environment.authUserUrl}/authuser`,
+      authuser
+    );
   }
 
   deleteAuthUser(authUserName: string): Observable<any> {
-    return this._http.delete<any>(`${this.authUserUrl}/authuser/` + authUserName);
+    return this._http.delete<any>(
+      `${this.authUserUrl}/authuser/` + authUserName
+    );
   }
 
   getAuthUser(authUserName: string): Observable<any> {
@@ -31,8 +35,10 @@ export class AuthuserserviceService {
   }
 
   updateAuthUser(authUserName: string, authuser: Authuser): Observable<any> {
-
-    return this._http.put<any>(`${this.authUserUrl}/authuser/` + authUserName, authuser);
+    return this._http.put<any>(
+      `${this.authUserUrl}/authuser/` + authUserName,
+      authuser
+    );
   }
 
   loginDataAuthUser(authuser: Authuser): Observable<any> {

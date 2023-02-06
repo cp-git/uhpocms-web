@@ -4,10 +4,9 @@ import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'environments/environment.development';
 import { Category } from './category';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CategoryService {
-
   private readonly categoryUrl: string;
   constructor(private _http: HttpClient) {
     this.categoryUrl = "http://localhost:8090/category/uhpocms/category"
