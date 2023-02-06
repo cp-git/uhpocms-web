@@ -8,6 +8,11 @@ import { environment } from 'environments/environment.development';
   providedIn: 'root',
 })
 export class QuizService {
+
+
+
+
+
   // BASE_PATH: 'http://localhost:8080'
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser';
 
@@ -18,12 +23,19 @@ export class QuizService {
   _loginUrl: string;
 
   constructor(private _http: HttpClient) {
-    this.quizUrl = environment.quizUrl + '/quiz';
-    this._loginUrl = `${environment.quizUrl}/basicauth`;
+
+    // this.quizUrl = environment.quizUrl + '/quiz';
+    // this._loginUrl = `${environment.quizUrl}/basicauth`;
+
+    this.quizUrl = "http://localhost:8090/quiz/uhpocms/quiz";
+    this._loginUrl = "http://localhost:8090/quiz/uhpocms/basicauth";
+
+
   }
 
   _getAllQuizzes(): Observable<any> {
-    return this._http.get<any>(`${this.quizUrl}?title=all`);
+    // return this._http.get<any>("http://localhost:8090/quiz/uhpocms/quiz?title=all");
+    return this._http.get<any>(`${this.quizUrl}/` + "?title=all");
   }
 
   _getQuizByTitle(title: string): Observable<any> {

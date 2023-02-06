@@ -32,6 +32,18 @@ import { AddcourseComponent } from './course/addcourse/addcourse.component';
 import { UpdatecourseComponent } from './course/updatecourse/updatecourse.component';
 import { CourseComponent } from './course/displaycourse/course.component';
 
+import { CategoryComponent } from './category/UI/category/category.component';
+import { MainComponent } from './category/UI/main/main.component';
+import { AddModuleComponent } from './category/UI/add-module/add-module.component';
+import { AddCategoryComponent } from './category/UI/add-category/add-category.component';
+
+import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
+import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
+import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
+import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
+import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,8 +61,26 @@ import { CourseComponent } from './course/displaycourse/course.component';
     QuestionComponent,
     HomeComponent,
     CourseComponent,
+
     AddcourseComponent,
-    UpdatecourseComponent
+    UpdatecourseComponent,
+
+
+    CategoryComponent,
+    MainComponent,
+    AddModuleComponent,
+    AddCategoryComponent,
+
+    CreateQuizComponent,
+    UpdatequizComponent,
+    ViewDepartmentComponent,
+    ViewCoursesComponent,
+    DisplaySchoolComponent
+
+
+
+
+
   ],
 
   imports: [
@@ -72,4 +102,4 @@ import { CourseComponent } from './course/displaycourse/course.component';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

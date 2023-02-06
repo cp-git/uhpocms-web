@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+
+import { Router } from '@angular/router'
+import { Department } from 'app/admindepartment/department';
+
 import { AuthService } from 'app/authlogin/auth.service';
 
 @Component({
@@ -8,8 +11,8 @@ import { AuthService } from 'app/authlogin/auth.service';
   styleUrls: ['./login-component.component.css'],
 })
 export class LoginComponentComponent implements OnInit {
-  constructor(private _route: Router, private _authService: AuthService) {}
-  ngOnInit(): void {}
+  constructor(private _route: Router, private _authService: AuthService) { }
+  ngOnInit(): void { }
 
   RedirectRole() {
     this._route.navigate(['adminrole']);
@@ -57,4 +60,10 @@ export class LoginComponentComponent implements OnInit {
   logout() {
     this._authService.logout();
   }
+
+  RedirectToSchool() {
+    this._route.navigate(['school'])
+  }
+
+
 }

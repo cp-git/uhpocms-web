@@ -1,0 +1,21 @@
+.header1 h1 {
+    border: 1px groove red;
+    text-align: center;
+    background-color: aqua;
+}
+
+
+table th {
+    background-color: #566787;
+    text-align: center;
+    color: white;
+    border: 1px groove black;
+}
+
+.table-header th {
+    background-color: #566787;
+    text-align: center;
+    color: white;
+
+
+}

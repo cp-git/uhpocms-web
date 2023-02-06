@@ -1,0 +1,31 @@
+<div class="container-fluid">
+    <div class="header1">
+        <h1>Institute Courses</h1>
+    </div>
+    <table class="table" border="1px">
+        <thead id="deptHeader">
+            <tr>
+
+
+                <th>Course Name</th>
+                <th>Course Description</th>
+
+                <th>Created On</th>
+
+
+
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr *ngFor="let course of courses">
+                <td>{{ course.courseName }}</td>
+                <td>{{ course.courseDescription }}</td>
+
+                <td>{{course.courseCreatedDate}}</td>
+
+
+
+            </tr>
+        </tbody>
+    </table>

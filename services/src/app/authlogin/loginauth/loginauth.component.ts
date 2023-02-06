@@ -26,9 +26,9 @@ export class LoginauthComponent {
     private _auth: AuthuserserviceService,
     private _route: Router,
     private authenticationService: AuthService
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   userLogin() {
     this._auth.loginDataAuthUser(this.authUser).subscribe(
@@ -40,6 +40,7 @@ export class LoginauthComponent {
       (error) => console.log(error)
     );
   }
+
 
   handleLogin() {
     this.authenticationService

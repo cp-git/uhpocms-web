@@ -1,9 +1,12 @@
 export class Category {
-  categoryId!: number;
+
+  categoryId!: number | null
   categoryName!: string;
-  isActive!: boolean;
+  active!: boolean;
   createdBy!: string;
   createdOn!: Date;
   modifiedBy!: string;
   modifiedOn!: Date;
+
+
 }

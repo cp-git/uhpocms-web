@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!---Coding By CodingLab | www.codinglabweb.com--->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Registration Form in HTML CSS</title>
+</head>
+
+<body>
+    <section class="container">
+        <header>Module Registration</header>
+        <div class="form">
+            <div class="input-box">
+                <label>Full Name</label>
+                <input type="text" [(ngModel)]="module.moduleName" value="{{module.moduleName}}">
+            </div>
+
+            <div class="input-box">
+                <label>Description</label>
+                <input type="text" [(ngModel)]="module.moduleDescription" value="{{module.moduleDescription}}">
+            </div>
+
+            <div class="column">
+
+                <div class="input-box">
+                    <label>Start Date</label>
+                    <input type="date" [(ngModel)]="module.moduleStartDate" value="{{module.moduleStartDate}}" />
+                </div>
+                <div class="input-box">
+                    <label>End Date</label>
+                    <input type="date" [(ngModel)]="module.moduleEndDate" value="{{module.moduleEndDate}}" />
+                </div>
+            </div>
+            <div class="column">
+                <div class="input-box">
+                    <label>Module Order No</label>
+                    <input class="form-control" type="number" [(ngModel)]="module.moduleOrderNo"
+                        value="{{module.moduleOrderNo}}" />
+                </div>
+                <div class="input-box">
+                    <label>CourseId</label>
+                    <select [(ngModel)]="module.courseId_id" class="form-control">
+                        <option *ngFor="let course of courses" value="{{course.courseId}}"
+                            [selected]="module.courseId_id==course.courseId?true:null">
+                            {{course.courseName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="column">
+                <div class="input-box">
+                    <label>Is Active</label>
+                    <input type="checkbox" [(ngModel)]="module.moduleIsActive" checked=" {{module.moduleIsActive}}" />
+                </div>
+
+
+            </div>
+
+
+
+            <div>
+                <button class="button" (click)="addmodule(module)">Submit</button>
+            </div>
+        </div>
+
+
+
+    </section>
+</body>
+
+</html>
