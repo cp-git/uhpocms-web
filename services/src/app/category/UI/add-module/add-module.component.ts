@@ -37,6 +37,7 @@ export class AddModuleComponent {
     alert(JSON.stringify(module));
     var moduleId = module.moduleId;
 
+    module.moduleIsActive = true;
     // module.moduleId = null;
 
     this._service.addTeacherModule(module).subscribe(

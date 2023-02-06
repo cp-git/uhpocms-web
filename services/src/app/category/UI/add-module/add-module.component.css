@@ -8,6 +8,11 @@
     font-family: "Poppins", sans-serif;
 }
 
+.larger {
+    width: 50px;
+    height: 500px;
+}
+
 body {
     min-height: 100vh;
     display: flex;
@@ -40,7 +45,7 @@ body {
 
 .form .input-box {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 .input-box label {
@@ -90,14 +95,11 @@ body {
 
 
 
-
-
-
 .form button {
     height: 55px;
     width: 100%;
     color: #fff;
-    font-size: 1rem;
+    font-size: 2rem;
     font-weight: 400;
     margin-top: 30px;
     border: none;

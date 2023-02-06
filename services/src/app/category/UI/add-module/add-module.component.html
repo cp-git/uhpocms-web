@@ -11,7 +11,7 @@
 
 <body>
     <section class="container">
-        <header>Registration Form</header>
+        <header>Module Registration</header>
         <div class="form">
             <div class="input-box">
                 <label>Full Name</label>
@@ -19,7 +19,7 @@
             </div>
 
             <div class="input-box">
-                <label>Discription</label>
+                <label>Description</label>
                 <input type="text" [(ngModel)]="module.moduleDescription" value="{{module.moduleDescription}}">
             </div>
 
@@ -36,19 +36,6 @@
             </div>
             <div class="column">
                 <div class="input-box">
-                    <label>is Active</label>
-                    <input class="form-control" type="checkbox" [(ngModel)]="module.moduleIsActive"
-                        checked=" {{module.moduleIsActive}}" />
-                </div>
-
-                <div class="input-box">
-                    <label>Course</label>
-                    <input class="form-control" type="number" [(ngModel)]="module.moduleCourse"
-                        value="{{module.moduleCourse}}" />
-                </div>
-            </div>
-            <div class="column">
-                <div class="input-box">
                     <label>Module Order No</label>
                     <input class="form-control" type="number" [(ngModel)]="module.moduleOrderNo"
                         value="{{module.moduleOrderNo}}" />
@@ -58,16 +45,28 @@
                     <select [(ngModel)]="module.courseId_id" class="form-control">
                         <option *ngFor="let course of courses" value="{{course.courseId}}"
                             [selected]="module.courseId_id==course.courseId?true:null">
-                            {{course.courseName}} - {{course.courseId}}
+                            {{course.courseName}}
                         </option>
                     </select>
                 </div>
             </div>
+            <div class="column">
+                <div class="input-box">
+                    <label>Is Active</label>
+                    <input type="checkbox" [(ngModel)]="module.moduleIsActive" checked=" {{module.moduleIsActive}}" />
+                </div>
+
+
+            </div>
 
 
 
-            <button (click)="addmodule(module)">Submit</button>
+            <div>
+                <button class="button" (click)="addmodule(module)">Submit</button>
+            </div>
         </div>
+
+
 
     </section>
 </body>

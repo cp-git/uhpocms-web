@@ -37,7 +37,7 @@ export class CategoryComponent {
         }
       },
       error => {
-        alert("please enter valid details");
+        alert("Category Already Exist");
       }
 
     )
