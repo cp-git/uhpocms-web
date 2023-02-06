@@ -1,3 +1,3 @@
 export const commonEnv = {
-    baseUrl: location.origin
+  baseUrl: location.origin,
 };

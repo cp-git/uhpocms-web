@@ -35,12 +35,10 @@
 
 <body>
     <div class="container">
-        <button id="backbtn" (click)="back()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                    d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
-            </svg>
+        <button id="backbtn" (click)="back()" title="back">
+            <svg xmlns="http://www.w3.org/2000/svg"  width="30" height="30" fill="#E8E8E8"  class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
+                <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1z"/>
+              </svg>
         </button>
 
         <div class="d-flex  h-100">
@@ -52,13 +50,15 @@
                 <div class="card-body">
 
 
-
+               <div class="first-row">
+                <div class="first-row-child"> 
                     <div><label>Course Name</label></div>
                     <div class="form-group">
                         <input class="form-control" type="text" [(ngModel)]="course.courseName"
                             value="{{course.courseName}}" />
                     </div>
-
+                </div>
+                <div class="first-row-child">
                     <div><label> Course Description</label></div>
 
                     <div class="form-group">
@@ -66,43 +66,50 @@
                             value="{{course.courseDescription}}">
                         </textarea>
                     </div>
+                </div>
 
-
-
+                <div class="first-row-child">
                     <div><label>Course Code </label></div>
                     <div class="form-group">
                         <input class="form-control" type="text" [(ngModel)]="course.courseCode"
                             value="{{course.courseCode}}" />
                     </div>
-
+                </div>
+            </div>
+            <div class="first-row">
+                <div class="first-row-child"> 
                     <div><label>Course Type</label></div>
                     <div class="form-group">
                         <input class="form-control" type="text" [(ngModel)]="course.courseType"
                             value="{{course.courseType}}" />
                     </div>
-
+                </div>
+                <div class="first-row-child"> 
                     <div><label>Passing Score</label></div>
                     <div class="form-group">
                         <input class="form-control" type="number" [(ngModel)]="course.passingScore"
                             value="{{course.passingScore}}" />
                     </div>
-
+                </div>
+                <div class="first-row-child"> 
                     <div><label>Institute Name</label></div>
                     <div class="form-group">
 
                         <select [(ngModel)]="course.instId" class="form-control">
-                            <option *ngFor="let institute of institutions" value="{{course.instId}}"
-                                [selected]="course.instId">
+                            <option *ngFor="let institute of institutions" value="{{institute.adminInstitutionId}}"
+                                [selected]="institute.adminInstitutionId == course.instId ? true:null">
                                 {{institute.adminInstitutionName}}
                             </option>
                         </select>
                     </div>
-
+                </div>
+                </div>
+                <div class="last-row">
                     <div class="form-group">
                         <button class="form-control" id="loginbtn" class="btn  login_btn"
-                            (click)="updateCourse(course)">Update</button>
+                            (click)="updateCourse(course)" title="Update Course">Update</button>
                     </div>
-
+                </div>
 
 
 

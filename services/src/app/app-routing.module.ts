@@ -1,5 +1,5 @@
-import { Component, NgModule } from '@angular/core'
-import { RouterModule, Routes } from '@angular/router'
+import { Component, NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { DepartmentComponent } from './admindepartment/department/department.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
@@ -12,11 +12,9 @@ import { QuestionComponent } from './teacherquestion/question/question.component
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 
 import { HomeComponent } from './home/home.component';
-import { CourseComponent } from './course/course/course.component';
 import { AddcourseComponent } from './course/addcourse/addcourse.component';
 import { UpdatecourseComponent } from './course/updatecourse/updatecourse.component';
-
-
+import { CourseComponent } from './course/displaycourse/course.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -40,11 +38,8 @@ const routes: Routes = [
   //admindepartment routes
   { path: 'department', component: DepartmentComponent },
 
-
   //quiz routes
   { path: 'quiz', component: QuizComponent },
-
- 
 
   //teacherModule routes
   { path: 'teachermodule', component: TeachermoduleComponent },
@@ -52,33 +47,22 @@ const routes: Routes = [
   //teacherModule routes
   { path: 'email', component: EmailComponent },
 
- 
+  //home route
+  { path: 'home', component: HomeComponent },
 
-   //home route
-   {path: 'home', component: HomeComponent},
+  { path: 'course', component: CourseComponent },
 
-   {path: 'course', component: CourseComponent},
-  
-   {path: 'addcourse', component: AddcourseComponent},
+  { path: 'addcourse', component: AddcourseComponent },
 
-   
-   {path: 'updatecourse', component: UpdatecourseComponent}
-
-
-   
-
-
-
- 
+  { path: 'updatecourse/:courseName', component: UpdatecourseComponent },
 ];
 
 @NgModule({
-
-  imports: [RouterModule.forRoot(routes), RouterModule.forRoot(routes, { useHash: true })
-
+  imports: [
+    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { useHash: true }),
   ],
 
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
-
+export class AppRoutingModule {}

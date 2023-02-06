@@ -8,7 +8,7 @@ import { QuestionService } from '../service/question.service';
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
-  styleUrls: ['./question.component.css']
+  styleUrls: ['./question.component.css'],
 })
 export class QuestionComponent implements OnInit {
   question = new Question();
@@ -16,7 +16,7 @@ export class QuestionComponent implements OnInit {
 
   backupQuesiton = new Map();
 
-  //Creating array 
+  //Creating array
   category: Category[] = [];
   quiz: Quiz[] = [];
 
@@ -26,12 +26,14 @@ export class QuestionComponent implements OnInit {
   //Empty row
   isHidden: boolean = true;
 
-  constructor(private _service: QuestionService, private _activeRoute: ActivatedRoute, private _route: Router) {
-   
-  }
+  constructor(
+    private _service: QuestionService,
+    private _activeRoute: ActivatedRoute,
+    private _route: Router
+  ) {}
   insertQuestion(que: Question) {
     // alert(JSON.stringify(que));
-    this.question = ({} as Question);
+    this.question = {} as Question;
     this.question.questionFigure = que.questionFigure;
     this.question.questionContent = que.questionContent;
     this.question.questionExplanation = que.questionExplanation;
@@ -44,29 +46,31 @@ export class QuestionComponent implements OnInit {
     this.question.questionId = null;
 
     this._service.addQuestion(this.question).subscribe(
-      data => {
+      (data) => {
         // alert(JSON.stringify(que));
         // this.ngOnInit();
         this.question = data;
         if (this.backupQuesiton.size > 0) {
-          this._question[this._question.indexOf(que)] = (Object.assign({}, this.backupQuesiton.get(que.questionId)));
+          this._question[this._question.indexOf(que)] = Object.assign(
+            {},
+            this.backupQuesiton.get(que.questionId)
+          );
         }
         this._question.push(this.question);
-        this.backupQuesiton.set(this.question.questionId, (Object.assign({}, this.question)))
+        this.backupQuesiton.set(
+          this.question.questionId,
+          Object.assign({}, this.question)
+        );
         if (this._question.length > 0) {
           this.isHidden = false;
         }
-        alert("Question added Successfully")
-
+        alert('Question added Successfully');
       },
-      error =>
-        alert("please enter valid details")
-
-    )
+      (error) => alert('please enter valid details')
+    );
   }
 
   updateQuestion(que: Question) {
-
     this.question.questionId = que.questionId;
     this.question.questionFigure = que.questionFigure;
     this.question.questionContent = que.questionContent;
@@ -76,82 +80,85 @@ export class QuestionComponent implements OnInit {
     this.question.questionQuizId = que.questionQuizId;
     this.question.questionCategoryId = que.questionCategoryId;
     this.question.questionIsActive = que.questionIsActive;
-    this._service.updatedQuestion(this.question.questionFigure, this.question).subscribe(
-      data => {
-
-        this.question = data;
-        this.backupQuesiton.set(this.question.questionId, (Object.assign({}, this.question)))
-        // alert("here" + JSON.stringify(data))
-        alert("updated successfully")
-        // this.ngOnInit();
-      },
-      error => alert("please enter valid details")
-    )
+    this._service
+      .updatedQuestion(this.question.questionFigure, this.question)
+      .subscribe(
+        (data) => {
+          this.question = data;
+          this.backupQuesiton.set(
+            this.question.questionId,
+            Object.assign({}, this.question)
+          );
+          // alert("here" + JSON.stringify(data))
+          alert('updated successfully');
+          // this.ngOnInit();
+        },
+        (error) => alert('please enter valid details')
+      );
   }
 
   deleteQuestion(que: Question) {
     this._service.deleteQuestion(que.questionFigure).subscribe(
-      data => {
+      (data) => {
         this._question.splice(this._question.indexOf(que), 1);
-        this.backupQuesiton.delete(que.questionId)
-        alert("question is deleted")
+        this.backupQuesiton.delete(que.questionId);
+        alert('question is deleted');
         if (this._question.length <= 0) {
           this.isHidden = true;
-          this.question = ({} as Question);
+          this.question = {} as Question;
         }
         // this.ngOnInit();
-
       },
-      error => alert("Failed to delete Question")
-    )
-
+      (error) => alert('Failed to delete Question')
+    );
   }
   ngOnInit(): void {
     if (sessionStorage.getItem('authenticatedUser') === null) {
       this._route.navigate(['']);
     } else {
       this.getAll();
-      this.loadCategories()
-      this.loadQuiz()
+      this.loadCategories();
+      this.loadQuiz();
     }
-
   }
 
   private loadCategories() {
-    this.sessionData = sessionStorage.getItem("category");
+    this.sessionData = sessionStorage.getItem('category');
 
     this.data = JSON.parse(this.sessionData);
 
     for (var inst in this.data) {
-
       this.category.push(this.data[inst]);
     }
   }
 
   private getAll() {
     this._service.questionList().subscribe(
-      data => {
+      (data) => {
         this._question = data;
         // console.log("Response");
-        this._question.forEach(questionData => { this.backupQuesiton.set(questionData.questionId, (Object.assign({}, questionData))) })
+        this._question.forEach((questionData) => {
+          this.backupQuesiton.set(
+            questionData.questionId,
+            Object.assign({}, questionData)
+          );
+        });
 
         if (this._question.length > 0) {
           this.isHidden = false;
         }
       },
-      Error => console.log("exception")
-    )
+      (Error) => console.log('exception')
+    );
   }
 
   private loadQuiz() {
-    this.sessionData = sessionStorage.getItem("quiz");
+    this.sessionData = sessionStorage.getItem('quiz');
 
     this.data = JSON.parse(this.sessionData);
     for (var qiz in this.data) {
-      this.quiz.push(this.data[qiz])
+      this.quiz.push(this.data[qiz]);
     }
-
-
   }
 
   Home() {

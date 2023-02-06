@@ -3,28 +3,28 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Authuser } from '../authuser';
 import { AuthuserserviceService } from '../service/authuserservice.service';
 
-
 @Component({
   selector: 'app-authuser',
   templateUrl: './authuser.component.html',
-  styleUrls: ['../../app.component.css']
+  styleUrls: ['../../app.component.css'],
 })
 export class AuthuserComponent implements OnInit {
-
   authUser = new Authuser();
   _authUser: Authuser[] = [];
-
 
   isHidden: boolean = true;
 
   _backupUser: Authuser[] = [];
 
-  constructor(private _service: AuthuserserviceService, private _activeRoute: ActivatedRoute, private _route: Router) { }
+  constructor(
+    private _service: AuthuserserviceService,
+    private _activeRoute: ActivatedRoute,
+    private _route: Router
+  ) {}
 
   authUserName!: string;
 
   addauthUser(user: Authuser) {
-
     //alert(JSON.stringify(user));
     this.authUser.authUserName = user.authUserName;
     this.authUser.authUserPassword = user.authUserPassword;
@@ -36,24 +36,24 @@ export class AuthuserComponent implements OnInit {
     this.authUser.authUserIsActive = user.authUserIsActive;
     this.authUser.authUserIsSuperUser = user.authUserIsSuperUser;
     this._service.addAuthUser(this.authUser).subscribe(
-
-      data => {
+      (data) => {
         // console.log(data);
-        alert("authuser added Successfully");
+        alert('authuser added Successfully');
 
         this.ngOnInit();
       },
-      erorr => alert("Please enter valid details ")
-    )
+      (erorr) => alert('Please enter valid details ')
+    );
   }
 
   updateAuthUsers(user: Authuser) {
-
-    if (this._backupUser.findIndex(data => data.authUserName === (user.authUserName)) < 0) {
-      alert("authuser not exist for update. please enter another.");
-
+    if (
+      this._backupUser.findIndex(
+        (data) => data.authUserName === user.authUserName
+      ) < 0
+    ) {
+      alert('authuser not exist for update. please enter another.');
     } else {
-
       this.authUser.authUserId = user.authUserId;
       this.authUser.authUserName = user.authUserName;
       this.authUser.authUserPassword = user.authUserPassword;
@@ -67,16 +67,16 @@ export class AuthuserComponent implements OnInit {
 
       console.log(this.authUser);
 
-      this._service.updateAuthUser(user.authUserName,
-        this.authUser).subscribe(
-          data => {
-            console.log(data)
-            alert("Data Updated...")
-            this.ngOnInit();
-          },
-          error => {
-            console.log(error);
-          });
+      this._service.updateAuthUser(user.authUserName, this.authUser).subscribe(
+        (data) => {
+          console.log(data);
+          alert('Data Updated...');
+          this.ngOnInit();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 
@@ -84,46 +84,38 @@ export class AuthuserComponent implements OnInit {
     if (sessionStorage.getItem('authenticatedUser') === null) {
       this._route.navigate(['']);
     } else {
-
-
       this._service.authUserList().subscribe(
-        data => {
-          console.log("Response Receved...");
+        (data) => {
+          console.log('Response Receved...');
           this._authUser = data;
 
           if (this._authUser.length > 0) {
             this.isHidden = false;
           }
 
-          this._authUser.forEach(user => {
-            this._backupUser.push(Object.assign({}, user))
-          })
-
-
+          this._authUser.forEach((user) => {
+            this._backupUser.push(Object.assign({}, user));
+          });
         },
 
-        Error => console.log("exception")
-      )
+        (Error) => console.log('exception')
+      );
     }
   }
 
   deleteAuthUser(user: Authuser) {
-
     // alert("in method")
-    this._service.deleteAuthUser(user.authUserName)
-      .subscribe(
-        data => {
-          location.reload();
-          alert("authuser Deleted..")
-          this.ngOnInit();
-
-        },
-        error => console.log(error));
-
+    this._service.deleteAuthUser(user.authUserName).subscribe(
+      (data) => {
+        location.reload();
+        alert('authuser Deleted..');
+        this.ngOnInit();
+      },
+      (error) => console.log(error)
+    );
   }
 
   Home() {
-    this._route.navigate(['demo'])
+    this._route.navigate(['demo']);
   }
-
 }

@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
 html,body{
-background-image: url('../img/university2.jpg');
+background-image: url('../../../assets/img/addbooks.jpg');
 background-size: cover;
 background-repeat: no-repeat;
 height: 100%;
@@ -11,23 +11,27 @@ font-family: 'Numans', sans-serif;
 font-size:1.5rem;
 }
 #loginbtn{
-    margin-left: 36%;
-    margin-top: 10%;
+    /* margin-left: 36%;
+    margin-top: 10%; */
 
 }
 #backbtn{
-    margin-left: 115rem;
+    margin-left: 97%;
+    background-color: transparent;
+    border: none;
+    padding-top: 2%;
 }
 .container{
-height: 100%;
+height: 80%;
 align-content: center;
+overflow: hidden;
 }
 
 .card{
 height: fit-content;
 margin-top: auto;
 margin-bottom: auto;
-width: 400px;
+width: 80%;
 background-color: rgba(0,0,0,0.5) !important;
 }
 
@@ -100,7 +104,7 @@ margin-left: 4px;
 
 .h-100 {
     
-    justify-content: right!important;
+    justify-content: center!important;
 }
 
 label{
@@ -126,4 +130,33 @@ label{
 
 .two-col label {
     display: block;
+}
+
+.first-row {
+    /* border: 1px solid black;
+    margin: 1rem;
+    padding: 2rem 2rem;
+    text-align: center; */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+  }
+  .last-row {
+
+    display: grid;
+
+    justify-content: center;
+
+  }
+  /* .first-row-child {
+    display: inline-block;
+    border: 1px solid red;
+    padding: 1rem 1rem;
+    vertical-align: middle;
+  } */
+
+  .form-control {
+   
+    font-size: 1.3rem;
+
 }
