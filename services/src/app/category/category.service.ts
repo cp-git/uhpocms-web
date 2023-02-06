@@ -14,6 +14,7 @@ export class CategoryService {
   }
 
   _getAllCategorys(): Observable<any> {
+
     return this._http.get<any>(`${this.categoryUrl}/?category=all`);
   }
 
@@ -26,6 +27,9 @@ export class CategoryService {
   }
 
   deleteCategory(categoryName: string) {
-    return this._http.delete<Category>(`${this.categoryUrl}/` + categoryName);
+   // return this._http.delete<Category>(`${this.categoryUrl}/` + categoryName);
+
+    return this._http.get<any>("http://localhost:8090/category/uhpocms/category?category=all");
+
   }
 }

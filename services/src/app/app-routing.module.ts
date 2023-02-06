@@ -12,10 +12,15 @@ import { QuestionComponent } from './teacherquestion/question/question.component
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 
 import { HomeComponent } from './home/home.component';
+
 import { CategoryComponent } from './category/UI/category/category.component';
 import { MainComponent } from './category/UI/main/main.component';
 import { AddModuleComponent } from './category/UI/add-module/add-module.component';
 import { AddCategoryComponent } from './category/UI/add-category/add-category.component';
+
+import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
+import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
+
 
 const routes: Routes = [
 
@@ -50,6 +55,18 @@ const routes: Routes = [
 
   //quiz routes
   { path: 'quiz', component: QuizComponent },
+
+
+  //inserting  the quiz
+
+  { path: 'createQuiz', component: CreateQuizComponent },
+
+
+  //update Quiz
+
+  { path: 'updateQuiz/:title', component: UpdatequizComponent },
+ // { path: 'updateQuiz', component: UpdatequizComponent },
+
 
 
 
