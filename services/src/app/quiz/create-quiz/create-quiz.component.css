@@ -4,10 +4,11 @@
 
 html,
 body {
-    background-image: url('../img/university2.jpg');
+    background-image: url('../img/dd4.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-    height: 109vh;
+    height: max-content;
+    width: 100%;
     font-family: 'Numans', sans-serif;
     font-size: 1.5rem;
 }
@@ -28,21 +29,26 @@ input {
 }
 
 #backbtn {
-    margin-left: 115rem;
+    margin-left: 1100px;
 }
 
-.container {
+.container-fluid {
     height: 100%;
-    align-content: center;
+    /*align-content: center;*/
+}
+
+.Header h3 {
+    font-size: 40px;
+    color: red;
 }
 
 .card {
     height: fit-content;
-    margin-top: auto;
-    margin-bottom: auto;
-    width: 400px;
+    width: 70%;
     background-color: rgba(0, 0, 0, 0.5) !important;
 }
+
+
 
 .social_icon span {
     font-size: 60px;
@@ -111,8 +117,8 @@ input:focus {
 }
 
 .h-100 {
-
-    justify-content: right !important;
+    margin-left: 500px;
+    margin-top: 40px;
 }
 
 label {
@@ -140,4 +146,46 @@ label {
 
 .two-col label {
     display: block;
+}
+
+.sub-heading {
+    border: 1px groove grey;
+}
+
+
+.row {
+    margin-top: 15px;
+    margin-left: 20px;
+}
+
+.col-md-6 a {
+    color: black;
+    font-size: 17px;
+}
+
+
+input {
+    height: 35px;
+
+}
+
+select {
+    height: 35px !important;
+
+}
+
+#headdata {
+    background-color: aqua;
+    margin-top: 0px;
+}
+
+
+#btndemo {
+    margin-left: 800px;
+    padding: 10px;
+}
+
+#btndemo button {
+    height: 40px;
+    width: 100px;
 }
