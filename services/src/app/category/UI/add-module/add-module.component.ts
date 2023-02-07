@@ -30,6 +30,9 @@ export class AddModuleComponent {
 
   }
 
+  Back() {
+    this._route.navigate(['teachermodule'])
+  }
   moduleName!: string;
 
 
