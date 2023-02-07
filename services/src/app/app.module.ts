@@ -14,7 +14,6 @@ import { DepartmentComponent } from './admindepartment/department/department.com
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 
-import { QuizComponent } from './quiz/quiz.component';
 import { QuestionComponent } from './teacherquestion/question/question.component';
 import { EmailComponent } from './email/email/email.component';
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
@@ -43,6 +42,7 @@ import { ViewDepartmentComponent } from './InstituteDetails/view-department/view
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
+import { QuizComponent } from './quiz/quiz.component';
 
 
 @NgModule({
