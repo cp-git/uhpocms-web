@@ -42,6 +42,7 @@ import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
 import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
+import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
 
 
 @NgModule({
@@ -75,7 +76,8 @@ import { DisplaySchoolComponent } from './InstituteDetails/display-school/displa
     UpdatequizComponent,
     ViewDepartmentComponent,
     ViewCoursesComponent,
-    DisplaySchoolComponent
+    DisplaySchoolComponent,
+    UpdatemoduleComponent
 
 
 

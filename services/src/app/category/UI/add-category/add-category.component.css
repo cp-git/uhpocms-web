@@ -8,7 +8,7 @@
     font-family: 'Poppins', sans-serif;
 }
 
-body {
+.design {
     height: 100vh;
     display: flex;
     align-items: center;
@@ -50,9 +50,7 @@ body {
 }
 
 
-.container.active .forms {
-    height: 600px;
-}
+
 
 .container .form .title {
     position: relative;
@@ -60,16 +58,6 @@ body {
     font-weight: 600;
 }
 
-.form .title::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 3px;
-    width: 30px;
-    background-color: #4070f4;
-    border-radius: 25px;
-}
 
 .form .input-field {
     position: relative;

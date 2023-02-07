@@ -2,160 +2,78 @@
     <div class="header1">
         <h1 class="heading">Module Administration</h1>
     </div>
+    <button class="button" (click)="navAddModule()">Add Module</button>
+    <button class="button" (click)="navupdModule()">Update Module</button>
     <table class="table" border="1">
         <thead>
             <tr>
-                <th>Sr.No</th>
+
                 <th>Name</th>
                 <th>Description</th>
-                <th>IsActive</th>
+
                 <th>StartDate</th>
                 <th>EndDate</th>
-                <th>Course</th>
-                <th>ModuleOrderNo</th>
-                <th>CourseId_id</th>
 
-                <th>Update</th>
+                <th>ModuleOrderNo</th>
+                <th>Course Name</th>
+
+
                 <th>Delete</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngIf="isVisible">
-                <td>1</td>
 
-                <td>
-                    <div class="form-group">
-                        <input class="form-control" type="text" [(ngModel)]="module.moduleName"
-                            value="{{module.moduleName}}" />
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group">
-                        <input class="form-control" type="text" [(ngModel)]="module.moduleDescription"
-                            value="{{module.moduleDescription}}" />
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group">
-                        <input class="form-control" type="checkbox" [(ngModel)]="module.moduleIsActive"
-                            checked=" {{module.moduleIsActive}}" />
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group">
-                        <input class="form-control" type="text" [(ngModel)]="module.moduleStartDate"
-                            value="{{module.moduleStartDate}}" />
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group">
-                        <input class="form-control" type="text" [(ngModel)]="module.moduleEndDate"
-                            value="{{module.moduleEndDate}}" />
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group">
-                        <input class="form-control" type="number" [(ngModel)]="module.moduleCourse"
-                            value="{{module.moduleCourse}}" />
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group">
-                        <input class="form-control" type="number" [(ngModel)]="module.moduleOrderNo"
-                            value="{{module.moduleOrderNo}}" />
-                    </div>
-                </td>
-
-                <td>
-                    <div class="form-group">
-                        <select [(ngModel)]="module.courseId_id" class="form-control">
-                            <option *ngFor="let course of courses" value="{{course.courseId}}"
-                                [selected]="module.courseId_id==course.courseId?true:null">
-                                {{course.courseName}} - {{course.courseId}}
-                            </option>
-                        </select>
-                    </div>
-                </td>
-
-                <td>
-                    <div class="form-group">
-                        <button class="form-control btn btn-success" id="updbtn"
-                            (click)="updatemodule(module)">Update</button>
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group">
-                        <button class="form-control btn btn-danger" id="delbtn"
-                            (click)="deletemodule(module)">Delete</button>
-                    </div>
-                </td>
-            </tr>
 
 
 
 
             <tr *ngFor="let module of _teacherModule,let i=index">
-                <td>{{i+1}}</td>
+
                 <td>
                     <div class="form-group">
                         <input class="form-control" type="text" [(ngModel)]="module.moduleName"
-                            value="{{module.moduleName}}" />
+                            value="{{module.moduleName}}" readonly />
                     </div>
                 </td>
                 <td>
                     <div class="form-group">
                         <input class="form-control" type="text" [(ngModel)]="module.moduleDescription"
-                            value="{{module.moduleDescription}}" />
+                            value="{{module.moduleDescription}}" readonly />
                     </div>
                 </td>
-                <td>
-                    <div class="form-group">
-                        <input class="form-control" type="checkbox" [(ngModel)]="module.moduleIsActive"
-                            checked=" {{module.moduleIsActive}}" disabled />
-                    </div>
-                </td>
+
                 <td>
                     <div class="form-group">
                         <input class="form-control" type="text" [(ngModel)]="module.moduleStartDate"
-                            value="{{module.moduleStartDate}}" />
+                            value="{{module.moduleStartDate}}" readonly />
                     </div>
                 </td>
                 <td>
                     <div class="form-group">
                         <input class="form-control" type="text" [(ngModel)]="module.moduleEndDate"
-                            value="{{module.moduleEndDate}}" />
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group">
-                        <input class="form-control" type="number" [(ngModel)]="module.moduleCourse"
-                            value="{{module.moduleCourse}}" />
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group">
-                        <input class="form-control" type="number" [(ngModel)]="module.moduleOrderNo"
-                            value="{{module.moduleOrderNo}}" />
+                            value="{{module.moduleEndDate}}" readonly />
                     </div>
                 </td>
 
                 <td>
                     <div class="form-group">
-                        <select [(ngModel)]="module.courseId_id" class="form-control">
-                            <option *ngFor="let course of courses" value="{{course.courseId}}"
+                        <input class="form-control" type="number" [(ngModel)]="module.moduleOrderNo"
+                            value="{{module.moduleOrderNo}}" readonly />
+                    </div>
+                </td>
+
+                <td>
+                    <div class="form-group">
+                        <select [(ngModel)]="module.courseId_id" class="form-control" disabled>
+                            <option readonly *ngFor="let course of courses" value="{{course.courseId}}"
                                 [selected]="module.courseId_id==course.courseId?true:null">
-                                {{course.courseName}} - {{course.courseId}}
+                                {{course.courseName}}
                             </option>
                         </select>
                     </div>
                 </td>
 
-                <td>
-                    <div class="form-group">
-                        <button class="form-control btn btn-success" id="updbtn"
-                            (click)="updatemodule(module)">Update</button>
-                    </div>
-                </td>
+
                 <td>
                     <div class="form-group">
                         <button class="form-control btn btn-danger" id="delbtn"

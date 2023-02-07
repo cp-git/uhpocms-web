@@ -29,7 +29,7 @@ import { ViewDepartmentComponent } from './InstituteDetails/view-department/view
 
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
-
+import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
 const routes: Routes = [
 
   //category routing
@@ -37,6 +37,7 @@ const routes: Routes = [
   { path: 'addModule', component: AddModuleComponent },
   { path: 'main', component: MainComponent },
   { path: 'category', component: CategoryComponent },
+  { path: 'updateModule', component: UpdatemoduleComponent },
 
 
   { path: '', component: HomeComponent },
