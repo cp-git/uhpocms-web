@@ -14,6 +14,12 @@ export class ModuleService {
   }
 
 
+
+  // _getAllModules(): Observable<any> {
+  //   return this._http.get<any>(this._baseUrl + '?name=all');
+  // }
+
+
   // _getAllModules(): Observable<any> {
   //   return this._http.get<any>(this._baseUrl + '?name=all');
   // }
@@ -22,6 +28,8 @@ export class ModuleService {
   _getAllModules(): Observable<any> {
     return this._http.get<any>("http://localhost:8090/module/uhpocms/module?name=all");
   }
+
+
 
 
 }

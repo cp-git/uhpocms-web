@@ -29,7 +29,13 @@ import { ViewDepartmentComponent } from './InstituteDetails/view-department/view
 
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
+
 import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
+
+import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
+import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
+
+
 const routes: Routes = [
 
   //category routing
@@ -70,24 +76,15 @@ const routes: Routes = [
 
   { path: 'school', component: DisplaySchoolComponent },
 
-
-
-
   //inserting  the quiz
 
   { path: 'createQuiz', component: CreateQuizComponent },
-
   { path: 'course/:id', component: ViewCoursesComponent },
 
 
   //update Quiz
-
   { path: 'updateQuiz/:title', component: UpdatequizComponent },
   // { path: 'updateQuiz', component: UpdatequizComponent },
-
-
-
-
 
   //teacherModule routes
   { path: 'teachermodule', component: TeachermoduleComponent },
@@ -100,15 +97,17 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
 
   { path: 'course', component: CourseComponent },
-
-
   { path: 'addcourse', component: AddcourseComponent },
-
-
   { path: 'updatecourse/:courseName', component: UpdatecourseComponent },
 
-
-
+  //announcement router
+  {
+    path: 'announcement', component: AnnouncementComponent, children: [
+      {
+        path: 'add', component: CreateAnnouncementComponent
+      }
+    ]
+  }
 
 
 ];
