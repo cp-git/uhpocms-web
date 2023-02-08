@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row">
+        <!-- Button trigger modal -->
+        <div class="col-md-12 bg-light text-right">
+            <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModal"
+                routerLink="add">Add Notification</button>
+        </div>
+    </div>
+
+    <div class="d-flex flex-row mb-3">
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Message</th>
+                    <!-- <th scope="col">To</th> -->
+                    <th scope="col">Sent By</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of announcements; let i=index">
+                    <th scope="row">{{i+1}}</th>
+                    <td>{{data.announcementTitle}}</td>
+                    <td>{{data.announcementMessage}}</td>
+                    <!-- <td>{{data.announcementTo}}</td> -->
+                    <td>{{data.announcementReadby}}</td>
+                    <td (click)="deleteAnnouncementByTitle(data.announcementTitle)"><span class="fa fa-trash"></span>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-12 bg-light text-right">
+        <button class="btn btn-primary" routerLink="/demo">Back</button>
+    </div>
+</div>
+
+<router-outlet></router-outlet>

@@ -9,11 +9,8 @@ import { environment } from 'environments/environment.development';
 export class TeachermoduleserviceService {
   private readonly moduleUrl: string;
   constructor(private _http: HttpClient) {
-<<<<<<< HEAD
-    this.moduleUrl = environment.moduleUrl + '/module';
-=======
+    // this.moduleUrl = environment.moduleUrl + '/module';
     this.moduleUrl = `http://localhost:8090/module/uhpocms/module`;
->>>>>>> main
   }
 
   fetchModuleList(): Observable<any> {
