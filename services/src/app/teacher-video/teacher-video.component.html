@@ -1,0 +1,8 @@
+<div *ngFor="let video of videos">
+    <h3>{{ video.title }}</h3>
+    <video [src]="video.src" width="320" height="240" controls controlsList="nodownload"></video>
+</div>
+
+<video width="320" height="240" controls>
+    <source src="./../../assets/video.mp4">
+</video>

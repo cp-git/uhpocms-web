@@ -43,6 +43,8 @@ import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-cours
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
 import { QuizComponent } from './quiz/quiz.component';
+import { TeacherVideoComponent } from './teacher-video/teacher-video.component';
+
 
 
 @NgModule({
@@ -77,7 +79,9 @@ import { QuizComponent } from './quiz/quiz.component';
     ViewDepartmentComponent,
     ViewCoursesComponent,
     DisplaySchoolComponent,
-    UpdatemoduleComponent
+    UpdatemoduleComponent,
+    TeacherVideoComponent,
+
 
 
 

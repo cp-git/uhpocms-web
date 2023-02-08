@@ -30,8 +30,11 @@ import { ViewDepartmentComponent } from './InstituteDetails/view-department/view
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
+import { TeacherVideoComponent } from './teacher-video/teacher-video.component';
 const routes: Routes = [
 
+
+  { path: 'video', component: TeacherVideoComponent },
   //category routing
   { path: 'addCategory', component: AddCategoryComponent },
   { path: 'addModule', component: AddModuleComponent },

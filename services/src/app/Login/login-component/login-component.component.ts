@@ -57,6 +57,9 @@ export class LoginComponentComponent implements OnInit {
   RedirectToCourse() {
     this._route.navigate(['course']);
   }
+  RedirectToVideo() {
+    this._route.navigate(['video']);
+  }
   logout() {
     this._authService.logout();
   }
