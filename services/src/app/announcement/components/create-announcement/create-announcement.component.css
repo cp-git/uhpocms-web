@@ -1,0 +1,23 @@
+.dropdown {
+    list-style-type: none;
+    margin-top: 10px;
+}
+
+.dropdown-menu {
+    margin-top: 10px;
+    max-height: 180px;
+    overflow-y: auto;
+    --bs-dropdown-min-width: 20rem;
+}
+
+input[type="checkbox"] {
+    margin-bottom: 10px;
+}
+
+.modal-content {
+    height: 460px;
+}
+
+select {
+    margin-bottom: 10px;
+}
