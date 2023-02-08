@@ -65,7 +65,12 @@ export class LoginComponentComponent implements OnInit {
     this._route.navigate(['school'])
   }
 
+  RedirectToCategory() {
+    this._route.navigate(['main'])
+  }
+  
   RedirectToAnnouncement() {
     this._route.navigate(['announcement'])
   }
+
 }

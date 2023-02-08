@@ -2,13 +2,17 @@
     <div class="header1">
         <h1 class="heading">Category for Quiz</h1>
     </div>
+
+
+    <button class="button" (click)="navAddCategory()">Add Category</button>
+
     <table class="table" border="1">
         <thead>
             <tr>
-                <th>Sr.No.</th>
+
                 <!-- <th>EmailId</th> -->
                 <th>Category</th>
-                <th>isActive</th>
+
 
                 <th>Delete</th>
             </tr>
@@ -16,18 +20,14 @@
         <tbody>
 
             <tr *ngIf="isHidden">
-                <td>1</td>
+
                 <td>
                     <div class="form-group">
                         <input class="form-control" type="text" [(ngModel)]="category.categoryName"
-                            value="{{category.categoryName}}" />
+                            value="{{category.categoryName}}" readonly />
                     </div>
                 </td>
-                <td>
-                    <div class="form-group"><input class="form-control" type="checkbox" [(ngModel)]="category.active"
-                            checked=" {{category.active}}" />
-                    </div>
-                </td>
+
 
 
 
@@ -42,18 +42,14 @@
 
 
             <tr *ngFor="let categoryData of categories,let i=index">
-                <td>{{i+1}}</td>
+
                 <td>
                     <div class="form-group">
                         <input class="form-control" type="text" [(ngModel)]="categoryData.categoryName"
-                            value="{{categoryData.categoryName}}" />
+                            value="{{categoryData.categoryName}}" readonly />
                     </div>
                 </td>
-                <td>
-                    <div class="form-group"><input class="form-control" type="checkbox"
-                            [(ngModel)]="categoryData.active" checked=" {{categoryData.active}}" disabled />
-                    </div>
-                </td>
+
 
 
                 <td>

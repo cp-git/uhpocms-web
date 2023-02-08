@@ -29,8 +29,12 @@ import { ViewDepartmentComponent } from './InstituteDetails/view-department/view
 
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
+
+import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
+
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
 import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
+
 
 const routes: Routes = [
 
@@ -39,6 +43,7 @@ const routes: Routes = [
   { path: 'addModule', component: AddModuleComponent },
   { path: 'main', component: MainComponent },
   { path: 'category', component: CategoryComponent },
+  { path: 'updateModule', component: UpdatemoduleComponent },
 
 
   { path: '', component: HomeComponent },

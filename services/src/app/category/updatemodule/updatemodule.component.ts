@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
-import { Course } from 'app/class/course';
-import { Module } from '../module';
-import { TeachermoduleserviceService } from '../service/teachermoduleservice.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Course } from 'app/course/course';
+import { Module } from 'app/module/module';
+import { TeachermoduleserviceService } from 'app/teachermodule/teachermoduleservice.service';
 
 @Component({
-  selector: 'app-teachermodule',
-  templateUrl: './teachermodule.component.html',
-  styleUrls: ['./teachermodule.component.css'],
+  selector: 'app-updatemodule',
+  templateUrl: './updatemodule.component.html',
+  styleUrls: ['./updatemodule.component.css']
 })
-export class TeachermoduleComponent {
+export class UpdatemoduleComponent {
   module = new Module();
   _teacherModule: Module[] = []; //for all module data
 
@@ -23,9 +23,6 @@ export class TeachermoduleComponent {
   data: any;
   navAddModule() {
     this._route.navigate(['addModule']);
-  }
-  navupdModule() {
-    this._route.navigate(['updateModule']);
   }
   ngOnInit(): void {
     this.getAllModules();
@@ -45,34 +42,7 @@ export class TeachermoduleComponent {
 
   moduleName!: string;
 
-  addmodule(module: Module) {
-    //alert(JSON.stringify(module));
-    var moduleId = module.moduleId;
 
-    module.moduleId = null;
-
-    this._service.addTeacherModule(module).subscribe(
-      (data) => {
-        //console.log(data);
-        this.module = data;
-        if (this._backupModule.size > 0) {
-          this._teacherModule[this._teacherModule.indexOf(module)] =
-            Object.assign({}, this._backupModule.get(moduleId));
-        }
-        this._teacherModule.push(this.module);
-        this._backupModule.set(
-          this.module.moduleId,
-          Object.assign({}, this.module)
-        );
-        alert('Module Added successfully');
-        location.reload();
-        if (this._teacherModule.length > 0) {
-          this.isVisible = false;
-        }
-      },
-      (error) => alert('Module Name already exists')
-    );
-  }
 
   getAllModules() {
     this._service.fetchModuleList().subscribe(
@@ -160,7 +130,7 @@ export class TeachermoduleComponent {
     //alert(this.courses);
   }
 
-  Home() {
-    this._route.navigate(['main']);
+  Back() {
+    this._route.navigate(['teachermodule'])
   }
 }

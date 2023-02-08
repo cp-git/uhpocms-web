@@ -1,4 +1,5 @@
 export class Module {
+
   moduleId!: number | null
   moduleName!: string;
   moduleDescription!: string;
@@ -12,4 +13,5 @@ export class Module {
   moduleCreatedDate!: Date;
   moduleUpdatedBy!: string;
   moduleUpdatedDate!: Date;
+
 }

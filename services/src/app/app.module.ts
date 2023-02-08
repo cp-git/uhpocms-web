@@ -12,7 +12,11 @@ import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-
 import { DepartmentComponent } from './admindepartment/department/department.component';
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
+
+
+
 import { QuizComponent } from './quiz/quiz.component';
+
 import { QuestionComponent } from './teacherquestion/question/question.component';
 import { EmailComponent } from './email/email/email.component';
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
@@ -34,8 +38,13 @@ import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
 import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
+
+import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
+import { QuizComponent } from './quiz/quiz.component';
+
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
 import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
+
 
 
 @NgModule({
@@ -64,8 +73,10 @@ import { CreateAnnouncementComponent } from './announcement/components/create-an
     ViewDepartmentComponent,
     ViewCoursesComponent,
     DisplaySchoolComponent,
+    UpdatemoduleComponent
     AnnouncementComponent,
     CreateAnnouncementComponent
+
   ],
 
   imports: [

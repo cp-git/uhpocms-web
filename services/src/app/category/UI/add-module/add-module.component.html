@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<!---Coding By CodingLab | www.codinglabweb.com--->
-<html lang="en">
+<div class="body">
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Registration Form in HTML CSS</title>
-</head>
-
-<body>
     <section class="container">
         <header>Module Registration</header>
         <div class="form">
@@ -50,25 +40,19 @@
                     </select>
                 </div>
             </div>
-            <div class="column">
-                <div class="input-box">
-                    <label>Is Active</label>
-                    <input type="checkbox" [(ngModel)]="module.moduleIsActive" checked=" {{module.moduleIsActive}}" />
-                </div>
 
-
-            </div>
 
 
 
             <div>
                 <button class="button" (click)="addmodule(module)">Submit</button>
             </div>
+
+
         </div>
 
+        <button class="button" (click)="Back()" id="delbtn">Back</button>
 
 
     </section>
-</body>
-
-</html>
+</div>
