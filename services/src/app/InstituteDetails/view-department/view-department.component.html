@@ -9,8 +9,7 @@
 
                 <th>Department Name</th>
                 <th>Description</th>
-                <th>Created By</th>
-                <th>Created On</th>
+
 
 
 
@@ -25,11 +24,11 @@
             <tr *ngFor="let dept of departments">
                 <td>{{ dept.name }}</td>
                 <td>{{ dept.description }}</td>
-                <td>{{dept.createdBy}}</td>
-                <td>{{dept.createdOn}}</td>
+
 
 
 
             </tr>
         </tbody>
     </table>
+    <button class="btn btn-primary" (click)="Display()">Back</button>

@@ -1,6 +1,6 @@
 export class Module {
-<<<<<<< HEAD
-  moduleId!: number;
+
+  moduleId!: number | null
   moduleName!: string;
   moduleDescription!: string;
   moduleIsActive!: boolean;
@@ -13,19 +13,5 @@ export class Module {
   moduleCreatedDate!: Date;
   moduleUpdatedBy!: string;
   moduleUpdatedDate!: Date;
-=======
-	moduleId!: number | null
-	moduleName!: string;
-	moduleDescription!: string;
-	moduleIsActive!: boolean;
-	moduleStartDate!: Date;
-	moduleEndDate!: Date;
-	moduleCourse!: number;
-	moduleOrderNo!: number;
-	courseId_id!: number;
-	moduleCreatedBy!: string;
-	moduleCreatedDate!: Date;
-	moduleUpdatedBy!: string;
-	moduleUpdatedDate!: Date;
->>>>>>> main
+
 }

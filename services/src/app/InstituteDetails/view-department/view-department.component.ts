@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Department } from 'app/admindepartment/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
@@ -15,6 +16,7 @@ export class ViewDepartmentComponent {
   id: string | undefined | null;
 
   constructor(
+    private _route: Router,
     private readonly deptService: DepartmentService,
     private readonly route: ActivatedRoute
   ) { }
@@ -37,6 +39,10 @@ export class ViewDepartmentComponent {
 
 
 
+  }
+
+  Display() {
+    this._route.navigate(['display']);
   }
 
 }

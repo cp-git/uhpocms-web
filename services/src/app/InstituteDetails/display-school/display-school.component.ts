@@ -13,6 +13,4 @@ import { DepartmentService } from 'app/admindepartment/service/department.servic
 export class DisplaySchoolComponent {
 
 
-
-
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from 'app/course/course';
 import { CourseService } from 'app/course/course.service';
 
@@ -14,6 +14,7 @@ export class ViewCoursesComponent {
   backupCourse: Course[] = [];
   id: string | undefined | null;
   constructor(
+    private _route: Router,
     private readonly courseService: CourseService,
     private readonly route: ActivatedRoute
   ) { }
@@ -32,5 +33,8 @@ export class ViewCoursesComponent {
       }
 
     )
+  }
+  Display() {
+    this._route.navigate(['display']);
   }
 }
