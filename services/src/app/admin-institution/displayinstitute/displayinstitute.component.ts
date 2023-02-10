@@ -64,4 +64,7 @@ export class DisplayinstituteComponent {
       }
     );
   }
+  Back() {
+    this._route.navigate(['demo']);
+  }
 }

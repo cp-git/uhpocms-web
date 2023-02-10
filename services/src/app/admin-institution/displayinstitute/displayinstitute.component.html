@@ -4,24 +4,23 @@
         <div class="header1">
             <h1>Institute</h1>
         </div>
-        <div class="row text-right"><button class="btn btn-primary" routerLink="/addinstitute">ADD New
+        <div class="row text-right"><button class="btn btn-success" routerLink="/addinstitute">ADD New
                 Institute</button></div>
+
         <div class="container">
             <div class="row">
-                <div class="col-sm-3 text-center">
-                    <div><img src="../../assets/img/pic1.png" routerLink="/display" /></div>
-                    <div><button #btn1 id="demo" value="1" class="btn btn-info" routerLink="/display">IIT</button></div>
-                </div>
-                <div class="col-sm-3 text-center">
-                    <div><img src="../../assets/img/pic3.png" routerLink="/display" /></div>
-                    <div class="text-center"><button #btn1 id="demo" value="4" class="btn btn-info"
-                            routerLink="/display">AEC</button>
+                <div class="col-sm-3 text-center" *ngFor="let institution of admininstitutions">
+                    <div><img src="../../assets/img/{{institution.adminInstitutionPicture}}"
+                            [routerLink]="['/display',institution.adminInstitutionId]" />
                     </div>
 
-
-
+                    <div><button #btn1 id="demo" class="btn btn-info"
+                            [routerLink]="['/display',institution.adminInstitutionId]">{{institution.adminInstitutionName}}</button>
+                    </div>
                 </div>
 
             </div>
         </div>
+        <div class="row text-left"><button class="btn btn-primary" (click)="Back()">Back</button></div>
+
     </div>

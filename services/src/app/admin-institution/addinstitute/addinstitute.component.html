@@ -29,8 +29,9 @@
             </div>
             <div>
                 <label>Picture</label>
-                <input type="file" [(ngModel)]="admininstitution.adminInstitutionPicture"
-                    value="{{admininstitution.adminInstitutionPicture}}">
+                <input type="file" (change)="onFileSelected($event)"
+                    [(ngModel)]="admininstitution.adminInstitutionPicture" value="{{fileName}}">
+
             </div>
 
 

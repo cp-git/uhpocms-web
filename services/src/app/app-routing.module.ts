@@ -71,8 +71,8 @@ const routes: Routes = [
 
   { path: 'school', component: DisplaySchoolComponent },
 
-
   { path: 'display', component: DisplaySchoolComponent },
+  { path: 'display/:id', component: DisplaySchoolComponent },
 
   { path: 'addinstitute', component: AddinstituteComponent },
 
