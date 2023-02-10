@@ -1,44 +1,8 @@
 #demo {
     margin-left: 20px;
+    margin-top: 20px;
 }
 
 .back {
     margin-left: 20px;
-}
-
-.header1 h1 {
-    border: 1px groove red;
-    text-align: center;
-    background-color: aqua;
-}
-
-
-table th {
-    background-color: #566787;
-    text-align: center;
-    color: white;
-    border: 1px groove black;
-}
-
-.table-header th {
-    background-color: #566787;
-    text-align: center;
-    color: white;
-
-
-}
-
-img {
-    width: 150px;
-    height: 150px;
-    border-radius: 25px;
-}
-
-img:hover {
-    cursor: pointer;
-    filter: grayscale(100%);
-}
-
-.container {
-    margin-top: 20px;
 }
