@@ -1,0 +1,22 @@
+<body>
+    <button id="demo" class="btn btn-info" (click)="file()">File</button>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm" *ngFor="let video of videos">
+                <div>
+                    <h3>{{ video.title }}</h3>
+                    <video [src]="video.src" controls controlsList="nodownload"></video>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</body>
+
+<!--video width="320" height="240" controls>
+    <source src="./../../assets/video.mp4">
+</video>-->

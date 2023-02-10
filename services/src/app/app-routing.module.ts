@@ -30,10 +30,11 @@ import { ViewDepartmentComponent } from './InstituteDetails/view-department/view
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
-import { TeacherVideoComponent } from './teacher-video/teacher-video.component';
+import { TeacherVideoComponent } from './teacherFile/file/teacher-video/teacher-video.component';
+import { FileComponent } from './teacherFile/file/file.component';
 const routes: Routes = [
 
-
+  { path: 'file', component: FileComponent },
   { path: 'video', component: TeacherVideoComponent },
   //category routing
   { path: 'addCategory', component: AddCategoryComponent },

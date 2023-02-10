@@ -43,7 +43,8 @@ import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-cours
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
 import { QuizComponent } from './quiz/quiz.component';
-import { TeacherVideoComponent } from './teacher-video/teacher-video.component';
+import { TeacherVideoComponent } from './teacherFile/file/teacher-video/teacher-video.component';
+import { FileComponent } from './teacherFile/file/file.component';
 
 
 
@@ -81,6 +82,7 @@ import { TeacherVideoComponent } from './teacher-video/teacher-video.component';
     DisplaySchoolComponent,
     UpdatemoduleComponent,
     TeacherVideoComponent,
+    FileComponent,
 
 
 
