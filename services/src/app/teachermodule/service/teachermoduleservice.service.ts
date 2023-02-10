@@ -19,23 +19,23 @@ export class TeachermoduleserviceService {
 
 
   constructor(private _http: HttpClient) {
-    //  this._baseUrl = `${environment.moduleUrl}/module`;
+    this._baseUrl = `${environment.moduleUrl}/module`;
 
-    this._baseUrl = `http://localhost:8090/module/uhpocms/module`;
+    // this._baseUrl = `http://localhost:8090/module/uhpocms/module`;
 
     this._loginUrl = `${environment.moduleUrl}/basicauth`;
   }
 
   fetchModuleList(): Observable<any> {
 
-    //  return this._http.get<any>(this._baseUrl + '?name=all');
+    return this._http.get<any>(this._baseUrl + '?name=all');
 
-    return this._http.get<any>("http://localhost:8090/module/uhpocms/module?name=all");
+    // return this._http.get<any>("http://localhost:8090/module/uhpocms/module?name=all");
 
   }
 
   addTeacherModule(module: Module): Observable<any> {
-    return this._http.post<any>("http://localhost:8090/module/uhpocms/module", module);
+    return this._http.post<any>(this._baseUrl, module);
   }
 
   deleteModule(moduleName: string): Observable<any> {

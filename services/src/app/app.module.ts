@@ -40,7 +40,6 @@ import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-cours
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 
 import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
-import { QuizComponent } from './quiz/quiz.component';
 
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
 import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
@@ -73,7 +72,7 @@ import { CreateAnnouncementComponent } from './announcement/components/create-an
     ViewDepartmentComponent,
     ViewCoursesComponent,
     DisplaySchoolComponent,
-    UpdatemoduleComponent
+    UpdatemoduleComponent,
     AnnouncementComponent,
     CreateAnnouncementComponent
 
