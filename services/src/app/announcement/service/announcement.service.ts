@@ -8,8 +8,8 @@ import { Announcement } from '../announcement';
 })
 export class AnnouncementService {
 
-  //private readonly announcementUrl = `${environment.announcementUrl}/announcement`;
-  private readonly announcementUrl = `http://localhost:8090/announcement/uhpocms/announcement`
+  private readonly announcementUrl = `${environment.announcementUrl}/announcement`;
+  // private readonly announcementUrl = `http://localhost:8090/announcement/uhpocms/announcement`
   constructor(private _http: HttpClient) { }
 
   fetchAllAnnouncements() {
@@ -35,6 +35,6 @@ export class AnnouncementService {
   }
 
   sendAnnouncementsToProfileIDs(id: number, profileIDs: number[]) {
-    return this._http.post<Announcement>(`http://localhost:8090/announcement/uhpocms/announcement/send/` + id, profileIDs);
+    return this._http.post<Announcement>(`${this.announcementUrl}/send/` + id, profileIDs);
   }
 }

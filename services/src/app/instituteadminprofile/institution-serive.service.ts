@@ -8,7 +8,7 @@ import { map } from 'rxjs/internal/operators/map';
   providedIn: 'root',
 })
 export class InstitutionSeriveService {
-  private institutionUrl: string = environment.adminInstitutionUrl;
+  private institutionUrl: string;
   // BASE_PATH: 'http://localhost:8080'
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser';
 
@@ -17,9 +17,9 @@ export class InstitutionSeriveService {
   _loginUrl: string;
 
   constructor(private _http: HttpClient) {
-    // this.institutionUrl = environment.institutionUrl;
+    this.institutionUrl = environment.adminInstitutionUrl;
     this._loginUrl = `${environment.moduleUrl}/basicauth`;
-    this.institutionUrl = 'http://localhost:8090/admininstitution/uhpocms';
+    // this.institutionUrl = 'http://localhost:8090/admininstitution/uhpocms';
   }
 
   _getAllInstitutions(): Observable<any> {
