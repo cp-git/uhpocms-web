@@ -15,7 +15,7 @@ import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 
 
 
-import { QuizComponent } from './quiz/quiz.component';
+
 
 import { QuestionComponent } from './teacherquestion/question/question.component';
 import { EmailComponent } from './email/email/email.component';
@@ -73,7 +73,7 @@ import { CreateAnnouncementComponent } from './announcement/components/create-an
     ViewDepartmentComponent,
     ViewCoursesComponent,
     DisplaySchoolComponent,
-    UpdatemoduleComponent
+    UpdatemoduleComponent,
     AnnouncementComponent,
     CreateAnnouncementComponent
 
