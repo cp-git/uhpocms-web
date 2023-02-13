@@ -34,7 +34,7 @@
             </thead>
 
             <tbody>
-                <tr *ngIf="isHidden">
+                <!--  <tr *ngIf="isHidden">
 
 
 
@@ -172,7 +172,7 @@
                             (click)="_deletInstituteAdmin(_instituteAdmin.firstName)">Delete</button>
                     </td>
 
-                </tr>
+                </tr>-->
                 <tr *ngFor="let _instituteAdmin of _instituteAdminArray">
 
 
@@ -299,11 +299,19 @@
                         </div>
                     </td>
                     <td>
-                        <button class="btn btn-primary" (click)="_addInstituteAdmin(_instituteAdmin)">Add</button>
+                        <button class="btn btn-primary" (click)="_addInstituteAdmin()">Add</button>
                     </td>
                     <td>
+                        <!-- <button class="btn btn-success"
+                            (click)="_updateInstituteAdmin(_instituteAdmin.firstName,_instituteAdmin)">Update</button> -->
+
                         <button class="btn btn-success"
-                            (click)="_updateInstituteAdmin(_instituteAdmin.firstName,_instituteAdmin)">Update</button>
+                            (click)="_updateInstituteAdmin(_instituteAdmin.firstName)">Update</button>
+                    </td>
+
+                    <td>
+                        <button class="btn btn-danger"
+                            (click)="ViewInstituteadmin(_instituteAdmin.firstName)">View</button>
                     </td>
                     <td>
                         <button class="btn btn-danger"

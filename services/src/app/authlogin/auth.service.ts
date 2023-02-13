@@ -16,8 +16,8 @@ export class AuthService {
   _authUrl: string;
 
   constructor(private http: HttpClient, private _route: Router) {
-    this._authUrl = `${environment.authUserUrl}/basicauth`;
-    // this._authUrl = `http://localhost:8090/authuser/uhpocms/basicauth`;
+    // this._authUrl = `${environment.authUserUrl}/basicauth`;
+    this._authUrl = `http://localhost:8090/authuser/uhpocms/basicauth`;
   }
 
   authenticationService(username: String, password: String) {

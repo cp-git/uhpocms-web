@@ -43,6 +43,13 @@ import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.comp
 
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
 import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
+import { InsertinstituteadminprofileComponent } from './instituteadminprofile/insertinstituteadminprofile/insertinstituteadminprofile.component';
+import { UpdateinstituteadminprofileComponent } from './instituteadminprofile/updateinstituteadminprofile/updateinstituteadminprofile.component';
+import { ViewinstiteadminprofileComponent } from './instituteadminprofile/viewinstiteadminprofile/viewinstiteadminprofile.component';
+import { AuthenticationloginComponent } from './authenticationlogin/authenticationlogin.component';
+import { AdminmdouleComponent } from './adminmdoule/adminmdoule.component';
+import { TeacherComponent } from './teacher/teacher.component';
+import { StudentdataComponent } from './studentdata/studentdata.component';
 
 
 
@@ -74,7 +81,14 @@ import { CreateAnnouncementComponent } from './announcement/components/create-an
     DisplaySchoolComponent,
     UpdatemoduleComponent,
     AnnouncementComponent,
-    CreateAnnouncementComponent
+    CreateAnnouncementComponent,
+    InsertinstituteadminprofileComponent,
+    UpdateinstituteadminprofileComponent,
+    ViewinstiteadminprofileComponent,
+    AuthenticationloginComponent,
+    AdminmdouleComponent,
+    TeacherComponent,
+    StudentdataComponent
 
   ],
 

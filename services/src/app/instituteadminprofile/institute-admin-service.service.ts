@@ -77,4 +77,11 @@ export class InstituteAdminServiceService {
   _deleteInstituteAdminList(firstName: string): Observable<any> {
     return this.http.delete<any>(this._baseUrl + '/' + firstName);
   }
+
+
+  _getAllAuthUsersList(): Observable<any> {
+    return this.http.get<any>("http://localhost:8090/authuser/uhpocms/authuser?username=all");
+  }
+
+
 }

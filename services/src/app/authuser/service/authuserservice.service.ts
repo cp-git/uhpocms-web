@@ -46,7 +46,7 @@ export class AuthuserserviceService {
   }
 
   loginDataAuthUser(authuser: Authuser): Observable<any> {
-    return this._http.post<any>(this._loginUrl, authuser);
+    return this._http.post<any>("http://localhost:8090/authuser/uhpocms/login", authuser);
   }
 
   authenticationService(username: String, password: String) {
