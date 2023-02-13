@@ -39,6 +39,15 @@ export class QuestionService {
     return this._http.put<any>(this._baseUrl + '/' + questionFigure, question);
   }
 
+
+  getInactiveQuestionList(): Observable<any> {
+    return this._http.get<any>(`${this._baseUrl}/inactive?inactivequestions=all`);
+  }
+
+  updateActiveStatus(questionFigure: string, question: Question): Observable<any> {
+    return this._http.patch<any>(`${this._baseUrl}/` + questionFigure, question);
+  }
+
   authenticationService(username: String, password: String) {
     return this._http
       .get(this._authUrl, {
@@ -81,4 +90,6 @@ export class QuestionService {
     if (user === null) return '';
     return user;
   }
+
+
 }

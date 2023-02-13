@@ -102,4 +102,12 @@ export class TeachermoduleserviceService {
     if (user === null) return '';
     return user;
   }
+
+  getInactivemoduleList(): Observable<any> {
+    return this._http.get<any>(`${this._baseUrl}/inactive?inactivemodules=all`);
+  }
+
+  updateActiveStatus(moduleName: string, module: Module): Observable<any> {
+    return this._http.patch<any>(`${this._baseUrl}/` + moduleName, module);
+  }
 }

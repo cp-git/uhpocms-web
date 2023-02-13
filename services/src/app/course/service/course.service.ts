@@ -24,7 +24,7 @@ export class CourseService {
   }
 
   _getAllCourses(): Observable<any> {
-    return this._http.get<any>(`${this.courseUrl}?name=all`);
+    return this._http.get<any>(this.courseUrl + "/course?name=all");
   }
 
   addCourse(course: Course): Observable<any> {

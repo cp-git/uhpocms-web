@@ -43,6 +43,7 @@ import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.comp
 
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
 import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
+import { ActivationScreenComponent } from './teachermodule/activation-screen/activation-screen.component';
 
 
 
@@ -55,7 +56,7 @@ import { CreateAnnouncementComponent } from './announcement/components/create-an
     DepartmentComponent,
     AdminroleComponent,
     LoginauthComponent,
-    QuizComponent,
+
     TeachermoduleComponent,
     EmailComponent,
     QuestionComponent,
@@ -74,7 +75,8 @@ import { CreateAnnouncementComponent } from './announcement/components/create-an
     DisplaySchoolComponent,
     UpdatemoduleComponent,
     AnnouncementComponent,
-    CreateAnnouncementComponent
+    CreateAnnouncementComponent,
+    ActivationScreenComponent
 
   ],
 

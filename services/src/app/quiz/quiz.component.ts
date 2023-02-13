@@ -44,16 +44,17 @@ export class QuizComponent {
       this._route.navigate(['']);
     } else {
       this.getAllQuizzes();
-    }
 
-    this._quizMap;
-    this._categoryMap;
-    this._courseMap;
-    this._moduleMap;
-    this.getAllCourses();
-    this.getAllCategorys();
-    this.getAllModules();
-    console.log(this._quizMap);
+
+      this._quizMap;
+      this._categoryMap;
+      this._courseMap;
+      this._moduleMap;
+      this.getAllCourses();
+      this.getAllCategorys();
+      this.getAllModules();
+      console.log(this._quizMap);
+    }
   }
 
   getAllQuizzes() {

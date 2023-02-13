@@ -1,89 +1,186 @@
-<div class="container-fluid">
-    <div class="header1">
-        <h1 class="heading">Module Administration</h1>
+<html>
+
+<body>
+    <div class="container-fluid" *ngIf="activationScreenStatus">
+        <div class="header1">
+            <h1 class="heading">Module Administration</h1>
+        </div>
+        <button class="button" (click)="navAddModule()">Add Module</button>
+        <button class="button" (click)="navupdModule()">Update Module</button>
+        <!-- <button class="button" (click)="getInactivateModule()">Activate Module</button> -->
+        <table class="table" border="1">
+            <thead>
+                <tr>
+
+                    <th>Name</th>
+                    <th>Description</th>
+
+                    <th>StartDate</th>
+                    <th>EndDate</th>
+
+                    <th>ModuleOrderNo</th>
+                    <th>Course Name</th>
+
+
+                    <th>Update Status</th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+
+
+
+                <tr *ngFor="let module of _teacherModule,let i=index">
+
+                    <td>
+                        <div class="form-group">
+                            <input class="form-control" type="text" [(ngModel)]="module.moduleName"
+                                value="{{module.moduleName}}" readonly />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <input class="form-control" type="text" [(ngModel)]="module.moduleDescription"
+                                value="{{module.moduleDescription}}" readonly />
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="form-group">
+                            <input class="form-control" type="text" [(ngModel)]="module.moduleStartDate"
+                                value="{{module.moduleStartDate}}" readonly />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <input class="form-control" type="text" [(ngModel)]="module.moduleEndDate"
+                                value="{{module.moduleEndDate}}" readonly />
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="form-group">
+                            <input class="form-control" type="number" [(ngModel)]="module.moduleOrderNo"
+                                value="{{module.moduleOrderNo}}" readonly />
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="form-group">
+                            <select [(ngModel)]="module.courseId_id" class="form-control" disabled>
+                                <option readonly *ngFor="let course of courses" value="{{course.courseId}}"
+                                    [selected]="module.courseId_id==course.courseId?true:null">
+                                    {{course.courseName}}
+                                </option>
+                            </select>
+                        </div>
+                    </td>
+
+
+                    <td>
+                        <div class="form-group">
+                            <button class="form-control btn btn-danger" id="delbtn"
+                                (click)="activateModule(module,moduleName)">Activate</button>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <button class="btn btn-primary" (click)="BackToActivatedScreen()">Back</button>
     </div>
-    <button class="button" (click)="navAddModule()">Add Module</button>
-    <button class="button" (click)="navupdModule()">Update Module</button>
-    <table class="table" border="1">
-        <thead>
-            <tr>
+    <div class="container-fluid" *ngIf="!inActivationScreenStatus">
+        <div class="header1">
+            <h1 class="heading">Module Administration</h1>
+        </div>
+        <button class="button" (click)="navAddModule()">Add Module</button>
+        <button class="button" (click)="navupdModule()">Update Module</button>
+        <button class="button" (click)="getInactivateModule()">Inactive Modules</button>
+        <table class="table" border="1">
+            <thead>
+                <tr>
 
-                <th>Name</th>
-                <th>Description</th>
+                    <th>Name</th>
+                    <th>Description</th>
 
-                <th>StartDate</th>
-                <th>EndDate</th>
+                    <th>StartDate</th>
+                    <th>EndDate</th>
 
-                <th>ModuleOrderNo</th>
-                <th>Course Name</th>
-
-
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-
+                    <th>ModuleOrderNo</th>
+                    <th>Course Name</th>
 
 
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
 
 
-            <tr *ngFor="let module of _teacherModule,let i=index">
-
-                <td>
-                    <div class="form-group">
-                        <input class="form-control" type="text" [(ngModel)]="module.moduleName"
-                            value="{{module.moduleName}}" readonly />
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group">
-                        <input class="form-control" type="text" [(ngModel)]="module.moduleDescription"
-                            value="{{module.moduleDescription}}" readonly />
-                    </div>
-                </td>
-
-                <td>
-                    <div class="form-group">
-                        <input class="form-control" type="text" [(ngModel)]="module.moduleStartDate"
-                            value="{{module.moduleStartDate}}" readonly />
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group">
-                        <input class="form-control" type="text" [(ngModel)]="module.moduleEndDate"
-                            value="{{module.moduleEndDate}}" readonly />
-                    </div>
-                </td>
-
-                <td>
-                    <div class="form-group">
-                        <input class="form-control" type="number" [(ngModel)]="module.moduleOrderNo"
-                            value="{{module.moduleOrderNo}}" readonly />
-                    </div>
-                </td>
-
-                <td>
-                    <div class="form-group">
-                        <select [(ngModel)]="module.courseId_id" class="form-control" disabled>
-                            <option readonly *ngFor="let course of courses" value="{{course.courseId}}"
-                                [selected]="module.courseId_id==course.courseId?true:null">
-                                {{course.courseName}}
-                            </option>
-                        </select>
-                    </div>
-                </td>
 
 
-                <td>
-                    <div class="form-group">
-                        <button class="form-control btn btn-danger" id="delbtn"
-                            (click)="deletemodule(module)">Delete</button>
-                    </div>
-                </td>
-            </tr>
 
-        </tbody>
-    </table>
+                <tr *ngFor="let module of _teacherModule,let i=index">
 
-    <button class="btn btn-primary" (click)="Home()">Back</button>
-</div>
+                    <td>
+                        <div class="form-group">
+                            <input class="form-control" type="text" [(ngModel)]="module.moduleName"
+                                value="{{module.moduleName}}" readonly />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <input class="form-control" type="text" [(ngModel)]="module.moduleDescription"
+                                value="{{module.moduleDescription}}" readonly />
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="form-group">
+                            <input class="form-control" type="text" [(ngModel)]="module.moduleStartDate"
+                                value="{{module.moduleStartDate}}" readonly />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <input class="form-control" type="text" [(ngModel)]="module.moduleEndDate"
+                                value="{{module.moduleEndDate}}" readonly />
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="form-group">
+                            <input class="form-control" type="number" [(ngModel)]="module.moduleOrderNo"
+                                value="{{module.moduleOrderNo}}" readonly />
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="form-group">
+                            <select [(ngModel)]="module.courseId_id" class="form-control" disabled>
+                                <option readonly *ngFor="let course of courses" value="{{course.courseId}}"
+                                    [selected]="module.courseId_id==course.courseId?true:null">
+                                    {{course.courseName}}
+                                </option>
+                            </select>
+                        </div>
+                    </td>
+
+
+                    <td>
+                        <div class="form-group">
+                            <button class="form-control btn btn-danger" id="delbtn"
+                                (click)="deletemodule(module)">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <button class="btn btn-primary" (click)="BackToActivatedScreen()">Back</button>
+    </div>
+</body>
+
+</html>

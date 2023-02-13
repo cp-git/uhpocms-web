@@ -13,7 +13,8 @@ import { QuestionService } from '../service/question.service';
 export class QuestionComponent implements OnInit {
   question = new Question();
   _question: Question[] = [];
-
+  inActivationScreenStatus: boolean = false;
+  activationScreenStatus: boolean = false;
   backupQuesiton = new Map();
 
   //Creating array
@@ -30,7 +31,7 @@ export class QuestionComponent implements OnInit {
     private _service: QuestionService,
     private _activeRoute: ActivatedRoute,
     private _route: Router
-  ) {}
+  ) { }
   insertQuestion(que: Question) {
     // alert(JSON.stringify(que));
     this.question = {} as Question;
@@ -161,6 +162,57 @@ export class QuestionComponent implements OnInit {
     }
   }
 
+  getInactiveQuestions() {
+    this.inActivationScreenStatus = true;
+    this.activationScreenStatus = true;
+    this._service.getInactiveQuestionList().subscribe(
+      (data) => {
+        this._question = data;
+        // console.log("Response");
+        this._question.forEach((questionData) => {
+          this.backupQuesiton.set(
+            questionData.questionId,
+            Object.assign({}, questionData)
+          );
+        });
+
+        if (this._question.length > 0) {
+          this.isHidden = false;
+        }
+      },
+      (Error) => console.log('exception')
+    );
+  }
+
+  updateActiveStatus(que: Question) {
+    // this.question.questionId = que.questionId;
+    // this.question.questionFigure = que.questionFigure;
+    // this.question.questionContent = que.questionContent;
+    // this.question.questionExplanation = que.questionExplanation;
+    // this.question.questionOrderNo = que.questionOrderNo;
+    // this.question.questionIsMCQ = que.questionIsMCQ;
+    // this.question.questionQuizId = que.questionQuizId;
+    // this.question.questionCategoryId = que.questionCategoryId;
+    // this.question.questionIsActive = que.questionIsActive;
+    console.log(que)
+    console.log(que.questionFigure)
+    this._service
+      .updateActiveStatus(que.questionFigure, que)
+      .subscribe(
+        (data) => {
+          this.question = data;
+          console.log(this.question);
+          this.backupQuesiton.set(
+            this.question.questionId,
+            Object.assign({}, this.question)
+          );
+          // alert("here" + JSON.stringify(data))
+          alert('updated successfully');
+          location.reload();
+        },
+        (error) => alert('please enter valid details')
+      );
+  }
   Home() {
     this._route.navigate(['demo']);
   }

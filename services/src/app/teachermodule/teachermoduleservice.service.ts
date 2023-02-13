@@ -13,7 +13,7 @@ export class TeachermoduleserviceService {
 
     // this.moduleUrl = environment.moduleUrl + '/module';
 
-  //  this.moduleUrl = `http://localhost:8090/module/uhpocms/module`;
+    this.moduleUrl = `http://localhost:8090/module/uhpocms/module`;
 
 
     // this.moduleUrl = environment.moduleUrl + '/module';
@@ -24,6 +24,15 @@ export class TeachermoduleserviceService {
   fetchModuleList(): Observable<any> {
     return this._http.get<any>(`${this.moduleUrl}/?name=all`);
   }
+
+  getInactivemoduleList(): Observable<any> {
+    return this._http.get<any>(`${this.moduleUrl}/inactive?inactivemodules=all`);
+  }
+
+  updateActiveStatus(moduleName: string, module: Module): Observable<any> {
+    return this._http.patch<any>(`${this.moduleUrl}/` + moduleName, module);
+  }
+
 
   addTeacherModule(module: Module): Observable<any> {
 
