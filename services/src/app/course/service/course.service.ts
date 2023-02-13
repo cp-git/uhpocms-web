@@ -18,9 +18,9 @@ export class CourseService {
   _loginUrl: string;
 
   constructor(private _http: HttpClient) {
-    // this.courseUrl = environment.courseUrl;
+    this.courseUrl = environment.courseUrl;
     this._loginUrl = `${environment.courseUrl}/basicauth`;
-    this.courseUrl = 'http://localhost:8090/course/uhpocms/course';
+    // this.courseUrl = 'http://localhost:8090/course/uhpocms/course';
   }
 
   _getAllCourses(): Observable<any> {

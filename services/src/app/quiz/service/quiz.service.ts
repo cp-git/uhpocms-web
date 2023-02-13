@@ -9,10 +9,6 @@ import { environment } from 'environments/environment.development';
 })
 export class QuizService {
 
-
-
-
-
   // BASE_PATH: 'http://localhost:8080'
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser';
 
@@ -24,11 +20,11 @@ export class QuizService {
 
   constructor(private _http: HttpClient) {
 
-    // this.quizUrl = environment.quizUrl + '/quiz';
-    // this._loginUrl = `${environment.quizUrl}/basicauth`;
+    this.quizUrl = environment.quizUrl + '/quiz';
+    this._loginUrl = `${environment.quizUrl}/basicauth`;
 
-    this.quizUrl = "http://localhost:8090/quiz/uhpocms/quiz";
-    this._loginUrl = "http://localhost:8090/quiz/uhpocms/basicauth";
+    // this.quizUrl = "http://localhost:8090/quiz/uhpocms/quiz";
+    // this._loginUrl = "http://localhost:8090/quiz/uhpocms/basicauth";
 
 
   }

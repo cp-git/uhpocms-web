@@ -21,7 +21,7 @@ export class AppComponent {
   modules: Module[] = [];
   instituteProfiles: InstituteAdmin[] = [];
 
-  constructor(private _appService: AppService) {}
+  constructor(private _appService: AppService) { }
 
   ngOnInit(): void {
     this.loadAdminInstitution();

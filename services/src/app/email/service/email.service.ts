@@ -7,7 +7,7 @@ import { environment } from 'environments/environment.development';
   providedIn: 'root',
 })
 export class EmailService {
-  private readonly baseURL = 'http://localhost:8090/email/uhpocms/email';
+  // private readonly baseURL = 'http://localhost:8090/email/uhpocms/email';
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser';
 
   public username: String = 'uhpocadmin';

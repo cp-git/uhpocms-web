@@ -9,7 +9,8 @@ import { Category } from './category';
 export class CategoryService {
   private readonly categoryUrl: string;
   constructor(private _http: HttpClient) {
-    this.categoryUrl = "http://localhost:8090/category/uhpocms/category"
+    // this.categoryUrl = "http://localhost:8090/category/uhpocms/category"
+    this.categoryUrl = `${environment.categoryUrl}/category`;
   }
 
   _getAllCategorys(): Observable<any> {
@@ -26,9 +27,9 @@ export class CategoryService {
   }
 
   deleteCategory(categoryName: string) {
-   // return this._http.delete<Category>(`${this.categoryUrl}/` + categoryName);
+    return this._http.delete<Category>(`${this.categoryUrl}/` + categoryName);
 
-    return this._http.get<any>("http://localhost:8090/category/uhpocms/category?category=all");
+    // return this._http.get<any>("http://localhost:8090/category/uhpocms/category?category=all");
 
   }
 }
