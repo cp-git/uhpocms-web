@@ -21,12 +21,15 @@ export class AddCategoryComponent {
     this.category = new Category();
 
   }
-
+  Back() {
+    this._route.navigate(['category'])
+  }
 
   addCategory(toCreateCategory: Category) {
 
     var categoryId = toCreateCategory.categoryId;
     toCreateCategory.categoryId = null;
+    toCreateCategory.active = true;
 
     this.categoryService.insertCategory(toCreateCategory).subscribe(
       response => {

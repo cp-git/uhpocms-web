@@ -1,6 +1,21 @@
 /* Import Google font - Poppins */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 
+
+.button {
+    background-color: #7cdb2e;
+    /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+
+    text-decoration: none;
+    margin-bottom: 20px;
+
+
+    font-size: 16px;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -13,7 +28,7 @@
     height: 500px;
 }
 
-body {
+.body {
     min-height: 100vh;
     display: flex;
     align-items: center;

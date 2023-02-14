@@ -32,6 +32,12 @@ import { DisplaySchoolComponent } from './InstituteDetails/display-school/displa
 import { AddinstituteComponent } from './admin-institution/addinstitute/addinstitute.component';
 import { DisplayinstituteComponent } from './admin-institution/displayinstitute/displayinstitute.component';
 
+import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
+
+import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
+import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
+
+
 const routes: Routes = [
 
   //category routing
@@ -39,6 +45,7 @@ const routes: Routes = [
   { path: 'addModule', component: AddModuleComponent },
   { path: 'main', component: MainComponent },
   { path: 'category', component: CategoryComponent },
+  { path: 'updateModule', component: UpdatemoduleComponent },
 
 
   { path: '', component: HomeComponent },
@@ -69,7 +76,8 @@ const routes: Routes = [
 
   { path: 'department/:id', component: ViewDepartmentComponent },
 
-  { path: 'school', component: DisplaySchoolComponent },
+  //{ path: 'school', component: DisplaySchoolComponent },
+
 
   { path: 'display', component: DisplaySchoolComponent },
   { path: 'display/:id', component: DisplaySchoolComponent },
@@ -77,21 +85,17 @@ const routes: Routes = [
   { path: 'addinstitute', component: AddinstituteComponent },
 
   { path: 'displayinstitute', component: DisplayinstituteComponent },
+
+
   //inserting  the quiz
 
   { path: 'createQuiz', component: CreateQuizComponent },
-
   { path: 'course/:id', component: ViewCoursesComponent },
 
 
   //update Quiz
-
   { path: 'updateQuiz/:title', component: UpdatequizComponent },
   // { path: 'updateQuiz', component: UpdatequizComponent },
-
-
-
-
 
   //teacherModule routes
   { path: 'teachermodule', component: TeachermoduleComponent },
@@ -104,15 +108,17 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
 
   { path: 'course', component: CourseComponent },
-
-
   { path: 'addcourse', component: AddcourseComponent },
-
-
   { path: 'updatecourse/:courseName', component: UpdatecourseComponent },
 
-
-
+  //announcement router
+  {
+    path: 'announcement', component: AnnouncementComponent, children: [
+      {
+        path: 'add', component: CreateAnnouncementComponent
+      }
+    ]
+  }
 
 
 ];

@@ -17,44 +17,32 @@ export class DepartmentService {
   constructor(private _http: HttpClient) {
 
 
-    // this.departmentUrl = environment.departmentUrl;
-    // this.adminInstitutionUrl = environment.adminInstitutionUrl;
+    this.departmentUrl = environment.departmentUrl;
+    this.adminInstitutionUrl = environment.adminInstitutionUrl;
 
-    this.departmentUrl = `http://localhost:8090/department/uhpocms`;
-    this.adminInstitutionUrl = `http://localhost:8090/department/uhpocms`;
+    // this.departmentUrl = `http://localhost:8090/department/uhpocms`;
+    // this.adminInstitutionUrl = `http://localhost:8090/department/uhpocms`;
 
   }
 
   fetchAllDepartments(): Observable<Department[]> {
-    return this._http.get<Department[]>(
-      `${this.departmentUrl}/getdept?name=all`
-    );
+    return this._http.get<Department[]>(`${this.departmentUrl}/getdept?name=all`);
   }
 
   fetchAllInstitutions(): Observable<AdminInstitution[]> {
-    return this._http.get<AdminInstitution[]>(
-      `${this.adminInstitutionUrl}/institution?name=all`
-    );
+    return this._http.get<AdminInstitution[]>(`${this.adminInstitutionUrl}/institution?name=all`);
   }
 
   insertDepartment(department: Department): Observable<Department> {
-    return this._http.post<Department>(
-      `${this.departmentUrl}/department`,
-      department
-    );
+    return this._http.post<Department>(`${this.departmentUrl}/department`, department);
   }
 
   deleteDepartment(name: string): Observable<any> {
-    return this._http.delete<Department>(
-      `${this.departmentUrl}/department/` + name
-    );
+    return this._http.delete<Department>(`${this.departmentUrl}/department/` + name);
   }
 
   updateDepartment(name: string, department: Department) {
-    return this._http.put<Department>(
-      `${this.departmentUrl}/department/` + name,
-      department
-    );
+    return this._http.put<Department>(`${this.departmentUrl}/department/` + name, department);
   }
 
   getDepartmentByName(name: string) {

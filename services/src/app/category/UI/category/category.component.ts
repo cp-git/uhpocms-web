@@ -19,6 +19,11 @@ export class CategoryComponent {
 
   }
 
+  navAddCategory() {
+    //this._dialog.open(AdminroleComponent);
+    this._route.navigate(['addCategory']);
+  }
+
 
   addCategory(toCreateCategory: Category) {
 
