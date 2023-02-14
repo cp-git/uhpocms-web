@@ -77,4 +77,13 @@ export class InstituteAdminServiceService {
   _deleteInstituteAdminList(firstName: string): Observable<any> {
     return this.http.delete<any>(this._baseUrl + '/' + firstName);
   }
+
+  getAllDeactivatedInstituteProfiles(): Observable<any[]> {
+    return this.http.get<any[]>(`${this._baseUrl}?firstName=inactive`);
+  }
+
+  activateInstituteProfile(departmentId: number): Observable<any> {
+    return this.http.patch<any>(`${this._baseUrl}/activate/` + departmentId, {});
+  }
+
 }

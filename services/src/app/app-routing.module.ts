@@ -34,6 +34,9 @@ import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.comp
 
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
 import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
+import { ActivateDepartmentComponent } from './admindepartment/department/activate-department/activate-department.component';
+import { ActivateRoleComponent } from './roleadmin/activate-role/activate-role.component';
+import { ActivateProfileComponent } from './instituteadminprofile/activate-profile/activate-profile.component';
 
 
 const routes: Routes = [
@@ -49,6 +52,10 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   //admin role routes
   { path: 'adminrole', component: AdminroleComponent },
+
+  //activate role routes
+  { path: 'adminrole/activate', component: ActivateRoleComponent },
+
   //auth user routes
   { path: 'authuser', component: AuthuserComponent },
 
@@ -60,13 +67,13 @@ const routes: Routes = [
 
   //instituteadmin routes
   { path: 'displayInstituteAdmin', component: DisplayInstituteAdminComponent },
+  { path: 'displayInstituteAdmin/activate', component: ActivateProfileComponent },
 
   //admindepartment routes
   { path: 'department', component: DepartmentComponent },
 
   //admindepartment routes
-  { path: 'department', component: DepartmentComponent },
-
+  { path: 'department/activate', component: ActivateDepartmentComponent },
 
   //quiz routes
   { path: 'quiz', component: QuizComponent },

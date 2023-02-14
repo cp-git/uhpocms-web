@@ -28,7 +28,7 @@ export class DisplayInstituteAdminComponent {
   constructor(
     private _instituteAdminService: InstituteAdminServiceService,
     private _route: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     if (sessionStorage.getItem('authenticatedUser') == null) {
@@ -144,5 +144,9 @@ export class DisplayInstituteAdminComponent {
 
   Home() {
     this._route.navigate(['demo']);
+  }
+
+  activateProfile() {
+    this._route.navigate(['displayInstituteAdmin/activate']);
   }
 }

@@ -1,0 +1,36 @@
+<div class="container-fluid text-center">
+    <h2>Activate Role</h2>
+    <table class="table" border="1px">
+        <thead>
+            <tr>
+                <th style="width: 80px">Sr.No</th>
+                <th>Role Name</th>
+                <th>Role description</th>
+                <th>Activate</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr *ngFor="let role of adminRoles; let i=index">
+                <td style="width: 80px">{{i+1}}</td>
+                <td>
+                    <div class="form-group">
+                        <input type="text" class="form-control" value="{{role.roleName}}" readonly>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="form-group">
+                        <input type="text" class="form-control" value="{{role.roleDescription}}" readonly>
+                    </div>
+                </td>
+
+                <td> <button class="btn btn-success" id="add1" (click)="activateRole(role.roleId)">Activate</button>
+                </td>
+
+
+            </tr>
+        </tbody>
+    </table>
+    <td><button class="btn btn-primary" (click)="Home()">Back</button></td>
+</div>

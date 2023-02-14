@@ -43,6 +43,9 @@ import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.comp
 
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
 import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
+import { ActivateDepartmentComponent } from './admindepartment/department/activate-department/activate-department.component';
+import { ActivateRoleComponent } from './roleadmin/activate-role/activate-role.component';
+import { ActivateProfileComponent } from './instituteadminprofile/activate-profile/activate-profile.component';
 
 
 
@@ -74,8 +77,10 @@ import { CreateAnnouncementComponent } from './announcement/components/create-an
     DisplaySchoolComponent,
     UpdatemoduleComponent,
     AnnouncementComponent,
-    CreateAnnouncementComponent
-
+    CreateAnnouncementComponent,
+    ActivateDepartmentComponent,
+    ActivateRoleComponent,
+    ActivateProfileComponent
   ],
 
   imports: [

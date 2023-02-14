@@ -6,6 +6,6 @@ export class Department {
   createdOn!: Date;
   modifiedBy!: string;
   modifiedOn!: Date;
-  institutionId_id!: number;
+  institutionId!: number;
   active!: boolean;
 }

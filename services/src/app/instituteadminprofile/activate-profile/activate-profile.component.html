@@ -1,0 +1,84 @@
+<div class="container-fluid">
+
+    <div class="header1">
+        <h1> INSTITUTE ADMIN </h1>
+    </div>
+    <table class="table table-striped">
+        <thead class="table-header">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Institution Id</th>
+                <th>User Id </th>
+                <th>User Role</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let _instituteAdmin of _instituteAdminArray">
+                <td>
+                    <div class="form-group">
+
+                        <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.firstName"
+                            name="{{_instituteAdmin.firstName}}">
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+
+                        <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.lastName"
+                            name="{{_instituteAdmin.lastName}}">
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+
+                        <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminEmail"
+                            name="{{_instituteAdmin.adminEmail}}">
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+
+                        <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminDepartment"
+                            name="{{_instituteAdmin.adminDepartment}}">
+                    </div>
+                </td>
+
+                <td>
+
+                    <div class="form-group">
+
+                        <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.institutionId"
+                            name="{{_instituteAdmin.institutionId}}">
+                    </div>
+                </td>
+
+                <td>
+                    <div class="form-group">
+
+                        <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.userId"
+                            name="{{_instituteAdmin.userId}}">
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+
+                        <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.userRole"
+                            name="{{_instituteAdmin.userRole}}">
+                    </div>
+                </td>
+
+
+            </tr>
+        </tbody>
+
+    </table>
+
+    <button class="btn btn-primary" (click)="Home()">Back</button>
+
+
+</div>

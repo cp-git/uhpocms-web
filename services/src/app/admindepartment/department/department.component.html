@@ -2,6 +2,7 @@
     <div class="header1">
         <h1>Department Administration</h1>
     </div>
+    <div class="text-right"><button class="btn btn-success" (click)="activateDepartment()"> Activate</button></div>
     <table class="table" border="1px">
         <thead id="deptHeader">
             <tr>
@@ -50,9 +51,9 @@
                 </td>
                 <td>
                     <div class="form-group">
-                        <select class="form-control" [(ngModel)]="department.institutionId_id">
+                        <select class="form-control" [(ngModel)]="department.institutionId">
                             <option *ngFor="let inst of adminInstitutions" value="{{inst.adminInstitutionId}}"
-                                [selected]="department.institutionId_id==inst.adminInstitutionId?true:null">
+                                [selected]="department.institutionId==inst.adminInstitutionId?true:null">
                                 {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}
                             </option>
                         </select>
@@ -94,10 +95,10 @@
                 </td>
                 <td>
                     <div class="form-group">
-                        <select class="form-control" [(ngModel)]="dept.institutionId_id">
+                        <select class="form-control" [(ngModel)]="dept.institutionId">
 
                             <option *ngFor="let inst of adminInstitutions" value="{{inst.adminInstitutionId}}"
-                                [selected]="dept.institutionId_id==inst.adminInstitutionId?true:null">
+                                [selected]="dept.institutionId==inst.adminInstitutionId?true:null">
                                 {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}
                             </option>
                         </select>

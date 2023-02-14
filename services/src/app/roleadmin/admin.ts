@@ -1,5 +1,5 @@
 export class Admin {
-  roleId!: number | undefined;
+  roleId!: number;
   active!: boolean;
   roleName!: string;
   roleDescription!: String;
