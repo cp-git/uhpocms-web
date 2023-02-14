@@ -11,16 +11,17 @@ import { CourseService } from '../service/course.service';
   styleUrls: ['./course.component.css'],
 })
 export class CourseComponent {
+  isActivationScreen: boolean = false;
   isVisible: boolean = true;
 
   _backupModule = new Map();
 
-  controlEnabled:boolean = true;
+  controlEnabled: boolean = true;
   // array of course
 
   course = new Course();
   courses: Course[] = []; //for drop down data
-
+  inActiveCourses: Course[] = [];
   institutions: AdminInstitution[] = [];
   institution = new AdminInstitution();
   sessionData: any;
@@ -31,15 +32,16 @@ export class CourseComponent {
     private _instService: InstitutionSeriveService,
     private _activatedRoute: ActivatedRoute,
     private _route: Router
-  ) {}
+  ) { }
   ngOnInit(): void {
-    this.getAllCourses();
+    // this.getAllCourses();
 
     if (sessionStorage.getItem('authenticatedUser') === null) {
       this._route.navigate(['']);
     } else {
       this.getAllCourses();
       this.getAllInstitutes();
+      this.getAllDeactivateCourses();
     }
   }
   getAllInstitutes() {
@@ -100,5 +102,42 @@ export class CourseComponent {
         alert('Failed to delete');
       }
     );
+  }
+
+  redirectToActivateCourse() {
+    this._route.navigate(['/activate']);
+  }
+
+  getAllDeactivateCourses() {
+    this._service.getAllDeactivateCourses().subscribe(
+      (response) => {
+        this.inActiveCourses = response;
+      },
+      (error) => {
+        alert("Error");
+      }
+    );
+  }
+
+  activateCourse(courseId: number) {
+    this._service.activateCourseById(courseId).subscribe(
+      (response) => {
+        //this.courses = response;
+        alert("Activated successful");
+        this.ngOnInit();
+      },
+      (error) => {
+        alert("Error");
+      }
+    );
+  }
+
+  // backToCourse() {
+  //   this._route.navigate(['/course']);
+  // }
+
+  activationScreen() {
+    this.isActivationScreen = true;
+    this.ngOnInit();
   }
 }

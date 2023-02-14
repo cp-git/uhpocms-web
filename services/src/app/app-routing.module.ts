@@ -118,7 +118,6 @@ const routes: Routes = [
   { path: 'course', component: CourseComponent },
   { path: 'addcourse', component: AddcourseComponent },
   { path: 'updatecourse/:courseName', component: UpdatecourseComponent },
-
   //announcement router
   {
     path: 'announcement', component: AnnouncementComponent, children: [
