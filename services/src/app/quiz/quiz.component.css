@@ -50,6 +50,12 @@ th {
     text-align: left;
 }
 
+tr {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+
 thead th {
     background-color: #55608f;
 }

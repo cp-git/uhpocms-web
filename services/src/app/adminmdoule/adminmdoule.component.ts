@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Authuser } from 'app/authuser/authuser';
+import { AuthuserserviceService } from 'app/authuser/authuserservice.service';
 
 @Component({
   selector: 'app-adminmdoule',
@@ -10,10 +11,12 @@ import { Authuser } from 'app/authuser/authuser';
 export class AdminmdouleComponent {
 
 
+  authUser = new Authuser();
 
 
 
-  constructor(private _route: Router) { }
+
+  constructor(private _route: Router, private _auth: AuthuserserviceService) { }
 
   RedirectTOAuth() {
     this._route.navigate(['authuser']);
@@ -34,6 +37,9 @@ export class AdminmdouleComponent {
   RedirectTOLogin() {
     this._route.navigate(['authenticationlogin'])
   }
+
+
+
 
 
 

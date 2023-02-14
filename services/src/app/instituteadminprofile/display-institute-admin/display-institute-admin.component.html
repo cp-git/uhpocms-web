@@ -5,9 +5,12 @@
 
     </div>
 
+    <div class="addbtn">
+        <button class="btn btn-primary" (click)="_addInstituteAdmin()">Add</button>
+    </div>
 
     <form #adduserform="ngForm">
-        <table class="table table-striped">
+        <table class="table table-striped" style="margin-top: 20px;">
             <thead class="table-header">
                 <tr>
 
@@ -298,19 +301,19 @@
                                 name="{{_instituteAdmin.userRole}}">
                         </div>
                     </td>
-                    <td>
+                    <!--<td>
                         <button class="btn btn-primary" (click)="_addInstituteAdmin()">Add</button>
-                    </td>
+                    </td>-->
                     <td>
                         <!-- <button class="btn btn-success"
                             (click)="_updateInstituteAdmin(_instituteAdmin.firstName,_instituteAdmin)">Update</button> -->
 
-                        <button class="btn btn-success"
+                        <button class="btn btn-success" id="Updatebtninsadmin"
                             (click)="_updateInstituteAdmin(_instituteAdmin.firstName)">Update</button>
                     </td>
 
                     <td>
-                        <button class="btn btn-danger"
+                        <button class="btn btn-info"
                             (click)="ViewInstituteadmin(_instituteAdmin.firstName)">View</button>
                     </td>
                     <td>

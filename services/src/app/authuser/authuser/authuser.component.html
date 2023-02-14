@@ -77,10 +77,11 @@
 						<input type="checkbox" class="form-control" [(ngModel)]=" authUser.authUserIsSuperUser" checked>
 					</div>
 				</td>
-				<td><button class="btn btn-primary" (click)="addauthUser(authUser)">Add</button></td>
-				<td><button class="btn btn-success" (click)="updateAuthUsers(authUser)">Update</button>
+				<td><button class="btn btn-primary" id="addauth" (click)="addauthUser(authUser)">Add</button></td>
+				<td><button class="btn btn-success" id="updateauth" (click)="updateAuthUsers(authUser)">Update</button>
 				</td>
-				<td><button class="btn btn-danger" (click)="deleteAuthUser(authUser)">Delete</button></td>
+				<td><button class="btn btn-danger" id="deleteauth" (click)="deleteAuthUser(authUser)">Delete</button>
+				</td>
 
 
 			</tr>
@@ -142,9 +143,9 @@
 						<input type="checkbox" class="form-control" [(ngModel)]=" user.authUserIsSuperUser" checked>
 					</div>
 				</td>
-				<td><button class="btn btn-primary" (click)="addauthUser(user)">Add</button></td>
-				<td><button class="btn btn-success" (click)="updateAuthUsers(user)">Update</button></td>
-				<td><button class="btn btn-danger" (click)="deleteAuthUser(user)">Delete</button></td>
+				<td><button class="btn btn-primary" id="addauth" (click)="addauthUser(user)">Add</button></td>
+				<td><button class="btn btn-success" id="updateauth" (click)="updateAuthUsers(user)">Update</button></td>
+				<td><button class="btn btn-danger" id="deleteauth" (click)="deleteAuthUser(user)">Delete</button></td>
 
 
 			</tr>
