@@ -16,6 +16,9 @@ import { QuizService } from './service/quiz.service';
   styleUrls: ['./quiz.component.css'],
 })
 export class QuizComponent {
+
+  inActivationScreenStatus: boolean = false;
+  activationScreenStatus: boolean = false;
   _quizArray: Quiz[] = [];
   _quiz: Quiz = new Quiz();
   _courseArray: Course[] = [];
@@ -44,17 +47,16 @@ export class QuizComponent {
       this._route.navigate(['']);
     } else {
       this.getAllQuizzes();
-
-
-      this._quizMap;
-      this._categoryMap;
-      this._courseMap;
-      this._moduleMap;
-      this.getAllCourses();
-      this.getAllCategorys();
-      this.getAllModules();
-      console.log(this._quizMap);
     }
+
+    this._quizMap;
+    this._categoryMap;
+    this._courseMap;
+    this._moduleMap;
+    this.getAllCourses();
+    this.getAllCategorys();
+    this.getAllModules();
+    console.log(this._quizMap);
   }
 
   getAllQuizzes() {
@@ -167,6 +169,39 @@ export class QuizComponent {
     );
   }
 
+  getInactiveQuizzes() {
+    this.inActivationScreenStatus = true;
+    this.activationScreenStatus = true;
+    this._quizService.getInactiveQuizList().subscribe(
+      (data) => {
+        this._quizArray = data;
+        console.log(data);
+        this._quizArray.forEach((_quizData) => {
+          this._quizMap.set(_quizData.quizId, Object.assign({}, _quizData));
+        });
+        if (data.length == 0) {
+          this.isHidden = true;
+        }
+      },
+      (error) => {
+        alert('Quiz data not found');
+      }
+    );
+
+  }
+
+  updateActiveStatus(quiz: Quiz) {
+
+    this._quizService.updateActiveStatus(quiz.title, quiz).subscribe(data => {
+      //console.log(data)
+      console.log(this._quiz)
+      alert("Quiz Activated Successfully")
+      location.reload();
+
+
+    }, error => console.log(error));
+
+  }
   back() {
     this._route.navigate(['demo'])
 

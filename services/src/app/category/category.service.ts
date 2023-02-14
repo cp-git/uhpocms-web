@@ -32,4 +32,13 @@ export class CategoryService {
     // return this._http.get<any>("http://localhost:8090/category/uhpocms/category?category=all");
 
   }
+
+  getInactivecategoryList(): Observable<any> {
+    return this._http.get<any>(`${this.categoryUrl}/inactive?inactivecategories=all`);
+  }
+
+  updateActiveStatus(category: string, categoryEntity: Category): Observable<any> {
+    return this._http.patch<any>(`${this.categoryUrl}/` + category, categoryEntity);
+  }
+
 }

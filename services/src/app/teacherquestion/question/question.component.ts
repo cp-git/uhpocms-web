@@ -207,7 +207,7 @@ export class QuestionComponent implements OnInit {
             Object.assign({}, this.question)
           );
           // alert("here" + JSON.stringify(data))
-          alert('updated successfully');
+          alert('Question activated successfully');
           location.reload();
         },
         (error) => alert('please enter valid details')

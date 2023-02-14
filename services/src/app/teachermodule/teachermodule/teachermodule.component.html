@@ -68,9 +68,9 @@
 
                     <td>
                         <div class="form-group">
-                            <select [(ngModel)]="module.courseId_id" class="form-control" disabled>
+                            <select [(ngModel)]="module.courseId_id" class="form-control" [disabled]="controlEnabled">
                                 <option readonly *ngFor="let course of courses" value="{{course.courseId}}"
-                                    [selected]="module.courseId_id==course.courseId?true:null">
+                                    [selected]="module.courseId_id == course.courseId ? true : null">
                                     {{course.courseName}}
                                 </option>
                             </select>
@@ -158,9 +158,9 @@
 
                     <td>
                         <div class="form-group">
-                            <select [(ngModel)]="module.courseId_id" class="form-control" disabled>
+                            <select [(ngModel)]="module.courseId_id" class="form-control" [disabled]="controlEnabled">
                                 <option readonly *ngFor="let course of courses" value="{{course.courseId}}"
-                                    [selected]="module.courseId_id==course.courseId?true:null">
+                                    [selected]="course.courseId == module.courseId_id   ? true : null">
                                     {{course.courseName}}
                                 </option>
                             </select>
@@ -179,7 +179,7 @@
             </tbody>
         </table>
 
-        <button class="btn btn-primary" (click)="BackToActivatedScreen()">Back</button>
+        <button class="btn btn-primary" (click)="Home()">Back</button>
     </div>
 </body>
 

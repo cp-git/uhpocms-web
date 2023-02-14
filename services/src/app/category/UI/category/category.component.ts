@@ -10,7 +10,8 @@ import { CategoryService } from 'app/category/category.service';
 })
 export class CategoryComponent {
   categories: Category[] = [];
-
+  inActivationScreenStatus: boolean = false;
+  activationScreenStatus: boolean = false;
   category: Category;
 
   isHidden: boolean = false;
@@ -120,7 +121,52 @@ export class CategoryComponent {
 
 
   }
+
+  updateActiveStatus(category: Category) {
+    this.categoryService.updateActiveStatus(category.categoryName, category).subscribe(
+      response => {
+        this.category = response;
+        console.log(response);
+        alert("category updated successfully")
+        location.reload();
+        if (this.categories.length > 0) {
+          this.isHidden = true;
+        }
+      },
+      error => {
+        alert("please enter valid details")
+      }
+
+    )
+  }
+
+
+
+
+  getInactiveCategories() {
+    this.inActivationScreenStatus = true;
+    this.activationScreenStatus = true;
+    this.categoryService.getInactivecategoryList().subscribe(
+      response => {
+        // assigning received data to emails
+        this.categories = response;
+
+        this.emptyRow();
+
+      },
+      error => {
+        alert("Data not found");
+      }
+    );
+  }
   Back() {
     this._route.navigate(['main'])
   }
+
+
+  BackToActivatedScreen() {
+    location.reload();
+  }
 }
+
+

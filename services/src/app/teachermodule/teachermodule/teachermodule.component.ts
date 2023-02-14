@@ -10,6 +10,7 @@ import { TeachermoduleserviceService } from '../service/teachermoduleservice.ser
   styleUrls: ['./teachermodule.component.css'],
 })
 export class TeachermoduleComponent {
+  controlEnabled: boolean = true;
   module = new Module();
   _teacherModule: Module[] = []; //for all module data
 
@@ -219,7 +220,7 @@ export class TeachermoduleComponent {
           // );
           // this.ngOnInit();]
           console.log(this.module)
-          alert('Data updated successfuly');
+          alert('Module activated successfuly');
           location.reload();
 
           if (this._teacherModule.length > 0) {
@@ -232,9 +233,6 @@ export class TeachermoduleComponent {
       );
   }
 
-  backToActivatedScreen() {
-    location.reload();
-  }
 
 
 }

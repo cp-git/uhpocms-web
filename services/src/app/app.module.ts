@@ -44,6 +44,8 @@ import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.comp
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
 import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
 import { ActivationScreenComponent } from './teachermodule/activation-screen/activation-screen.component';
+import { Quiz } from './quiz/quiz';
+import { QuizComponent } from './quiz/quiz.component';
 
 
 
@@ -56,7 +58,6 @@ import { ActivationScreenComponent } from './teachermodule/activation-screen/act
     DepartmentComponent,
     AdminroleComponent,
     LoginauthComponent,
-
     TeachermoduleComponent,
     EmailComponent,
     QuestionComponent,
@@ -76,7 +77,8 @@ import { ActivationScreenComponent } from './teachermodule/activation-screen/act
     UpdatemoduleComponent,
     AnnouncementComponent,
     CreateAnnouncementComponent,
-    ActivationScreenComponent
+    ActivationScreenComponent,
+    QuizComponent
 
   ],
 
@@ -88,6 +90,7 @@ import { ActivationScreenComponent } from './teachermodule/activation-screen/act
     BrowserAnimationsModule,
     MatIconModule,
     MatToolbarModule,
+    BrowserModule
   ],
 
   providers: [
