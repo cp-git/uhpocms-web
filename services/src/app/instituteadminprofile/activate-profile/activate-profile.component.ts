@@ -49,4 +49,18 @@ export class ActivateProfileComponent implements OnInit {
   Home() {
     this._router.navigate(['displayInstituteAdmin'])
   }
+
+  activateProfile(institutionId: number) {
+    this._instituteAdminService.activateInstituteProfile(institutionId).subscribe(
+      response => {
+        alert("Profile activated");
+        this.ngOnInit();
+      },
+      error => {
+        alert("Profile activation failed");
+      }
+    );
+  }
+
+
 }

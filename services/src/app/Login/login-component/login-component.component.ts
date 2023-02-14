@@ -65,12 +65,21 @@ export class LoginComponentComponent implements OnInit {
     this._route.navigate(['school'])
   }
 
+
+  RedirectToAddInstitute() {
+    this._route.navigate(['addinstitute'])
+  }
+
+  RedirectToDisplayInstitute() {
+    this._route.navigate(['displayinstitute'])
+  }
   RedirectToCategory() {
     this._route.navigate(['main'])
   }
-  
+
   RedirectToAnnouncement() {
     this._route.navigate(['announcement'])
+
   }
 
 }

@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="header1">
-        <h1>Institute Courses</h1>
+        <h1>{{admininstitution.adminInstitutionName}} Courses</h1>
     </div>
     <table class="table" border="1px">
         <thead id="deptHeader">
@@ -10,7 +10,7 @@
                 <th>Course Name</th>
                 <th>Course Description</th>
 
-                <th>Created On</th>
+
 
 
 
@@ -22,10 +22,10 @@
                 <td>{{ course.courseName }}</td>
                 <td>{{ course.courseDescription }}</td>
 
-                <td>{{course.courseCreatedDate}}</td>
 
 
 
             </tr>
         </tbody>
     </table>
+    <button class="btn btn-primary" (click)="Display()">Back</button>

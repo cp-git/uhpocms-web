@@ -13,6 +13,7 @@
                 <th>Institution Id</th>
                 <th>User Id </th>
                 <th>User Role</th>
+                <th>Activate</th>
             </tr>
         </thead>
 
@@ -22,29 +23,29 @@
                 <td>
                     <div class="form-group">
 
-                        <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.firstName"
-                            name="{{_instituteAdmin.firstName}}">
+                        <input type="text" class="form-control" value="{{_instituteAdmin.firstName}}"
+                            name="{{_instituteAdmin.firstName}}" disabled>
                     </div>
                 </td>
                 <td>
                     <div class="form-group">
 
-                        <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.lastName"
-                            name="{{_instituteAdmin.lastName}}">
+                        <input type="text" class="form-control" value="{{_instituteAdmin.lastName}}"
+                            name="{{_instituteAdmin.lastName}}" disabled>
                     </div>
                 </td>
                 <td>
                     <div class="form-group">
 
-                        <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminEmail"
-                            name="{{_instituteAdmin.adminEmail}}">
+                        <input type="text" class="form-control" value="{{_instituteAdmin.adminEmail}}"
+                            name="{{_instituteAdmin.adminEmail}}" disabled>
                     </div>
                 </td>
                 <td>
                     <div class="form-group">
 
-                        <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminDepartment"
-                            name="{{_instituteAdmin.adminDepartment}}">
+                        <input type="text" class="form-control" value="{{_instituteAdmin.adminDepartment}}"
+                            name="{{_instituteAdmin.adminDepartment}}" disabled>
                     </div>
                 </td>
 
@@ -52,25 +53,27 @@
 
                     <div class="form-group">
 
-                        <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.institutionId"
-                            name="{{_instituteAdmin.institutionId}}">
+                        <input type="text" class="form-control" value="{{_instituteAdmin.institutionId}}"
+                            name="{{_instituteAdmin.institutionId}}" disabled>
                     </div>
                 </td>
 
                 <td>
                     <div class="form-group">
 
-                        <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.userId"
-                            name="{{_instituteAdmin.userId}}">
+                        <input type="text" class="form-control" value="{{_instituteAdmin.userId}}"
+                            name="{{_instituteAdmin.userId}}" disabled>
                     </div>
                 </td>
                 <td>
                     <div class="form-group">
 
-                        <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.userRole"
-                            name="{{_instituteAdmin.userRole}}">
+                        <input type="text" class="form-control" value="{{_instituteAdmin.userRole}}"
+                            name="{{_instituteAdmin.userRole}}" disabled>
                     </div>
                 </td>
+                <td><button class="btn btn-success" (click)="activateProfile(_instituteAdmin.adminId)">
+                        Activate</button></td>
 
 
             </tr>

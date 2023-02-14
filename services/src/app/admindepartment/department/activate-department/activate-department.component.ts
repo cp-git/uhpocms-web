@@ -61,7 +61,7 @@ export class ActivateDepartmentComponent implements OnInit {
     );
   }
 
-  Home() {
+  home() {
     this._router.navigate(['department']);
   }
 }

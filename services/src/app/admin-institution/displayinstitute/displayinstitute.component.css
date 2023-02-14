@@ -20,27 +20,21 @@ table th {
 
 }
 
-
-
-
-
-
-table tr {
-    display: table;
-    table-layout: fixed;
-    width: 100%;
+img {
+    width: 150px;
+    height: 150px;
+    border-radius: 25px;
 }
 
-table td {
-    border: 1px groove black;
+img:hover {
+    cursor: pointer;
+    filter: grayscale(100%);
 }
 
-#chk {
-    width: 40px;
-    height: 30px;
-
+.container {
+    margin-top: 20px;
 }
 
-#deptHeader {
-    background-color: grey;
+button {
+    margin: 10px;
 }

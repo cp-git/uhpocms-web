@@ -1,0 +1,29 @@
+<div class="container-fluid">
+    <div class="container">
+
+        <div class="header1">
+            <h1>Institute</h1>
+        </div>
+        <div class="row text-right">
+            <button class="btn btn-success" (click)="redirectToActivate()">Activate Institutions</button>
+            <button class="btn btn-success" routerLink="/addinstitute">ADD New
+                Institute</button>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3 text-center" *ngFor="let institution of admininstitutions">
+                    <div><img src="../../assets/img/{{institution.adminInstitutionPicture}}"
+                            [routerLink]="['/display',institution.adminInstitutionId]" />
+                    </div>
+
+                    <div><button #btn1 id="demo" class="btn btn-info"
+                            [routerLink]="['/display',institution.adminInstitutionId]">{{institution.adminInstitutionName}}</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row text-left"><button class="btn btn-primary" (click)="Back()">Back</button></div>
+
+    </div>
