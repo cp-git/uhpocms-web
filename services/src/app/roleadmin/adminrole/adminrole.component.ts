@@ -106,7 +106,7 @@ export class AdminroleComponent {
     this._route.navigate(['demo']);
   }
 
-  activateRole() {
+  redirectToActivateRole() {
     this._route.navigate(['adminrole/activate']);
   }
 }

@@ -191,7 +191,7 @@ export class DepartmentComponent implements OnInit {
     this._route.navigate(['demo']);
   }
 
-  activateDepartment() {
+  redirectToActivateDepartment() {
     this._route.navigate(['department/activate']);
   }
 }

@@ -68,7 +68,7 @@ export class DisplayinstituteComponent {
     this._route.navigate(['demo']);
   }
 
-  redirectToActivate() {
+  redirectToActivateInstitution() {
     this._route.navigate(['displayinstitute/activate']);
   }
 }

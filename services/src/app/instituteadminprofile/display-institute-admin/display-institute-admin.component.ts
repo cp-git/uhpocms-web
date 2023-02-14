@@ -146,7 +146,7 @@ export class DisplayInstituteAdminComponent {
     this._route.navigate(['demo']);
   }
 
-  activateProfile() {
+  redirectToActivateProfile() {
     this._route.navigate(['displayInstituteAdmin/activate']);
   }
 }
