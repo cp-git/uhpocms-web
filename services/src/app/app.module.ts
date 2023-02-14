@@ -15,7 +15,7 @@ import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 
 
 
-import { QuizComponent } from './quiz/quiz.component';
+
 
 import { QuestionComponent } from './teacherquestion/question/question.component';
 import { EmailComponent } from './email/email/email.component';
@@ -38,11 +38,15 @@ import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
 import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
+import { AddinstituteComponent } from './admin-institution/addinstitute/addinstitute.component';
+import { DisplayinstituteComponent } from './admin-institution/displayinstitute/displayinstitute.component';
+
 
 import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
 
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
 import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
+
 import { InsertinstituteadminprofileComponent } from './instituteadminprofile/insertinstituteadminprofile/insertinstituteadminprofile.component';
 import { UpdateinstituteadminprofileComponent } from './instituteadminprofile/updateinstituteadminprofile/updateinstituteadminprofile.component';
 import { ViewinstiteadminprofileComponent } from './instituteadminprofile/viewinstiteadminprofile/viewinstiteadminprofile.component';
@@ -50,6 +54,11 @@ import { AuthenticationloginComponent } from './authenticationlogin/authenticati
 import { AdminmdouleComponent } from './adminmdoule/adminmdoule.component';
 import { TeacherComponent } from './teacher/teacher.component';
 import { StudentdataComponent } from './studentdata/studentdata.component';
+
+import { ActivationScreenComponent } from './teachermodule/activation-screen/activation-screen.component';
+import { Quiz } from './quiz/quiz';
+import { QuizComponent } from './quiz/quiz.component';
+
 
 
 
@@ -62,7 +71,6 @@ import { StudentdataComponent } from './studentdata/studentdata.component';
     DepartmentComponent,
     AdminroleComponent,
     LoginauthComponent,
-    QuizComponent,
     TeachermoduleComponent,
     EmailComponent,
     QuestionComponent,
@@ -79,9 +87,19 @@ import { StudentdataComponent } from './studentdata/studentdata.component';
     ViewDepartmentComponent,
     ViewCoursesComponent,
     DisplaySchoolComponent,
+
+    AddinstituteComponent,
+    DisplayinstituteComponent,
+
+
+
+
+
+
     UpdatemoduleComponent,
     AnnouncementComponent,
     CreateAnnouncementComponent,
+
     InsertinstituteadminprofileComponent,
     UpdateinstituteadminprofileComponent,
     ViewinstiteadminprofileComponent,
@@ -89,6 +107,11 @@ import { StudentdataComponent } from './studentdata/studentdata.component';
     AdminmdouleComponent,
     TeacherComponent,
     StudentdataComponent
+
+    ActivationScreenComponent,
+    QuizComponent
+
+
 
   ],
 
@@ -100,6 +123,7 @@ import { StudentdataComponent } from './studentdata/studentdata.component';
     BrowserAnimationsModule,
     MatIconModule,
     MatToolbarModule,
+    BrowserModule
   ],
 
   providers: [

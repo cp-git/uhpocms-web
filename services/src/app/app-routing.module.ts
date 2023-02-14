@@ -29,6 +29,8 @@ import { ViewDepartmentComponent } from './InstituteDetails/view-department/view
 
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
+import { AddinstituteComponent } from './admin-institution/addinstitute/addinstitute.component';
+import { DisplayinstituteComponent } from './admin-institution/displayinstitute/displayinstitute.component';
 
 import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
 
@@ -105,7 +107,16 @@ const routes: Routes = [
 
   { path: 'department/:id', component: ViewDepartmentComponent },
 
-  { path: 'school', component: DisplaySchoolComponent },
+  //{ path: 'school', component: DisplaySchoolComponent },
+
+
+  { path: 'display', component: DisplaySchoolComponent },
+  { path: 'display/:id', component: DisplaySchoolComponent },
+
+  { path: 'addinstitute', component: AddinstituteComponent },
+
+  { path: 'displayinstitute', component: DisplayinstituteComponent },
+
 
   //inserting  the quiz
 

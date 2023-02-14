@@ -10,9 +10,12 @@ import { TeachermoduleserviceService } from '../service/teachermoduleservice.ser
   styleUrls: ['./teachermodule.component.css'],
 })
 export class TeachermoduleComponent {
+  controlEnabled: boolean = true;
   module = new Module();
   _teacherModule: Module[] = []; //for all module data
 
+  inActivationScreenStatus: boolean = false;
+  activationScreenStatus: boolean = false;
   isVisible: boolean = true;
 
   _backupModule = new Map();
@@ -28,6 +31,7 @@ export class TeachermoduleComponent {
     this._route.navigate(['updateModule']);
   }
   ngOnInit(): void {
+    this.activationScreenStatus = false;
     this.getAllModules();
 
     if (sessionStorage.getItem('authenticatedUser') === null) {
@@ -75,6 +79,7 @@ export class TeachermoduleComponent {
   }
 
   getAllModules() {
+
     this._service.fetchModuleList().subscribe(
       (data) => {
         console.log('Response Received...');
@@ -163,4 +168,71 @@ export class TeachermoduleComponent {
   Home() {
     this._route.navigate(['main']);
   }
+
+  getInactivateModule() {
+    this.inActivationScreenStatus = true;
+    this.activationScreenStatus = true;
+    this._service.getInactivemoduleList().subscribe(
+      (data) => {
+        console.log('Response Received...');
+        this._teacherModule = data;
+
+        this._teacherModule.forEach((moduleData) => {
+          this._backupModule.set(
+            moduleData.moduleId,
+            Object.assign({}, moduleData)
+          );
+        });
+        if (this._teacherModule.length > 0) {
+          this.isVisible = false;
+        }
+      },
+      (error) => {
+        alert('Data not found');
+      }
+    );
+  }
+
+  BackToActivatedScreen() {
+    location.reload();
+  }
+
+  activateModule(module: Module, moduleName: string) {
+    console.log(module, moduleName)
+    // this.module = ({} as Module);
+    // this.module.moduleName = module.moduleName;
+    // this.module.moduleDescription = module.moduleDescription;
+    // this.module.moduleIsActive = module.moduleIsActive;
+    // this.module.moduleStartDate = module.moduleStartDate;
+    // this.module.moduleEndDate = module.moduleEndDate;
+    // this.module.moduleCourse = module.moduleCourse;
+    // this.module.moduleOrderNo = module.moduleOrderNo;
+    // this.module.courseId_id = module.courseId_id;
+    this._service
+      .updateActiveStatus(module.moduleName, module)
+      .subscribe(
+        (data) => {
+          // console.log(data)
+          this.module = data;
+          // this._backupModule.set(
+          //   this.module.moduleId,
+          //   Object.assign({}, this.module)
+          // );
+          // this.ngOnInit();]
+          console.log(this.module)
+          alert('Module activated successfuly');
+          location.reload();
+
+          if (this._teacherModule.length > 0) {
+            this.isVisible = false;
+          }
+        },
+        (error) => {
+          alert('Failed to update');
+        }
+      );
+  }
+
+
+
 }
