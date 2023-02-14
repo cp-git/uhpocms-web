@@ -35,4 +35,11 @@ export class AdminroleserviceService {
   getAdmin(roleName: string): Observable<Admin> {
     return this._http.get<Admin>(`${this.adminRoleUrl}/` + roleName);
   }
+
+  getAllDeactivatedRoles(): Observable<Admin[]> {
+    return this._http.get<Admin[]>(`${this.adminRoleUrl}?name=inactive`);
+  }
+  activateAdminRole(roleId: number): Observable<Admin> {
+    return this._http.patch<Admin>(`${this.adminRoleUrl}/activate/` + roleId, {});
+  }
 }

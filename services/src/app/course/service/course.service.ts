@@ -18,7 +18,7 @@ export class CourseService {
   _loginUrl: string;
 
   constructor(private _http: HttpClient) {
-    this.courseUrl = environment.courseUrl;
+    this.courseUrl = `${environment.courseUrl}/course`;
     this._loginUrl = `${environment.courseUrl}/basicauth`;
     this.courseUrl = 'http://localhost:8090/course/uhpocms/course';
   }
@@ -84,5 +84,13 @@ export class CourseService {
     let user = sessionStorage.getItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME);
     if (user === null) return '';
     return user;
+  }
+
+  getAllDeactivateCourses(): Observable<Course[]> {
+    return this._http.get<Course[]>(`${this.courseUrl}?name=inactive`);
+  }
+
+  activateCourseById(courseId: number): Observable<any> {
+    return this._http.patch<any>(`${this.courseUrl}/activate/` + courseId, {});
   }
 }

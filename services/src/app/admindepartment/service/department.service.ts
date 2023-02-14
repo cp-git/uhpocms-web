@@ -54,4 +54,12 @@ export class DepartmentService {
     return this._http.get<Department[]>(`${this.departmentUrl}/department/institutionId/` + id);
   }
 
+  getAllDeactivatedDepartments(): Observable<Department[]> {
+    return this._http.get<Department[]>(`${this.departmentUrl}/getdept?name=inactive`);
+  }
+
+  activateDepartment(departmentId: number): Observable<any> {
+    return this._http.patch<any>(`${this.departmentUrl}/department/activate/` + departmentId, {});
+  }
+
 }

@@ -21,7 +21,7 @@ export class AdminroleComponent {
     private _service: AdminroleserviceService,
     private _activatedRoute: ActivatedRoute,
     private _route: Router
-  ) {}
+  ) { }
 
   roleName!: string;
 
@@ -89,8 +89,7 @@ export class AdminroleComponent {
     this._service.deleteAdmin(roleName).subscribe(
       (data) => {
         alert('Data Deleted...');
-        location.reload();
-        this._route.navigate(['RoleAdminHome']);
+        this.ngOnInit();
       },
       (error) => console.log(error)
     );
@@ -105,5 +104,9 @@ export class AdminroleComponent {
 
   Home() {
     this._route.navigate(['demo']);
+  }
+
+  redirectToActivateRole() {
+    this._route.navigate(['adminrole/activate']);
   }
 }

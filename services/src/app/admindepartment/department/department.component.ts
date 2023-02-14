@@ -47,7 +47,7 @@ export class DepartmentComponent implements OnInit {
       this.department.name = dept.name;
       this.department.description = dept.description;
       this.department.active = dept.active;
-      this.department.institutionId_id = dept.institutionId_id;
+      this.department.institutionId = dept.institutionId;
 
       // inserting department
       this._deptService.insertDepartment(this.department).subscribe(
@@ -59,7 +59,7 @@ export class DepartmentComponent implements OnInit {
           this.departments[this.departments.indexOf(dept)] = Object.assign(
             {},
             this.backupDept[
-              this.backupDept.findIndex((data) => data.id == dept.id)
+            this.backupDept.findIndex((data) => data.id == dept.id)
             ]
           );
 
@@ -86,7 +86,7 @@ export class DepartmentComponent implements OnInit {
     this.department.name = dept.name;
     this.department.description = dept.description;
     this.department.active = dept.active;
-    this.department.institutionId_id = dept.institutionId_id;
+    this.department.institutionId = dept.institutionId;
 
     // updating department with name
     this._deptService.updateDepartment(dept.name, this.department).subscribe(
@@ -189,5 +189,9 @@ export class DepartmentComponent implements OnInit {
 
   Home() {
     this._route.navigate(['demo']);
+  }
+
+  redirectToActivateDepartment() {
+    this._route.navigate(['department/activate']);
   }
 }

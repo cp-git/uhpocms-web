@@ -72,7 +72,7 @@ export class LoginComponentComponent implements OnInit {
 
   RedirectToDisplayInstitute() {
     this._route.navigate(['displayinstitute'])
-
+  }
   RedirectToCategory() {
     this._route.navigate(['main'])
   }

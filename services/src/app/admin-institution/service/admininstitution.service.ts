@@ -12,7 +12,8 @@ export class AdmininstitutionService {
   private readonly institutionUrl: string;
   constructor(private _http: HttpClient) {
 
-    this.institutionUrl = `http://localhost:8090/admininstitution/uhpocms/institution`;
+    // this.institutionUrl = `http://localhost:8090/admininstitution/uhpocms/institution`;
+    this.institutionUrl = `${environment.adminInstitutionUrl}/institution`;
 
   }
 
@@ -42,5 +43,13 @@ export class AdmininstitutionService {
 
   getInstitution(admininstitutionName: string): Observable<AdminInstitution> {
     return this._http.get<AdminInstitution>(`${this.institutionUrl}/admininstitution/` + admininstitutionName);
+  }
+
+  getDeactivatedInstitutions(): Observable<AdminInstitution[]> {
+    return this._http.get<AdminInstitution[]>(`${this.institutionUrl}?name=inactive`);
+  }
+
+  activateInstitutionById(institutionId: number): Observable<any> {
+    return this._http.patch<any>(`${this.institutionUrl}/activate/` + institutionId, {});
   }
 }

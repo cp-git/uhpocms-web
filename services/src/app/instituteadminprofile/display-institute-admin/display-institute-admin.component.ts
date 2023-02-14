@@ -134,4 +134,8 @@ export class DisplayInstituteAdminComponent {
   Home() {
     this._route.navigate(['adminmodule']);
   }
+
+  redirectToActivateProfile() {
+    this._route.navigate(['displayInstituteAdmin/activate']);
+  }
 }

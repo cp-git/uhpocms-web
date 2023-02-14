@@ -40,12 +40,13 @@ import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-cours
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { AddinstituteComponent } from './admin-institution/addinstitute/addinstitute.component';
 import { DisplayinstituteComponent } from './admin-institution/displayinstitute/displayinstitute.component';
-
-
 import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
-
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
 import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
+import { ActivateDepartmentComponent } from './admindepartment/department/activate-department/activate-department.component';
+import { ActivateRoleComponent } from './roleadmin/activate-role/activate-role.component';
+import { ActivateProfileComponent } from './instituteadminprofile/activate-profile/activate-profile.component';
+import { ActivateInstitutionComponent } from './admin-institution/activate-institution/activate-institution.component';
 
 import { InsertinstituteadminprofileComponent } from './instituteadminprofile/insertinstituteadminprofile/insertinstituteadminprofile.component';
 import { UpdateinstituteadminprofileComponent } from './instituteadminprofile/updateinstituteadminprofile/updateinstituteadminprofile.component';
@@ -87,18 +88,17 @@ import { QuizComponent } from './quiz/quiz.component';
     ViewDepartmentComponent,
     ViewCoursesComponent,
     DisplaySchoolComponent,
-
     AddinstituteComponent,
     DisplayinstituteComponent,
-
-
-
-
-
-
     UpdatemoduleComponent,
     AnnouncementComponent,
     CreateAnnouncementComponent,
+
+    ActivateDepartmentComponent,
+    ActivateRoleComponent,
+    ActivateProfileComponent,
+    ActivateInstitutionComponent
+
 
     InsertinstituteadminprofileComponent,
     UpdateinstituteadminprofileComponent,

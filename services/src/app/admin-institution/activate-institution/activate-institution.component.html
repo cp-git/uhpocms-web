@@ -1,0 +1,38 @@
+<div class="container-fluid text-center">
+    <div class="header1">
+        <h1>Activate Institution</h1>
+    </div>
+    <table class="table" border="1px">
+        <thead>
+            <tr>
+                <th style="width: 80px">Sr.No</th>
+                <th>Department Name</th>
+                <th>Description</th>
+                <th>Institute Name</th>
+                <th>Activate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let inst of institutions; let i=index">
+                <td style="width: 80px">{{i+1}}</td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" value="{{inst.adminInstitutionName}}" readonly />
+                    </div>
+                </td>
+
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" value="{{inst.adminInstitutionDescription}}" readonly />
+                    </div>
+
+                </td>
+
+                <td><button class="btn btn-success" (click)="activateInstitution(inst.adminInstitutionId)">
+                        Activate</button></td>
+
+            </tr>
+        </tbody>
+    </table>
+    <td><button class="btn btn-primary" (click)="home()">Back</button></td>
+</div>

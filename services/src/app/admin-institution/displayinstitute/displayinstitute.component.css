@@ -34,3 +34,7 @@ img:hover {
 .container {
     margin-top: 20px;
 }
+
+button {
+    margin: 10px;
+}
