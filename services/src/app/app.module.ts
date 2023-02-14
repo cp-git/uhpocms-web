@@ -15,7 +15,7 @@ import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 
 
 
-import { QuizComponent } from './quiz/quiz.component';
+
 
 import { QuestionComponent } from './teacherquestion/question/question.component';
 import { EmailComponent } from './email/email/email.component';
@@ -48,6 +48,19 @@ import { ActivateRoleComponent } from './roleadmin/activate-role/activate-role.c
 import { ActivateProfileComponent } from './instituteadminprofile/activate-profile/activate-profile.component';
 import { ActivateInstitutionComponent } from './admin-institution/activate-institution/activate-institution.component';
 
+import { InsertinstituteadminprofileComponent } from './instituteadminprofile/insertinstituteadminprofile/insertinstituteadminprofile.component';
+import { UpdateinstituteadminprofileComponent } from './instituteadminprofile/updateinstituteadminprofile/updateinstituteadminprofile.component';
+import { ViewinstiteadminprofileComponent } from './instituteadminprofile/viewinstiteadminprofile/viewinstiteadminprofile.component';
+import { AuthenticationloginComponent } from './authenticationlogin/authenticationlogin.component';
+import { AdminmdouleComponent } from './adminmdoule/adminmdoule.component';
+import { TeacherComponent } from './teacher/teacher.component';
+import { StudentdataComponent } from './studentdata/studentdata.component';
+
+import { ActivationScreenComponent } from './teachermodule/activation-screen/activation-screen.component';
+import { Quiz } from './quiz/quiz';
+import { QuizComponent } from './quiz/quiz.component';
+
+
 
 
 @NgModule({
@@ -59,7 +72,6 @@ import { ActivateInstitutionComponent } from './admin-institution/activate-insti
     DepartmentComponent,
     AdminroleComponent,
     LoginauthComponent,
-    QuizComponent,
     TeachermoduleComponent,
     EmailComponent,
     QuestionComponent,
@@ -81,10 +93,26 @@ import { ActivateInstitutionComponent } from './admin-institution/activate-insti
     UpdatemoduleComponent,
     AnnouncementComponent,
     CreateAnnouncementComponent,
+
     ActivateDepartmentComponent,
     ActivateRoleComponent,
     ActivateProfileComponent,
     ActivateInstitutionComponent
+
+
+    InsertinstituteadminprofileComponent,
+    UpdateinstituteadminprofileComponent,
+    ViewinstiteadminprofileComponent,
+    AuthenticationloginComponent,
+    AdminmdouleComponent,
+    TeacherComponent,
+    StudentdataComponent
+
+    ActivationScreenComponent,
+    QuizComponent
+
+
+
   ],
 
   imports: [
@@ -95,6 +123,7 @@ import { ActivateInstitutionComponent } from './admin-institution/activate-insti
     BrowserAnimationsModule,
     MatIconModule,
     MatToolbarModule,
+    BrowserModule
   ],
 
   providers: [

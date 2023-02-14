@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 //import { AuthuserserviceService } from 'app/authuser/authuserservice.service';
 
 import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
+import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
+import { InstituteAdminServiceService } from 'app/instituteadminprofile/institute-admin-service.service';
 
 import { AuthService } from '../auth.service';
 import { Authuser } from '../authuser';
@@ -22,24 +24,35 @@ export class LoginauthComponent {
   loginSuccess = false;
 
   authUser = new Authuser();
+  _instituteadminprofile = new InstituteAdmin();
+
+  firstName!: string;
+
+
+
   constructor(
     private _auth: AuthuserserviceService,
     private _route: Router,
-    private authenticationService: AuthService
+    private authenticationService: AuthService,
+    private _service: InstituteAdminServiceService
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+
+  }
 
   userLogin() {
     this._auth.loginDataAuthUser(this.authUser).subscribe(
       (data) => {
-        console.log(data);
         alert('User Successfully Logged In..');
         this._route.navigate(['adminrole']);
       },
       (error) => console.log(error)
     );
+
   }
+
+
 
 
   handleLogin() {
@@ -50,7 +63,7 @@ export class LoginauthComponent {
           this.invalidLogin = false;
           this.loginSuccess = true;
           this.successMessage = 'Login Successful.';
-          this._route.navigate(['demo']);
+          this._route.navigate(['authenticationlogin']);
         },
         () => {
           this.invalidLogin = true;

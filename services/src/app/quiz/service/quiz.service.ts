@@ -20,11 +20,11 @@ export class QuizService {
 
   constructor(private _http: HttpClient) {
 
-    this.quizUrl = environment.quizUrl + '/quiz';
-    this._loginUrl = `${environment.quizUrl}/basicauth`;
+    // this.quizUrl = environment.quizUrl + '/quiz';
+    // this._loginUrl = `${environment.quizUrl}/basicauth`;
 
-    // this.quizUrl = "http://localhost:8090/quiz/uhpocms/quiz";
-    // this._loginUrl = "http://localhost:8090/quiz/uhpocms/basicauth";
+    this.quizUrl = "http://localhost:8090/quiz/uhpocms/quiz";
+    this._loginUrl = "http://localhost:8090/quiz/uhpocms/basicauth";
 
 
   }
@@ -92,4 +92,13 @@ export class QuizService {
     if (user === null) return '';
     return user;
   }
+
+  getInactiveQuizList(): Observable<any> {
+    return this._http.get<any>(`${this.quizUrl}/inactive?inactivequizzes=all`);
+  }
+
+  updateActiveStatus(title: string, quiz: Quiz): Observable<any> {
+    return this._http.patch<any>(`${this.quizUrl}/` + title, quiz);
+  }
+
 }

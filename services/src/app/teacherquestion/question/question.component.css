@@ -1,1 +1,5 @@
 @import url("../../app.component.css");
+
+#activebtn {
+    width: 12%;
+}

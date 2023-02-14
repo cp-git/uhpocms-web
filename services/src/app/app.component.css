@@ -21,6 +21,27 @@ table th {
 }
 
 
+.addbtn button {
+    margin-left: 1400px;
+    width: 100px;
+}
+
+#Updatebtninsadmin {
+    width: 64px;
+}
+
+#addauth {
+    margin-left: 20px;
+}
+
+#updateauth {
+    margin-left: 20px;
+}
+
+#deleteauth {
+    margin-left: 20px;
+}
+
 
 
 

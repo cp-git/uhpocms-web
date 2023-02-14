@@ -83,7 +83,7 @@ export class CourseComponent {
     this._route.navigate(['updatecourse', courseName]);
   }
   Home() {
-    this._route.navigate(['demo']);
+    this._route.navigate(['adminmodule']);
   }
 
   deletecourse(course: Course) {

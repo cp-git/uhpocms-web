@@ -9,7 +9,8 @@ import { environment } from 'environments/environment.development';
 export class QuestionService {
   private readonly questionUrl: string;
   constructor(private _http: HttpClient) {
-    this.questionUrl = environment.questionUrl + '/question';
+    // this.questionUrl = environment.questionUrl + '/question';
+    this.questionUrl = `http://localhost:8090/question/uhpocms/question`;
   }
 
   questionList(): Observable<any> {
@@ -34,4 +35,14 @@ export class QuestionService {
       question
     );
   }
+
+  getInactiveQuestionList(): Observable<any> {
+    return this._http.get<any>(`${this.questionUrl}/inactive?inactivequestions=all`);
+  }
+
+  updateActiveStatus(questionFigure: string, question: Question): Observable<any> {
+    return this._http.patch<any>(`${this.questionUrl}/` + questionFigure, question);
+  }
+
+
 }

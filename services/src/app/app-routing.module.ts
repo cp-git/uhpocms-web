@@ -36,10 +36,20 @@ import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.comp
 
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
 import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
+
 import { ActivateDepartmentComponent } from './admindepartment/department/activate-department/activate-department.component';
 import { ActivateRoleComponent } from './roleadmin/activate-role/activate-role.component';
 import { ActivateProfileComponent } from './instituteadminprofile/activate-profile/activate-profile.component';
 import { ActivateInstitutionComponent } from './admin-institution/activate-institution/activate-institution.component';
+
+import { InsertinstituteadminprofileComponent } from './instituteadminprofile/insertinstituteadminprofile/insertinstituteadminprofile.component';
+import { UpdateinstituteadminprofileComponent } from './instituteadminprofile/updateinstituteadminprofile/updateinstituteadminprofile.component';
+import { ViewinstiteadminprofileComponent } from './instituteadminprofile/viewinstiteadminprofile/viewinstiteadminprofile.component';
+import { AuthenticationloginComponent } from './authenticationlogin/authenticationlogin.component';
+import { AdminmdouleComponent } from './adminmdoule/adminmdoule.component';
+import { TeacherComponent } from './teacher/teacher.component';
+import { StudentdataComponent } from './studentdata/studentdata.component';
+
 
 
 const routes: Routes = [
@@ -50,6 +60,15 @@ const routes: Routes = [
   { path: 'main', component: MainComponent },
   { path: 'category', component: CategoryComponent },
   { path: 'updateModule', component: UpdatemoduleComponent },
+
+
+  { path: 'authenticationlogin', component: AuthenticationloginComponent },
+
+  { path: 'adminmodule', component: AdminmdouleComponent },
+
+  { path: 'teacherdisplay', component: TeacherComponent },
+
+  { path: 'studentdata', component: StudentdataComponent },
 
 
   { path: '', component: HomeComponent },
@@ -71,6 +90,21 @@ const routes: Routes = [
   //instituteadmin routes
   { path: 'displayInstituteAdmin', component: DisplayInstituteAdminComponent },
   { path: 'displayInstituteAdmin/activate', component: ActivateProfileComponent },
+
+
+  //insert intituteadmin profile
+  { path: 'insertadminprofile', component: InsertinstituteadminprofileComponent },
+
+  //update instituteadminprofile
+  { path: 'updateinstituteadminprofile', component: UpdateinstituteadminprofileComponent },
+
+  { path: 'updateinstituteadminprofile/:firstName', component: UpdateinstituteadminprofileComponent },
+
+
+  //view instituteadminprofile
+  { path: 'viewadminprofile/:firstName', component: ViewinstiteadminprofileComponent },
+
+  { path: 'viewadminprofile', component: ViewinstiteadminprofileComponent },
 
   //admindepartment routes
   { path: 'department', component: DepartmentComponent },

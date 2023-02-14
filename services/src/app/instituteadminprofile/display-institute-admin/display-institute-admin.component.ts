@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Authuser } from 'app/authuser/authuser';
 import { AdminInstitution } from '../admin-institution';
 import { InstituteAdmin } from '../institute-admin';
 import { InstituteAdminServiceService } from '../institute-admin-service.service';
@@ -21,6 +22,8 @@ export class DisplayInstituteAdminComponent {
   _instituteAdminObjCopy: InstituteAdmin[] = [];
 
   _adminInstitutions: AdminInstitution[] = [];
+
+  _authUsers: Authuser[] = [];
   // for extra row when there is no data
   isHidden: boolean = true;
   selected: any;
@@ -36,6 +39,7 @@ export class DisplayInstituteAdminComponent {
     } else {
       this._getAllList();
       this._getAllAdminInstitutions();
+      this._getAllAuthUsers();
     }
   }
 
@@ -69,65 +73,50 @@ export class DisplayInstituteAdminComponent {
     });
   }
 
+
+  _getAllAuthUsers() {
+    this._instituteAdminService._getAllAuthUsersList().subscribe((data) => {
+      this._authUsers = data;
+    });
+
+  }
+
   //insert a data in database
-  _addInstituteAdmin(_instituteAdminObject: InstituteAdmin) {
-    let _addInstituteObj = new InstituteAdmin();
-    _addInstituteObj.activeUser = _instituteAdminObject.activeUser;
-    _addInstituteObj.adminAddress1 = _instituteAdminObject.adminAddress1;
-    _addInstituteObj.adminAddress2 = _instituteAdminObject.adminAddress2;
-    _addInstituteObj.adminCity = _instituteAdminObject.adminCity;
-    _addInstituteObj.adminDepartment = _instituteAdminObject.adminDepartment;
-    _addInstituteObj.adminEmail = _instituteAdminObject.adminEmail;
-    _addInstituteObj.adminGender = _instituteAdminObject.adminGender;
-    _addInstituteObj.institutionId = _instituteAdminObject.institutionId;
-    _addInstituteObj.adminState = _instituteAdminObject.adminState;
-    _addInstituteObj.adminZip = _instituteAdminObject.adminZip;
-    _addInstituteObj.createdBy = _instituteAdminObject.createdBy;
-    _addInstituteObj.dob = _instituteAdminObject.dob;
-    _addInstituteObj.firstName = _instituteAdminObject.firstName;
-    _addInstituteObj.lastName = _instituteAdminObject.lastName;
-    _addInstituteObj.mobilePhone = _instituteAdminObject.mobilePhone;
-    _addInstituteObj.modifiedBy = _instituteAdminObject.modifiedBy;
-    _addInstituteObj.profilePics = _instituteAdminObject.profilePics;
-    _addInstituteObj.userId = _instituteAdminObject.userId;
-    _addInstituteObj.userRole = _instituteAdminObject.userRole;
+  _addInstituteAdmin() {
+    this._route.navigate(['insertadminprofile'])
 
-    console.log(_addInstituteObj);
-    this._instituteAdminService
-      ._addInstituteAdminList(_addInstituteObj)
-      .subscribe((data) => {
-        console.log(data);
-        // _addInstituteObj = data;
-        // this._instituteAdmin2[this._instituteAdmin2.indexOf(_instituteAdminObject)] = this._instituteAdminObjCopy[this._instituteAdminObjCopy.findIndex(data => data.firstName == _instituteAdminObject.firstName)];
-        // this._instituteAdmin2.push(_addInstituteObj);
-        alert('Institute Added Successfully');
-        location.reload();
-
-        // this._route.navigate(['displayInstituteAdmin'])
-      });
   }
 
   //update a data in database
-  _updateInstituteAdmin(firstName: string, _instituteAdmin: InstituteAdmin) {
-    this._instituteAdminService._getInstituteAdminList(firstName).subscribe(
-      (data) => {
-        console.log(data);
-        this._instituteAdminObj = data;
+  _updateInstituteAdmin(firstName: string) {
 
-        this._instituteAdminService
-          ._updateInstituteAdminList(firstName, _instituteAdmin)
-          .subscribe(
-            (data) => {
-              console.log(data);
-              alert('Data Updated Successfully');
-              this._route.navigate(['displayInstituteAdmin']);
-            },
-            (error) => console.log(error)
-          );
-      },
-      (error) => console.log(error)
-    );
+    this._route.navigate(['/updateinstituteadminprofile', firstName]);
   }
+  // this._instituteAdminService._getInstituteAdminList(firstName).subscribe(
+  //   (data) => {
+  //     console.log(data);
+  //     this._instituteAdminObj = data;
+
+  //     this._instituteAdminService
+  //       ._updateInstituteAdminList(firstName, _instituteAdmin)
+  //       .subscribe(
+  //         (data) => {
+  //           console.log(data);
+  //           alert('Data Updated Successfully');
+  //           this._route.navigate(['displayInstituteAdmin']);
+  //         },
+  //         (error) => console.log(error)
+  //       );
+  //   },
+  //   (error) => console.log(error)
+  // );
+
+
+  ViewInstituteadmin(firstName: String) {
+    this._route.navigate(['viewadminprofile', firstName]);
+
+  }
+
 
   //delete a data in database
 
@@ -143,7 +132,7 @@ export class DisplayInstituteAdminComponent {
   }
 
   Home() {
-    this._route.navigate(['demo']);
+    this._route.navigate(['adminmodule']);
   }
 
   redirectToActivateProfile() {

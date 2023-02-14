@@ -78,6 +78,7 @@ export class InstituteAdminServiceService {
     return this.http.delete<any>(this._baseUrl + '/' + firstName);
   }
 
+
   getAllDeactivatedInstituteProfiles(): Observable<any[]> {
     return this.http.get<any[]>(`${this._baseUrl}?firstName=inactive`);
   }
@@ -85,5 +86,13 @@ export class InstituteAdminServiceService {
   activateInstituteProfile(departmentId: number): Observable<any> {
     return this.http.patch<any>(`${this._baseUrl}/activate/` + departmentId, {});
   }
+
+
+
+  _getAllAuthUsersList(): Observable<any> {
+    return this.http.get<any>("http://localhost:8090/authuser/uhpocms/authuser?username=all");
+  }
+
+
 
 }
