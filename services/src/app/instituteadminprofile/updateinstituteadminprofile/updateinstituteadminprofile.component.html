@@ -1,0 +1,122 @@
+<div class="container">
+    <h1>Update Student Details...</h1>
+    <h4>Upadte the following details as shown...!</h4>
+    <form #adduserform="ngForm" (ngSubmit)="updateadmin()">
+
+
+        <h6>Active User</h6>
+        <div class="form-group">
+
+            <input type="checkbox" id="chk" class="form-control" required [(ngModel)]="_instituteAdmin.activeUser"
+                name="activeUser">
+        </div>
+
+        <h6>Address1</h6>
+        <div class="form-group">
+
+            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminAddress1"
+                name="adminAddress1">
+        </div>
+
+        <h6>address2</h6>
+        <div class="form-group">
+
+            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminAddress2"
+                name="adminAddress2">
+        </div>
+
+        <h6>city</h6>
+        <div class="form-group">
+
+            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminCity" name="adminCity">
+        </div>
+
+        <h6>Depratment</h6>
+        <div class="form-group">
+
+            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminDepartment"
+                name="adminDepartment">
+        </div>
+
+        <h6>Email</h6>
+        <div class="form-group">
+
+            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminEmail" name="adminEmail">
+        </div>
+
+        <h6>Gender</h6>
+        <div class="form-group">
+            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminGender"
+                name="adminGender">
+        </div>
+
+        <h6>State</h6>
+        <div class="form-group">
+
+            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminState" name="adminState">
+        </div>
+
+        <h6>Pincode</h6>
+        <div class="form-group">
+
+            <input type="number" class="form-control" required [(ngModel)]="_instituteAdmin.adminZip" name="adminZip">
+        </div>
+
+
+        <h6>DOB</h6>
+        <div class="form-group">
+
+            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.dob" name="dob">
+        </div>
+
+        <h6>First Name</h6>
+        <div class="form-group">
+
+            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.firstName" name="firstName">
+        </div>
+
+        <h6>Last Name</h6>
+        <div class="form-group">
+
+            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.lastName" name="lastName">
+        </div>
+
+        <h6>institutionId</h6>
+        <div class="form-group">
+
+            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.institutionId"
+                name="institutionId">
+        </div>
+
+        <h6>Phone Number</h6>
+        <div class="form-group">
+
+            <input type="number" class="form-control" required [(ngModel)]="_instituteAdmin.mobilePhone"
+                name="mobilePhone">
+        </div>
+
+        <h6>Profile Pics</h6>
+        <div class="form-group">
+
+            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.profilePics"
+                name="profilePics">
+        </div>
+
+        <h6>userId</h6>
+        <div class="form-group">
+
+            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.userId" name="userId">
+        </div>
+
+        <h6>userRole</h6>
+        <div class="form-group">
+
+            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.userRole" name="userRole">
+        </div>
+
+        <button type="submit" class="btn btn-success" id="btn1">Update</button>&nbsp;&nbsp;
+
+
+    </form>
+
+</div>

@@ -20,7 +20,7 @@ export class AuthuserComponent implements OnInit {
     private _service: AuthuserserviceService,
     private _activeRoute: ActivatedRoute,
     private _route: Router
-  ) {}
+  ) { }
 
   authUserName!: string;
 
@@ -116,6 +116,6 @@ export class AuthuserComponent implements OnInit {
   }
 
   Home() {
-    this._route.navigate(['demo']);
+    this._route.navigate(['adminmodule']);
   }
 }

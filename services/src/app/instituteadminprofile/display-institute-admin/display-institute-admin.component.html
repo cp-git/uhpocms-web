@@ -5,9 +5,12 @@
 
     </div>
 
+    <div class="addbtn">
+        <button class="btn btn-primary" (click)="_addInstituteAdmin()">Add</button>
+    </div>
 
     <form #adduserform="ngForm">
-        <table class="table table-striped">
+        <table class="table table-striped" style="margin-top: 20px;">
             <thead class="table-header">
                 <tr>
 
@@ -34,7 +37,7 @@
             </thead>
 
             <tbody>
-                <tr *ngIf="isHidden">
+                <!--  <tr *ngIf="isHidden">
 
 
 
@@ -172,7 +175,7 @@
                             (click)="_deletInstituteAdmin(_instituteAdmin.firstName)">Delete</button>
                     </td>
 
-                </tr>
+                </tr>-->
                 <tr *ngFor="let _instituteAdmin of _instituteAdminArray">
 
 
@@ -298,12 +301,20 @@
                                 name="{{_instituteAdmin.userRole}}">
                         </div>
                     </td>
+                    <!--<td>
+                        <button class="btn btn-primary" (click)="_addInstituteAdmin()">Add</button>
+                    </td>-->
                     <td>
-                        <button class="btn btn-primary" (click)="_addInstituteAdmin(_instituteAdmin)">Add</button>
+                        <!-- <button class="btn btn-success"
+                            (click)="_updateInstituteAdmin(_instituteAdmin.firstName,_instituteAdmin)">Update</button> -->
+
+                        <button class="btn btn-success" id="Updatebtninsadmin"
+                            (click)="_updateInstituteAdmin(_instituteAdmin.firstName)">Update</button>
                     </td>
+
                     <td>
-                        <button class="btn btn-success"
-                            (click)="_updateInstituteAdmin(_instituteAdmin.firstName,_instituteAdmin)">Update</button>
+                        <button class="btn btn-info"
+                            (click)="ViewInstituteadmin(_instituteAdmin.firstName)">View</button>
                     </td>
                     <td>
                         <button class="btn btn-danger"

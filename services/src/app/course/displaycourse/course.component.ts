@@ -15,7 +15,7 @@ export class CourseComponent {
 
   _backupModule = new Map();
 
-  controlEnabled:boolean = true;
+  controlEnabled: boolean = true;
   // array of course
 
   course = new Course();
@@ -31,7 +31,7 @@ export class CourseComponent {
     private _instService: InstitutionSeriveService,
     private _activatedRoute: ActivatedRoute,
     private _route: Router
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.getAllCourses();
 
@@ -81,7 +81,7 @@ export class CourseComponent {
     this._route.navigate(['updatecourse', courseName]);
   }
   Home() {
-    this._route.navigate(['demo']);
+    this._route.navigate(['adminmodule']);
   }
 
   deletecourse(course: Course) {
