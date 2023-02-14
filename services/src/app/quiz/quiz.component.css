@@ -50,6 +50,12 @@ th {
     text-align: left;
 }
 
+tr {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+
 thead th {
     background-color: #55608f;
 }
@@ -105,6 +111,17 @@ td:hover ::before {
 
 .header-right {
     float: right;
+    width: 30%;
+}
+
+.header-right-inactive {
+    float: right;
+
+}
+
+#activebtn {
+    width: 32%;
+    margin-right: 32px;
 }
 
 .addbtn {
