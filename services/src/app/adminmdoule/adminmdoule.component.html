@@ -1,8 +1,22 @@
-<div class="container">
-    <h1>Admin Portal</h1>
+<!-- <div class="container">
+    <div class="header">
+        <div class="row">
+            <div class="col-md-6" id="h1">
+                <h1>Admin Portal</h1>
+            </div>
 
-    <button class="btn btn-info" (click)="RedirectTOLogin()" style="margin-left: 1100px;">Logout</button>
+            <div class="col-md-6" id="h2">
+                <button class="btn btn-info" (click)="RedirectTOLogin()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class=""
+
+
     <div class="row">
+
         <div class="col-md-3">
 
             <button id="demo" class="btn btn-info" (click)="RedirectTOAuth()">Auth User</button>
@@ -32,4 +46,148 @@
 
 
 
+</div> -->
+
+
+<div class="container-fluid mt-5 mb-3">
+
+    <head>
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    </head>
+
+    <div class="header">
+        <div class="row">
+            <div class="col-md-6" id="h1">
+                <h1>Admin Portal</h1>
+            </div>
+
+            <div class="col-md-6" id="h2">
+                <button class="btn btn-info" (click)="RedirectTOLogin()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="sub-head">
+        <div class="col-md-4" id="data1">
+            <div class="card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <i class="glyphicon glyphicon-user" id="icon1"></i>
+                        <div class="ms-2 c-details">
+                            <h2 class="mb-0" id="AuthUsername">AuthUser Module</h2>
+                        </div>
+
+                        <button id="demo" class="btn btn-info" (click)="RedirectTOAuth()">Auth User</button>
+                    </div>
+
+                </div>
+                <div class="mt-5">
+                    <h3 class="heading">Authentication of User Based on Role<br> CRUD Operations</h3>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4" id="data1">
+            <div class="card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <i class="material-icons" id="icon1">computer</i>
+                        <div class="ms-2 c-details">
+                            <h2 class="mb-0" id="AuthUsername">InstituteAdmin Profile Module</h2>
+                        </div>
+
+                        <button id="demo" class="btn btn-info"
+                            (click)="RedirectToInstituteAdminProfile()">InstituteAdmin
+                            Profile</button>
+                    </div>
+
+                </div>
+                <div class="mt-5">
+                    <h3 class="heading">Role Based Instituteadmin Profile<br> CRUD Operations</h3>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4" id="data1">
+            <div class="card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <i class="material-icons" id="icon1">class</i>
+                        <div class="ms-2 c-details">
+                            <h2 class="mb-0" id="AuthUsername">Course Module</h2>
+                        </div>
+
+                        <button id="demo" class="btn btn-info" (click)="RedirectToCourse()">Course</button>
+                    </div>
+
+                </div>
+                <div class="mt-5">
+                    <h3 class="heading">Adding Course By Admin Portal<br> CRUD Operations</h3>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="sub-head">
+        <div class="col-md-4" id="data1">
+            <div class="card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <i class="material-icons" id="icon1">important_devices</i>
+                        <div class="ms-2 c-details">
+                            <h2 class="mb-0" id="AuthUsername">Admin Department Module</h2>
+                        </div>
+
+                        <button id="demo" class="btn btn-info" (click)="RedirectToAdminDept()">Admin Department</button>
+                    </div>
+
+                </div>
+                <div class="mt-5">
+                    <h3 class="heading">Authentication of User Based on Role<br> CRUD Operations</h3>
+
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-md-4" id="data1">
+            <div class="card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <i class="material-icons" id="icon1">computer</i>
+                        <div class="ms-2 c-details">
+                            <h2 class="mb-0" id="AuthUsername">InstituteAdmin Profile Module</h2>
+                        </div>
+    
+                        <button id="demo" class="btn btn-info" (click)="RedirectToInstituteAdminProfile()">InstituteAdmin
+                            Profile</button>
+                    </div>
+    
+                </div>
+                <div class="mt-5">
+                    <h3 class="heading">Role Based Instituteadmin Profile<br> CRUD Operations</h3>
+    
+                </div>
+            </div>
+        </div> -->
+        <!-- <div class="col-md-4" id="data1">
+            <div class="card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <i class="material-icons" id="icon1">class</i>
+                        <div class="ms-2 c-details">
+                            <h2 class="mb-0" id="AuthUsername">Course Module</h2>
+                        </div>
+    
+                        <button id="demo" class="btn btn-info" (click)="RedirectToCourse()">Course</button>
+                    </div>
+    
+                </div>
+                <div class="mt-5">
+                    <h3 class="heading">Adding Course By Admin Portal<br> CRUD Operations</h3>
+    
+                </div>
+            </div>
+        </div> -->
+    </div>
 </div>
