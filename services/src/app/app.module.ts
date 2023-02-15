@@ -97,7 +97,7 @@ import { QuizComponent } from './quiz/quiz.component';
     ActivateDepartmentComponent,
     ActivateRoleComponent,
     ActivateProfileComponent,
-    ActivateInstitutionComponent
+    ActivateInstitutionComponent,
 
 
     InsertinstituteadminprofileComponent,
@@ -106,7 +106,7 @@ import { QuizComponent } from './quiz/quiz.component';
     AuthenticationloginComponent,
     AdminmdouleComponent,
     TeacherComponent,
-    StudentdataComponent
+    StudentdataComponent,
 
     ActivationScreenComponent,
     QuizComponent
