@@ -116,6 +116,6 @@ export class AuthuserComponent implements OnInit {
   }
 
   Home() {
-    this._route.navigate(['adminmodule']);
+    this._route.navigate(['adminmodule/admin']);
   }
 }
