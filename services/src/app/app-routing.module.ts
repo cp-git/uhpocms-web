@@ -49,11 +49,14 @@ import { AuthenticationloginComponent } from './authenticationlogin/authenticati
 import { AdminmdouleComponent } from './adminmdoule/adminmdoule.component';
 import { TeacherComponent } from './teacher/teacher.component';
 import { StudentdataComponent } from './studentdata/studentdata.component';
-
+import { StudentcourseComponent } from './student/studentcourse/studentcourse.component';
 
 
 const routes: Routes = [
 
+  ///studentCourse
+  { path: 'studentcourse', component: StudentcourseComponent },
+  { path: 'profile/:id', component: StudentcourseComponent },
   //category routing
   { path: 'addCategory', component: AddCategoryComponent },
   { path: 'addModule', component: AddModuleComponent },
@@ -133,6 +136,7 @@ const routes: Routes = [
 
   { path: 'createQuiz', component: CreateQuizComponent },
   { path: 'course/:id', component: ViewCoursesComponent },
+
 
 
   //update Quiz

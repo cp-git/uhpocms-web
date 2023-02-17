@@ -51,7 +51,8 @@ export class AuthenticationloginComponent {
                   this._route.navigate(['teacherdisplay'])
                 }
                 else if (this._instituteAdminArray[i].userRole == 'student') {
-                  this._route.navigate(['studentdata']);
+                  this._route.navigate(['studentdata'], { state: { id: this._instituteAdminArray[i].adminId } });
+
                 }
 
 
