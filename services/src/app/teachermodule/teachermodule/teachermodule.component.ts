@@ -166,7 +166,7 @@ export class TeachermoduleComponent {
   }
 
   Home() {
-    this._route.navigate(['main']);
+    this._route.navigate(['teacherdisplay/teacher']);
   }
 
   getInactivateModule() {

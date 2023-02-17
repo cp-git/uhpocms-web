@@ -188,7 +188,7 @@ export class DepartmentComponent implements OnInit {
   }
 
   Home() {
-    this._route.navigate(['demo']);
+    this._route.navigate(['adminmodule/admin']);
   }
 
   redirectToActivateDepartment() {

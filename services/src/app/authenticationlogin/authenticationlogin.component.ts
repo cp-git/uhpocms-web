@@ -45,13 +45,13 @@ export class AuthenticationloginComponent {
                 alert(this._instituteAdminArray[i].userRole);
 
                 if (this._instituteAdminArray[i].userRole == 'admin') {
-                  this._route.navigate(['adminmodule'])
+                  this._route.navigate(['adminmodule/admin'])
                 }
                 else if (this._instituteAdminArray[i].userRole == 'teacher') {
-                  this._route.navigate(['teacherdisplay'])
+                  this._route.navigate(['teacherdisplay/teacher'])
                 }
                 else if (this._instituteAdminArray[i].userRole == 'student') {
-                  this._route.navigate(['studentdata']);
+                  this._route.navigate(['studentdata/student']);
                 }
 
 

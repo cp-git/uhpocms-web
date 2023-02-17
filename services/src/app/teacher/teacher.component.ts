@@ -10,7 +10,8 @@ export class TeacherComponent {
   constructor(private _route: Router) { }
 
   RedirectToCourse() {
-    this._route.navigate(['course']);
+    const role = 'teacher';
+    this._route.navigate(['course/userrole/', role]);
   }
 
   RedirectToModule() {
@@ -18,7 +19,8 @@ export class TeacherComponent {
   }
 
   RedirectToQuiz() {
-    this._route.navigate(['quiz']);
+    const role = 'teacher';
+    this._route.navigate(['quiz', role]);
   }
 
 

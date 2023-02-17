@@ -64,11 +64,11 @@ const routes: Routes = [
 
   { path: 'authenticationlogin', component: AuthenticationloginComponent },
 
-  { path: 'adminmodule', component: AdminmdouleComponent },
+  { path: 'adminmodule/admin', component: AdminmdouleComponent },
 
-  { path: 'teacherdisplay', component: TeacherComponent },
+  { path: 'teacherdisplay/teacher', component: TeacherComponent },
 
-  { path: 'studentdata', component: StudentdataComponent },
+  { path: 'studentdata/student', component: StudentdataComponent },
 
 
   { path: '', component: HomeComponent },
@@ -89,6 +89,7 @@ const routes: Routes = [
 
   //instituteadmin routes
   { path: 'displayInstituteAdmin', component: DisplayInstituteAdminComponent },
+
   { path: 'displayInstituteAdmin/activate', component: ActivateProfileComponent },
 
 
@@ -113,7 +114,8 @@ const routes: Routes = [
   { path: 'department/activate', component: ActivateDepartmentComponent },
 
   //quiz routes
-  { path: 'quiz', component: QuizComponent },
+  { path: 'quiz/:role', component: QuizComponent },
+
 
 
   { path: 'department/:id', component: ViewDepartmentComponent },
@@ -149,7 +151,10 @@ const routes: Routes = [
   //home route
   { path: 'home', component: HomeComponent },
 
-  { path: 'course', component: CourseComponent },
+
+  { path: 'course/userrole/:role', component: CourseComponent },
+
+
   { path: 'addcourse', component: AddcourseComponent },
   { path: 'updatecourse/:courseName', component: UpdatecourseComponent },
   //announcement router
