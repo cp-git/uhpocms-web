@@ -13,21 +13,25 @@ export class AdminmdouleComponent {
 
   authUser = new Authuser();
 
-
+  role: string | undefined;
 
 
   constructor(private _route: Router, private _auth: AuthuserserviceService) { }
 
   RedirectTOAuth() {
     this._route.navigate(['authuser']);
+
   }
 
   RedirectToInstituteAdminProfile() {
     this._route.navigate(['displayInstituteAdmin']);
+
   }
 
   RedirectToCourse() {
-    this._route.navigate(['course']);
+    this.role = 'admin';
+    this._route.navigate(['course/userrole/', this.role]);
+
   }
 
   RedirectToAdminDept() {

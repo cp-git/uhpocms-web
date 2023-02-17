@@ -27,6 +27,7 @@ export class CourseComponent {
   sessionData: any;
   data: any;
 
+
   constructor(
     private _service: CourseService,
     private _instService: InstitutionSeriveService,
@@ -36,6 +37,7 @@ export class CourseComponent {
   ngOnInit(): void {
     // this.getAllCourses();
 
+
     if (sessionStorage.getItem('authenticatedUser') === null) {
       this._route.navigate(['']);
     } else {
@@ -43,6 +45,8 @@ export class CourseComponent {
       this.getAllInstitutes();
       this.getAllDeactivateCourses();
     }
+
+
   }
   getAllInstitutes() {
     this._instService._getAllInstitutions().subscribe((data) => {
@@ -83,7 +87,14 @@ export class CourseComponent {
     this._route.navigate(['updatecourse', courseName]);
   }
   Home() {
-    this._route.navigate(['adminmodule']);
+    if (this._activatedRoute.snapshot.params['role'] == 'admin') { this._route.navigate(['adminmodule/admin']); }
+
+    else if (this._activatedRoute.snapshot.params['role'] == 'teacher') { this._route.navigate(['teacherdisplay/teacher']); }
+
+    else if (this._activatedRoute.snapshot.params['role'] == 'student') { this._route.navigate(['studentdata/student']); }
+
+
+
   }
 
   deletecourse(course: Course) {
@@ -114,7 +125,7 @@ export class CourseComponent {
         this.inActiveCourses = response;
       },
       (error) => {
-        alert("Error");
+
       }
     );
   }
@@ -127,7 +138,7 @@ export class CourseComponent {
         this.ngOnInit();
       },
       (error) => {
-        alert("Error");
+
       }
     );
   }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from 'app/category/category';
 import { CategoryService } from 'app/category/category.service';
 import { Course } from 'app/course/course';
@@ -37,7 +37,8 @@ export class QuizComponent {
     private _route: Router,
     private _courseService: CourseService,
     private _categoryService: CategoryService,
-    private _moduleService: ModuleService
+    private _moduleService: ModuleService,
+    private _activatedRoute: ActivatedRoute
   ) {
     this.getAllQuizzes();
   }
@@ -203,7 +204,13 @@ export class QuizComponent {
 
   }
   back() {
-    this._route.navigate(['demo'])
+
+    if (this._activatedRoute.snapshot.params['role'] == 'teacher') { this._route.navigate(['teacherdisplay/teacher']); }
+
+    else if (this._activatedRoute.snapshot.params['role'] == 'student') { this._route.navigate(['studentdata/student']); }
+
+
+
 
   }
 }

@@ -11,11 +11,13 @@ export class StudentdataComponent {
   constructor(private _route: Router) { }
 
   RedirectToQuiz() {
-    this._route.navigate(['quiz']);
+    const role = 'student';
+    this._route.navigate(['quiz', role]);
   }
 
   RedirectToCourse() {
-    this._route.navigate(['course']);
+    const role = 'student';
+    this._route.navigate(['course/userrole/', role]);
   }
 
   RedirectTOLogin() {
