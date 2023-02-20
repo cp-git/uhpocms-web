@@ -1,22 +1,25 @@
 <div class="container">
     <div>
-        <h1>Student Course</h1>
+        <h1>Student Enroll Courses</h1>
     </div>
+    <td>
+        <button class="btn btn-primary" (click)="Back()"><i class="fa fa-home"></i></button>
+    </td>
+
     <table class="table" border="1">
         <thead>
             <tr>
-                <th style="width: 80px">Sr.No</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Course Code</th>
                 <th>Course Type</th>
                 <th>Passing Score</th>
-                <th>Institute Name</th>
+
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let course of courses,let i=index">
-                <td style="width: 80px">{{i+1}}</td>
+            <tr *ngFor="let course of courses,">
+
                 <td>
                     <div class="form-group">
                         <input class="form-control" type="text" [(ngModel)]="course.courseName"
@@ -49,20 +52,20 @@
                     </div>
                 </td>
 
-                <td>
-                    <!-- <div class="form-group">
+                <!-- <td>
+                    <div class="form-group">
 
                         <ng-container *ngFor="let inst of institutions">
                             <input *ngIf="course.instId==inst.adminInstitutionId?true:null" class="form-control"
                                 type="text" value="{{inst.adminInstitutionName}}" readonly />
                         </ng-container>
 
-                    </div> -->
-                </td>
+                    </div>
+                </td> -->
             </tr>
 
         </tbody>
     </table>
-    {{courses|json}}
-    <!-- <td><button class="btn btn-primary" (click)="backToCourse()">Back</button></td> -->
+    <!-- {{courses|json}} -->
+
 </div>

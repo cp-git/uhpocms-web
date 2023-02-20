@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from 'app/course/course';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
@@ -12,15 +12,18 @@ import { StudentCoursesService } from '../student-courses.service';
 export class StudentcourseComponent {
 
   instituteAdminProfile: InstituteAdmin[] = [];
-  profileId: number;
+  profileId: any;
+
   constructor(
+
     private _route: Router,
-    private readonly studentCourseService: StudentCoursesService,
-    private readonly route: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private readonly studentCourseService: StudentCoursesService
 
   ) {
-    this.profileId = 0;
+    this.profileId = this.activatedRoute.snapshot.paramMap.get('id');;
   }
+
 
 
   courses: Course[] = [];
@@ -28,52 +31,23 @@ export class StudentcourseComponent {
 
   ngOnInit(): void {
 
-    alert();
-    const currentNavigation = this._route.getCurrentNavigation();
-    if (currentNavigation) {
-      // Use the currentNavigation object safely here
-      const state = currentNavigation.extras.state;
-      if (state) {
-        this.profileId = state['id'];
-        // Do something with the data (e.g. display it in the component)
-      }
-    }
+    this.getStudentCoursesByProfileId(this.profileId);
 
-    this.getStudentCourses();
-
-
-    //   this.route.paramMap.subscribe(
-    //     (params) => {
-    //       this.id = params.get("id");
-    //       if (this.id) {
-    //         this.studentCourse.getCourseByProfileId(this.id).subscribe(
-    //           (coursedata) => {
-    //             this.courses = coursedata;
-    //           }
-    //         )
-    //       }
-    //     }
-    //   )
   }
 
+  Back() {
+    this._route.navigate(['studentdata', { id: this.profileId }]);
+  }
 
-  getStudentCourses() {
-    this.studentCourseService.getCourseByProfileId(this.profileId).subscribe(
+  getStudentCoursesByProfileId(profileId: any) {
+    this.studentCourseService.getCourseByProfileId(profileId).subscribe(
       response => {
         this.courses = response;
+
       },
       error => {
         alert("failed to fetch data");
       }
     );
   }
-  // private assignProfile() {
-  //   this.instituteAdminProfile.forEach(profile =>  {
-
-  //     if (profile.adminInstitutionId == this.id) {
-  //       this.admininstitution = institute;
-  //       return;
-  //     }
-  //   })
-  // }
 }

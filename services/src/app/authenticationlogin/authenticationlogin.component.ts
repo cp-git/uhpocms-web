@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Authuser } from 'app/authuser/authuser';
 import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
@@ -13,15 +13,17 @@ import { InstituteAdminServiceService } from 'app/instituteadminprofile/institut
 export class AuthenticationloginComponent {
 
   authUser = new Authuser();
-
+  profile_id: number;
   _instituteAdminArray: InstituteAdmin[] = [];
   constructor(
     private _auth: AuthuserserviceService,
     private _route: Router,
+    private route: ActivatedRoute,
     private _instituteadminprofile: InstituteAdminServiceService
 
   ) {
-    this._getAllList()
+    this._getAllList();
+    this.profile_id = 0;
   }
 
 
@@ -42,7 +44,7 @@ export class AuthenticationloginComponent {
               if (this._instituteAdminArray[i].userId === this.authUser.authUserId) {
                 console.log(this._instituteAdminArray[i].userId + "authuser_id in instituteadmin profile..")
                 console.log(this.authUser.authUserId + "authuser_id in Auth User profile..")
-                alert(this._instituteAdminArray[i].userRole);
+                //alert(this._instituteAdminArray[i].userRole);
 
                 if (this._instituteAdminArray[i].userRole == 'admin') {
                   this._route.navigate(['adminmodule'])
@@ -51,7 +53,10 @@ export class AuthenticationloginComponent {
                   this._route.navigate(['teacherdisplay'])
                 }
                 else if (this._instituteAdminArray[i].userRole == 'student') {
-                  this._route.navigate(['studentdata'], { state: { id: this._instituteAdminArray[i].adminId } });
+                  // alert(this._instituteAdminArray[i].adminId);
+                  // alert({ state: { id: this._instituteAdminArray[i].adminId } });
+
+                  this._route.navigate(['studentdata', { id: this._instituteAdminArray[i].adminId }]);
 
                 }
 
@@ -73,6 +78,8 @@ export class AuthenticationloginComponent {
 
   }
 
+
+
   _getAllList() {
     this._instituteadminprofile
       ._getAllInstituteAdminList()
@@ -81,13 +88,7 @@ export class AuthenticationloginComponent {
         console.log(data1);
       });
 
-    //get all institution ids
 
-    //  if (this._instituteAdminArray.length > 0) {
-    //     this.isHidden = true;
-    //  }
-    // },
-    //  )
   }
 
 

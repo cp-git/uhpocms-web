@@ -9,7 +9,7 @@ export class StudentCoursesService {
 
   constructor(private _http: HttpClient) { }
 
-  getCourseByProfileId(id: number): Observable<any> {
-    return this._http.get<any>("http://localhost:8080/uhpocms/course/profileId/" + id);
+  getCourseByProfileId(profileId: number): Observable<any> {
+    return this._http.get<any>("http://localhost:8080/uhpocms/course/profileId/" + profileId);
   }
 }
