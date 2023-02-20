@@ -77,5 +77,8 @@ export class AddinstituteComponent {
       );
     }
   }
+  Back() {
+    this._route.navigate(['displayinstitute']);
+  }
 
 }
