@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-teacher',
@@ -7,8 +7,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./teacher.component.css']
 })
 export class TeacherComponent {
-  constructor(private _route: Router) { }
 
+  userName: String | undefined;
+  constructor(private _route: Router, private _activatedRoute: ActivatedRoute) { }
+
+  ngOnInit(): void {
+
+    this.userName = this._activatedRoute.snapshot.params['userName'];
+
+  }
   RedirectToCourse() {
     const role = 'teacher';
     this._route.navigate(['course/userrole/', role]);

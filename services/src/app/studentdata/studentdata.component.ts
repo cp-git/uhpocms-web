@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-studentdata',
@@ -8,7 +8,14 @@ import { Router } from '@angular/router';
 })
 export class StudentdataComponent {
 
-  constructor(private _route: Router) { }
+  userName: String | undefined;
+  constructor(private _route: Router, private _activatedRoute: ActivatedRoute) { }
+
+  ngOnInit(): void {
+
+    this.userName = this._activatedRoute.snapshot.params['userName'];
+
+  }
 
   RedirectToQuiz() {
     const role = 'student';

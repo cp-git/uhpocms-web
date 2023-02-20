@@ -64,11 +64,11 @@ const routes: Routes = [
 
   { path: 'authenticationlogin', component: AuthenticationloginComponent },
 
-  { path: 'adminmodule/admin', component: AdminmdouleComponent },
+  { path: 'adminmodule/admin/:userName', component: AdminmdouleComponent },
 
-  { path: 'teacherdisplay/teacher', component: TeacherComponent },
+  { path: 'teacherdisplay/teacher/:userName', component: TeacherComponent },
 
-  { path: 'studentdata/student', component: StudentdataComponent },
+  { path: 'studentdata/student/:userName', component: StudentdataComponent },
 
 
   { path: '', component: HomeComponent },
