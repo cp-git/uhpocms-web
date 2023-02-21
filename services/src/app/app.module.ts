@@ -59,6 +59,9 @@ import { StudentdataComponent } from './studentdata/studentdata.component';
 import { ActivationScreenComponent } from './teachermodule/activation-screen/activation-screen.component';
 import { Quiz } from './quiz/quiz';
 import { QuizComponent } from './quiz/quiz.component';
+import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
+import { ViewDepartmentcourseComponent } from './InstituteDetails/view-departmentcourse/view-departmentcourse.component';
+import { ShowcoursesComponent } from './InstituteDetails/showcourses/showcourses.component';
 
 
 
@@ -109,7 +112,10 @@ import { QuizComponent } from './quiz/quiz.component';
     StudentdataComponent,
 
     ActivationScreenComponent,
-    QuizComponent
+    QuizComponent,
+    AddDepartmentsComponent,
+    ViewDepartmentcourseComponent,
+    ShowcoursesComponent
 
 
 

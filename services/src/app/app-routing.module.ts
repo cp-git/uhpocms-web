@@ -49,6 +49,8 @@ import { AuthenticationloginComponent } from './authenticationlogin/authenticati
 import { AdminmdouleComponent } from './adminmdoule/adminmdoule.component';
 import { TeacherComponent } from './teacher/teacher.component';
 import { StudentdataComponent } from './studentdata/studentdata.component';
+import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
+import { ViewDepartmentcourseComponent } from './InstituteDetails/view-departmentcourse/view-departmentcourse.component';
 
 
 
@@ -126,10 +128,23 @@ const routes: Routes = [
   { path: 'display', component: DisplaySchoolComponent },
   { path: 'display/:id', component: DisplaySchoolComponent },
 
+
   { path: 'addinstitute', component: AddinstituteComponent },
 
   { path: 'displayinstitute', component: DisplayinstituteComponent },
+  { path: 'displayinstitute/:adminInstitutionId', component: DisplayinstituteComponent },
   { path: 'displayinstitute/activate', component: ActivateInstitutionComponent },
+
+
+  //adding the multiple departments in Institute admin
+  { path: 'departments', component: AddDepartmentsComponent },
+  { path: 'departments/:institutionId', component: AddDepartmentsComponent },
+
+
+  { path: 'departmentCourse/:id', component: ViewDepartmentcourseComponent },
+
+
+
 
   //inserting  the quiz
 

@@ -15,6 +15,8 @@ export class DisplaySchoolComponent implements OnInit {
 
   public institutionId: any;
 
+
+
   constructor(private _router: Router, private _route: ActivatedRoute) {
     this.institutionId = 0;
   }
@@ -22,6 +24,8 @@ export class DisplaySchoolComponent implements OnInit {
   ngOnInit(): void {
     this.institutionId = this._route.snapshot.paramMap.get('id');
     // alert(this.institutionId);
+
+
   }
 
 }
