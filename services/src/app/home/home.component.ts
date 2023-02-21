@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
   ],
 })
 export class HomeComponent {
-  constructor(private _route: Router) {}
+  constructor(private _route: Router) { }
 
   // public src="assets/videos/university_video.mp4"
   public src = 'assets/videos/university_video.mp4';

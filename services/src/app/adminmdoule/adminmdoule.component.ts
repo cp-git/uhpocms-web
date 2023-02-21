@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthenticationserviceService } from 'app/authenticationlogin/service/authenticationservice.service';
 import { Authuser } from 'app/authuser/authuser';
 import { AuthuserserviceService } from 'app/authuser/authuserservice.service';
 
@@ -15,8 +16,15 @@ export class AdminmdouleComponent {
 
   role: string | undefined;
 
+  userName: String | undefined;
 
-  constructor(private _route: Router, private _auth: AuthuserserviceService) { }
+  constructor(private _route: Router, private _auth: AuthuserserviceService, private _authenticationService: AuthenticationserviceService, private _activatedRoute: ActivatedRoute) { }
+
+  ngOnInit(): void {
+
+    this.userName = this._activatedRoute.snapshot.params['userName'];
+
+  }
 
   RedirectTOAuth() {
     this._route.navigate(['authuser']);
@@ -41,6 +49,7 @@ export class AdminmdouleComponent {
   RedirectTOLogin() {
     this._route.navigate(['authenticationlogin'])
   }
+
 
 
 
