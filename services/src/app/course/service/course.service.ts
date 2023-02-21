@@ -93,4 +93,8 @@ export class CourseService {
   activateCourseById(courseId: number): Observable<any> {
     return this._http.patch<any>(`${this.courseUrl}/activate/` + courseId, {});
   }
+
+  getCourseByDepartmentId(deptid: string) {
+    return this._http.get<any>("http://localhost:8090/course/uhpocms/course/departmentId/" + deptid)
+  }
 }

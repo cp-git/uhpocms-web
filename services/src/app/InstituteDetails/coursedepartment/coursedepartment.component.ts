@@ -1,15 +1,19 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Department } from 'app/admindepartment/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
+import { Course } from 'app/course/course';
+import { CourseService } from 'app/course/course.service';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 
 @Component({
-  selector: 'app-display-school',
-  templateUrl: './display-school.component.html',
-  styleUrls: ['./display-school.component.css']
+  selector: 'app-coursedepartment',
+  templateUrl: './coursedepartment.component.html',
+  styleUrls: ['./coursedepartment.component.css']
 })
-export class DisplaySchoolComponent {
+export class CoursedepartmentComponent {
+
+
   // Institution array
   admininstitutions: AdminInstitution[] = [];
   backupInst: AdminInstitution[] = [];
@@ -22,52 +26,33 @@ export class DisplaySchoolComponent {
   sessionData: any;
   data: any;
 
-  // department array
-  departments: Department[] = [];
-  backupDept: Department[] = [];
+
+  //course array
+  courses: Course[] = [];
+  backupCourse: Course[] = [];
   id: any | undefined | null;
-
-  public institutionId: any;
-
-  department = new Department();
-
   constructor(
     private _route: Router,
-    private readonly deptService: DepartmentService,
+    private readonly courseService: CourseService,
     private readonly route: ActivatedRoute
-  ) {
-    this.admininstitution = new AdminInstitution();
-    this.institutionId = 0;
 
-  }
+  ) { this.admininstitution = new AdminInstitution(); }
 
   ngOnInit(): void {
-
-    this.institutionId = this.route.snapshot.paramMap.get('id');
-
     this.route.paramMap.subscribe(
       (params) => {
         this.id = params.get("id");
-
         if (this.id) {
           console.log(this.id)
-          this.deptService.getDepartmentByInstitutionId(this.id).subscribe(
-            (deptdata) => {
-              this.departments = deptdata;
-              console.log(deptdata);
+          this.courseService.getCourseByDepartmentId(this.id).subscribe(
+            (coursedata) => {
+              this.courses = coursedata;
+              console.log(coursedata);
             }
           )
         }
-
-
-
       }
-
     )
-
-
-
-
     this.loadAdminInstitutions();
     this.assignInstitution();
 
@@ -91,17 +76,11 @@ export class DisplaySchoolComponent {
     }
   }
 
-  Display() {
-    this._route.navigate(['/display', this.id]);
+  addCourses() {
+    this._route.navigate(['courses']);
+
   }
 
-  addDepartment() {
-    this._route.navigate(['departments'])
-  }
-
-  viewDepartment(id: number) {
-    this._route.navigate(['departmentCourse', id])
-  }
 
 
 }

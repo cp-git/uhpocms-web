@@ -11,6 +11,7 @@ import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 })
 export class AddDepartmentsComponent {
 
+
   department: Department;
 
   departments: Department[] = [];
