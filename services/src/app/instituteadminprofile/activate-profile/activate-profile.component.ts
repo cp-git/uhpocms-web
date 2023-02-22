@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
 import { AdminInstitution } from '../admin-institution';
 import { InstituteAdmin } from '../institute-admin';
 import { InstituteAdminServiceService } from '../institute-admin-service.service';
@@ -16,7 +17,7 @@ export class ActivateProfileComponent implements OnInit {
   sessionData: any;
   data: any;
   constructor(private _instituteAdminService: InstituteAdminServiceService,
-    private _router: Router) {
+    private _router: Router, private authUserService: AuthuserserviceService) {
 
   }
 
@@ -50,17 +51,42 @@ export class ActivateProfileComponent implements OnInit {
     this._router.navigate(['displayInstituteAdmin'])
   }
 
-  activateProfile(institutionId: number) {
-    this._instituteAdminService.activateInstituteProfile(institutionId).subscribe(
-      response => {
-        alert("Profile activated");
-        this.ngOnInit();
-      },
-      error => {
-        alert("Profile activation failed");
-      }
-    );
+  activateProfile(profile: InstituteAdmin) {
+    if (this.isObjectComplete(profile)) {
+      this._instituteAdminService.activateInstituteProfile(profile.adminId).subscribe(
+        response => {
+          this.authUserService.activateAuthUserById(profile.userId).subscribe(
+            response => {
+              alert('Profile activated successfully');
+            },
+            error => {
+              alert("Failed to add profile");
+            }
+          );
+          this.ngOnInit();
+        },
+        error => {
+          alert("Profile activation failed");
+        }
+      );
+    } else {
+      alert("profile is incomplete to activate!");
+    }
+
   }
+
+  isObjectComplete(profile: any): boolean {
+    for (const key in profile) {
+      if (profile.hasOwnProperty(key) && key !== 'activeUser') {
+        if (profile[key] == null || profile[key] === undefined || profile[key] === '') {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
 
 
 }
