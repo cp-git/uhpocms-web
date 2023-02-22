@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Department } from 'app/admindepartment/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-add-departments',
@@ -21,6 +22,8 @@ export class AddDepartmentsComponent {
   isHidden: boolean = false;
   hideId: boolean = false;
 
+
+
   sessionData: any;
   data: any;
 
@@ -29,7 +32,7 @@ export class AddDepartmentsComponent {
 
   adminInstitutions: AdminInstitution[] = [];
 
-  constructor(private _deptService: DepartmentService, private _route: Router) {
+  constructor(private _deptService: DepartmentService, private _route: Router, private location: Location) {
     this.department = new Department();
   }
 
@@ -69,7 +72,7 @@ export class AddDepartmentsComponent {
           this.departments.push(this.department);
           this.backupDept.push(Object.assign({}, this.department));
           alert('Added Successfuly');
-          this._route.navigate(['display'])
+          this.location.back();
 
 
 
@@ -93,5 +96,8 @@ export class AddDepartmentsComponent {
       this.adminInstitutions.push(this.data[inst]);
     }
   }
+
+
+
 
 }
