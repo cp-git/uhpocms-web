@@ -59,6 +59,7 @@ import { StudentdataComponent } from './studentdata/studentdata.component';
 import { ActivationScreenComponent } from './teachermodule/activation-screen/activation-screen.component';
 import { Quiz } from './quiz/quiz';
 import { QuizComponent } from './quiz/quiz.component';
+import { StudentmoduleComponent } from './studentdata/component/studentmodule/studentmodule.component';
 
 
 
@@ -109,7 +110,8 @@ import { QuizComponent } from './quiz/quiz.component';
     StudentdataComponent,
 
     ActivationScreenComponent,
-    QuizComponent
+    QuizComponent,
+    StudentmoduleComponent
 
 
 

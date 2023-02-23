@@ -1,0 +1,9 @@
+<div class="container">
+    <ng-container *ngFor="let file of studentModuleFile">
+        <div>
+            <video width="320" height="240" controls>
+                <source src="../../../../assets/video/{{file.moduleFile}}" type="video/mp4">
+            </video>
+        </div>
+    </ng-container>
+</div>

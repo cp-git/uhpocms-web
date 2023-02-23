@@ -100,7 +100,7 @@ export class AuthenticationloginComponent {
                   this._route.navigate(['teacherdisplay/teacher', userName])
                 }
                 else if (this._instituteAdminArray[i].userRole == 'student') {
-                  this._route.navigate(['studentdata/student', userName]);
+                  this._route.navigate(['studentdata/student', userName, { profileid: this._instituteAdminArray[i].adminId }]);
                 }
 
 
