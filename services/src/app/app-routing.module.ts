@@ -191,7 +191,7 @@ const routes: Routes = [
   {
     path: 'announcement', component: AnnouncementComponent, children: [
       {
-        path: 'add', component: CreateAnnouncementComponent
+        path: 'addAnnouncee', component: CreateAnnouncementComponent
       }
     ]
   }

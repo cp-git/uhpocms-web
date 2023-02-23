@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Admin } from '../admin';
 import { AdminroleserviceService } from '../adminroleservice.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-adminrole',
@@ -20,7 +21,8 @@ export class AdminroleComponent {
   constructor(
     private _service: AdminroleserviceService,
     private _activatedRoute: ActivatedRoute,
-    private _route: Router
+    private _route: Router,
+    private location: Location
   ) { }
 
   roleName!: string;
@@ -103,7 +105,8 @@ export class AdminroleComponent {
   }
 
   Home() {
-    this._route.navigate(['demo']);
+    this.location.back();
+    // this._route.navigate(['demo']);
   }
 
   redirectToActivateRole() {

@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { AdminInstitution } from '../admin-institution/admin-institution';
 import { Department } from '../department';
 import { DepartmentService } from '../service/department.service';
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
@@ -24,7 +26,7 @@ export class DepartmentComponent implements OnInit {
   sessionData: any;
   data: any;
 
-  constructor(private _deptService: DepartmentService, private _route: Router) {
+  constructor(private _deptService: DepartmentService, private _route: Router, private location: Location) {
     this.department = new Department();
   }
 
@@ -188,7 +190,8 @@ export class DepartmentComponent implements OnInit {
   }
 
   Home() {
-    this._route.navigate(['adminmodule/admin']);
+    this.location.back();
+    //this._route.navigate(['adminmodule/admin']);
   }
 
   redirectToActivateDepartment() {

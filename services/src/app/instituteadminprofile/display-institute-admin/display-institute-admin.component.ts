@@ -4,6 +4,7 @@ import { Authuser } from 'app/authuser/authuser';
 import { AdminInstitution } from '../admin-institution';
 import { InstituteAdmin } from '../institute-admin';
 import { InstituteAdminServiceService } from '../institute-admin-service.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-display-institute-admin',
@@ -30,7 +31,8 @@ export class DisplayInstituteAdminComponent {
 
   constructor(
     private _instituteAdminService: InstituteAdminServiceService,
-    private _route: Router
+    private _route: Router,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -132,7 +134,8 @@ export class DisplayInstituteAdminComponent {
   }
 
   Home() {
-    this._route.navigate(['adminmodule/admin']);
+    this.location.back();
+    // this._route.navigate(['adminmodule/admin']);
   }
 
   redirectToActivateProfile() {

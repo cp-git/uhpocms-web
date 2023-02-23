@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { AdminInstitution } from '../admininstitution';
 import { AdmininstitutionService } from '../service/admininstitution.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-displayinstitute',
@@ -20,7 +21,7 @@ export class DisplayinstituteComponent {
   hideId: boolean = false;
   admininstitution: AdminInstitution;
 
-  constructor(private _institutionService: AdmininstitutionService, private _route: Router) {
+  constructor(private _institutionService: AdmininstitutionService, private _route: Router, private location: Location) {
     this.admininstitution = new AdminInstitution();
   }
 
@@ -65,7 +66,8 @@ export class DisplayinstituteComponent {
     );
   }
   Back() {
-    this._route.navigate(['demo']);
+    this.location.back();
+    //this._route.navigate(['demo']);
   }
 
   redirectToActivateInstitution() {
