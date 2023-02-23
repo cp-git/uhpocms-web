@@ -21,7 +21,7 @@
             </button>
 
             <button class="btn btn-success" (click)="activationScreen()">
-                Activate</button>
+                InActive Courses</button>
 
         </div>
     </div>
@@ -201,8 +201,6 @@
                                             class="form-control" type="text" value="{{dept.name}}" readonly />
                                     </ng-container>
                                 </ng-container>
-
-
                             </div>
                         </td>
 
@@ -253,12 +251,12 @@
 
     <div class="container" *ngIf="isActivationScreen">
         <div>
-            <h1 style="color: white">Activate Course</h1>
+            <h1 style="color: white">InActive Courses</h1>
         </div>
         <table class="table" border="1">
             <thead>
                 <tr>
-                    <th style="width: 80px">Sr.No</th>
+
                     <th>Name</th>
                     <th>Description</th>
                     <th>Course Code</th>
@@ -270,8 +268,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let course of inActiveCourses,let i=index">
-                    <td style="width: 80px">{{i+1}}</td>
+                <tr *ngFor="let course of inActiveCourses">
+
                     <td>
                         <div class="form-group">
                             <input class="form-control" type="text" [(ngModel)]="course.courseName"
@@ -314,6 +312,18 @@
 
                         </div>
                     </td>
+                    <td>
+                        <div class="form-group">
+                            <ng-container *ngFor="let courseDepts of courseDepartments">
+                                <ng-container *ngFor="let depts of adminDepartments">
+                                    <input
+                                        *ngIf="((course.courseId==courseDepts.courseId)&&(depts.id==courseDepts.departmentId))?true:null"
+                                        class="form-control" type="text" value="{{depts.name}}" readonly />
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </td>
+
 
 
 
