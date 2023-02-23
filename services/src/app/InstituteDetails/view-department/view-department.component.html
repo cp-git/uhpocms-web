@@ -2,6 +2,8 @@
     <div class="header1">
         <h1>{{admininstitution.adminInstitutionName}} Departments</h1>
     </div>
+
+    <button (click)="addDepartment()">Add Department</button>
     <table class="table" border="1px">
         <thead id="deptHeader">
             <tr>
@@ -9,6 +11,9 @@
 
                 <th>Department Name</th>
                 <th>Description</th>
+                <th>Action</th>
+
+
 
 
 
@@ -24,6 +29,7 @@
             <tr *ngFor="let dept of departments">
                 <td>{{ dept.name }}</td>
                 <td>{{ dept.description }}</td>
+                <td> <button type="button" id="btn1" (click)="viewDepartment(dept.id)">View</button></td>
 
 
 

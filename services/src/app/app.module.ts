@@ -37,7 +37,7 @@ import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
 import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
 import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
-import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
+
 import { AddinstituteComponent } from './admin-institution/addinstitute/addinstitute.component';
 import { DisplayinstituteComponent } from './admin-institution/displayinstitute/displayinstitute.component';
 import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
@@ -59,6 +59,10 @@ import { StudentdataComponent } from './studentdata/studentdata.component';
 import { ActivationScreenComponent } from './teachermodule/activation-screen/activation-screen.component';
 import { Quiz } from './quiz/quiz';
 import { QuizComponent } from './quiz/quiz.component';
+import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
+import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
+import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
+
 
 
 
@@ -87,7 +91,6 @@ import { QuizComponent } from './quiz/quiz.component';
     UpdatequizComponent,
     ViewDepartmentComponent,
     ViewCoursesComponent,
-    DisplaySchoolComponent,
     AddinstituteComponent,
     DisplayinstituteComponent,
     UpdatemoduleComponent,
@@ -109,7 +112,11 @@ import { QuizComponent } from './quiz/quiz.component';
     StudentdataComponent,
 
     ActivationScreenComponent,
-    QuizComponent
+    QuizComponent,
+    DisplaySchoolComponent,
+    CoursedepartmentComponent,
+    AddDepartmentsComponent
+
 
 
 

@@ -28,17 +28,28 @@ export class ViewDepartmentComponent {
   backupDept: Department[] = [];
   id: any | undefined | null;
 
+  public institutionId: any;
+
+  department = new Department();
+
   constructor(
     private _route: Router,
     private readonly deptService: DepartmentService,
     private readonly route: ActivatedRoute
-  ) { this.admininstitution = new AdminInstitution(); }
+  ) {
+    this.admininstitution = new AdminInstitution();
+    this.institutionId = 0;
+
+  }
 
   ngOnInit(): void {
+
+    this.institutionId = this.route.snapshot.paramMap.get('id');
 
     this.route.paramMap.subscribe(
       (params) => {
         this.id = params.get("id");
+
         if (this.id) {
           this.deptService.getDepartmentByInstitutionId(this.id).subscribe(
             (deptdata) => {
@@ -82,6 +93,15 @@ export class ViewDepartmentComponent {
   Display() {
     this._route.navigate(['/display', this.id]);
   }
+
+  addDepartment() {
+    this._route.navigate(['departments'])
+  }
+
+  viewDepartment(id: number) {
+    this._route.navigate(['departmentCourse', id])
+  }
+
 
 }
 
