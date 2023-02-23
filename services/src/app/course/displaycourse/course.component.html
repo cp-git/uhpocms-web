@@ -41,6 +41,7 @@
                         <th>Type</th>
                         <th>Passing Score</th>
                         <th>Institute Name</th>
+                        <th>Department Name</th>
 
 
                         <th>Update</th>
@@ -99,6 +100,8 @@
                             </div>
                         </td>
 
+
+
                         <td>
                             <div class="form-group">
                                 <button class="form-control icon" (click)="updatecourse(course,course.courseName)"
@@ -113,7 +116,8 @@
                         </td>
                         <td>
                             <div class="form-group">
-                                <button class="form-control icon" (click)="deletecourse(course)" title="Delete Course">
+                                <button class="form-control icon" (click)="deletecourseById(course)"
+                                    title="Delete Course">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
                                         class="bi bi-trash-fill" viewBox="0 0 16 16">
                                         <path
@@ -159,11 +163,11 @@
                             </div>
                         </td>
 
-                        <td>
+                        <!-- <td>
                             <div class="form-group">
 
-                                <!-- <input class="form-control" type="number" [(ngModel)]="course.instId"
-                                value="{{course.instId}}" readonly /> -->
+                                 <input class="form-control" type="number" [(ngModel)]="course.instId"
+                                value="{{course.instId}}" readonly /> 
                                 <select [(ngModel)]="course.instId" class="form-control" [disabled]="controlEnabled">
                                     <option *ngFor="let institute of institutions"
                                         value="{{institute.adminInstitutionId}}"
@@ -171,6 +175,32 @@
                                         {{institute.adminInstitutionName}}
                                     </option>
                                 </select>
+
+
+                            </div>
+                        </td> -->
+
+                        <td>
+                            <div class="form-group">
+
+                                <ng-container *ngFor="let institute of institutions">
+                                    <input *ngIf="course.instId==institute.adminInstitutionId?true:null"
+                                        class="form-control" type="text" value="{{institute.adminInstitutionName}}"
+                                        readonly />
+                                </ng-container>
+
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="form-group">
+                                <ng-container *ngFor="let courseDept of courseDepartments">
+                                    <ng-container *ngFor="let dept of adminDepartments">
+                                        <input
+                                            *ngIf="((course.courseId==courseDept.courseId)&&(dept.id==courseDept.departmentId))?true:null"
+                                            class="form-control" type="text" value="{{dept.name}}" readonly />
+                                    </ng-container>
+                                </ng-container>
 
 
                             </div>
@@ -187,9 +217,21 @@
                                     </svg></button>
                             </div>
                         </td>
-                        <td>
+                        <!-- <td>
                             <div class="form-group">
                                 <button class="form-control icon" (click)="deletecourse(course)" title="Delete Course">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
+                                        class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </td> -->
+                        <td>
+                            <div class="form-group">
+                                <button class="form-control icon" (click)="deletecourseById(course)"
+                                    title="Delete Course">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
                                         class="bi bi-trash-fill" viewBox="0 0 16 16">
                                         <path
@@ -202,6 +244,8 @@
 
                 </tbody>
             </table>
+
+            <!-- {{adminDepartments|json}} -->
 
             <!-- <button class="btn btn-primary" (click)="Home()">Back</button> -->
         </div>
@@ -221,6 +265,7 @@
                     <th>Course Type</th>
                     <th>Passing Score</th>
                     <th>Institute Name</th>
+                    <th>Department Name</th>
                     <th>Activate</th>
                 </tr>
             </thead>
