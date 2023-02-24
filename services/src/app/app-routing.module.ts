@@ -49,6 +49,11 @@ import { AuthenticationloginComponent } from './authenticationlogin/authenticati
 import { AdminmdouleComponent } from './adminmdoule/adminmdoule.component';
 import { TeacherComponent } from './teacher/teacher.component';
 import { StudentdataComponent } from './studentdata/studentdata.component';
+
+import { StudentCourseComponent } from './student/student-course/student-course.component';
+import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';
+import { InactiveTeacherCourseComponent } from './assignedCourseToTeacher/inactive-teacher-course/inactive-teacher-course.component';
+
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
@@ -56,9 +61,18 @@ import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-
 
 
 
+
 const routes: Routes = [
 
+  //teacherCourse
+
+  { path: 'inactivecourse', component: InactiveTeacherCourseComponent },
+  { path: 'teachercourse', component: TeacherCourseComponent },
+  { path: 'teacher/:id', component: TeacherCourseComponent },
   //category routing
+  { path: 'studentcourse', component: StudentCourseComponent },
+  { path: 'profile/:id', component: StudentCourseComponent },
+
   { path: 'addCategory', component: AddCategoryComponent },
   { path: 'addModule', component: AddModuleComponent },
   { path: 'main', component: MainComponent },
@@ -72,7 +86,10 @@ const routes: Routes = [
 
   { path: 'teacherdisplay/teacher/:userName', component: TeacherComponent },
 
+  { path: 'teacher', component: TeacherComponent },
+
   { path: 'studentdata/student/:userName', component: StudentdataComponent },
+  { path: 'studentdata', component: StudentdataComponent },
 
 
   { path: '', component: HomeComponent },

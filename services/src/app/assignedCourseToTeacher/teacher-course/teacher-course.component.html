@@ -1,0 +1,92 @@
+<body>
+    <div class="container">
+        <div>
+            <h1>Courses Assigned To Teacher</h1>
+        </div>
+
+        <td>
+            <button class="btnn" (click)="inactve()">Inactive Courses</button>
+        </td>
+
+        <table class="table" border="1">
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Course Description</th>
+                    <th>Course Code</th>
+                    <th>Course Type</th>
+                    <th>Passing Score</th>
+                    <th>Institute Name</th>
+                    <th>Department Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let course of courses">
+
+                    <td>
+                        <div class="form-group">
+                            <input class="form-control" type="text" [(ngModel)]="course.courseName"
+                                value="{{course.courseName}}" readonly />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <input class="form-control" type="text" [(ngModel)]="course.courseDescription"
+                                value="{{course.courseDescription}}" readonly />
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="form-group">
+                            <input class="form-control" type="text" [(ngModel)]="course.courseCode"
+                                value="{{course.courseCode}}" readonly />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <input class="form-control" type="text" [(ngModel)]="course.courseType"
+                                value="{{course.courseType}}" readonly />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <input class="form-control" type="number" [(ngModel)]="course.passingScore"
+                                value="{{course.passingScore}}" readonly />
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="form-group">
+
+                            <select [(ngModel)]="course.instId" class="form-control" disabled>
+                                <option *ngFor="let institute of adminInstitutions"
+                                    value="{{institute.adminInstitutionId}}"
+                                    [selected]="institute.adminInstitutionId == course.instId ? true:null">
+                                    {{institute.adminInstitutionName}}
+                                </option>
+                            </select>
+
+                        </div>
+                    </td>
+                    <!-- <td>
+                        <div class="form-group">
+                            <ng-container *ngFor="let courseDept of courseDepartments">
+                                <ng-container *ngFor="let dept of adminDepartments">
+                                    <input
+                                        *ngIf="((course.courseId==courseDept.courseId)&&(dept.id==courseDept.departmentId))?true:null"
+                                        class="form-control" type="text" value="{{dept.name}}" readonly />
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </td> -->
+                </tr>
+
+            </tbody>
+        </table>
+        <!-- {{courses|json}} -->
+        <td>
+            <button class="btn btn-primary" (click)="Back()"><i class="fa fa-home"></i></button>
+        </td>
+
+    </div>
+</body>
