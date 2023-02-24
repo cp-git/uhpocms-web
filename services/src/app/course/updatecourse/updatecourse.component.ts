@@ -4,6 +4,10 @@ import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstitutionSeriveService } from 'app/instituteadminprofile/institution-serive.service';
 import { Course } from '../course';
 import { CourseService } from '../service/course.service';
+import { Department } from 'app/admindepartment/department';
+import { DepartmentService } from 'app/admindepartment/service/department.service';
+import { Coursedepartment } from '../coursedepartment';
+import { CourseDepartmentService } from '../course-department.service';
 
 @Component({
   selector: 'app-updatecourse',
@@ -14,11 +18,14 @@ export class UpdatecourseComponent {
   isVisible: boolean = true;
 
   _backupModule = new Map();
+  adminDepartments: Department[] = [];
+  courseDepartments: Coursedepartment[] = [];
 
   // array of course
 
   course = new Course();
   courses: Course[] = []; //for drop down data
+  courseDepartment: Coursedepartment;
 
   institutions: AdminInstitution[] = [];
   institution = new AdminInstitution();
@@ -29,14 +36,22 @@ export class UpdatecourseComponent {
     private _service: CourseService,
     private _instService: InstitutionSeriveService,
     private _activatedRoute: ActivatedRoute,
-    private _route: Router
-  ) {}
+    private _route: Router,
+    private departmentService: DepartmentService,
+    private courseDepartmentService: CourseDepartmentService
+  ) {
+    this.courseDepartment = new Coursedepartment();
+
+
+  }
   ngOnInit(): void {
     if (sessionStorage.getItem('authenticatedUser') === null) {
       this._route.navigate(['']);
     } else {
       this.getAllInstitutes();
       this.getCourse();
+      this.loadAdminDepartments();
+      this.loadCourseDepartment();
     }
   }
 
@@ -50,6 +65,16 @@ export class UpdatecourseComponent {
       },
       (error) => {
         alert('Data not found');
+      }
+    );
+  }
+  loadAdminDepartments() {
+    this.departmentService.fetchAllDepartments().subscribe(
+      response => {
+        this.adminDepartments = response;
+      },
+      error => {
+        console.log(error);
       }
     );
   }
@@ -73,6 +98,8 @@ export class UpdatecourseComponent {
     this.course = {} as Course;
 
     this.course.courseName = updatedCourse.courseName;
+    this.course.courseId = updatedCourse.courseId;
+
     this.course.courseDescription = updatedCourse.courseDescription;
     this.course.courseIsActive = true;
     this.course.courseCode = updatedCourse.courseCode;
@@ -81,7 +108,7 @@ export class UpdatecourseComponent {
     this.course.instId = updatedCourse.instId;
 
     this._service
-      .updateCourseList(this.course.courseName, this.course)
+      .updateCourseListById(this.course.courseId, this.course)
       .subscribe(
         (data) => {
           console.log(data);
@@ -91,20 +118,31 @@ export class UpdatecourseComponent {
             this.course.courseCode,
             Object.assign({}, data)
           );
-          // this.ngOnInit();
-          alert('Data updated successfuly');
+
+          this.courseDepartment.courseId = this.course.courseId;
+          //alert(JSON.stringify(this.courseDepartment));
+          this.courseDepartmentService.assignCourseToDepartment(this.courseDepartment).subscribe();
+
           this._route.navigate(['course']);
           if (this.courses.length > 0) {
             this.isVisible = false;
           }
-        },
-        (error) => {
-          alert('Failed to update');
-        }
-      );
-  }
+          alert('Data updated successfully');
+          this._route.navigate(['course/userrole/admin']);
+        });
 
+  }
   back() {
     this._route.navigate(['course']);
+  }
+  loadCourseDepartment() {
+    this.courseDepartmentService.getCoursesDepartmentId().subscribe(
+      response => {
+        this.courseDepartments = response;
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 }

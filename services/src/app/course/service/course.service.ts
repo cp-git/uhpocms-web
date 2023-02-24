@@ -20,7 +20,7 @@ export class CourseService {
   constructor(private _http: HttpClient) {
     //  this.courseUrl = `${environment.courseUrl}/course`;
     this._loginUrl = `${environment.courseUrl}/basicauth`;
-    this.courseUrl = 'http://localhost:8090/course/uhpocms/course';
+    this.courseUrl = `${environment.courseUrl}/course`;
   }
 
   _getAllCourses(): Observable<any> {
@@ -31,16 +31,28 @@ export class CourseService {
     return this._http.post<any>(this.courseUrl, course);
   }
 
-  deleteModule(courseName: string): Observable<any> {
+  deleteCourseByName(courseName: string): Observable<any> {
     return this._http.delete<any>(this.courseUrl + '/' + courseName);
+  }
+
+  deleteCourseByCourseId(courseId: number): Observable<any> {
+    return this._http.delete<any>(this.courseUrl + '/courseId/' + courseId);
   }
 
   updateCourseList(courseName: string, course: Course): Observable<any> {
     return this._http.put<any>(this.courseUrl + '/' + courseName, course);
   }
 
+  updateCourseListById(courseId: number, course: Course): Observable<any> {
+    return this._http.put<any>(this.courseUrl + '/courseID/' + courseId, course);
+  }
+
   getCourse(courseName: string): Observable<Course> {
     return this._http.get<Course>(this.courseUrl + '/' + courseName);
+  }
+
+  getCourseByCourseId(courseId: number): Observable<any> {
+    return this._http.get<Course>(this.courseUrl + '/courseId/' + courseId);
   }
 
   authenticationService(username: String, password: String) {
@@ -92,5 +104,9 @@ export class CourseService {
 
   activateCourseById(courseId: number): Observable<any> {
     return this._http.patch<any>(`${this.courseUrl}/activate/` + courseId, {});
+  }
+
+  getCourseByDepartmentId(deptid: string) {
+    return this._http.get<any>("http://localhost:8090/course/uhpocms/course/departmentId/" + deptid)
   }
 }

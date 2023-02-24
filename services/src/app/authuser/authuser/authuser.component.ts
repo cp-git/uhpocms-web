@@ -33,7 +33,7 @@ export class AuthuserComponent implements OnInit {
     this.authUser.authUserEmail = user.authUserEmail;
     this.authUser.authUserDateJoined = user.authUserDateJoined;
     this.authUser.authUserIsStaff = user.authUserIsStaff;
-    this.authUser.authUserIsActive = user.authUserIsActive;
+    this.authUser.authUserIsActive = false;
     this.authUser.authUserIsSuperUser = user.authUserIsSuperUser;
     this._service.addAuthUser(this.authUser).subscribe(
       (data) => {
@@ -81,12 +81,14 @@ export class AuthuserComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // alert("called");
     if (sessionStorage.getItem('authenticatedUser') === null) {
       this._route.navigate(['']);
     } else {
+      // alert("called else");
       this._service.authUserList().subscribe(
         (data) => {
-          console.log('Response Receved...');
+          console.log('Response Received...');
           this._authUser = data;
 
           if (this._authUser.length > 0) {

@@ -14,7 +14,7 @@
 				<th>Last Name</th>
 				<th>Email</th>
 				<th>Join Date</th>
-				<th>Active</th>
+				<!-- <th>Active</th> -->
 				<th>Staff</th>
 				<th>Super User</th>
 				<th>Add</th>
@@ -26,55 +26,56 @@
 
 				<td>
 					<div class="form-group">
-						<input type="text" class="form-control" [(ngModel)]="authUser.authUserName"
-							value="{{authUser.authUserName}}">
+						<input name="username" type="text" class="form-control" [(ngModel)]="authUser.authUserName">
 					</div>
 				</td>
 				<td>
 					<div class="form-group">
-						<input type="text" [(ngModel)]="authUser.authUserPassword"
-							value="{{authUser.authUserPassword}}">
+						<input name="password" type="text" class="form-control" [(ngModel)]="authUser.authUserPassword">
 					</div>
 				</td>
 
 				<td>
 					<div class="form-group">
-						<input type="text" class="form-control" [(ngModel)]="authUser.authUserFirstName"
-							value="{{authUser.authUserFirstName}}">
+						<input name="firstname" type="text" class="form-control"
+							[(ngModel)]="authUser.authUserFirstName">
 					</div>
 				</td>
 
 
 				<td>
 					<div class="form-group">
-						<input type="text" class="form-control" [(ngModel)]="authUser.authUserLastName"
-							value="{{authUser.authUserLastName}} ">
+						<input name="lastname" type="text" class="form-control" [(ngModel)]="authUser.authUserLastName">
 					</div>
 				</td>
 				<td>
-					<div class="form-control">
-						<input type="text" class="form-control" [(ngModel)]=" authUser.authUserEmail"
-							value="{{authUser.authUserEmail}}">
+					<div class="form-group">
+						<input name="email" type="email" class="form-control" [(ngModel)]="authUser.authUserEmail">
 					</div>
 				</td>
-				<td><input type="text" class="form-control" [(ngModel)]=" authUser.authUserDateJoined"
-						value="{{authUser.authUserDateJoined}}">
-				</td>
 				<td>
+					<div class="form-group">
+						<input name="joindate" type="date" class="form-control"
+							[(ngModel)]="authUser.authUserDateJoined">
+					</div>
+				</td>
+				<!-- <td>
 					<div class="form-group">
 						<input type="checkbox" class="form-control" [(ngModel)]=" authUser.authUserIsActive" checked>
 					</div>
-				</td>
+				</td> -->
 
 				<td>
 					<div class="form-group">
-						<input type="checkbox" class="form-control" [(ngModel)]=" authUser.authUserIsStaff" checked>
+						<input name="isstaff" type="checkbox" class="form-control"
+							[(ngModel)]=" authUser.authUserIsStaff" checked>
 					</div>
 				</td>
 
 				<td>
 					<div class="form-group">
-						<input type="checkbox" class="form-control" [(ngModel)]=" authUser.authUserIsSuperUser" checked>
+						<input name="issupperuser" type="checkbox" class="form-control"
+							[(ngModel)]=" authUser.authUserIsSuperUser" checked>
 					</div>
 				</td>
 				<td><button class="btn btn-primary" id="addauth" (click)="addauthUser(authUser)">Add</button></td>
@@ -103,19 +104,19 @@
 				</td>
 				<td>
 					<div class="form-group">
-						<input type=" text" class="form-control" [(ngModel)]="user.authUserFirstName"
+						<input type="text" class="form-control" [(ngModel)]="user.authUserFirstName"
 							value="{{user.authUserFirstName}}">
 					</div>
 				</td>
 				<td>
 					<div class="form-group">
 						<input type="text" class="form-control" [(ngModel)]="user.authUserLastName"
-							value="{{user.authUserLastName}} ">
+							value="{{user.authUserLastName}}">
 					</div>
 				</td>
 				<td>
 					<div class="form-group">
-						<input type="text" class="form-control" [(ngModel)]=" user.authUserEmail"
+						<input type="text" class="form-control" [(ngModel)]="user.authUserEmail"
 							value="{{user.authUserEmail}}">
 					</div>
 				</td>
@@ -123,24 +124,24 @@
 
 				<td>
 					<div class="form-group">
-						<input type=" text" class="form-control" [(ngModel)]=" user.authUserDateJoined"
+						<input type="text" class="form-control" [(ngModel)]="user.authUserDateJoined"
 							value="{{user.authUserDateJoined}}">
 					</div>
 				</td>
-				<td>
+				<!-- <td>
 					<div class="form-group">
 						<input type="checkbox" class="form-control" [(ngModel)]=" user.authUserIsActive" checked
 							disabled>
 					</div>
-				</td>
+				</td> -->
 				<td>
 					<div class="form-group">
-						<input type="checkbox" class="form-control" [(ngModel)]=" user.authUserIsStaff" checked>
+						<input type="checkbox" class="form-control" [(ngModel)]="user.authUserIsStaff" checked>
 					</div>
 				</td>
 				<td>
 					<div class="form-group">
-						<input type="checkbox" class="form-control" [(ngModel)]=" user.authUserIsSuperUser" checked>
+						<input type="checkbox" class="form-control" [(ngModel)]="user.authUserIsSuperUser" checked>
 					</div>
 				</td>
 				<td><button class="btn btn-primary" id="addauth" (click)="addauthUser(user)">Add</button></td>
@@ -154,4 +155,5 @@
 
 		<td><button class="btn btn-primary" (click)="Home()">Back</button></td>
 	</div>
+	<!-- {{_authUser|json}} -->
 </div>
