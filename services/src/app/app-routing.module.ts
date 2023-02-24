@@ -49,6 +49,7 @@ import { AuthenticationloginComponent } from './authenticationlogin/authenticati
 import { AdminmdouleComponent } from './adminmdoule/adminmdoule.component';
 import { TeacherComponent } from './teacher/teacher.component';
 import { StudentdataComponent } from './studentdata/studentdata.component';
+import { EnrollstudentComponent } from './enrollstudent/enrollstudent.component';
 
 
 
@@ -70,6 +71,7 @@ const routes: Routes = [
 
   { path: 'studentdata/student/:userName', component: StudentdataComponent },
 
+  { path: 'enrollstudent', component: EnrollstudentComponent },
 
   { path: '', component: HomeComponent },
   //admin role routes

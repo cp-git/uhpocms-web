@@ -31,4 +31,7 @@ export class StudentdataComponent {
     this._route.navigate(['authenticationlogin'])
   }
 
+
+
+
 }

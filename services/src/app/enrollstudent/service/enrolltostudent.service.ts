@@ -1,46 +1,32 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'environments/environment.development';
+import { map, Observable } from 'rxjs';
+import { Enrolltostudent } from '../class/enrolltostudent';
 
-import { map } from 'rxjs';
-import { Course } from '../course';
+
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class CourseService {
-  private courseUrl: string = environment.courseUrl;
+export class EnrolltostudentService {
+
+  // private courseUrl: string = environment.courseUrl;
   // BASE_PATH: 'http://localhost:8080'
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser';
 
   public username: String = 'uhpocadmin';
   public password: String = 'P@55w0rd';
   _loginUrl: string;
+  enrollmentUrl: string;
 
   constructor(private _http: HttpClient) {
     //  this.courseUrl = `${environment.courseUrl}/course`;
     this._loginUrl = `${environment.courseUrl}/basicauth`;
-    this.courseUrl = 'http://localhost:8090/course/uhpocms/course';
+    this.enrollmentUrl = 'http://localhost:8090/enrolltostudent/uhpocms/enrollstudent/';
   }
 
-  _getAllCourses(): Observable<any> {
-    return this._http.get<any>(this.courseUrl + "?name=all");
-  }
-
-  addCourse(course: Course): Observable<any> {
-    return this._http.post<any>(this.courseUrl, course);
-  }
-
-  deleteModule(courseName: string): Observable<any> {
-    return this._http.delete<any>(this.courseUrl + '/' + courseName);
-  }
-
-  updateCourseList(courseName: string, course: Course): Observable<any> {
-    return this._http.put<any>(this.courseUrl + '/' + courseName, course);
-  }
-
-  getCourse(courseName: string): Observable<Course> {
-    return this._http.get<Course>(this.courseUrl + '/' + courseName);
+  saveEnrolledStudents(enrolltostudent: Enrolltostudent): Observable<any> {
+    return this._http.post<any>(this.enrollmentUrl, enrolltostudent);
   }
 
   authenticationService(username: String, password: String) {
@@ -86,15 +72,5 @@ export class CourseService {
     return user;
   }
 
-  getAllDeactivateCourses(): Observable<Course[]> {
-    return this._http.get<Course[]>(`${this.courseUrl}?name=inactive`);
-  }
 
-  activateCourseById(courseId: number): Observable<any> {
-    return this._http.patch<any>(`${this.courseUrl}/activate/` + courseId, {});
-  }
-
-  getCourseByDepartmentId(deptid: number) {
-    return this._http.get<any>("http://localhost:8090/course/uhpocms/course/deptId/" + deptid)
-  }
 }

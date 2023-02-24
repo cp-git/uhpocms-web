@@ -17,7 +17,8 @@ export class InstituteAdminServiceService {
   _loginUrl: string;
 
   constructor(private http: HttpClient) {
-    this._baseUrl = `${environment.instituteAdmin}/profile`;
+    // this._baseUrl = `${environment.instituteAdmin}/profile`;
+    this._baseUrl = "http://localhost:8090/instituteadmin/uhpocms/profile";
     this._admininstitutionUrl = `${environment.adminInstitutionUrl}/institution`;
     this._loginUrl = `${environment.adminInstitutionUrl}/login`;
   }
@@ -93,6 +94,9 @@ export class InstituteAdminServiceService {
     return this.http.get<any>("http://localhost:8090/authuser/uhpocms/authuser?username=all");
   }
 
+  _getProfileByRoleAndInstitutionId(userRole: string, instId: number): Observable<any> {
+    return this.http.get<any>(this._baseUrl + '/' + userRole + '/' + instId);
+  }
 
 
 }
