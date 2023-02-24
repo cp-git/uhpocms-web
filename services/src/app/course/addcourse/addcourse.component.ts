@@ -4,6 +4,7 @@ import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstitutionSeriveService } from 'app/instituteadminprofile/institution-serive.service';
 import { Course } from '../course';
 import { CourseService } from '../service/course.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-addcourse',
@@ -29,8 +30,9 @@ export class AddcourseComponent {
     private _service: CourseService,
     private _instService: InstitutionSeriveService,
     private _activatedRoute: ActivatedRoute,
-    private _route: Router
-  ) {}
+    private _route: Router,
+    private location: Location
+  ) { }
   ngOnInit(): void {
     if (sessionStorage.getItem('authenticatedUser') === null) {
       this._route.navigate(['']);
@@ -78,7 +80,8 @@ export class AddcourseComponent {
           Object.assign({}, this.course)
         );
         alert('Course Added successfully');
-        this._route.navigate(['course']);
+        this.location.back();
+        //this._route.navigate(['course']);
         if (this.courses.length > 0) {
           this.isVisible = false;
         }
@@ -88,6 +91,7 @@ export class AddcourseComponent {
   }
 
   back() {
-    this._route.navigate(['course']);
+    this.location.back();
+    // this._route.navigate(['course']);
   }
 }

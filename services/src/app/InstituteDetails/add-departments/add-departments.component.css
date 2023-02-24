@@ -1,0 +1,19 @@
+#input1 {
+    width: 450px;
+}
+
+.container {
+    width: fit-content;
+    margin-top: 120px;
+    border: 1px groove red;
+    height: 350px;
+}
+
+.header {
+    width: 100%;
+    border: 1px groove red;
+}
+
+.header h1 {
+    text-align: center;
+}

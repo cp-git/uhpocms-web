@@ -27,8 +27,8 @@ export class TeachermoduleserviceService {
     this.loggedInUser = this.loggedInUserSubject.asObservable();
     this._baseUrl = `${environment.moduleUrl}/module`;
 
-    // this._baseUrl = `http://localhost:8090/module/uhpocms/module`;
-    this._baseUrl = `http://localhost:8090/uhpocms/module`;
+    this._baseUrl = `http://localhost:8090/module/uhpocms/module`;
+    //this._baseUrl = `http://localhost:8090/uhpocms/module`;
 
     this._loginUrl = `${environment.moduleUrl}/basicauth`;
   }
