@@ -50,6 +50,7 @@ import { AdminmdouleComponent } from './adminmdoule/adminmdoule.component';
 import { TeacherComponent } from './teacher/teacher.component';
 import { StudentdataComponent } from './studentdata/studentdata.component';
 import { StudentmoduleComponent } from './studentdata/component/studentmodule/studentmodule.component';
+import { StudentCourseComponent } from './studentdata/component/student-course/student-course.component';
 
 
 
@@ -145,6 +146,7 @@ const routes: Routes = [
   //teacherModule routes
   { path: 'teachermodule', component: TeachermoduleComponent },
   { path: 'studentmodule', component: StudentmoduleComponent },
+  { path: 'studentcourse', component: StudentCourseComponent },
 
   { path: 'email', component: EmailComponent },
 

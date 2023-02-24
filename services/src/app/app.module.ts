@@ -60,6 +60,7 @@ import { ActivationScreenComponent } from './teachermodule/activation-screen/act
 import { Quiz } from './quiz/quiz';
 import { QuizComponent } from './quiz/quiz.component';
 import { StudentmoduleComponent } from './studentdata/component/studentmodule/studentmodule.component';
+import { StudentCourseComponent } from './studentdata/component/student-course/student-course.component';
 
 
 
@@ -111,7 +112,8 @@ import { StudentmoduleComponent } from './studentdata/component/studentmodule/st
 
     ActivationScreenComponent,
     QuizComponent,
-    StudentmoduleComponent
+    StudentmoduleComponent,
+    StudentCourseComponent
 
 
 

@@ -17,7 +17,7 @@ export class StudentdataComponent {
   ngOnInit(): void {
 
     this.userName = this._activatedRoute.snapshot.params['userName'];
-    this.studentid = this._activatedRoute.snapshot.paramMap.get('profileid')
+    this.studentid = this._activatedRoute.snapshot.paramMap.get('id')
 
   }
 
@@ -36,7 +36,11 @@ export class StudentdataComponent {
   }
 
   RedirectToStudentModule() {
-    this._route.navigate(['studentmodule', { profileid: this.studentid }])
+    this._route.navigate(['studentmodule', { id: this.studentid }])
+  }
+
+  RedirectToStudentCourse() {
+    this._route.navigate(['studentcourse', { id: this.studentid }])
   }
 
 }

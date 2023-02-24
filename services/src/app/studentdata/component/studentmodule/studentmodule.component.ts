@@ -17,12 +17,12 @@ export class StudentmoduleComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.studentId = this.activateRoute.snapshot.paramMap.get('profileid');
+    this.studentId = this.activateRoute.snapshot.paramMap.get('id');
     this.loadStudentAssignedCourses();
   }
 
   loadStudentAssignedCourses() {
-    this.studentService.getStudentCoursesByStudentId(this.studentId).subscribe(
+    this.studentService.getModuleFilesByStudentId(this.studentId).subscribe(
       response => {
         this.studentModuleFile = response;
       },
