@@ -19,9 +19,8 @@ export class InactiveTeacherCourseComponent {
     private _route: Router,
     private activatedRoute: ActivatedRoute,
     private readonly teacherCourseService: TeacherCourseService
-  ) {
+  ) { }
 
-  }
   backToTeacherCourse() {
     this._route.navigate(['teachercourse', { id: this.teacherId }]);
   }
@@ -32,8 +31,8 @@ export class InactiveTeacherCourseComponent {
   ngOnInit(): void {
     this.teacherId = this.activatedRoute.snapshot.paramMap.get('id');
     this.getInactiveCoursesByProfileId(this.teacherId);
-
   }
+
   institutions: AdminInstitution[] = [];
   institution = new AdminInstitution();
 

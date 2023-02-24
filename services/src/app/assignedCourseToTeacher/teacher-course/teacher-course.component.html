@@ -16,7 +16,8 @@
                     <th>Course Code</th>
                     <th>Course Type</th>
                     <th>Passing Score</th>
-                    <th>institute Name</th>
+                    <th>Institute Name</th>
+                    <th>Department Name</th>
                 </tr>
             </thead>
             <tbody>
@@ -67,6 +68,17 @@
 
                         </div>
                     </td>
+                    <!-- <td>
+                        <div class="form-group">
+                            <ng-container *ngFor="let courseDept of courseDepartments">
+                                <ng-container *ngFor="let dept of adminDepartments">
+                                    <input
+                                        *ngIf="((course.courseId==courseDept.courseId)&&(dept.id==courseDept.departmentId))?true:null"
+                                        class="form-control" type="text" value="{{dept.name}}" readonly />
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </td> -->
                 </tr>
 
             </tbody>

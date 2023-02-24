@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Department } from 'app/admindepartment/department';
+import { DepartmentService } from 'app/admindepartment/service/department.service';
 import { Course } from 'app/course/course';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
@@ -12,6 +14,7 @@ import { TeacherCourseService } from '../teacher-course.service';
 })
 export class TeacherCourseComponent {
 
+  adminDepartments: Department[] = [];
   instituteAdminProfile: InstituteAdmin[] = [];
   teacherId: any;
 
@@ -26,6 +29,7 @@ export class TeacherCourseComponent {
   constructor(
     private _route: Router,
     private activatedRoute: ActivatedRoute,
+    private departmentService: DepartmentService,
     private readonly teacherCourseService: TeacherCourseService
   ) {
     this.teacherId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -39,6 +43,16 @@ export class TeacherCourseComponent {
 
   }
 
+  loadAdminDepartments() {
+    this.departmentService.fetchAllDepartments().subscribe(
+      response => {
+        this.adminDepartments = response;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
   private loadAdminInstitutions() {
     this.sessionData = sessionStorage.getItem('admininstitution');
 
