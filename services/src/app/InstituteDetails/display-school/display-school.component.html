@@ -1,8 +1,40 @@
-<div class="container">
-    <button #btn1 id="demo" value="{{institutionId}}" class="btn btn-info"
-        routerLink="/department/{{institutionId}}">ActivateDepartment</button>
-    <button #btn1 id="demo" value="{{institutionId}}" class="btn btn-info" routerLink="/course/{{institutionId}}">Listed
-        Course</button>
-    <div class="text-right"><button class="back btn btn-primary" routerLink="/displayinstitute">Back</button></div>
+<div class="container-fluid">
+    <div class="header1">
+        <h1>{{admininstitution.adminInstitutionName}} Departments</h1>
+    </div>
 
-</div>
+    <button (click)="addDepartment()">Add Department</button>
+    <table class="table" border="1px">
+        <thead id="deptHeader">
+            <tr>
+
+
+                <th>Department Name</th>
+                <th>Description</th>
+                <th>Action</th>
+
+
+
+
+
+
+            </tr>
+
+
+        </thead>
+
+
+
+        <tbody>
+            <tr *ngFor="let dept of departments">
+                <td>{{ dept.name }}</td>
+                <td>{{ dept.description }}</td>
+                <td> <button type="button" id="btn1" (click)="viewDepartment(dept.id)">View</button></td>
+
+
+
+
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-primary" (click)="Display()">Back</button>

@@ -20,4 +20,8 @@ export class CourseService {
   getCourseByInstitutionId(id: string): Observable<any> {
     return this._http.get<any>("http://localhost:8090/course/uhpocms/course/institutionId/" + id);
   }
+
+  getCourseByDepartmentId(deptid: string) {
+    return this._http.get<any>("http://localhost:8090/course/uhpocms/course/departmentId/" + deptid)
+  }
 }

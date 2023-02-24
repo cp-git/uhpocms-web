@@ -25,7 +25,7 @@
     <link rel="stylesheet" type="text/css" href="addcourse.component.css">
 
 
-   
+
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -36,9 +36,11 @@
 <body>
     <div class="container">
         <button id="backbtn" (click)="back()" title="back">
-            <svg xmlns="http://www.w3.org/2000/svg"  width="30" height="30" fill="#E8E8E8"  class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
-                <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1z"/>
-              </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#E8E8E8"
+                class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
+                <path
+                    d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1z" />
+            </svg>
         </button>
 
         <div class="d-flex  h-100">
@@ -48,83 +50,97 @@
 
                 </div>
                 <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-5">
+                            <label for="institutionName">Institution Name</label>
+                            <select name="institutionid" class="form-control" [(ngModel)]="course.instId">
+                                <option value="undefined">Select</option>
+                                <option *ngFor="let inst of institutions" [value]="inst.adminInstitutionId">
+                                    {{inst.adminInstitutionName}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="departmentName">Department Name</label>
+                            <select name="departmentid" class="form-control"
+                                [(ngModel)]="courseDepartment.departmentId">
+                                <option value="undefined">Select</option>
+                                <ng-container *ngFor="let department of adminDepartments">
+                                    <option *ngIf="department.institutionId==course.instId?true:null"
+                                        [value]="department.id">
+                                        {{department.name}}
+                                    </option>
+                                </ng-container>
+                            </select>
+                        </div>
 
-
-               <div class="first-row">
-                <div class="first-row-child"> 
-                    <div><label>Course Name</label></div>
-                    <div class="form-group">
-                        <input class="form-control" type="text" [(ngModel)]="course.courseName"
-                            value="{{course.courseName}}" />
                     </div>
-                </div>
-                <div class="first-row-child">
-                    <div><label> Course Description</label></div>
+                    <div class="first-row">
+                        <div class="first-row-child">
+                            <div><label>Course Name</label></div>
+                            <div class="form-group">
+                                <input class="form-control" type="text" [(ngModel)]="course.courseName"
+                                    value="{{course.courseName}}" />
+                            </div>
+                        </div>
+                        <div class="first-row-child">
+                            <div><label> Course Description</label></div>
 
-                    <div class="form-group">
-                        <textarea class="form-control" type="text" [(ngModel)]="course.courseDescription"
-                            value="{{course.courseDescription}}">
+                            <div class="form-group">
+                                <textarea class="form-control" type="text" [(ngModel)]="course.courseDescription"
+                                    value="{{course.courseDescription}}">
                         </textarea>
+                            </div>
+                        </div>
+
+                        <div class="first-row-child">
+                            <div><label>Course Code </label></div>
+                            <div class="form-group">
+                                <input class="form-control" type="text" [(ngModel)]="course.courseCode"
+                                    value="{{course.courseCode}}" />
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <div class="first-row">
+                        <div class="first-row-child">
+                            <div><label>Course Type</label></div>
+                            <div class="form-group">
+                                <input class="form-control" type="text" [(ngModel)]="course.courseType"
+                                    value="{{course.courseType}}" />
+                            </div>
+                        </div>
+                        <div class="first-row-child">
+                            <div><label>Passing Score</label></div>
+                            <div class="form-group">
+                                <input class="form-control" type="number" [(ngModel)]="course.passingScore"
+                                    value="{{course.passingScore}}" />
+                            </div>
+                        </div>
 
-                <div class="first-row-child">
-                    <div><label>Course Code </label></div>
-                    <div class="form-group">
-                        <input class="form-control" type="text" [(ngModel)]="course.courseCode"
-                            value="{{course.courseCode}}" />
+                        <div class="last-row">
+                            <div class="form-group">
+                                <button class="form-control" id="loginbtn" class="btn  login_btn"
+                                    (click)="addCourse(course)" title="Add Course">Add</button>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
                     </div>
-                </div>
-            </div>
-            <div class="first-row">
-                <div class="first-row-child"> 
-                    <div><label>Course Type</label></div>
-                    <div class="form-group">
-                        <input class="form-control" type="text" [(ngModel)]="course.courseType"
-                            value="{{course.courseType}}" />
-                    </div>
-                </div>
-                <div class="first-row-child"> 
-                    <div><label>Passing Score</label></div>
-                    <div class="form-group">
-                        <input class="form-control" type="number" [(ngModel)]="course.passingScore"
-                            value="{{course.passingScore}}" />
-                    </div>
-                </div>
-                <div class="first-row-child"> 
-                    <div><label>Institute Name</label></div>
-                    <div class="form-group">
-
-                        <select [(ngModel)]="course.instId" class="form-control">
-                            <option *ngFor="let institute of institutions" value="{{institute.adminInstitutionId}}"
-                                [selected]="institute.adminInstitutionId == course.instId ? true:null">
-                                {{institute.adminInstitutionName}}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                </div>
-                <div class="last-row">
-                    <div class="form-group">
-                        <button class="form-control" id="loginbtn" class="btn  login_btn"
-                            (click)="addCourse(course)" title="Add Course">Add</button>
-                    </div>
-                </div>
-
-
-
-
-
-
 
 
                 </div>
-
-
             </div>
         </div>
     </div>
-   
+
+    <!-- {{course|json}}
+    {{courseDepartment|json}} -->
 </body>
 
 </html>

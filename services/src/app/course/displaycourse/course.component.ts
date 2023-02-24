@@ -4,6 +4,10 @@ import { AdminInstitution } from 'app/admindepartment/admin-institution/admin-in
 import { InstitutionSeriveService } from 'app/instituteadminprofile/institution-serive.service';
 import { Course } from '../course';
 import { CourseService } from '../service/course.service';
+import { Department } from 'app/admindepartment/department';
+import { DepartmentService } from 'app/admindepartment/service/department.service';
+import { Coursedepartment } from '../coursedepartment';
+import { CourseDepartmentService } from '../course-department.service';
 
 @Component({
   selector: 'app-displaycourse',
@@ -14,6 +18,8 @@ export class CourseComponent {
   isActivationScreen: boolean = false;
   isVisible: boolean = true;
 
+  adminDepartments: Department[] = [];
+  courseDepartments: Coursedepartment[] = [];
   _backupModule = new Map();
 
   controlEnabled: boolean = true;
@@ -32,8 +38,12 @@ export class CourseComponent {
     private _service: CourseService,
     private _instService: InstitutionSeriveService,
     private _activatedRoute: ActivatedRoute,
-    private _route: Router
-  ) { }
+    private _route: Router,
+    private departmentService: DepartmentService,
+    private courseDepartmentService: CourseDepartmentService,
+  ) {
+    this.loadAdminDepartments();
+  }
   ngOnInit(): void {
     // this.getAllCourses();
 
@@ -44,6 +54,7 @@ export class CourseComponent {
       this.getAllCourses();
       this.getAllInstitutes();
       this.getAllDeactivateCourses();
+      this.loadCourseDepartment();
     }
 
 
@@ -98,7 +109,25 @@ export class CourseComponent {
   }
 
   deletecourse(course: Course) {
-    this._service.deleteModule(course.courseName).subscribe(
+    this._service.deleteCourseByName(course.courseName).subscribe(
+      (data) => {
+        this.courses.splice(this.courses.indexOf(course), 1);
+        this._backupModule.delete(course.courseId);
+        // this.ngOnInit();
+        alert(course.courseName + ' deleted successfuly');
+
+        if (this.courses.length > 0) {
+          this.isVisible = false;
+        }
+      },
+      (error) => {
+        alert('Failed to delete');
+      }
+    );
+  }
+
+  deletecourseById(course: Course) {
+    this._service.deleteCourseByCourseId(course.courseId).subscribe(
       (data) => {
         this.courses.splice(this.courses.indexOf(course), 1);
         this._backupModule.delete(course.courseId);
@@ -150,5 +179,27 @@ export class CourseComponent {
   activationScreen() {
     this.isActivationScreen = true;
     this.ngOnInit();
+  }
+
+  loadAdminDepartments() {
+    this.departmentService.fetchAllDepartments().subscribe(
+      response => {
+        this.adminDepartments = response;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  loadCourseDepartment() {
+    this.courseDepartmentService.getCoursesDepartmentId().subscribe(
+      response => {
+        this.courseDepartments = response;
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 }
