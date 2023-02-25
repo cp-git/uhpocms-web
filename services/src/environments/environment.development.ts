@@ -29,5 +29,6 @@ export const environment = {
   quizUrl: `http://localhost:8090/quiz/uhpocms`,
   adminRoleUrl: `http://localhost:8090/adminrole/uhpocms`,
   questionUrl: `http://localhost:8090/question/uhpocms`,
-  announcementUrl: `http://localhost:8090/announcement/uhpocms`
+  announcementUrl: `http://localhost:8090/announcement/uhpocms`,
+  moduleFileUrl: `http://localhost:8090/modulefile/uhpocms`,
 };

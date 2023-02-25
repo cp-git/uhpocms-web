@@ -1,0 +1,66 @@
+<!-- <p>student-course works!</p>
+<h1>Course</h1>
+{{courses|json}}
+<p>student-course works!</p>
+<h1>Modules</h1>
+{{modules|json}}
+<p>student-course works!</p>
+<h1>ModulesFiles</h1>
+{{studentModuleFiles|json}}
+<p>student-course works!</p> -->
+
+<div class="container">
+    <h1>Enrolled courses</h1>
+    <div class="row">
+        <div class="form-group col-md-2">
+            <label for="course">Course Name</label>
+            <select (change)="onCourseSelect(selectedCourse)" [(ngModel)]="selectedCourse" class="form-select"
+                aria-label="Default select example">
+                <option value="undefined">Select Courses</option>
+                <option *ngFor="let course of courses" [value]="course.courseId">{{course.courseName}}</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2" *ngIf="selectedCourse">
+            <label for="module">Module Name</label>
+            <select [(ngModel)]="selectedModule" class="form-select" aria-label="Default select example">
+                <option value="undefined">Select Module</option>
+                <ng-container *ngFor="let module of modules">
+                    <option *ngIf="selectedCourse==module.courseId_id" [value]="module.moduleId">{{module.moduleName}}
+                    </option>
+                </ng-container>
+            </select>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="form-group col-md-2" *ngIf="selectedModule">
+            <ng-container *ngFor="let file of studentModuleFiles">
+                <div *ngIf="selectedModule==file.moduleId">
+                    <video width="320" height="240" controls>
+                        <source src="../../../../assets/video/{{file.moduleFile}}" type="video/mp4">
+                    </video>
+                </div>
+            </ng-container>
+        </div>
+        <!-- <div class="form-group">
+            <label for="course">Course:</label>
+            <select class="form-control" id="course" (change)="onCourseSelect($event)">
+                <option value="{{selectedCourse}}">Select a course</option>
+                <option *ngFor="let course of courses" [value]="course.courseId">{{course.courseName}}</option>
+            </select>
+        </div>
+
+        <div class="form-group" *ngIf="selectedCourse">
+            <label for="module">Module:</label>
+            <select class="form-control" id="module" (change)="onModuleSelect($event)">
+                <option value="">Select a module</option>
+                <option *ngFor="let module of selectedCourse.modules" [value]="module.id">{{module.name}}</option>
+            </select>
+        </div> -->
+    </div>
+
+</div>
+<!-- 
+{{selectedCourse|json}}
+{{selectedModule|json}}
+{{studentModuleFiles|json}} -->

@@ -97,11 +97,10 @@ export class AuthenticationloginComponent {
                   this._route.navigate(['adminmodule/admin', userName])
                 }
                 else if (this._instituteAdminArray[i].userRole == 'teacher') {
-                  this._route.navigate(['teacher', { id: this._instituteAdminArray[i].adminId }])
-                  // this._route.navigate(['teacherdisplay/teacher', userName])
+                  this._route.navigate(['teacherdisplay/teacher', userName])
                 }
                 else if (this._instituteAdminArray[i].userRole == 'student') {
-                  this._route.navigate(['studentdata', { id: this._instituteAdminArray[i].adminId }]);
+                  this._route.navigate(['studentdata', userName, { id: this._instituteAdminArray[i].adminId }]);
                 }
 
 

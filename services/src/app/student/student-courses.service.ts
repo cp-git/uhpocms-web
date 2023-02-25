@@ -10,6 +10,6 @@ export class StudentCoursesService {
   constructor(private _http: HttpClient) { }
 
   getCourseByProfileId(profileId: number): Observable<any> {
-    return this._http.get<any>("http://localhost:8080/uhpocms/course/profileId/" + profileId);
+    return this._http.get<any>("http://localhost:8090/course/uhpocms/course/profileId/" + profileId);
   }
 }

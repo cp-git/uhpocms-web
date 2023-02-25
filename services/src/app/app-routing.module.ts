@@ -49,6 +49,7 @@ import { AuthenticationloginComponent } from './authenticationlogin/authenticati
 import { AdminmdouleComponent } from './adminmdoule/adminmdoule.component';
 import { TeacherComponent } from './teacher/teacher.component';
 import { StudentdataComponent } from './studentdata/studentdata.component';
+import { StudentmoduleComponent } from './studentdata/component/studentmodule/studentmodule.component';
 
 import { StudentCourseComponent } from './student/student-course/student-course.component';
 import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';
@@ -190,10 +191,9 @@ const routes: Routes = [
 
   //teacherModule routes
   { path: 'teachermodule', component: TeachermoduleComponent },
+  { path: 'studentmodule', component: StudentmoduleComponent },
 
-  //teacherModule routes
   { path: 'email', component: EmailComponent },
-
 
   //home route
   { path: 'home', component: HomeComponent },
