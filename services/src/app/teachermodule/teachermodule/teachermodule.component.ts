@@ -3,6 +3,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Course } from 'app/class/course';
 import { Module } from '../module';
 import { TeachermoduleserviceService } from '../service/teachermoduleservice.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-teachermodule',
@@ -44,7 +45,8 @@ export class TeachermoduleComponent {
   constructor(
     private _service: TeachermoduleserviceService,
     private _activatedRoute: ActivatedRoute,
-    private _route: Router
+    private _route: Router,
+    private location: Location
   ) { }
 
   moduleName!: string;
@@ -166,7 +168,8 @@ export class TeachermoduleComponent {
   }
 
   Home() {
-    this._route.navigate(['teacherdisplay/teacher']);
+    this.location.back();
+    // this._route.navigate(['teacherdisplay/teacher']);
   }
 
   getInactivateModule() {

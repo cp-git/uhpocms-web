@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Announcement } from 'app/announcement/announcement';
 import { AnnouncementService } from 'app/announcement/service/announcement.service';
 import { AuthService } from 'app/authlogin/auth.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-announcement',
@@ -13,7 +14,7 @@ export class AnnouncementComponent implements OnInit {
   announcements: Announcement[] = [];
   announcement: Announcement;
 
-  constructor(private announcementService: AnnouncementService, private router: Router, private authService: AuthService) {
+  constructor(private announcementService: AnnouncementService, private router: Router, private authService: AuthService, private location: Location) {
     this.announcement = new Announcement();
   }
 
@@ -60,6 +61,10 @@ export class AnnouncementComponent implements OnInit {
         alert("add failed");
       }
     );
+  }
+
+  back() {
+    this.location.back();
   }
 
 

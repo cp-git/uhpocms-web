@@ -59,7 +59,7 @@
     <div class="header">
         <div class="row">
             <div class="col-md-6" id="h1">
-                <h1>Admin Portal</h1>
+                <h1>Admin Panel</h1>
                 <h3> Welcome {{userName}}</h3>
             </div>
 
@@ -76,17 +76,14 @@
                     <div class="d-flex flex-row align-items-center">
                         <i class="glyphicon glyphicon-user" id="icon1"></i>
                         <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername">AuthUser Module</h2>
+                            <h2 class="mb-0" id="AuthUsername">Create User</h2>
                         </div>
 
                         <button id="demo" class="btn btn-info" (click)="RedirectTOAuth()">Auth User</button>
                     </div>
 
                 </div>
-                <div class="mt-5">
-                    <h3 class="heading">Authentication of User Based on Role<br> CRUD Operations</h3>
 
-                </div>
             </div>
         </div>
         <div class="col-md-4" id="data1">
@@ -95,7 +92,7 @@
                     <div class="d-flex flex-row align-items-center">
                         <i class="material-icons" id="icon1">computer</i>
                         <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername">InstituteAdmin Profile Module</h2>
+                            <h2 class="mb-0" id="AuthUsername">Create User Profile </h2>
                         </div>
 
                         <button id="demo" class="btn btn-info"
@@ -104,10 +101,7 @@
                     </div>
 
                 </div>
-                <div class="mt-5">
-                    <h3 class="heading">Role Based Instituteadmin Profile<br> CRUD Operations</h3>
 
-                </div>
             </div>
         </div>
         <div class="col-md-4" id="data1">
@@ -116,17 +110,14 @@
                     <div class="d-flex flex-row align-items-center">
                         <i class="material-icons" id="icon1">class</i>
                         <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername">Course Module</h2>
+                            <h2 class="mb-0" id="AuthUsername">Create Course</h2>
                         </div>
 
                         <button id="demo" class="btn btn-info" (click)="RedirectToCourse()">Course</button>
                     </div>
 
                 </div>
-                <div class="mt-5">
-                    <h3 class="heading">Adding Course By Admin Portal<br> CRUD Operations</h3>
 
-                </div>
             </div>
         </div>
     </div>
@@ -138,17 +129,14 @@
                     <div class="d-flex flex-row align-items-center">
                         <i class="material-icons" id="icon1">important_devices</i>
                         <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername">Admin Department Module</h2>
+                            <h2 class="mb-0" id="AuthUsername">Create Department </h2>
                         </div>
 
                         <button id="demo" class="btn btn-info" (click)="RedirectToAdminDept()">Admin Department</button>
                     </div>
 
                 </div>
-                <div class="mt-5">
-                    <h3 class="heading">Authentication of User Based on Role<br> CRUD Operations</h3>
 
-                </div>
             </div>
         </div>
         <div class="col-md-4" id="data1">
@@ -157,18 +145,51 @@
                     <div class="d-flex flex-row align-items-center">
                         <i class="material-icons" id="icon1">computer</i>
                         <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername">Admin Institution Module</h2>
+                            <h2 class="mb-0" id="AuthUsername">Create Institution </h2>
                         </div>
 
-                        <button id="demo" class="btn btn-info" (click)="RedirectToAdminInstitution()">InstituteAdmin
-                            Profile</button>
+                        <button id="demo" class="btn btn-info" (click)="RedirectToAdminInstitution()">Institution
+                        </button>
                     </div>
 
                 </div>
-                <div class="mt-5">
-                    <h3 class="heading">Role Based Admin Institution Profile<br> CRUD Operations</h3>
+
+            </div>
+        </div>
+        <div class="col-md-4" id="data1">
+            <div class="card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <i class="material-icons" id="icon1">class</i>
+                        <div class="ms-2 c-details">
+                            <h2 class="mb-0" id="AuthUsername">Create Role</h2>
+                        </div>
+
+                        <button id="demo" class="btn btn-info" (click)="RedirectToRole()">Role</button>
+                    </div>
 
                 </div>
+
+            </div>
+        </div>
+
+        <!-- Row 3-->
+
+        <div class="col-md-4" id="data1">
+            <div class="card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <i class="material-icons" id="icon1">computer</i>
+                        <div class="ms-2 c-details">
+                            <h2 class="mb-0" id="AuthUsername">Announcements </h2>
+                        </div>
+
+                        <button id="demo" class="btn btn-info" (click)="RedirectToAnnouncement()">Announcements
+                        </button>
+                    </div>
+
+                </div>
+
             </div>
         </div>
         <!-- <div class="col-md-4" id="data1">
@@ -177,18 +198,16 @@
                     <div class="d-flex flex-row align-items-center">
                         <i class="material-icons" id="icon1">class</i>
                         <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername">Course Module</h2>
+                            <h2 class="mb-0" id="AuthUsername">Create Role</h2>
                         </div>
-    
-                        <button id="demo" class="btn btn-info" (click)="RedirectToCourse()">Course</button>
+        
+                        <button id="demo" class="btn btn-info" (click)="RedirectToRole()">Role</button>
                     </div>
-    
+        
                 </div>
-                <div class="mt-5">
-                    <h3 class="heading">Adding Course By Admin Portal<br> CRUD Operations</h3>
-    
-                </div>
+        
             </div>
         </div> -->
+        <!--End of row-->
     </div>
 </div>
