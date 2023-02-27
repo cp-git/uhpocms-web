@@ -28,7 +28,7 @@ import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
 import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
 
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
-import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
+
 import { AddinstituteComponent } from './admin-institution/addinstitute/addinstitute.component';
 import { DisplayinstituteComponent } from './admin-institution/displayinstitute/displayinstitute.component';
 
@@ -51,11 +51,32 @@ import { TeacherComponent } from './teacher/teacher.component';
 import { StudentdataComponent } from './studentdata/studentdata.component';
 import { EnrollstudentComponent } from './enrollstudent/enrollstudent.component';
 
+import { StudentmoduleComponent } from './studentdata/component/studentmodule/studentmodule.component';
+
+import { StudentCourseComponent } from './student/student-course/student-course.component';
+import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';
+import { InactiveTeacherCourseComponent } from './assignedCourseToTeacher/inactive-teacher-course/inactive-teacher-course.component';
+
+import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
+import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
+import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
+
+
+
+
 
 
 const routes: Routes = [
 
+  //teacherCourse
+
+  { path: 'inactivecourse', component: InactiveTeacherCourseComponent },
+  { path: 'teachercourse', component: TeacherCourseComponent },
+  { path: 'teacher/:id', component: TeacherCourseComponent },
   //category routing
+  { path: 'studentcourse', component: StudentCourseComponent },
+  { path: 'profile/:id', component: StudentCourseComponent },
+
   { path: 'addCategory', component: AddCategoryComponent },
   { path: 'addModule', component: AddModuleComponent },
   { path: 'main', component: MainComponent },
@@ -69,7 +90,10 @@ const routes: Routes = [
 
   { path: 'teacherdisplay/teacher/:userName', component: TeacherComponent },
 
+  { path: 'teacher', component: TeacherComponent },
+
   { path: 'studentdata/student/:userName', component: StudentdataComponent },
+  { path: 'studentdata', component: StudentdataComponent },
 
   { path: 'enrollstudent', component: EnrollstudentComponent },
 
@@ -122,16 +146,42 @@ const routes: Routes = [
 
   { path: 'department/:id', component: ViewDepartmentComponent },
 
-  //{ path: 'school', component: DisplaySchoolComponent },
 
-
-  { path: 'display', component: DisplaySchoolComponent },
-  { path: 'display/:id', component: DisplaySchoolComponent },
 
   { path: 'addinstitute', component: AddinstituteComponent },
 
   { path: 'displayinstitute', component: DisplayinstituteComponent },
+  { path: 'displayinstitute/:adminInstitutionId', component: DisplayinstituteComponent },
   { path: 'displayinstitute/activate', component: ActivateInstitutionComponent },
+
+
+
+  //display school urls
+
+  { path: 'display', component: DisplaySchoolComponent },
+  { path: 'display/:id', component: DisplaySchoolComponent },
+
+
+  //url for deprtment course
+
+  { path: 'departmentCourse', component: CoursedepartmentComponent },
+  { path: 'departmentCourse/:id', component: CoursedepartmentComponent },
+
+
+  //add department for institute
+  { path: 'departments', component: AddDepartmentsComponent },
+
+  //add multiple courses for department
+  { path: 'courses', component: AddcourseComponent },
+
+
+
+
+
+
+
+
+
 
   //inserting  the quiz
 
@@ -145,10 +195,9 @@ const routes: Routes = [
 
   //teacherModule routes
   { path: 'teachermodule', component: TeachermoduleComponent },
+  { path: 'studentmodule', component: StudentmoduleComponent },
 
-  //teacherModule routes
   { path: 'email', component: EmailComponent },
-
 
   //home route
   { path: 'home', component: HomeComponent },

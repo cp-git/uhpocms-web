@@ -65,7 +65,7 @@ export class InstituteAdminServiceService {
   }
 
   _addInstituteAdminList(instituteAdmin: InstituteAdmin): Observable<any> {
-    return this.http.post<any>(this._baseUrl + '/', instituteAdmin);
+    return this.http.post<any>(this._baseUrl, instituteAdmin);
   }
 
   _updateInstituteAdminList(
@@ -91,12 +91,15 @@ export class InstituteAdminServiceService {
 
 
   _getAllAuthUsersList(): Observable<any> {
-    return this.http.get<any>("http://localhost:8090/authuser/uhpocms/authuser?username=all");
+    return this.http.get<any>(`${this._baseUrl}/authuser?username=all`);
   }
 
   _getProfileByRoleAndInstitutionId(userRole: string, instId: number): Observable<any> {
     return this.http.get<any>(this._baseUrl + '/' + userRole + '/' + instId);
   }
 
+  saveOrUpdateProfile(authUserId: number, profile: InstituteAdmin): Observable<any> {
+    return this.http.put<any>(`${this._baseUrl}/` + authUserId, profile);
+  }
 
 }

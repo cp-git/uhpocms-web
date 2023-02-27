@@ -46,7 +46,7 @@ export class AuthuserserviceService {
   }
 
   loginDataAuthUser(authuser: Authuser): Observable<any> {
-    return this._http.post<any>("http://localhost:8090/authuser/uhpocms/login", authuser);
+    return this._http.post<any>(this._loginUrl, authuser);
   }
 
   authenticationService(username: String, password: String) {
@@ -90,5 +90,13 @@ export class AuthuserserviceService {
     let user = sessionStorage.getItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME);
     if (user === null) return '';
     return user;
+  }
+
+  getAllInactiveAuthUsers(): Observable<Authuser[]> {
+    return this._http.get<Authuser[]>(`${this._baseUrl}?username=inactive`);
+  }
+
+  activateAuthUserById(authUserId: number): Observable<any> {
+    return this._http.patch<any>(`${this._baseUrl}/activate/` + authUserId, {});
   }
 }

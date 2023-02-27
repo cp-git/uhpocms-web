@@ -8,13 +8,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class StudentdataComponent {
 
+  profileId: any;
   userName: String | undefined;
-  constructor(private _route: Router, private _activatedRoute: ActivatedRoute) { }
+  constructor(private _route: Router, private _activatedRoute: ActivatedRoute) {
+
+  }
 
   ngOnInit(): void {
-
     this.userName = this._activatedRoute.snapshot.params['userName'];
-
+    this.profileId = this._activatedRoute.snapshot.paramMap.get('id');
+  }
+  RedirectToStudentCourse() {
+    this._route.navigate(['studentcourse', { id: this.profileId }]);
   }
 
   RedirectToQuiz() {
@@ -29,6 +34,11 @@ export class StudentdataComponent {
 
   RedirectTOLogin() {
     this._route.navigate(['authenticationlogin'])
+  }
+
+
+  RedirectToStudentModule() {
+    this._route.navigate(['studentmodule', { id: this.profileId }])
   }
 
 

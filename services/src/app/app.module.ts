@@ -37,7 +37,7 @@ import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
 import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
 import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
-import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
+
 import { AddinstituteComponent } from './admin-institution/addinstitute/addinstitute.component';
 import { DisplayinstituteComponent } from './admin-institution/displayinstitute/displayinstitute.component';
 import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
@@ -59,8 +59,21 @@ import { StudentdataComponent } from './studentdata/studentdata.component';
 import { ActivationScreenComponent } from './teachermodule/activation-screen/activation-screen.component';
 import { Quiz } from './quiz/quiz';
 import { QuizComponent } from './quiz/quiz.component';
+
 import { EnrollstudentComponent } from './enrollstudent/enrollstudent.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+
+import { StudentmoduleComponent } from './studentdata/component/studentmodule/studentmodule.component';
+
+import { StudentCourseComponent } from './student/student-course/student-course.component';
+import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';
+import { InactiveTeacherCourseComponent } from './assignedCourseToTeacher/inactive-teacher-course/inactive-teacher-course.component';
+
+import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
+import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
+import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
+
+
 
 
 
@@ -89,7 +102,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
     UpdatequizComponent,
     ViewDepartmentComponent,
     ViewCoursesComponent,
-    DisplaySchoolComponent,
     AddinstituteComponent,
     DisplayinstituteComponent,
     UpdatemoduleComponent,
@@ -112,7 +124,19 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
     ActivationScreenComponent,
     QuizComponent,
-    EnrollstudentComponent
+
+    EnrollstudentComponent,
+
+    StudentCourseComponent,
+    TeacherCourseComponent,
+    InactiveTeacherCourseComponent,
+    DisplaySchoolComponent,
+    CoursedepartmentComponent,
+    AddDepartmentsComponent,
+    StudentmoduleComponent,
+
+
+
 
 
 

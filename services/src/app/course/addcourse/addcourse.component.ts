@@ -4,6 +4,10 @@ import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstitutionSeriveService } from 'app/instituteadminprofile/institution-serive.service';
 import { Course } from '../course';
 import { CourseService } from '../service/course.service';
+import { Department } from 'app/admindepartment/department';
+import { DepartmentService } from 'app/admindepartment/service/department.service';
+import { Coursedepartment } from '../coursedepartment';
+import { CourseDepartmentService } from '../course-department.service';
 
 @Component({
   selector: 'app-addcourse',
@@ -15,10 +19,13 @@ export class AddcourseComponent {
 
   _backupModule = new Map();
 
+  adminDepartments: Department[] = [];
+
   // array of course
 
   course = new Course();
   courses: Course[] = []; //for drop down data
+  courseDepartment: Coursedepartment;
 
   institutions: AdminInstitution[] = [];
   institution = new AdminInstitution();
@@ -29,8 +36,14 @@ export class AddcourseComponent {
     private _service: CourseService,
     private _instService: InstitutionSeriveService,
     private _activatedRoute: ActivatedRoute,
-    private _route: Router
-  ) {}
+    private _route: Router,
+    private departmentService: DepartmentService,
+    private courseDepartmentService: CourseDepartmentService
+  ) {
+    this.loadAdminDepartments();
+    this.courseDepartment = new Coursedepartment();
+
+  }
   ngOnInit(): void {
     if (sessionStorage.getItem('authenticatedUser') === null) {
       this._route.navigate(['']);
@@ -54,17 +67,29 @@ export class AddcourseComponent {
     });
   }
 
+  loadAdminDepartments() {
+    this.departmentService.fetchAllDepartments().subscribe(
+      response => {
+        this.adminDepartments = response;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
   addCourse(course: Course) {
     //alert(JSON.stringify(module));
 
     var courseId = course.courseId;
     // module.moduleId = null;
     course.courseIsActive = true;
+
     this._service.addCourse(course).subscribe(
       (data) => {
         //console.log(data);
         this.course = data;
-        console.log(course.instId)
+        // console.log(course.instId)
 
         if (this._backupModule.size > 0) {
           this.courses[this.courses.indexOf(course)] = Object.assign(
@@ -77,13 +102,24 @@ export class AddcourseComponent {
           this.course.courseId,
           Object.assign({}, this.course)
         );
-        alert('Course Added successfully');
-        this._route.navigate(['course']);
-        if (this.courses.length > 0) {
-          this.isVisible = false;
-        }
+
+        this.courseDepartment.courseId = this.course.courseId;
+        this.courseDepartmentService.assignCourseToDepartment(this.courseDepartment).subscribe(
+          response => {
+            alert('Course Added successfully');
+            this._route.navigate(['course']);
+            if (this.courses.length > 0) {
+              this.isVisible = false;
+            }
+            this._route.navigate(['course/userrole/admin']);
+          },
+          error => {
+            alert("Course added but failed to assign");
+          }
+        );
+
       },
-      (error) => alert('Module Name already exists')
+      (error) => alert('Failed to add')
     );
   }
 

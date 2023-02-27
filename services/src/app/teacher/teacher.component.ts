@@ -8,8 +8,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class TeacherComponent {
 
+  teacherId: any;
   userName: String | undefined;
-  constructor(private _route: Router, private _activatedRoute: ActivatedRoute) { }
+  constructor(private _route: Router, private _activatedRoute: ActivatedRoute) {
+    this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
+  }
 
   ngOnInit(): void {
 
@@ -19,6 +22,9 @@ export class TeacherComponent {
   RedirectToCourse() {
     const role = 'teacher';
     this._route.navigate(['course/userrole/', role]);
+  }
+  RedirectToTeacherCourse() {
+    this._route.navigate(['teachercourse', { id: this.teacherId }]);
   }
 
   RedirectToModule() {

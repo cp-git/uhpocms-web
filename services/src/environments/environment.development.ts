@@ -9,6 +9,7 @@ export const environment = {
   // authUserUrl: `${commonEnv.baseUrl}/authuser/uhpocms`,
   // categoryUrl: `${commonEnv.baseUrl}/category/uhpocms`,
   // courseUrl: `${commonEnv.baseUrl}/course/uhpocms`,
+  // courseDepartmentUrl:'`${commonEnv.baseUrl}/course/uhpocms`,
   // emailUrl: `${commonEnv.baseUrl}/email/uhpocms`,
   // moduleUrl: `${commonEnv.baseUrl}/module/uhpocms`,
   // quizUrl: `${commonEnv.baseUrl}/quiz/uhpocms`,
@@ -22,10 +23,12 @@ export const environment = {
   authUserUrl: `http://localhost:8090/authuser/uhpocms`,
   categoryUrl: `http://localhost:8090/category/uhpocms`,
   courseUrl: `http://localhost:8090/course/uhpocms`,
+  courseDepartmentUrl: `http://localhost:8090/course/uhpocms`,
   emailUrl: `http://localhost:8090/email/uhpocms`,
   moduleUrl: `http://localhost:8090/module/uhpocms`,
   quizUrl: `http://localhost:8090/quiz/uhpocms`,
   adminRoleUrl: `http://localhost:8090/adminrole/uhpocms`,
   questionUrl: `http://localhost:8090/question/uhpocms`,
-  announcementUrl: `http://localhost:8090/announcement/uhpocms`
+  announcementUrl: `http://localhost:8090/announcement/uhpocms`,
+  moduleFileUrl: `http://localhost:8090/modulefile/uhpocms`,
 };

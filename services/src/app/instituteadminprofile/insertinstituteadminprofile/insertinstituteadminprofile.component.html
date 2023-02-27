@@ -1,136 +1,143 @@
 <div class="container">
-    <h1>Admin Form</h1>
-    <h4>Add new Student...!</h4>
-    <form #adduserform="ngForm" (ngSubmit)="_addInstituteAdmin()">
 
+    <div class="header1">
+        <h1>Create Profile</h1>
+    </div>
 
+    <form #adduserform="ngForm" (ngSubmit)="addInstituteAdmin()">
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label for="institutionName">Institution Name</label>
+                <select name="institutionid" class="form-control" [(ngModel)]="_instituteAdmin.institutionId">
+                    <option value="undefined">Select</option>
+                    <option *ngFor="let inst of adminInstitutions" [value]="inst.adminInstitutionId">
+                        {{inst.adminInstitutionName}}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="departmentName">Department Name</label>
+                <select name="departmentname" class="form-control" [(ngModel)]="_instituteAdmin.adminDepartment">
+                    <option value="undefined">Select</option>
+                    <ng-container *ngFor="let department of adminDepartments">
+                        <option *ngIf="department.institutionId==_instituteAdmin.institutionId?true:null"
+                            [value]="department.id">
+                            {{department.name}}
+                        </option>
+                    </ng-container>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="userName">User Name</label>
+                <select name="userid" class="form-control" [(ngModel)]="_instituteAdmin.userId"
+                    (change)="getCurrentAuthUser(_instituteAdmin.userId)">
+                    <option value="undefined">Select</option>
+                    <option *ngFor="let authUser of authUsersData" value="{{authUser.authUserId}}">
+                        {{authUser.authUserFirstName}} {{authUser.authUserLastName}} - {{authUser.authUserName}}
+                    </option>
+                </select>
+            </div>
 
-        <h6>Active User</h6>
-        <div class="form-group">
-
-            <input type="checkbox" id="chk" class="form-control" required [(ngModel)]="_instituteAdmin.activeUser"
-                name="_instituteAdmin.activeUser">
         </div>
-
-        <h6>Address1</h6>
         <div class="form-group">
-
-            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminAddress1"
-                name="_instituteAdmin.adminAddress1">
+            <div class="form-group col-md-3">
+                <label for="userRole">User Role</label>
+                <select name="userrole" class="form-control" [(ngModel)]="_instituteAdmin.userRole" required>
+                    <option value="undefined">Select</option>
+                    <option *ngFor="let role of adminRoles" value="{{role.roleName}}">
+                        {{role.roleName}}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputEmail4">First Name</label>
+                <input name="firstname" type="text" class="form-control" id="firstname"
+                    [(ngModel)]="_instituteAdmin.firstName" disabled>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputEmail4">Last Name</label>
+                <input name="lastname" type="email" class="form-control" id="lastname"
+                    [ngModel]="_instituteAdmin.lastName" disabled>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputEmail4">Email Address</label>
+                <input name="email" type="email" class="form-control" id="email"
+                    [(ngModel)]="_instituteAdmin.adminEmail" disabled>
+            </div>
         </div>
-
-        <h6>address2</h6>
         <div class="form-group">
+            <div class="form-group col-md-3">
+                <label for="DOB">Date Of Birth</label>
+                <input name="dob" type="date" class="form-control" id="dob" [(ngModel)]="_instituteAdmin.dob" required>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="gender">Gender</label>
+                <select name="gender" class="form-control" id="gender" [(ngModel)]="_instituteAdmin.adminGender"
+                    required>
+                    <option value="undefined">Select</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
 
-            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminAddress2"
-                name="_instituteAdmin.adminAddress2">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="phoneNumber">Phone Number</label>
+                <input name="phonenumber" type="number" class="form-control" id="phonenumber"
+                    [(ngModel)]="_instituteAdmin.mobilePhone" required>
+            </div>
         </div>
-
-        <h6>city</h6>
         <div class="form-group">
-
-            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminCity"
-                name="_instituteAdmin.adminCity">
+            <div class="form-group col-md-6">
+                <label for="inputAddress2">Address</label>
+                <input name="address1" [(ngModel)]="_instituteAdmin.adminAddress1" type="text" class="form-control"
+                    id="address1" placeholder="1234 Main St">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputAddress2">Address 2</label>
+                <input name="address2" type="text" [(ngModel)]="_instituteAdmin.adminAddress2" class="form-control"
+                    id="address2" placeholder="Apartment, studio, or floor">
+            </div>
         </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="inputState">State</label>
+                <input name="state" type="text" class="form-control" id="inputState"
+                    [(ngModel)]="_instituteAdmin.adminState" required>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputCity">City</label>
+                <input name="city" type="text" class="form-control" id="inputCity"
+                    [(ngModel)]="_instituteAdmin.adminCity" required>
+            </div>
 
-        <h6>Depratment</h6>
-        <div class="form-group">
-
-            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminDepartment"
-                name="_instituteAdmin.adminDepartment">
+            <div class="form-group col-md-3">
+                <label for="inputZip">Zip</label>
+                <input name="zipcode" type="number" class="form-control" id="inputZip"
+                    [(ngModel)]="_instituteAdmin.adminZip" required>
+            </div>
         </div>
-
-        <h6>Email</h6>
-        <div class="form-group">
-
-            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminEmail"
-                name="_instituteAdmin.adminEmail">
+        <div class="form-group col-md-3"><label for="profilePic">Profile Picture</label>
+            <input name="profilepic" type="file" class="form-control" id="profilepic"
+                [(ngModel)]="_instituteAdmin.profilePics" (change)="onFileSelected($event)" required>
         </div>
-
-        <h6>Gender</h6>
-        <div class="form-group">
-            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminGender"
-                name="_instituteAdmin.adminGender">
+        <div class="form-group col-md-12">
+            <div class="form-check">
+                <input name="isactive" class="form-check-input" type="checkbox" id="isactive"
+                    [(ngModel)]="_instituteAdmin.activeUser" (change)="onChangeIsActive()">
+                <label class="form-check-label align-middle" for="gridCheck">Active status</label>
+            </div>
         </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <button type="submit" class="btn btn-primary"
+                    [class.active]="_instituteAdmin.activeUser">{{submitButton}}</button>
+                <button type="button" (click)="backToDisplayScreen()" class="btn btn-primary">Back</button>
+            </div>
 
-        <h6>State</h6>
-        <div class="form-group">
-
-            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.adminState"
-                name="_instituteAdmin.adminState">
         </div>
-
-        <h6>Pincode</h6>
-        <div class="form-group">
-
-            <input type="number" class="form-control" required [(ngModel)]="_instituteAdmin.adminZip"
-                name="_instituteAdmin.adminZip">
-        </div>
-
-
-        <h6>DOB</h6>
-        <div class="form-group">
-
-            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.dob"
-                name="_instituteAdmin.dob">
-        </div>
-
-        <h6>First Name</h6>
-        <div class="form-group">
-
-            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.firstName"
-                name="_instituteAdmin.firstName">
-        </div>
-
-        <h6>Last Name</h6>
-        <div class="form-group">
-
-            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.lastName"
-                name="_instituteAdmin.lastName">
-        </div>
-
-        <h6>institutionId</h6>
-        <div class="form-group">
-
-            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.institutionId"
-                name="_instituteAdmin.institutionId">
-        </div>
-
-        <h6>Phone Number</h6>
-        <div class="form-group">
-
-            <input type="number" class="form-control" required [(ngModel)]="_instituteAdmin.mobilePhone"
-                name="_instituteAdmin.mobilePhone">
-        </div>
-
-        <h6>Profile Pics</h6>
-        <div class="form-group">
-
-            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.profilePics"
-                name="_instituteAdmin.profilePics">
-        </div>
-
-        <h6>userId</h6>
-        <div class="form-group">
-
-            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.userId"
-                name="_instituteAdmin.userId">
-        </div>
-
-        <h6>userRole</h6>
-        <div class="form-group">
-
-            <input type="text" class="form-control" required [(ngModel)]="_instituteAdmin.userRole"
-                name="_instituteAdmin.userRole">
-        </div>
-
-
-
-        <button type="submit" class="btn btn-success" id="btn1">Submit</button>&nbsp;&nbsp;
-        <!--<button type="submit" class="btn btn-primary" (click)="goBack()">back</button>-->
-
     </form>
-
-
-
 </div>
+<!-- {{_instituteAdmin|json}}
+{{inactiveProfiles|json}} -->
+<!-- {{_instituteAdmin.profilePics}} -->
