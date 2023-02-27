@@ -49,6 +49,8 @@ import { AuthenticationloginComponent } from './authenticationlogin/authenticati
 import { AdminmdouleComponent } from './adminmdoule/adminmdoule.component';
 import { TeacherComponent } from './teacher/teacher.component';
 import { StudentdataComponent } from './studentdata/studentdata.component';
+import { EnrollstudentComponent } from './enrollstudent/enrollstudent.component';
+
 import { StudentmoduleComponent } from './studentdata/component/studentmodule/studentmodule.component';
 
 import { StudentCourseComponent } from './student/student-course/student-course.component';
@@ -58,6 +60,7 @@ import { InactiveTeacherCourseComponent } from './assignedCourseToTeacher/inacti
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
+
 
 
 
@@ -92,6 +95,7 @@ const routes: Routes = [
   { path: 'studentdata/student/:userName', component: StudentdataComponent },
   { path: 'studentdata', component: StudentdataComponent },
 
+  { path: 'enrollstudent', component: EnrollstudentComponent },
 
   { path: '', component: HomeComponent },
   //admin role routes

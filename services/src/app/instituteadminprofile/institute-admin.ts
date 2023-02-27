@@ -1,4 +1,6 @@
 export class InstituteAdmin {
+  fullName: string | undefined;
+
   //     dob: string,
   //     firstName: string,
   //     lastName: string,

@@ -50,9 +50,17 @@ export class AdminmdouleComponent {
     this._route.navigate(['authenticationlogin'])
   }
 
+
+  RedirectToEnrollStudent() {
+
+    this._route.navigate(['enrollstudent'])
+
+  }
+
   RedirectToAdminInstitution() {
     this._route.navigate(['displayinstitute'])
   }
+
 
 
 

@@ -59,6 +59,10 @@ import { StudentdataComponent } from './studentdata/studentdata.component';
 import { ActivationScreenComponent } from './teachermodule/activation-screen/activation-screen.component';
 import { Quiz } from './quiz/quiz';
 import { QuizComponent } from './quiz/quiz.component';
+
+import { EnrollstudentComponent } from './enrollstudent/enrollstudent.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+
 import { StudentmoduleComponent } from './studentdata/component/studentmodule/studentmodule.component';
 
 import { StudentCourseComponent } from './student/student-course/student-course.component';
@@ -120,6 +124,9 @@ import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-
 
     ActivationScreenComponent,
     QuizComponent,
+
+    EnrollstudentComponent,
+
     StudentCourseComponent,
     TeacherCourseComponent,
     InactiveTeacherCourseComponent,
@@ -127,6 +134,7 @@ import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-
     CoursedepartmentComponent,
     AddDepartmentsComponent,
     StudentmoduleComponent,
+
 
 
 
@@ -142,7 +150,8 @@ import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-
     BrowserAnimationsModule,
     MatIconModule,
     MatToolbarModule,
-    BrowserModule
+    BrowserModule,
+    NgSelectModule
   ],
 
   providers: [
