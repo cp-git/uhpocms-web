@@ -113,8 +113,30 @@
                                     [multiple]="true" [(ngModel)]="_profileArrCopy">
                                 </ng-select> -->
                                 <ng-select [items]="_profileArray" bindLabel="fullName" [searchable]="true"
-                                    bindValue="adminId" placeholder="Select Students" [clearable]="true" appendTo="body"
-                                    [multiple]="true" [(ngModel)]="selected">
+                                    [closeOnSelect]="false" bindValue="adminId" placeholder="Select Students"
+                                    [clearable]="true" appendTo="body" [multiple]="true" [(ngModel)]="selected"
+                                    groupBy="selectedAllGroup" [selectableGroup]="true" [selectableGroupAsModel]="false"
+                                    [virtualScroll]="shouldEnableVirtualScroll(_profileArray, 1)">
+
+
+                                    <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" /> Select
+                                        All
+                                    </ng-template>
+
+                                    <!-- code to disable display of selected students in input field -->
+                                    <ng-template ng-multi-label-tmp>
+                                        <span style="display:block" class="ng-placeholder">Select Students</span>
+                                    </ng-template>
+
+
+
+
+                                    <!-- code to display checkbox  -->
+                                    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                        <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />
+                                        {{item.fullName}}
+                                    </ng-template>
                                 </ng-select>
 
                                 <!-- <ng-select [items]="categories" bindLabel="name" placeholder="Select Category"

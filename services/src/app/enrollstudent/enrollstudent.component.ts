@@ -76,6 +76,26 @@ export class EnrollstudentComponent {
   }
 
 
+  selectAllForDropdownItems(items: any[]) {
+    let allSelect = (items: any[]) => {
+      items.forEach(element => {
+        element['selectedAllGroup'] = 'selectedAllGroup';
+      });
+    };
+
+    allSelect(items);
+  }
+
+
+  shouldEnableVirtualScroll(_profileArray: any, size: number): boolean {
+
+    if (!_profileArray) {
+      return false;
+    }
+
+    return _profileArray.length > size;
+  }
+
   private getAllInstitution() {
     // fetching all institution
     this._institutionService.fetchAdminInstitutionList().subscribe(
@@ -143,7 +163,7 @@ export class EnrollstudentComponent {
         console.log(response)
         // instId = this._profile.institutionId;
         console.log(instId);
-
+        this.selectAllForDropdownItems(this._profileArray);
       }
     )
 
