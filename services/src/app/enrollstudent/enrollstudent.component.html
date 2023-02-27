@@ -35,7 +35,7 @@
 
 <body>
     <div class="container">
-        <button id="backbtn" title="back">
+        <button id="backbtn" title="back" (click)="back()">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#E8E8E8"
                 class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
                 <path
@@ -103,12 +103,23 @@
                         <div class="first-row-child">
                             <div><label>Student Name</label></div>
                             <div class="form-group">
-                                <select [(ngModel)]="_profile.adminId" class="form-control">
+                                <!-- <select [(ngModel)]="_profile.adminId" class="form-control" multiple>
                                     <option *ngFor="let profile of _profileArray" value="{{profile.adminId}}"
                                         [selected]="profile.adminId">
                                         {{profile.firstName}} {{profile.lastName}} - {{profile.adminEmail}}
                                     </option>
-                                </select>
+                                </select> -->
+                                <!-- <ng-select [items]="_profile.adminId" placeholder="Select Category" appendTo="body"
+                                    [multiple]="true" [(ngModel)]="_profileArrCopy">
+                                </ng-select> -->
+                                <ng-select [items]="_profileArray" bindLabel="fullName" [searchable]="true"
+                                    bindValue="adminId" placeholder="Select Students" [clearable]="true" appendTo="body"
+                                    [multiple]="true" [(ngModel)]="selected">
+                                </ng-select>
+
+                                <!-- <ng-select [items]="categories" bindLabel="name" placeholder="Select Category"
+                                    appendTo="body" [multiple]="true" [(ngModel)]="selected">
+                                </ng-select> -->
                             </div>
                         </div>
                     </div>
@@ -117,7 +128,7 @@
                         <div class="form-group">
                             <!-- <button class="form-control" id="loginbtn" class="btn  login_btn">SAVE</button> -->
                             <button class="form-control" id="loginbtn" class="btn  login_btn"
-                                (click)="saveEnrolledStudent(course.courseId,_profile.adminId)"
+                                (click)="saveEnrolledStudent(course.courseId,_profile.adminId); getSelectedValue()"
                                 title="Update Course">SAVE</button>
                         </div>
                     </div>

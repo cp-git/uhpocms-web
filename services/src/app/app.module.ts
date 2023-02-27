@@ -60,6 +60,7 @@ import { ActivationScreenComponent } from './teachermodule/activation-screen/act
 import { Quiz } from './quiz/quiz';
 import { QuizComponent } from './quiz/quiz.component';
 import { EnrollstudentComponent } from './enrollstudent/enrollstudent.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 
@@ -125,7 +126,8 @@ import { EnrollstudentComponent } from './enrollstudent/enrollstudent.component'
     BrowserAnimationsModule,
     MatIconModule,
     MatToolbarModule,
-    BrowserModule
+    BrowserModule,
+    NgSelectModule
   ],
 
   providers: [

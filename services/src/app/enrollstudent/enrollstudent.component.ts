@@ -7,8 +7,10 @@ import { CourseService } from 'app/course/service/course.service';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 import { InstituteAdminServiceService } from 'app/instituteadminprofile/institute-admin-service.service';
-import { Enrolltostudent } from './class/enrolltostudent';
+
 import { EnrolltostudentService } from './service/enrolltostudent.service';
+import { Location } from '@angular/common';
+import { Enrolltostudent } from './class/enrolltostudent';
 
 @Component({
   selector: 'app-enrollstudent',
@@ -20,6 +22,8 @@ export class EnrollstudentComponent {
   _profile = new InstituteAdmin();
 
   _profileArray: InstituteAdmin[] = [];
+
+  _profileArrCopy: InstituteAdmin[] = [];
 
   institutions: AdminInstitution[] = [];
 
@@ -40,7 +44,28 @@ export class EnrollstudentComponent {
 
   instituteActive: boolean = true;
 
-  constructor(private _institutionService: AdmininstitutionService, private _deptService: DepartmentService, private courseService: CourseService, private profileService: InstituteAdminServiceService, private enrollstuService: EnrolltostudentService) { }
+
+  categories = [
+    { id: 1, name: 'Laravel' },
+    { id: 2, name: 'Codeigniter' },
+    { id: 3, name: 'React' },
+    { id: 4, name: 'PHP' },
+    { id: 5, name: 'Angular' },
+    { id: 6, name: 'Vue' },
+    { id: 7, name: 'JQuery', disabled: true },
+    { id: 8, name: 'Javascript' },
+  ];
+
+  selected = [
+
+  ];
+
+  getSelectedValue() {
+    console.log("getSelectedValue")
+    console.log(this.selected);
+  }
+
+  constructor(private _institutionService: AdmininstitutionService, private _deptService: DepartmentService, private courseService: CourseService, private profileService: InstituteAdminServiceService, private enrollstuService: EnrolltostudentService, private location: Location) { }
   ngOnInit() {
     this.getAllInstitution();
 
@@ -114,6 +139,7 @@ export class EnrollstudentComponent {
     this.profileService._getProfileByRoleAndInstitutionId(userRole, instId).subscribe(
       (response) => {
         this._profileArray = response;
+        this._profileArray.map((i) => { i.fullName = i.firstName + ' ' + i.lastName + ' - ' + i.adminEmail; return i; });
         console.log(response)
         // instId = this._profile.institutionId;
         console.log(instId);
@@ -126,22 +152,37 @@ export class EnrollstudentComponent {
 
   saveEnrolledStudent(courseId: number, profileId: number) {
 
+    // const profileIdList = [1, 2, 3];
+
+    console.log("Profile array copy down");
+    console.log(this._profileArrCopy);
+
+    console.log(this._profileArray);
     this.enrolledStudent.courseId = courseId;
     this.enrolledStudent.profileId = profileId;
 
     console.log(this.enrolledStudent)
 
-    this.enrollstuService.saveEnrolledStudents(this.enrolledStudent).subscribe(
-      (response) => {
 
-      }
-    )
+    for (let i = 0; i < this.selected.length; i++) {
 
+      this.enrolledStudent.profileId = this.selected[i];
+      this.enrollstuService.saveEnrolledStudents(this.enrolledStudent).subscribe(
+        (response) => {
 
+          alert("Student Enrolled Successfully");
+        }
+      )
+
+    }
 
 
 
   }
 
+  back() {
+    this.location.back();
+
+  }
 
 }
