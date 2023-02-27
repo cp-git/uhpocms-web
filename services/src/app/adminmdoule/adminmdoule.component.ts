@@ -16,7 +16,7 @@ export class AdminmdouleComponent {
 
   role: string | undefined;
 
-  userName: String | undefined;
+  userName!: string;
 
   constructor(private _route: Router, private _auth: AuthuserserviceService, private _authenticationService: AuthenticationserviceService, private _activatedRoute: ActivatedRoute) { }
 

@@ -97,6 +97,10 @@ export class AddDepartmentsComponent {
     }
   }
 
+  HomeBtn() {
+    this.location.back();
+  }
+
 
 
 

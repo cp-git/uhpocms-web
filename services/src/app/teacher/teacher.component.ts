@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class TeacherComponent {
 
   teacherId: any;
-  userName: String | undefined;
+  userName!: string;
   constructor(private _route: Router, private _activatedRoute: ActivatedRoute) {
     this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
   }
