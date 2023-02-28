@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Announcement } from 'app/announcement/announcement';
 import { AnnouncementService } from 'app/announcement/service/announcement.service';
 import { AuthService } from 'app/authlogin/auth.service';
@@ -14,8 +14,19 @@ export class AnnouncementComponent implements OnInit {
   announcements: Announcement[] = [];
   announcement: Announcement;
 
-  constructor(private announcementService: AnnouncementService, private router: Router, private authService: AuthService, private location: Location) {
+  currentAnnouncement: Announcement;
+  isAutherisedToAdd: boolean = false;
+  profileId: any;
+  userRole: any;
+  constructor(
+    private location: Location,
+    private announcementService: AnnouncementService,
+    private router: Router,
+    private authService: AuthService,
+    private activatedRoute: ActivatedRoute
+  ) {
     this.announcement = new Announcement();
+    this.currentAnnouncement = new Announcement();
   }
 
   ngOnInit(): void {
@@ -24,19 +35,62 @@ export class AnnouncementComponent implements OnInit {
     // } else {
 
     // }
-    this.getAllAnnouncements();
+    this.profileId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.userRole = this.activatedRoute.snapshot.params['role'];
+    this.changeRole(this.profileId, this.userRole);
+    // this.getAllAnnouncements();
+    // this.getAnnouncements(this.profileId, this.userRole);
   }
 
+  private getAnnouncements(profileId: number) {
+    this.announcementService.fetchAnnouncementByProfileId(profileId).subscribe(
+      response => {
+        this.announcements = response;
+      },
+      error => {
+        alert("Not able to fetch record");
+      }
+    );
+  }
+  private changeRole(profileId: number, userRole: string) {
+    switch (userRole) {
+      case "student":
+
+        this.isAutherisedToAdd = false;
+        this.getAnnouncements(profileId);
+        break;
+      case "teacher":
+        this.isAutherisedToAdd = true;
+        this.getAnnouncements(profileId);
+        break;
+      case "coadmin":
+        this.isAutherisedToAdd = true;
+        this.getAllAnnouncements();
+        break;
+      case "admin":
+        this.isAutherisedToAdd = true;
+        this.getAllAnnouncements();
+        break;
+    }
+
+  }
+  goBack(): void {
+    this.location.back();
+  }
   private getAllAnnouncements() {
     this.announcementService.fetchAllAnnouncements().subscribe(
       response => {
         this.announcements = response;
-
       },
       error => {
         // alert("Not able to fetch record");
       }
     );
+  }
+
+  viewAnnouncement(announement: Announcement) {
+    this.currentAnnouncement = announement;
+    this.router.navigate([`/announcement/${this.userRole}/view`, announement.id])
   }
 
   public deleteAnnouncementByTitle(title: string) {

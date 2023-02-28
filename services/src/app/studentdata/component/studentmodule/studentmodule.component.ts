@@ -12,6 +12,8 @@ import { Module } from 'app/teachermodule/module';
 })
 export class StudentmoduleComponent implements OnInit {
   studentId: any;
+  userName: any;
+
   courseId: any;
   moduleId: any;
   courses: Course[] = [];
@@ -25,6 +27,7 @@ export class StudentmoduleComponent implements OnInit {
   }
   ngOnInit(): void {
     this.studentId = this.activateRoute.snapshot.paramMap.get('id');
+    this.userName = this.activateRoute.snapshot.params['username'];
     this.loadCourseOfStudent(this.studentId);
     this.loadStudentAssignedCourses(this.studentId);
   }

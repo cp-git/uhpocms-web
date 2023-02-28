@@ -94,10 +94,10 @@ export class AuthenticationloginComponent {
                 alert(this._instituteAdminArray[i].userRole);
 
                 if (this._instituteAdminArray[i].userRole == 'admin') {
-                  this._route.navigate(['adminmodule/admin', userName])
+                  this._route.navigate(['adminmodule/admin', userName, { id: this._instituteAdminArray[i].adminId }]);
                 }
                 else if (this._instituteAdminArray[i].userRole == 'teacher') {
-                  this._route.navigate(['teacherdisplay/teacher', userName])
+                  this._route.navigate(['teacherdisplay/teacher', userName, { id: this._instituteAdminArray[i].adminId }]);
                 }
                 else if (this._instituteAdminArray[i].userRole == 'student') {
                   this._route.navigate(['studentdata/student', userName, { id: this._instituteAdminArray[i].adminId }]);

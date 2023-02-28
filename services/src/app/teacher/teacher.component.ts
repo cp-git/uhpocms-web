@@ -41,5 +41,8 @@ export class TeacherComponent {
     this._route.navigate(['authenticationlogin'])
   }
 
+  redirectToAnnouncements() {
+    this._route.navigate(['announcement/teacher', { id: this.teacherId }])
+  }
 
 }

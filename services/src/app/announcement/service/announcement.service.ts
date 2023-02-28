@@ -37,4 +37,9 @@ export class AnnouncementService {
   sendAnnouncementsToProfileIDs(id: number, profileIDs: number[]) {
     return this._http.post<Announcement>(`${this.announcementUrl}/send/` + id, profileIDs);
   }
+
+  fetchAnnouncementByProfileId(profileId: number) {
+    // alert(`${this.announcementUrl}/profileid?id=${profileId}`);
+    return this._http.get<Announcement[]>(`${this.announcementUrl}/profileid?id=${profileId}`);
+  }
 }

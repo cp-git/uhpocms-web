@@ -78,7 +78,7 @@ export class LoginComponentComponent implements OnInit {
   }
 
   RedirectToAnnouncement() {
-    this._route.navigate(['announcement'])
+    this._route.navigate(['announcement/admin', { id: '115' }])
 
   }
 
