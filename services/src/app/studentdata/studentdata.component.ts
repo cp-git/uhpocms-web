@@ -36,6 +36,7 @@ export class StudentdataComponent {
     this._route.navigate(['authenticationlogin'])
   }
 
+
   RedirectToStudentModule() {
     this._route.navigate(['studentmodule', { id: this.profileId }])
   }

@@ -59,6 +59,10 @@ import { StudentdataComponent } from './studentdata/studentdata.component';
 import { ActivationScreenComponent } from './teachermodule/activation-screen/activation-screen.component';
 import { Quiz } from './quiz/quiz';
 import { QuizComponent } from './quiz/quiz.component';
+
+import { EnrollstudentComponent } from './enrollstudent/enrollstudent.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+
 import { StudentmoduleComponent } from './studentdata/component/studentmodule/studentmodule.component';
 
 import { StudentCourseComponent } from './student/student-course/student-course.component';
@@ -121,6 +125,9 @@ import { CommonModule } from '@angular/common';
 
     ActivationScreenComponent,
     QuizComponent,
+
+    EnrollstudentComponent,
+
     StudentCourseComponent,
     TeacherCourseComponent,
     InactiveTeacherCourseComponent,
@@ -146,6 +153,8 @@ import { CommonModule } from '@angular/common';
     MatToolbarModule,
     BrowserModule,
     CommonModule
+    NgSelectModule
+
   ],
 
   providers: [

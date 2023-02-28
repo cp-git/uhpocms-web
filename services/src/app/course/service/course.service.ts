@@ -106,7 +106,14 @@ export class CourseService {
     return this._http.patch<any>(`${this.courseUrl}/activate/` + courseId, {});
   }
 
-  getCourseByDepartmentId(deptid: string) {
+
+  
+
+
+  getCourseByDepartmentId(deptid: number) {
     return this._http.get<any>("http://localhost:8090/course/uhpocms/course/deptId/" + deptid)
+
+
+
   }
 }
