@@ -16,7 +16,7 @@ export class AdminmdouleComponent {
 
   role: string | undefined;
 
-  userName: String | undefined;
+  userName!: string;
 
   constructor(private _route: Router, private _auth: AuthuserserviceService, private _authenticationService: AuthenticationserviceService, private _activatedRoute: ActivatedRoute) { }
 
@@ -59,6 +59,14 @@ export class AdminmdouleComponent {
 
   RedirectToAdminInstitution() {
     this._route.navigate(['displayinstitute'])
+  }
+
+  RedirectToRole() {
+    this._route.navigate(['adminrole'])
+  }
+
+  RedirectToAnnouncement() {
+    this._route.navigate(['announcement'])
   }
 
 

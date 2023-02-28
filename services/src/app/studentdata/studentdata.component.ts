@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class StudentdataComponent {
 
   profileId: any;
-  userName: String | undefined;
+  userName!: string;
   constructor(private _route: Router, private _activatedRoute: ActivatedRoute) {
 
   }
@@ -40,6 +40,7 @@ export class StudentdataComponent {
   RedirectToStudentModule() {
     this._route.navigate(['studentmodule', { id: this.profileId }])
   }
+
 
 
 

@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Authuser } from '../authuser';
 import { AuthuserserviceService } from '../service/authuserservice.service';
 
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-authuser',
   templateUrl: './authuser.component.html',
@@ -19,7 +21,8 @@ export class AuthuserComponent implements OnInit {
   constructor(
     private _service: AuthuserserviceService,
     private _activeRoute: ActivatedRoute,
-    private _route: Router
+    private _route: Router,
+    private location: Location
   ) { }
 
   authUserName!: string;
@@ -118,6 +121,7 @@ export class AuthuserComponent implements OnInit {
   }
 
   Home() {
-    this._route.navigate(['adminmodule/admin']);
+    this.location.back();
+    //this._route.navigate(['adminmodule/admin']);
   }
 }

@@ -72,6 +72,7 @@ import { InactiveTeacherCourseComponent } from './assignedCourseToTeacher/inacti
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -151,7 +152,9 @@ import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-
     MatIconModule,
     MatToolbarModule,
     BrowserModule,
+    CommonModule
     NgSelectModule
+
   ],
 
   providers: [

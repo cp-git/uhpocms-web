@@ -8,6 +8,7 @@ import { Department } from 'app/admindepartment/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
 import { Coursedepartment } from '../coursedepartment';
 import { CourseDepartmentService } from '../course-department.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-displaycourse',
@@ -41,6 +42,7 @@ export class CourseComponent {
     private _route: Router,
     private departmentService: DepartmentService,
     private courseDepartmentService: CourseDepartmentService,
+    private location: Location
   ) {
     this.loadAdminDepartments();
   }
@@ -98,11 +100,12 @@ export class CourseComponent {
     this._route.navigate(['updatecourse', courseName]);
   }
   Home() {
-    if (this._activatedRoute.snapshot.params['role'] == 'admin') { this._route.navigate(['adminmodule/admin']); }
+    this.location.back();
+    // if (this._activatedRoute.snapshot.params['role'] == 'admin') { this._route.navigate(['adminmodule/admin']); }
 
-    else if (this._activatedRoute.snapshot.params['role'] == 'teacher') { this._route.navigate(['teacherdisplay/teacher']); }
+    // else if (this._activatedRoute.snapshot.params['role'] == 'teacher') { this._route.navigate(['teacherdisplay/teacher']); }
 
-    else if (this._activatedRoute.snapshot.params['role'] == 'student') { this._route.navigate(['studentdata/student']); }
+    // else if (this._activatedRoute.snapshot.params['role'] == 'student') { this._route.navigate(['studentdata/student']); }
 
 
 

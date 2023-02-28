@@ -107,8 +107,12 @@ export class CourseService {
   }
 
 
+  
+
+
   getCourseByDepartmentId(deptid: number) {
     return this._http.get<any>("http://localhost:8090/course/uhpocms/course/deptId/" + deptid)
+
 
 
   }

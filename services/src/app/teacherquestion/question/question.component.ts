@@ -4,6 +4,7 @@ import { Category } from 'app/class/category';
 import { Quiz } from 'app/class/quiz';
 import { Question } from '../question';
 import { QuestionService } from '../service/question.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-question',
@@ -30,7 +31,8 @@ export class QuestionComponent implements OnInit {
   constructor(
     private _service: QuestionService,
     private _activeRoute: ActivatedRoute,
-    private _route: Router
+    private _route: Router,
+    private location: Location
   ) { }
   insertQuestion(que: Question) {
     // alert(JSON.stringify(que));
@@ -214,6 +216,7 @@ export class QuestionComponent implements OnInit {
       );
   }
   Home() {
-    this._route.navigate(['demo']);
+    this.location.back();
+    // this._route.navigate(['demo']);
   }
 }

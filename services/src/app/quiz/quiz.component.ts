@@ -9,6 +9,7 @@ import { Module } from 'app/module/module';
 import { ModuleService } from 'app/module/module.service';
 import { Quiz } from './quiz';
 import { QuizService } from './service/quiz.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-quiz',
@@ -38,7 +39,8 @@ export class QuizComponent {
     private _courseService: CourseService,
     private _categoryService: CategoryService,
     private _moduleService: ModuleService,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private location: Location
   ) {
     this.getAllQuizzes();
   }
@@ -204,10 +206,11 @@ export class QuizComponent {
 
   }
   back() {
+    this.location.back();
 
-    if (this._activatedRoute.snapshot.params['role'] == 'teacher') { this._route.navigate(['teacherdisplay/teacher']); }
+    // if (this._activatedRoute.snapshot.params['role'] == 'teacher') { this._route.navigate(['teacherdisplay/teacher']); }
 
-    else if (this._activatedRoute.snapshot.params['role'] == 'student') { this._route.navigate(['studentdata/student']); }
+    // else if (this._activatedRoute.snapshot.params['role'] == 'student') { this._route.navigate(['studentdata/student']); }
 
 
 
