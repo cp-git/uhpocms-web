@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment.development';
+import { Observable } from 'rxjs';
 import { Announcement } from '../announcement';
 
 @Injectable({
@@ -30,8 +31,8 @@ export class AnnouncementService {
     return this._http.put<Announcement>(`${this.announcementUrl}/` + announcement.announcementTitle, announcement);
   }
 
-  deleteAnnouncement(announcementTitle: string) {
-    return this._http.delete<Announcement>(`${this.announcementUrl}/` + announcementTitle);
+  deleteAnnouncementById(announcementId: number): Observable<any> {
+    return this._http.delete<any>(`${this.announcementUrl}/` + announcementId);
   }
 
   sendAnnouncementsToProfileIDs(id: number, profileIDs: number[]) {

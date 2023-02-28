@@ -93,8 +93,20 @@ export class AnnouncementComponent implements OnInit {
     this.router.navigate([`/announcement/${this.userRole}/view`, announement.id])
   }
 
-  public deleteAnnouncementByTitle(title: string) {
-    this.announcementService.deleteAnnouncement(title).subscribe(
+  // public deleteAnnouncementByTitle(title: string) {
+  //   this.announcementService.deleteAnnouncement(title).subscribe(
+  //     response => {
+  //       alert("deleted successfuly");
+  //       this.ngOnInit();
+  //     },
+  //     error => {
+  //       alert("deleted failed");
+  //     }
+  //   );
+  // }
+
+  public deleteAnnouncementById(announcementId: number) {
+    this.announcementService.deleteAnnouncementById(announcementId).subscribe(
       response => {
         alert("deleted successfuly");
         this.ngOnInit();
