@@ -152,7 +152,7 @@ import { CommonModule } from '@angular/common';
     MatIconModule,
     MatToolbarModule,
     BrowserModule,
-    CommonModule
+    CommonModule,
     NgSelectModule
 
   ],
