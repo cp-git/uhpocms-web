@@ -62,6 +62,7 @@ import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-
 import { ViewAnnouncementComponent } from './announcement/components/view-announcement/view-announcement.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -125,8 +126,9 @@ import { ViewAnnouncementComponent } from './announcement/components/view-announ
     MatIconModule,
     MatToolbarModule,
     BrowserModule,
+    NgSelectModule,
     CommonModule,
-    NgSelectModule
+
 
   ],
 
