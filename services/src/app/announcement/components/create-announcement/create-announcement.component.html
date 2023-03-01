@@ -4,7 +4,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Create Announcement</h5>
+                <h5 *ngIf="isCreateScreen" class="modal-title" id="exampleModalLabel">Create Announcement</h5>
+                <h5 *ngIf="!isCreateScreen" class="modal-title" id="exampleModalLabel">Announcement</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -13,12 +14,12 @@
                 <div class="mb-3">
                     <label class="col-form-label">Subject</label>
                     <input type="text" [(ngModel)]="announcement.announcementTitle" class="form-control"
-                        id="announcementTitle">
+                        id="announcementTitle" [disabled]="!isCreateScreen">
                 </div>
                 <div class="mb-3">
                     <label class="col-form-label">Message</label>
                     <textarea [(ngModel)]="announcement.announcementMessage" style="height: 121px" class="form-control"
-                        id="announcementMessage"></textarea>
+                        id="announcementMessage" [disabled]="!isCreateScreen"></textarea>
                 </div>
                 <div class="mb-3 row">
                     <div class="col-8 col-md-6">
@@ -30,7 +31,8 @@
                             <ul class="dropdown-menu">
                                 <div class="form-group">
 
-                                    <input type="checkbox" (change)="selectAll($event)">Select All
+                                    <input type="checkbox" (change)="selectAll($event)"
+                                        [disabled]="!isCreateScreen">Select All
                                     <select class="form-control" (click)="$event.stopPropagation()"
                                         [(ngModel)]="selectedRole" (change)="onRoleChange()">
                                         <option value="All" selected>All</option>
@@ -44,7 +46,8 @@
 
                                     <div *ngFor="let profile of filterRoles">
                                         <input type="checkbox" [checked]="profileIDs.includes(profile.adminId)"
-                                            (change)="onChange(profile.adminId, $event)" id="{{profile.adminId}}">
+                                            (change)="onChange(profile.adminId, $event)" id="{{profile.adminId}}"
+                                            [disabled]="!isCreateScreen">
                                         {{profile.adminEmail}}
                                     </div>
                                 </div>
@@ -58,7 +61,8 @@
             </div>
             <div class="modal-footer">
                 <button #closeModalBtn type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" (click)="sendAnnouncements(announcement)">Send</button>
+                <button *ngIf="isCreateScreen" type="button" class="btn btn-primary"
+                    (click)="sendAnnouncements(announcement)">Send</button>
             </div>
         </div>
     </div>

@@ -1,5 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { DepartmentComponent } from './admindepartment/department/department.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
@@ -16,22 +17,16 @@ import { HomeComponent } from './home/home.component';
 import { AddcourseComponent } from './course/addcourse/addcourse.component';
 import { UpdatecourseComponent } from './course/updatecourse/updatecourse.component';
 import { CourseComponent } from './course/displaycourse/course.component';
-
-
 import { CategoryComponent } from './category/UI/category/category.component';
 import { MainComponent } from './category/UI/main/main.component';
 import { AddModuleComponent } from './category/UI/add-module/add-module.component';
 import { AddCategoryComponent } from './category/UI/add-category/add-category.component';
-
 import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
 import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
 import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
-
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
-
 import { AddinstituteComponent } from './admin-institution/addinstitute/addinstitute.component';
 import { DisplayinstituteComponent } from './admin-institution/displayinstitute/displayinstitute.component';
-
 import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
 
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
@@ -60,8 +55,6 @@ import { InactiveTeacherCourseComponent } from './assignedCourseToTeacher/inacti
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
-import { ViewAnnouncementComponent } from './announcement/components/view-announcement/view-announcement.component';
-
 
 
 
@@ -143,19 +136,13 @@ const routes: Routes = [
   //quiz routes
   { path: 'quiz/:role', component: QuizComponent },
 
-
-
   { path: 'department/:id', component: ViewDepartmentComponent },
-
-
 
   { path: 'addinstitute', component: AddinstituteComponent },
 
   { path: 'displayinstitute', component: DisplayinstituteComponent },
   { path: 'displayinstitute/:adminInstitutionId', component: DisplayinstituteComponent },
   { path: 'displayinstitute/activate', component: ActivateInstitutionComponent },
-
-
 
   //display school urls
 
@@ -174,15 +161,6 @@ const routes: Routes = [
 
   //add multiple courses for department
   { path: 'courses', component: AddcourseComponent },
-
-
-
-
-
-
-
-
-
 
   //inserting  the quiz
 
@@ -216,7 +194,7 @@ const routes: Routes = [
         path: 'add', component: CreateAnnouncementComponent
       },
       {
-        path: 'view/:id', component: ViewAnnouncementComponent
+        path: 'view/:id', component: CreateAnnouncementComponent
       }
     ]
   }

@@ -89,7 +89,8 @@ export class AnnouncementComponent implements OnInit {
   }
 
   viewAnnouncement(announement: Announcement) {
-    this.currentAnnouncement = announement;
+    // this.currentAnnouncement = announement;
+    this.announcementService.selectedAnnouncement = announement;
     this.router.navigate([`/announcement/${this.userRole}/view`, announement.id])
   }
 
