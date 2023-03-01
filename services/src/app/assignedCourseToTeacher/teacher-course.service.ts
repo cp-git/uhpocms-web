@@ -16,4 +16,6 @@ export class TeacherCourseService {
   getInactiveAssignedCourseToTeacher(teacherId: number): Observable<any> {
     return this._http.get<any>("http://localhost:8090/course/uhpocms/course/inactive/teacherid/" + teacherId);
   }
+
+
 }
