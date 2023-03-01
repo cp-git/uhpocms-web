@@ -78,6 +78,7 @@ import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -151,7 +152,9 @@ import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-
     MatIconModule,
     MatToolbarModule,
     BrowserModule,
-    NgSelectModule
+    NgSelectModule,
+
+
   ],
 
   providers: [

@@ -60,19 +60,38 @@
                                     (click)=" getDepartmentByInstId(_profile.institutionId); getProfileByRoleAndInstId(_profile.institutionId)">
                                     <option *ngFor="let institute of institutions"
                                         value="{{institute.adminInstitutionId}}"
-                                        [selected]="institute.adminInstitutionId ">
+                                        [selected]="institute.adminInstitutionId " class="dropdown-item">
                                         {{institute.adminInstitutionName}}
                                     </option>
                                 </select>
-                                <!-- <select class="form-control">
-                                    <option *ngFor="let institute of institutions"
-                                        value="{{institute.adminInstitutionId}}"
-                                        [selected]="institute.adminInstitutionId ">
-                                        {{institute.adminInstitutionName}}
-                                    </option>
-                                </select> -->
+
+
+
+
                             </div>
                         </div>
+
+                        <!-- <div class="first-row-child">
+                            <div><label>Institution</label></div>
+                            <div class="form-group">
+
+                                <ng-select [items]="institutions" bindLabel="adminInstitutionName" [searchable]="true"
+                                    [closeOnSelect]="false" bindValue="adminInstitutionName"
+                                    placeholder="Select Institutions" [clearable]="true" appendTo="body"
+                                    [multiple]="true" [(ngModel)]="_profile.institutionId" [selectableGroup]="true"
+                                    [selectableGroupAsModel]="false" [virtualScroll]="true"
+                                    [addTag]=" getDepartmentByInstId(_profile.institutionId); getProfileByRoleAndInstId(_profile.institutionId)">
+
+                                
+                        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                            <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />
+                            {{item.adminInstitutionName}}
+                        </ng-template>
+                        </ng-select>
+
+                    </div>
+                </div> -->
+
                         <div class="first-row-child">
                             <div><label>Department</label></div>
 
@@ -112,15 +131,23 @@
                                 <!-- <ng-select [items]="_profile.adminId" placeholder="Select Category" appendTo="body"
                                     [multiple]="true" [(ngModel)]="_profileArrCopy">
                                 </ng-select> -->
+
+                                <!-- <ng-select [virtualScroll]="true" [items]="_profileArray" bindLabel="fullName"
+                                    [searchable]="true" [closeOnSelect]="false" bindValue="adminId"
+                                    placeholder="Select Students" [clearable]="true" appendTo="body" [multiple]="true"
+                                    [(ngModel)]="selected"> -->
+
+
                                 <ng-select [items]="_profileArray" bindLabel="fullName" [searchable]="true"
                                     [closeOnSelect]="false" bindValue="adminId" placeholder="Select Students"
                                     [clearable]="true" appendTo="body" [multiple]="true" [(ngModel)]="selected"
                                     groupBy="selectedAllGroup" [selectableGroup]="true" [selectableGroupAsModel]="false"
-                                    [virtualScroll]="shouldEnableVirtualScroll(_profileArray, 1)">
+                                    [virtualScroll]="true">
 
-
+                                    //code to display select all checkbox
                                     <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
-                                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" /> Select
+                                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" />
+                                        Select
                                         All
                                     </ng-template>
 
@@ -129,6 +156,10 @@
                                         <span style="display:block" class="ng-placeholder">Select Students</span>
                                     </ng-template>
 
+                                    <!-- <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" />
+                                        Select All
+                                    </ng-template> -->
 
 
 

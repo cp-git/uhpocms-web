@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { AdmininstitutionService } from 'app/admin-institution/service/admininstitution.service';
 import { Department } from 'app/admindepartment/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
@@ -7,6 +7,7 @@ import { CourseService } from 'app/course/service/course.service';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 import { InstituteAdminServiceService } from 'app/instituteadminprofile/institute-admin-service.service';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { EnrolltostudentService } from './service/enrolltostudent.service';
 import { Location } from '@angular/common';
@@ -16,6 +17,8 @@ import { Enrolltostudent } from './class/enrolltostudent';
   selector: 'app-enrollstudent',
   templateUrl: './enrollstudent.component.html',
   styleUrls: ['./enrollstudent.component.css']
+
+
 })
 export class EnrollstudentComponent {
 
@@ -41,9 +44,14 @@ export class EnrollstudentComponent {
 
   enrolledStudentArr: Enrolltostudent[] = [];
 
+  end: any;
+  size: number = 1;
+  loading = false;
 
   instituteActive: boolean = true;
 
+  maxResults = 10;
+  offset = 0;
 
   categories = [
     { id: 1, name: 'Laravel' },
@@ -87,20 +95,24 @@ export class EnrollstudentComponent {
   }
 
 
-  shouldEnableVirtualScroll(_profileArray: any, size: number): boolean {
+  shouldEnableVirtualScroll(_profileArrayForSelect: InstituteAdmin[], size: number): boolean {
 
-    if (!_profileArray) {
+    console.log("size" + size);
+    console.log("_profileArrayForSelect" + _profileArrayForSelect)
+
+    if (!_profileArrayForSelect) {
       return false;
     }
+    console.log(_profileArrayForSelect.length > size)
 
-    return _profileArray.length > size;
+    return _profileArrayForSelect.length > size;
   }
 
   private getAllInstitution() {
     // fetching all institution
     this._institutionService.fetchAdminInstitutionList().subscribe(
       (response) => {
-        // assigning received data to institution
+        // assigning received data to institutionfo
         this.institutions = response;
 
         //  cloning array from instituion to backupinst
@@ -199,6 +211,40 @@ export class EnrollstudentComponent {
 
 
   }
+
+  onScrollToEnd() {
+    console.log('onscrollEend');
+    this.fetchMore();
+  }
+
+
+
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: any) {
+    if (this.loading || this.size <= this._profileArray.length) {
+      return;
+    }
+
+    if ((event + 0) >= this._profileArray.length) {
+      this.fetchMore();
+    }
+  }
+
+  fetchMore() {
+    this.loading = true;
+    this.enrollstuService.setParams({
+      maxResults: this.maxResults,
+      offset: this.offset,
+    });
+    this.offset += 1;
+    this._profileArray;
+    // this.service.getTestsList()
+    //     .pipe(takeWhile(() => this.alive)).subscribe(() => {
+    //     this.loading = false
+    // })
+  }
+
+
 
   back() {
     this.location.back();

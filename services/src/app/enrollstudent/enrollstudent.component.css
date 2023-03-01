@@ -18,6 +18,11 @@ body {
 
 }
 
+::ng-deep ngx-scrollbar-thumb {
+    background-color: red;
+}
+
+
 #backbtn {
     margin-left: 97%;
     background-color: transparent;
