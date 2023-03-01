@@ -3,15 +3,18 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment.development';
 import { Observable } from 'rxjs';
 import { Announcement } from '../announcement';
+import { AnnouncementTo } from '../announcement-to';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnnouncementService {
-
+  public selectedAnnouncement: Announcement;
   private readonly announcementUrl = `${environment.announcementUrl}/announcement`;
-  // private readonly announcementUrl = `http://localhost:8090/announcement/uhpocms/announcement`
-  constructor(private _http: HttpClient) { }
+
+  constructor(private _http: HttpClient) {
+    this.selectedAnnouncement = new Announcement;
+  }
 
   fetchAllAnnouncements() {
     //alert(`${this.announcementUrl}?title=all`);
@@ -42,5 +45,9 @@ export class AnnouncementService {
   fetchAnnouncementByProfileId(profileId: number) {
     // alert(`${this.announcementUrl}/profileid?id=${profileId}`);
     return this._http.get<Announcement[]>(`${this.announcementUrl}/profileid?id=${profileId}`);
+  }
+
+  fetchProfileIdsByAnnouncementId(announcementId: number): Observable<AnnouncementTo[]> {
+    return this._http.get<AnnouncementTo[]>(`${this.announcementUrl}/profileid/${announcementId}`);
   }
 }

@@ -1,9 +1,11 @@
 
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Announcement } from 'app/announcement/announcement';
+import { AnnouncementTo } from 'app/announcement/announcement-to';
 import { AnnouncementService } from 'app/announcement/service/announcement.service';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-create-announcement',
@@ -12,11 +14,16 @@ import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 })
 export class CreateAnnouncementComponent {
 
+  @ViewChild('closeModalBtn', { static: true })     // for close modal when sent announcements
+  closeModalBtn!: ElementRef<any>;
+  @ViewChild('modal', { static: true })
+  modal!: ElementRef<any>;
+
+
   private announcementId: number;     // announcement id to add in to_list table
   private instituteAdmins: InstituteAdmin[] = [];     // data of institute admin profile for dropdown
   private sessionData: any;   // for session data
   private data: any;
-
   private students: InstituteAdmin[] = [];
   private admins: InstituteAdmin[] = [];
   private coadmins: InstituteAdmin[] = [];
@@ -24,24 +31,16 @@ export class CreateAnnouncementComponent {
   private otherRoles: InstituteAdmin[] = [];
   public filterRoles: InstituteAdmin[] = [];
 
-  @ViewChild('closeModalBtn', { static: true })     // for close modal when sent announcements
-  closeModalBtn!: ElementRef<any>;
-  @ViewChild('modal', { static: true })
-  modal!: ElementRef<any>;
-
-
   public announcement: Announcement;     // announcement for sending
   public profileIDs: number[] = [];    // for capturing ids of profiles
-
   public searchValue: any;     // for filter list of profiles in tropdown
   public filteredList: any = [];
-
   public selectedRole: any;    // array of student, admin, coadmin, teachers ids
-
   public users = new Map();
+  public currentAnnouncementProfileIds: AnnouncementTo[] = [];
 
-
-  constructor(private announcementService: AnnouncementService, private router: Router) {
+  public isCreateScreen: boolean = true;
+  constructor(private announcementService: AnnouncementService, private router: Router, private activatedRoute: ActivatedRoute) {
     this.announcement = new Announcement();
     this.announcementId = 0;
     this.selectedRole = "All";
@@ -49,17 +48,52 @@ export class CreateAnnouncementComponent {
 
   ngOnInit(): void {
     // getting institution profile data from session 
+    this.announcementId = this.activatedRoute.snapshot.params['id'];
+    if (this.announcementId > 0) {
+      this.announcement = this.announcementService.selectedAnnouncement;
+      this.announcementService.fetchProfileIdsByAnnouncementId(this.announcementId).subscribe(
+        response => {
+          this.profileIDs = [];
+          response.forEach(profileId => {
+            this.profileIDs.push(profileId.profileId);
+          });
+          console.log("loaded profile ids");
+        },
+        error => {
+          this.currentAnnouncementProfileIds = [];
+          console.log("failed to load profile ids" + error);
+        }
+      );
+      this.isCreateScreen = false;
+    } else {
+      this.isCreateScreen = true;
+    }
 
+    // loading all user profiles
     this.loadInstitutionProfile();
 
     // for separting orignal and filter list
     this.filteredList = this.instituteAdmins;
     this.filterRoles = this.instituteAdmins;
+
+    // sorting profiles as per role
     this.sortProfiles();
+  }
+
+  ngAfterViewInit() {
+    // subscribe to NavigationEnd event
+    // alert();
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      // call ngOnInit when NavigationEnd event fires
+      this.ngOnInit();
+    });
   }
 
   // getting institution profile data from session 
   private loadInstitutionProfile() {
+    this.instituteAdmins = [];
     this.sessionData = sessionStorage.getItem("instituteprofile");
     this.data = JSON.parse(this.sessionData);
 
