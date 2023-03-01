@@ -45,7 +45,7 @@ export class InsertinstituteadminprofileComponent {
     this.loadAllInactiveProfiles();
   }
 
-  addInstituteAdmin() {
+  _addInstituteAdmin() {
     this._instituteAdminService.saveOrUpdateProfile(this._instituteAdmin.userId, this._instituteAdmin).subscribe(
       response => {
         if (this._instituteAdmin.activeUser === true) {
