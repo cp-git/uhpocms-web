@@ -4,6 +4,7 @@ import { Route, Router } from '@angular/router';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 import { Email } from '../email';
 import { EmailService } from '../service/email.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-email',
@@ -19,7 +20,7 @@ export class EmailComponent {
   isHidden: boolean = false;
   data: any;
 
-  constructor(private _emailService: EmailService, private _route: Router) {
+  constructor(private _emailService: EmailService, private _route: Router, private location: Location) {
     this.email = new Email();
   }
 
@@ -165,6 +166,7 @@ export class EmailComponent {
 
   // back button
   homePage() {
-    this._route.navigate(['demo']);
+    this.location.back();
+    // this._route.navigate(['demo']);
   }
 }

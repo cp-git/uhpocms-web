@@ -60,6 +60,7 @@ import { InactiveTeacherCourseComponent } from './assignedCourseToTeacher/inacti
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
+import { ViewAnnouncementComponent } from './announcement/components/view-announcement/view-announcement.component';
 
 
 
@@ -93,7 +94,7 @@ const routes: Routes = [
   { path: 'teacher', component: TeacherComponent },
 
   { path: 'studentdata/student/:userName', component: StudentdataComponent },
-  { path: 'studentdata', component: StudentdataComponent },
+  // { path: 'studentdata', component: StudentdataComponent },
 
   { path: 'enrollstudent', component: EnrollstudentComponent },
 
@@ -195,7 +196,7 @@ const routes: Routes = [
 
   //teacherModule routes
   { path: 'teachermodule', component: TeachermoduleComponent },
-  { path: 'studentmodule', component: StudentmoduleComponent },
+  { path: 'studentmodule/:username', component: StudentmoduleComponent },
 
   { path: 'email', component: EmailComponent },
 
@@ -210,9 +211,12 @@ const routes: Routes = [
   { path: 'updatecourse/:courseName', component: UpdatecourseComponent },
   //announcement router
   {
-    path: 'announcement', component: AnnouncementComponent, children: [
+    path: 'announcement/:role', component: AnnouncementComponent, children: [
       {
         path: 'add', component: CreateAnnouncementComponent
+      },
+      {
+        path: 'view/:id', component: ViewAnnouncementComponent
       }
     ]
   }

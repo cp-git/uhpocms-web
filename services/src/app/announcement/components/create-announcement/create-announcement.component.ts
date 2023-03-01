@@ -140,16 +140,16 @@ export class CreateAnnouncementComponent {
     this.instituteAdmins.forEach(profile => {
       // alert(profile.userRole)
       switch (profile.userRole) {
-        case 'Admin':
+        case 'admin':
           this.admins.push(profile);
           break;
-        case 'CoAdmin':
+        case 'coadmin':
           this.coadmins.push(profile);
           break;
-        case 'Student':
+        case 'student':
           this.students.push(profile);
           break;
-        case 'Teacher':
+        case 'teacher':
           this.teachers.push(profile);
           break;
         default:

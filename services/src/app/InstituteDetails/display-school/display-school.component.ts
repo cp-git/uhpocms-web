@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Department } from 'app/admindepartment/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-display-school',
@@ -34,7 +35,8 @@ export class DisplaySchoolComponent {
   constructor(
     private _route: Router,
     private readonly deptService: DepartmentService,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private location: Location
   ) {
     this.admininstitution = new AdminInstitution();
     this.institutionId = 0;
@@ -92,7 +94,8 @@ export class DisplaySchoolComponent {
   }
 
   Display() {
-    this._route.navigate(['/display', this.id]);
+    this.location.back();
+    //this._route.navigate(['/display', this.id]);
   }
 
   addDepartment() {
