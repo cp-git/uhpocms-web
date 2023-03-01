@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row">
+    <div class="row" *ngIf="isAutherisedToAdd">
         <!-- Button trigger modal -->
         <div class="col-md-12 bg-light text-right">
             <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModal"
@@ -16,7 +16,7 @@
                     <th scope="col">Message</th>
                     <!-- <th scope="col">To</th> -->
                     <th scope="col">Sent By</th>
-                    <th scope="col">Delete</th>
+                    <th *ngIf="isAutherisedToAdd" scope="col">Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,7 +26,8 @@
                     <td>{{data.announcementMessage}}</td>
                     <!-- <td>{{data.announcementTo}}</td> -->
                     <td>{{data.announcementReadby}}</td>
-                    <td (click)="deleteAnnouncementByTitle(data.announcementTitle)"><span class="fa fa-trash"></span>
+                    <td *ngIf="isAutherisedToAdd" (click)="deleteAnnouncementById(data.id)"><span
+                            class="fa fa-trash"></span>
                     </td>
                 </tr>
 
