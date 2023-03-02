@@ -8,7 +8,7 @@ import { Department } from 'app/admindepartment/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
 import { Coursedepartment } from '../coursedepartment';
 import { CourseDepartmentService } from '../course-department.service';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-addcourse',
   templateUrl: './addcourse.component.html',
@@ -38,7 +38,9 @@ export class AddcourseComponent {
     private _activatedRoute: ActivatedRoute,
     private _route: Router,
     private departmentService: DepartmentService,
-    private courseDepartmentService: CourseDepartmentService
+    private courseDepartmentService: CourseDepartmentService,
+    private location: Location
+
   ) {
     this.loadAdminDepartments();
     this.courseDepartment = new Coursedepartment();
@@ -124,6 +126,7 @@ export class AddcourseComponent {
   }
 
   back() {
-    this._route.navigate(['course']);
+    this.location.back();
+    // this._route.navigate(['course']);
   }
 }

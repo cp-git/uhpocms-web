@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { AdminInstitution } from 'app/admindepartment/admin-institution/admin-institution';
 import { Department } from 'app/admindepartment/department';
@@ -19,13 +19,19 @@ export class ActivateDepartmentComponent implements OnInit {
   sessionData: any;
   data: any;
 
-  constructor(private _departmentService: DepartmentService, private _router: Router) {
+  userName!: string;
+  adminId: any;
+
+  constructor(private _departmentService: DepartmentService, private _router: Router, private _activatedRoute: ActivatedRoute) {
 
   }
 
   ngOnInit(): void {
     this.loadAdminInstitutions();
     this.getAllDeactivatedDepartments();
+    this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
+    this.userName = this._activatedRoute.snapshot.params['userName'];
+    console.log(this.userName)
 
   }
 
@@ -33,6 +39,7 @@ export class ActivateDepartmentComponent implements OnInit {
     this._departmentService.getAllDeactivatedDepartments().subscribe(
       response => {
         this.departments = response;
+        console.log(response);
       },
       error => {
         alert("Failed ot fetch data");
@@ -62,6 +69,6 @@ export class ActivateDepartmentComponent implements OnInit {
   }
 
   home() {
-    this._router.navigate(['department']);
+    this._router.navigate(['department', this.userName]);
   }
 }

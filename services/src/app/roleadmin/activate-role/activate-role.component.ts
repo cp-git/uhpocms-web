@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Admin } from 'app/roleadmin/admin';
 import { AdminroleserviceService } from '../adminroleservice.service';
@@ -11,12 +11,18 @@ import { AdminroleserviceService } from '../adminroleservice.service';
 })
 export class ActivateRoleComponent implements OnInit {
 
+  userName!: string;
+  adminId: any;
+
   adminRoles: Admin[] = [];
-  constructor(private _roleService: AdminroleserviceService, private _router: Router) {
+  constructor(private _roleService: AdminroleserviceService, private _router: Router, private _activatedRoute: ActivatedRoute) {
 
   }
 
   ngOnInit(): void {
+    this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
+    this.userName = this._activatedRoute.snapshot.params['userName'];
+    console.log(this.userName)
     this.loadAdminRoles();
   }
 
@@ -44,6 +50,6 @@ export class ActivateRoleComponent implements OnInit {
   }
 
   Home() {
-    this._router.navigate(['adminrole']);
+    this._router.navigate(['adminrole', this.userName]);
   }
 }

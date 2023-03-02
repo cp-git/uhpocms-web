@@ -91,12 +91,16 @@ const routes: Routes = [
 
   { path: 'enrollstudent', component: EnrollstudentComponent },
 
+  { path: 'enrollstudent/:userName', component: EnrollstudentComponent },
+
   { path: '', component: HomeComponent },
   //admin role routes
   { path: 'adminrole', component: AdminroleComponent },
 
+  { path: 'adminrole/:userName', component: AdminroleComponent },
+
   //activate role routes
-  { path: 'adminrole/activate', component: ActivateRoleComponent },
+  { path: 'adminrole/activate/:userName', component: ActivateRoleComponent },
 
   //auth user routes
   { path: 'authuser', component: AuthuserComponent },
@@ -109,12 +113,15 @@ const routes: Routes = [
 
   //instituteadmin routes
   { path: 'displayInstituteAdmin', component: DisplayInstituteAdminComponent },
+  { path: 'displayInstituteAdmin/:userName', component: DisplayInstituteAdminComponent },
 
   { path: 'displayInstituteAdmin/activate', component: ActivateProfileComponent },
 
 
   //insert intituteadmin profile
   { path: 'insertadminprofile', component: InsertinstituteadminprofileComponent },
+
+  { path: 'insertadminprofile/:userName', component: InsertinstituteadminprofileComponent },
 
   //update instituteadminprofile
   { path: 'updateinstituteadminprofile', component: UpdateinstituteadminprofileComponent },
@@ -130,8 +137,13 @@ const routes: Routes = [
   //admindepartment routes
   { path: 'department', component: DepartmentComponent },
 
+  { path: 'department/:userName', component: DepartmentComponent },
+
   //admindepartment routes
-  { path: 'department/activate', component: ActivateDepartmentComponent },
+  { path: 'department/departmentactivation', component: ActivateDepartmentComponent },
+
+  { path: 'department/departmentactivation/:userName', component: ActivateDepartmentComponent },
+
 
   //quiz routes
   { path: 'quiz/:role', component: QuizComponent },
