@@ -6,6 +6,17 @@ body {
 	height: 100%;
 }
 
+
+.myheader {
+	border: 1px groove grey;
+	background-color: aqua;
+}
+
+.myheader h1 {
+	text-align: center;
+
+}
+
 body {
 	margin: 0;
 	/* background: linear-gradient(45deg, #49a09d, #5f2c82); */

@@ -12,8 +12,8 @@ export class AdmininstitutionService {
   private readonly institutionUrl: string;
   constructor(private _http: HttpClient) {
 
-    // this.institutionUrl = `http://localhost:8090/admininstitution/uhpocms/institution`;
-    this.institutionUrl = `${environment.adminInstitutionUrl}/institution`;
+    this.institutionUrl = `http://localhost:8090/admininstitution/uhpocms/institution`;
+    //this.institutionUrl = `${environment.adminInstitutionUrl}/institution`;
 
   }
 

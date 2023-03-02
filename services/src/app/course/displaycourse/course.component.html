@@ -1,24 +1,25 @@
 <html>
 
     <body>
+        <div class="container-fluid">
+            <div class="myheader">
+                <h1>Course Administration</h1>
+            </div>
+        </div>
         <div class="header">
-            <a href="#default" class="logo">Courses</a>
             <div class="header-right">
 
-                <button (click)="Add()" class="icon" title="Add Course">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#E0E0E0"
-                        class="bi bi-plus-square-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
-                    </svg>
-                </button>
-                <button (click)="Home()" class="icon" title="Back">
+                <button class="btn btn-primary" style="margin-right: 50px;" (click)="Add()">Add Course</button>
+                <!-- <button (click)="Add()" class="icon" title="Add Course"> 
+
+                </button>-->
+                <!-- <button (click)="Home()" class="icon" title="Back">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#E0E0E0"
                         class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
                         <path
                             d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1z" />
                     </svg>
-                </button>
+                </button> -->
 
                 <button class="btn btn-success" (click)="activationScreen()">
                     InActive Courses</button>
@@ -340,8 +341,10 @@
 
                 </tbody>
             </table>
-            <!-- <td><button class="btn btn-primary" (click)="backToCourse()">Back</button></td> -->
+
         </div>
+
+        <button class="btn btn-primary" style="margin-left: 100px;" (click)="Home()">Back</button>
     </body>
 
 </html>

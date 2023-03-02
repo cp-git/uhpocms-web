@@ -169,6 +169,7 @@ export class EnrollstudentComponent {
   getProfileByRoleAndInstId(instId: number) {
 
     console.log("this.selected.length " + this.selected.length)
+    this.selected = [];
     const userRole = "student";
     instId = this._profile.institutionId;
     // console.log(instId);
@@ -207,6 +208,7 @@ export class EnrollstudentComponent {
         (response) => {
 
           if (i == 0) {
+
             alert("Student Enrolled Successfully");
           }
         }

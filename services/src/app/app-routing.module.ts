@@ -152,13 +152,18 @@ const routes: Routes = [
 
   { path: 'addinstitute', component: AddinstituteComponent },
 
+  { path: 'addinstitute/:userName', component: AddinstituteComponent },
+
   { path: 'displayinstitute', component: DisplayinstituteComponent },
+  { path: 'displayinstitute/:userName', component: DisplayinstituteComponent },
+
   { path: 'displayinstitute/:adminInstitutionId', component: DisplayinstituteComponent },
   { path: 'displayinstitute/activate', component: ActivateInstitutionComponent },
 
   //display school urls
 
   { path: 'display', component: DisplaySchoolComponent },
+
   { path: 'display/:id', component: DisplaySchoolComponent },
 
 
@@ -170,6 +175,9 @@ const routes: Routes = [
 
   //add department for institute
   { path: 'departments', component: AddDepartmentsComponent },
+
+  { path: 'departments/:userName', component: AddDepartmentsComponent },
+
 
   //add multiple courses for department
   { path: 'courses', component: AddcourseComponent },

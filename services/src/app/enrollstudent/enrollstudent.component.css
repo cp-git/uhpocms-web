@@ -12,6 +12,23 @@ body {
     font-size: 1.5rem;
 }
 
+.heading {
+    border: 1px groove red;
+    background-color: aqua;
+}
+
+.heading h1 {
+    text-align: center;
+    font-size: 28px;
+
+}
+
+#btndemo {
+    width: 140px;
+    height: 30px;
+    margin-left: 100px;
+}
+
 #loginbtn {
     /* margin-left: 36%;
     margin-top: 10%; */
