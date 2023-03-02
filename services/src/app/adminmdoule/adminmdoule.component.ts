@@ -28,6 +28,10 @@ export class AdminmdouleComponent {
     this._route.navigate(['authuser']);
 
   }
+  RedirectToAssignTeacher() {
+    this._route.navigate(['assignteacher']);
+
+  }
 
   RedirectToInstituteAdminProfile() {
     this._route.navigate(['displayInstituteAdmin', this.userName]);
