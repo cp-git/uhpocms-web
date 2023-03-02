@@ -21,6 +21,7 @@ export class AdminmdouleComponent {
     this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
 
+
   }
 
   RedirectTOAuth() {
@@ -33,7 +34,7 @@ export class AdminmdouleComponent {
   }
 
   RedirectToInstituteAdminProfile() {
-    this._route.navigate(['displayInstituteAdmin']);
+    this._route.navigate(['displayInstituteAdmin', this.userName]);
 
   }
 
@@ -44,7 +45,7 @@ export class AdminmdouleComponent {
   }
 
   RedirectToAdminDept() {
-    this._route.navigate(['department']);
+    this._route.navigate(['department', this.userName]);
   }
 
   RedirectTOLogin() {
@@ -54,16 +55,16 @@ export class AdminmdouleComponent {
 
   RedirectToEnrollStudent() {
 
-    this._route.navigate(['enrollstudent'])
+    this._route.navigate(['enrollstudent', this.userName])
 
   }
 
   RedirectToAdminInstitution() {
-    this._route.navigate(['displayinstitute'])
+    this._route.navigate(['displayinstitute', this.userName])
   }
 
   RedirectToRole() {
-    this._route.navigate(['adminrole'])
+    this._route.navigate(['adminrole', this.userName])
   }
 
   RedirectToAnnouncement() {

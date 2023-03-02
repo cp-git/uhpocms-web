@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Department } from 'app/admindepartment/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
 import { Authuser } from 'app/authuser/authuser';
@@ -30,12 +30,16 @@ export class InsertinstituteadminprofileComponent {
   data: any;
   foundMatch: boolean = false;
   submitButton: string = 'Save';
+
+  userName!: string;
+  adminId: any;
   constructor(
     private _instituteAdminService: InstituteAdminServiceService,
     private _route: Router,
     private authUserService: AuthuserserviceService,
     private departmentService: DepartmentService,
-    private adminRoleService: AdminroleserviceService
+    private adminRoleService: AdminroleserviceService,
+    private _activatedRoute: ActivatedRoute
   ) {
     this.loadAdminInstitutions();
     this.loadAdminRoles();
@@ -43,6 +47,15 @@ export class InsertinstituteadminprofileComponent {
     this.currentAuthUser = new Authuser();
     this.loadAdminDepartments();
     this.loadAllInactiveProfiles();
+  }
+
+  ngOnInit(): void {
+
+    this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
+    this.userName = this._activatedRoute.snapshot.params['userName'];
+    console.log(this.userName)
+
+
   }
 
   _addInstituteAdmin() {
@@ -178,7 +191,7 @@ export class InsertinstituteadminprofileComponent {
 
 
   backToDisplayScreen() {
-    this._route.navigate(['displayInstituteAdmin']);
+    this._route.navigate(['displayInstituteAdmin', this.userName]);
   }
 
   onFileSelected(event: any) {

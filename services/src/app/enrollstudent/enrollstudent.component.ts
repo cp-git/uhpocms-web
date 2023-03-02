@@ -22,6 +22,7 @@ import { Enrolltostudent } from './class/enrolltostudent';
 })
 export class EnrollstudentComponent {
 
+  _disablevar: boolean = false;
   _profile = new InstituteAdmin();
 
   _profileArray: InstituteAdmin[] = [];
@@ -64,9 +65,7 @@ export class EnrollstudentComponent {
     { id: 8, name: 'Javascript' },
   ];
 
-  selected = [
-
-  ];
+  selected = [];
 
   getSelectedValue() {
     console.log("getSelectedValue")
@@ -77,8 +76,9 @@ export class EnrollstudentComponent {
   ngOnInit() {
     this.getAllInstitution();
 
+    console.log("couresId  " + this.course.courseId)
 
-
+    console.log("this.selected.length " + this.selected.length)
 
     console.log(this._profile.institutionId);
   }
@@ -110,6 +110,7 @@ export class EnrollstudentComponent {
 
   private getAllInstitution() {
     // fetching all institution
+    console.log("this.selected.length " + this.selected.length)
     this._institutionService.fetchAdminInstitutionList().subscribe(
       (response) => {
         // assigning received data to institutionfo
@@ -133,7 +134,7 @@ export class EnrollstudentComponent {
   }
 
   getDepartmentByInstId(instId: number) {
-
+    console.log("this.selected.length " + this.selected.length)
     instId = this._profile.institutionId;
 
     this._deptService.getDepartmentByInstitutionId(instId).subscribe(
@@ -150,6 +151,7 @@ export class EnrollstudentComponent {
 
   getCoursesByDeptId(deptId: number) {
 
+    console.log("this.selected.length " + this.selected.length)
     console.log(this.department);
     console.log(deptId);
     deptId = this.department.id;
@@ -165,6 +167,9 @@ export class EnrollstudentComponent {
 
 
   getProfileByRoleAndInstId(instId: number) {
+
+    console.log("this.selected.length " + this.selected.length)
+    this.selected = [];
     const userRole = "student";
     instId = this._profile.institutionId;
     // console.log(instId);
@@ -202,9 +207,15 @@ export class EnrollstudentComponent {
       this.enrollstuService.saveEnrolledStudents(this.enrolledStudent).subscribe(
         (response) => {
 
-          alert("Student Enrolled Successfully");
+          if (i == 0) {
+
+            alert("Student Enrolled Successfully");
+          }
         }
+
+
       )
+
 
     }
 
@@ -244,6 +255,21 @@ export class EnrollstudentComponent {
     // })
   }
 
+
+  disablefunc() {
+
+    console.log("this.selected.length " + this.selected.length)
+
+    if ((this.selected.length != 0) && (this.course.courseId != undefined) && (this.department.id != undefined)) {
+      this._disablevar = true;
+
+    }
+
+    else {
+      this._disablevar = false;
+    }
+    console.log("diasable var   " + this._disablevar)
+  }
 
 
   back() {

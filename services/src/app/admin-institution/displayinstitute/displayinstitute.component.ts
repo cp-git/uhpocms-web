@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 import { AdminInstitution } from '../admininstitution';
@@ -22,7 +22,10 @@ export class DisplayinstituteComponent {
   hideId: boolean = false;
   admininstitution: AdminInstitution;
 
-  constructor(private _institutionService: AdmininstitutionService, private _route: Router, private location: Location) {
+  userName!: string;
+  adminId: any;
+
+  constructor(private _institutionService: AdmininstitutionService, private _route: Router, private location: Location, private _activatedRoute: ActivatedRoute) {
     this.admininstitution = new AdminInstitution();
   }
 
@@ -30,6 +33,9 @@ export class DisplayinstituteComponent {
     if (sessionStorage.getItem('authenticatedUser') == null) {
       this._route.navigate(['login']);
     } else {
+      this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
+      this.userName = this._activatedRoute.snapshot.params['userName'];
+      console.log(this.userName)
       this.getAllInstitution();
 
     }
@@ -41,6 +47,11 @@ export class DisplayinstituteComponent {
       this.admininstitution = {} as AdminInstitution;
       this.admininstitution.adminInstitutionIsActive = true;
     }
+  }
+
+
+  addInstitute() {
+    this._route.navigate(['addinstitute', this.userName])
   }
 
   private getAllInstitution() {

@@ -5,3 +5,20 @@
 button {
     margin-bottom: 10px;
 }
+
+td {
+    white-space: nowrap;
+    max-width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.myheader {
+    border: 1px groove grey;
+    background-color: aqua;
+}
+
+.myheader h1 {
+    text-align: center;
+
+}

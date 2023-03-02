@@ -5,6 +5,7 @@ import { DepartmentService } from 'app/admindepartment/service/department.servic
 import { Course } from 'app/course/course';
 import { CourseService } from 'app/course/course.service';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-coursedepartment',
@@ -34,7 +35,8 @@ export class CoursedepartmentComponent {
   constructor(
     private _route: Router,
     private readonly courseService: CourseService,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private location: Location
 
   ) { this.admininstitution = new AdminInstitution(); }
 
@@ -78,6 +80,11 @@ export class CoursedepartmentComponent {
 
   addCourses() {
     this._route.navigate(['courses']);
+
+  }
+
+  Display() {
+    this.location.back();
 
   }
 

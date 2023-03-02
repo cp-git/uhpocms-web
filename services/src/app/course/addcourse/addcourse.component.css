@@ -2,7 +2,7 @@
 
 html,
 body {
-    background-image: url('../../../assets/img/addbooks.jpg');
+    /*background-image: url('../../../assets/img/addbooks.jpg');*/
     /* F:\uhpocms-web\main\uhpocms-web\services\src\assets\img */
     background-size: cover;
     background-repeat: no-repeat;
@@ -14,6 +14,22 @@ body {
 #loginbtn {
     /* margin-left: 36%;
     margin-top: 10%; */
+}
+
+.myheader {
+    border: 1px groove grey;
+    background-color: aqua;
+}
+
+.myheader h1 {
+    text-align: center;
+
+}
+
+#btndemo {
+    width: 120px;
+    height: 30px;
+    margin-left: 100px;
 }
 
 #backbtn {

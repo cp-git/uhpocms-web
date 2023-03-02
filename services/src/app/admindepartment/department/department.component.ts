@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdminInstitution } from '../admin-institution/admin-institution';
 import { Department } from '../department';
 import { DepartmentService } from '../service/department.service';
@@ -19,13 +19,16 @@ export class DepartmentComponent implements OnInit {
   hideId: boolean = false;
   department: Department;
 
+  userName!: string;
+  adminId: any;
+
   // array of admin institution
 
   adminInstitutions: AdminInstitution[] = [];
   sessionData: any;
   data: any;
 
-  constructor(private _deptService: DepartmentService, private _route: Router, private location: Location) {
+  constructor(private _deptService: DepartmentService, private _route: Router, private location: Location, private _activatedRoute: ActivatedRoute) {
     this.department = new Department();
   }
 
@@ -33,6 +36,9 @@ export class DepartmentComponent implements OnInit {
     if (sessionStorage.getItem('authenticatedUser') == null) {
       this._route.navigate(['login']);
     } else {
+      this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
+      this.userName = this._activatedRoute.snapshot.params['userName'];
+      console.log(this.userName)
       this.getAllDepartments();
       this.loadAdminInstitutions();
     }
@@ -189,11 +195,12 @@ export class DepartmentComponent implements OnInit {
   }
 
   Home() {
-    this.location.back();
-    //this._route.navigate(['adminmodule/admin']);
+    // this.location.back();
+    this._route.navigate(['adminmodule/admin', this.userName]);
   }
 
   redirectToActivateDepartment() {
-    this._route.navigate(['department/activate']);
+    console.log("in department..")
+    this._route.navigate(['department/departmentactivation', this.userName]);
   }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Authuser } from 'app/authuser/authuser';
 import { AdminInstitution } from '../admin-institution';
 import { InstituteAdmin } from '../institute-admin';
@@ -29,16 +29,25 @@ export class DisplayInstituteAdminComponent {
   isHidden: boolean = true;
   selected: any;
 
+  userName!: string;
+  adminId: any;
+
+
   constructor(
     private _instituteAdminService: InstituteAdminServiceService,
     private _route: Router,
-    private location: Location
+    private location: Location,
+    private _activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     if (sessionStorage.getItem('authenticatedUser') == null) {
       this._route.navigate(['login']);
     } else {
+
+      this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
+      this.userName = this._activatedRoute.snapshot.params['userName'];
+      console.log(this.userName)
       this._getAllList();
       this._getAllAdminInstitutions();
       this._getAllAuthUsers();
@@ -85,7 +94,7 @@ export class DisplayInstituteAdminComponent {
 
   //insert a data in database
   _addInstituteAdmin() {
-    this._route.navigate(['insertadminprofile'])
+    this._route.navigate(['insertadminprofile', this.userName])
 
   }
 
@@ -134,11 +143,11 @@ export class DisplayInstituteAdminComponent {
   }
 
   Home() {
-    this.location.back();
-    // this._route.navigate(['adminmodule/admin']);
+    //this.location.back();
+    this._route.navigate(['adminmodule/admin', this.userName]);
   }
 
   redirectToActivateProfile() {
-    this._route.navigate(['displayInstituteAdmin/activate']);
+    this._route.navigate(['displayInstituteAdmin/activate', this.userName]);
   }
 }

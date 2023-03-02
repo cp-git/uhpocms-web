@@ -32,6 +32,9 @@ export class DisplaySchoolComponent {
 
   department = new Department();
 
+  userName!: string;
+  adminId: any;
+
   constructor(
     private _route: Router,
     private readonly deptService: DepartmentService,
@@ -44,6 +47,8 @@ export class DisplaySchoolComponent {
   }
 
   ngOnInit(): void {
+
+
 
     this.institutionId = this.route.snapshot.paramMap.get('id');
 

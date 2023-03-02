@@ -1,5 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { DepartmentComponent } from './admindepartment/department/department.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
@@ -16,22 +17,16 @@ import { HomeComponent } from './home/home.component';
 import { AddcourseComponent } from './course/addcourse/addcourse.component';
 import { UpdatecourseComponent } from './course/updatecourse/updatecourse.component';
 import { CourseComponent } from './course/displaycourse/course.component';
-
-
 import { CategoryComponent } from './category/UI/category/category.component';
 import { MainComponent } from './category/UI/main/main.component';
 import { AddModuleComponent } from './category/UI/add-module/add-module.component';
 import { AddCategoryComponent } from './category/UI/add-category/add-category.component';
-
 import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
 import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
 import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
-
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
-
 import { AddinstituteComponent } from './admin-institution/addinstitute/addinstitute.component';
 import { DisplayinstituteComponent } from './admin-institution/displayinstitute/displayinstitute.component';
-
 import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
 
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
@@ -60,8 +55,10 @@ import { InactiveTeacherCourseComponent } from './assignedCourseToTeacher/inacti
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
+
 import { ViewAnnouncementComponent } from './announcement/components/view-announcement/view-announcement.component';
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
+
 
 
 
@@ -99,12 +96,16 @@ const routes: Routes = [
 
   { path: 'enrollstudent', component: EnrollstudentComponent },
 
+  { path: 'enrollstudent/:userName', component: EnrollstudentComponent },
+
   { path: '', component: HomeComponent },
   //admin role routes
   { path: 'adminrole', component: AdminroleComponent },
 
+  { path: 'adminrole/:userName', component: AdminroleComponent },
+
   //activate role routes
-  { path: 'adminrole/activate', component: ActivateRoleComponent },
+  { path: 'adminrole/activate/:userName', component: ActivateRoleComponent },
 
   //auth user routes
   { path: 'authuser', component: AuthuserComponent },
@@ -117,12 +118,15 @@ const routes: Routes = [
 
   //instituteadmin routes
   { path: 'displayInstituteAdmin', component: DisplayInstituteAdminComponent },
+  { path: 'displayInstituteAdmin/:userName', component: DisplayInstituteAdminComponent },
 
   { path: 'displayInstituteAdmin/activate', component: ActivateProfileComponent },
 
 
   //insert intituteadmin profile
   { path: 'insertadminprofile', component: InsertinstituteadminprofileComponent },
+
+  { path: 'insertadminprofile/:userName', component: InsertinstituteadminprofileComponent },
 
   //update instituteadminprofile
   { path: 'updateinstituteadminprofile', component: UpdateinstituteadminprofileComponent },
@@ -138,29 +142,33 @@ const routes: Routes = [
   //admindepartment routes
   { path: 'department', component: DepartmentComponent },
 
+  { path: 'department/:userName', component: DepartmentComponent },
+
   //admindepartment routes
-  { path: 'department/activate', component: ActivateDepartmentComponent },
+  { path: 'department/departmentactivation', component: ActivateDepartmentComponent },
+
+  { path: 'department/departmentactivation/:userName', component: ActivateDepartmentComponent },
+
 
   //quiz routes
   { path: 'quiz/:role', component: QuizComponent },
 
-
-
   { path: 'department/:id', component: ViewDepartmentComponent },
-
-
 
   { path: 'addinstitute', component: AddinstituteComponent },
 
+  { path: 'addinstitute/:userName', component: AddinstituteComponent },
+
   { path: 'displayinstitute', component: DisplayinstituteComponent },
+  { path: 'displayinstitute/:userName', component: DisplayinstituteComponent },
+
   { path: 'displayinstitute/:adminInstitutionId', component: DisplayinstituteComponent },
   { path: 'displayinstitute/activate', component: ActivateInstitutionComponent },
-
-
 
   //display school urls
 
   { path: 'display', component: DisplaySchoolComponent },
+
   { path: 'display/:id', component: DisplaySchoolComponent },
 
 
@@ -173,17 +181,11 @@ const routes: Routes = [
   //add department for institute
   { path: 'departments', component: AddDepartmentsComponent },
 
+  { path: 'departments/:userName', component: AddDepartmentsComponent },
+
+
   //add multiple courses for department
   { path: 'courses', component: AddcourseComponent },
-
-
-
-
-
-
-
-
-
 
   //inserting  the quiz
 
@@ -217,7 +219,7 @@ const routes: Routes = [
         path: 'add', component: CreateAnnouncementComponent
       },
       {
-        path: 'view/:id', component: ViewAnnouncementComponent
+        path: 'view/:id', component: CreateAnnouncementComponent
       }
     ]
   }
