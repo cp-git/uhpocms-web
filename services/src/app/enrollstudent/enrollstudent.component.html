@@ -57,7 +57,8 @@
                             <div><label>Institution</label></div>
                             <div class="form-group">
                                 <select [(ngModel)]="_profile.institutionId" class="form-control"
-                                    (click)=" getDepartmentByInstId(_profile.institutionId); getProfileByRoleAndInstId(_profile.institutionId)">
+                                    (click)=" getDepartmentByInstId(_profile.institutionId); getProfileByRoleAndInstId(_profile.institutionId)"
+                                    (change)="disablefunc()">
                                     <option *ngFor="let institute of institutions"
                                         value="{{institute.adminInstitutionId}}"
                                         [selected]="institute.adminInstitutionId " class="dropdown-item">
@@ -97,7 +98,7 @@
 
                             <div class="form-group">
                                 <select [(ngModel)]="department.id" class="form-control"
-                                    (click)=" getCoursesByDeptId(department.id)">
+                                    (click)=" getCoursesByDeptId(department.id)" (change)="disablefunc()">
                                     <option *ngFor="let department of departments" value="{{department.id}}"
                                         [selected]="department.id">
                                         {{department.name}}
@@ -109,7 +110,7 @@
                         <div class="first-row-child">
                             <div><label>Course</label></div>
                             <div class="form-group">
-                                <select [(ngModel)]="course.courseId" class="form-control">
+                                <select [(ngModel)]="course.courseId" class="form-control" (change)="disablefunc()">
                                     <option *ngFor="let course of courses" value="{{course.courseId}}"
                                         [selected]="course.courseId">
                                         {{course.courseName}}
@@ -142,7 +143,7 @@
                                     [closeOnSelect]="false" bindValue="adminId" placeholder="Select Students"
                                     [clearable]="true" appendTo="body" [multiple]="true" [(ngModel)]="selected"
                                     groupBy="selectedAllGroup" [selectableGroup]="true" [selectableGroupAsModel]="false"
-                                    [virtualScroll]="true">
+                                    [virtualScroll]="true" (change)="disablefunc()">
 
                                     //code to display select all checkbox
                                     <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
@@ -161,12 +162,19 @@
                                         Select All
                                     </ng-template> -->
 
+                                    <!-- <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                        <div>
+                                          <span>{{item.firstName}}</span>
+                                          <span>{{item.lastName}}</span>
+                                        </div>
+                                      </ng-template>    -->
+
 
 
                                     <!-- code to display checkbox  -->
                                     <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                                         <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />
-                                        {{item.fullName}}
+                                        {{item.firstName}} {{item.lastName}} {{item.adminEmail}}
                                     </ng-template>
                                 </ng-select>
 
@@ -180,7 +188,12 @@
                     <div class="last-row">
                         <div class="form-group">
                             <!-- <button class="form-control" id="loginbtn" class="btn  login_btn">SAVE</button> -->
-                            <button class="form-control" id="loginbtn" class="btn  login_btn"
+                            <button class="form-control" id="loginbtn" class="btn  login_btn" [disabled]="true"
+                                *ngIf="!_disablevar"
+                                (click)="saveEnrolledStudent(course.courseId,_profile.adminId); getSelectedValue()"
+                                title="Update Course">SAVE</button>
+
+                            <button class="form-control" id="loginbtn" class="btn  login_btn" *ngIf="_disablevar"
                                 (click)="saveEnrolledStudent(course.courseId,_profile.adminId); getSelectedValue()"
                                 title="Update Course">SAVE</button>
                         </div>
