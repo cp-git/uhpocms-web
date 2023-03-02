@@ -113,7 +113,7 @@ export class AddcourseComponent {
             if (this.courses.length > 0) {
               this.isVisible = false;
             }
-            this._route.navigate(['course/userrole/admin']);
+            this.location.back();
           },
           error => {
             alert("Course added but failed to assign");

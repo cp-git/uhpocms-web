@@ -56,7 +56,7 @@ export class AdminmdouleComponent {
   }
 
   RedirectToAdminInstitution() {
-    this._route.navigate(['displayinstitute'])
+    this._route.navigate(['displayinstitute', this.userName])
   }
 
   RedirectToRole() {

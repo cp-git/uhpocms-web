@@ -3,6 +3,7 @@ body {
 }
 
 .card {
+    height: 200px;
     border: none;
     border-radius: 10px
 }
@@ -76,7 +77,9 @@ body {
 }
 
 #demo {
-    margin-left: 190px;
+    margin-left: 180px;
+    width: 160px;
+    height: 40px;
 }
 
 .heading {
