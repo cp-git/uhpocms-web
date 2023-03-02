@@ -206,7 +206,9 @@ export class EnrollstudentComponent {
       this.enrollstuService.saveEnrolledStudents(this.enrolledStudent).subscribe(
         (response) => {
 
-          alert("Student Enrolled Successfully");
+          if (i == 0) {
+            alert("Student Enrolled Successfully");
+          }
         }
 
 
