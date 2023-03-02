@@ -4,6 +4,8 @@ import { Course } from 'app/class/course';
 import { Module } from '../module';
 import { TeachermoduleserviceService } from '../service/teachermoduleservice.service';
 import { Location } from '@angular/common';
+import { ModuleFile } from '../module-file/class/module-file';
+import { ModuleFileService } from '../module-file/module-file.service';
 
 @Component({
   selector: 'app-teachermodule',
@@ -14,6 +16,9 @@ export class TeachermoduleComponent {
   controlEnabled: boolean = true;
   module = new Module();
   _teacherModule: Module[] = []; //for all module data
+
+  modulesFile: ModuleFile[] = [];
+  moduleFile = new ModuleFile();
 
   inActivationScreenStatus: boolean = false;
   activationScreenStatus: boolean = false;
@@ -46,8 +51,13 @@ export class TeachermoduleComponent {
     private _service: TeachermoduleserviceService,
     private _activatedRoute: ActivatedRoute,
     private _route: Router,
-    private location: Location
+    private location: Location,
+    private moduleFileService: ModuleFileService
   ) { }
+
+  RedirectToModuleFile() {
+    this._route.navigate(['modulefile']);
+  }
 
   moduleName!: string;
 
@@ -236,6 +246,21 @@ export class TeachermoduleComponent {
       );
   }
 
+  addLesson(moduleId: number, moduleFile: ModuleFile) {
+    this.moduleFile.moduleId = moduleId;
+    this.moduleFile.moduleFile = moduleFile.moduleFile;
+    this.moduleFile.moduleFileIsActive = true;
 
+    this.moduleFileService.addModuleFile(this.moduleFile).subscribe(
+      (data) => {
+        //alert(this.moduleFile)
+        //console.log(data);
+        this.moduleFile = data;
+        alert('Lesson Added successfully');
+        this.ngOnInit();
+      },
+      (error) => alert('failed to upload ')
+    );
+  }
 
 }
