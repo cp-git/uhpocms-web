@@ -27,6 +27,9 @@ export class AdminroleComponent {
 
   roleName!: string;
 
+  userName!: string;
+  adminId: any;
+
   addrole(role: Admin) {
     //alert(JSON.stringify(role));
     this.admin.roleName = role.roleName;
@@ -49,6 +52,10 @@ export class AdminroleComponent {
     if (sessionStorage.getItem('authenticatedUser') == null) {
       this._route.navigate(['/login']);
     } else {
+
+      this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
+      this.userName = this._activatedRoute.snapshot.params['userName'];
+      console.log(this.userName)
       this._service.fetchadminlist().subscribe(
         (data) => {
           console.log('Response Received...');
@@ -105,11 +112,11 @@ export class AdminroleComponent {
   }
 
   Home() {
-    this.location.back();
-    //this._route.navigate(['demo']);
+    //this.location.back();
+    this._route.navigate(['adminmodule/admin', this.userName]);
   }
 
   redirectToActivateRole() {
-    this._route.navigate(['adminrole/activate']);
+    this._route.navigate(['adminrole/activate', this.userName]);
   }
 }
