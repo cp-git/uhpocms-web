@@ -1,3 +1,8 @@
+<div class="container-fluid">
+    <div class="myheader">
+        <h1>Announcement</h1>
+    </div>
+</div>
 <div class="container">
     <div class="row" *ngIf="isAutherisedToAdd">
         <!-- Button trigger modal -->
@@ -23,9 +28,11 @@
                 <tr *ngFor="let data of announcements; let i=index">
                     <th scope="row">{{i+1}}</th>
                     <td (click)="viewAnnouncement(data)" data-toggle="modal" data-target="#exampleModal">
-                        {{data.announcementTitle}}</td>
+                        {{data.announcementTitle}}
+                    </td>
                     <td>
-                        {{data.announcementMessage}}</td>
+                        {{data.announcementMessage}}
+                    </td>
                     <!-- <td>{{data.announcementTo}}</td> -->
                     <td>{{data.announcementReadby}}</td>
                     <td *ngIf=" isAutherisedToAdd" (click)="deleteAnnouncementById(data.id)"><span

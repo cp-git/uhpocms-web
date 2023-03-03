@@ -68,6 +68,7 @@ const routes: Routes = [
   { path: 'teacher/:id', component: TeacherCourseComponent },
   //category routing
   { path: 'studentcourse', component: StudentCourseComponent },
+  { path: 'studentcourse/:userName', component: StudentCourseComponent },
   { path: 'profile/:id', component: StudentCourseComponent },
 
   { path: 'addCategory', component: AddCategoryComponent },
@@ -193,7 +194,7 @@ const routes: Routes = [
 
   //teacherModule routes
   { path: 'teachermodule', component: TeachermoduleComponent },
-  { path: 'studentmodule/:username', component: StudentmoduleComponent },
+  { path: 'studentmodule/:userName', component: StudentmoduleComponent },
 
   { path: 'email', component: EmailComponent },
 
