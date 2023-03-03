@@ -60,9 +60,9 @@ body {
     font-size: 2rem;
     color: #707070;
     margin-top: 8px;
-    border: 1px solid #ddd;
+
     border-radius: 6px;
-    padding: 0 15px;
+
 }
 
 .input-box input:focus {
@@ -108,7 +108,7 @@ body {
 }
 
 button {
-    margin-right: 160px;
+    margin-left: 160px;
 }
 
 /*Responsive*/
