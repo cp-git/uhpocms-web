@@ -1,69 +1,68 @@
 <!-- Modal -->
-<div #modal class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div #modal data-backdrop="static" class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 *ngIf="isCreateScreen" class="modal-title" id="exampleModalLabel">Create Announcement</h5>
                 <h5 *ngIf="!isCreateScreen" class="modal-title" id="exampleModalLabel">Announcement</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button (click)="announcementPage()" type="button" class="close" data-dismiss="modal"
+                    aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label class="col-form-label">Subject</label>
-                    <input type="text" [(ngModel)]="announcement.announcementTitle" class="form-control"
-                        id="announcementTitle" [disabled]="!isCreateScreen">
-                </div>
-                <div class="mb-3">
-                    <label class="col-form-label">Message</label>
-                    <textarea [(ngModel)]="announcement.announcementMessage" style="height: 121px" class="form-control"
-                        id="announcementMessage" [disabled]="!isCreateScreen"></textarea>
-                </div>
-                <div class="mb-3 row">
-                    <div class="col-8 col-md-6">
+            <form (ngSubmit)="sendAnnouncements(announcement)">
 
-                        <div class="dropdown mt-2">
-                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select
-                                emails from list
-                                <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <div class="form-group">
-
-                                    <input type="checkbox" (change)="selectAll($event)"
-                                        [disabled]="!isCreateScreen">Select All
-                                    <select class="form-control" (click)="$event.stopPropagation()"
-                                        [(ngModel)]="selectedRole" (change)="onRoleChange()">
-                                        <option value="All" selected>All</option>
-                                        <option *ngFor="let role of users.keys()" value="{{role}}">
-                                            {{role}}
-                                        </option>
-                                    </select>
-
-                                    <input type="text" class="form-control" [ngModel]="searchValue"
-                                        placeholder="Search Box" (ngModelChange)="sortEmails($event)">
-
-                                    <div *ngFor="let profile of filterRoles">
-                                        <input type="checkbox" [checked]="profileIDs.includes(profile.adminId)"
-                                            (change)="onChange(profile.adminId, $event)" id="{{profile.adminId}}"
-                                            [disabled]="!isCreateScreen">
-                                        {{profile.adminEmail}}
-                                    </div>
-                                </div>
-                            </ul>
-                        </div>
-
-
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="col-form-label">Subject</label>
+                        <input name="announcementtitle" type="text" [(ngModel)]="announcement.announcementTitle"
+                            class="form-control" id="announcementTitle" [disabled]="!isCreateScreen" required>
                     </div>
-
+                    <div class="mb-3">
+                        <label class="col-form-label">Message</label>
+                        <textarea name="announcementmessage" [(ngModel)]="announcement.announcementMessage"
+                            style="height: 121px" class="form-control" id="announcementMessage"
+                            [disabled]="!isCreateScreen" required></textarea>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-8 col-md-6">
+                            <div class="dropdown mt-2">
+                                <button class="btn btn-primary dropdown-toggle" type="button"
+                                    data-toggle="dropdown">Select emails
+                                    from list
+                                    <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <div class="form-group">
+                                        <input name="selectall" type="checkbox" (change)="selectAll($event)"
+                                            [disabled]="!isCreateScreen">Select All
+                                        <select name="selectrole" class="form-control"
+                                            (click)="$event.stopPropagation()" [(ngModel)]="selectedRole"
+                                            (change)="onRoleChange()">
+                                            <option value="All" selected>All</option>
+                                            <option *ngFor="let role of users.keys()" value="{{role}}">{{role}}</option>
+                                        </select>
+                                        <input name="searchbox" type="text" class="form-control" [ngModel]="searchValue"
+                                            placeholder="Search Box" (ngModelChange)="sortEmails($event)">
+                                        <div *ngFor="let profile of filterRoles">
+                                            <input name="profileids" type="checkbox"
+                                                [checked]="profileIDs.includes(profile.adminId)"
+                                                (change)="onChange(profile.adminId, $event)" id="{{profile.adminId}}"
+                                                [disabled]="!isCreateScreen">
+                                            {{profile.adminEmail}}
+                                        </div>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button #closeModalBtn type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button *ngIf="isCreateScreen" type="button" class="btn btn-primary"
-                    (click)="sendAnnouncements(announcement)">Send</button>
-            </div>
+                <div class="modal-footer">
+                    <button #closeModalBtn type="button" class="btn btn-secondary" data-dismiss="modal"
+                        (click)="announcementPage()">Close</button>
+                    <button *ngIf="isCreateScreen" type="submit" class="btn btn-primary">Send</button>
+                </div>
+            </form>
+
         </div>
     </div>
-</div>

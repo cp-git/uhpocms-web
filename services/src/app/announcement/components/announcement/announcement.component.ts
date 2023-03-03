@@ -76,6 +76,15 @@ export class AnnouncementComponent implements OnInit {
   }
   goBack(): void {
     this.location.back();
+    // if (this.userRole == 'admin') {
+    //   this.router.navigate(['adminmodule/admin', userName, { id: this.profileId }]);
+    // }
+    // else if (this.userRole == 'teacher') {
+    //   this.router.navigate(['teacherdisplay/teacher', userName, { id: this.profileId }]);
+    // }
+    // else if (this.userRole == 'student') {
+    //   this.router.navigate(['studentdata/student', userName, { id: this.profileId }]);
+    // }
   }
   private getAllAnnouncements() {
     this.announcementService.fetchAllAnnouncements().subscribe(
