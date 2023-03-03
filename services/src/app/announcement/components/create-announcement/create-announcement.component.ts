@@ -6,7 +6,7 @@ import { AnnouncementTo } from 'app/announcement/announcement-to';
 import { AnnouncementService } from 'app/announcement/service/announcement.service';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 import { filter } from 'rxjs';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-create-announcement',
   templateUrl: './create-announcement.component.html',
@@ -40,7 +40,7 @@ export class CreateAnnouncementComponent {
   public currentAnnouncementProfileIds: AnnouncementTo[] = [];
 
   public isCreateScreen: boolean = true;
-  constructor(private announcementService: AnnouncementService, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private location: Location, private announcementService: AnnouncementService, private router: Router, private activatedRoute: ActivatedRoute) {
     this.announcement = new Announcement();
     this.announcementId = 0;
     this.selectedRole = "All";
@@ -113,9 +113,29 @@ export class CreateAnnouncementComponent {
 
   // sending announcements to users
   sendAnnouncements(announcement: Announcement) {
-    this.insertAnnouncement(announcement);
+    // this.insertAnnouncement(announcement);
+    if (this.validate(announcement) && this.profileIDs.length > 0) {
+      this.insertAnnouncement(announcement);
+    } else {
+      alert("Fields are empty or Select users to send announcement");
+    }
+
   }
 
+  validate(object: any): boolean {
+    if (Object.keys(object).length === 0) {
+      return false;
+    }
+    for (const key in object) {
+      if (object.hasOwnProperty(key)) {
+        const value = object[key];
+        if (value === undefined || value === null || value === '') {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
   // adding announement data in table
   private insertAnnouncement(announcement: Announcement) {
     this.announcementService.insertAnnouncement(announcement).subscribe(
@@ -235,5 +255,9 @@ export class CreateAnnouncementComponent {
       });
     }
 
+  }
+
+  announcementPage() {
+    this.location.back();
   }
 }

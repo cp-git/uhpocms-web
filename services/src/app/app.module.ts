@@ -59,8 +59,6 @@ import { InactiveTeacherCourseComponent } from './assignedCourseToTeacher/inacti
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
-
-import { ViewAnnouncementComponent } from './announcement/components/view-announcement/view-announcement.component';
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
 
 
@@ -117,12 +115,7 @@ import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assignco
     CoursedepartmentComponent,
     AddDepartmentsComponent,
     StudentmoduleComponent,
-
-    ViewAnnouncementComponent,
     AssigncoursetoteacherComponent,
-
-
-
   ],
 
   imports: [
@@ -136,7 +129,6 @@ import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assignco
     BrowserModule,
     NgSelectModule,
     CommonModule,
-
 
   ],
 
