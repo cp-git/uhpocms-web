@@ -20,7 +20,7 @@
         <div class="form">
             <div class="input-box">
                 <label>Institute Name</label>
-                <input type="text" [(ngModel)]="admininstitution.adminInstitutionName"
+                <input type="text" [(ngModel)]="admininstitution.adminInstitutionName" (ngModelChange)="checkFields()"
                     value="{{admininstitution.adminInstitutionName}}">
             </div>
 
@@ -28,20 +28,26 @@
                 <div class="input-box">
                     <label>Description</label>
                     <textarea rows="4" cols="50" type="text" [(ngModel)]="admininstitution.adminInstitutionDescription"
+                        (ngModelChange)="checkFields()"
                         value="{{admininstitution.adminInstitutionDescription}}"></textarea>
                 </div>
 
             </div>
-            <div>
-                <label>Picture</label>
+            <div class="input-box" style="border: none; ">
+                <label>Profile Picture</label>
                 <input type="file" (change)="onFileSelected($event)"
-                    [(ngModel)]="admininstitution.adminInstitutionPicture" value="{{fileName}}">
+                    [(ngModel)]="admininstitution.adminInstitutionPicture" (ngModelChange)="checkFields()"
+                    value="{{fileName}}">
 
             </div>
 
 
             <div>
-                <button type="button" class="btn btn-primary" (click)="addInstitution(admininstitution)">Submit</button>
+                <button type="button" class="btn btn-primary" [disabled]="buttonDisabled"
+                    (click)="addInstitution(admininstitution)">Submit</button>
+                <!-- <button type="button" class="btn btn-primary" *ngIf="_disablevar"
+                    (click)="addInstitution(admininstitution)">Submit</button> -->
+
 
                 <button type="button" class="btn btn-danger" (click)="Back()">Back</button>
             </div>

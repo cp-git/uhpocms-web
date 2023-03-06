@@ -12,7 +12,8 @@ import { AdmininstitutionService } from '../service/admininstitution.service';
 })
 export class AddinstituteComponent {
   fileName: string;
-
+  // _disablevar: boolean = false;
+  buttonDisabled = true;
   // Institution array
   admininstitutions: AdminInstitution[] = [];
   backupInst: AdminInstitution[] = [];
@@ -22,13 +23,18 @@ export class AddinstituteComponent {
   hideId: boolean = false;
   admininstitution: AdminInstitution;
 
+
   constructor(private _institutionService: AdmininstitutionService, private _route: Router) {
     this.admininstitution = new AdminInstitution();
     this.fileName = '';
   }
 
+
   onFileSelected(event: any) {
     this.fileName = event.target.files[0].name;
+    if (this.fileName != '') {
+      //this.disablefunc();
+    }
   }
 
 
@@ -38,6 +44,7 @@ export class AddinstituteComponent {
 
   // for inserting new Institution in table
   addInstitution(inst: AdminInstitution) {
+
     if (this.backupInst.findIndex((data) => data.adminInstitutionName === inst.adminInstitutionName) >= 0) {
       alert('Institute name already exist. please enter another.');
     } else {
@@ -77,6 +84,32 @@ export class AddinstituteComponent {
       );
     }
   }
+  // disablefunc() {
+
+  //   if ((this.admininstitution.adminInstitutionName != undefined) && (this.admininstitution.adminInstitutionDescription != undefined) && (this.fileName != '')) {
+  //     this._disablevar = true;
+
+  //   }
+
+  //   else {
+  //     this._disablevar = false;
+  //   }
+  //   // console.log("diasable var   " + this._disablevar)
+  // }
+
+  checkFields() {
+    // Check if any fields are empty
+    if (!this.admininstitution.adminInstitutionName || !this.admininstitution.adminInstitutionDescription || !this.admininstitution.adminInstitutionPicture) {
+      // If any field is empty, disable the button
+      this.buttonDisabled = true;
+    } else {
+      // If all fields have a value, enable the button
+      this.buttonDisabled = false;
+    }
+  }
+
+
+
   Back() {
     this._route.navigate(['displayinstitute']);
   }
