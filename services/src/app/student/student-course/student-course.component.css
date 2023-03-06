@@ -1,0 +1,13 @@
+.myheader {
+    border: 1px groove grey;
+    background-color: aqua;
+}
+
+.myheader h1 {
+    text-align: center;
+
+}
+
+.container {
+    margin-top: 30px;
+}

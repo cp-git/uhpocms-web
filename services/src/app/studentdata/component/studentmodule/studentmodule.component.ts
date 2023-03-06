@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModuleFile } from 'app/class/module-file';
 import { Course } from 'app/course/course';
 import { StudentService } from 'app/studentdata/service/student.service';
@@ -22,12 +22,13 @@ export class StudentmoduleComponent implements OnInit {
 
   selectedCourse: any;
   selectedModule: any;
-  constructor(private activateRoute: ActivatedRoute, private studentService: StudentService) {
+  constructor(private activateRoute: ActivatedRoute, private studentService: StudentService, private route: Router) {
 
   }
   ngOnInit(): void {
     this.studentId = this.activateRoute.snapshot.paramMap.get('id');
-    this.userName = this.activateRoute.snapshot.params['username'];
+    this.userName = this.activateRoute.snapshot.params['userName'];
+    console.log(this.userName)
     this.loadCourseOfStudent(this.studentId);
     this.loadStudentAssignedCourses(this.studentId);
   }
@@ -92,4 +93,8 @@ export class StudentmoduleComponent implements OnInit {
   //     this.selectedModule = undefined;
   //   }
   // }
+
+  back() {
+    this.route.navigate(['studentdata/student', this.userName])
+  }
 }

@@ -25,7 +25,15 @@ export class StudentCourseComponent {
   courses: Course[] = [];
   id: any | undefined | null;
 
+  userName!: string;
+  adminId: any;
+
   ngOnInit(): void {
+    this.profileId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.userName = this.activatedRoute.snapshot.params['userName'];
+    console.log(this.userName);
+
+
 
     this.getStudentCoursesByProfileId(this.profileId);
 
@@ -33,7 +41,7 @@ export class StudentCourseComponent {
 
 
   Back() {
-    this._route.navigate(['studentdata', { id: this.profileId }]);
+    this._route.navigate(['studentdata/student', this.userName]);
   }
 
   getStudentCoursesByProfileId(profileId: any) {

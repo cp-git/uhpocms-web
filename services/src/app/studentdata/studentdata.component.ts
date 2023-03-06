@@ -15,11 +15,12 @@ export class StudentdataComponent {
   }
 
   ngOnInit(): void {
-    this.userName = this._activatedRoute.snapshot.params['userName'];
     this.profileId = this._activatedRoute.snapshot.paramMap.get('id');
+    this.userName = this._activatedRoute.snapshot.params['userName'];
+    console.log(this.userName);
   }
   RedirectToStudentCourse() {
-    this._route.navigate(['studentcourse', { id: this.profileId }]);
+    this._route.navigate(['studentcourse', this.userName, { id: this.profileId }]);
   }
 
   RedirectToQuiz() {

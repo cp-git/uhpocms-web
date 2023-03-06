@@ -6,3 +6,13 @@
     margin: 10px;
     border: 1px solid rgb(0, 0, 0);
 }
+
+.myheader {
+    border: 1px groove grey;
+    background-color: aqua;
+}
+
+.myheader h1 {
+    text-align: center;
+
+}
