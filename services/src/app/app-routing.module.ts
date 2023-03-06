@@ -220,7 +220,10 @@ const routes: Routes = [
     ]
   },
   { path: 'view/:viewname', component: ViewAllComponent },
-  { path: 'add/:viewname', component: ViewAddComponent }
+  { path: 'add/:viewname', component: ViewAddComponent },
+  {
+    path: 'update/:viewname/:id', component: ViewAddComponent
+  }
 
 
 ];

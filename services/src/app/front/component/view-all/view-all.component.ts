@@ -25,6 +25,8 @@ export class ViewAllComponent implements OnInit {
   tableHeader: any;
   viewOf: any;  // current module name
   tableData: any[] = [];
+  currentIdColumnname: string;
+  objectToUpdate: any;
 
   // All Modules Array
   authUsers: Authuser[] = [];
@@ -44,11 +46,10 @@ export class ViewAllComponent implements OnInit {
     private departmentService: DepartmentService,
     private institutionService: InstitutionSeriveService
   ) {
-
+    this.currentIdColumnname = '';
   }
 
   ngOnInit(): void {
-
     this.changeHeader();
   }
 
@@ -60,6 +61,11 @@ export class ViewAllComponent implements OnInit {
     return a;
   }
 
+  selectClickedObject(item: any) {
+    this.objectToUpdate = item;
+    // alert("hello" + JSON.stringify(this.objectToUpdate));
+
+  }
 
   changeHeader() {
     this.viewOf = this.route.snapshot.paramMap.get('viewname');
@@ -86,6 +92,7 @@ export class ViewAllComponent implements OnInit {
       response => {
         this.authUsers = response;
         this.tableData = this.authUsers;
+        this.currentIdColumnname = "authUserId";
         console.log(this.tableData);
 
       },
@@ -99,10 +106,12 @@ export class ViewAllComponent implements OnInit {
   loadDepartments() {
     this.departmentService.fetchAllDepartments().subscribe(
       response => {
+        this.departmentService.departments = response;
         this.departments = response;
         this.tableData = this.departments;
         this.dropdownColumnId1 = "adminInstitutionId";
         this.dropdownColumnName1 = "adminInstitutionName";
+        this.currentIdColumnname = "id";
         console.log(this.tableData);
 
       },
@@ -130,6 +139,7 @@ export class ViewAllComponent implements OnInit {
       response => {
         this.roles = response;
         this.tableData = this.roles;
+        this.currentIdColumnname = "roleId";
         console.log(this.tableData);
       },
       error => {

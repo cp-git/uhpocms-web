@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,18 +11,20 @@ import { Department } from 'app/admindepartment/department';
 import { DepartmentColumn } from 'app/front/TableHeaders/department-column';
 import { AdminInstitution } from 'app/admindepartment/admin-institution/admin-institution';
 import { AdminroleserviceService } from 'app/roleadmin/adminroleservice.service';
-import { Admin } from 'app/roleadmin/admin';
 import { AdminRoleColumn } from 'app/front/TableHeaders/admin-role-column';
 import { InstitutionSeriveService } from 'app/instituteadminprofile/institution-serive.service';
-
+import { Admin } from 'app/roleadmin/admin';
 @Component({
   selector: 'app-view-add',
   templateUrl: './view-add.component.html',
   styleUrls: ['./view-add.component.css']
 })
 export class ViewAddComponent implements OnInit {
+  // @Input() selectedItem: any;
 
   viewOf: any;
+  currentId!: any;
+  addedOrUpdate: string;
   tableHeader: any;
   optionsArray1: any
   institutions: AdminInstitution[] = [];
@@ -30,6 +32,7 @@ export class ViewAddComponent implements OnInit {
   currentModel: any;
   authUser: Authuser;
   department: Department;
+  adminRole: Admin;
 
   dropdownColumnId1: string = '';
   dropdownColumnName1: string = '';
@@ -46,10 +49,16 @@ export class ViewAddComponent implements OnInit {
 
     this.authUser = new Authuser();
     this.department = new Department();
+    this.adminRole = new Admin();
+    this.addedOrUpdate = 'add';
+    this.currentId = 0;
+
 
   }
   ngOnInit(): void {
+
     this.changeHeader();
+    // alert(JSON.stringify(this.selectedItem));
   }
 
   home() {
@@ -58,14 +67,15 @@ export class ViewAddComponent implements OnInit {
 
   changeHeader() {
     this.viewOf = this.route.snapshot.paramMap.get('viewname');
+    this.currentId = this.route.snapshot.paramMap.get('id');
+    if (this.currentId > 0 || this.currentId != undefined || this.currentId != null) {
+      this.addedOrUpdate = "update";
+    }
+    // alert(this.currentId)
     switch (this.viewOf) {
       case "Department":
-        this.tableHeader = DepartmentColumn;
-        this.loadInstitutions();
-        this.optionsArray1 = this.institutions;
-        this.dropdownColumnId1 = "adminInstitutionId";
-        this.dropdownColumnName1 = "adminInstitutionName";
-        this.currentModel = this.department;
+        this.changeToDepartment();
+        // alert(JSON.stringify(this.currentModel));
 
         break;
       case "AuthUser":
@@ -74,6 +84,7 @@ export class ViewAddComponent implements OnInit {
         break;
       case "AdminRole":
         this.tableHeader = AdminRoleColumn;
+        this.currentModel = this.adminRole;
         break;
     }
   }
@@ -90,31 +101,6 @@ export class ViewAddComponent implements OnInit {
         this.institutions = [];
       }
     );
-
-    // this.institutions = [
-    //   {
-    //     "adminInstitutionId": 2,
-    //     "adminInstitutionName": "ssvps",
-    //     "adminInstitutionDescription": "ssvps desc",
-    //     "adminInstitutionIsActive": true,
-    //     "adminInstitutionCreatedBy": "admin",
-    //     "adminInstitutionCreatedOn": new Date("2022-12-11T18:30:00.000+00:00"),
-    //     "adminInstitutionModifiedBy": "admin",
-    //     "adminInstitutionModifiedOn": new Date("2022-12-11T18:30:00.000+00:00"),
-    //     "adminInstitutionPicture": "pic1.jpg"
-    //   },
-    //   {
-    //     "adminInstitutionId": 1,
-    //     "adminInstitutionName": "IIT",
-    //     "adminInstitutionDescription": "iit desc",
-    //     "adminInstitutionIsActive": true,
-    //     "adminInstitutionCreatedBy": "admin",
-    //     "adminInstitutionCreatedOn": new Date("2022-12-11T18:30:00.000+00:00"),
-    //     "adminInstitutionModifiedBy": "admin",
-    //     "adminInstitutionModifiedOn": new Date("2022-12-11T18:30:00.000+00:00"),
-    //     "adminInstitutionPicture": "pic1.jpg"
-    //   }
-    // ]
   }
 
   add(currentModel: any) {
@@ -124,20 +110,20 @@ export class ViewAddComponent implements OnInit {
         currentModel.active = true;
         this.departmentService.insertDepartment(currentModel).subscribe(
           response => {
-            alert("Department added successfully !");
+            alert(`Department ${this.addedOrUpdate} successfully !`);
           },
           error => {
-            alert("Failed to add Department !");
+            alert(`Failed to ${this.addedOrUpdate} Department !`);
           }
         );
         break;
       case "AuthUser":
         this.authUserService.addAuthUser(currentModel).subscribe(
           response => {
-            alert("AuthUser added successfully !");
+            alert(`AuthUser ${this.addedOrUpdate} successfully !`);
           },
           error => {
-            alert("Failed to add AuthUser !");
+            alert(`Failed to ${this.addedOrUpdate} AuthUser !`);
           }
         )
 
@@ -146,6 +132,24 @@ export class ViewAddComponent implements OnInit {
       case "AdminRole":
 
         break;
+    }
+    this.router.navigate([`/view/${this.viewOf}`]);
+  }
+
+  changeToDepartment() {
+    this.tableHeader = DepartmentColumn;
+    this.loadInstitutions();
+    // this.optionsArray1 = this.institutions;
+    this.dropdownColumnId1 = "adminInstitutionId";
+    this.dropdownColumnName1 = "adminInstitutionName";
+    this.currentModel = this.department;
+    for (let i = 0; i < this.departmentService.departments.length; i++) {
+      const department = this.departmentService.departments[i];
+      if (department.id == this.currentId) {
+        this.currentModel = department;
+        // alert("current" + JSON.stringify(this.currentModel));
+        break; // exit the loop when the condition is met
+      }
     }
   }
 }
