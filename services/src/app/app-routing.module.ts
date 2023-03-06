@@ -56,6 +56,8 @@ import { DisplaySchoolComponent } from './InstituteDetails/display-school/displa
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
+import { ViewAllComponent } from './front/component/view-all/view-all.component';
+import { ViewAddComponent } from './front/component/view-add/view-add.component';
 
 
 const routes: Routes = [
@@ -216,7 +218,9 @@ const routes: Routes = [
         path: 'view/:id', component: CreateAnnouncementComponent
       }
     ]
-  }
+  },
+  { path: 'view/:viewname', component: ViewAllComponent },
+  { path: 'add/:viewname', component: ViewAddComponent }
 
 
 ];

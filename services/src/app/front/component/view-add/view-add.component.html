@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="header1">
+        <h3>Add {{viewOf}}</h3>
+        <!-- <button class="btn btn-primary" routerLink="/add/{{viewOf}}">Add</button> -->
+    </div>
+    {{currentModel|json}}
+
+    <div class="card-block">
+        <form class="form-material">
+
+            <div class="form-group form-default col-sm-4" *ngFor="let column of tableHeader">
+                <ng-container [ngSwitch]="column.type">
+                    <ng-container *ngSwitchCase="'input'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <input name="column.key" type="text" [(ngModel)]="currentModel[column.key]" class="form-control"
+                            required="">
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'email'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <input name="column.key" type="email" [(ngModel)]="currentModel[column.key]"
+                            class="form-control" required="">
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'date'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <input name="column.key" type="date" [(ngModel)]="currentModel[column.key]" class="form-control"
+                            required="">
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'textarea'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <textarea name="column.key" [(ngModel)]="currentModel[column.key]" class="form-control"
+                            required=""></textarea>
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'dropdown'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <select name="column.key" [(ngModel)]="currentModel[column.key]" class="form-control"
+                            required="">
+                            <option value="undefined">Select</option>
+                            <option *ngFor="let option of optionsArray1" [value]="option[dropdownColumnId1]">
+                                {{ option[dropdownColumnName1] }}
+                            </option>
+                        </select>
+
+                    </ng-container>
+                </ng-container>
+            </div>
+
+
+        </form>
+    </div>
+    <div class="card-block">
+        <button class="btn btn-primary" (click)="add(currentModel)">Submit</button>
+        <button class="btn btn-primary" (click)="home()">Back</button>
+    </div>
+</div>

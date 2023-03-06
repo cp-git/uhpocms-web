@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="header1">
+        <h1>{{viewOf}} Administration</h1>
+        <button class="btn btn-danger" routerLink='/add/{{viewOf}}'>Add</button>
+    </div>
+    <table class="table table-bordered">
+        <thead id="deptHeader">
+            <tr>
+                <th *ngFor="let column of tableHeader">{{ column.label }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of tableData">
+                <td *ngFor="let column of tableHeader">
+                    <ng-container [ngSwitch]="column.type">
+                        <input class="form-control" *ngSwitchCase="'input'" type="text" [(ngModel)]="row[column.key]">
+                        <input class="form-control" *ngSwitchCase="'email'" type="email" [(ngModel)]="row[column.key]">
+                        <!-- handle email type -->
+                        <input class="form-control" *ngSwitchCase="'date'" type="date" [(ngModel)]="row[column.key]">
+                        <!-- handle date type -->
+                        <textarea class="form-control" *ngSwitchCase="'textarea'"
+                            [(ngModel)]="row[column.key]"></textarea>
+                        <select class="form-control" *ngSwitchCase="'dropdown'">
+                            <option *ngFor="let option of optionsArray1" [value]="option[dropdownColumnName1]"
+                                [selected]="option[dropdownColumnId1] === row[column.key]?true:null">
+                                {{ option[dropdownColumnName1] }}
+                            </option>
+                        </select>
+
+                        <input class="form-control" *ngSwitchCase="'checkbox'" type="checkbox"
+                            [(ngModel)]="row[column.key]">
+                    </ng-container>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-primary" (click)="home()">Back</button>
+</div>

@@ -60,6 +60,8 @@ import { DisplaySchoolComponent } from './InstituteDetails/display-school/displa
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
+import { ViewAddComponent } from './front/component/view-add/view-add.component';
+import { ViewAllComponent } from './front/component/view-all/view-all.component';
 
 
 
@@ -116,6 +118,8 @@ import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assignco
     AddDepartmentsComponent,
     StudentmoduleComponent,
     AssigncoursetoteacherComponent,
+    ViewAddComponent,
+    ViewAllComponent
   ],
 
   imports: [
