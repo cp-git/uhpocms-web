@@ -20,6 +20,7 @@ export class AdminmdouleComponent {
   ngOnInit(): void {
     this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
+    console.log(this.userName)
 
 
   }
@@ -34,7 +35,7 @@ export class AdminmdouleComponent {
   }
 
   RedirectToInstituteAdminProfile() {
-    this._route.navigate(['displayInstituteAdmin', this.userName]);
+    this._route.navigate(['displayInstituteAdmin/display', this.userName]);
 
   }
 

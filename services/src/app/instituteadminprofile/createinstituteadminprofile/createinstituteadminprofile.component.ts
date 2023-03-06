@@ -1,21 +1,22 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdminInstitution } from 'app/admin-institution/admininstitution';
 import { Department } from 'app/admindepartment/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
 import { Authuser } from 'app/authuser/authuser';
 import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
+
 import { Admin } from 'app/roleadmin/admin';
 import { AdminroleserviceService } from 'app/roleadmin/adminroleservice.service';
-import { AdminInstitution } from '../admin-institution';
 import { InstituteAdmin } from '../institute-admin';
 import { InstituteAdminServiceService } from '../institute-admin-service.service';
 
 @Component({
-  selector: 'app-insertinstituteadminprofile',
-  templateUrl: './insertinstituteadminprofile.component.html',
-  styleUrls: ['./insertinstituteadminprofile.component.css', '../../app.component.css']
+  selector: 'app-createinstituteadminprofile',
+  templateUrl: './createinstituteadminprofile.component.html',
+  styleUrls: ['./createinstituteadminprofile.component.css']
 })
-export class InsertinstituteadminprofileComponent {
+export class CreateinstituteadminprofileComponent {
   _instituteAdmin = new InstituteAdmin();
   adminInstitutions: AdminInstitution[] = [];
   inactiveProfiles: InstituteAdmin[] = [];
@@ -41,9 +42,12 @@ export class InsertinstituteadminprofileComponent {
     private adminRoleService: AdminroleserviceService,
     private _activatedRoute: ActivatedRoute
   ) {
-
+    this.loadAdminInstitutions();
+    this.loadAdminRoles();
+    this.loadAuthUsers();
     this.currentAuthUser = new Authuser();
-
+    this.loadAdminDepartments();
+    this.loadAllInactiveProfiles();
   }
 
   ngOnInit(): void {
@@ -51,13 +55,6 @@ export class InsertinstituteadminprofileComponent {
     this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
     console.log(this.userName)
-    this.loadAdminInstitutions();
-    this.loadAdminRoles();
-    this.loadAuthUsers();
-    this.loadAdminDepartments();
-    this.loadAllInactiveProfiles();
-
-
 
 
   }
@@ -195,7 +192,7 @@ export class InsertinstituteadminprofileComponent {
 
 
   backToDisplayScreen() {
-    this._route.navigate(['displayInstituteAdmin/display', this.userName]);
+    this._route.navigate(['displayInstituteAdmin', this.userName]);
   }
 
   onFileSelected(event: any) {
@@ -210,7 +207,5 @@ export class InsertinstituteadminprofileComponent {
     }
 
   }
-
-
 
 }

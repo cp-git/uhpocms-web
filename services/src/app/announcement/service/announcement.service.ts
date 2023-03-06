@@ -10,7 +10,9 @@ import { AnnouncementTo } from '../announcement-to';
 })
 export class AnnouncementService {
   public selectedAnnouncement: Announcement;
-  private readonly announcementUrl = `${environment.announcementUrl}/announcement`;
+  private readonly announcementUrl = "http://localhost:8090/announcement/uhpocms/announcement";
+
+
 
   constructor(private _http: HttpClient) {
     this.selectedAnnouncement = new Announcement;

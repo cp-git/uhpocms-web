@@ -113,9 +113,9 @@ const routes: Routes = [
 
   //instituteadmin routes
   { path: 'displayInstituteAdmin', component: DisplayInstituteAdminComponent },
-  { path: 'displayInstituteAdmin/:userName', component: DisplayInstituteAdminComponent },
+  { path: 'displayInstituteAdmin/display/:userName', component: DisplayInstituteAdminComponent },
 
-  { path: 'displayInstituteAdmin/activate', component: ActivateProfileComponent },
+  { path: 'displayInstituteAdmin/display/activate/:userName', component: ActivateProfileComponent },
 
 
   //insert intituteadmin profile

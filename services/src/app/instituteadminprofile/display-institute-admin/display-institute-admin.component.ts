@@ -148,6 +148,6 @@ export class DisplayInstituteAdminComponent {
   }
 
   redirectToActivateProfile() {
-    this._route.navigate(['displayInstituteAdmin/activate', this.userName]);
+    this._route.navigate(['displayInstituteAdmin/display/activate', this.userName]);
   }
 }
