@@ -60,6 +60,40 @@ import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assignco
 
 const routes: Routes = [
 
+  //AuthUser
+
+  { path: 'authuser', component: AuthuserComponent },
+
+  { path: 'authuser/:userName', component: AuthuserComponent },
+
+
+  //InstituteAdminProfile Routes
+
+
+  { path: 'displayInstituteAdmin/display/:userName', component: DisplayInstituteAdminComponent },
+
+  { path: 'displayInstituteAdmin/display/activate/:userName', component: ActivateProfileComponent },
+
+
+  //insert intituteadmin profile
+
+  { path: 'insertadminprofile/:userName', component: InsertinstituteadminprofileComponent },
+
+  //update instituteadminprofile
+
+
+  { path: 'updateinstituteadminprofile/:firstName', component: UpdateinstituteadminprofileComponent },
+
+
+  //view instituteadminprofile
+  { path: 'viewadminprofile/:firstName', component: ViewinstiteadminprofileComponent },
+
+
+  //course Module
+
+
+
+
   //teacherCourse
 
   { path: 'assignteacher', component: AssigncoursetoteacherComponent },
@@ -112,27 +146,7 @@ const routes: Routes = [
   { path: 'login', component: LoginauthComponent },
 
   //instituteadmin routes
-  { path: 'displayInstituteAdmin', component: DisplayInstituteAdminComponent },
-  { path: 'displayInstituteAdmin/display/:userName', component: DisplayInstituteAdminComponent },
 
-  { path: 'displayInstituteAdmin/display/activate/:userName', component: ActivateProfileComponent },
-
-
-  //insert intituteadmin profile
-  { path: 'insertadminprofile', component: InsertinstituteadminprofileComponent },
-
-  { path: 'insertadminprofile/:userName', component: InsertinstituteadminprofileComponent },
-
-  //update instituteadminprofile
-  { path: 'updateinstituteadminprofile', component: UpdateinstituteadminprofileComponent },
-
-  { path: 'updateinstituteadminprofile/:firstName', component: UpdateinstituteadminprofileComponent },
-
-
-  //view instituteadminprofile
-  { path: 'viewadminprofile/:firstName', component: ViewinstiteadminprofileComponent },
-
-  { path: 'viewadminprofile', component: ViewinstiteadminprofileComponent },
 
   //admindepartment routes
   { path: 'department', component: DepartmentComponent },
@@ -202,7 +216,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
 
 
-  { path: 'course/userrole/:role', component: CourseComponent },
+  { path: 'course/userrole/:userName', component: CourseComponent },
 
 
   { path: 'addcourse', component: AddcourseComponent },

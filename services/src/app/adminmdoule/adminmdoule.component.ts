@@ -26,7 +26,7 @@ export class AdminmdouleComponent {
   }
 
   RedirectTOAuth() {
-    this._route.navigate(['authuser']);
+    this._route.navigate(['authuser', this.userName]);
 
   }
   RedirectToAssignTeacher() {
@@ -40,8 +40,8 @@ export class AdminmdouleComponent {
   }
 
   RedirectToCourse() {
-    this.role = 'admin';
-    this._route.navigate(['course/userrole/', this.role]);
+
+    this._route.navigate(['course/userrole/', this.userName]);
 
   }
 
