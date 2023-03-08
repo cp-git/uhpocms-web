@@ -43,10 +43,12 @@
                             [(ngModel)]="row[column.key]">
                     </ng-container>
                 </td>
-                <td><button (click)="selectClickedObject(row)" [ngModel]="row[currentIdColumnname]"
-                        class="btn btn-primary"
+                <td><button (click)="selectClickedObject(row)" class="btn btn-primary"
                         [routerLink]="['/update', viewOf, row[currentIdColumnname]]">Update</button>
+                    <button (click)="selectClickedObject(row)" class="btn btn-primary"
+                        [routerLink]="['/viewall', viewOf, row[currentIdColumnname]]">View</button>
                 </td>
+
             </tr>
         </tbody>
     </table>

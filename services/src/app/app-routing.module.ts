@@ -58,7 +58,7 @@ import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
 import { ViewAllComponent } from './front/component/view-all/view-all.component';
 import { ViewAddComponent } from './front/component/view-add/view-add.component';
-
+import { ViewComponent } from './front/component/view/view.component';
 
 const routes: Routes = [
 
@@ -223,7 +223,9 @@ const routes: Routes = [
   { path: 'add/:viewname', component: ViewAddComponent },
   {
     path: 'update/:viewname/:id', component: ViewAddComponent
-  }
+  },
+  { path: 'viewall/:viewname/:id', component: ViewComponent },
+
 
 
 ];

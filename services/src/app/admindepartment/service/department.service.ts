@@ -13,7 +13,7 @@ import { environment } from 'environments/environment.development';
 export class DepartmentService {
   private readonly departmentUrl: string;
   private readonly adminInstitutionUrl: string;
-
+  departments: Department[] = [];
   constructor(private _http: HttpClient) {
 
 

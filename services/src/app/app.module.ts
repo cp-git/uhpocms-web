@@ -62,6 +62,7 @@ import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
 import { ViewAddComponent } from './front/component/view-add/view-add.component';
 import { ViewAllComponent } from './front/component/view-all/view-all.component';
+import { ViewComponent } from './front/component/view/view.component';
 
 
 
@@ -119,7 +120,9 @@ import { ViewAllComponent } from './front/component/view-all/view-all.component'
     StudentmoduleComponent,
     AssigncoursetoteacherComponent,
     ViewAddComponent,
-    ViewAllComponent
+    ViewAllComponent,
+    ViewComponent,
+
   ],
 
   imports: [
