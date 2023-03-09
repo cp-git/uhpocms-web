@@ -78,11 +78,15 @@ export class DisplayinstituteComponent {
     );
   }
   Back() {
-    this.location.back();
-    //this._route.navigate(['demo']);
+    //this.location.back();
+    this._route.navigate(['adminmodule/admin', this.userName]);
   }
 
   redirectToActivateInstitution() {
     this._route.navigate(['displayinstitute/activate']);
+  }
+
+  display(adminInstitutionId: number) {
+    this._route.navigate(['display', adminInstitutionId, this.userName])
   }
 }

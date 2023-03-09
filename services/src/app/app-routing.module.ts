@@ -178,13 +178,18 @@ const routes: Routes = [
 
   { path: 'display', component: DisplaySchoolComponent },
 
-  { path: 'display/:id', component: DisplaySchoolComponent },
+
+  // { path: 'display/:id', component: DisplaySchoolComponent },
+
+  { path: 'display/:id/:userName', component: DisplaySchoolComponent },
+
+
 
 
   //url for deprtment course
 
   { path: 'departmentCourse', component: CoursedepartmentComponent },
-  { path: 'departmentCourse/:id', component: CoursedepartmentComponent },
+  { path: 'departmentCourse/:id/:userName', component: CoursedepartmentComponent },
 
 
   //add department for institute
@@ -198,7 +203,7 @@ const routes: Routes = [
 
   //inserting  the quiz
 
-  { path: 'createQuiz', component: CreateQuizComponent },
+  { path: 'createQuiz/:userName', component: CreateQuizComponent },
   { path: 'course/:id', component: ViewCoursesComponent },
 
 
@@ -220,7 +225,9 @@ const routes: Routes = [
 
 
   { path: 'addcourse', component: AddcourseComponent },
-  { path: 'updatecourse/:courseName', component: UpdatecourseComponent },
+  { path: 'updatecourse/:courseName/:userName', component: UpdatecourseComponent },
+
+  { path: 'updatecourse/:userName', component: UpdatecourseComponent },
   //announcement router
   {
     path: 'announcement/:role', component: AnnouncementComponent, children: [

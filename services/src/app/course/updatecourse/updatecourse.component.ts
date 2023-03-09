@@ -32,6 +32,9 @@ export class UpdatecourseComponent {
   sessionData: any;
   data: any;
 
+  userName!: string;
+  adminId: any;
+
   constructor(
     private _service: CourseService,
     private _instService: InstitutionSeriveService,
@@ -48,6 +51,10 @@ export class UpdatecourseComponent {
     if (sessionStorage.getItem('authenticatedUser') === null) {
       this._route.navigate(['']);
     } else {
+
+      this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
+      this.userName = this._activatedRoute.snapshot.params['userName'];
+      console.log(this.userName)
       this.getAllInstitutes();
       this.getCourse();
       this.loadAdminDepartments();
@@ -128,12 +135,12 @@ export class UpdatecourseComponent {
             this.isVisible = false;
           }
           alert('Data updated successfully');
-          this._route.navigate(['course/userrole/admin']);
+          this._route.navigate(['course/userrole', this.userName]);
         });
 
   }
   back() {
-    this._route.navigate(['course']);
+    this._route.navigate(['course/userrole', this.userName]);
   }
   loadCourseDepartment() {
     this.courseDepartmentService.getCoursesDepartmentId().subscribe(

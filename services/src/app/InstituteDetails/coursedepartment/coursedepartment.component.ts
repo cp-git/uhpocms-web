@@ -32,6 +32,9 @@ export class CoursedepartmentComponent {
   courses: Course[] = [];
   backupCourse: Course[] = [];
   id: any | undefined | null;
+
+  userName!: string;
+  adminId: any;
   constructor(
     private _route: Router,
     private readonly courseService: CourseService,
@@ -41,6 +44,9 @@ export class CoursedepartmentComponent {
   ) { this.admininstitution = new AdminInstitution(); }
 
   ngOnInit(): void {
+    this.adminId = this.route.snapshot.paramMap.get('id');
+    this.userName = this.route.snapshot.params['userName'];
+    console.log(this.userName)
     this.route.paramMap.subscribe(
       (params) => {
         this.id = params.get("id");
@@ -84,6 +90,7 @@ export class CoursedepartmentComponent {
   }
 
   Display() {
+
     this.location.back();
 
   }
