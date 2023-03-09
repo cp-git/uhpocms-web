@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="row justify-content-between">
+        <div class="col-sm-6">
+            <h1>Department Administration</h1>
+        </div>
+
+        <div class="col-sm-6 text-right">
+            <!-- <button class="btn btn-danger" [routerLink]="['/add', viewOf]">Add</button> -->
+            <!-- <button class="btn btn-primary" (click)="navigateToAdd()">Add</button> -->
+            <button class="btn btn-primary" (click)="home()">Back</button>
+        </div>
+    </div>
+
+    <app-view-all *ngIf="dataAvailable" [data]="{moduleName:'Department' ,moduleData:this.departments}"
+        [dropdown1]="adminInstitutions"></app-view-all>
+</div>

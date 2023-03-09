@@ -62,10 +62,9 @@ import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
 import { ViewAddComponent } from './front/component/view-add/view-add.component';
 import { ViewAllComponent } from './front/component/view-all/view-all.component';
-
-
-
-
+import { TableModule } from './front/module/table.module';
+import { DepartmentModule } from './department/module/department/department.module';
+import { AddDepartmentComponent } from './department/components/add-department/add-department.component';
 
 @NgModule({
   declarations: [
@@ -118,11 +117,12 @@ import { ViewAllComponent } from './front/component/view-all/view-all.component'
     AddDepartmentsComponent,
     StudentmoduleComponent,
     AssigncoursetoteacherComponent,
-    ViewAddComponent,
-    ViewAllComponent
+    // ViewAddComponent,
+    AddDepartmentComponent
   ],
 
   imports: [
+    TableModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -132,8 +132,7 @@ import { ViewAllComponent } from './front/component/view-all/view-all.component'
     MatToolbarModule,
     BrowserModule,
     NgSelectModule,
-    CommonModule,
-
+    DepartmentModule
   ],
 
   providers: [

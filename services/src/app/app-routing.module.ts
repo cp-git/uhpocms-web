@@ -1,7 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DepartmentComponent } from './admindepartment/department/department.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
 import { EmailComponent } from './email/email/email.component';
@@ -58,6 +57,8 @@ import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
 import { ViewAllComponent } from './front/component/view-all/view-all.component';
 import { ViewAddComponent } from './front/component/view-add/view-add.component';
+import { DepartmentComponent } from './department/components/department/department.component';
+import { AddDepartmentComponent } from './department/components/add-department/add-department.component';
 
 
 const routes: Routes = [
@@ -149,7 +150,7 @@ const routes: Routes = [
   //quiz routes
   { path: 'quiz/:role', component: QuizComponent },
 
-  { path: 'department/:id', component: ViewDepartmentComponent },
+
 
   { path: 'addinstitute', component: AddinstituteComponent },
 
@@ -223,8 +224,13 @@ const routes: Routes = [
   { path: 'add/:viewname', component: ViewAddComponent },
   {
     path: 'update/:viewname/:id', component: ViewAddComponent
-  }
-
+  },
+  {
+    path: 'Department', component: DepartmentComponent, children: [
+      { path: 'add', component: AddDepartmentComponent }
+    ]
+  },
+  { path: 'AuthUser', component: AuthuserComponent },
 
 ];
 

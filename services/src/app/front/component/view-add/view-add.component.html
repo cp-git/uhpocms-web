@@ -3,7 +3,7 @@
         <div class="col-sm-6">
             <h1>Add/Update {{viewOf}}</h1>
         </div>
-        <!-- <button class="btn btn-primary" routerLink="/add/{{viewOf}}">Add</button> -->
+
         <div class="col-sm-6 text-right">
             <button class="btn btn-primary" (click)="home()">Back</button>
         </div>
@@ -16,35 +16,35 @@
                     <ng-container *ngSwitchCase="'input'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
-                        <input name="{{column.key}}" type="text" [(ngModel)]="currentModel[column.key]"
+                        <input name="{{column.key}}" type="text" [(ngModel)]="currentData[column.key]"
                             class="form-control" required="">
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'email'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
-                        <input name="{{column.key}}" type="email" [(ngModel)]="currentModel[column.key]"
+                        <input name="{{column.key}}" type="email" [(ngModel)]="currentData[column.key]"
                             class="form-control" required="">
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'date'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
-                        <input name="{{column.key}}" type="date" [(ngModel)]="currentModel[column.key]"
+                        <input name="{{column.key}}" type="date" [(ngModel)]="currentData[column.key]"
                             class="form-control" required="">
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'textarea'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
-                        <textarea name="{{column.key}}" [(ngModel)]="currentModel[column.key]" class="form-control"
+                        <textarea name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
                             required=""></textarea>
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'dropdown'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
-                        <select name="{{column.key}}" [(ngModel)]="currentModel[column.key]" class="form-control"
+                        <select name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
                             required="">
                             <option value="undefined">Select</option>
                             <option *ngFor="let option of optionsArray1" [value]="option[dropdownColumnId1]">
@@ -57,7 +57,7 @@
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
                         <input class="form-control" *ngSwitchCase="'checkbox'" type="checkbox"
-                            [(ngModel)]="currentModel[column.key]">
+                            [(ngModel)]="currentData[column.key]">
                     </ng-container>
                 </ng-container>
             </div>
@@ -67,7 +67,7 @@
     </div>
     <div class="card-block row justify-content-between">
         <div class="col-sm-6">
-            <button class="btn btn-primary" (click)="add(currentModel)">Submit</button>
+            <button class="btn btn-primary" (click)="add(currentData)">Submit</button>
         </div>
 
     </div>

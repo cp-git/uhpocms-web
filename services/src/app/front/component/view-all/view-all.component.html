@@ -1,19 +1,17 @@
 <div class="container">
-    <div class="row justify-content-between">
+    <!-- <div class="row justify-content-between">
         <div class="col-sm-6">
             <h1>{{viewOf}} Administration</h1>
-        </div>
-        <!-- <button class="btn btn-primary" routerLink="/add/{{viewOf}}">Add</button> -->
-        <div class="col-sm-6 text-right">
-            <button class="btn btn-danger" [routerLink]="['/add', viewOf]">Add</button>
-            <button class="btn btn-primary" (click)="home()">Back</button>
-
-        </div>
-    </div>
+        </div> -->
+    <button class="btn btn-primary" (click)="navigateToAdd()">Add</button>
+    <!-- <div class=" col-sm-6 text-right">
+       
+    </div> -->
+    <!--</div> -->
     <!-- <div class="header1">
-        
         <button class="btn btn-danger" [routerLink]="['/add', viewOf]">Add</button>
     </div> -->
+    kuggjgj
     <table class="table table-bordered">
         <thead id="deptHeader">
             <tr>
@@ -25,27 +23,28 @@
             <tr *ngFor="let row of tableData">
                 <td *ngFor="let column of tableHeader">
                     <ng-container [ngSwitch]="column.type">
-                        <input class="form-control" *ngSwitchCase="'input'" type="text" [(ngModel)]="row[column.key]">
-                        <input class="form-control" *ngSwitchCase="'email'" type="email" [(ngModel)]="row[column.key]">
+                        <input name="{{column.key}}" class="form-control" *ngSwitchCase="'input'" type="text"
+                            [(ngModel)]="row[column.key]" disabled>
+                        <input name="{{column.key}}" class="form-control" *ngSwitchCase="'email'" type="email"
+                            [(ngModel)]="row[column.key]" disabled>
                         <!-- handle email type -->
-                        <input class="form-control" *ngSwitchCase="'date'" type="date" [(ngModel)]="row[column.key]">
+                        <input name="{{column.key}}" class="form-control" *ngSwitchCase="'date'" type="date"
+                            [(ngModel)]="row[column.key]" disabled>
                         <!-- handle date type -->
-                        <textarea class="form-control" *ngSwitchCase="'textarea'"
-                            [(ngModel)]="row[column.key]"></textarea>
-                        <select class="form-control" *ngSwitchCase="'dropdown'">
+                        <textarea name="{{column.key}}" class="form-control" *ngSwitchCase="'textarea'"
+                            [(ngModel)]="row[column.key]" disabled></textarea>
+                        <select name="{{column.key}}" class="form-control" *ngSwitchCase="'dropdown'" disabled>
                             <option *ngFor="let option of optionsArray1" [value]="option[dropdownColumnName1]"
                                 [selected]="option[dropdownColumnId1] === row[column.key]?true:null">
                                 {{ option[dropdownColumnName1] }}
                             </option>
                         </select>
 
-                        <input class="form-control" *ngSwitchCase="'checkbox'" type="checkbox"
-                            [(ngModel)]="row[column.key]">
+                        <input name="{{column.key}}" class="form-control" *ngSwitchCase="'checkbox'" type="checkbox"
+                            [(ngModel)]="row[column.key]" disabled>
                     </ng-container>
                 </td>
-                <td><button (click)="selectClickedObject(row)" [ngModel]="row[currentIdColumnname]"
-                        class="btn btn-primary"
-                        [routerLink]="['/update', viewOf, row[currentIdColumnname]]">Update</button>
+                <td><button (click)="navigateToUpdate(row)" class="btn btn-primary">Update</button>
                 </td>
             </tr>
         </tbody>

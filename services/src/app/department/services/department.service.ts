@@ -2,17 +2,16 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Department } from '../department';
-import { AdminInstitution } from 'app/admindepartment/admin-institution/admin-institution';
-// import { InsertDepartmentComponent } from '../insert-department/insert-department.component';
-
+import { Department } from 'app/admindepartment/department';
 import { environment } from 'environments/environment.development';
+import { AdminInstitution } from 'app/admin-institution/admininstitution';
+
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class DepartmentService {
   departments: Department[] = [];
-  adminInstitutions: AdminInstitution[] = []
+  adminInstitutions: AdminInstitution[] = [];
   private readonly departmentUrl: string;
   private readonly adminInstitutionUrl: string;
 
