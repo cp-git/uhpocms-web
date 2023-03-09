@@ -30,7 +30,7 @@ export class AdminmdouleComponent {
 
   }
   RedirectToAssignTeacher() {
-    this._route.navigate(['assignteacher']);
+    this._route.navigate(['assignteacher', this.userName]);
 
   }
 

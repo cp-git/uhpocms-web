@@ -1,0 +1,99 @@
+<div class="container-fluid">
+    <div class="myheader">
+        <h1 style="color: black">InActive Courses</h1>
+    </div>
+
+</div>
+
+<div class="container">
+
+    <table class="table" border="1">
+        <thead>
+            <tr>
+
+                <th>Name</th>
+                <th>Description</th>
+                <th>Course Code</th>
+                <th>Course Type</th>
+                <th>Passing Score</th>
+                <th>Institute Name</th>
+                <th>Department Name</th>
+                <th>Activate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let course of inActiveCourses">
+
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" [(ngModel)]="course.courseName"
+                            value="{{course.courseName}}" readonly />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" [(ngModel)]="course.courseDescription"
+                            value="{{course.courseDescription}}" readonly />
+                    </div>
+                </td>
+
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" [(ngModel)]="course.courseCode"
+                            value="{{course.courseCode}}" readonly />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="text" [(ngModel)]="course.courseType"
+                            value="{{course.courseType}}" readonly />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="number" [(ngModel)]="course.passingScore"
+                            value="{{course.passingScore}}" readonly />
+                    </div>
+                </td>
+
+                <td>
+                    <div class="form-group">
+
+                        <ng-container *ngFor="let inst of institutions">
+                            <input *ngIf="course.instId==inst.adminInstitutionId?true:null" class="form-control"
+                                type="text" value="{{inst.adminInstitutionName}}" readonly />
+                        </ng-container>
+
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <ng-container *ngFor="let courseDepts of courseDepartments">
+                            <ng-container *ngFor="let depts of adminDepartments">
+                                <input
+                                    *ngIf="((course.courseId==courseDepts.courseId)&&(depts.id==courseDepts.departmentId))?true:null"
+                                    class="form-control" type="text" value="{{depts.name}}" readonly />
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                </td>
+
+
+
+
+
+                <td>
+                    <div class="form-group">
+                        <button class="form-control btn-success" (click)="activateCourse(course.courseId)"
+                            title="activate Course">Activate
+                        </button>
+                    </div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <button class="btn btn-primary" (click)="back()">Back</button>
+
+</div>

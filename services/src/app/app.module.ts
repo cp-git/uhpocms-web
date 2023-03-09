@@ -61,6 +61,7 @@ import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/c
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
 import { CreateinstituteadminprofileComponent } from './instituteadminprofile/createinstituteadminprofile/createinstituteadminprofile.component';
+import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.component';
 
 
 
@@ -118,6 +119,7 @@ import { CreateinstituteadminprofileComponent } from './instituteadminprofile/cr
     StudentmoduleComponent,
     AssigncoursetoteacherComponent,
     CreateinstituteadminprofileComponent,
+    InactivecourseComponent,
   ],
 
   imports: [

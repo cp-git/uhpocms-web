@@ -100,6 +100,12 @@ export class CourseService {
     return user;
   }
 
+
+  getAllDeactivCourses(): Observable<Course[]> {
+    return this._http.get<Course[]>(`${this.courseUrl}?name=inactive`);
+  }
+
+
   getAllDeactivateCourses(): Observable<Course[]> {
     return this._http.get<Course[]>(`${this.courseUrl}?name=inactive`);
   }

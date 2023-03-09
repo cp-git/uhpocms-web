@@ -12,11 +12,21 @@ export class UpdateinstituteadminprofileComponent {
   _instituteAdmin = new InstituteAdmin();
   firstName!: string;
 
+  userName!: string;
+  adminId: any;
+
   constructor(private _service: InstituteAdminServiceService, private _activatedRoute: ActivatedRoute, private _route: Router) { }
 
   ngOnInit(): void {
+
+    this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
+    this.userName = this._activatedRoute.snapshot.params['userName'];
+    console.log(this.userName)
+
     this.firstName = this._activatedRoute.snapshot.params['firstName'];
     console.log(this.firstName);
+
+
 
     this._service._getInstituteAdminList(this.firstName)
       .subscribe(data => {
@@ -34,5 +44,10 @@ export class UpdateinstituteadminprofileComponent {
       this._route.navigate(['/displayInstituteAdmin'])
 
     }, error => console.log(error));
+  }
+
+  back() {
+    this._route.navigate(['displayInstituteAdmin/display', this.userName])
+
   }
 }

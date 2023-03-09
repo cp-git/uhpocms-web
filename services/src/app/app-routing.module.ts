@@ -56,6 +56,7 @@ import { DisplaySchoolComponent } from './InstituteDetails/display-school/displa
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
+import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.component';
 
 
 const routes: Routes = [
@@ -82,11 +83,11 @@ const routes: Routes = [
   //update instituteadminprofile
 
 
-  { path: 'updateinstituteadminprofile/:firstName', component: UpdateinstituteadminprofileComponent },
+  { path: 'updateinstituteadminprofile/:firstName/:userName', component: UpdateinstituteadminprofileComponent },
 
 
   //view instituteadminprofile
-  { path: 'viewadminprofile/:firstName', component: ViewinstiteadminprofileComponent },
+  { path: 'viewadminprofile/:firstName/:userName', component: ViewinstiteadminprofileComponent },
 
 
   //course Module
@@ -97,6 +98,8 @@ const routes: Routes = [
   //teacherCourse
 
   { path: 'assignteacher', component: AssigncoursetoteacherComponent },
+  { path: 'assignteacher/:userName', component: AssigncoursetoteacherComponent },
+
   { path: 'inactivecourse', component: InactiveTeacherCourseComponent },
   { path: 'teachercourse', component: TeacherCourseComponent },
   { path: 'teacher/:id', component: TeacherCourseComponent },
@@ -209,6 +212,8 @@ const routes: Routes = [
 
   //update Quiz
   { path: 'updateQuiz/:title', component: UpdatequizComponent },
+
+  { path: 'updateQuiz/:title', component: UpdatequizComponent },
   // { path: 'updateQuiz', component: UpdatequizComponent },
 
   //teacherModule routes
@@ -226,6 +231,8 @@ const routes: Routes = [
 
   { path: 'addcourse', component: AddcourseComponent },
   { path: 'updatecourse/:courseName/:userName', component: UpdatecourseComponent },
+
+  { path: 'inactivecourse/:userName', component: InactivecourseComponent },
 
   { path: 'updatecourse/:userName', component: UpdatecourseComponent },
   //announcement router

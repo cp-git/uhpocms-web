@@ -7,8 +7,8 @@
     <table class="table" border="1px">
         <thead id="deptHeader">
             <tr>
-                <th>Sr.No.</th>
-                <th *ngIf="hideId">Id</th>
+
+
                 <th>Name</th>
                 <th>Description</th>
                 <th>Active</th>
@@ -20,18 +20,7 @@
         </thead>
         <tbody>
             <tr *ngIf="isHidden">
-                <td>
-                    <div class="form-group">
-                        1
-                    </div>
-                </td>
-                <td *ngIf="hideId">
 
-                    <div class="form-group">
-                        <input class="form-control" [(ngModel)]="department.id" type="number" value="{{department.id}}"
-                            disabled />
-                    </div>
-                </td>
                 <td>
                     <div class="form-group">
                         <input class="form-control" [(ngModel)]="department.name" type="text"
@@ -67,12 +56,7 @@
                 </td>
             </tr>
             <tr *ngFor="let dept of departments; let i=index">
-                <td>{{i+1}}</td>
-                <td *ngIf="hideId">
-                    <div class="form-group">
-                        <input class="form-control" [(ngModel)]="dept.id" type="number" value="{{dept.id}}" disabled />
-                    </div>
-                </td>
+
                 <td>
                     <div class="form-group">
                         <input class="form-control" [(ngModel)]="dept.name" type="text" value="{{dept.name}}" />
