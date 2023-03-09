@@ -90,6 +90,7 @@ export class ViewAllComponent implements OnInit {
 
     this.authUserService.authUserList().subscribe(
       response => {
+        this.authUserService.authUsers = response;
         this.authUsers = response;
         this.tableData = this.authUsers;
         this.currentIdColumnname = "authUserId";

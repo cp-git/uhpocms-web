@@ -221,13 +221,8 @@ const routes: Routes = [
   },
   { path: 'view/:viewname', component: ViewAllComponent },
   { path: 'add/:viewname', component: ViewAddComponent },
-  {
-    path: 'update/:viewname/:id', component: ViewAddComponent
-  },
+  { path: 'update/:viewname/:id', component: ViewAddComponent },
   { path: 'viewall/:viewname/:id', component: ViewComponent },
-
-
-
 ];
 
 @NgModule({

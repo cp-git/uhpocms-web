@@ -13,6 +13,7 @@ import { AdminInstitution } from 'app/admindepartment/admin-institution/admin-in
 import { AdminroleserviceService } from 'app/roleadmin/adminroleservice.service';
 import { AdminRoleColumn } from 'app/front/TableHeaders/admin-role-column';
 import { InstitutionSeriveService } from 'app/instituteadminprofile/institution-serive.service';
+import { AuthUserAllColumn } from 'app/front/TableHeaders/auth-user-column';
 import { Admin } from 'app/roleadmin/admin';
 @Component({
   selector: 'app-view',
@@ -66,9 +67,9 @@ export class ViewComponent {
   changeHeader() {
     this.viewOf = this.route.snapshot.paramMap.get('viewname');
     this.currentId = this.route.snapshot.paramMap.get('id');
-    if (this.currentId > 0 || this.currentId != undefined || this.currentId != null) {
-      this.addedOrUpdate = "update";
-    }
+    // if (this.currentId > 0 || this.currentId != undefined || this.currentId != null) {
+    //   this.addedOrUpdate = "update";
+    // }
     // alert(this.currentId)
     switch (this.viewOf) {
       case "Department":
@@ -77,8 +78,10 @@ export class ViewComponent {
 
         break;
       case "AuthUser":
-        this.tableHeader = AuthUserColumn;
-        this.currentModel = this.authUser;
+        //  alert("inauthuser");
+        this.changeToAuthuser();
+        // this.tableHeader = AuthUserAllColumn;
+        // this.currentModel = this.authUser;
         break;
       case "AdminRole":
         this.tableHeader = AdminRoleColumn;
@@ -135,6 +138,7 @@ export class ViewComponent {
   }
 
   changeToDepartment() {
+
     this.tableHeader = DepartmentAllColumn;
     this.loadInstitutions();
     // this.optionsArray1 = this.institutions;
@@ -145,6 +149,22 @@ export class ViewComponent {
       const department = this.departmentService.departments[i];
       if (department.id == this.currentId) {
         this.currentModel = department;
+        // alert("current" + JSON.stringify(this.currentModel));
+        break; // exit the loop when the condition is met
+      }
+    }
+  }
+
+  changeToAuthuser() {
+    this.tableHeader = AuthUserAllColumn;
+    // this.loadInstitutions();
+    // this.optionsArray1 = this.institutions;
+    this.currentModel = this.authUser;
+    for (let i = 0; i < this.authUserService.authUsers.length; i++) {
+      const authUser = this.authUserService.authUsers[i];
+      //alert("in me----------" + authUser);
+      if (authUser.authUserId == this.currentId) {
+        this.currentModel = authUser;
         // alert("current" + JSON.stringify(this.currentModel));
         break; // exit the loop when the condition is met
       }

@@ -11,7 +11,7 @@ import { Authuser } from '../authuser';
 export class AuthuserserviceService {
   // BASE_PATH: 'http://localhost:8080'
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser';
-
+  authUsers: Authuser[] = [];
   public username: String = 'uhpocadmin';
   public password: String = 'P@55w0rd';
   _baseUrl: string;
@@ -42,7 +42,7 @@ export class AuthuserserviceService {
   }
 
   updateAuthUser(authUserName: string, authuser: Authuser): Observable<any> {
-    return this._http.put<any>(this._baseUrl + authUserName, authuser);
+    return this._http.put<any>(`${this._baseUrl}/${authUserName}`, authuser);
   }
 
   loginDataAuthUser(authuser: Authuser): Observable<any> {

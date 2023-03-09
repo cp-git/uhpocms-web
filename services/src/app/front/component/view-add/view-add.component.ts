@@ -14,6 +14,7 @@ import { AdminroleserviceService } from 'app/roleadmin/adminroleservice.service'
 import { AdminRoleColumn } from 'app/front/TableHeaders/admin-role-column';
 import { InstitutionSeriveService } from 'app/instituteadminprofile/institution-serive.service';
 import { Admin } from 'app/roleadmin/admin';
+import { AuthUserAllColumn } from 'app/front/TableHeaders/auth-user-column';
 @Component({
   selector: 'app-view-add',
   templateUrl: './view-add.component.html',
@@ -68,6 +69,7 @@ export class ViewAddComponent implements OnInit {
   changeHeader() {
     this.viewOf = this.route.snapshot.paramMap.get('viewname');
     this.currentId = this.route.snapshot.paramMap.get('id');
+    // alert(this.currentId)
     if (this.currentId > 0 || this.currentId != undefined || this.currentId != null) {
       this.addedOrUpdate = "update";
     }
@@ -79,17 +81,32 @@ export class ViewAddComponent implements OnInit {
 
         break;
       case "AuthUser":
-        this.tableHeader = AuthUserColumn;
-        this.currentModel = this.authUser;
+        this.changeToAuthuser();
+        // this.tableHeader = AuthUserColumn;
+        // this.currentModel = this.authUser;
         break;
       case "AdminRole":
         this.tableHeader = AdminRoleColumn;
         this.currentModel = this.adminRole;
         break;
     }
+
+
   }
 
-
+  changeToAuthuser() {
+    // alert(JSON.stringify(this.authUserService.authUsers))
+    this.tableHeader = AuthUserColumn;
+    this.currentModel = this.authUser;
+    for (let i = 0; i < this.authUserService.authUsers.length; i++) {
+      const authuser = this.authUserService.authUsers[i];
+      if (authuser.authUserId == this.currentId) {
+        this.currentModel = authuser;
+        // alert("current" + JSON.stringify(this.currentModel));
+        break; // exit the loop when the condition is met
+      }
+    }
+  }
 
   loadInstitutions() {
     this.institutionService._getAllInstitutions().subscribe(
@@ -103,36 +120,69 @@ export class ViewAddComponent implements OnInit {
     );
   }
 
-  add(currentModel: any) {
+  addOrUpdate(currentModel: any) {
+
     this.viewOf = this.route.snapshot.paramMap.get('viewname');
-    switch (this.viewOf) {
-      case "Department":
-        currentModel.active = true;
-        this.departmentService.insertDepartment(currentModel).subscribe(
-          response => {
-            alert(`Department ${this.addedOrUpdate} successfully !`);
-          },
-          error => {
-            alert(`Failed to ${this.addedOrUpdate} Department !`);
-          }
-        );
-        break;
-      case "AuthUser":
-        this.authUserService.addAuthUser(currentModel).subscribe(
-          response => {
-            alert(`AuthUser ${this.addedOrUpdate} successfully !`);
-          },
-          error => {
-            alert(`Failed to ${this.addedOrUpdate} AuthUser !`);
-          }
-        )
+    if (this.addedOrUpdate === 'add') {
+      switch (this.viewOf) {
+        case "Department":
+          currentModel.active = true;
+          this.departmentService.insertDepartment(currentModel).subscribe(
+            response => {
+              alert(`Department ${this.addedOrUpdate} successfully !`);
+            },
+            error => {
+              alert(`Failed to ${this.addedOrUpdate} Department !`);
+            }
+          );
+          break;
+        case "AuthUser":
+          this.authUserService.addAuthUser(currentModel).subscribe(
+            response => {
+              alert(`AuthUser ${this.addedOrUpdate} successfully !`);
+            },
+            error => {
+              alert(`Failed to ${this.addedOrUpdate} AuthUser !`);
+            }
+          )
 
 
-        break;
-      case "AdminRole":
+          break;
+        case "AdminRole":
 
-        break;
+          break;
+      }
+    } else {
+      switch (this.viewOf) {
+        case "Department":
+          currentModel.active = true;
+          this.departmentService.insertDepartment(currentModel).subscribe(
+            response => {
+              alert(`Department ${this.addedOrUpdate} successfully !`);
+            },
+            error => {
+              alert(`Failed to ${this.addedOrUpdate} Department !`);
+            }
+          );
+          break;
+        case "AuthUser":
+          this.authUserService.updateAuthUser(currentModel.authUserName, currentModel).subscribe(
+            response => {
+              alert(`AuthUser ${this.addedOrUpdate} successfully !`);
+            },
+            error => {
+              alert(`Failed to ${this.addedOrUpdate} AuthUser !`);
+            }
+          )
+
+
+          break;
+        case "AdminRole":
+
+          break;
+      }
     }
+
     this.router.navigate([`/view/${this.viewOf}`]);
   }
 

@@ -18,21 +18,26 @@
         <thead id="deptHeader">
             <tr>
                 <th *ngFor="let column of tableHeader">{{ column.label }}</th>
-                <th>Action</th>
+                <th>Update</th>
+                <th>View</th>
+
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let row of tableData">
                 <td *ngFor="let column of tableHeader">
                     <ng-container [ngSwitch]="column.type">
-                        <input class="form-control" *ngSwitchCase="'input'" type="text" [(ngModel)]="row[column.key]">
-                        <input class="form-control" *ngSwitchCase="'email'" type="email" [(ngModel)]="row[column.key]">
+                        <input class="form-control" *ngSwitchCase="'input'" type="text" [(ngModel)]="row[column.key]"
+                            disabled>
+                        <input class="form-control" *ngSwitchCase="'email'" type="email" [(ngModel)]="row[column.key]"
+                            disabled>
                         <!-- handle email type -->
-                        <input class="form-control" *ngSwitchCase="'date'" type="date" [(ngModel)]="row[column.key]">
+                        <input class="form-control" *ngSwitchCase="'date'" type="date" [(ngModel)]="row[column.key]"
+                            disabled>
                         <!-- handle date type -->
                         <textarea class="form-control" *ngSwitchCase="'textarea'"
                             [(ngModel)]="row[column.key]"></textarea>
-                        <select class="form-control" *ngSwitchCase="'dropdown'">
+                        <select class="form-control" *ngSwitchCase="'dropdown'" disabled>
                             <option *ngFor="let option of optionsArray1" [value]="option[dropdownColumnName1]"
                                 [selected]="option[dropdownColumnId1] === row[column.key]?true:null">
                                 {{ option[dropdownColumnName1] }}
@@ -40,14 +45,15 @@
                         </select>
 
                         <input class="form-control" *ngSwitchCase="'checkbox'" type="checkbox"
-                            [(ngModel)]="row[column.key]">
+                            [(ngModel)]="row[column.key]" disabled>
                     </ng-container>
                 </td>
                 <td><button (click)="selectClickedObject(row)" class="btn btn-primary"
                         [routerLink]="['/update', viewOf, row[currentIdColumnname]]">Update</button>
-                    <button (click)="selectClickedObject(row)" class="btn btn-primary"
-                        [routerLink]="['/viewall', viewOf, row[currentIdColumnname]]">View</button>
+
                 </td>
+                <td> <button (click)="selectClickedObject(row)" class="btn btn-primary"
+                        [routerLink]="['/viewall', viewOf, row[currentIdColumnname]]">View</button></td>
 
             </tr>
         </tbody>
