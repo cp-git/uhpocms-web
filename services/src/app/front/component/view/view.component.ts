@@ -15,6 +15,9 @@ import { AdminRoleColumn } from 'app/front/TableHeaders/admin-role-column';
 import { InstitutionSeriveService } from 'app/instituteadminprofile/institution-serive.service';
 import { AuthUserAllColumn } from 'app/front/TableHeaders/auth-user-column';
 import { Admin } from 'app/roleadmin/admin';
+import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
+import { InstituteAdminServiceService } from 'app/instituteadminprofile/institute-admin-service.service';
+import { ProfileAllColumn } from 'app/front/TableHeaders/profile-column';
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
@@ -27,14 +30,21 @@ export class ViewComponent {
   tableHeader: any;
   optionsArray1: any
   institutions: AdminInstitution[] = [];
+  departments: Department[] = [];
 
   currentModel: any;
   authUser: Authuser;
   department: Department;
   adminRole: Admin;
+  profile: InstituteAdmin;
 
   dropdownColumnId1: string = '';
   dropdownColumnName1: string = '';
+
+  ///for 2nd dropdown
+  optionsArray2: any;
+  dropdownColumnId2: string = '';
+  dropdownColumnName2: string = '';
 
   constructor(
     private location: Location,
@@ -43,12 +53,14 @@ export class ViewComponent {
     private route: ActivatedRoute,
     private authUserService: AuthuserserviceService,
     private departmentService: DepartmentService,
-    private institutionService: InstitutionSeriveService
+    private institutionService: InstitutionSeriveService,
+    private profileService: InstituteAdminServiceService
   ) {
 
     this.authUser = new Authuser();
     this.department = new Department();
     this.adminRole = new Admin();
+    this.profile = new InstituteAdmin();
     this.addedOrUpdate = 'add';
     this.currentId = 0;
 
@@ -83,14 +95,27 @@ export class ViewComponent {
         // this.tableHeader = AuthUserAllColumn;
         // this.currentModel = this.authUser;
         break;
-      case "AdminRole":
-        this.tableHeader = AdminRoleColumn;
-        this.currentModel = this.adminRole;
+
+      case "Profile":
+        this.changeToProfile();
         break;
     }
   }
 
+  loadDepartments() {
+    this.departmentService.fetchAllDepartments().subscribe(
+      response => {
+        this.departments = response;
 
+        this.optionsArray1 = this.institutions;
+        this.optionsArray2 = this.department;
+
+      },
+      error => {
+        this.departments = [];
+      }
+    )
+  }
 
   loadInstitutions() {
     this.institutionService._getAllInstitutions().subscribe(
@@ -104,37 +129,31 @@ export class ViewComponent {
     );
   }
 
-  add(currentModel: any) {
-    this.viewOf = this.route.snapshot.paramMap.get('viewname');
-    switch (this.viewOf) {
-      case "Department":
-        currentModel.active = true;
-        this.departmentService.insertDepartment(currentModel).subscribe(
-          response => {
-            alert(`Department ${this.addedOrUpdate} successfully !`);
-          },
-          error => {
-            alert(`Failed to ${this.addedOrUpdate} Department !`);
-          }
-        );
-        break;
-      case "AuthUser":
-        this.authUserService.addAuthUser(currentModel).subscribe(
-          response => {
-            alert(`AuthUser ${this.addedOrUpdate} successfully !`);
-          },
-          error => {
-            alert(`Failed to ${this.addedOrUpdate} AuthUser !`);
-          }
-        )
+  changeToProfile() {
 
+    this.tableHeader = ProfileAllColumn;
+    this.loadInstitutions();
+    this.loadDepartments();
 
-        break;
-      case "AdminRole":
+    this.optionsArray2 = this.departments;
+    this.dropdownColumnId2 = "id";
+    this.dropdownColumnName2 = "name";
+    this.optionsArray1 = this.institutions;
+    this.dropdownColumnId1 = "adminInstitutionId";
+    this.dropdownColumnName1 = "adminInstitutionName";
 
-        break;
+    this.currentModel = this.profile;
+    alert(this.currentId);
+
+    for (let i = 0; i < this.profileService.profiles.length; i++) {
+      const profile = this.profileService.profiles[i];
+      if (profile.adminId == this.currentId) {
+        this.currentModel = profile;
+        // alert("current" + JSON.stringify(this.currentModel));
+        break; // exit the loop when the condition is met
+      }
     }
-    this.router.navigate([`/view/${this.viewOf}`]);
+
   }
 
   changeToDepartment() {

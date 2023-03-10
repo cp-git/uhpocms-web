@@ -20,7 +20,6 @@
                 <th *ngFor="let column of tableHeader">{{ column.label }}</th>
                 <th>Update</th>
                 <th>View</th>
-
             </tr>
         </thead>
         <tbody>
@@ -37,10 +36,16 @@
                         <!-- handle date type -->
                         <textarea class="form-control" *ngSwitchCase="'textarea'"
                             [(ngModel)]="row[column.key]"></textarea>
-                        <select class="form-control" *ngSwitchCase="'dropdown'" disabled>
+                        <select class="form-control" *ngSwitchCase="'dropdown1'" disabled>
                             <option *ngFor="let option of optionsArray1" [value]="option[dropdownColumnName1]"
-                                [selected]="option[dropdownColumnId1] === row[column.key]?true:null">
+                                [selected]="option[dropdownColumnId1] == row[column.key]?true:null">
                                 {{ option[dropdownColumnName1] }}
+                            </option>
+                        </select>
+                        <select class="form-control" *ngSwitchCase="'dropdown2'" disabled>
+                            <option *ngFor="let option of optionsArray2" [value]="option[dropdownColumnName2]"
+                                [selected]="option[dropdownColumnId2] === row[column.key]?true:null">
+                                {{ option[dropdownColumnName2] }}
                             </option>
                         </select>
 
@@ -63,3 +68,8 @@
 
 
 <!-- <app-view-add [selectedItem]="objectToUpdate"></app-view-add> -->
+
+{{optionsArray2|json}}
+{{dropdownColumnId2|json}}
+{{dropdownColumnName2|json}}
+{{tableHeader|json}}

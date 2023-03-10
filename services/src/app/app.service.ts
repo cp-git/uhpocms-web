@@ -6,7 +6,7 @@ import { Course } from './class/course';
 import { Module } from './class/module';
 import { Quiz } from './class/quiz';
 import { InstituteAdmin } from './instituteadminprofile/institute-admin';
-
+import { Department } from './admindepartment/department';
 import { AdminInstitution } from './admindepartment/admin-institution/admin-institution';
 import { environment } from 'environments/environment.development';
 @Injectable({
@@ -19,6 +19,7 @@ export class AppService {
   private readonly categoryURL: string;
   private readonly moduleURL: string;
   private readonly instituteProfileURL: string;
+  private readonly departmentURL: string;
 
 
   constructor(private _http: HttpClient) {
@@ -29,6 +30,8 @@ export class AppService {
     this.categoryURL = `${environment.categoryUrl}/category?category=all`;
     this.moduleURL = `${environment.moduleUrl}/module?name=all`;
     this.instituteProfileURL = `${environment.instituteAdmin}/profile?firstName=all`;
+    this.departmentURL = `${environment.departmentUrl}/getdept?name=all`;
+
   }
 
   fetchAllInstitution(): Observable<AdminInstitution[]> {
@@ -59,5 +62,11 @@ export class AppService {
   fetchAllInstituteProfile(): Observable<InstituteAdmin[]> {
     //alert(this.baseUrl + this.instituteProfileWar + this.instituteProfileURL)
     return this._http.get<InstituteAdmin[]>(this.instituteProfileURL);
+  }
+
+  fetchAllDepartment(): Observable<Department[]> {
+    alert(this.departmentURL);
+    return this._http.get<Department[]>(`http://localhost:8090/department/uhpocms/getdept?name=all`);
+
   }
 }

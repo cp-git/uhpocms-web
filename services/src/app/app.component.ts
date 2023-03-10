@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Department } from './admindepartment/department';
 import { AppService } from './app.service';
 import { AdminInstitution } from './class/admin-institution';
 import { Category } from './class/category';
@@ -20,6 +21,7 @@ export class AppComponent {
   courses: Course[] = [];
   modules: Module[] = [];
   instituteProfiles: InstituteAdmin[] = [];
+  departments: Department[] = [];
 
   constructor(private _appService: AppService) { }
 
@@ -45,6 +47,23 @@ export class AppComponent {
       },
       (error) => {
         sessionStorage.setItem('admininstitution', '');
+      }
+    );
+  }
+
+  loadDepartments() {
+    this._appService.fetchAllDepartment().subscribe(
+      (response) => {
+        this.departments = response;
+        alert(this.departments);
+        sessionStorage.setItem(
+          'departments',
+          JSON.stringify(this.departments)
+        );
+
+      },
+      (error) => {
+        sessionStorage.setItem('departments', '');
       }
     );
   }

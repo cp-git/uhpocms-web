@@ -15,6 +15,10 @@ import { AdminRoleColumn } from 'app/front/TableHeaders/admin-role-column';
 import { InstitutionSeriveService } from 'app/instituteadminprofile/institution-serive.service';
 import { Admin } from 'app/roleadmin/admin';
 import { AuthUserAllColumn } from 'app/front/TableHeaders/auth-user-column';
+import { ProfileAllColumn } from 'app/front/TableHeaders/profile-column';
+import { AdmininstitutionService } from 'app/admin-institution/service/admininstitution.service';
+import { InstituteAdminServiceService } from 'app/instituteadminprofile/institute-admin-service.service';
+import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 @Component({
   selector: 'app-view-add',
   templateUrl: './view-add.component.html',
@@ -29,11 +33,16 @@ export class ViewAddComponent implements OnInit {
   tableHeader: any;
   optionsArray1: any
   institutions: AdminInstitution[] = [];
-
-  currentModel: any;
+  departments: Department[] = [];
+  currentModel: any; //current data for view or update
   authUser: Authuser;
   department: Department;
   adminRole: Admin;
+  profile: InstituteAdmin;
+
+  optionsArray2: any;
+  dropdownColumnId2: string = '';
+  dropdownColumnName2: string = '';
 
   dropdownColumnId1: string = '';
   dropdownColumnName1: string = '';
@@ -45,19 +54,21 @@ export class ViewAddComponent implements OnInit {
     private route: ActivatedRoute,
     private authUserService: AuthuserserviceService,
     private departmentService: DepartmentService,
-    private institutionService: InstitutionSeriveService
+    private institutionService: InstitutionSeriveService,
+    private profileServices: InstituteAdminServiceService
   ) {
 
     this.authUser = new Authuser();
     this.department = new Department();
     this.adminRole = new Admin();
+    this.profile = new InstituteAdmin();
     this.addedOrUpdate = 'add';
     this.currentId = 0;
 
 
   }
-  ngOnInit(): void {
 
+  ngOnInit(): void {
     this.changeHeader();
     // alert(JSON.stringify(this.selectedItem));
   }
@@ -85,9 +96,8 @@ export class ViewAddComponent implements OnInit {
         // this.tableHeader = AuthUserColumn;
         // this.currentModel = this.authUser;
         break;
-      case "AdminRole":
-        this.tableHeader = AdminRoleColumn;
-        this.currentModel = this.adminRole;
+      case "Profile":
+        this.changeToProfile();
         break;
     }
 
@@ -108,6 +118,20 @@ export class ViewAddComponent implements OnInit {
     }
   }
 
+  loadDepartments() {
+    this.departmentService.fetchAllDepartments().subscribe(
+      response => {
+        this.departments = response;
+
+        this.optionsArray1 = this.institutions;
+        this.optionsArray2 = this.department;
+
+      },
+      error => {
+        this.departments = [];
+      }
+    )
+  }
   loadInstitutions() {
     this.institutionService._getAllInstitutions().subscribe(
       response => {
@@ -145,8 +169,17 @@ export class ViewAddComponent implements OnInit {
               alert(`Failed to ${this.addedOrUpdate} AuthUser !`);
             }
           )
+          break;
 
-
+        case "Profile":
+          this.profileServices._addInstituteAdminList(currentModel).subscribe(
+            response => {
+              alert(`Profile ${this.addedOrUpdate} successfully !`);
+            },
+            error => {
+              alert(`Failed to ${this.addedOrUpdate} Profile !`);
+            }
+          )
           break;
         case "AdminRole":
 
@@ -174,15 +207,23 @@ export class ViewAddComponent implements OnInit {
               alert(`Failed to ${this.addedOrUpdate} AuthUser !`);
             }
           )
+          break;
 
-
+        case "Profile":
+          this.profileServices.saveOrUpdateProfile(currentModel.userId, currentModel).subscribe(
+            response => {
+              alert(`AuthUser ${this.addedOrUpdate} successfully !`);
+            },
+            error => {
+              alert(`Failed to ${this.addedOrUpdate} AuthUser !`);
+            }
+          )
           break;
         case "AdminRole":
 
           break;
       }
     }
-
     this.router.navigate([`/view/${this.viewOf}`]);
   }
 
@@ -201,5 +242,33 @@ export class ViewAddComponent implements OnInit {
         break; // exit the loop when the condition is met
       }
     }
+  }
+
+  changeToProfile() {
+    this.tableHeader = ProfileAllColumn;
+    this.loadInstitutions();
+    this.loadDepartments();
+
+    // this.optionsArray2 = this.departments;
+    this.dropdownColumnId2 = "id";
+    this.dropdownColumnName2 = "name";
+
+    alert(this.departments + "dept");
+    this.optionsArray1 = this.institutions;
+    this.dropdownColumnId1 = "adminInstitutionId";
+    this.dropdownColumnName1 = "adminInstitutionName";
+    alert(this.institutions);
+    this.currentModel = this.profile;
+    // alert(this.currentId);
+
+    for (let i = 0; i < this.profileServices.profiles.length; i++) {
+      const profile = this.profileServices.profiles[i];
+      if (profile.adminId == this.currentId) {
+        this.currentModel = profile;
+        // alert("current" + JSON.stringify(this.currentModel));
+        break; // exit the loop when the condition is met
+      }
+    }
+
   }
 }

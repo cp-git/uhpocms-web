@@ -16,6 +16,7 @@ export class InstituteAdminServiceService {
   public password: string = 'Pa55w0rd';
   _loginUrl: string;
 
+  profiles: InstituteAdmin[] = [];
   constructor(private http: HttpClient) {
     // this._baseUrl = `${environment.instituteAdmin}/profile`;
     this._baseUrl = "http://localhost:8090/instituteadmin/uhpocms/profile";

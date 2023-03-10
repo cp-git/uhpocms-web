@@ -41,7 +41,7 @@
                             required=""></textarea>
                     </ng-container>
 
-                    <ng-container *ngSwitchCase="'dropdown'">
+                    <ng-container *ngSwitchCase="'dropdown1'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
                         <select name="{{column.key}}" [(ngModel)]="currentModel[column.key]" class="form-control"
@@ -51,8 +51,20 @@
                                 {{ option[dropdownColumnName1] }}
                             </option>
                         </select>
-
                     </ng-container>
+
+                    <ng-container *ngSwitchCase="'dropdown2'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <select name="{{column.key}}" [(ngModel)]="currentModel[column.key]" class="form-control"
+                            required="">
+                            <option value="undefined">Select</option>
+                            <option *ngFor="let option of optionsArray1" [value]="option[dropdownColumnId2]">
+                                {{ option[dropdownColumnName2] }}
+                            </option>
+                        </select>
+                    </ng-container>
+
                     <ng-container *ngSwitchCase="'checkbox'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
