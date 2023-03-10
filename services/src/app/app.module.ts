@@ -64,7 +64,8 @@ import { ViewAddComponent } from './front/component/view-add/view-add.component'
 import { ViewAllComponent } from './front/component/view-all/view-all.component';
 import { TableModule } from './front/module/table.module';
 import { DepartmentModule } from './department/module/department/department.module';
-import { AddDepartmentComponent } from './department/components/add-department/add-department.component';
+import { AuthUserModule } from './auth-user/auth-user.module';
+import { UpdateDepartmentComponent } from './department/components/update-department/update-department.component';
 
 @NgModule({
   declarations: [
@@ -118,7 +119,8 @@ import { AddDepartmentComponent } from './department/components/add-department/a
     StudentmoduleComponent,
     AssigncoursetoteacherComponent,
     // ViewAddComponent,
-    AddDepartmentComponent
+    // AddDepartmentComponent,
+    // ViewOneDepartmentComponent
   ],
 
   imports: [
@@ -132,7 +134,8 @@ import { AddDepartmentComponent } from './department/components/add-department/a
     MatToolbarModule,
     BrowserModule,
     NgSelectModule,
-    DepartmentModule
+    DepartmentModule,
+    AuthUserModule
   ],
 
   providers: [

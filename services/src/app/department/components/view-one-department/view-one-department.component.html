@@ -1,14 +1,14 @@
 <div class="container">
     <div class="row justify-content-between">
         <div class="col-sm-6">
-            <h1>Add Department</h1>
+            <h1>View Department</h1>
         </div>
 
         <div class="col-sm-6 text-right">
             <!-- <button class="btn btn-danger" [routerLink]="['/add', viewOf]">Add</button> -->
-            <button class="btn btn-primary" (click)="back()">Back</button>
+            <button class="btn btn-primary" (click)="home()">Back</button>
         </div>
     </div>
-    <app-view-add (submitClicked)="onChildSubmitButtonClick($event)"></app-view-add>
+    <app-view [data]="{moduleName:'Department',currentData:currentData}" [dropdown1]="adminInstitutions"></app-view>
 
 </div>

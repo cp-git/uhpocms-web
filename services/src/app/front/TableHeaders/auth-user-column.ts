@@ -5,7 +5,7 @@ export const AuthUserColumn = [
     { key: 'authUserFirstName', label: 'First Name', type: 'input' },
     { key: 'authUserLastName', label: 'Last Name', type: 'input' },
     { key: 'authUserEmail', label: 'Email', type: 'email' },
-    { key: 'authUserDateJoined', label: 'Join Date', type: 'date', format: 'yyyy-dd-mm' },
+    { key: 'authUserDateJoined', label: 'Join Date', type: 'input' },
     { key: 'authUserIsStaff', label: 'Is Staff', type: 'checkbox' },
     { key: 'authUserIsSuperUser', label: 'Is Superuser', type: 'checkbox' }
 ]

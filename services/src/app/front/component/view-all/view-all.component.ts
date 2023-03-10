@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,11 +19,16 @@ import { ViewAllService } from 'app/front/services/view-all.service';
 @Component({
   selector: 'app-view-all',
   templateUrl: './view-all.component.html',
-  styleUrls: ['./view-all.component.css'],
+  styleUrls: ['./view-all.component.css']
 })
 export class ViewAllComponent implements OnInit {
   @Input() data: { moduleName: string, moduleData: any } = { moduleName: '', moduleData: null };
-  @Input() dropdown1: any;
+  @Input() dropdown1?: any;
+  @Input() dropdown2?: any;
+
+  @Output() viewClicked: EventEmitter<any> = new EventEmitter();
+  @Output() updateClicked: EventEmitter<any> = new EventEmitter();
+
   // for current table header for selected(current) modules
   tableHeader: any;
   viewOf: any;  // current module name
@@ -60,12 +65,27 @@ export class ViewAllComponent implements OnInit {
     // this.data.moduleData = [...this.data.moduleData];
     // alert(JSON.stringify(this.data.moduleData))
     this.viewOf = this.data.moduleName;
-    this.service.viewOf = this.viewOf
+    this.service.viewOf = this.viewOf;
+    this.tableData = this.data.moduleData;
     this.changeHeader();
   }
 
   navigateToAdd() {
     this.router.navigate(['/add', `${this.viewOf}`]);
+  }
+
+  onViewClicked(objectToView: any): void {
+    // alert("onChildButtonClick" + JSON.stringify(objectToView));
+    this.viewClicked.emit(objectToView);
+
+  }
+  onUpdatClicked(objectToView: any): void {
+    alert("onUpdatClicked" + JSON.stringify(objectToView));
+    this.updateClicked.emit(objectToView);
+    // this.router.navigate(['/Department/update']);
+
+    // this.router.navigate(['/Department/update']);
+
   }
 
   home() {
@@ -80,9 +100,12 @@ export class ViewAllComponent implements OnInit {
     this.objectToUpdate = item;
     // alert("hello" + JSON.stringify(this.objectToUpdate));
     // alert()
-    this.router.navigate(['/update', `${this.viewOf}`, `${this.objectToUpdate[this.currentIdColumnname]}`]);
+    this.router.navigate([`${this.viewOf}/update`, , `${this.objectToUpdate[this.currentIdColumnname]}`]);
 
   }
+  // navigateToView(objectToView: any) {
+  //   alert(JSON.stringify(objectToView));
+  // }
 
   changeHeader() {
     // this.viewOf = this.route.snapshot.paramMap.get('viewname');
@@ -93,7 +116,6 @@ export class ViewAllComponent implements OnInit {
         // this.loadInstitutions();  // loading institutions for dropdown
         // this.loadDepartments();   // for printing data
 
-        this.tableData = this.data.moduleData;
         // alert(JSON.stringify(this.tableData))
         this.institutions = this.dropdown1;
         // alert("hello" + JSON.stringify(this.institutions))
@@ -105,7 +127,7 @@ export class ViewAllComponent implements OnInit {
         break;
       case "AuthUser":
         this.tableHeader = AuthUserColumn;
-        this.loadAuthUsers();
+        // this.loadAuthUsers();
         break;
       case "AdminRole":
         this.tableHeader = AdminRoleColumn;

@@ -10,8 +10,10 @@ import { AdminInstitution } from 'app/admin-institution/admininstitution';
   providedIn: 'root'
 })
 export class DepartmentService {
+  currentDepartmentData: Department;
   departments: Department[] = [];
   adminInstitutions: AdminInstitution[] = [];
+
   private readonly departmentUrl: string;
   private readonly adminInstitutionUrl: string;
 
@@ -20,6 +22,7 @@ export class DepartmentService {
 
     this.departmentUrl = environment.departmentUrl;
     this.adminInstitutionUrl = environment.adminInstitutionUrl;
+    this.currentDepartmentData = new Department();
 
     // this.departmentUrl = `http://localhost:8090/department/uhpocms`;
     // this.adminInstitutionUrl = `http://localhost:8090/department/uhpocms`;

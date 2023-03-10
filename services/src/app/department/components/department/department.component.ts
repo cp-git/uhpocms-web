@@ -8,11 +8,12 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
-  styleUrls: ['./department.component.css']
+  styleUrls: ['./department.component.css'],
+
 })
 export class DepartmentComponent implements OnInit {
   readonly moduleName = 'Department';
-
+  currentData: Department;
   departments: Department[] = [];
   dataAvailable: boolean = false;
   sessionData: any;
@@ -24,7 +25,7 @@ export class DepartmentComponent implements OnInit {
     private departmentService: DepartmentService,
     private router: Router
   ) {
-
+    this.currentData = new Department();
   }
   // ngOnChanges(changes: SimpleChanges) {
   //   if (changes[this.data.moduleData]) {
@@ -36,10 +37,10 @@ export class DepartmentComponent implements OnInit {
     this.getAllDepartments();
   }
   navigateToAdd() {
-    this.router.navigate(['/add/Department']);
+    this.router.navigate(['/Department/add']);
   }
-  home() {
-    this.location.back();
+  back() {
+    this.router.navigate(['/demo']);
   }
 
 
@@ -71,4 +72,25 @@ export class DepartmentComponent implements OnInit {
       }
     );
   }
+
+  onChildViewClick(objectReceived: any): void {
+    // alert("onChildButtonClic2k" + JSON.stringify(objectReceived));
+    this.currentData = objectReceived;
+    this.departmentService.currentDepartmentData = this.currentData;
+    this.router.navigate(['/Department/view'])
+  }
+
+  onChildUpdateClick(objectReceived: any): void {
+    alert("onChildButtonClic2k" + JSON.stringify(objectReceived));
+    this.currentData = objectReceived;
+    this.departmentService.currentDepartmentData = this.currentData;
+    this.router.navigate(['/Department/update'])
+  }
+
+  // onChildUpdateClick(objectReceived: any): void {
+  //   alert("onChildButtonClick" + JSON.stringify(objectReceived));
+  //   // this.update(objectReceived);
+  //   this.currentData = objectReceived;
+  // }
+
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -22,7 +22,11 @@ import { ViewAllService } from 'app/front/services/view-all.service';
 })
 export class ViewAddComponent implements OnInit {
   // @Input() selectedItem: any;
+  @Input() data: { screen: string, moduleName: string, currentData: any } = { screen: '', moduleName: '', currentData: null };
+  @Input() dropdown1?: any;
+  @Input() dropdown2?: any;
 
+  @Output() submitClicked: EventEmitter<any> = new EventEmitter();
   viewOf: any;
   currentId!: any;
   addedOrUpdate: string;
@@ -57,8 +61,19 @@ export class ViewAddComponent implements OnInit {
 
 
   }
+
+  onSubmitClicked(objectToAdd: any): void {
+    // alert("onChildButtonClick" + JSON.stringify(objectToAdd));
+    this.submitClicked.emit(objectToAdd);
+
+  }
   ngOnInit(): void {
     this.viewOf = this.service.viewOf;
+    if (this.data.screen === 'update') {
+      this.currentData = this.data.currentData;
+      this.viewOf = this.data.moduleName;
+    }
+
     // alert(JSON.stringify(this.viewOf));
 
     this.changeHeader();
@@ -72,11 +87,11 @@ export class ViewAddComponent implements OnInit {
 
   changeHeader() {
     // this.viewOf = this.route.snapshot.paramMap.get('viewname');
-    this.currentId = this.route.snapshot.paramMap.get('id');
-    if (this.currentId > 0 || this.currentId != undefined || this.currentId != null) {
-      this.addedOrUpdate = "update";
-      // alert(this.currentId)
-    }
+    // this.currentId = this.route.snapshot.paramMap.get('id');
+    // if (this.currentId > 0 || this.currentId != undefined || this.currentId != null) {
+    //   this.addedOrUpdate = "update";
+    //   // alert(this.currentId)
+    // }
     // alert(this.currentId)
     switch (this.viewOf) {
       case "Department":
@@ -109,38 +124,38 @@ export class ViewAddComponent implements OnInit {
     );
   }
 
-  add(currentModel: any) {
-    // this.viewOf = this.route.snapshot.paramMap.get('viewname');
-    switch (this.viewOf) {
-      case "Department":
-        currentModel.active = true;
-        this.departmentService.insertDepartment(currentModel).subscribe(
-          response => {
-            alert(`Department ${this.addedOrUpdate} successfully !`);
-          },
-          error => {
-            alert(`Failed to ${this.addedOrUpdate} Department !`);
-          }
-        );
-        break;
-      case "AuthUser":
-        this.authUserService.addAuthUser(currentModel).subscribe(
-          response => {
-            alert(`AuthUser ${this.addedOrUpdate} successfully !`);
-          },
-          error => {
-            alert(`Failed to ${this.addedOrUpdate} AuthUser !`);
-          }
-        )
+  // add(currentModel: any) {
+  //   // this.viewOf = this.route.snapshot.paramMap.get('viewname');
+  //   switch (this.viewOf) {
+  //     case "Department":
+  //       currentModel.active = true;
+  //       this.departmentService.insertDepartment(currentModel).subscribe(
+  //         response => {
+  //           alert(`Department ${this.addedOrUpdate} successfully !`);
+  //         },
+  //         error => {
+  //           alert(`Failed to ${this.addedOrUpdate} Department !`);
+  //         }
+  //       );
+  //       break;
+  //     case "AuthUser":
+  //       this.authUserService.addAuthUser(currentModel).subscribe(
+  //         response => {
+  //           alert(`AuthUser ${this.addedOrUpdate} successfully !`);
+  //         },
+  //         error => {
+  //           alert(`Failed to ${this.addedOrUpdate} AuthUser !`);
+  //         }
+  //       )
 
 
-        break;
-      case "AdminRole":
+  //       break;
+  //     case "AdminRole":
 
-        break;
-    }
-    this.router.navigate([`/${this.viewOf}`]);
-  }
+  //       break;
+  //   }
+  //   this.router.navigate([`/${this.viewOf}`]);
+  // }
 
   changeToDepartment() {
     // this.tableHeader = DepartmentColumn;
@@ -163,16 +178,19 @@ export class ViewAddComponent implements OnInit {
     this.optionsArray1 = this.service.optionsArray1;
     this.dropdownColumnId1 = this.service.dropdownColumnId1;
     this.dropdownColumnName1 = this.service.dropdownColumnName1;
-    this.currentData = this.department;
-    if (this.currentId) {
-      for (let i = 0; i < this.service.tableData.length; i++) {
-        const department = this.service.tableData[i];
-        if (department.id == this.currentId) {
-          this.currentData = department;
-          alert("current" + JSON.stringify(this.currentData));
-          break; // exit the loop when the condition is met
-        }
-      }
-    }
+    // if (this.currentData.length <= 0) {
+    //   this.currentData = this.department;
+    // }
+
+    // if (this.currentId) {
+    //   for (let i = 0; i < this.service.tableData.length; i++) {
+    //     const department = this.service.tableData[i];
+    //     if (department.id == this.currentId) {
+    //       this.currentData = department;
+    //       alert("current" + JSON.stringify(this.currentData));
+    //       break; // exit the loop when the condition is met
+    //     }
+    //   }
+    // }
   }
 }

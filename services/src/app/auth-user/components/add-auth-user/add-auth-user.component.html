@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row justify-content-between">
         <div class="col-sm-6">
-            <h1>Add Department</h1>
+            <h1>Add/Update Department</h1>
         </div>
 
         <div class="col-sm-6 text-right">
@@ -9,6 +9,6 @@
             <button class="btn btn-primary" (click)="back()">Back</button>
         </div>
     </div>
-    <app-view-add (submitClicked)="onChildSubmitButtonClick($event)"></app-view-add>
+    <app-view-add (addClicked)="onChildButtonClick($event)"></app-view-add>
 
 </div>

@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row justify-content-between">
         <div class="col-sm-6">
-            <h1>Department Administration</h1>
+            <h1>AuthUser Administration</h1>
         </div>
 
         <div class="col-sm-6 text-right">
@@ -11,7 +11,6 @@
         </div>
     </div>
 
-    <app-view-all *ngIf="dataAvailable" [data]="{moduleName:'Department' ,moduleData:this.departments}"
-        [dropdown1]="adminInstitutions" (viewClicked)="onChildViewClick($event)"
-        (updateClicked)="onChildUpdateClick($event)"></app-view-all>
+    <app-view-all *ngIf="dataAvailable" [data]="{moduleName:'AuthUser' ,moduleData:this.authUsers}"
+        (viewClicked)="onChildButtonClick($event)"></app-view-all>
 </div>

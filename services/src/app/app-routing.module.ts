@@ -59,6 +59,11 @@ import { ViewAllComponent } from './front/component/view-all/view-all.component'
 import { ViewAddComponent } from './front/component/view-add/view-add.component';
 import { DepartmentComponent } from './department/components/department/department.component';
 import { AddDepartmentComponent } from './department/components/add-department/add-department.component';
+import { ViewOneDepartmentComponent } from './department/components/view-one-department/view-one-department.component';
+import { ViewAllAuthUserComponent } from './auth-user/components/view-all-auth-user/view-all-auth-user.component';
+import { AddAuthUserComponent } from './auth-user/components/add-auth-user/add-auth-user.component';
+import { ViewOneAuthUserComponent } from './auth-user/components/view-one-auth-user/view-one-auth-user.component';
+import { UpdateDepartmentComponent } from './department/components/update-department/update-department.component';
 
 
 const routes: Routes = [
@@ -225,12 +230,15 @@ const routes: Routes = [
   {
     path: 'update/:viewname/:id', component: ViewAddComponent
   },
-  {
-    path: 'Department', component: DepartmentComponent, children: [
-      { path: 'add', component: AddDepartmentComponent }
-    ]
-  },
-  { path: 'AuthUser', component: AuthuserComponent },
+  { path: 'Department', component: DepartmentComponent },
+  { path: 'Department/add', component: AddDepartmentComponent },
+  { path: 'Department/view', component: ViewOneDepartmentComponent },
+  { path: 'Department/update', component: UpdateDepartmentComponent },
+
+  { path: 'AuthUser', component: ViewAllAuthUserComponent },
+  { path: 'AuthUser/add', component: AddAuthUserComponent },
+  { path: 'AuthUser/view', component: ViewOneAuthUserComponent },
+  { path: 'AuthUser/view', component: ViewOneAuthUserComponent },
 
 ];
 

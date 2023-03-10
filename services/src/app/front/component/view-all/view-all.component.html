@@ -3,7 +3,7 @@
         <div class="col-sm-6">
             <h1>{{viewOf}} Administration</h1>
         </div> -->
-    <button class="btn btn-primary" (click)="navigateToAdd()">Add</button>
+    <!-- <button class="btn btn-primary" (click)="navigateToAdd()">Add</button> -->
     <!-- <div class=" col-sm-6 text-right">
        
     </div> -->
@@ -11,7 +11,6 @@
     <!-- <div class="header1">
         <button class="btn btn-danger" [routerLink]="['/add', viewOf]">Add</button>
     </div> -->
-    kuggjgj
     <table class="table table-bordered">
         <thead id="deptHeader">
             <tr>
@@ -44,7 +43,9 @@
                             [(ngModel)]="row[column.key]" disabled>
                     </ng-container>
                 </td>
-                <td><button (click)="navigateToUpdate(row)" class="btn btn-primary">Update</button>
+                <td><button (click)="onUpdatClicked(row)" class="btn btn-primary">Update</button>
+                </td>
+                <td><button (click)="onViewClicked(row)" class="btn btn-primary">View</button>
                 </td>
             </tr>
         </tbody>

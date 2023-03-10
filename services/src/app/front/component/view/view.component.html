@@ -1,14 +1,14 @@
 <div class="container">
     <!-- <div class="row justify-content-between">
         <div class="col-sm-6">
-            <h1>Add/Update {{viewOf}}</h1>
+            <h1>View {{viewOf}}</h1>
         </div>
-
-        <div class="col-sm-6 text-right">
-            <button class="btn btn-primary" (click)="home()">Back</button>
-        </div>
-    </div> -->
-    <!-- {{currentModel|json}} -->
+    <button class="btn btn-primary" routerLink="/add/{{viewOf}}">Add</button> 
+    <div class="col-sm-6 text-right">
+        <button class="btn btn-primary" (click)="home()">Back</button>
+    </div>
+</div>
+{{currentModel|json}} -->
     <div class="card-block">
         <form class="form-material">
             <div *ngFor="let column of tableHeader" class="form-group form-default col-sm-4">
@@ -16,36 +16,36 @@
                     <ng-container *ngSwitchCase="'input'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
-                        <input name="{{column.key}}" type="text" [(ngModel)]="currentData[column.key]"
-                            class="form-control" required="">
+                        <input name="{{column.key}}" type="text" [(ngModel)]="currentModel[column.key]"
+                            class="form-control" required="" disabled>
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'email'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
-                        <input name="{{column.key}}" type="email" [(ngModel)]="currentData[column.key]"
-                            class="form-control" required="">
+                        <input name="{{column.key}}" type="email" [(ngModel)]="currentModel[column.key]"
+                            class="form-control" required="" disabled>
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'date'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
-                        <input name="{{column.key}}" type="date" [(ngModel)]="currentData[column.key]"
-                            class="form-control" required="">
+                        <input name="{{column.key}}" type="date" [(ngModel)]="currentModel[column.key]"
+                            class="form-control" required="" disabled>
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'textarea'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
-                        <textarea name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
-                            required=""></textarea>
+                        <textarea name="{{column.key}}" [(ngModel)]="currentModel[column.key]" class="form-control"
+                            required="" disabled></textarea>
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'dropdown'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
-                        <select name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
-                            required="">
+                        <select name="{{column.key}}" [(ngModel)]="currentModel[column.key]" class="form-control"
+                            required="" disabled>
                             <option value="undefined">Select</option>
                             <option *ngFor="let option of optionsArray1" [value]="option[dropdownColumnId1]">
                                 {{ option[dropdownColumnName1] }}
@@ -56,8 +56,8 @@
                     <ng-container *ngSwitchCase="'checkbox'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
-                        <input class="form-control" *ngSwitchCase="'checkbox'" type="checkbox"
-                            [(ngModel)]="currentData[column.key]">
+                        <input name="column.key" class="form-control" *ngSwitchCase="'checkbox'" type="checkbox"
+                            [(ngModel)]="currentModel[column.key]" disabled>
                     </ng-container>
                 </ng-container>
             </div>
@@ -65,10 +65,5 @@
 
         </form>
     </div>
-    <div class="card-block row justify-content-between">
-        <div class="col-sm-6">
-            <button class="btn btn-primary" (click)="onSubmitClicked(currentData)">Submit</button>
-        </div>
 
-    </div>
 </div>
