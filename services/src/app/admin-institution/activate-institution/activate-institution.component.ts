@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdminInstitution } from '../admininstitution';
 import { AdmininstitutionService } from '../service/admininstitution.service';
 
@@ -11,12 +11,18 @@ import { AdmininstitutionService } from '../service/admininstitution.service';
 export class ActivateInstitutionComponent implements OnInit {
 
   institutions: AdminInstitution[] = [];
+  userName!: string;
+  adminId: any;
 
-  constructor(private _institutionService: AdmininstitutionService, private _router: Router) {
+  constructor(private _institutionService: AdmininstitutionService, private _router: Router,
+    private _activatedRoute: ActivatedRoute) {
 
   }
 
   ngOnInit(): void {
+    this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
+    this.userName = this._activatedRoute.snapshot.params['userName'];
+    console.log(this.userName)
     this.getAllDeactivatedInstitutions();
   }
 
@@ -45,7 +51,7 @@ export class ActivateInstitutionComponent implements OnInit {
 
   home() {
 
-    this._router.navigate(['displayinstitute']);
+    this._router.navigate(['displayinstitute', this.userName]);
   }
 
 

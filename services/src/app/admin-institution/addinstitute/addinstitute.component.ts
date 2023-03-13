@@ -84,18 +84,7 @@ export class AddinstituteComponent {
       );
     }
   }
-  // disablefunc() {
 
-  //   if ((this.admininstitution.adminInstitutionName != undefined) && (this.admininstitution.adminInstitutionDescription != undefined) && (this.fileName != '')) {
-  //     this._disablevar = true;
-
-  //   }
-
-  //   else {
-  //     this._disablevar = false;
-  //   }
-  //   // console.log("diasable var   " + this._disablevar)
-  // }
 
   checkFields() {
     // Check if any fields are empty

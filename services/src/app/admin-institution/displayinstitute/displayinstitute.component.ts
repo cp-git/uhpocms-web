@@ -77,16 +77,33 @@ export class DisplayinstituteComponent {
       }
     );
   }
+  // for deleting institution by name
+  deleteInstitution(inst: AdminInstitution) {
+    // calling service mathod to delete institution
+    this._institutionService.deleteInstitution(inst.adminInstitutionName).subscribe(
+      (response) => {
+        this.admininstitutions.splice(this.admininstitutions.indexOf(inst), 1);
+        this.backupInst.splice(this.admininstitutions.indexOf(inst), 1);
+        alert(inst.adminInstitutionName + ' Institution deleted successfully');
+        this.displayEmptyRow();
+      },
+      (error) => {
+        alert('not able to delete \n' + JSON.stringify(error.error));
+      }
+    );
+  }
+
   Back() {
     //this.location.back();
     this._route.navigate(['adminmodule/admin', this.userName]);
   }
 
   redirectToActivateInstitution() {
-    this._route.navigate(['displayinstitute/activate']);
+
+    this._route.navigate(['displayinstitute/activate', this.userName]);
   }
 
   display(adminInstitutionId: number) {
-    this._route.navigate(['display', adminInstitutionId, this.userName])
+    this._route.navigate(['displayinstitute/activate', adminInstitutionId, this.userName])
   }
 }

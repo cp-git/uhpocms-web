@@ -125,6 +125,8 @@ export class AddcourseComponent {
     );
   }
 
+
+
   back() {
     this.location.back();
     // this._route.navigate(['course']);
