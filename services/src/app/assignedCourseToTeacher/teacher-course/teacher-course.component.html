@@ -8,6 +8,7 @@
             <button class="btnn" (click)="inactve()">Inactive Courses</button>
         </td>
 
+
         <table class="table" border="1">
             <thead>
                 <tr>
@@ -18,6 +19,7 @@
                     <th>Passing Score</th>
                     <th>Institute Name</th>
                     <th>Department Name</th>
+                    <th>Upload Syllabus</th>
                 </tr>
             </thead>
             <tbody>
@@ -57,7 +59,6 @@
 
                     <td>
                         <div class="form-group">
-
                             <select [(ngModel)]="course.instId" class="form-control" disabled>
                                 <option *ngFor="let institute of adminInstitutions"
                                     value="{{institute.adminInstitutionId}}"
@@ -65,10 +66,9 @@
                                     {{institute.adminInstitutionName}}
                                 </option>
                             </select>
-
                         </div>
                     </td>
-                    <!-- <td>
+                    <td>
                         <div class="form-group">
                             <ng-container *ngFor="let courseDept of courseDepartments">
                                 <ng-container *ngFor="let dept of adminDepartments">
@@ -78,7 +78,16 @@
                                 </ng-container>
                             </ng-container>
                         </div>
-                    </td> -->
+                    </td>
+                    <td>
+                        <div class="form-group text-white">
+                            <input type="file" [(ngModel)]="courseSyllabus.syllabusFile"
+                                value="{{courseSyllabus.syllabusFile}}"
+                                (change)="addSyllabus(course.courseId,courseSyllabus)">
+                            <!-- <button (click)="addSyllabus(course.courseId,courseSyllabus)">Submit</button> -->
+                            <!-- {{courseSyllabus.syllabusFile}} -->
+                        </div>
+                    </td>
                 </tr>
 
             </tbody>
