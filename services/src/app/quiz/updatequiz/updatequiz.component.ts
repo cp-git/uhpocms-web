@@ -30,6 +30,9 @@ export class UpdatequizComponent {
   _moduleMap = new Map();
   isHidden: boolean = false;
 
+  teacherId: any;
+  userName!: string;
+
   title!: string;
   // _quiz: Quiz = new Quiz();
   constructor(private _service: QuizService, private _activatedRoute: ActivatedRoute, private _route: Router, private _courseService: CourseService, private _categoryService: CategoryService, private _moduleService: ModuleService) { }
@@ -41,6 +44,9 @@ export class UpdatequizComponent {
     }
 
 
+    this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
+    this.userName = this._activatedRoute.snapshot.params['userName'];
+    console.log(this.userName)
     this._quizMap;
     this._categoryMap;
     this._courseMap;
@@ -103,7 +109,7 @@ export class UpdatequizComponent {
   }
 
   back() {
-    this._route.navigate(['quiz']);
+    this._route.navigate(['quiz', this.userName]);
   }
 
 }

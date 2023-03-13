@@ -64,18 +64,19 @@
 
     <body>
         <div class="container-fluid">
+            <div class="myheader">
+                <h1>Create Quiz</h1>
+            </div>
             <div class="row">
                 <div class="col-md-12">
 
                     <div class="row">
                         <div class="col-md-4">
-                            <div class="Header">
-                                <h3>Create Quiz</h3>
-                            </div>
+
 
                         </div>
 
-                        <div class="col-md-8">
+                        <!-- <div class="col-md-8">
                             <button id="backbtn" (click)="back()">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                                     class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
@@ -84,7 +85,7 @@
                                 </svg>
                             </button>
 
-                        </div>
+                        </div> -->
 
                     </div>
 
@@ -560,8 +561,12 @@
                         <div class="row">
                             <div class="col-md-4" id="btndemo">
                                 <button class="btn btn-primary" id="submitbtn" (click)="addQuiz(_quiz)">Add</button>
+                                <button class="btn btn-primary" style="margin-left: 10px;"
+                                    (click)="back()">Back</button>
+
 
                             </div>
+
 
                         </div>
                         <!-- <button class="btn btn-primary" id="submitbtn" (click)="addQuiz(_quiz)">Add</button>-->

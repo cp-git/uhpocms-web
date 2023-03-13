@@ -24,7 +24,7 @@ export class AssigncourseteacherService {
   constructor(private _http: HttpClient) {
     //  this.courseUrl = `${environment.courseUrl}/course`;
     this._loginUrl = `${environment.courseUrl}/basicauth`;
-    this.assignTeacherUrl = 'http://localhost:8080/uhpocms/assigntoteacher';
+    this.assignTeacherUrl = 'http://localhost:8090/assigntoteacher/uhpocms/assigntoteacher';
   }
 
   assignTeacherToCourse(assignTeacher: Assignteacher): Observable<any> {

@@ -9,13 +9,22 @@ body {
 body {
     margin: 0;
     /* background: linear-gradient(45deg, #49a09d, #5f2c82); */
-    background-image: url(img/dd4.jpg);
+
     background-size: cover;
     background-repeat: no-repeat;
     font-family: sans-serif;
     font-weight: 100;
 }
 
+.myheader {
+    border: 1px groove grey;
+    background-color: aqua;
+}
+
+.myheader h1 {
+    text-align: center;
+
+}
 
 
 .container-fluid {

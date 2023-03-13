@@ -14,6 +14,7 @@ export class InactiveTeacherCourseComponent {
 
   instituteAdminProfile: InstituteAdmin[] = [];
   teacherId: any;
+  userName!: string;
 
   constructor(
     private _route: Router,
@@ -22,7 +23,7 @@ export class InactiveTeacherCourseComponent {
   ) { }
 
   backToTeacherCourse() {
-    this._route.navigate(['teachercourse', { id: this.teacherId }]);
+    this._route.navigate(['teachercourse', { id: this.teacherId }, this.userName]);
   }
 
   courses: Course[] = [];
@@ -30,6 +31,10 @@ export class InactiveTeacherCourseComponent {
 
   ngOnInit(): void {
     this.teacherId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.userName = this.activatedRoute.snapshot.params['userName'];
+    console.log(this.userName)
+
+    //this.teacherId = this.activatedRoute.snapshot.paramMap.get('id');
     this.getInactiveCoursesByProfileId(this.teacherId);
   }
 

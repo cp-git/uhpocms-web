@@ -17,13 +17,26 @@ h1 {
 
 }
 
+.myheader {
+    border: 1px groove grey;
+    background-color: aqua;
+}
+
+.myheader h1 {
+    text-align: center;
+
+}
+
 body {
     margin: 0;
     /* background: linear-gradient(45deg, #49a09d, #5f2c82); */
-    background-image: url('../../../assets/img/bookimg.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
     font-family: sans-serif;
     font-weight: 100;
+}
+
+table {
+    margin-top: 20px;
 }
