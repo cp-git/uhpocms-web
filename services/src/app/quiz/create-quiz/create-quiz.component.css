@@ -4,7 +4,7 @@
 
 html,
 body {
-    background-image: url('../img/dd4.jpg');
+
     background-size: cover;
     background-repeat: no-repeat;
     height: max-content;
@@ -19,6 +19,16 @@ body {
 
 }
 
+.myheader {
+    border: 1px groove grey;
+    background-color: aqua;
+}
+
+.myheader h1 {
+    text-align: center;
+
+}
+
 h4 {
     color: white;
 
@@ -28,9 +38,9 @@ input {
     font-size: 20px;
 }
 
-#backbtn {
+/*#backbtn {
     margin-left: 1100px;
-}
+}*/
 
 .container-fluid {
     height: 100%;
@@ -181,7 +191,7 @@ select {
 
 
 #btndemo {
-    margin-left: 800px;
+    margin-left: 700px;
     padding: 10px;
 }
 

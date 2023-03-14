@@ -56,6 +56,7 @@ import { DisplaySchoolComponent } from './InstituteDetails/display-school/displa
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
+import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.component';
 
 
 const routes: Routes = [
@@ -82,11 +83,11 @@ const routes: Routes = [
   //update instituteadminprofile
 
 
-  { path: 'updateinstituteadminprofile/:firstName', component: UpdateinstituteadminprofileComponent },
+  { path: 'updateinstituteadminprofile/:firstName/:userName', component: UpdateinstituteadminprofileComponent },
 
 
   //view instituteadminprofile
-  { path: 'viewadminprofile/:firstName', component: ViewinstiteadminprofileComponent },
+  { path: 'viewadminprofile/:firstName/:userName', component: ViewinstiteadminprofileComponent },
 
 
   //course Module
@@ -97,9 +98,24 @@ const routes: Routes = [
   //teacherCourse
 
   { path: 'assignteacher', component: AssigncoursetoteacherComponent },
+  { path: 'assignteacher/:userName', component: AssigncoursetoteacherComponent },
+
   { path: 'inactivecourse', component: InactiveTeacherCourseComponent },
+
+  { path: 'inactivecourse/:userName', component: InactiveTeacherCourseComponent },
+
   { path: 'teachercourse', component: TeacherCourseComponent },
+
+  { path: 'teachercourse/:userName', component: TeacherCourseComponent },
   { path: 'teacher/:id', component: TeacherCourseComponent },
+
+
+
+  // { path: 'teacher/:id/:userName', component: TeacherCourseComponent },
+
+
+
+
   //category routing
   { path: 'studentcourse', component: StudentCourseComponent },
   { path: 'studentcourse/:userName', component: StudentCourseComponent },
@@ -107,9 +123,14 @@ const routes: Routes = [
 
   { path: 'addCategory', component: AddCategoryComponent },
   { path: 'addModule', component: AddModuleComponent },
+
+  { path: 'addModule/:userName', component: AddModuleComponent },
+
   { path: 'main', component: MainComponent },
   { path: 'category', component: CategoryComponent },
   { path: 'updateModule', component: UpdatemoduleComponent },
+
+  { path: 'updateModule/:userName', component: UpdatemoduleComponent },
 
 
   { path: 'authenticationlogin', component: AuthenticationloginComponent },
@@ -118,7 +139,7 @@ const routes: Routes = [
 
   { path: 'teacherdisplay/teacher/:userName', component: TeacherComponent },
 
-  { path: 'teacher', component: TeacherComponent },
+
 
   { path: 'studentdata/student/:userName', component: StudentdataComponent },
   // { path: 'studentdata', component: StudentdataComponent },
@@ -160,7 +181,7 @@ const routes: Routes = [
 
 
   //quiz routes
-  { path: 'quiz/:role', component: QuizComponent },
+  { path: 'quiz/:userName', component: QuizComponent },
 
   { path: 'department/:id', component: ViewDepartmentComponent },
 
@@ -209,10 +230,16 @@ const routes: Routes = [
 
   //update Quiz
   { path: 'updateQuiz/:title', component: UpdatequizComponent },
+
+  { path: 'updateQuiz/:title/:userName', component: UpdatequizComponent },
   // { path: 'updateQuiz', component: UpdatequizComponent },
 
   //teacherModule routes
   { path: 'teachermodule', component: TeachermoduleComponent },
+
+  { path: 'teachermodule/:userName', component: TeachermoduleComponent },
+
+
   { path: 'studentmodule/:userName', component: StudentmoduleComponent },
 
   { path: 'email', component: EmailComponent },
@@ -226,6 +253,8 @@ const routes: Routes = [
 
   { path: 'addcourse', component: AddcourseComponent },
   { path: 'updatecourse/:courseName/:userName', component: UpdatecourseComponent },
+
+  { path: 'inactivecourse/:userName', component: InactivecourseComponent },
 
   { path: 'updatecourse/:userName', component: UpdatecourseComponent },
   //announcement router

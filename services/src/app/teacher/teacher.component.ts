@@ -11,29 +11,27 @@ export class TeacherComponent {
   teacherId: any;
   userName!: string;
   constructor(private _route: Router, private _activatedRoute: ActivatedRoute) {
-    this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
+
   }
 
   ngOnInit(): void {
-
+    this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
+    console.log(this.userName)
 
   }
-  RedirectToCourse() {
-    const role = 'teacher';
-    this._route.navigate(['course/userrole/', role]);
-  }
+
   RedirectToTeacherCourse() {
-    this._route.navigate(['teachercourse', { id: this.teacherId }]);
+    this._route.navigate(['teachercourse', { id: this.teacherId }, this.userName]);
   }
 
   RedirectToModule() {
-    this._route.navigate(['teachermodule']);
+    this._route.navigate(['teachermodule', { id: this.teacherId }, this.userName]);
   }
 
   RedirectToQuiz() {
-    const role = 'teacher';
-    this._route.navigate(['quiz', role]);
+
+    this._route.navigate(['quiz', this.userName]);
   }
 
 

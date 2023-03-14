@@ -1,146 +1,149 @@
 <html>
 
-<body>
+    <body>
 
-    <div *ngIf="activationScreenStatus">
-        <div class="header">
-            <a href="#default" class="logo">Quiz Administration</a>
-            <div class="header-right-inactive">
-
-                <button (click)="Add()" class="addbtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                        class="bi bi-plus-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                        <path
-                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-                    </svg>
-                </button>
-                <button (click)="back()" class="backbtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                        class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
-                    </svg>
-                </button>
-
+        <div class="container-fluid">
+            <div class="myheader">
+                <h1>Quiz Administration</h1>
             </div>
         </div>
-        <div class="container-fluid">
 
+        <div *ngIf="activationScreenStatus">
+            <div class="header">
 
-            <div class="header1">
-                <h1 class="heading"> </h1>
+                <div class="header-right-inactive">
+
+                    <button class="btn btn-primary" (click)="Add()">Add Quiz</button>
+
+                    <!-- <button (click)="Add()" class="addbtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                            class="bi bi-plus-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path
+                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                        </svg>
+                    </button> -->
+                    <!-- <button (click)="back()" class="backbtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                            class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+                        </svg>
+                    </button> -->
+
+                </div>
             </div>
-            <table class="table" border="1">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Url</th>
-                        <th>RandomOrder</th>
+            <div class="container-fluid">
+                <table class="table" border="1">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Url</th>
+                            <th>RandomOrder</th>
 
-                        <th>MaxQuestions</th>
-                        <th>AnswersAtEnd</th>
-                        <th>ExamPaper</th>
-                        <th>SingleAttempt</th>
-                        <th>PassMark</th>
-                        <th>SuccessText</th>
-                        <th>FailText</th>
-                        <th>Draft</th>
-                        <th>QuizOrderNo</th>
-                        <th>CourseId</th>
-                        <th>ModuleId</th>
-                        <th>CategoryId</th>
-                        <th>Active</th>
+                            <!-- <th>MaxQuestions</th>
+                            <th>AnswersAtEnd</th>
+                            <th>ExamPaper</th>
+                            <th>SingleAttempt</th> -->
+                            <th>PassMark</th>
+                            <th>SuccessText</th>
+                            <th>FailText</th>
+                            <th>Draft</th>
+                            <th>QuizOrderNo</th>
+                            <th>CourseId</th>
+                            <th>ModuleId</th>
+                            <th>CategoryId</th>
+                            <th>Active</th>
 
 
-                        <th>Activate</th>
-                    </tr>
-                </thead>
-                <tbody>
+                            <th>Activate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                    <tr *ngFor="let _quiz of _quizArray">
+                        <tr *ngFor="let _quiz of _quizArray">
 
-                        <td>{{_quiz.title}}</td>
-                        <!-- <div class="form-group">
+                            <td>{{_quiz.title}}</td>
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.title" type="text"
                                     value="{{_quiz.title}}" />
                             </div> -->
 
-                        <td>{{_quiz.description}}</td>
-                        <!--<div class="form-group">
+                            <td>{{_quiz.description}}</td>
+                            <!--<div class="form-group">
                             <input class="form-control" [(ngModel)]="_quiz.description" type="text"
                                 value="{{_quiz.description}}" />
                         </div> -->
 
-                        <td>{{_quiz.url}}</td>
-                        <!-- <div class="form-group">
+                            <td>{{_quiz.url}}</td>
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.url" type="text" value="{{_quiz.url}}" />
                             </div> -->
 
-                        <td>{{_quiz.randomOrder}}</td>
-                        <!-- <div class="form-group">
+                            <td>{{_quiz.randomOrder}}</td>
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.randomOrder" type="checkbox"
                                     value="{{_quiz.randomOrder}}" />
                             </div> -->
 
-                        <td>{{_quiz.maxQuestions}}</td>
-                        <!-- <div class="form-group">
+                            <!-- <td>{{_quiz.maxQuestions}}</td> -->
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.maxQuestions" type="text"
                                     value="{{_quiz.maxQuestions}}" />
                             </div> -->
 
-                        <td>{{_quiz.answersAtEnd}}</td>
-                        <!-- <div class="form-group">
+                            <!-- <td>{{_quiz.answersAtEnd}}</td> -->
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.answersAtEnd" type="checkbox"
                                     value="{{_quiz.answersAtEnd}}" />
                             </div> -->
 
-                        <td>{{_quiz.examPaper}}</td>
-                        <!-- <div class="form-group">
+                            <!-- <td>{{_quiz.examPaper}}</td> -->
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.examPaper" type="checkbox"
                                     value="{{_quiz.examPaper}}" />
                             </div> -->
 
-                        <td>{{_quiz.singleAttempt}}</td>
-                        <!-- <div class="form-group">
+                            <!-- <td>{{_quiz.singleAttempt}}</td> -->
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.singleAttempt" type="checkbox"
                                     value="{{_quiz.singleAttempt}}" />
                             </div> -->
 
-                        <td>{{_quiz.passMark}}</td>
-                        <!-- <div class="form-group">
+                            <td>{{_quiz.passMark}}</td>
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.passMark" type="text"
                                     value="{{_quiz.passMark}}" />
                             </div> -->
 
-                        <td>{{_quiz.successText}}</td>
-                        <!-- <div class="form-group">
+                            <td>{{_quiz.successText}}</td>
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.successText" type="text"
                                     value="{{_quiz.successText}}" />
                             </div> -->
 
-                        <td>{{_quiz.failText}}</td>
-                        <!-- <div class="form-group">
+                            <td>{{_quiz.failText}}</td>
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.failText" type="text"
                                     value="{{_quiz.failText}}" />
                             </div> -->
 
-                        <td>{{_quiz.draft}}</td>
-                        <!-- <div class="form-group">
+                            <td>{{_quiz.draft}}</td>
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.draft" type="checkbox"
                                     value="{{_quiz.draft}}" />
                             </div> -->
 
-                        <td>{{_quiz.quizOrderNo}}</td>
-                        <!-- <div class="form-group">
+                            <td>{{_quiz.quizOrderNo}}</td>
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.quizOrderNo" type="text"
                                     value="{{_quiz.quizOrderNo}}" />
                             </div> -->
 
-                        <!-- <td><input [(ngModel)]="_quiz.courseidId" type="text" value="{{_quiz.courseidId}}" /></td> -->
-                        <td>{{_quiz.courseId}}</td>
-                        <!-- <div class="form-group">
+                            <!-- <td><input [(ngModel)]="_quiz.courseidId" type="text" value="{{_quiz.courseidId}}" /></td> -->
+                            <td>{{_quiz.courseId}}</td>
+                            <!-- <div class="form-group">
                                 <select class="form-control" [(ngModel)]="_quiz.courseId">
                                     <option *ngFor="let course of _courseArray" value="{{course.courseId}}"
                                         [selected]="_quiz.courseId == course.courseId ? true:null">
@@ -149,9 +152,9 @@
                                 </select>
                             </div> -->
 
-                        <!-- <td><input [(ngModel)]="_quiz.moduleId" type="text" value="{{_quiz.moduleId}}" /></td> -->
-                        <td>{{_quiz.moduleId}}</td>
-                        <!-- <div class="form-group">
+                            <!-- <td><input [(ngModel)]="_quiz.moduleId" type="text" value="{{_quiz.moduleId}}" /></td> -->
+                            <td>{{_quiz.moduleId}}</td>
+                            <!-- <div class="form-group">
                                 <select class="form-control" [(ngModel)]="_quiz.moduleId">
                                     <option *ngFor="let module of _moduleArray" value="{{module.moduleId}}"
                                         [selected]="_quiz.moduleId == module.moduleId ? true:null">
@@ -160,9 +163,9 @@
                                 </select>
                             </div> -->
 
-                        <!-- <td><input [(ngModel)]="_quiz.categoryId" type="text" value="{{_quiz.categoryId}}" /></td> -->
-                        <td>{{_quiz.categoryId}}</td>
-                        <!-- <div class="form-group">
+                            <!-- <td><input [(ngModel)]="_quiz.categoryId" type="text" value="{{_quiz.categoryId}}" /></td> -->
+                            <td>{{_quiz.categoryId}}</td>
+                            <!-- <div class="form-group">
                                 <select class="form-control" [(ngModel)]="_quiz.categoryId">
                                     <option *ngFor="let category of _categoryArray" value="{{category.categoryId}}"
                                         [selected]="_quiz.categoryId == category.categoryId ? true:null">
@@ -171,177 +174,181 @@
                                 </select>
                             </div> -->
 
-                        <td>{{_quiz.active}}</td>
-                        <!-- <div class="form-group">
+                            <td>{{_quiz.active}}</td>
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.active" type="checkbox"
                                     value="{{_quiz.active}}" disabled />
                             </div> -->
 
-                        <!-- 
+                            <!-- 
                     <td><button class="btn btn-success" (click)="updateQuiz(_quiz.title)">Update</button> -->
-                        <td><button class="btn btn-danger" (click)="updateActiveStatus(_quiz)">Activate</button>
+                            <td><button class="btn btn-danger" (click)="updateActiveStatus(_quiz)">Activate</button>
 
-                            <!-- <td><button class="btn btn-primary" (click)="addQuiz()">Add</button></td>
+                                <!-- <td><button class="btn btn-primary" (click)="addQuiz()">Add</button></td>
                             <td><button class="btn btn-success" (click)="updateQuiz(_quiz,_quiz.title)">Update</button>
                             </td>
                             <td><button class="btn btn-danger" (click)="deleteQuiz(_quiz,_quiz.title)">Delete</button> 
                             </td>-->
-                    </tr>
+                        </tr>
 
 
 
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
 
+                <button class="btn btn-info" (click)="back()">Back</button>
+
+
+            </div>
 
         </div>
 
-    </div>
 
+        <div *ngIf="!inActivationScreenStatus">
+            <div class="header">
 
-    <div *ngIf="!inActivationScreenStatus">
-        <div class="header">
-            <a href="#default" class="logo">Quiz Administration</a>
-            <div class="header-right">
+                <div class="header-right">
 
-                <button class="form-control btn btn-success " id="activebtn" (click)="getInactiveQuizzes()">Inactive
-                    Quizzes</button>
+                    <button class="form-control btn btn-success " id="activebtn" (click)="getInactiveQuizzes()">Inactive
+                        Quizzes</button>
 
-                <button (click)="Add()" class="addbtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                        class="bi bi-plus-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                        <path
-                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-                    </svg>
-                </button>
-                <button (click)="back()" class="backbtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                        class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
-                    </svg>
-                </button>
+                    <button class="btn btn-primary" (click)="Add()">Add Quiz</button>
 
+                    <!-- <button (click)="Add()" class="addbtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                            class="bi bi-plus-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path
+                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                        </svg>
+                    </button> -->
+                    <!-- <button (click)="back()" class="backbtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                            class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+                        </svg>
+                    </button> -->
+
+                </div>
             </div>
-        </div>
-        <div class="container-fluid">
+            <div class="container-fluid">
 
 
-            <div class="header1">
-                <h1 class="heading"> </h1>
-            </div>
-            <table class="table" border="1">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Url</th>
-                        <th>RandomOrder</th>
+                <div class="header1">
+                    <h1 class="heading"> </h1>
+                </div>
+                <table class="table" border="1">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Url</th>
+                            <th>RandomOrder</th>
 
-                        <th>MaxQuestions</th>
-                        <th>AnswersAtEnd</th>
-                        <th>ExamPaper</th>
-                        <th>SingleAttempt</th>
-                        <th>PassMark</th>
-                        <th>SuccessText</th>
-                        <th>FailText</th>
-                        <th>Draft</th>
-                        <th>QuizOrderNo</th>
-                        <th>CourseId</th>
-                        <th>ModuleId</th>
-                        <th>CategoryId</th>
-                        <th>Active</th>
+                            <!-- <th>MaxQuestions</th>
+                            <th>AnswersAtEnd</th>
+                            <th>ExamPaper</th>
+                            <th>SingleAttempt</th> -->
+                            <th>PassMark</th>
+                            <th>SuccessText</th>
+                            <th>FailText</th>
+                            <th>Draft</th>
+                            <th>QuizOrderNo</th>
+                            <th>CourseId</th>
+                            <th>ModuleId</th>
+                            <th>CategoryId</th>
+                            <th>Active</th>
 
-                        <th>Update</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
+                            <th>Update</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                    <tr *ngFor="let _quiz of _quizArray">
+                        <tr *ngFor="let _quiz of _quizArray">
 
-                        <td>{{_quiz.title}}</td>
-                        <!-- <div class="form-group">
+                            <td>{{_quiz.title}}</td>
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.title" type="text"
                                     value="{{_quiz.title}}" />
                             </div> -->
 
-                        <td>{{_quiz.description}}</td>
-                        <!--<div class="form-group">
+                            <td>{{_quiz.description}}</td>
+                            <!--<div class="form-group">
                             <input class="form-control" [(ngModel)]="_quiz.description" type="text"
                                 value="{{_quiz.description}}" />
                         </div> -->
 
-                        <td>{{_quiz.url}}</td>
-                        <!-- <div class="form-group">
+                            <td>{{_quiz.url}}</td>
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.url" type="text" value="{{_quiz.url}}" />
                             </div> -->
 
-                        <td>{{_quiz.randomOrder}}</td>
-                        <!-- <div class="form-group">
+                            <td>{{_quiz.randomOrder}}</td>
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.randomOrder" type="checkbox"
                                     value="{{_quiz.randomOrder}}" />
                             </div> -->
 
-                        <td>{{_quiz.maxQuestions}}</td>
-                        <!-- <div class="form-group">
+                            <!-- <td>{{_quiz.maxQuestions}}</td> -->
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.maxQuestions" type="text"
                                     value="{{_quiz.maxQuestions}}" />
                             </div> -->
 
-                        <td>{{_quiz.answersAtEnd}}</td>
-                        <!-- <div class="form-group">
+                            <!-- <td>{{_quiz.answersAtEnd}}</td> -->
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.answersAtEnd" type="checkbox"
                                     value="{{_quiz.answersAtEnd}}" />
                             </div> -->
 
-                        <td>{{_quiz.examPaper}}</td>
-                        <!-- <div class="form-group">
+                            <!-- <td>{{_quiz.examPaper}}</td> -->
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.examPaper" type="checkbox"
                                     value="{{_quiz.examPaper}}" />
                             </div> -->
 
-                        <td>{{_quiz.singleAttempt}}</td>
-                        <!-- <div class="form-group">
+                            <!-- <td>{{_quiz.singleAttempt}}</td> -->
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.singleAttempt" type="checkbox"
                                     value="{{_quiz.singleAttempt}}" />
                             </div> -->
 
-                        <td>{{_quiz.passMark}}</td>
-                        <!-- <div class="form-group">
+                            <td>{{_quiz.passMark}}</td>
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.passMark" type="text"
                                     value="{{_quiz.passMark}}" />
                             </div> -->
 
-                        <td>{{_quiz.successText}}</td>
-                        <!-- <div class="form-group">
+                            <td>{{_quiz.successText}}</td>
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.successText" type="text"
                                     value="{{_quiz.successText}}" />
                             </div> -->
 
-                        <td>{{_quiz.failText}}</td>
-                        <!-- <div class="form-group">
+                            <td>{{_quiz.failText}}</td>
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.failText" type="text"
                                     value="{{_quiz.failText}}" />
                             </div> -->
 
-                        <td>{{_quiz.draft}}</td>
-                        <!-- <div class="form-group">
+                            <td>{{_quiz.draft}}</td>
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.draft" type="checkbox"
                                     value="{{_quiz.draft}}" />
                             </div> -->
 
-                        <td>{{_quiz.quizOrderNo}}</td>
-                        <!-- <div class="form-group">
+                            <td>{{_quiz.quizOrderNo}}</td>
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.quizOrderNo" type="text"
                                     value="{{_quiz.quizOrderNo}}" />
                             </div> -->
 
-                        <!-- <td><input [(ngModel)]="_quiz.courseidId" type="text" value="{{_quiz.courseidId}}" /></td> -->
-                        <td>{{_quiz.courseId}}</td>
-                        <!-- <div class="form-group">
+                            <!-- <td><input [(ngModel)]="_quiz.courseidId" type="text" value="{{_quiz.courseidId}}" /></td> -->
+                            <td>{{_quiz.courseId}}</td>
+                            <!-- <div class="form-group">
                                 <select class="form-control" [(ngModel)]="_quiz.courseId">
                                     <option *ngFor="let course of _courseArray" value="{{course.courseId}}"
                                         [selected]="_quiz.courseId == course.courseId ? true:null">
@@ -350,9 +357,9 @@
                                 </select>
                             </div> -->
 
-                        <!-- <td><input [(ngModel)]="_quiz.moduleId" type="text" value="{{_quiz.moduleId}}" /></td> -->
-                        <td>{{_quiz.moduleId}}</td>
-                        <!-- <div class="form-group">
+                            <!-- <td><input [(ngModel)]="_quiz.moduleId" type="text" value="{{_quiz.moduleId}}" /></td> -->
+                            <td>{{_quiz.moduleId}}</td>
+                            <!-- <div class="form-group">
                                 <select class="form-control" [(ngModel)]="_quiz.moduleId">
                                     <option *ngFor="let module of _moduleArray" value="{{module.moduleId}}"
                                         [selected]="_quiz.moduleId == module.moduleId ? true:null">
@@ -361,9 +368,9 @@
                                 </select>
                             </div> -->
 
-                        <!-- <td><input [(ngModel)]="_quiz.categoryId" type="text" value="{{_quiz.categoryId}}" /></td> -->
-                        <td>{{_quiz.categoryId}}</td>
-                        <!-- <div class="form-group">
+                            <!-- <td><input [(ngModel)]="_quiz.categoryId" type="text" value="{{_quiz.categoryId}}" /></td> -->
+                            <td>{{_quiz.categoryId}}</td>
+                            <!-- <div class="form-group">
                                 <select class="form-control" [(ngModel)]="_quiz.categoryId">
                                     <option *ngFor="let category of _categoryArray" value="{{category.categoryId}}"
                                         [selected]="_quiz.categoryId == category.categoryId ? true:null">
@@ -372,34 +379,36 @@
                                 </select>
                             </div> -->
 
-                        <td>{{_quiz.active}}</td>
-                        <!-- <div class="form-group">
+                            <td>{{_quiz.active}}</td>
+                            <!-- <div class="form-group">
                                 <input class="form-control" [(ngModel)]="_quiz.active" type="checkbox"
                                     value="{{_quiz.active}}" disabled />
                             </div> -->
 
 
-                        <td><button class="btn btn-success" (click)="updateQuiz(_quiz.title)">Update</button>
-                        <td><button class="btn btn-danger" (click)="deleteQuiz(_quiz,_quiz.title)">Delete</button>
+                            <td><button class="btn btn-success" (click)="updateQuiz(_quiz.title)">Update</button>
+                            <td><button class="btn btn-danger" (click)="deleteQuiz(_quiz,_quiz.title)">Delete</button>
 
-                            <!-- <td><button class="btn btn-primary" (click)="addQuiz()">Add</button></td>
+                                <!-- <td><button class="btn btn-primary" (click)="addQuiz()">Add</button></td>
                             <td><button class="btn btn-success" (click)="updateQuiz(_quiz,_quiz.title)">Update</button>
                             </td>
                             <td><button class="btn btn-danger" (click)="deleteQuiz(_quiz,_quiz.title)">Delete</button> 
                             </td>-->
-                    </tr>
+                        </tr>
 
 
 
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
 
+                <button class="btn btn-info" (click)="back()">Back</button>
+
+
+            </div>
 
         </div>
 
-    </div>
-
-</body>
+    </body>
 
 </html>

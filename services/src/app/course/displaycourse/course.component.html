@@ -6,6 +6,8 @@
                 <h1>Course Administration</h1>
             </div>
         </div>
+
+        <!-- <button class="btn btn-primary" (click)="inactivecourse()">InActiveCourse</button> -->
         <div class="header">
             <div class="header-right">
 
@@ -21,8 +23,7 @@
                     </svg>
                 </button> -->
 
-                <button class="btn btn-success" (click)="activationScreen()">
-                    InActive Courses</button>
+                <button class="btn btn-primary" (click)="inactivecourse()">InActiveCourse</button>
 
             </div>
         </div>
@@ -105,8 +106,10 @@
 
 
                             <td>
-                                <div class="form-group">
-                                    <button class="form-control icon" (click)="updatecourse(course,course.courseName)"
+                                <button class="btn btn-primary"
+                                    (click)="updatecourse(course,course.courseName)">Update</button>
+                                <!-- <div class="form-group">
+                                    <button class="form-control icon" 
                                         title="Update Course">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue"
                                             class="bi bi-pen-fill" viewBox="0 0 16 16">
@@ -114,9 +117,10 @@
                                                 d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z" />
                                         </svg>
                                     </button>
-                                </div>
+                                </div> -->
                             </td>
                             <td>
+                                <button class=" btn btn-danger" (click)="deletecourseById(course)"></button>
                                 <div class="form-group">
                                     <button class="form-control icon" (click)="deletecourseById(course)"
                                         title="Delete Course">
@@ -207,7 +211,10 @@
                             </td>
 
                             <td>
-                                <div class="form-group">
+
+                                <button class="btn btn-primary"
+                                    (click)="updatecourse(course,course.courseName)">Update</button>
+                                <!-- <div class="form-group">
                                     <button class="form-control icon" (click)="updatecourse(course,course.courseName)"
                                         title="Update Course">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue"
@@ -215,7 +222,7 @@
                                             <path
                                                 d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z" />
                                         </svg></button>
-                                </div>
+                                </div> -->
                             </td>
                             <!-- <td>
                             <div class="form-group">
@@ -229,7 +236,9 @@
                             </div>
                         </td> -->
                             <td>
-                                <div class="form-group">
+                                <button class="btn btn-danger" (click)="deletecourseById(course)">Delete</button>
+
+                                <!-- <div class="form-group">
                                     <button class="form-control icon" (click)="deletecourseById(course)"
                                         title="Delete Course">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
@@ -238,7 +247,7 @@
                                                 d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                         </svg>
                                     </button>
-                                </div>
+                                </div> -->
                             </td>
                         </tr>
 

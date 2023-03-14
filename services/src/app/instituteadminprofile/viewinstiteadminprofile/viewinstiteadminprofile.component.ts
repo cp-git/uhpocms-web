@@ -19,11 +19,18 @@ export class ViewinstiteadminprofileComponent {
 
   _authList: Authuser[] = [];
 
+  userName!: string;
+  adminId: any;
+
 
   authUserName!: string;
   _instituteadminprofile = new InstituteAdmin();
   constructor(private _route: Router, private _service: InstituteAdminServiceService, private _activatedRoute: ActivatedRoute, private _authservice: AuthuserserviceService) { }
   ngOnInit(): void {
+
+    this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
+    this.userName = this._activatedRoute.snapshot.params['userName'];
+    console.log(this.userName)
 
     this.getInstituteProfileByName();
 
@@ -106,7 +113,7 @@ export class ViewinstiteadminprofileComponent {
 
 
   goBack() {
-    this._route.navigate([''])
+    this._route.navigate(['displayInstituteAdmin/display', this.userName])
   }
 
 }

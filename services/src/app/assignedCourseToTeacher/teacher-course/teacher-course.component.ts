@@ -30,6 +30,7 @@ export class TeacherCourseComponent {
   courses: Course[] = [];
   course = new Course();
   id: any | undefined | null;
+  userName!: string;
 
   courseDepartments: Coursedepartment[] = [];
 
@@ -47,6 +48,16 @@ export class TeacherCourseComponent {
     this.teacherId = this.activatedRoute.snapshot.paramMap.get('id');
     this.loadAdminInstitutions();
     this.loadAdminDepartments();
+
+
+
+  ngOnInit(): void {
+
+    this.teacherId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.userName = this.activatedRoute.snapshot.params['userName'];
+    console.log(this.userName)
+
+    this.getCoursesByProfileId(this.teacherId);
 
 
   }
@@ -99,10 +110,10 @@ export class TeacherCourseComponent {
     }
   }
   inactve() {
-    this._route.navigate(['inactivecourse', { id: this.teacherId }])
+    this._route.navigate(['inactivecourse', { id: this.teacherId }, this.userName])
   }
   Back() {
-    this._route.navigate(['teacher', { id: this.teacherId }]);
+    this._route.navigate(['teacherdisplay/teacher', { id: this.teacherId }, this.userName]);
   }
 
 

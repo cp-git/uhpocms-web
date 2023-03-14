@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 import { AdminInstitution } from '../admininstitution';
@@ -23,11 +23,26 @@ export class AddinstituteComponent {
   hideId: boolean = false;
   admininstitution: AdminInstitution;
 
+  userName!: string;
+  adminId: any;
 
-  constructor(private _institutionService: AdmininstitutionService, private _route: Router) {
+
+  constructor(private _institutionService: AdmininstitutionService, private _route: Router, private _activatedRoute: ActivatedRoute) {
     this.admininstitution = new AdminInstitution();
     this.fileName = '';
   }
+
+  ngOnInit(): void {
+
+    this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
+    this.userName = this._activatedRoute.snapshot.params['userName'];
+    console.log(this.userName)
+
+
+  }
+
+
+
 
 
   onFileSelected(event: any) {
@@ -36,6 +51,8 @@ export class AddinstituteComponent {
       //this.disablefunc();
     }
   }
+
+
 
 
 
@@ -99,8 +116,10 @@ export class AddinstituteComponent {
 
 
 
+
+
   Back() {
-    this._route.navigate(['displayinstitute']);
+    this._route.navigate(['displayinstitute', this.userName]);
   }
 
 }

@@ -51,6 +51,7 @@ export class DisplayinstituteComponent {
 
 
   addInstitute() {
+    console.log("in function")
     this._route.navigate(['addinstitute', this.userName])
   }
 

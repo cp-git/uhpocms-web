@@ -211,4 +211,8 @@ export class CourseComponent {
       }
     )
   }
+
+  inactivecourse() {
+    this._route.navigate(['inactivecourse', this.userName])
+  }
 }
