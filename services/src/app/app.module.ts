@@ -60,6 +60,7 @@ import { DisplaySchoolComponent } from './InstituteDetails/display-school/displa
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
+import { AllotPermissionComponent } from './allot-permission/allot-permission.component';
 
 
 
@@ -116,6 +117,7 @@ import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assignco
     AddDepartmentsComponent,
     StudentmoduleComponent,
     AssigncoursetoteacherComponent,
+    AllotPermissionComponent,
   ],
 
   imports: [

@@ -1,0 +1,84 @@
+<div class="container-fluid">
+    <div class="header1">
+        <h1>Allot Permissions</h1>
+    </div>
+
+</div>
+<table class="table" border="1px">
+    <thead id="deptHeader">
+        <tr>
+            <th>Sr.No.</th>
+            <th>Permissions</th>
+
+            <th>Institute</th>
+            <th>Role</th>
+            <th>Name</th>
+            <th>Allot</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <div class="form-group">
+                    1
+                </div>
+            </td>
+            <td>
+
+                <div class="form-group">
+                    <input class="form-control" [(ngModel)]="permission" type="text" value="Create Course" />
+                </div>
+            </td>
+
+
+
+            <td>
+                <!-- [selected]="department.institutionId==inst.adminInstitutionId?true:null">    -->
+                <div class="form-group">
+                    <select class="form-control" [(ngModel)]="institutionId">
+                        <option *ngFor="let inst of institutions" value="{{institution.adminInstitutionId}}"
+                            [selected]="inst.adminInstitutionId == institution.adminInstitutionId?true:null">
+
+                            {{inst.adminInstitutionName}}
+                        </option>
+                    </select>
+                    <!-- <input class="form-control" [(ngModel)]="instituteId" type="number" value="1" /> -->
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <div class="form-group">
+                        <select class="form-control" [(ngModel)]="roleId">
+                            <option *ngFor="let roleInstance of userroles" value="{{role.roleId}}"
+                                [selected]="roleInstance.roleId == role.roleId ? true:null">
+
+                                {{roleInstance.roleName}}
+                            </option>
+                        </select>
+                        <!-- <input class="form-control" [(ngModel)]="instituteId" type="number" value="1" /> -->
+                    </div>
+                    <!-- <input class="form-control" [(ngModel)]="userrole" type="text" value="teacher" />  -->
+                </div>
+            </td>
+            <td>
+                <!-- <div class="form-group">
+                        <select class="form-control" [(ngModel)]="department.institutionId">
+                            <option *ngFor="let of adminInstitutions" value="{{inst.adminInstitutionId}}"
+                                [selected]="department.institutionId==inst.adminInstitutionId?true:null">
+                                {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}
+                            </option>
+                        </select>
+                    </div> -->
+                <div class="form-group">
+                    <input class="form-control" [(ngModel)]="profileId" type="number" value="3" />
+                </div>
+            </td>
+            <td><button class="btn btn-primary" id="addbtn">Allot Permission</button></td>
+
+        </tr>
+
+    </tbody>
+</table>
+
+<td><button class="btn btn-primary">Back</button></td>

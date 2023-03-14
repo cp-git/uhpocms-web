@@ -56,6 +56,7 @@ import { DisplaySchoolComponent } from './InstituteDetails/display-school/displa
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
+import { AllotPermissionComponent } from './allot-permission/allot-permission.component';
 
 
 const routes: Routes = [
@@ -75,6 +76,8 @@ const routes: Routes = [
   { path: 'main', component: MainComponent },
   { path: 'category', component: CategoryComponent },
   { path: 'updateModule', component: UpdatemoduleComponent },
+
+  { path: 'allotPermission', component: AllotPermissionComponent },
 
 
   { path: 'authenticationlogin', component: AuthenticationloginComponent },
