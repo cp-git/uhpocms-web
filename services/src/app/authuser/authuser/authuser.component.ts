@@ -18,11 +18,15 @@ export class AuthuserComponent implements OnInit {
 
   _backupUser: Authuser[] = [];
 
+  userName!: string;
+  adminId: any;
+
   constructor(
     private _service: AuthuserserviceService,
     private _activeRoute: ActivatedRoute,
     private _route: Router,
-    private location: Location
+    private location: Location,
+    private _activatedRoute: ActivatedRoute
   ) { }
 
   authUserName!: string;
@@ -88,6 +92,10 @@ export class AuthuserComponent implements OnInit {
     if (sessionStorage.getItem('authenticatedUser') === null) {
       this._route.navigate(['']);
     } else {
+
+      this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
+      this.userName = this._activatedRoute.snapshot.params['userName'];
+      console.log(this.userName)
       // alert("called else");
       this._service.authUserList().subscribe(
         (data) => {
@@ -121,7 +129,7 @@ export class AuthuserComponent implements OnInit {
   }
 
   Home() {
-    this.location.back();
-    //this._route.navigate(['adminmodule/admin']);
+
+    this._route.navigate(['adminmodule/admin', this.userName]);
   }
 }

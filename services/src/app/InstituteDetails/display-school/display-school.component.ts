@@ -48,6 +48,10 @@ export class DisplaySchoolComponent {
 
   ngOnInit(): void {
 
+    this.adminId = this.route.snapshot.paramMap.get('id');
+    this.userName = this.route.snapshot.params['userName'];
+    console.log(this.userName)
+
 
 
     this.institutionId = this.route.snapshot.paramMap.get('id');
@@ -99,8 +103,8 @@ export class DisplaySchoolComponent {
   }
 
   Display() {
-    this.location.back();
-    //this._route.navigate(['/display', this.id]);
+    //this.location.back();
+    this._route.navigate(['/displayinstitute', this.userName]);
   }
 
   addDepartment() {
@@ -108,7 +112,7 @@ export class DisplaySchoolComponent {
   }
 
   viewDepartment(id: number) {
-    this._route.navigate(['departmentCourse', id])
+    this._route.navigate(['departmentCourse', id, this.userName])
   }
 
 

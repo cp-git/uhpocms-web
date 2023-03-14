@@ -13,7 +13,7 @@ export class DepartmentComponent implements OnInit {
   // department array
   departments: Department[] = [];
   backupDept: Department[] = [];
-
+  _backupDept = new Map();
   // for extra row when there is no data
   isHidden: boolean = false;
   hideId: boolean = false;
@@ -46,43 +46,43 @@ export class DepartmentComponent implements OnInit {
 
   // for inserting new department in table
   addDepartment(dept: Department) {
-    if (this.backupDept.findIndex((data) => data.name === dept.name) >= 0) {
-      alert('Department name already exist. please enter another.');
-    } else {
-      // assigning value
-      this.department = {} as Department;
-      this.department.name = dept.name;
-      this.department.description = dept.description;
-      this.department.active = dept.active;
-      this.department.institutionId = dept.institutionId;
+    // if (this.backupDept.findIndex((data) => data.name === dept.name) >= 0) {
+    //   alert('Department name already exist. please enter another.');
+    // } else {
+    // assigning value
+    this.department = {} as Department;
+    this.department.name = dept.name;
+    this.department.description = dept.description;
+    this.department.active = dept.active;
+    this.department.institutionId = dept.institutionId;
 
-      // inserting department
-      this._deptService.insertDepartment(this.department).subscribe(
-        (response) => {
-          this.department = {} as Department;
-          this.department = response;
+    // inserting department
+    this._deptService.createDepartment(this.department).subscribe(
+      (response) => {
+        this.department = {} as Department;
+        this.department = response;
 
-          // replacing value from backup to departments
-          this.departments[this.departments.indexOf(dept)] = Object.assign(
-            {},
-            this.backupDept[
-            this.backupDept.findIndex((data) => data.id == dept.id)
-            ]
-          );
+        // replacing value from backup to departments
+        this.departments[this.departments.indexOf(dept)] = Object.assign(
+          {},
+          this.backupDept[
+          this.backupDept.findIndex((data) => data.id == dept.id)
+          ]
+        );
 
-          this.departments.push(this.department);
-          this.backupDept.push(Object.assign({}, this.department));
-          alert('Added Successfuly');
+        this.departments.push(this.department);
+        this.backupDept.push(Object.assign({}, this.department));
+        alert('Added Successfuly');
 
-          if (this.departments.length > 0) {
-            this.isHidden = false;
-          }
-        },
-        (error) => {
-          alert('not able to add data \n' + JSON.stringify(error.error));
+        if (this.departments.length > 0) {
+          this.isHidden = false;
         }
-      );
-    }
+      },
+      (error) => {
+        alert("Department creation failed");
+      }
+    );
+    // }
   }
 
   // for updating department
@@ -112,8 +112,41 @@ export class DepartmentComponent implements OnInit {
       }
     );
   }
+  updateDepartmentById(dept: Department) {
+    // assigning value with id for update
+    this.department = {} as Department;
+    this.department.id = dept.id;
+    this.department.name = dept.name;
+    this.department.description = dept.description;
+    this.department.active = dept.active;
+    this.department.institutionId = dept.institutionId;
 
-  // for deleting department
+    this._deptService
+      .updateDepartmentListById(this.department.id, this.department)
+      .subscribe(
+        (data) => {
+          this.department = {} as Department;
+          this.department = data;
+          this.departments[this.departments.indexOf(dept)] = this.department;
+          this.backupDept[this.departments.indexOf(dept)] = Object.assign(
+            {},
+            this.department
+          );
+
+
+          alert('Data updated successfully');
+
+        },
+
+        (error) => {
+          alert('Updation Failed: Department Name Already Exist ');
+        }
+      );
+
+
+  }
+
+  // for deleting department by name
   deleteDepartment(dept: Department) {
     // calling service mathod to delete department
     this._deptService.deleteDepartment(dept.name).subscribe(
@@ -126,6 +159,26 @@ export class DepartmentComponent implements OnInit {
       },
       (error) => {
         alert('not able to delete \n' + JSON.stringify(error.error));
+      }
+    );
+  }
+  //deleting dept by id
+  deleteDepartmentById(dept: Department) {
+    this._deptService.deleteDepartmentById(dept.id).subscribe(
+      (data) => {
+        this.departments.splice(this.departments.indexOf(dept), 1);
+        // this.backupDept.splice(this.departments.indexOf(dept), 1);
+        this._backupDept.delete(dept.id);
+
+        // this.ngOnInit();
+        alert(dept.id + ' deleted successfuly');
+
+        if (this.departments.length > 0) {
+          this.displayEmptyRow();
+        }
+      },
+      (error) => {
+        alert('Failed to delete');
       }
     );
   }

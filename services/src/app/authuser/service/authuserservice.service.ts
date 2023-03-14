@@ -20,9 +20,12 @@ export class AuthuserserviceService {
   _loginUrl: string;
 
   constructor(private _http: HttpClient) {
-    this._baseUrl = `${environment.authUserUrl}/authuser`;
+    //  this._baseUrl = `${environment.authUserUrl}/authuser`;
     this._authUrl = `${environment.authUserUrl}/basicauth`;
     this._loginUrl = `${environment.authUserUrl}/login`;
+
+
+    this._baseUrl = "http://localhost:8090/authuser/uhpocms/authuser";
   }
 
   authUserList(): Observable<any> {
@@ -34,15 +37,15 @@ export class AuthuserserviceService {
   }
 
   deleteAuthUser(authUserName: string): Observable<any> {
-    return this._http.delete<any>(this._baseUrl + authUserName);
+    return this._http.delete<any>(this._baseUrl + "/" + authUserName);
   }
 
   getAuthUser(authUserName: string): Observable<any> {
-    return this._http.get<any>(this._baseUrl + authUserName);
+    return this._http.get<any>(this._baseUrl + "/" + authUserName);
   }
 
   updateAuthUser(authUserName: string, authuser: Authuser): Observable<any> {
-    return this._http.put<any>(this._baseUrl + authUserName, authuser);
+    return this._http.put<any>(this._baseUrl + "/" + authUserName, authuser);
   }
 
   loginDataAuthUser(authuser: Authuser): Observable<any> {

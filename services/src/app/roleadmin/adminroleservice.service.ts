@@ -9,11 +9,13 @@ import { environment } from 'environments/environment.development';
 export class AdminroleserviceService {
   private readonly adminRoleUrl: string;
   constructor(private _http: HttpClient) {
-    this.adminRoleUrl = environment.adminRoleUrl + '/role';
+    //this.adminRoleUrl = environment.adminRoleUrl + '/role';
+
+    this.adminRoleUrl = "http://localhost:8090/adminrole/uhpocms/role"
   }
 
   fetchadminlist(): Observable<any> {
-    return this._http.get<any>("http://localhost:8090/adminrole/uhpocms/role?name=all");
+    return this._http.get<any>(`${this.adminRoleUrl}/?name=all`);
   }
 
   addAdminRole(admin: Admin): Observable<any> {
