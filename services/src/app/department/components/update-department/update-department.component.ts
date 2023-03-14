@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Department } from 'app/admindepartment/department';
 import { DepartmentService } from 'app/department/services/department.service';
 import { AdminInstitution } from 'app/admin-institution/admininstitution';
+import { DepartmentColumn } from 'app/department/department-column';
+import { Department } from 'app/department/department';
 @Component({
   selector: 'app-update-department',
   templateUrl: './update-department.component.html',
@@ -11,8 +12,10 @@ import { AdminInstitution } from 'app/admin-institution/admininstitution';
 export class UpdateDepartmentComponent implements OnInit {
   currentData: Department;
   adminInstitutions: AdminInstitution[] = [];
-  constructor(private location: Location, private router: Router, private departmentService: DepartmentService) {
+  departmentHeader: any;
+  constructor(private router: Router, private departmentService: DepartmentService) {
     this.currentData = new Department();
+    this.departmentHeader = DepartmentColumn;
   }
 
   ngOnInit(): void {

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { AdminInstitution } from 'app/admin-institution/admininstitution';
+import { Department } from 'app/department/department';
+import { DepartmentColumn } from 'app/department/department-column';
 import { DepartmentService } from 'app/department/services/department.service';
 @Component({
   selector: 'app-add-department',
@@ -8,13 +10,20 @@ import { DepartmentService } from 'app/department/services/department.service';
   styleUrls: ['./add-department.component.css']
 })
 export class AddDepartmentComponent implements OnInit {
-
-  constructor(private location: Location, private router: Router, private departmentService: DepartmentService) {
-
+  adminInstitutions: AdminInstitution[] = [];
+  departmentHeader: any;
+  department: Department;
+  sessionData: any;
+  data: any;
+  constructor(private router: Router, private departmentService: DepartmentService) {
+    this.departmentHeader = DepartmentColumn;
+    this.department = new Department();
   }
 
   ngOnInit(): void {
-    // alert()
+    this.loadAdminInstitutions();
+    // this.adminInstitutions = this.departmentService.adminInstitutions;
+    // alert("adinst" + JSON.stringify(this.adminInstitutions));
   }
   back() {
     this.router.navigate(['/Department']);
@@ -33,11 +42,22 @@ export class AddDepartmentComponent implements OnInit {
 
     this.router.navigate(['/Department'])
   }
+
   onChildSubmitButtonClick(objectReceived: any): void {
     // alert("onChildButtonClick" + JSON.stringify(objectReceived));
     this.add(objectReceived);
   }
 
 
+  private loadAdminInstitutions() {
+    this.sessionData = sessionStorage.getItem('admininstitution');
+
+    this.data = JSON.parse(this.sessionData);
+    for (var inst in this.data) {
+      this.adminInstitutions.push(this.data[inst]);
+    }
+    this.departmentService.adminInstitutions = this.adminInstitutions;
+
+  }
 }
 

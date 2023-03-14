@@ -64,6 +64,11 @@ import { ViewAllAuthUserComponent } from './auth-user/components/view-all-auth-u
 import { AddAuthUserComponent } from './auth-user/components/add-auth-user/add-auth-user.component';
 import { ViewOneAuthUserComponent } from './auth-user/components/view-one-auth-user/view-one-auth-user.component';
 import { UpdateDepartmentComponent } from './department/components/update-department/update-department.component';
+import { ViewAllAdminRoleComponent } from './admin-role/components/view-all-admin-role/view-all-admin-role.component';
+import { AddAdminRoleComponent } from './admin-role/components/add-admin-role/add-admin-role.component';
+import { ViewOneAdminRoleComponent } from './admin-role/components/view-one-admin-role/view-one-admin-role.component';
+import { UpdateAdminRoleComponent } from './admin-role/components/update-admin-role/update-admin-role.component';
+import { AdminRoleComponent } from './admin-role/components/admin-role/admin-role.component';
 
 
 const routes: Routes = [
@@ -238,7 +243,12 @@ const routes: Routes = [
   { path: 'AuthUser', component: ViewAllAuthUserComponent },
   { path: 'AuthUser/add', component: AddAuthUserComponent },
   { path: 'AuthUser/view', component: ViewOneAuthUserComponent },
-  { path: 'AuthUser/view', component: ViewOneAuthUserComponent },
+  { path: 'AuthUser/update', component: ViewOneAuthUserComponent },
+
+  { path: 'AdminRole', component: AdminRoleComponent },
+  { path: 'AdminRole/add', component: AddAdminRoleComponent },
+  { path: 'AdminRole/view', component: ViewOneAdminRoleComponent },
+  { path: 'AdminRole/update', component: UpdateAdminRoleComponent },
 
 ];
 

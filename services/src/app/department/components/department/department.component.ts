@@ -1,10 +1,9 @@
 import { Component, OnInit, NgModule, SimpleChanges } from '@angular/core';
-import { Location } from '@angular/common';
-import { TableModule } from 'app/front/module/table.module';
 import { DepartmentService } from 'app/department/services/department.service';
-import { Department } from 'app/admindepartment/department';
 import { AdminInstitution } from 'app/admin-institution/admininstitution';
 import { Router } from '@angular/router';
+import { DepartmentColumn } from 'app/department/department-column';
+import { Department } from 'app/department/department';
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
@@ -16,22 +15,18 @@ export class DepartmentComponent implements OnInit {
   currentData: Department;
   departments: Department[] = [];
   dataAvailable: boolean = false;
+  departmentHeader: any;
   sessionData: any;
   data: any;
   adminInstitutions: AdminInstitution[] = [];
   constructor(
-    private location: Location,
-    private module: TableModule,
     private departmentService: DepartmentService,
     private router: Router
   ) {
     this.currentData = new Department();
+    this.departmentHeader = DepartmentColumn;
   }
-  // ngOnChanges(changes: SimpleChanges) {
-  //   if (changes[this.data.moduleData]) {
-  //     this.data.moduleData = changes[this.data.moduleData].currentValue;
-  //   }
-  // }
+
   ngOnInit(): void {
     this.loadAdminInstitutions();
     this.getAllDepartments();
@@ -52,17 +47,20 @@ export class DepartmentComponent implements OnInit {
       this.adminInstitutions.push(this.data[inst]);
     }
     this.departmentService.adminInstitutions = this.adminInstitutions;
+    // alert(JSON.stringify(this.adminInstitutions))
   }
 
   private getAllDepartments() {
     // fetching all departments
     this.departmentService.fetchAllDepartments().subscribe(
       (response) => {
+
         //assign data to local variable
         this.departments = response;
+
         //assign data to service variable
         this.departmentService.departments = this.departments;
-        // alert(JSON.stringify(this.departmentService.departments))
+
         if (this.departmentService.departments.length > 0) {
           this.dataAvailable = true;
         }
@@ -81,16 +79,11 @@ export class DepartmentComponent implements OnInit {
   }
 
   onChildUpdateClick(objectReceived: any): void {
-    alert("onChildButtonClic2k" + JSON.stringify(objectReceived));
+    // alert("onChildButtonClic2k" + JSON.stringify(objectReceived));
     this.currentData = objectReceived;
     this.departmentService.currentDepartmentData = this.currentData;
     this.router.navigate(['/Department/update'])
   }
 
-  // onChildUpdateClick(objectReceived: any): void {
-  //   alert("onChildButtonClick" + JSON.stringify(objectReceived));
-  //   // this.update(objectReceived);
-  //   this.currentData = objectReceived;
-  // }
 
 }

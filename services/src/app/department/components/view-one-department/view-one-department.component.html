@@ -9,6 +9,7 @@
             <button class="btn btn-primary" (click)="home()">Back</button>
         </div>
     </div>
-    <app-view [data]="{moduleName:'Department',currentData:currentData}" [dropdown1]="adminInstitutions"></app-view>
+    <app-view [data]="{moduleName:'Department' ,currentData:currentData , tableHeader:departmentHeader}"
+        [dropdown1]="{optionsArray1:adminInstitutions ,dropdownColumnId1:'adminInstitutionId' , dropdownColumnName1:'adminInstitutionName'}"></app-view>
 
 </div>

@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row justify-content-between">
         <div class="col-sm-6">
-            <h1>AuthUser Administration</h1>
+            <h1>Admin Role Administration</h1>
         </div>
 
         <div class="col-sm-6 text-right">
@@ -10,7 +10,12 @@
             <button class="btn btn-primary" (click)="back()">Back</button>
         </div>
     </div>
-    <!-- 
-    <app-view-all *ngIf="dataAvailable" [data]="{moduleName:'AuthUser' ,moduleData:this.authUsers}"
-        (viewClicked)="onChildButtonClick($event)"></app-view-all> -->
+
+    <app-view-all *ngIf="dataAvailable"
+        [data]="{moduleName: this.tableName ,moduleData:this.tableData , tableHeader:this.tableHeader}"
+        [idsColumnName]="{columnName:'roleId'}" (viewClicked)="onChildViewClick($event)"
+        (updateClicked)="onChildUpdateClick($event)"></app-view-all>
+    <div *ngIf="!dataAvailable">
+        <h3>No roles</h3>
+    </div>
 </div>

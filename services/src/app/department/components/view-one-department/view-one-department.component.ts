@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
-import { Department } from 'app/admindepartment/department';
 import { DepartmentService } from 'app/department/services/department.service';
 import { AdminInstitution } from 'app/admin-institution/admininstitution';
+import { Department } from 'app/department/department';
+import { DepartmentAllColumn } from 'app/department/department-column';
 
 @Component({
   selector: 'app-view-one-department',
@@ -13,8 +13,10 @@ import { AdminInstitution } from 'app/admin-institution/admininstitution';
 export class ViewOneDepartmentComponent implements OnInit {
   currentData: Department;
   adminInstitutions: AdminInstitution[] = [];
-  constructor(private location: Location, private router: Router, private departmentService: DepartmentService) {
+  departmentHeader: any;
+  constructor(private router: Router, private departmentService: DepartmentService) {
     this.currentData = new Department();
+    this.departmentHeader = DepartmentAllColumn;
   }
 
   ngOnInit(): void {
@@ -28,8 +30,5 @@ export class ViewOneDepartmentComponent implements OnInit {
     this.router.navigate(['/Department']);
   }
 
-  // onChildButtonClick(objectReceived: any): void {
-  //   alert("onChildButtonClic2k" + JSON.stringify(objectReceived));
-  //   this.currentData = objectReceived;
-  // }
+
 }

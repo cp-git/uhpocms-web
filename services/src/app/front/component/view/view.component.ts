@@ -21,50 +21,68 @@ import { Admin } from 'app/roleadmin/admin';
 })
 export class ViewComponent {
 
-  @Input() data: { moduleName: string, currentData: any } = { moduleName: '', currentData: null };
-  @Input() dropdown1?: any;
-  @Input() dropdown2?: any;
+  @Input() data: { moduleName: string, currentData: any, tableHeader: any } = { moduleName: '', currentData: null, tableHeader: null };
+  @Input() dropdown1?: { optionsArray1: any, dropdownColumnId1: string, dropdownColumnName1: string };
+  @Input() dropdown2?: { optionsArray2: any, dropdownColumnId2: string, dropdownColumnName2: string };
+
 
   viewOf: any;
-  currentId!: any;
-  addedOrUpdate: string;
+  // currentId!: any;
+  // addedOrUpdate: string;
   tableHeader: any;
-  optionsArray1: any
-  institutions: AdminInstitution[] = [];
+  // institutions: AdminInstitution[] = [];
 
-  currentModel: any;
-  authUser: Authuser;
-  department: Department;
-  adminRole: Admin;
+  currentData: any;
+  // authUser: Authuser;
+  // department: Department;
+  // adminRole: Admin;
 
-  dropdownColumnId1: string = '';
-  dropdownColumnName1: string = '';
+  // for dropdown
+  optionsArray1: any;
+  dropdownColumnId1: any;
+  dropdownColumnName1: any;
+
+  // for dropdown
+  optionsArray2: any;
+  dropdownColumnId2: any;
+  dropdownColumnName2: any;
 
   constructor(
-    private location: Location,
-    private router: Router,
-    private roleService: AdminroleserviceService,
-    private route: ActivatedRoute,
-    private authUserService: AuthuserserviceService,
-    private departmentService: DepartmentService,
-    private institutionService: InstitutionSeriveService
+    private location: Location
   ) {
 
-    this.authUser = new Authuser();
-    this.department = new Department();
-    this.adminRole = new Admin();
-    this.addedOrUpdate = 'add';
-    this.currentId = 0;
+    // this.authUser = new Authuser();
+    // this.department = new Department();
+    // this.adminRole = new Admin();
+    // this.addedOrUpdate = 'add';
+    // this.currentId = 0;
 
 
   }
   ngOnInit(): void {
     this.viewOf = this.data.moduleName;
-    this.currentModel = this.data.currentData;
-    this.optionsArray1 = this.dropdown1;
-    this.changeHeader();
+    this.currentData = this.data.currentData;
+    this.tableHeader = this.data.tableHeader;
+    this.initialiseDropdownData();
+    // this.changeHeader();
     // alert(JSON.stringify("cd" + JSON.stringify(JSON.parse(this.data.currentData))));
   }
+  initialiseDropdownData() {
+
+    if (this.dropdown1?.optionsArray1 != undefined) {
+      this.optionsArray1 = this.dropdown1?.optionsArray1;
+      this.dropdownColumnId1 = this.dropdown1?.dropdownColumnId1;
+      this.dropdownColumnName1 = this.dropdown1?.dropdownColumnName1;
+
+    }
+
+    if (this.dropdown2?.optionsArray2 != undefined) {
+      this.optionsArray2 = this.dropdown2?.optionsArray2;
+      this.dropdownColumnId2 = this.dropdown2?.dropdownColumnId2;
+      this.dropdownColumnName2 = this.dropdown2?.dropdownColumnName2;
+    }
+  }
+
 
   home() {
     this.location.back();
@@ -76,7 +94,7 @@ export class ViewComponent {
 
     switch (this.viewOf) {
       case "Department":
-        this.changeToDepartment();
+        // this.changeToDepartment();
         // alert(JSON.stringify(this.currentModel));
 
         break;
@@ -87,25 +105,25 @@ export class ViewComponent {
         // this.currentModel = this.authUser;
         break;
       case "AdminRole":
-        this.tableHeader = AdminRoleColumn;
-        this.currentModel = this.adminRole;
+        // this.tableHeader = AdminRoleColumn;
+        // this.currentData = this.adminRole;
         break;
     }
   }
 
 
 
-  loadInstitutions() {
-    this.institutionService._getAllInstitutions().subscribe(
-      response => {
-        this.institutions = response;
-        this.optionsArray1 = this.institutions;
-      },
-      error => {
-        this.institutions = [];
-      }
-    );
-  }
+  // loadInstitutions() {
+  //   this.institutionService._getAllInstitutions().subscribe(
+  //     response => {
+  //       this.institutions = response;
+  //       this.optionsArray1 = this.institutions;
+  //     },
+  //     error => {
+  //       this.institutions = [];
+  //     }
+  //   );
+  // }
 
 
   changeToDepartment() {

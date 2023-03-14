@@ -56,7 +56,7 @@
                     <ng-container *ngSwitchCase="'checkbox'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
-                        <input class="form-control" *ngSwitchCase="'checkbox'" type="checkbox"
+                        <input name="{{column.key}}" class="form-control" *ngSwitchCase="'checkbox'" type="checkbox"
                             [(ngModel)]="currentData[column.key]">
                     </ng-container>
                 </ng-container>

@@ -1,0 +1,72 @@
+<div class="container">
+    <div>
+        <ng-container *ngIf="viewAll">
+            <div class="row justify-content-between">
+                <div class="col-sm-6">
+                    <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <ng-container *ngTemplateOutlet="addButton;"></ng-container>
+                    <ng-container *ngTemplateOutlet="backButton;"></ng-container>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="viewAll">
+            <ng-container *ngTemplateOutlet="viewall;"></ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="viewAdd">
+            <div class="row justify-content-between">
+                <div class="col-sm-6">
+                    <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <ng-container *ngTemplateOutlet="backButton;"></ng-container>
+                </div>
+            </div>
+            <ng-container *ngTemplateOutlet="viewadd;"></ng-container>
+        </ng-container>
+    </div>
+</div>
+
+
+<ng-template #title let-headerTitle>
+    <h1>{{headerTitle}}</h1>
+</ng-template>
+
+<ng-template #addButton>
+    <button class="btn btn-primary" (click)="onAddClick()">Add</button>
+</ng-template>
+
+<ng-template #backButton>
+    <button class="btn btn-primary" (click)="back()">Back</button>
+</ng-template>
+
+<ng-template #viewall>
+    <app-view-all *ngIf="dataAvailable"
+        [data]="{moduleName: this.tableName ,moduleData:this.adminRoles , tableHeader:this.adminRoleHeader}"
+        [idsColumnName]="{columnName:'roleId'}" (viewClicked)="onChildViewClick($event)"
+        (updateClicked)="onChildUpdateClick($event)"></app-view-all>
+    <div *ngIf="!dataAvailable">
+        <h3>No roles</h3>
+    </div>
+</ng-template>
+
+
+<ng-template #viewadd>
+    <app-view-add [data]="{moduleName:tableName ,currentData:emptyAdminRole , tableHeader:adminRoleHeader}"
+        (submitClicked)="onChildSubmitButtonClick($event)" (viewClicked)="onChildViewClick($event)"
+        (updateClicked)="onChildUpdateClick($event)"></app-view-add>
+
+</ng-template>
+
+<ng-template #viewone>
+    <app-view [data]="{moduleName:tableName,currentData:currentData , tableHeader:adminRoleHeader}"></app-view>
+
+</ng-template>
+
+<ng-template #update>
+    <app-view-add [data]="{moduleName:tableName ,currentData:currentData , tableHeader:adminRoleHeader}"
+        (submitClicked)="onChildUpdateClick($event)"></app-view-add>
+
+</ng-template>

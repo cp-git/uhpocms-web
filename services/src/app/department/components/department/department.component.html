@@ -11,7 +11,12 @@
         </div>
     </div>
 
-    <app-view-all *ngIf="dataAvailable" [data]="{moduleName:'Department' ,moduleData:this.departments}"
-        [dropdown1]="adminInstitutions" (viewClicked)="onChildViewClick($event)"
+    <app-view-all *ngIf="dataAvailable"
+        [data]="{moduleName:'Department' ,moduleData:this.departments , tableHeader:departmentHeader}"
+        [dropdown1]="{optionsArray1:this.adminInstitutions ,dropdownColumnId1:'adminInstitutionId' , dropdownColumnName1:'adminInstitutionName'}"
+        [idsColumnName]="{columnName:'id'}" (viewClicked)="onChildViewClick($event)"
         (updateClicked)="onChildUpdateClick($event)"></app-view-all>
+    <div *ngIf="!dataAvailable">
+        <h3>No departments</h3>
+    </div>
 </div>

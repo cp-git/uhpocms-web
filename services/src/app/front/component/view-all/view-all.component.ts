@@ -22,9 +22,10 @@ import { ViewAllService } from 'app/front/services/view-all.service';
   styleUrls: ['./view-all.component.css']
 })
 export class ViewAllComponent implements OnInit {
-  @Input() data: { moduleName: string, moduleData: any } = { moduleName: '', moduleData: null };
-  @Input() dropdown1?: any;
-  @Input() dropdown2?: any;
+  @Input() data: { moduleName: string, moduleData: any, tableHeader: any } = { moduleName: '', moduleData: null, tableHeader: null };
+  @Input() idsColumnName: { columnName: string } = { columnName: '' };
+  @Input() dropdown1?: { optionsArray1: any, dropdownColumnId1: string, dropdownColumnName1: string };
+  @Input() dropdown2?: { optionsArray2: any, dropdownColumnId2: string, dropdownColumnName2: string };
 
   @Output() viewClicked: EventEmitter<any> = new EventEmitter();
   @Output() updateClicked: EventEmitter<any> = new EventEmitter();
@@ -33,7 +34,7 @@ export class ViewAllComponent implements OnInit {
   tableHeader: any;
   viewOf: any;  // current module name
   tableData: any[] = [];
-  currentIdColumnname: string;
+  currentIdColumnName: any;
   objectToUpdate: any;
 
   // All Modules Array
@@ -44,30 +45,50 @@ export class ViewAllComponent implements OnInit {
 
   // for dropdown
   optionsArray1: any;
-  dropdownColumnId1: string = '';
-  dropdownColumnName1: string = '';
+  dropdownColumnId1: any;
+  dropdownColumnName1: any;
+
+  // for dropdown
+  optionsArray2: any;
+  dropdownColumnId2: any;
+  dropdownColumnName2: any;
 
   constructor(
     private location: Location,
     private router: Router,
     private roleService: AdminroleserviceService,
-    private route: ActivatedRoute,
     private authUserService: AuthuserserviceService,
-    private departmentService: DepartmentService,
-    private institutionService: InstitutionSeriveService,
     private service: ViewAllService
   ) {
-    this.currentIdColumnname = '';
+
+
   }
 
+  initialiseDropdownData() {
+
+    if (this.dropdown1?.optionsArray1 != undefined) {
+      this.optionsArray1 = this.dropdown1?.optionsArray1;
+      this.dropdownColumnId1 = this.dropdown1?.dropdownColumnId1;
+      this.dropdownColumnName1 = this.dropdown1?.dropdownColumnName1;
+
+    }
+
+    if (this.dropdown2?.optionsArray2 != undefined) {
+      this.optionsArray2 = this.dropdown2?.optionsArray2;
+      this.dropdownColumnId2 = this.dropdown2?.dropdownColumnId2;
+      this.dropdownColumnName2 = this.dropdown2?.dropdownColumnName2;
+    }
+  }
 
   ngOnInit(): void {
-    // this.data.moduleData = [...this.data.moduleData];
-    // alert(JSON.stringify(this.data.moduleData))
+
+    this.currentIdColumnName = this.idsColumnName;
     this.viewOf = this.data.moduleName;
     this.service.viewOf = this.viewOf;
+    this.tableHeader = this.data.tableHeader;
     this.tableData = this.data.moduleData;
-    this.changeHeader();
+
+    this.initialiseDropdownData();
   }
 
   navigateToAdd() {
@@ -75,17 +96,11 @@ export class ViewAllComponent implements OnInit {
   }
 
   onViewClicked(objectToView: any): void {
-    // alert("onChildButtonClick" + JSON.stringify(objectToView));
     this.viewClicked.emit(objectToView);
 
   }
   onUpdatClicked(objectToView: any): void {
-    alert("onUpdatClicked" + JSON.stringify(objectToView));
     this.updateClicked.emit(objectToView);
-    // this.router.navigate(['/Department/update']);
-
-    // this.router.navigate(['/Department/update']);
-
   }
 
   home() {
@@ -96,35 +111,19 @@ export class ViewAllComponent implements OnInit {
     return a;
   }
 
-  navigateToUpdate(item: any) {
-    this.objectToUpdate = item;
-    // alert("hello" + JSON.stringify(this.objectToUpdate));
-    // alert()
-    this.router.navigate([`${this.viewOf}/update`, , `${this.objectToUpdate[this.currentIdColumnname]}`]);
+  // navigateToUpdate(item: any) {
+  //   this.objectToUpdate = item;
+  //   // alert("hello" + JSON.stringify(this.objectToUpdate));
+  //   // alert()
+  //   this.router.navigate([`${this.viewOf}/update`, , `${this.objectToUpdate[this.currentIdColumnName]}`]);
 
-  }
-  // navigateToView(objectToView: any) {
-  //   alert(JSON.stringify(objectToView));
   // }
 
+
   changeHeader() {
-    // this.viewOf = this.route.snapshot.paramMap.get('viewname');
-    // this.viewOf = 'Department';
+
     switch (this.viewOf) {
-      case "Department":
-        this.tableHeader = DepartmentColumn;
-        // this.loadInstitutions();  // loading institutions for dropdown
-        // this.loadDepartments();   // for printing data
 
-        // alert(JSON.stringify(this.tableData))
-        this.institutions = this.dropdown1;
-        // alert("hello" + JSON.stringify(this.institutions))
-        this.optionsArray1 = this.institutions;
-        this.dropdownColumnId1 = "adminInstitutionId";
-        this.dropdownColumnName1 = "adminInstitutionName";
-        this.currentIdColumnname = "id";
-
-        break;
       case "AuthUser":
         this.tableHeader = AuthUserColumn;
         // this.loadAuthUsers();
@@ -139,7 +138,8 @@ export class ViewAllComponent implements OnInit {
     this.service.optionsArray1 = this.optionsArray1; // initialize service variable
     this.service.dropdownColumnId1 = this.dropdownColumnId1; // initialize service variable
     this.service.dropdownColumnName1 = this.dropdownColumnName1; // initialize service variable
-    this.service.currentIdColumnName = this.currentIdColumnname; // initialize service variable
+    this.service.currentIdColumnName = this.currentIdColumnName; // initialize service variable
+
   }
 
   loadAuthUsers() {
@@ -148,7 +148,7 @@ export class ViewAllComponent implements OnInit {
       response => {
         this.authUsers = response;
         this.tableData = this.authUsers;
-        this.currentIdColumnname = "authUserId";
+        this.currentIdColumnName = "authUserId";
         console.log(this.tableData);
 
       },
@@ -159,53 +159,19 @@ export class ViewAllComponent implements OnInit {
   }
 
 
-  loadDepartments() {
-    this.departmentService.fetchAllDepartments().subscribe(
-      response => {
-        this.departmentService.departments = response;
-        this.departments = response;
-        this.tableData = this.departments;
-        this.dropdownColumnId1 = "adminInstitutionId";
-        this.dropdownColumnName1 = "adminInstitutionName";
-        this.currentIdColumnname = "id";
-        console.log(this.tableData);
-
-      },
-      error => {
-        alert("no departments")
-      }
-    )
-  }
-
-  loadInstitutions() {
-    this.institutionService._getAllInstitutions().subscribe(
-      response => {
-        this.institutions = response;
-        this.optionsArray1 = this.institutions;
-      },
-      error => {
-        this.institutions = [];
-      }
-    );
-
-  }
 
   loadAdminRole() {
     this.roleService.fetchadminlist().subscribe(
       response => {
         this.roles = response;
         this.tableData = this.roles;
-        this.currentIdColumnname = "roleId";
+        this.currentIdColumnName = "roleId";
         console.log(this.tableData);
       },
       error => {
         alert("no roles");
       }
     );
-  }
-
-  viewAddScreen() {
-
   }
 
 }

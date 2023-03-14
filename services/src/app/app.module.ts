@@ -66,6 +66,7 @@ import { TableModule } from './front/module/table.module';
 import { DepartmentModule } from './department/module/department/department.module';
 import { AuthUserModule } from './auth-user/auth-user.module';
 import { UpdateDepartmentComponent } from './department/components/update-department/update-department.component';
+import { AdminRoleModule } from './admin-role/admin-role.module';
 
 @NgModule({
   declarations: [
@@ -135,7 +136,8 @@ import { UpdateDepartmentComponent } from './department/components/update-depart
     BrowserModule,
     NgSelectModule,
     DepartmentModule,
-    AuthUserModule
+    AuthUserModule,
+    AdminRoleModule
   ],
 
   providers: [

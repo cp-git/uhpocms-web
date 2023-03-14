@@ -22,63 +22,73 @@ import { ViewAllService } from 'app/front/services/view-all.service';
 })
 export class ViewAddComponent implements OnInit {
   // @Input() selectedItem: any;
-  @Input() data: { screen: string, moduleName: string, currentData: any } = { screen: '', moduleName: '', currentData: null };
-  @Input() dropdown1?: any;
-  @Input() dropdown2?: any;
+  @Input() data: { moduleName: string, currentData: any, tableHeader: any } = { moduleName: '', currentData: null, tableHeader: null };
+  @Input() dropdown1?: { optionsArray1: any, dropdownColumnId1: string, dropdownColumnName1: string };
+  @Input() dropdown2?: { optionsArray2: any, dropdownColumnId2: string, dropdownColumnName2: string };
 
   @Output() submitClicked: EventEmitter<any> = new EventEmitter();
   viewOf: any;
-  currentId!: any;
-  addedOrUpdate: string;
+  screen: any;
+  // currentId!: any;
+  // addedOrUpdate: string;
   tableHeader: any;
-  optionsArray1: any
-  institutions: AdminInstitution[] = [];
+
+  // institutions: AdminInstitution[] = [];
 
   currentData: any;
   authUser: Authuser;
   department: Department;
   adminRole: Admin;
 
-  dropdownColumnId1: string = '';
-  dropdownColumnName1: string = '';
+  // for dropdown
+  optionsArray1: any;
+  dropdownColumnId1: any;
+  dropdownColumnName1: any;
+
+  // for dropdown
+  optionsArray2: any;
+  dropdownColumnId2: any;
+  dropdownColumnName2: any;
 
   constructor(
     private location: Location,
-    private router: Router,
-    private roleService: AdminroleserviceService,
-    private route: ActivatedRoute,
-    private authUserService: AuthuserserviceService,
-    private departmentService: DepartmentService,
-    private institutionService: InstitutionSeriveService,
-    private service: ViewAllService
   ) {
 
     this.authUser = new Authuser();
     this.department = new Department();
     this.adminRole = new Admin();
-    this.addedOrUpdate = 'add';
-    this.currentId = 0;
+    // this.addedOrUpdate = 'add';
+    // this.currentId = 0;
 
 
   }
 
   onSubmitClicked(objectToAdd: any): void {
-    // alert("onChildButtonClick" + JSON.stringify(objectToAdd));
     this.submitClicked.emit(objectToAdd);
+  }
+
+  ngOnInit(): void {
+
+    this.tableHeader = this.data.tableHeader;
+    this.currentData = this.data.currentData
+    this.viewOf = this.data.moduleName;
+    this.initialiseDropdownData();
 
   }
-  ngOnInit(): void {
-    this.viewOf = this.service.viewOf;
-    if (this.data.screen === 'update') {
-      this.currentData = this.data.currentData;
-      this.viewOf = this.data.moduleName;
+  initialiseDropdownData() {
+
+    if (this.dropdown1?.optionsArray1 != undefined) {
+      this.optionsArray1 = this.dropdown1?.optionsArray1;
+      this.dropdownColumnId1 = this.dropdown1?.dropdownColumnId1;
+      this.dropdownColumnName1 = this.dropdown1?.dropdownColumnName1;
+
     }
 
-    // alert(JSON.stringify(this.viewOf));
-
-    this.changeHeader();
-    // alert(JSON.stringify(this.selectedItem));
-
+    if (this.dropdown2?.optionsArray2 != undefined) {
+      this.optionsArray2 = this.dropdown2?.optionsArray2;
+      this.dropdownColumnId2 = this.dropdown2?.dropdownColumnId2;
+      this.dropdownColumnName2 = this.dropdown2?.dropdownColumnName2;
+    }
   }
 
   home() {
@@ -86,19 +96,9 @@ export class ViewAddComponent implements OnInit {
   }
 
   changeHeader() {
-    // this.viewOf = this.route.snapshot.paramMap.get('viewname');
-    // this.currentId = this.route.snapshot.paramMap.get('id');
-    // if (this.currentId > 0 || this.currentId != undefined || this.currentId != null) {
-    //   this.addedOrUpdate = "update";
-    //   // alert(this.currentId)
-    // }
-    // alert(this.currentId)
-    switch (this.viewOf) {
-      case "Department":
-        this.changeToDepartment();
-        // alert(JSON.stringify(this.currentModel));
 
-        break;
+    switch (this.viewOf) {
+
       case "AuthUser":
         this.tableHeader = AuthUserColumn;
         this.currentData = this.authUser;
@@ -110,87 +110,4 @@ export class ViewAddComponent implements OnInit {
     }
   }
 
-
-
-  loadInstitutions() {
-    this.institutionService._getAllInstitutions().subscribe(
-      response => {
-        this.institutions = response;
-        this.optionsArray1 = this.institutions;
-      },
-      error => {
-        this.institutions = [];
-      }
-    );
-  }
-
-  // add(currentModel: any) {
-  //   // this.viewOf = this.route.snapshot.paramMap.get('viewname');
-  //   switch (this.viewOf) {
-  //     case "Department":
-  //       currentModel.active = true;
-  //       this.departmentService.insertDepartment(currentModel).subscribe(
-  //         response => {
-  //           alert(`Department ${this.addedOrUpdate} successfully !`);
-  //         },
-  //         error => {
-  //           alert(`Failed to ${this.addedOrUpdate} Department !`);
-  //         }
-  //       );
-  //       break;
-  //     case "AuthUser":
-  //       this.authUserService.addAuthUser(currentModel).subscribe(
-  //         response => {
-  //           alert(`AuthUser ${this.addedOrUpdate} successfully !`);
-  //         },
-  //         error => {
-  //           alert(`Failed to ${this.addedOrUpdate} AuthUser !`);
-  //         }
-  //       )
-
-
-  //       break;
-  //     case "AdminRole":
-
-  //       break;
-  //   }
-  //   this.router.navigate([`/${this.viewOf}`]);
-  // }
-
-  changeToDepartment() {
-    // this.tableHeader = DepartmentColumn;
-    // this.loadInstitutions();
-    // this.optionsArray1 = this.institutions;
-    // this.dropdownColumnId1 = "adminInstitutionId";
-    // this.dropdownColumnName1 = "adminInstitutionName";
-    // this.currentModel = this.department;
-    // for (let i = 0; i < this.departmentService.departments.length; i++) {
-    //   const department = this.departmentService.departments[i];
-    //   if (department.id == this.currentId) {
-    //     this.currentModel = department;
-    //     // alert("current" + JSON.stringify(this.currentModel));
-    //     break; // exit the loop when the condition is met
-    //   }
-    // }
-
-    this.tableHeader = this.service.tableHeader;
-    // this.loadInstitutions();
-    this.optionsArray1 = this.service.optionsArray1;
-    this.dropdownColumnId1 = this.service.dropdownColumnId1;
-    this.dropdownColumnName1 = this.service.dropdownColumnName1;
-    // if (this.currentData.length <= 0) {
-    //   this.currentData = this.department;
-    // }
-
-    // if (this.currentId) {
-    //   for (let i = 0; i < this.service.tableData.length; i++) {
-    //     const department = this.service.tableData[i];
-    //     if (department.id == this.currentId) {
-    //       this.currentData = department;
-    //       alert("current" + JSON.stringify(this.currentData));
-    //       break; // exit the loop when the condition is met
-    //     }
-    //   }
-    // }
-  }
 }

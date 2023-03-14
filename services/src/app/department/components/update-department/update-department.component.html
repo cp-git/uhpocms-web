@@ -9,7 +9,8 @@
             <button class="btn btn-primary" (click)="back()">Back</button>
         </div>
     </div>
-    <app-view-add [data]="{screen:'update' ,moduleName:'Department',currentData:currentData}"
-        [dropdown1]="adminInstitutions" (submitClicked)="onChildUpdateClick($event)"></app-view-add>
+    <app-view-add [data]="{moduleName:'Department' ,currentData:currentData , tableHeader:departmentHeader}"
+        [dropdown1]="{optionsArray1:adminInstitutions ,dropdownColumnId1:'adminInstitutionId' , dropdownColumnName1:'adminInstitutionName'}"
+        (submitClicked)="onChildUpdateClick($event)"></app-view-add>
 
 </div>
