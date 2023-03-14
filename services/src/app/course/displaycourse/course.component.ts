@@ -58,7 +58,7 @@ export class CourseComponent {
     } else {
       this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
       this.userName = this._activatedRoute.snapshot.params['userName'];
-      console.log(this.userName)
+      console.log(this.userName + " " + this.adminId)
       this.getAllCourses();
       this.getAllInstitutes();
       this.getAllDeactivateCourses();
@@ -213,6 +213,6 @@ export class CourseComponent {
   }
 
   inactivecourse() {
-    this._route.navigate(['inactivecourse', this.userName])
+    this._route.navigate(['inactivecourse', this.adminId, this.userName])
   }
 }

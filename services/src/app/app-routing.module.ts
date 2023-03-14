@@ -106,7 +106,7 @@ const routes: Routes = [
 
   { path: 'inactivecourse', component: InactiveTeacherCourseComponent },
 
-  { path: 'inactivecourse/:userName', component: InactiveTeacherCourseComponent },
+  { path: 'inactivecourse/:id/:userName', component: InactiveTeacherCourseComponent },
 
   { path: 'teachercourse', component: TeacherCourseComponent },
 
@@ -256,7 +256,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
 
 
-  { path: 'course/userrole/:userName', component: CourseComponent },
+  { path: 'course/userrole/:userName/:id', component: CourseComponent },
 
 
   { path: 'addcourse', component: AddcourseComponent },

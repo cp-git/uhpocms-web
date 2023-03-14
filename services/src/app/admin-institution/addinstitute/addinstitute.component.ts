@@ -89,7 +89,7 @@ export class AddinstituteComponent {
           this.admininstitutions.push(this.admininstitution);
           this.backupInst.push(Object.assign({}, this.admininstitution));
           alert('Institute Added Successfuly');
-          this._route.navigate(['displayinstitute']);
+          this._route.navigate(['displayinstitute', this.userName]);
 
           if (this.admininstitutions.length > 0) {
             this.isHidden = false;
