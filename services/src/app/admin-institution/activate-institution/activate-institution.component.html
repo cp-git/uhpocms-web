@@ -2,13 +2,13 @@
     <div class="header1">
         <h1>Activate Institution</h1>
     </div>
-    <table class="table" border="1px">
+    <!-- <table class="table" border="1px">
         <thead>
             <tr>
                 <th style="width: 80px">Sr.No</th>
-                <th>Department Name</th>
-                <th>Description</th>
                 <th>Institute Name</th>
+                <th>Description</th>
+
                 <th>Activate</th>
             </tr>
         </thead>
@@ -33,6 +33,21 @@
 
             </tr>
         </tbody>
-    </table>
+    </table> -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3 text-center" *ngFor="let institution of institutions">
+                <div><img src="../../assets/img/{{institution.adminInstitutionPicture}}" />
+                </div>
+
+                <div><button #btn1 id="demo" class="btn btn-info">{{institution.adminInstitutionName}}</button>
+                </div>
+                <div><button class="btn btn-success"
+                        (click)="activateInstitution(institution.adminInstitutionId)">Activate</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
     <td><button class="btn btn-primary" (click)="home()">Back</button></td>
 </div>

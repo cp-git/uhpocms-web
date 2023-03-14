@@ -60,7 +60,11 @@ export class ActivateDepartmentComponent implements OnInit {
     this._departmentService.activateDepartment(departmentId).subscribe(
       response => {
         alert("Activatation sucessfully");
-        this.ngOnInit();
+        this.departments = this.departments.filter(d => d.id !== departmentId); // Remove the activated department from the list
+        this.adminInstitutions = []; // Clear the adminInstitutions array
+        this.loadAdminInstitutions(); // Reload the adminInstitutions array with fresh data
+
+        // this.ngOnInit();
       },
       error => {
         alert("deactivatation Failed");

@@ -193,7 +193,7 @@ const routes: Routes = [
   { path: 'displayinstitute/:userName', component: DisplayinstituteComponent },
 
   { path: 'displayinstitute/:adminInstitutionId', component: DisplayinstituteComponent },
-  { path: 'displayinstitute/activate', component: ActivateInstitutionComponent },
+  { path: 'displayinstitute/activate/:userName', component: ActivateInstitutionComponent },
 
   //display school urls
 

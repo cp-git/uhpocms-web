@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Coursesyllabus } from 'app/class/coursesyllabus';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -7,8 +8,15 @@ import { Observable } from 'rxjs';
 })
 export class TeacherCourseService {
 
-  constructor(private _http: HttpClient) { }
+  private syllabusUrl: string;
+  constructor(private _http: HttpClient) {
+    this.syllabusUrl = `http://localhost:8090/courseSyllabus/uhpocms/courseSyllabus`;
+  }
 
+  addCourseSyllabus(courseSyllabus: Coursesyllabus): Observable<any> {
+
+    return this._http.post<any>(`${this.syllabusUrl}`, courseSyllabus);
+  }
   getAssignedCourseToTeacher(teacherId: number): Observable<any> {
     return this._http.get<any>("http://localhost:8090/course/uhpocms/course/teacherid/" + teacherId);
   }
