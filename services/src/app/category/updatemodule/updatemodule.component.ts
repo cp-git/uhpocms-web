@@ -15,6 +15,10 @@ export class UpdatemoduleComponent {
 
   isVisible: boolean = true;
 
+
+  teacherId: any;
+  userName!: string;
+
   _backupModule = new Map();
 
   // array of course
@@ -30,6 +34,9 @@ export class UpdatemoduleComponent {
     if (sessionStorage.getItem('authenticatedUser') === null) {
       this._route.navigate(['']);
     } else {
+      this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
+      this.userName = this._activatedRoute.snapshot.params['userName'];
+      console.log(this.userName)
       this.getAllModules();
       this.loadCourses();
     }
@@ -131,6 +138,6 @@ export class UpdatemoduleComponent {
   }
 
   Back() {
-    this._route.navigate(['teachermodule'])
+    this._route.navigate(['teachermodule', this.userName, { id: this.teacherId }])
   }
 }

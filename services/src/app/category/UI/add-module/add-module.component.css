@@ -3,7 +3,7 @@
 
 
 .button {
-    background-color: #7cdb2e;
+    background-color: dodgerblue;
     /* Green */
     border: none;
     color: white;
@@ -34,7 +34,7 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
-    background: rgb(130, 106, 251);
+
 }
 
 .container {

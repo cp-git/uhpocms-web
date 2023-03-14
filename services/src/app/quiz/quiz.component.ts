@@ -33,6 +33,8 @@ export class QuizComponent {
   _categoryMap = new Map();
   _moduleMap = new Map();
   isHidden: boolean = false;
+  teacherId: any;
+  userName!: string;
   constructor(
     private _quizService: QuizService,
     private _route: Router,
@@ -49,6 +51,10 @@ export class QuizComponent {
     if (sessionStorage.getItem('authenticatedUser') === null) {
       this._route.navigate(['']);
     } else {
+      this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
+      this.userName = this._activatedRoute.snapshot.params['userName'];
+      console.log(this.userName)
+
       this.getAllQuizzes();
     }
 
@@ -110,7 +116,7 @@ export class QuizComponent {
   }
 
   Add() {
-    this._route.navigate(['createQuiz']);
+    this._route.navigate(['createQuiz', this.userName]);
     // let quizObj = new Quiz;
     // quizObj.title = quiz.title;
     // quizObj.description = quiz.description;
@@ -153,7 +159,7 @@ export class QuizComponent {
 
 
   updateQuiz(title: string) {
-    this._route.navigate(['updateQuiz', title])
+    this._route.navigate(['updateQuiz', title, this.userName])
 
   }
 
@@ -206,7 +212,10 @@ export class QuizComponent {
 
   }
   back() {
-    this.location.back();
+
+    console.log("in method..")
+    this._route.navigate(['teacherdisplay/teacher', this.userName])
+    //this.location.back();
 
     // if (this._activatedRoute.snapshot.params['role'] == 'teacher') { this._route.navigate(['teacherdisplay/teacher']); }
 

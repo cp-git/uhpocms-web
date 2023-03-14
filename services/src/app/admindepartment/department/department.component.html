@@ -7,8 +7,8 @@
     <table class="table" border="1px">
         <thead id="deptHeader">
             <tr>
-                <th>Sr.No.</th>
-                <th *ngIf="hideId">Id</th>
+
+
                 <th>Name</th>
                 <th>Description</th>
                 <th>Active</th>
@@ -20,18 +20,7 @@
         </thead>
         <tbody>
             <tr *ngIf="isHidden">
-                <td>
-                    <div class="form-group">
-                        1
-                    </div>
-                </td>
-                <td *ngIf="hideId">
 
-                    <div class="form-group">
-                        <input class="form-control" [(ngModel)]="department.id" type="number" value="{{department.id}}"
-                            disabled />
-                    </div>
-                </td>
                 <td>
                     <div class="form-group">
                         <input class="form-control" [(ngModel)]="department.name" type="text"
@@ -62,17 +51,13 @@
                 </td>
                 <td><button class="btn btn-primary" id="addbtn" (click)="addDepartment(department)">Add</button></td>
                 <td><button class="btn btn-success" id="updatebtn"
-                        (click)="updateDepartment(department)">Update</button></td>
-                <td><button class="btn btn-danger" id="deletebtn" (click)="deleteDepartment(department)">Delete</button>
+                        (click)="updateDepartmentById(department)">Update</button></td>
+                <td><button class="btn btn-danger" id="deletebtn"
+                        (click)="deleteDepartmentById(department)">Delete</button>
                 </td>
             </tr>
             <tr *ngFor="let dept of departments; let i=index">
-                <td>{{i+1}}</td>
-                <td *ngIf="hideId">
-                    <div class="form-group">
-                        <input class="form-control" [(ngModel)]="dept.id" type="number" value="{{dept.id}}" disabled />
-                    </div>
-                </td>
+
                 <td>
                     <div class="form-group">
                         <input class="form-control" [(ngModel)]="dept.name" type="text" value="{{dept.name}}" />
@@ -102,12 +87,15 @@
                                 [selected]="dept.institutionId==inst.adminInstitutionId?true:null">
                                 {{inst.adminInstitutionName}} - {{inst.adminInstitutionId}}
                             </option>
+
                         </select>
                     </div>
                 </td>
                 <td><button class="btn btn-primary" (click)="addDepartment(dept)"> Add</button></td>
-                <td><button class="btn btn-success" id="updatebtn" (click)="updateDepartment(dept)">Update</button></td>
-                <td><button class="btn btn-danger" id="deletebtn" (click)="deleteDepartment(dept)">Delete</button></td>
+                <td><button class="btn btn-success" id="updatebtn" (click)="updateDepartmentById(dept)">Update</button>
+                </td>
+                <td><button class="btn btn-danger" id="deletebtn" (click)="deleteDepartmentById(dept)">Delete</button>
+                </td>
             </tr>
         </tbody>
     </table>

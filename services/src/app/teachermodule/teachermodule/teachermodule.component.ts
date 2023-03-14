@@ -24,6 +24,9 @@ export class TeachermoduleComponent {
   activationScreenStatus: boolean = false;
   isVisible: boolean = true;
 
+  teacherId: any;
+  userName!: string;
+
   _backupModule = new Map();
 
   // array of course
@@ -31,10 +34,10 @@ export class TeachermoduleComponent {
   sessionData: any;
   data: any;
   navAddModule() {
-    this._route.navigate(['addModule']);
+    this._route.navigate(['addModule', { id: this.teacherId }, this.userName]);
   }
   navupdModule() {
-    this._route.navigate(['updateModule']);
+    this._route.navigate(['updateModule', { id: this.teacherId }, this.userName]);
   }
   ngOnInit(): void {
     this.activationScreenStatus = false;
@@ -43,6 +46,10 @@ export class TeachermoduleComponent {
     if (sessionStorage.getItem('authenticatedUser') === null) {
       this._route.navigate(['']);
     } else {
+      this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
+      this.userName = this._activatedRoute.snapshot.params['userName'];
+      console.log(this.userName)
+
       this.getAllModules();
       this.loadCourses();
     }
@@ -178,8 +185,7 @@ export class TeachermoduleComponent {
   }
 
   Home() {
-    this.location.back();
-    // this._route.navigate(['teacherdisplay/teacher']);
+    this._route.navigate(['teacherdisplay/teacher', { id: this.teacherId }, this.userName]);
   }
 
   getInactivateModule() {

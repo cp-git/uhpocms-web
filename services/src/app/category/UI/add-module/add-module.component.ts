@@ -23,6 +23,9 @@ export class AddModuleComponent {
   sessionData: any;
   data: any;
 
+  teacherId: any;
+  userName!: string;
+
 
 
   constructor(private _service: TeachermoduleserviceService, private _activatedRoute: ActivatedRoute, private _route: Router) {
@@ -31,7 +34,7 @@ export class AddModuleComponent {
   }
 
   Back() {
-    this._route.navigate(['teachermodule'])
+    this._route.navigate(['teachermodule', this.userName, { id: this.teacherId }])
   }
   moduleName!: string;
 
@@ -70,6 +73,9 @@ export class AddModuleComponent {
   }
 
   ngOnInit(): void {
+    this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
+    this.userName = this._activatedRoute.snapshot.params['userName'];
+    console.log(this.userName)
     this.loadCourses();
   }
 }

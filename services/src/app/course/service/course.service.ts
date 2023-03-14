@@ -20,7 +20,9 @@ export class CourseService {
   constructor(private _http: HttpClient) {
     //  this.courseUrl = `${environment.courseUrl}/course`;
     this._loginUrl = `${environment.courseUrl}/basicauth`;
-    this.courseUrl = `${environment.courseUrl}/course`;
+    // this.courseUrl = `${environment.courseUrl}/course`;
+
+    this.courseUrl = "http://localhost:8090/course/uhpocms/course"
   }
 
   _getAllCourses(): Observable<any> {
@@ -98,6 +100,12 @@ export class CourseService {
     return user;
   }
 
+
+  getAllDeactivCourses(): Observable<Course[]> {
+    return this._http.get<Course[]>(`${this.courseUrl}?name=inactive`);
+  }
+
+
   getAllDeactivateCourses(): Observable<Course[]> {
     return this._http.get<Course[]>(`${this.courseUrl}?name=inactive`);
   }
@@ -107,7 +115,7 @@ export class CourseService {
   }
 
 
-  
+
 
 
   getCourseByDepartmentId(deptid: number) {

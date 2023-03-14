@@ -4,7 +4,6 @@
 
 html,
 body {
-    background-image: url('../img/dd4.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     width: 100%;
@@ -30,7 +29,17 @@ input {
 
 
 #backbtn {
-    margin-left: 115rem;
+    margin-left: 300px;
+}
+
+.myheader {
+    border: 1px groove grey;
+    background-color: aqua;
+}
+
+.myheader h1 {
+    text-align: center;
+
 }
 
 .container {

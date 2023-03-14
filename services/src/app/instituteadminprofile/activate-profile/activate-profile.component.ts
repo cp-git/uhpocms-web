@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
 import { AdminInstitution } from '../admin-institution';
 import { InstituteAdmin } from '../institute-admin';
@@ -16,12 +16,18 @@ export class ActivateProfileComponent implements OnInit {
   adminInstitutions: AdminInstitution[] = [];
   sessionData: any;
   data: any;
+
+  userName!: string;
+  adminId: any;
   constructor(private _instituteAdminService: InstituteAdminServiceService,
-    private _router: Router, private authUserService: AuthuserserviceService) {
+    private _router: Router, private authUserService: AuthuserserviceService, private _activatedRoute: ActivatedRoute) {
 
   }
 
   ngOnInit(): void {
+    this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
+    this.userName = this._activatedRoute.snapshot.params['userName'];
+    console.log(this.userName)
     this._getAllInactiveProfiles();
     this._getAllAdminInstitutions();
   }
@@ -48,7 +54,7 @@ export class ActivateProfileComponent implements OnInit {
   }
 
   Home() {
-    this._router.navigate(['displayInstituteAdmin'])
+    this._router.navigate(['displayInstituteAdmin/display', this.userName])
   }
 
   activateProfile(profile: InstituteAdmin) {

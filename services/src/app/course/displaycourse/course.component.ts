@@ -34,6 +34,9 @@ export class CourseComponent {
   sessionData: any;
   data: any;
 
+  userName!: string;
+  adminId: any;
+
 
   constructor(
     private _service: CourseService,
@@ -53,6 +56,9 @@ export class CourseComponent {
     if (sessionStorage.getItem('authenticatedUser') === null) {
       this._route.navigate(['']);
     } else {
+      this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
+      this.userName = this._activatedRoute.snapshot.params['userName'];
+      console.log(this.userName)
       this.getAllCourses();
       this.getAllInstitutes();
       this.getAllDeactivateCourses();
@@ -97,10 +103,10 @@ export class CourseComponent {
   }
 
   updatecourse(course: Course, courseName: string) {
-    this._route.navigate(['updatecourse', courseName]);
+    this._route.navigate(['updatecourse', courseName, this.userName]);
   }
   Home() {
-    this.location.back();
+    this._route.navigate(['adminmodule/admin', this.userName])
     // if (this._activatedRoute.snapshot.params['role'] == 'admin') { this._route.navigate(['adminmodule/admin']); }
 
     // else if (this._activatedRoute.snapshot.params['role'] == 'teacher') { this._route.navigate(['teacherdisplay/teacher']); }
@@ -204,5 +210,9 @@ export class CourseComponent {
         console.log(error);
       }
     )
+  }
+
+  inactivecourse() {
+    this._route.navigate(['inactivecourse', this.userName])
   }
 }

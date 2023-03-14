@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from 'app/category/category';
 import { CategoryService } from 'app/category/category.service';
 import { Course } from 'app/course/course';
@@ -30,7 +30,10 @@ export class CreateQuizComponent {
   _categoryMap = new Map();
   _moduleMap = new Map();
   isHidden: boolean = false;
-  constructor(private _quizService: QuizService, private _route: Router, private _courseService: CourseService, private _categoryService: CategoryService, private _moduleService: ModuleService) {
+  teacherId: any;
+  userName!: string;
+  constructor(private _quizService: QuizService, private _route: Router, private _courseService: CourseService,
+    private _categoryService: CategoryService, private _moduleService: ModuleService, private _activatedRoute: ActivatedRoute) {
 
 
 
@@ -41,6 +44,10 @@ export class CreateQuizComponent {
     if (sessionStorage.getItem('authenticatedUser') === null) {
       this._route.navigate(['']);
     }
+
+    this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
+    this.userName = this._activatedRoute.snapshot.params['userName'];
+    console.log(this.userName)
 
 
     this._quizMap;
@@ -133,7 +140,7 @@ export class CreateQuizComponent {
 
 
   back() {
-    this._route.navigate(['quiz'])
+    this._route.navigate(['quiz', this.userName])
   }
 
 }

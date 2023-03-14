@@ -222,12 +222,14 @@
                         </div>
                     </div>
 
+
                     <div class="last-row">
                         <div class="form-group">
                             <!-- <button class="form-control" id="loginbtn" class="btn  login_btn">SAVE</button> -->
                             <button class="form-control" id="loginbtn" class="btn  login_btn" [disabled]="true"
                                 *ngIf="!_disablevar"
                                 (click)="saveEnrolledStudent(course.courseId,_profile.adminId); getSelectedValue()">SAVE</button>
+
 
                             <button class="form-control" id="loginbtn" class="btn  login_btn" *ngIf="_disablevar"
                                 (click)="saveEnrolledStudent(course.courseId,_profile.adminId); getSelectedValue()">SAVE</button>

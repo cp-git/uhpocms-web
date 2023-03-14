@@ -56,28 +56,89 @@ import { DisplaySchoolComponent } from './InstituteDetails/display-school/displa
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
+
 import { AllotPermissionComponent } from './allot-permission/allot-permission.component';
+
+import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.component';
+
 
 
 const routes: Routes = [
 
+  //AuthUser
+
+  { path: 'authuser', component: AuthuserComponent },
+
+  { path: 'authuser/:userName', component: AuthuserComponent },
+
+
+  //InstituteAdminProfile Routes
+
+
+  { path: 'displayInstituteAdmin/display/:userName', component: DisplayInstituteAdminComponent },
+
+  { path: 'displayInstituteAdmin/display/activate/:userName', component: ActivateProfileComponent },
+
+
+  //insert intituteadmin profile
+
+  { path: 'insertadminprofile/:userName', component: InsertinstituteadminprofileComponent },
+
+  //update instituteadminprofile
+
+
+  { path: 'updateinstituteadminprofile/:firstName/:userName', component: UpdateinstituteadminprofileComponent },
+
+
+  //view instituteadminprofile
+  { path: 'viewadminprofile/:firstName/:userName', component: ViewinstiteadminprofileComponent },
+
+
+  //course Module
+
+
+
+
   //teacherCourse
 
   { path: 'assignteacher', component: AssigncoursetoteacherComponent },
+  { path: 'assignteacher/:userName', component: AssigncoursetoteacherComponent },
+
   { path: 'inactivecourse', component: InactiveTeacherCourseComponent },
+
+  { path: 'inactivecourse/:userName', component: InactiveTeacherCourseComponent },
+
   { path: 'teachercourse', component: TeacherCourseComponent },
+
+  { path: 'teachercourse/:userName', component: TeacherCourseComponent },
   { path: 'teacher/:id', component: TeacherCourseComponent },
+
+
+
+  // { path: 'teacher/:id/:userName', component: TeacherCourseComponent },
+
+
+
+
   //category routing
   { path: 'studentcourse', component: StudentCourseComponent },
+  { path: 'studentcourse/:userName', component: StudentCourseComponent },
   { path: 'profile/:id', component: StudentCourseComponent },
 
   { path: 'addCategory', component: AddCategoryComponent },
   { path: 'addModule', component: AddModuleComponent },
+
+  { path: 'addModule/:userName', component: AddModuleComponent },
+
   { path: 'main', component: MainComponent },
   { path: 'category', component: CategoryComponent },
   { path: 'updateModule', component: UpdatemoduleComponent },
 
+
   { path: 'allotPermission', component: AllotPermissionComponent },
+
+  { path: 'updateModule/:userName', component: UpdatemoduleComponent },
+
 
 
   { path: 'authenticationlogin', component: AuthenticationloginComponent },
@@ -86,7 +147,7 @@ const routes: Routes = [
 
   { path: 'teacherdisplay/teacher/:userName', component: TeacherComponent },
 
-  { path: 'teacher', component: TeacherComponent },
+
 
   { path: 'studentdata/student/:userName', component: StudentdataComponent },
   // { path: 'studentdata', component: StudentdataComponent },
@@ -114,27 +175,7 @@ const routes: Routes = [
   { path: 'login', component: LoginauthComponent },
 
   //instituteadmin routes
-  { path: 'displayInstituteAdmin', component: DisplayInstituteAdminComponent },
-  { path: 'displayInstituteAdmin/:userName', component: DisplayInstituteAdminComponent },
 
-  { path: 'displayInstituteAdmin/activate', component: ActivateProfileComponent },
-
-
-  //insert intituteadmin profile
-  { path: 'insertadminprofile', component: InsertinstituteadminprofileComponent },
-
-  { path: 'insertadminprofile/:userName', component: InsertinstituteadminprofileComponent },
-
-  //update instituteadminprofile
-  { path: 'updateinstituteadminprofile', component: UpdateinstituteadminprofileComponent },
-
-  { path: 'updateinstituteadminprofile/:firstName', component: UpdateinstituteadminprofileComponent },
-
-
-  //view instituteadminprofile
-  { path: 'viewadminprofile/:firstName', component: ViewinstiteadminprofileComponent },
-
-  { path: 'viewadminprofile', component: ViewinstiteadminprofileComponent },
 
   //admindepartment routes
   { path: 'department', component: DepartmentComponent },
@@ -148,7 +189,7 @@ const routes: Routes = [
 
 
   //quiz routes
-  { path: 'quiz/:role', component: QuizComponent },
+  { path: 'quiz/:userName', component: QuizComponent },
 
   { path: 'department/:id', component: ViewDepartmentComponent },
 
@@ -160,19 +201,24 @@ const routes: Routes = [
   { path: 'displayinstitute/:userName', component: DisplayinstituteComponent },
 
   { path: 'displayinstitute/:adminInstitutionId', component: DisplayinstituteComponent },
-  { path: 'displayinstitute/activate', component: ActivateInstitutionComponent },
+  { path: 'displayinstitute/activate/:userName', component: ActivateInstitutionComponent },
 
   //display school urls
 
   { path: 'display', component: DisplaySchoolComponent },
 
-  { path: 'display/:id', component: DisplaySchoolComponent },
+
+  // { path: 'display/:id', component: DisplaySchoolComponent },
+
+  { path: 'display/:id/:userName', component: DisplaySchoolComponent },
+
+
 
 
   //url for deprtment course
 
   { path: 'departmentCourse', component: CoursedepartmentComponent },
-  { path: 'departmentCourse/:id', component: CoursedepartmentComponent },
+  { path: 'departmentCourse/:id/:userName', component: CoursedepartmentComponent },
 
 
   //add department for institute
@@ -186,17 +232,23 @@ const routes: Routes = [
 
   //inserting  the quiz
 
-  { path: 'createQuiz', component: CreateQuizComponent },
+  { path: 'createQuiz/:userName', component: CreateQuizComponent },
   { path: 'course/:id', component: ViewCoursesComponent },
 
 
   //update Quiz
   { path: 'updateQuiz/:title', component: UpdatequizComponent },
+
+  { path: 'updateQuiz/:title/:userName', component: UpdatequizComponent },
   // { path: 'updateQuiz', component: UpdatequizComponent },
 
   //teacherModule routes
   { path: 'teachermodule', component: TeachermoduleComponent },
-  { path: 'studentmodule/:username', component: StudentmoduleComponent },
+
+  { path: 'teachermodule/:userName', component: TeachermoduleComponent },
+
+
+  { path: 'studentmodule/:userName', component: StudentmoduleComponent },
 
   { path: 'email', component: EmailComponent },
 
@@ -204,11 +256,15 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
 
 
-  { path: 'course/userrole/:role', component: CourseComponent },
+  { path: 'course/userrole/:userName', component: CourseComponent },
 
 
   { path: 'addcourse', component: AddcourseComponent },
-  { path: 'updatecourse/:courseName', component: UpdatecourseComponent },
+  { path: 'updatecourse/:courseName/:userName', component: UpdatecourseComponent },
+
+  { path: 'inactivecourse/:userName', component: InactivecourseComponent },
+
+  { path: 'updatecourse/:userName', component: UpdatecourseComponent },
   //announcement router
   {
     path: 'announcement/:role', component: AnnouncementComponent, children: [

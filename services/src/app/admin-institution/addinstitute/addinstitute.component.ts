@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 import { AdminInstitution } from '../admininstitution';
@@ -12,7 +12,8 @@ import { AdmininstitutionService } from '../service/admininstitution.service';
 })
 export class AddinstituteComponent {
   fileName: string;
-
+  // _disablevar: boolean = false;
+  buttonDisabled = true;
   // Institution array
   admininstitutions: AdminInstitution[] = [];
   backupInst: AdminInstitution[] = [];
@@ -22,14 +23,36 @@ export class AddinstituteComponent {
   hideId: boolean = false;
   admininstitution: AdminInstitution;
 
-  constructor(private _institutionService: AdmininstitutionService, private _route: Router) {
+  userName!: string;
+  adminId: any;
+
+
+  constructor(private _institutionService: AdmininstitutionService, private _route: Router, private _activatedRoute: ActivatedRoute) {
     this.admininstitution = new AdminInstitution();
     this.fileName = '';
   }
 
+  ngOnInit(): void {
+
+    this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
+    this.userName = this._activatedRoute.snapshot.params['userName'];
+    console.log(this.userName)
+
+
+  }
+
+
+
+
+
   onFileSelected(event: any) {
     this.fileName = event.target.files[0].name;
+    if (this.fileName != '') {
+      //this.disablefunc();
+    }
   }
+
+
 
 
 
@@ -38,6 +61,7 @@ export class AddinstituteComponent {
 
   // for inserting new Institution in table
   addInstitution(inst: AdminInstitution) {
+
     if (this.backupInst.findIndex((data) => data.adminInstitutionName === inst.adminInstitutionName) >= 0) {
       alert('Institute name already exist. please enter another.');
     } else {
@@ -77,8 +101,25 @@ export class AddinstituteComponent {
       );
     }
   }
+
+
+  checkFields() {
+    // Check if any fields are empty
+    if (!this.admininstitution.adminInstitutionName || !this.admininstitution.adminInstitutionDescription || !this.admininstitution.adminInstitutionPicture) {
+      // If any field is empty, disable the button
+      this.buttonDisabled = true;
+    } else {
+      // If all fields have a value, enable the button
+      this.buttonDisabled = false;
+    }
+  }
+
+
+
+
+
   Back() {
-    this._route.navigate(['displayinstitute']);
+    this._route.navigate(['displayinstitute', this.userName]);
   }
 
 }

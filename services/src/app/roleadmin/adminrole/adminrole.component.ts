@@ -86,7 +86,7 @@ export class AdminroleComponent {
       this._service.updateadminlist(this.admin.roleName, this.admin).subscribe(
         (data) => {
           // console.log(data)
-          alert('Data Updated...');
+          alert('Role Successfully Updated...');
           this.ngOnInit();
         },
         (error) => console.log(error)

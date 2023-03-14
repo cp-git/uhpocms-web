@@ -101,7 +101,7 @@ export class DisplayInstituteAdminComponent {
   //update a data in database
   _updateInstituteAdmin(firstName: string) {
 
-    this._route.navigate(['/updateinstituteadminprofile', firstName]);
+    this._route.navigate(['/updateinstituteadminprofile', firstName, this.userName]);
   }
   // this._instituteAdminService._getInstituteAdminList(firstName).subscribe(
   //   (data) => {
@@ -124,7 +124,7 @@ export class DisplayInstituteAdminComponent {
 
 
   ViewInstituteadmin(firstName: String) {
-    this._route.navigate(['viewadminprofile', firstName]);
+    this._route.navigate(['viewadminprofile', firstName, this.userName]);
 
   }
 
@@ -148,6 +148,6 @@ export class DisplayInstituteAdminComponent {
   }
 
   redirectToActivateProfile() {
-    this._route.navigate(['displayInstituteAdmin/activate', this.userName]);
+    this._route.navigate(['displayInstituteAdmin/display/activate', this.userName]);
   }
 }

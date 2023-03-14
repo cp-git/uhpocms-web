@@ -10,6 +10,7 @@ import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 import { InstituteAdminServiceService } from 'app/instituteadminprofile/institute-admin-service.service';
 import { AssigncourseteacherService } from '../assigncourseteacher.service';
 import { Assignteacher } from '../assignteacher';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-assigncoursetoteacher',
@@ -38,6 +39,9 @@ export class AssigncoursetoteacherComponent {
 
   assignTeacher = new Assignteacher();
   assignTeacherArr: Assignteacher[] = [];
+
+  userName!: string;
+  adminId: any;
 
 
   end: any;
@@ -69,9 +73,13 @@ export class AssigncoursetoteacherComponent {
     console.log(this.selected);
   }
 
-  constructor(private _institutionService: AdmininstitutionService, private _deptService: DepartmentService, private courseService: CourseService, private profileService: InstituteAdminServiceService, private assignTeacherService: AssigncourseteacherService, private location: Location) { }
+  constructor(private _institutionService: AdmininstitutionService, private _deptService: DepartmentService, private courseService: CourseService, private profileService: InstituteAdminServiceService, private assignTeacherService: AssigncourseteacherService,
+    private location: Location, private _activatedRoute: ActivatedRoute, private _route: Router) { }
 
   ngOnInit() {
+    this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
+    this.userName = this._activatedRoute.snapshot.params['userName'];
+    console.log(this.userName)
     this.getAllInstitution();
     console.log(this._profile.institutionId);
   }
@@ -243,7 +251,7 @@ export class AssigncoursetoteacherComponent {
 
 
   back() {
-    this.location.back();
+    this._route.navigate(['adminmodule/admin', this.userName])
 
   }
 }

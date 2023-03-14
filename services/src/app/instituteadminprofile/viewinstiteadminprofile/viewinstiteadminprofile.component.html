@@ -2,18 +2,30 @@
 <table class="table table-striped">
     <tr>
         <th>Role Id</th>
-        <th>Role Active</th>
-        <th>Role Name</th>
-        <th>Role description</th>
-        <th>createdBy</th>
-        <th>createdOn</th>
-        <th>modifiedBy</th>
-        <th>modifiedBy</th>
+        <th>User Role</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Address1</th>
+        <th>Address2</th>
+        <th>City</th>
+        <th>Department</th>
+        <th>Email</th>
+        <th>Gender</th>
+        <th>State</th>
+        <th>ZipCode</th>
+        <th>Dob</th>
+        <th>institutionId</th>
+        <th>Phone</th>
+        <th>Pics</th>
+        <th>Active</th>
 
     </tr>
     <tr>
         <!--<li>{{emp | json}}</li>-->
-        <td>{{_instituteadminprofile.activeUser}}</td>
+        <td>{{_instituteadminprofile.userId}}</td>
+        <td>{{_instituteadminprofile.userRole}}</td>
+        <td>{{_instituteadminprofile.firstName}}</td>
+        <td>{{_instituteadminprofile.lastName}}</td>
         <td>{{_instituteadminprofile.adminAddress1}}</td>
         <td>{{_instituteadminprofile.adminAddress2}}</td>
         <td>{{_instituteadminprofile.adminCity}}</td>
@@ -23,13 +35,12 @@
         <td>{{_instituteadminprofile.adminState}}</td>
         <td>{{_instituteadminprofile.adminZip}}</td>
         <td>{{_instituteadminprofile.dob}}</td>
-        <td>{{_instituteadminprofile.firstName}}</td>
-        <td>{{_instituteadminprofile.lastName}}</td>
         <td>{{_instituteadminprofile.institutionId}}</td>
         <td>{{_instituteadminprofile.mobilePhone}}</td>
         <td>{{_instituteadminprofile.profilePics}}</td>
-        <td>{{_instituteadminprofile.userId}}</td>
-        <td>{{_instituteadminprofile.userRole}}</td>
+        <td>{{_instituteadminprofile.activeUser}}</td>
+
+
 
 
 

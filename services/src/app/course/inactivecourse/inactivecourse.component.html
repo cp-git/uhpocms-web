@@ -1,27 +1,28 @@
 <div class="container-fluid">
     <div class="myheader">
-        <h1>Enrolled Courses</h1>
+        <h1 style="color: black">InActive Courses</h1>
     </div>
+
 </div>
+
 <div class="container">
-
-
-
-
 
     <table class="table" border="1">
         <thead>
             <tr>
+
                 <th>Name</th>
                 <th>Description</th>
                 <th>Course Code</th>
                 <th>Course Type</th>
                 <th>Passing Score</th>
-
+                <th>Institute Name</th>
+                <th>Department Name</th>
+                <th>Activate</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let course of courses">
+            <tr *ngFor="let course of inActiveCourses">
 
                 <td>
                     <div class="form-group">
@@ -55,7 +56,7 @@
                     </div>
                 </td>
 
-                <!-- <td>
+                <td>
                     <div class="form-group">
 
                         <ng-container *ngFor="let inst of institutions">
@@ -64,13 +65,35 @@
                         </ng-container>
 
                     </div>
-                </td> -->
+                </td>
+                <td>
+                    <div class="form-group">
+                        <ng-container *ngFor="let courseDepts of courseDepartments">
+                            <ng-container *ngFor="let depts of adminDepartments">
+                                <input
+                                    *ngIf="((course.courseId==courseDepts.courseId)&&(depts.id==courseDepts.departmentId))?true:null"
+                                    class="form-control" type="text" value="{{depts.name}}" readonly />
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                </td>
+
+
+
+
+
+                <td>
+                    <div class="form-group">
+                        <button class="form-control btn-success" (click)="activateCourse(course.courseId)"
+                            title="activate Course">Activate
+                        </button>
+                    </div>
+                </td>
             </tr>
 
         </tbody>
     </table>
-    <!-- {{courses|json}} -->
 
-    <button class="btn btn-primary" (click)="Back()">Back</button>
+    <button class="btn btn-primary" (click)="back()">Back</button>
 
 </div>
