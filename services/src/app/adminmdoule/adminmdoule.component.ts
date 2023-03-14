@@ -50,7 +50,7 @@ export class AdminmdouleComponent {
   }
 
   RedirectTOLogin() {
-    this._route.navigate(['authenticationlogin'])
+    this._route.navigate([''])
   }
 
 

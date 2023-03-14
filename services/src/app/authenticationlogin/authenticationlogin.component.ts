@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'app/authlogin/auth.service';
 import { Authuser } from 'app/authuser/authuser';
 import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
@@ -15,13 +16,23 @@ export class AuthenticationloginComponent {
 
   authUser = new Authuser();
 
+
+
+  username!: string;
+  password!: string;
+  errorMessage = 'Invalid Credentials';
+  successMessage!: string;
+  invalidLogin = false;
+  loginSuccess = false;
+
   _instituteAdminArray: InstituteAdmin[] = [];
   constructor(
     private _auth: AuthuserserviceService,
     private _route: Router,
     private _instituteadminprofile: InstituteAdminServiceService,
     private _activatedRoute: ActivatedRoute,
-    private _authenticationService: AuthenticationserviceService
+    private _authenticationService: AuthenticationserviceService,
+    private _authService: AuthService
 
   ) {
     this._getAllList();
@@ -75,6 +86,7 @@ export class AuthenticationloginComponent {
     //   (error) => console.log(error)
     // );
 
+
     this._auth.loginDataAuthUser(this.authUser).subscribe(
       (data) => {
         const userName = data.authUserFirstName + " " + data.authUserLastName;
@@ -94,12 +106,15 @@ export class AuthenticationloginComponent {
                 alert(this._instituteAdminArray[i].userRole);
 
                 if (this._instituteAdminArray[i].userRole == 'admin') {
+                  this.authorizeuser();
                   this._route.navigate(['adminmodule/admin', userName, { id: this._instituteAdminArray[i].adminId }]);
                 }
                 else if (this._instituteAdminArray[i].userRole == 'teacher') {
+                  this.authorizeuser();
                   this._route.navigate(['teacherdisplay/teacher', userName, { id: this._instituteAdminArray[i].adminId }]);
                 }
                 else if (this._instituteAdminArray[i].userRole == 'student') {
+                  this.authorizeuser();
                   this._route.navigate(['studentdata/student', userName, { id: this._instituteAdminArray[i].adminId }]);
                 }
 
@@ -149,6 +164,28 @@ export class AuthenticationloginComponent {
 
   back() {
     this._route.navigate(['home']);
+  }
+
+
+  authorizeuser() {
+
+    this._authService
+      .authenticationService(this.username, this.password)
+      .subscribe(
+        (result) => {
+          console.log("in admin authorization..")
+          this.invalidLogin = false;
+          this.loginSuccess = true;
+          this.successMessage = 'Login Successful.';
+          // this._route.navigate(['authenticationlogin']);
+        },
+        () => {
+          this.invalidLogin = true;
+          this.loginSuccess = false;
+        }
+      );
+
+
   }
 
 }

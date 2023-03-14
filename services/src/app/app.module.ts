@@ -16,7 +16,7 @@ import { LoginComponentComponent } from './Login/login-component/login-component
 import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-institute-admin/display-institute-admin.component';
 import { DepartmentComponent } from './admindepartment/department/department.component';
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
-import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
+
 import { QuestionComponent } from './teacherquestion/question/question.component';
 import { EmailComponent } from './email/email/email.component';
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
@@ -75,7 +75,7 @@ import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.
     DisplayInstituteAdminComponent,
     DepartmentComponent,
     AdminroleComponent,
-    LoginauthComponent,
+
     TeachermoduleComponent,
     EmailComponent,
     QuestionComponent,

@@ -2,7 +2,6 @@ import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { DepartmentComponent } from './admindepartment/department/department.component';
-import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
 import { EmailComponent } from './email/email/email.component';
 import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-institute-admin/display-institute-admin.component';
@@ -133,7 +132,7 @@ const routes: Routes = [
   { path: 'updateModule/:userName', component: UpdatemoduleComponent },
 
 
-  { path: 'authenticationlogin', component: AuthenticationloginComponent },
+  { path: '', component: AuthenticationloginComponent },
 
   { path: 'adminmodule/admin/:userName', component: AdminmdouleComponent },
 
@@ -164,7 +163,7 @@ const routes: Routes = [
   { path: 'question', component: QuestionComponent },
   //login route
   { path: 'demo', component: LoginComponentComponent },
-  { path: 'login', component: LoginauthComponent },
+
 
   //instituteadmin routes
 
