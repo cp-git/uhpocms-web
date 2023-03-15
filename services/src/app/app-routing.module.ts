@@ -57,7 +57,7 @@ import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/c
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
 
-import { AllotPermissionComponent } from './allot-permission/allot-permission.component';
+
 
 import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.component';
 
@@ -135,7 +135,7 @@ const routes: Routes = [
   { path: 'updateModule', component: UpdatemoduleComponent },
 
 
-  { path: 'allotPermission', component: AllotPermissionComponent },
+
 
   { path: 'updateModule/:userName', component: UpdatemoduleComponent },
 
