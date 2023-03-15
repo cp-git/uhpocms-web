@@ -60,8 +60,12 @@ import { DisplaySchoolComponent } from './InstituteDetails/display-school/displa
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
+
+
+
 import { CreateinstituteadminprofileComponent } from './instituteadminprofile/createinstituteadminprofile/createinstituteadminprofile.component';
 import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.component';
+
 
 
 
@@ -118,8 +122,12 @@ import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.
     AddDepartmentsComponent,
     StudentmoduleComponent,
     AssigncoursetoteacherComponent,
+
+
+
     CreateinstituteadminprofileComponent,
     InactivecourseComponent,
+
   ],
 
   imports: [

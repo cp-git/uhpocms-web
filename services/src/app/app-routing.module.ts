@@ -56,7 +56,11 @@ import { DisplaySchoolComponent } from './InstituteDetails/display-school/displa
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
+
+
+
 import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.component';
+
 
 
 const routes: Routes = [
@@ -102,7 +106,7 @@ const routes: Routes = [
 
   { path: 'inactivecourse', component: InactiveTeacherCourseComponent },
 
-  { path: 'inactivecourse/:userName', component: InactiveTeacherCourseComponent },
+  { path: 'inactivecourse/:id/:userName', component: InactiveTeacherCourseComponent },
 
   { path: 'teachercourse', component: TeacherCourseComponent },
 
@@ -130,7 +134,11 @@ const routes: Routes = [
   { path: 'category', component: CategoryComponent },
   { path: 'updateModule', component: UpdatemoduleComponent },
 
+
+
+
   { path: 'updateModule/:userName', component: UpdatemoduleComponent },
+
 
 
   { path: 'authenticationlogin', component: AuthenticationloginComponent },
@@ -248,7 +256,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
 
 
-  { path: 'course/userrole/:userName', component: CourseComponent },
+  { path: 'course/userrole/:userName/:id', component: CourseComponent },
 
 
   { path: 'addcourse', component: AddcourseComponent },

@@ -48,19 +48,11 @@ export class TeacherCourseComponent {
     this.teacherId = this.activatedRoute.snapshot.paramMap.get('id');
     this.loadAdminInstitutions();
     this.loadAdminDepartments();
-
-
-
-  ngOnInit(): void {
-
-    this.teacherId = this.activatedRoute.snapshot.paramMap.get('id');
-    this.userName = this.activatedRoute.snapshot.params['userName'];
-    console.log(this.userName)
-
-    this.getCoursesByProfileId(this.teacherId);
-
-
   }
+
+
+
+
   RedirectToCourseSyllabus() {
     this._route.navigate(['coursesyllabus']);
   }
@@ -94,6 +86,12 @@ export class TeacherCourseComponent {
     if (sessionStorage.getItem('authenticatedUser') === null) {
       this._route.navigate(['']);
     } else {
+
+      this.teacherId = this.activatedRoute.snapshot.paramMap.get('id');
+      this.userName = this.activatedRoute.snapshot.params['userName'];
+      console.log(this.userName)
+
+      this.getCoursesByProfileId(this.teacherId);
 
       this.loadCourseDepartment();
     }

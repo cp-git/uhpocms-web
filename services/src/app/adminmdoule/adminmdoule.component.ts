@@ -41,7 +41,7 @@ export class AdminmdouleComponent {
 
   RedirectToCourse() {
 
-    this._route.navigate(['course/userrole/', this.userName]);
+    this._route.navigate(['course/userrole/', this.adminId, this.userName]);
 
   }
 

@@ -38,10 +38,10 @@ export class UpdateinstituteadminprofileComponent {
 
 
   updateadmin() {
-    this._service._updateInstituteAdminList(this.firstName, this._instituteAdmin).subscribe(data => {
+    this._service.saveOrUpdateProfile(this._instituteAdmin.userId, this._instituteAdmin).subscribe(data => {
       //console.log(data)
       console.log(this._instituteAdmin)
-      this._route.navigate(['/displayInstituteAdmin'])
+      this._route.navigate(['/displayInstituteAdmin/display', this.userName])
 
     }, error => console.log(error));
   }
