@@ -78,7 +78,7 @@ export class InsertinstituteadminprofileComponent {
         } else {
           alert('Profile saved successfully. NOTE - Profile is not activated!');
         }
-        this._route.navigate(['displayInstituteAdmin']);
+        this._route.navigate(['displayInstituteAdmin/display', this.userName]);
       },
       error => {
         alert("Failed to add profile");

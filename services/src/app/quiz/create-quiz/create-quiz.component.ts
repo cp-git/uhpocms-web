@@ -123,7 +123,7 @@ export class CreateQuizComponent {
         this._quizArray.push(this._quiz)
         this._quizMap.set(this._quiz.quizId, (Object.assign({}, this._quiz)));
         alert("Quiz Added Successfully");
-        this._route.navigate(['quiz'])
+        this._route.navigate(['quiz', this.userName])
       }
       ,
       error => {

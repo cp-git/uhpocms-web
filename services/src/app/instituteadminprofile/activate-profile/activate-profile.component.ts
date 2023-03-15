@@ -64,6 +64,7 @@ export class ActivateProfileComponent implements OnInit {
           this.authUserService.activateAuthUserById(profile.userId).subscribe(
             response => {
               alert('Profile activated successfully');
+
             },
             error => {
               alert("Failed to add profile");

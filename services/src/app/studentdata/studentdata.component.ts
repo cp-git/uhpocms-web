@@ -39,7 +39,7 @@ export class StudentdataComponent {
 
 
   RedirectToStudentModule() {
-    this._route.navigate(['studentmodule', this.userName, { id: this.profileId }]);
+    this._route.navigate(['studentmodule', { id: this.profileId }]);
   }
 
   redirectToNotification() {

@@ -248,7 +248,7 @@ const routes: Routes = [
   { path: 'teachermodule/:userName', component: TeachermoduleComponent },
 
 
-  { path: 'studentmodule/:userName', component: StudentmoduleComponent },
+  { path: 'studentmodule', component: StudentmoduleComponent },
 
   { path: 'email', component: EmailComponent },
 
@@ -256,7 +256,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
 
 
-  { path: 'course/userrole/:userName/:id', component: CourseComponent },
+  { path: 'course/userrole/:userName', component: CourseComponent },
 
 
   { path: 'addcourse', component: AddcourseComponent },

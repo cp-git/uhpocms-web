@@ -22,7 +22,7 @@ export class TeacherComponent {
   }
 
   RedirectToTeacherCourse() {
-    this._route.navigate(['teachercourse', { id: this.teacherId }, this.userName]);
+    this._route.navigate(['teachercourse', { id: this.teacherId }]);
   }
 
   RedirectToModule() {
