@@ -60,21 +60,15 @@ import { DisplaySchoolComponent } from './InstituteDetails/display-school/displa
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
-
-
-
 import { CreateinstituteadminprofileComponent } from './instituteadminprofile/createinstituteadminprofile/createinstituteadminprofile.component';
 import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.component';
+
 import { ReusableModule } from './reusable/module/reusable.module';
 import { AdminRoleModule } from './admin-role/admin-role.module';
-import { ViewOneComponent } from './reusable/component/view-one/view-one.component';
 import { DepartmentModule } from './department/department.module';
-import { AddUpdateComponent } from './reusable/component/add-update/add-update.component';
-
-
-
-
-
+import { ProfilesModule } from './profiles/profiles.module';
+import { AuthUserColumn } from './auth-user/auth-user-column';
+import { AuthUserModule } from './auth-user/auth-user.module';
 
 @NgModule({
   declarations: [
@@ -134,6 +128,8 @@ import { AddUpdateComponent } from './reusable/component/add-update/add-update.c
   ],
 
   imports: [
+    AuthUserModule,
+    ProfilesModule,
     DepartmentModule,
     ReusableModule,
     AdminRoleModule,

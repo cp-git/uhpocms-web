@@ -61,6 +61,8 @@ import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assignco
 
 import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.component';
 import { AdminRoleComponent } from './admin-role/components/admin-role/admin-role.component';
+import { ProfileComponent } from './profiles/components/profile/profile.component';
+import { AuthUserComponent } from './auth-user/components/auth-user/auth-user.component';
 
 
 
@@ -167,7 +169,7 @@ const routes: Routes = [
   { path: 'adminrole/activate/:userName', component: ActivateRoleComponent },
 
   //auth user routes
-  { path: 'authuser', component: AuthuserComponent },
+  // { path: 'authuser', component: AuthuserComponent },
 
   //question routes
   { path: 'question', component: QuestionComponent },
@@ -278,7 +280,10 @@ const routes: Routes = [
     ]
   },
 
-  { path: 'AdminRole', component: AdminRoleComponent }
+  { path: 'AdminRole', component: AdminRoleComponent },
+  { path: 'Profile', component: ProfileComponent },
+  { path: 'AuthUser', component: AuthUserComponent }
+
 
 ];
 
