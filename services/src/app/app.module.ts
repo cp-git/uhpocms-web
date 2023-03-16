@@ -65,6 +65,11 @@ import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assignco
 
 import { CreateinstituteadminprofileComponent } from './instituteadminprofile/createinstituteadminprofile/createinstituteadminprofile.component';
 import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.component';
+import { ReusableModule } from './reusable/module/reusable.module';
+import { AdminRoleModule } from './admin-role/admin-role.module';
+import { ViewOneComponent } from './reusable/component/view-one/view-one.component';
+import { DepartmentModule } from './department/department.module';
+import { AddUpdateComponent } from './reusable/component/add-update/add-update.component';
 
 
 
@@ -123,14 +128,15 @@ import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.
     StudentmoduleComponent,
     AssigncoursetoteacherComponent,
 
-
-
     CreateinstituteadminprofileComponent,
     InactivecourseComponent,
 
   ],
 
   imports: [
+    DepartmentModule,
+    ReusableModule,
+    AdminRoleModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

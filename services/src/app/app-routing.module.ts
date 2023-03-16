@@ -60,6 +60,7 @@ import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assignco
 
 
 import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.component';
+import { AdminRoleComponent } from './admin-role/components/admin-role/admin-role.component';
 
 
 
@@ -275,8 +276,9 @@ const routes: Routes = [
         path: 'view/:id', component: CreateAnnouncementComponent
       }
     ]
-  }
+  },
 
+  { path: 'AdminRole', component: AdminRoleComponent }
 
 ];
 

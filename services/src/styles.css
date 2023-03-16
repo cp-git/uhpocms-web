@@ -10,3 +10,11 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+button {
+    margin: 2px;
+}
+
+.container {
+    margin-top: 10px;
+}
