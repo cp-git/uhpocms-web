@@ -38,7 +38,7 @@ export class DepartmentComponent implements OnInit {
   sessionData: any;
   data: any;
 
-  emptyDepartment: Department;  // empty admin role
+  emptyDepartment: Department;  // empty department
   currentData!: Department;  // for update and view, to show existing data
 
 
@@ -61,12 +61,9 @@ export class DepartmentComponent implements OnInit {
 
 
   ngOnInit(): void {
-    //  this.service.get
+
     this.getAllDepartments();
     this.getInactiveDepartment();
-
-
-
   }
 
   // back button functionality
@@ -89,7 +86,7 @@ export class DepartmentComponent implements OnInit {
   // function will call when child view button is clicked 
   onChildViewClick(objectReceived: any): void {
 
-    // hiding view of all column and displaying all admin roles screen 
+    // hiding view of all column and displaying all departments screen 
     this.viewOne = true;
     this.viewAll = false;
     this.currentData = objectReceived;    // assingning data to current data for child component
@@ -99,7 +96,7 @@ export class DepartmentComponent implements OnInit {
   // function will call when child update button is clicked 
   onChildUpdateClick(objectReceived: Department): void {
 
-    // hiding update screen and displaying all admin roles screen 
+    // hiding update screen and displaying all departments screen 
     this.viewAll = false;
     this.viewUpdate = true;
 
@@ -153,7 +150,7 @@ export class DepartmentComponent implements OnInit {
   // Funcation calls specific to this module
   ///////////////////////////////////////////
 
-  // For updating admin role
+  // For updating department
   private updateDepartment(currentData: Department) {
     // calling service for updating data
     this.service.updateDepartment(currentData.id, currentData).subscribe(
@@ -222,7 +219,7 @@ export class DepartmentComponent implements OnInit {
     );
   }
 
-  // For getting all inactive admin roles
+  // For getting all inactive departments
   private getInactiveDepartment() {
 
     // calling service to get all inactive record
@@ -238,13 +235,13 @@ export class DepartmentComponent implements OnInit {
   }
 
 
-  // For activating admin role using role id
+  // For activating department using role id
   private activateDepartment(roleId: number) {
 
-    // calling service to activating admin role
+    // calling service to activating department
     this.service.activateDepartment(roleId).subscribe(
       response => {
-        alert("Activated admin role");
+        alert("Activated department");
         this.ngOnInit();
       },
       error => {

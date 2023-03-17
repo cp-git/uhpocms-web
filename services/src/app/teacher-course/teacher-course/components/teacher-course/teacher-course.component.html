@@ -66,44 +66,39 @@
 
 <ng-template #viewall>
     <app-view-all *ngIf="allData.length>0" [data]="{moduleData:this.allData , columnNames:this.columnNames}"
-        [dropdown1]="{optionsArray1:this.adminInstitutions ,dropdownColumnId1:dropdownColumnId1 , dropdownColumnName1:dropdownColumnName1}"
-        [idsColumnName]="{columnName:primaryIdColumnName}" [isViewAllScreen]="true"
-        (viewClicked)="onChildViewClick($event)" (updateClicked)="onChildUpdateClick($event)"
+        [dropdown1]="{optionsArray1:this.adminInstitutions ,dropdownColumnId1:dropdownColumnId1 ,
+            dropdownColumnName1:dropdownColumnName1}" [idsColumnName]="{columnName:primaryIdColumnName}"
+        [isViewAllScreen]="true" (viewClicked)="onChildViewClick($event)" (updateClicked)="onChildUpdateClick($event)"
         (deleteClicked)="onChildDeleteClick($event)">
     </app-view-all>
     <div *ngIf="allData.length==0">
-        <h3>No Departments</h3>
+        <h3>No active Courses</h3>
     </div>
 </ng-template>
 
 <ng-template #viewactivate>
     <app-view-all *ngIf="allInActiveData.length>0"
-        [dropdown1]="{optionsArray1:this.adminInstitutions ,dropdownColumnId1:dropdownColumnId1 , dropdownColumnName1:dropdownColumnName1}"
-        [data]="{moduleData:this.allInActiveData , columnNames:this.columnNames}"
-        [idsColumnName]="{columnName:primaryIdColumnName}" [isActivateScreen]="true"
-        (activateClicked)="onChildActivateClick($event)">
+        [data]="{moduleData:this.allInActiveData , columnNames:this.columnNames}" [dropdown1]="{optionsArray1:this.adminInstitutions ,dropdownColumnId1:dropdownColumnId1 ,
+        dropdownColumnName1:dropdownColumnName1}" [idsColumnName]="{columnName:primaryIdColumnName}"
+        [isActivateScreen]="true" (activateClicked)="onChildActivateClick($event)">
     </app-view-all>
     <div *ngIf="allInActiveData.length==0">
-        <h3>No Inactive Departments</h3>
+        <h3>No Inactive courses</h3>
     </div>
 </ng-template>
 
 
 <ng-template #viewadd>
-
-    <app-add-update [data]="{currentData:emptyDepartment , columnNames:columnNames}"
-        [dropdown1]="{optionsArray1:this.adminInstitutions ,dropdownColumnId1:dropdownColumnId1 , dropdownColumnName1:dropdownColumnName1}"
-        (submitClicked)="onAddDepartmentSubmit($event)"></app-add-update>
+    <app-add-update [data]="{currentData:emptyCourse, columnNames:columnNames}" [dropdown1]="{optionsArray1:this.adminInstitutions ,dropdownColumnId1:dropdownColumnId1 ,
+        dropdownColumnName1:dropdownColumnName1}" (submitClicked)="onAddCourseSubmit($event)"></app-add-update>
 </ng-template>
 
 <ng-template #viewone>
-
-    <app-view-one [data]="{currentData:currentData , columnNames:allColumnNames}"
-        [dropdown1]="{optionsArray1:this.adminInstitutions ,dropdownColumnId1:dropdownColumnId1 , dropdownColumnName1:dropdownColumnName1}"></app-view-one>
+    <app-view-one [data]="{currentData:currentData , columnNames:allColumnNames}" [dropdown1]="{optionsArray1:this.adminInstitutions ,dropdownColumnId1:dropdownColumnId1 ,
+        dropdownColumnName1:dropdownColumnName1}"></app-view-one>
 </ng-template>
 
 <ng-template #viewupdate>
-    <app-add-update [data]="{currentData:currentData , columnNames:columnNames}"
-        [dropdown1]="{optionsArray1:this.adminInstitutions ,dropdownColumnId1:dropdownColumnId1 , dropdownColumnName1:dropdownColumnName1}"
-        (submitClicked)="onUpdateDepartmentSubmit($event)"></app-add-update>
+    <app-add-update [data]="{currentData:currentData , columnNames:columnNames}" [dropdown1]="{optionsArray1:this.adminInstitutions ,dropdownColumnId1:dropdownColumnId1 ,
+        dropdownColumnName1:dropdownColumnName1}" (submitClicked)="onUpdateCourseSubmit($event)"></app-add-update>
 </ng-template>

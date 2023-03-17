@@ -12,3 +12,11 @@ table th {
     color: white;
     border: 1px groove black;
 }
+
+table td {
+    text-align: center;
+}
+
+.btn {
+    border-radius: 15px;
+}

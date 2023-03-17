@@ -69,6 +69,7 @@ import { DepartmentModule } from './department/department.module';
 // import { ProfilesModule } from './profiles/profiles.module';
 import { AuthUserModule } from './auth-user/auth-user.module';
 import { QuestionModule } from './question/question.module';
+import { TeacherCourseModule } from './teacher-course/teacher-course/teacher-course.module';
 
 @NgModule({
   declarations: [
@@ -144,6 +145,7 @@ import { QuestionModule } from './question/question.module';
     BrowserModule,
     NgSelectModule,
     CommonModule,
+    TeacherCourseModule
 
   ],
 

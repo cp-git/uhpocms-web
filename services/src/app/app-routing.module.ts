@@ -49,7 +49,7 @@ import { EnrollstudentComponent } from './enrollstudent/enrollstudent.component'
 import { StudentmoduleComponent } from './studentdata/component/studentmodule/studentmodule.component';
 
 import { StudentCourseComponent } from './student/student-course/student-course.component';
-import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';
+// import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';
 import { InactiveTeacherCourseComponent } from './assignedCourseToTeacher/inactive-teacher-course/inactive-teacher-course.component';
 
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
@@ -65,6 +65,7 @@ import { AdminRoleComponent } from './admin-role/components/admin-role/admin-rol
 import { AuthUserComponent } from './auth-user/components/auth-user/auth-user.component';
 import { QuestionComponent } from './question/components/question/question.component';
 import { DepartmentComponent } from './department/components/department/department.component';
+import { TeacherCourseComponent } from './teacher-course/teacher-course/components/teacher-course/teacher-course.component';
 
 
 
@@ -286,7 +287,8 @@ const routes: Routes = [
   // { path: 'Profile', component: ProfileComponent },
   { path: 'AuthUser', component: AuthUserComponent },
   { path: 'Question', component: QuestionComponent },
-  { path: 'Department', component: DepartmentComponent }
+  { path: 'Department', component: DepartmentComponent },
+  { path: 'Course', component: TeacherCourseComponent }
 
 
 ];
