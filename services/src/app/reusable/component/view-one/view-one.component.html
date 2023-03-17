@@ -31,7 +31,7 @@
                             required="" disabled></textarea>
                     </ng-container>
 
-                    <ng-container *ngSwitchCase="'dropdown'">
+                    <ng-container *ngSwitchCase="'dropdown1'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
                         <select name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
@@ -39,6 +39,17 @@
                             <option value="undefined">Select</option>
                             <option *ngFor="let option of optionsArray1" [value]="option[dropdownColumnId1]">
                                 {{ option[dropdownColumnName1] }}
+                            </option>
+                        </select>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'dropdown2'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <select name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
+                            required="" disabled>
+                            <option value="undefined">Select</option>
+                            <option *ngFor="let option of optionsArray2" [value]="option[dropdownColumnId2]">
+                                {{ option[dropdownColumnName2] }}
                             </option>
                         </select>
                     </ng-container>

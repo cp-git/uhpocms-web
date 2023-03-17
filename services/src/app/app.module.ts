@@ -68,7 +68,7 @@ import { AdminRoleModule } from './admin-role/admin-role.module';
 import { DepartmentModule } from './department/department.module';
 // import { ProfilesModule } from './profiles/profiles.module';
 import { AuthUserModule } from './auth-user/auth-user.module';
-// import { QuestionModule } from './question/question.module';
+import { QuestionModule } from './question/question.module';
 
 @NgModule({
   declarations: [
@@ -128,7 +128,7 @@ import { AuthUserModule } from './auth-user/auth-user.module';
   ],
 
   imports: [
-    // QuestionModule,
+    QuestionModule,
     AuthUserModule,
     // ProfilesModule,
     DepartmentModule,

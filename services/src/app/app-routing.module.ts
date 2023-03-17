@@ -63,7 +63,7 @@ import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.
 import { AdminRoleComponent } from './admin-role/components/admin-role/admin-role.component';
 // import { ProfileComponent } from './profiles/components/profile/profile.component';
 import { AuthUserComponent } from './auth-user/components/auth-user/auth-user.component';
-// import { QuestionComponent } from './question/components/question/question.component';
+import { QuestionComponent } from './question/components/question/question.component';
 
 
 
@@ -284,7 +284,7 @@ const routes: Routes = [
   { path: 'AdminRole', component: AdminRoleComponent },
   // { path: 'Profile', component: ProfileComponent },
   { path: 'AuthUser', component: AuthUserComponent },
-  // { path: 'Question', component: QuestionComponent }
+  { path: 'Question', component: QuestionComponent }
 
 
 ];
