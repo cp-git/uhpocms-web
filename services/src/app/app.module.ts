@@ -25,17 +25,15 @@ import { HomeComponent } from './home/home.component';
 import { AddcourseComponent } from './course/addcourse/addcourse.component';
 import { UpdatecourseComponent } from './course/updatecourse/updatecourse.component';
 import { CourseComponent } from './course/displaycourse/course.component';
-import { CategoryComponent } from './category/UI/category/category.component';
-import { MainComponent } from './category/UI/main/main.component';
-import { AddModuleComponent } from './category/UI/add-module/add-module.component';
-import { AddCategoryComponent } from './category/UI/add-category/add-category.component';
+
+;
 import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
 import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
 import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
 import { AddinstituteComponent } from './admin-institution/addinstitute/addinstitute.component';
 import { DisplayinstituteComponent } from './admin-institution/displayinstitute/displayinstitute.component';
-import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
+
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
 import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
 import { ActivateDepartmentComponent } from './admindepartment/department/activate-department/activate-department.component';
@@ -70,6 +68,11 @@ import { DepartmentModule } from './department/department.module';
 import { AuthUserModule } from './auth-user/auth-user.module';
 import { QuestionModule } from './question/question.module';
 import { TeacherCourseModule } from './teacher-course/teacher-course/teacher-course.module';
+import { CategoryComponent } from './category/component/component/category.component';
+import { MainComponent } from './category/UI/main/main.component';
+import { AddModuleComponent } from './category/UI/add-module/add-module.component';
+import { AddCategoryComponent } from './category/UI/add-category/add-category.component';
+import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
 
 @NgModule({
   declarations: [

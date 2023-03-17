@@ -17,7 +17,7 @@ import { HomeComponent } from './home/home.component';
 import { AddcourseComponent } from './course/addcourse/addcourse.component';
 import { UpdatecourseComponent } from './course/updatecourse/updatecourse.component';
 import { CourseComponent } from './course/displaycourse/course.component';
-import { CategoryComponent } from './category/UI/category/category.component';
+
 import { MainComponent } from './category/UI/main/main.component';
 import { AddModuleComponent } from './category/UI/add-module/add-module.component';
 import { AddCategoryComponent } from './category/UI/add-category/add-category.component';
@@ -66,6 +66,7 @@ import { AuthUserComponent } from './auth-user/components/auth-user/auth-user.co
 import { QuestionComponent } from './question/components/question/question.component';
 import { DepartmentComponent } from './department/components/department/department.component';
 import { TeacherCourseComponent } from './teacher-course/teacher-course/components/teacher-course/teacher-course.component';
+import { CategoryComponent } from './category/component/component/category.component';
 
 
 
