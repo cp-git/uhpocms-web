@@ -1,7 +1,7 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DepartmentComponent } from './admindepartment/department/department.component';
+// import { DepartmentComponent } from './admindepartment/department/department.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
 import { EmailComponent } from './email/email/email.component';
@@ -64,6 +64,7 @@ import { AdminRoleComponent } from './admin-role/components/admin-role/admin-rol
 // import { ProfileComponent } from './profiles/components/profile/profile.component';
 import { AuthUserComponent } from './auth-user/components/auth-user/auth-user.component';
 import { QuestionComponent } from './question/components/question/question.component';
+import { DepartmentComponent } from './department/components/department/department.component';
 
 
 
@@ -284,7 +285,8 @@ const routes: Routes = [
   { path: 'AdminRole', component: AdminRoleComponent },
   // { path: 'Profile', component: ProfileComponent },
   { path: 'AuthUser', component: AuthUserComponent },
-  { path: 'Question', component: QuestionComponent }
+  { path: 'Question', component: QuestionComponent },
+  { path: 'Department', component: DepartmentComponent }
 
 
 ];
