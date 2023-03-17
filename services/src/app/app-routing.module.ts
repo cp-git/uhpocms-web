@@ -9,7 +9,7 @@ import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
 import { QuizComponent } from './quiz/quiz.component';
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
-import { QuestionComponent } from './teacherquestion/question/question.component';
+// import { QuestionComponent } from './teacherquestion/question/question.component';
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 
 import { HomeComponent } from './home/home.component';
@@ -61,8 +61,9 @@ import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assignco
 
 import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.component';
 import { AdminRoleComponent } from './admin-role/components/admin-role/admin-role.component';
-import { ProfileComponent } from './profiles/components/profile/profile.component';
+// import { ProfileComponent } from './profiles/components/profile/profile.component';
 import { AuthUserComponent } from './auth-user/components/auth-user/auth-user.component';
+// import { QuestionComponent } from './question/components/question/question.component';
 
 
 
@@ -172,7 +173,7 @@ const routes: Routes = [
   // { path: 'authuser', component: AuthuserComponent },
 
   //question routes
-  { path: 'question', component: QuestionComponent },
+  // { path: 'question', component: QuestionComponent },
   //login route
   { path: 'demo', component: LoginComponentComponent },
   { path: 'login', component: LoginauthComponent },
@@ -281,8 +282,9 @@ const routes: Routes = [
   },
 
   { path: 'AdminRole', component: AdminRoleComponent },
-  { path: 'Profile', component: ProfileComponent },
-  { path: 'AuthUser', component: AuthUserComponent }
+  // { path: 'Profile', component: ProfileComponent },
+  { path: 'AuthUser', component: AuthUserComponent },
+  // { path: 'Question', component: QuestionComponent }
 
 
 ];

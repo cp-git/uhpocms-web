@@ -67,8 +67,8 @@ import { ReusableModule } from './reusable/module/reusable.module';
 import { AdminRoleModule } from './admin-role/admin-role.module';
 import { DepartmentModule } from './department/department.module';
 import { ProfilesModule } from './profiles/profiles.module';
-import { AuthUserColumn } from './auth-user/auth-user-column';
 import { AuthUserModule } from './auth-user/auth-user.module';
+// import { QuestionModule } from './question/question.module';
 
 @NgModule({
   declarations: [
@@ -128,8 +128,9 @@ import { AuthUserModule } from './auth-user/auth-user.module';
   ],
 
   imports: [
+    // QuestionModule,
     AuthUserModule,
-    ProfilesModule,
+    // ProfilesModule,
     DepartmentModule,
     ReusableModule,
     AdminRoleModule,
