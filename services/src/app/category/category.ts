@@ -1,6 +1,6 @@
 export class Category {
 
-  categoryId!: number | null
+  categoryId!: number
   categoryName!: string;
   active!: boolean;
   createdBy!: string;

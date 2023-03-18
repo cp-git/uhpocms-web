@@ -14,21 +14,21 @@
     </div>
 
     <div class="navigations">
-        <button id="demo" class="btn btn-info" (click)="RedirectRole()">AdminRole</button>
-        <button id="demo" class="btn btn-info" (click)="RedirectTOAuth()">Auth User</button>
-        <button id="demo" class="btn btn-info" (click)="RedirectToInstituteAdminProfile()">InstituteAdmin
+        <button id="demo" class="btn btn-info" [routerLink]="['/AdminRole']">AdminRole</button>
+        <button id="demo" class="btn btn-info" [routerLink]="['/AuthUser']">Auth User</button>
+        <button id="demo" class="btn btn-info" [routerLink]="['/Profile']">InstituteAdmin
             Profile</button>
-        <button id="demo" class="btn btn-info" (click)="RedirectToAdminDept()">Admin Department</button>
+        <button id="demo" class="btn btn-info" [routerLink]="['/Department']">Admin Department</button>
         <button id="demo" class="btn btn-info" (click)="RedirectToQuiz()">Quiz</button>
-        <button id="demo" class="btn btn-info" (click)="RedirectToQuestion()">Teacher Question</button>
+        <button id="demo" class="btn btn-info" [routerLink]="['/Question']">Teacher Question</button>
         <button id="demo" class="btn btn-info" (click)="RedirectToEmail()">Email</button>
         <button id="demo" class="btn btn-info" (click)="RedirectToModule()">Teacher Module</button>
 
-        <button id="demo" class="btn btn-info" (click)="RedirectToCourse()">Course</button>
+        <button id="demo" class="btn btn-info" [routerLink]="['/Course']">Course</button>
 
         <button id="demo" class="btn btn-info" (click)="RedirectToDisplayInstitute()">Institute</button>
 
-        <button id="demo" class="btn btn-info" (click)="RedirectToCategory()">Category</button>
+        <button id="demo" class="btn btn-info" [routerLink]="['/category']">Category</button>
         <button id="demo" class="btn btn-info" (click)="RedirectToAnnouncement()">Announcement</button>
 
 

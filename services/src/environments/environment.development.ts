@@ -5,7 +5,7 @@ export const environment = {
   production: false,
   // departmentUrl: `${commonEnv.baseUrl}/department/uhpocms`,
   // adminInstitutionUrl: `${commonEnv.baseUrl}/admininstitution/uhpocms`,
-  // instituteAdmin: `${commonEnv.baseUrl}/instituteadmin/uhpocms`,
+  // instituteAdminUrl: `${commonEnv.baseUrl}/instituteadmin/uhpocms`,
   // authUserUrl: `${commonEnv.baseUrl}/authuser/uhpocms`,
   // categoryUrl: `${commonEnv.baseUrl}/category/uhpocms`,
   // courseUrl: `${commonEnv.baseUrl}/course/uhpocms`,
@@ -19,7 +19,7 @@ export const environment = {
 
   departmentUrl: `http://localhost:8090/department/uhpocms`,
   adminInstitutionUrl: `http://localhost:8090/admininstitution/uhpocms`,
-  instituteAdmin: `http://localhost:8090/instituteadmin/uhpocms`,
+  instituteAdminUrl: `http://localhost:8090/instituteadmin/uhpocms`,
   authUserUrl: `http://localhost:8090/authuser/uhpocms`,
   categoryUrl: `http://localhost:8090/category/uhpocms`,
   courseUrl: `http://localhost:8090/course/uhpocms`,

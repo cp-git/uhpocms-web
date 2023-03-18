@@ -1,7 +1,7 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DepartmentComponent } from './admindepartment/department/department.component';
+// import { DepartmentComponent } from './admindepartment/department/department.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
 import { EmailComponent } from './email/email/email.component';
@@ -9,7 +9,7 @@ import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
 import { QuizComponent } from './quiz/quiz.component';
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
-import { QuestionComponent } from './teacherquestion/question/question.component';
+// import { QuestionComponent } from './teacherquestion/question/question.component';
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 
 import { HomeComponent } from './home/home.component';
@@ -17,7 +17,7 @@ import { HomeComponent } from './home/home.component';
 import { AddcourseComponent } from './course/addcourse/addcourse.component';
 import { UpdatecourseComponent } from './course/updatecourse/updatecourse.component';
 import { CourseComponent } from './course/displaycourse/course.component';
-import { CategoryComponent } from './category/UI/category/category.component';
+
 import { MainComponent } from './category/UI/main/main.component';
 import { AddModuleComponent } from './category/UI/add-module/add-module.component';
 import { AddCategoryComponent } from './category/UI/add-category/add-category.component';
@@ -49,7 +49,7 @@ import { EnrollstudentComponent } from './enrollstudent/enrollstudent.component'
 import { StudentmoduleComponent } from './studentdata/component/studentmodule/studentmodule.component';
 
 import { StudentCourseComponent } from './student/student-course/student-course.component';
-import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';
+// import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';
 import { InactiveTeacherCourseComponent } from './assignedCourseToTeacher/inactive-teacher-course/inactive-teacher-course.component';
 
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
@@ -60,6 +60,13 @@ import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assignco
 
 
 import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.component';
+import { AdminRoleComponent } from './admin-role/components/admin-role/admin-role.component';
+// import { ProfileComponent } from './profiles/components/profile/profile.component';
+import { AuthUserComponent } from './auth-user/components/auth-user/auth-user.component';
+import { QuestionComponent } from './question/components/question/question.component';
+import { DepartmentComponent } from './department/components/department/department.component';
+import { TeacherCourseComponent } from './teacher-course/teacher-course/components/teacher-course/teacher-course.component';
+import { CategoryComponent } from './category/component/component/category.component';
 
 
 
@@ -166,10 +173,10 @@ const routes: Routes = [
   { path: 'adminrole/activate/:userName', component: ActivateRoleComponent },
 
   //auth user routes
-  { path: 'authuser', component: AuthuserComponent },
+  // { path: 'authuser', component: AuthuserComponent },
 
   //question routes
-  { path: 'question', component: QuestionComponent },
+  // { path: 'question', component: QuestionComponent },
   //login route
   { path: 'demo', component: LoginComponentComponent },
   { path: 'login', component: LoginauthComponent },
@@ -248,7 +255,7 @@ const routes: Routes = [
   { path: 'teachermodule/:userName', component: TeachermoduleComponent },
 
 
-  { path: 'studentmodule/:userName', component: StudentmoduleComponent },
+  { path: 'studentmodule', component: StudentmoduleComponent },
 
   { path: 'email', component: EmailComponent },
 
@@ -256,7 +263,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
 
 
-  { path: 'course/userrole/:userName/:id', component: CourseComponent },
+  { path: 'course/userrole/:userName', component: CourseComponent },
 
 
   { path: 'addcourse', component: AddcourseComponent },
@@ -275,7 +282,14 @@ const routes: Routes = [
         path: 'view/:id', component: CreateAnnouncementComponent
       }
     ]
-  }
+  },
+
+  { path: 'AdminRole', component: AdminRoleComponent },
+  // { path: 'Profile', component: ProfileComponent },
+  { path: 'AuthUser', component: AuthUserComponent },
+  { path: 'Question', component: QuestionComponent },
+  { path: 'Department', component: DepartmentComponent },
+  { path: 'Course', component: TeacherCourseComponent }
 
 
 ];

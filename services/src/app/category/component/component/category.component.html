@@ -1,0 +1,102 @@
+<div class="container">
+    <div>
+        <ng-container *ngIf="viewAll">
+            <div class="row justify-content-between">
+                <div class="col-sm-6">
+                    <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <ng-container *ngTemplateOutlet="addButton;"></ng-container>
+                    <ng-container *ngTemplateOutlet="activateButton;"></ng-container>
+                    <ng-container *ngTemplateOutlet="backButton;"></ng-container>
+
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="viewAdd || viewOne || viewUpdate || viewActivate">
+            <div class="row justify-content-between">
+                <div class="col-sm-6">
+                    <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <ng-container *ngTemplateOutlet="backButton;"></ng-container>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="viewAll">
+            <ng-container *ngTemplateOutlet="viewall;"></ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="viewAdd">
+            <ng-container *ngTemplateOutlet="viewadd;"></ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="viewUpdate">
+            <ng-container *ngTemplateOutlet="viewupdate;"></ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="viewOne">
+            <ng-container *ngTemplateOutlet="viewone;"></ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="viewActivate">
+            <ng-container *ngTemplateOutlet="viewactivate;"></ng-container>
+        </ng-container>
+    </div>
+</div>
+
+
+<ng-template #title let-headerTitle>
+    <h1>{{headerTitle}}</h1>
+</ng-template>
+
+<ng-template #addButton>
+    <button class="btn btn-primary" (click)="onAddClick()">Add</button>
+</ng-template>
+
+<ng-template #backButton>
+    <button class="btn btn-primary" (click)="back()">Back</button>
+</ng-template>
+
+<ng-template #activateButton>
+    <button class="btn btn-primary" (click)="onActivateClick()">Inactive</button>
+</ng-template>
+
+<ng-template #viewall>
+    <app-view-all *ngIf="allData.length>0" [data]="{moduleData:this.allData , columnNames:this.columnNames}"
+        [idsColumnName]="{columnName:primaryIdColumnName}" [isViewAllScreen]="true"
+        (viewClicked)="onChildViewClick($event)" (updateClicked)="onChildUpdateClick($event)"
+        (deleteClicked)="onChildDeleteClick($event)">
+    </app-view-all>
+    <div *ngIf="allData.length==0">
+        <h3>No categories</h3>
+    </div>
+</ng-template>
+
+<ng-template #viewactivate>
+    <app-view-all *ngIf="allInActiveData.length>0"
+        [data]="{moduleData:this.allInActiveData , columnNames:this.columnNames}"
+        [idsColumnName]="{columnName:primaryIdColumnName}" [isActivateScreen]="true"
+        (activateClicked)="onChildActivateClick($event)">
+    </app-view-all>
+    <div *ngIf="allInActiveData.length==0">
+        <h3>No Inactive roles</h3>
+    </div>
+</ng-template>
+
+
+<ng-template #viewadd>
+    <app-add-update [data]="{currentData:emptyCategory , columnNames:columnNames}"
+        (submitClicked)="onAddCategorySubmit($event)"></app-add-update>
+</ng-template>
+
+<ng-template #viewone>
+    <app-view-one [data]="{currentData:currentData , columnNames:allColumnNames}"></app-view-one>
+</ng-template>
+
+<ng-template #viewupdate>
+    <app-add-update [data]="{currentData:currentData , columnNames:columnNames}"
+        (submitClicked)="onUpdateCategorySubmit($event)"></app-add-update>
+</ng-template>

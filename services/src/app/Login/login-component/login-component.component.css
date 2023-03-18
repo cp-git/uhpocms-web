@@ -3,16 +3,18 @@
 }
 
 #logout {
-
     margin-left: 1400px;
 }
 
 .Header {
     width: 100%;
     float: left;
-
 }
 
 button {
     margin: 10px;
+}
+
+.btn {
+    border-radius: 15px;
 }

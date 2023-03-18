@@ -108,7 +108,7 @@ export class TeacherCourseComponent {
     }
   }
   inactve() {
-    this._route.navigate(['inactivecourse', { id: this.teacherId }, this.userName])
+    this._route.navigate(['inactivecourse', { id: this.teacherId }])
   }
   Back() {
     this._route.navigate(['teacherdisplay/teacher', { id: this.teacherId }, this.userName]);
@@ -119,6 +119,7 @@ export class TeacherCourseComponent {
     this.teacherCourseService.getAssignedCourseToTeacher(teacherId).subscribe(
       response => {
         this.courses = response;
+        console.log(response);
       },
       error => {
         alert("failed to fetch data");

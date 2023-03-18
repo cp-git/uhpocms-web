@@ -28,7 +28,7 @@ export class AppService {
     this.courseURL = `${environment.courseUrl}/course?name=all`;
     this.categoryURL = `${environment.categoryUrl}/category?category=all`;
     this.moduleURL = `${environment.moduleUrl}/module?name=all`;
-    this.instituteProfileURL = `${environment.instituteAdmin}/profile?firstName=all`;
+    this.instituteProfileURL = `${environment.instituteAdminUrl}/profile?firstName=all`;
   }
 
   fetchAllInstitution(): Observable<AdminInstitution[]> {

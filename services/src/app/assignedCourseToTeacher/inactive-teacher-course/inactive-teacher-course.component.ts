@@ -4,6 +4,7 @@ import { Course } from 'app/course/course';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 import { TeacherCourseService } from '../teacher-course.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-inactive-teacher-course',
@@ -19,11 +20,13 @@ export class InactiveTeacherCourseComponent {
   constructor(
     private _route: Router,
     private activatedRoute: ActivatedRoute,
-    private readonly teacherCourseService: TeacherCourseService
+    private readonly teacherCourseService: TeacherCourseService,
+    private location: Location
   ) { }
 
   backToTeacherCourse() {
-    this._route.navigate(['course/userrole/', this.userName, this.teacherId]);
+    this.location.back();
+    // this._route.navigate(['course/userrole/', this.userName, this.teacherId]);
   }
 
   courses: Course[] = [];
@@ -42,7 +45,8 @@ export class InactiveTeacherCourseComponent {
   institution = new AdminInstitution();
 
   Back() {
-    this._route.navigate(['teacher', { id: this.teacherId }]);
+    this.location.back();
+    // this._route.navigate(['teacher', { id: this.teacherId }]);
   }
 
   getInactiveCoursesByProfileId(teacherId: number) {

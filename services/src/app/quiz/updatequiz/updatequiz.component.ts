@@ -103,7 +103,7 @@ export class UpdatequizComponent {
     this._service._updateQuiz(this.title, this._quiz).subscribe(data => {
       //console.log(data)
       console.log(this._quiz)
-      this._route.navigate(['quiz'])
+      this._route.navigate(['quiz', this.userName])
 
     }, error => console.log(error));
   }

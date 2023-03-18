@@ -22,8 +22,8 @@ export class CategoryService {
     return this._http.post<Category>(`${this.categoryUrl}`, category);
   }
 
-  updateCategory(category: Category) {
-    return this._http.put<Category>(`${this.categoryUrl}/` + category.categoryName, category);
+  updateCategory(category: Category, categoryId: number) {
+    return this._http.put<Category>(`${this.categoryUrl}/` + categoryId, category);
   }
 
   deleteCategory(categoryName: string) {
@@ -37,8 +37,13 @@ export class CategoryService {
     return this._http.get<any>(`${this.categoryUrl}/inactive?inactivecategories=all`);
   }
 
-  updateActiveStatus(category: string, categoryEntity: Category): Observable<any> {
-    return this._http.patch<any>(`${this.categoryUrl}/` + category, categoryEntity);
+  updateActiveStatus(category: string): Observable<any> {
+    return this._http.patch<any>(`${this.categoryUrl}/` + category, {});
   }
+
+  getCategoryByName(categoryName: string) {
+    return this._http.get<any>(`${this.categoryUrl}/` + categoryName);
+  }
+
 
 }

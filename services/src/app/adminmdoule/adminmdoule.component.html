@@ -64,7 +64,7 @@
             </div>
 
             <div class="col-md-6" id="h2">
-                <button class="btn btn-info" (click)="RedirectTOLogin()">Logout</button>
+                <button class="btn btn-info" id="adminbtn" (click)="RedirectTOLogin()">Logout</button>
             </div>
         </div>
     </div>
@@ -79,7 +79,8 @@
                             <h2 class="mb-0" id="AuthUsername">User Administration</h2>
                         </div>
 
-                        <button id="demo" class="btn btn-info" (click)="RedirectTOAuth()">Auth User</button>
+                        <button id="demo" class="btn btn-info" id="adminbtn" (click)="RedirectTOAuth()">Auth
+                            User</button>
                     </div>
 
                 </div>
@@ -95,7 +96,7 @@
                             <h2 class="mb-0" id="AuthUsername"> User Profile Administration </h2>
                         </div>
 
-                        <button id="demo" class="btn btn-info"
+                        <button id="adminbtn" class="btn btn-info"
                             (click)="RedirectToInstituteAdminProfile()">InstituteAdmin
                             Profile</button>
                     </div>
@@ -113,7 +114,7 @@
                             <h2 class="mb-0" id="AuthUsername"> Course Administration</h2>
                         </div>
 
-                        <button id="demo" class="btn btn-info" (click)="RedirectToCourse()">Course</button>
+                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToCourse()">Course</button>
                     </div>
 
                 </div>
@@ -132,7 +133,8 @@
                             <h2 class="mb-0" id="AuthUsername">Department Administration</h2>
                         </div>
 
-                        <button id="demo" class="btn btn-info" (click)="RedirectToAdminDept()">Admin Department</button>
+                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToAdminDept()">Admin
+                            Department</button>
                     </div>
 
                 </div>
@@ -149,7 +151,7 @@
                             <h2 class="mb-0" id="AuthUsername"> Student Administration</h2>
                         </div>
 
-                        <button id="demo" class="btn btn-info" (click)="RedirectToEnrollStudent()">Enroll
+                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToEnrollStudent()">Enroll
                             Student</button>
                     </div>
 
@@ -167,7 +169,7 @@
                             <h2 class="mb-0" id="AuthUsername"> Institution Administration </h2>
                         </div>
 
-                        <button id="demo" class="btn btn-info" (click)="RedirectToAdminInstitution()">Institution
+                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToAdminInstitution()">Institution
                         </button>
                     </div>
 
@@ -187,7 +189,7 @@
                             <h2 class="mb-0" id="AuthUsername">User Role Administration</h2>
                         </div>
 
-                        <button id="demo" class="btn btn-info" (click)="RedirectToRole()">Role</button>
+                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToRole()">Role</button>
                     </div>
 
                 </div>
@@ -203,7 +205,7 @@
                             <h2 class="mb-0" id="AuthUsername">Announcements </h2>
                         </div>
 
-                        <button id="demo" class="btn btn-info" (click)="RedirectToAnnouncement()">Announcements
+                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToAnnouncement()">Announcements
                         </button>
                     </div>
 
@@ -237,10 +239,10 @@
                     <div class="d-flex flex-row align-items-center">
                         <i class="material-icons" id="icon1">class</i>
                         <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername">Assign Teacher To course</h2>
+                            <h2 class="mb-0" id="AuthUsername">Course Assigned To Teacher</h2>
                         </div>
 
-                        <button id="demo" class="btn btn-info" (click)="RedirectToAssignTeacher()">Assign
+                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToAssignTeacher()">Assign
                             Teacher</button>
                     </div>
 
@@ -258,7 +260,7 @@
                             <h2 class="mb-0" id="AuthUsername">Allocate Permissions to Teachers</h2>
                         </div>
 
-                        <button id="demo" class="btn btn-info" routerLink="/allotPermission">Allocate
+                        <button id="adminbtn" class="btn btn-info" routerLink="/allotPermission">Allocate
                             Permissions</button>
                     </div>
 

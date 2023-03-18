@@ -28,7 +28,7 @@ export class AddCategoryComponent {
   addCategory(toCreateCategory: Category) {
 
     var categoryId = toCreateCategory.categoryId;
-    toCreateCategory.categoryId = null;
+    toCreateCategory.categoryId = 0;
     toCreateCategory.active = true;
 
     this.categoryService.insertCategory(toCreateCategory).subscribe(
