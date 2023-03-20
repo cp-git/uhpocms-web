@@ -48,7 +48,7 @@ export class CreateQuizComponent {
 
     this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
-    console.log(this.userName)
+    //console.log(this.userName)
 
 
     this._quizMap;
@@ -125,7 +125,7 @@ export class CreateQuizComponent {
 
     this._quizService._addQuiz(quizObj).subscribe(
       data => {
-        console.log(data);
+        //console.log(data);
         if (this._quizMap.size > 0) {
           this._quizArray[this._quizArray.indexOf(quiz)] = (Object.assign({}, this._quizMap.get(quiz.quizId)));
         }

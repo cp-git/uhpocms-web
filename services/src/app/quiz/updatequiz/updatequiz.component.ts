@@ -47,7 +47,7 @@ export class UpdatequizComponent {
 
     this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
-    console.log(this.userName)
+    // console.log(this.userName)
     this._quizMap;
     this._categoryMap;
     this._courseMap;
@@ -57,13 +57,13 @@ export class UpdatequizComponent {
     this.getAllModules();
 
     this.title = this._activatedRoute.snapshot.params['title'];
-    console.log(this.title);
+    // console.log(this.title);
 
     this._service._getQuizByTitle(this.title)
       .subscribe(data => {
         //console.log(data)
         this._quiz = data;
-        console.log(this._quiz)
+        // console.log(this._quiz)
       }, error => console.log(error));
   }
 
@@ -110,7 +110,7 @@ export class UpdatequizComponent {
   updateQuiz(quiz: Quiz) {
     this._service._updateQuiz(this.title, this._quiz).subscribe(data => {
       //console.log(data)
-      console.log(this._quiz)
+      //console.log(this._quiz)
       this._route.navigate(['quiz', this.userName])
 
     }, error => console.log(error));

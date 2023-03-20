@@ -53,7 +53,7 @@ export class QuizComponent {
     } else {
       this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
       this.userName = this._activatedRoute.snapshot.params['userName'];
-      console.log(this.userName)
+      // console.log(this.userName)
 
       this.getAllQuizzes();
     }
@@ -74,7 +74,7 @@ export class QuizComponent {
     this._quizService._getAllQuizzes().subscribe(
       (data) => {
         this._quizArray = data;
-        console.log(data);
+        //console.log(data);
         this._quizArray.forEach((_quizData) => {
           this._quizMap.set(_quizData.quizId, Object.assign({}, _quizData));
         });
@@ -199,7 +199,7 @@ export class QuizComponent {
     this._quizService.getInactiveQuizList().subscribe(
       (data) => {
         this._quizArray = data;
-        console.log(data);
+        //console.log(data);
         this._quizArray.forEach((_quizData) => {
           this._quizMap.set(_quizData.quizId, Object.assign({}, _quizData));
         });
@@ -220,7 +220,7 @@ export class QuizComponent {
 
     this._quizService.updateActiveStatus(quiz.title, quiz).subscribe(data => {
       //console.log(data)
-      console.log(this._quiz)
+      // console.log(this._quiz)
       alert("Quiz Activated Successfully")
       location.reload();
 

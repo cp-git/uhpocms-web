@@ -58,7 +58,7 @@ export class InactivecourseComponent {
     } else {
       this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
       this.userName = this._activatedRoute.snapshot.params['userName'];
-      console.log(this.userName)
+      // console.log(this.userName)
       this.getAllCourses();
       this.getAllInstitutes();
       this.getAllDeactivateCourses();

@@ -72,7 +72,7 @@ export class AuthuserComponent implements OnInit {
       this.authUser.authUserIsActive = user.authUserIsActive;
       this.authUser.authUserIsSuperUser = user.authUserIsSuperUser;
 
-      console.log(this.authUser);
+      //console.log(this.authUser);
 
       this._service.updateAuthUser(user.authUserName, this.authUser).subscribe(
         (data) => {
@@ -99,7 +99,7 @@ export class AuthuserComponent implements OnInit {
       // alert("called else");
       this._service.authUserList().subscribe(
         (data) => {
-          console.log('Response Received...');
+          // console.log('Response Received...');
           this._authUser = data;
 
           if (this._authUser.length > 0) {
