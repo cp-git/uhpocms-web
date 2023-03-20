@@ -65,9 +65,10 @@ import { AdminRoleComponent } from './admin-role/components/admin-role/admin-rol
 import { AuthUserComponent } from './auth-user/components/auth-user/auth-user.component';
 import { QuestionComponent } from './question/components/question/question.component';
 import { DepartmentComponent } from './department/components/department/department.component';
-import { TeacherCourseComponent } from './teacher-course/teacher-course/components/teacher-course/teacher-course.component';
+// import { TeacherCourseComponent } from './teacher-course/teacher-course/components/teacher-course/teacher-course.component';
 import { CategoryComponent } from './category/component/component/category.component';
 import { AdminmdouleComponent } from './adminmdoule/components/admin-module/adminmdoule.component';
+import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';
 
 
 
