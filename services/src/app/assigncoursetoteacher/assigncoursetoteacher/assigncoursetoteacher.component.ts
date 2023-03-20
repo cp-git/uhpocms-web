@@ -165,6 +165,7 @@ export class AssigncoursetoteacherComponent {
   }
 
 
+  ///Function for get profile by role and institution id 
   getProfileByRoleAndInstId(instId: number) {
     const userRole = "teacher";
     instId = this._profile.institutionId;
@@ -183,9 +184,8 @@ export class AssigncoursetoteacherComponent {
   }
 
 
+  //function for save the course id with profile ID
   saveAssignTeacher(courseId: number, profileId: number) {
-    // alert(courseId + " and " + profileId);
-    // const profileIdList = [1, 2, 3];
 
     console.log("Profile array copy down");
     console.log(this._profileArrCopy);
@@ -194,7 +194,6 @@ export class AssigncoursetoteacherComponent {
     this.assignTeacher.courseId = (courseId);
     this.assignTeacher.profileId = profileId;
 
-    console.log(this.assignTeacher)
 
 
     for (let i = 0; i < this.selected.length; i++) {
@@ -221,8 +220,6 @@ export class AssigncoursetoteacherComponent {
     this.fetchMore();
   }
 
-
-
   @HostListener('window:scroll', ['$event'])
   onScroll(event: any) {
     if (this.loading || this.size <= this._profileArray.length) {
@@ -242,10 +239,6 @@ export class AssigncoursetoteacherComponent {
     });
     this.offset += 1;
     this._profileArray;
-    // this.service.getTestsList()
-    //     .pipe(takeWhile(() => this.alive)).subscribe(() => {
-    //     this.loading = false
-    // })
   }
 
 

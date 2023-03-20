@@ -34,8 +34,10 @@ export class QuestionComponent implements OnInit {
     private _route: Router,
     private location: Location
   ) { }
+
+
+  //Function for adding question 
   insertQuestion(que: Question) {
-    // alert(JSON.stringify(que));
     this.question = {} as Question;
     this.question.questionFigure = que.questionFigure;
     this.question.questionContent = que.questionContent;
@@ -50,8 +52,7 @@ export class QuestionComponent implements OnInit {
 
     this._service.addQuestion(this.question).subscribe(
       (data) => {
-        // alert(JSON.stringify(que));
-        // this.ngOnInit();
+
         this.question = data;
         if (this.backupQuesiton.size > 0) {
           this._question[this._question.indexOf(que)] = Object.assign(
@@ -73,6 +74,8 @@ export class QuestionComponent implements OnInit {
     );
   }
 
+
+  //Function for updating question 
   updateQuestion(que: Question) {
     this.question.questionId = que.questionId;
     this.question.questionFigure = que.questionFigure;
@@ -100,6 +103,8 @@ export class QuestionComponent implements OnInit {
       );
   }
 
+
+  //Function for delete question
   deleteQuestion(que: Question) {
     this._service.deleteQuestion(que.questionFigure).subscribe(
       (data) => {
@@ -115,6 +120,8 @@ export class QuestionComponent implements OnInit {
       (error) => alert('Failed to delete Question')
     );
   }
+
+
   ngOnInit(): void {
     if (sessionStorage.getItem('authenticatedUser') === null) {
       this._route.navigate(['']);
@@ -125,6 +132,8 @@ export class QuestionComponent implements OnInit {
     }
   }
 
+
+  //load category data
   private loadCategories() {
     this.sessionData = sessionStorage.getItem('category');
 
@@ -135,6 +144,8 @@ export class QuestionComponent implements OnInit {
     }
   }
 
+
+  ///Function for get all question list
   private getAll() {
     this._service.questionList().subscribe(
       (data) => {
@@ -155,6 +166,8 @@ export class QuestionComponent implements OnInit {
     );
   }
 
+
+  ///function for load quiz data
   private loadQuiz() {
     this.sessionData = sessionStorage.getItem('quiz');
 
@@ -164,6 +177,8 @@ export class QuestionComponent implements OnInit {
     }
   }
 
+
+  //Function for get inactve Questions list
   getInactiveQuestions() {
     this.inActivationScreenStatus = true;
     this.activationScreenStatus = true;
@@ -186,16 +201,9 @@ export class QuestionComponent implements OnInit {
     );
   }
 
+  //Function for activating deleted question
   updateActiveStatus(que: Question) {
-    // this.question.questionId = que.questionId;
-    // this.question.questionFigure = que.questionFigure;
-    // this.question.questionContent = que.questionContent;
-    // this.question.questionExplanation = que.questionExplanation;
-    // this.question.questionOrderNo = que.questionOrderNo;
-    // this.question.questionIsMCQ = que.questionIsMCQ;
-    // this.question.questionQuizId = que.questionQuizId;
-    // this.question.questionCategoryId = que.questionCategoryId;
-    // this.question.questionIsActive = que.questionIsActive;
+
     console.log(que)
     console.log(que.questionFigure)
     this._service
