@@ -18,7 +18,6 @@ import { DepartmentComponent } from './admindepartment/components/department/dep
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 import { QuestionComponent } from './teacherquestion/question/question.component';
-import { EmailComponent } from './email/email/email.component';
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
 import { HomeComponent } from './home/home.component';
@@ -61,7 +60,7 @@ import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.
 import { ReusableModule } from './reusable/module/reusable.module';
 import { AdminRoleModule } from './admin-role/module/admin-role.module';
 import { DepartmentModule } from './department/department.module';
-// import { ProfilesModule } from './profiles/profiles.module';
+
 import { AuthUserModule } from './auth-user/auth-user.module';
 import { QuestionModule } from './question/question.module';
 import { TeacherCourseModule } from './teacher-course/teacher-course/teacher-course.module';
@@ -70,10 +69,13 @@ import { MainComponent } from './category/UI/main/main.component';
 import { AddModuleComponent } from './category/UI/add-module/add-module.component';
 import { AddCategoryComponent } from './category/UI/add-category/add-category.component';
 import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
+import { EmailComponent } from './email/components/email/email.component';
 import { AdminmdouleComponent } from './adminmdoule/components/admin-module/adminmdoule.component';
-import { CourseComponent } from './course/displaycourse/course.component';
-import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
+import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
+import { CourseComponent } from './course/displaycourse/course.component';
+
+
 
 @NgModule({
   declarations: [
@@ -85,7 +87,6 @@ import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-cours
     AdminroleComponent,
     LoginauthComponent,
     TeachermoduleComponent,
-    EmailComponent,
     QuestionComponent,
     HomeComponent,
     CourseComponent,
@@ -126,9 +127,9 @@ import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-cours
     AddDepartmentsComponent,
     StudentmoduleComponent,
     AssigncoursetoteacherComponent,
-
     CreateinstituteadminprofileComponent,
     InactivecourseComponent,
+    EmailComponent
 
   ],
 

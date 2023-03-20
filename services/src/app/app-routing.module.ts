@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 // import { DepartmentComponent } from './admindepartment/department/department.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
-import { EmailComponent } from './email/email/email.component';
+import { EmailComponent } from './email/components/email/email.component';
 import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-institute-admin/display-institute-admin.component';
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
 import { QuizComponent } from './quiz/quiz.component';

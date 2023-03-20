@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { flushMicrotasks } from '@angular/core/testing';
-//import { Department } from 'app/admindepartment/department';
-import { Department } from 'app/department/department';
+import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
 import { DepartmentColumn } from 'app/department/department-column';
 import { DepartmentAllColumn } from 'app/department/department-column';
@@ -10,10 +8,9 @@ import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
-  styleUrls: ['./department.component.css']
+  styleUrls: ['./department.component.css'],
 })
 export class DepartmentComponent implements OnInit {
-
   moduleName: string = 'Department Administration';
 
   //screen view
@@ -23,11 +20,12 @@ export class DepartmentComponent implements OnInit {
   viewAll: boolean = true;
   viewActivate: boolean = false;
 
-  dataAvailable: boolean = false;
+  // dataAvailable: boolean = false;
 
   columnNames: any;
   allColumnNames: any;
 
+  // For dropdown
   readonly primaryIdColumnName: string = 'id';
   readonly dropdownColumnId1: string = 'adminInstitutionId';
   readonly dropdownColumnName1: string = 'adminInstitutionName';
@@ -38,18 +36,11 @@ export class DepartmentComponent implements OnInit {
   sessionData: any;
   data: any;
 
-  emptyDepartment: Department;  // empty department
-  currentData!: Department;  // for update and view, to show existing data
-
-
-
+  emptyDepartment: Department; // empty department
+  currentData!: Department; // for update and view, to show existing data
 
   constructor(private service: DepartmentService, private location: Location) {
-
     // assigng headers
-    // this.adminRoleHeader = AdminRoleColumn;
-    // this.adminRoleAllHeader = AdminRoleAllColumn;
-
     this.columnNames = DepartmentColumn;
     this.allColumnNames = DepartmentAllColumn;
 
@@ -59,9 +50,7 @@ export class DepartmentComponent implements OnInit {
     this.loadAdminInstitutions();
   }
 
-
   ngOnInit(): void {
-
     this.getAllDepartments();
     this.getInactiveDepartment();
   }
@@ -77,26 +66,23 @@ export class DepartmentComponent implements OnInit {
     } else {
       this.location.back();
     }
-
   }
 
   adminInstitutions: AdminInstitution[] = [];
 
   // For navigate to view screen with data
-  // function will call when child view button is clicked 
+  // function will call when child view button is clicked
   onChildViewClick(objectReceived: any): void {
-
-    // hiding view of all column and displaying all departments screen 
+    // hiding view of all column and displaying all departments screen
     this.viewOne = true;
     this.viewAll = false;
-    this.currentData = objectReceived;    // assingning data to current data for child component
+    this.currentData = objectReceived; // assingning data to current data for child component
   }
 
   // For navigate to update screen with data
-  // function will call when child update button is clicked 
+  // function will call when child update button is clicked
   onChildUpdateClick(objectReceived: Department): void {
-
-    // hiding update screen and displaying all departments screen 
+    // hiding update screen and displaying all departments screen
     this.viewAll = false;
     this.viewUpdate = true;
 
@@ -105,13 +91,13 @@ export class DepartmentComponent implements OnInit {
   }
 
   // For navigate to update screen with data
-  // function will call when child update button is clicked 
+  // function will call when child update button is clicked
   onChildDeleteClick(objectReceived: Department): void {
     this.deleteDepartment(objectReceived.name);
   }
 
   // For navigate to activate screen with data
-  // function will call when child update button is clicked 
+  // function will call when child update button is clicked
   onChildActivateClick(objectReceived: Department): void {
     this.activateDepartment(objectReceived.id);
   }
@@ -138,6 +124,7 @@ export class DepartmentComponent implements OnInit {
     this.updateDepartment(objectReceived);
   }
 
+  // for loading adminInstitutitons from session data
   private loadAdminInstitutions() {
     this.sessionData = sessionStorage.getItem('admininstitution');
     //alert(this.sessionData);
@@ -146,6 +133,7 @@ export class DepartmentComponent implements OnInit {
       this.adminInstitutions.push(this.data[inst]);
     }
   }
+
   ///////////////////////////////////////////
   // Funcation calls specific to this module
   ///////////////////////////////////////////
@@ -154,20 +142,19 @@ export class DepartmentComponent implements OnInit {
   private updateDepartment(currentData: Department) {
     // calling service for updating data
     this.service.updateDepartment(currentData.id, currentData).subscribe(
-      response => {
+      (response) => {
         alert(`Department updated successfully !`);
         this.back();
       },
-      error => {
+      (error) => {
         alert(`Department updation failed !`);
       }
     );
   }
 
-  // For adding 
+  // For adding department
   private addDepartment(currentData: Department) {
-
-    currentData.active = true;  // setting active true
+    currentData.active = true; // setting active true
 
     // calling service for adding data
     this.service.insertDepartment(currentData).subscribe(
@@ -178,35 +165,33 @@ export class DepartmentComponent implements OnInit {
         this.back();
       },
       (error) => {
-        alert("Failed to add Department");
-      });
+        alert('Failed to add Department');
+      }
+    );
   }
 
-
-  // for getting all 
+  // for getting all departments
   private getAllDepartments() {
-    this.dataAvailable = true;
+    // this.dataAvailable = true;
 
     // calling service to get all data
     this.service.getAllDepartments().subscribe(
-      response => {
-
+      (response) => {
         this.allData = response; //assign data to local variable
 
         // if no data available
         if (this.allData.length > 0) {
-          this.dataAvailable = true;
+          // this.dataAvailable = true;
         }
       },
-      error => {
+      (error) => {
         console.log('No data in table ');
       }
     );
   }
 
-  // For deleting (soft delete) 
+  // For deleting (soft delete) department
   private deleteDepartment(name: string) {
-
     // calling service to soft delte
     this.service.deleteDepartment(name).subscribe(
       (response) => {
@@ -221,33 +206,28 @@ export class DepartmentComponent implements OnInit {
 
   // For getting all inactive departments
   private getInactiveDepartment() {
-
     // calling service to get all inactive record
     this.service.getAllDeactivatedDepartments().subscribe(
-      response => {
+      (response) => {
         this.allInActiveData = response;
       },
-      error => {
+      (error) => {
         console.log('No data in table ');
       }
     );
-
   }
 
-
   // For activating department using role id
-  private activateDepartment(roleId: number) {
-
+  private activateDepartment(id: number) {
     // calling service to activating department
-    this.service.activateDepartment(roleId).subscribe(
-      response => {
-        alert("Activated department");
+    this.service.activateDepartment(id).subscribe(
+      (response) => {
+        alert('Activated department');
         this.ngOnInit();
       },
-      error => {
-        alert("Failed to activate");
+      (error) => {
+        alert('Failed to activate');
       }
     );
   }
-
 }

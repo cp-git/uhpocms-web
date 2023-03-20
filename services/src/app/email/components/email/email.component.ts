@@ -1,10 +1,9 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component } from '@angular/core';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
-import { Email } from '../email';
-import { EmailService } from '../service/email.service';
 import { Location } from '@angular/common';
+import { Email } from '../../class/email';
+import { EmailService } from '../../service/email.service';
 
 @Component({
   selector: 'app-email',
@@ -16,18 +15,23 @@ export class EmailComponent {
   backupEmails = new Map(); // for backup data
   email: Email;
   instituteAdmin: InstituteAdmin[] = []; // for dropdown data
-  sessionData: any;
+
+  // empty row if data not available
   isHidden: boolean = false;
+
+  // For session data
+  sessionData: any;
   data: any;
 
-  constructor(private _emailService: EmailService, private _route: Router, private location: Location) {
+  constructor(private emailService: EmailService, private router: Router, private location: Location) {
     this.email = new Email();
+    this.loadInstituteProfile();
   }
 
   ngOnInit(): void {
-    this.loadInstituteProfile();
+
     if (sessionStorage.getItem('authenticatedUser') == null) {
-      this._route.navigate(['login']);
+      this.router.navigate(['login']);
     } else {
       this.getAllEmails();
     }
@@ -35,7 +39,7 @@ export class EmailComponent {
 
   // to fetch all active emails
   getAllEmails() {
-    this._emailService.fetchAllEmails().subscribe(
+    this.emailService.fetchAllEmails().subscribe(
       (response) => {
         // assigning received data to emails
         this.emails = response;
@@ -64,10 +68,9 @@ export class EmailComponent {
     // setting emailId to null, to create new row(primary key must be unique)
     toCreateEmail.emailId = null;
 
-    this._emailService.insertEmail(toCreateEmail).subscribe(
+    this.emailService.insertEmail(toCreateEmail).subscribe(
       (response) => {
         this.email = response;
-        //  this.ngOnInit();
 
         // if data present in backup
         if (this.backupEmails.size > 0) {
@@ -98,7 +101,7 @@ export class EmailComponent {
 
   // for updating email
   updateEmail(toUpdateEmail: Email) {
-    this._emailService.updateEmail(toUpdateEmail).subscribe(
+    this.emailService.updateEmail(toUpdateEmail).subscribe(
       (response) => {
         this.email = response;
 
@@ -107,7 +110,6 @@ export class EmailComponent {
           this.email.emailId,
           Object.assign({}, this.email)
         );
-        // this.ngOnInit();
         alert('Data updated successfuly');
 
         if (this.emails.length > 0) {
@@ -122,12 +124,12 @@ export class EmailComponent {
 
   // for deleting record using email title
   deleteEmail(toDeleteEmail: Email) {
-    this._emailService.deleteEmail(toDeleteEmail.title).subscribe(
+    this.emailService.deleteEmail(toDeleteEmail.title).subscribe(
       (response) => {
         // removing object from emails array and backup
         this.emails.splice(this.emails.indexOf(toDeleteEmail), 1);
         this.backupEmails.delete(toDeleteEmail.emailId);
-        // this.ngOnInit();
+
         alert(toDeleteEmail.title + ' deleted successfuly');
 
         this.toggleExtraEmptyRow();
@@ -167,6 +169,6 @@ export class EmailComponent {
   // back button
   homePage() {
     this.location.back();
-    // this._route.navigate(['demo']);
+    // this.router.navigate(['demo']);
   }
 }
