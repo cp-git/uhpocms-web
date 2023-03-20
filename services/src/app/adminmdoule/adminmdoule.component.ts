@@ -26,7 +26,7 @@ export class AdminmdouleComponent {
   }
 
   RedirectTOAuth() {
-    this._route.navigate(['authuser', this.userName]);
+    this._route.navigate(['AuthUser', this.userName]);
 
   }
   RedirectToAssignTeacher() {
