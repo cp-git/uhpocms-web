@@ -48,7 +48,7 @@ import { TeacherComponent } from './teacher/teacher.component';
 import { StudentdataComponent } from './studentdata/studentdata.component';
 import { ActivationScreenComponent } from './teachermodule/activation-screen/activation-screen.component';
 import { QuizComponent } from './quiz/quiz.component';
-import { EnrollstudentComponent } from './enrollstudent/components/entrollstudent/enrollstudent.component';
+import { EnrollstudentComponent } from './enrollstudent/enrollstudent.component';
 import { StudentmoduleComponent } from './studentdata/component/studentmodule/studentmodule.component';
 import { StudentCourseComponent } from './student/student-course/student-course.component';
 import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';

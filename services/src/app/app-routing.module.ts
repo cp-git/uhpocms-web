@@ -44,7 +44,7 @@ import { AuthenticationloginComponent } from './authenticationlogin/authenticati
 import { AdminmdouleComponent } from './adminmdoule/adminmdoule.component';
 import { TeacherComponent } from './teacher/teacher.component';
 import { StudentdataComponent } from './studentdata/studentdata.component';
-import { EnrollstudentComponent } from './enrollstudent/components/entrollstudent/enrollstudent.component';
+import { EnrollstudentComponent } from './enrollstudent/enrollstudent.component';
 
 import { StudentmoduleComponent } from './studentdata/component/studentmodule/studentmodule.component';
 
