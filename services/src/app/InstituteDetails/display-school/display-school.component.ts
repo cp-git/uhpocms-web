@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Department } from 'app/admindepartment/department';
+import { Department } from 'app/admindepartment/class/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { Location } from '@angular/common';

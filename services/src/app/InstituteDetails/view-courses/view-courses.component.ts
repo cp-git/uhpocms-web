@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from 'app/course/course';
 import { CourseService } from 'app/course/course.service';
-import { AdminInstitution } from 'app/admin-institution/admininstitution';
+
 
 import { AdmininstitutionService } from 'app/admin-institution/service/admininstitution.service';
+import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 
 @Component({
   selector: 'app-view-courses',

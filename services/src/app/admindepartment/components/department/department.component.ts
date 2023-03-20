@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdminInstitution } from '../admin-institution/admin-institution';
-import { Department } from '../department';
-import { DepartmentService } from '../service/department.service';
+
+import { Department } from '../../class/department';
+import { DepartmentService } from '../../service/department.service';
 import { Location } from '@angular/common';
+import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
@@ -14,31 +15,39 @@ export class DepartmentComponent implements OnInit {
   departments: Department[] = [];
   backupDept: Department[] = [];
   _backupDept = new Map();
+
   // for extra row when there is no data
   isHidden: boolean = false;
   hideId: boolean = false;
   department: Department;
-
   userName!: string;
   adminId: any;
 
   // array of admin institution
-
   adminInstitutions: AdminInstitution[] = [];
   sessionData: any;
   data: any;
 
+  //constructor
   constructor(private _deptService: DepartmentService, private _route: Router, private location: Location, private _activatedRoute: ActivatedRoute) {
     this.department = new Department();
   }
 
+  //ngoninit
   ngOnInit(): void {
+    //code when user is not authenticated
     if (sessionStorage.getItem('authenticatedUser') == null) {
       this._route.navigate(['login']);
-    } else {
+
+    }
+    //code when user is authenticated
+    else {
+
+      // variables to get data from url
       this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
       this.userName = this._activatedRoute.snapshot.params['userName'];
-      console.log(this.userName)
+
+      //functions to be exceuted when page loads
       this.getAllDepartments();
       this.loadAdminInstitutions();
     }
@@ -46,9 +55,7 @@ export class DepartmentComponent implements OnInit {
 
   // for inserting new department in table
   addDepartment(dept: Department) {
-    // if (this.backupDept.findIndex((data) => data.name === dept.name) >= 0) {
-    //   alert('Department name already exist. please enter another.');
-    // } else {
+
     // assigning value
     this.department = {} as Department;
     this.department.name = dept.name;
@@ -112,7 +119,10 @@ export class DepartmentComponent implements OnInit {
       }
     );
   }
+
+  //function to update department by id
   updateDepartmentById(dept: Department) {
+
     // assigning value with id for update
     this.department = {} as Department;
     this.department.id = dept.id;
@@ -162,6 +172,7 @@ export class DepartmentComponent implements OnInit {
       }
     );
   }
+
   //deleting dept by id
   deleteDepartmentById(dept: Department) {
     this._deptService.deleteDepartmentById(dept.id).subscribe(
@@ -205,6 +216,8 @@ export class DepartmentComponent implements OnInit {
       this.department.active = true;
     }
   }
+
+  //function to get all institutions
   private loadAdminInstitutions() {
     this.sessionData = sessionStorage.getItem('admininstitution');
 
@@ -214,6 +227,7 @@ export class DepartmentComponent implements OnInit {
     }
   }
 
+  //function to get aal departments
   private getAllDepartments() {
     // fetching all departments
     this._deptService.fetchAllDepartments().subscribe(
@@ -237,23 +251,18 @@ export class DepartmentComponent implements OnInit {
       }
     );
 
-    // this._deptService.fetchAllInstitutions().subscribe(
-    //   response => {
-    //     this.adminInstitutions = (response);
-    //   },
-    //   error => {
-    //     alert("Not able to fetch data \n" + JSON.stringify(error.error));
-    //   }
-    // );
+
   }
 
+  //function to route
   Home() {
-    // this.location.back();
+
     this._route.navigate(['adminmodule/admin', this.userName]);
   }
 
+  //function to route
   redirectToActivateDepartment() {
-    console.log("in department..")
+
     this._route.navigate(['department/departmentactivation', this.userName]);
   }
 }

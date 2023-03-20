@@ -1,0 +1,22 @@
+<div class="container-fluid text-center">
+    <div class="header1">
+        <h1>Activate Institution</h1>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3 text-center" *ngFor="let institution of institutions">
+                <div><img src="../../assets/img/{{institution.adminInstitutionPicture}}" />
+                </div>
+
+                <div><button #btn1 id="demo" class="btn btn-info">{{institution.adminInstitutionName}}</button>
+                </div>
+                <div><button class="btn btn-success"
+                        (click)="activateInstitution(institution.adminInstitutionId)">Activate</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <td><button class="btn btn-primary" (click)="home()">Back</button></td>
+</div>

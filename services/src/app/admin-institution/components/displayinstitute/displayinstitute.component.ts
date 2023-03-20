@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
-
-import { AdminInstitution } from '../admininstitution';
-import { AdmininstitutionService } from '../service/admininstitution.service';
+import { AdmininstitutionService } from '../../service/admininstitution.service';
 
 import { Location } from '@angular/common';
+import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 
 @Component({
   selector: 'app-displayinstitute',
@@ -13,6 +11,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./displayinstitute.component.css']
 })
 export class DisplayinstituteComponent {
+
   // Institution array
   admininstitutions: AdminInstitution[] = [];
   backupInst: AdminInstitution[] = [];
@@ -21,25 +20,34 @@ export class DisplayinstituteComponent {
   isHidden: boolean = false;
   hideId: boolean = false;
   admininstitution: AdminInstitution;
-
   userName!: string;
   adminId: any;
 
+  //constructor
   constructor(private _institutionService: AdmininstitutionService, private _route: Router, private location: Location, private _activatedRoute: ActivatedRoute) {
     this.admininstitution = new AdminInstitution();
   }
 
+  //ngOnint function
   ngOnInit(): void {
+
+    //if not authenticated route back to login page
     if (sessionStorage.getItem('authenticatedUser') == null) {
       this._route.navigate(['login']);
-    } else {
+    }
+
+    //if authenticated
+    else {
+      //code to get data from url
       this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
       this.userName = this._activatedRoute.snapshot.params['userName'];
-      console.log(this.userName)
+
+      //onload of page this function should be executed
       this.getAllInstitution();
 
     }
   }
+
   // for displaying empty when there is no data on ui
   private displayEmptyRow() {
     if (this.admininstitutions.length <= 0) {
@@ -49,12 +57,12 @@ export class DisplayinstituteComponent {
     }
   }
 
-
+  //function to route 
   addInstitute() {
-    console.log("in function")
     this._route.navigate(['addinstitute', this.userName])
   }
 
+  //function to get all institutions
   private getAllInstitution() {
     // fetching all institution
     this._institutionService.fetchAdminInstitutionList().subscribe(
@@ -78,6 +86,7 @@ export class DisplayinstituteComponent {
       }
     );
   }
+
   // for deleting institution by name
   deleteInstitution(inst: AdminInstitution) {
     // calling service mathod to delete institution
@@ -100,7 +109,6 @@ export class DisplayinstituteComponent {
   }
 
   redirectToActivateInstitution() {
-
     this._route.navigate(['displayinstitute/activate', this.userName]);
   }
 

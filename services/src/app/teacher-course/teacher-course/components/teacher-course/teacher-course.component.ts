@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
 // Module specific imports
-import { AdminInstitution } from 'app/admin-institution/admininstitution';
+
 import { Course } from '../../course';
 import { TeacherCourseService } from '../../services/teacher-course.service';
 import { CourseAllColumn, CourseColumn } from '../../teacher-course-column';
+import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 
 @Component({
   selector: 'app-teacher-course',
