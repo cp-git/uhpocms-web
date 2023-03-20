@@ -53,17 +53,6 @@ export class AssigncoursetoteacherComponent {
   maxResults = 10;
   offset = 0;
 
-  categories = [
-    { id: 1, name: 'Laravel' },
-    { id: 2, name: 'Codeigniter' },
-    { id: 3, name: 'React' },
-    { id: 4, name: 'PHP' },
-    { id: 5, name: 'Angular' },
-    { id: 6, name: 'Vue' },
-    { id: 7, name: 'JQuery', disabled: true },
-    { id: 8, name: 'Javascript' },
-  ];
-
   selected = [
 
   ];
@@ -149,8 +138,8 @@ export class AssigncoursetoteacherComponent {
     )
   }
 
+  //function for get Course by department id
   getCoursesByDeptId(deptId: number) {
-
     console.log(this.department);
     console.log(deptId);
     deptId = this.department.id;

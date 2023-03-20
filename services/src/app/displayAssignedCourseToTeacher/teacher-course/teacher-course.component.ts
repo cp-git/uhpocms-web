@@ -56,6 +56,8 @@ export class TeacherCourseComponent {
   RedirectToCourseSyllabus() {
     this._route.navigate(['coursesyllabus']);
   }
+
+  //get department
   loadAdminDepartments() {
     this.departmentService.fetchAllDepartments().subscribe(
       response => {
@@ -68,6 +70,7 @@ export class TeacherCourseComponent {
   }
 
 
+  //get courses
   loadCourseDepartment() {
     this.courseDepartmentService.getCoursesDepartmentId().subscribe(
       response => {
@@ -127,11 +130,13 @@ export class TeacherCourseComponent {
     );
   }
 
+
+  //function for insert syllabus with course id
   addSyllabus(courseId: number, courseSyllabus: Coursesyllabus) {
     this.courseSyllabus.courseId = courseId;
     this.courseSyllabus.syllabusFile = courseSyllabus.syllabusFile;
     this.courseSyllabus.courseSyllabusIsActive = true;
-    // alert(this.courseSyllabus.syllabusFile);
+
     this.courseSyllabusServices.addCourseSyllabus(this.courseSyllabus).subscribe(
       (data) => {
         alert(this.courseSyllabus)

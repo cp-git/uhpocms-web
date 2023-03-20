@@ -50,7 +50,7 @@ import { StudentmoduleComponent } from './studentdata/component/studentmodule/st
 
 import { StudentCourseComponent } from './student/student-course/student-course.component';
 // import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';
-import { InactiveTeacherCourseComponent } from './assignedCourseToTeacher/inactive-teacher-course/inactive-teacher-course.component';
+import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher/inactive-teacher-course/inactive-teacher-course.component';
 
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
