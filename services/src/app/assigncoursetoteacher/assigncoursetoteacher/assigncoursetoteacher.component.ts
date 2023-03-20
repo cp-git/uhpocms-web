@@ -2,7 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { AdmininstitutionService } from 'app/admin-institution/service/admininstitution.service';
 import { Department } from 'app/admindepartment/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
-import { Course } from 'app/course/course';
+import { Course } from 'app/course/class/course';
 import { CourseService } from 'app/course/service/course.service';
 import { Location } from '@angular/common';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';

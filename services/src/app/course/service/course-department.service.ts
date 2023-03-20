@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'environments/environment.development';
 
 import { map } from 'rxjs';
-import { Coursedepartment } from './coursedepartment';
+import { Coursedepartment } from '../class/coursedepartment';
 
 @Injectable({
   providedIn: 'root'

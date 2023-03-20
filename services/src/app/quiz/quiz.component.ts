@@ -3,11 +3,11 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from 'app/category/category';
 import { CategoryService } from 'app/category/category.service';
-import { Course } from 'app/course/course';
+import { Course } from 'app/course/class/course';
 import { CourseService } from 'app/course/service/course.service';
 import { Module } from 'app/module/module';
 import { ModuleService } from 'app/module/module.service';
-import { Quiz } from './quiz';
+import { Quiz } from './class/quiz';
 import { QuizService } from './service/quiz.service';
 import { Location } from '@angular/common';
 
@@ -68,6 +68,8 @@ export class QuizComponent {
     console.log(this._quizMap);
   }
 
+
+  //getting All Quiz Data
   getAllQuizzes() {
     this._quizService._getAllQuizzes().subscribe(
       (data) => {
@@ -86,6 +88,8 @@ export class QuizComponent {
     );
   }
 
+
+  //getting allcourses as dropdown
   getAllCourses() {
     this._courseService._getAllCourses().subscribe((data) => {
       this._courseArray = data;
@@ -94,6 +98,8 @@ export class QuizComponent {
       });
     });
   }
+
+  //Getting All Category as dropdown
   getAllCategorys() {
     this._categoryService._getAllCategorys().subscribe((data) => {
       this._categoryArray = data;
@@ -106,6 +112,8 @@ export class QuizComponent {
     });
   }
 
+
+  //getting all modules as dropdown
   getAllModules() {
     this._moduleService._getAllModules().subscribe((data) => {
       this._moduleArray = data;
@@ -115,6 +123,8 @@ export class QuizComponent {
     });
   }
 
+
+  //Navigating the route to quiz
   Add() {
     this._route.navigate(['createQuiz', this.userName]);
     // let quizObj = new Quiz;
@@ -158,11 +168,14 @@ export class QuizComponent {
   }
 
 
+  //Routing to the Update Quiz
   updateQuiz(title: string) {
     this._route.navigate(['updateQuiz', title, this.userName])
 
   }
 
+
+  //Deleting the quiz (soft delete)
   deleteQuiz(quiz: Quiz, title: string) {
     this._quizService._deleteQuiz(title).subscribe(
       (data) => {
@@ -178,6 +191,8 @@ export class QuizComponent {
     );
   }
 
+
+  //Getting Inactive Quiz
   getInactiveQuizzes() {
     this.inActivationScreenStatus = true;
     this.activationScreenStatus = true;
@@ -199,6 +214,8 @@ export class QuizComponent {
 
   }
 
+
+  //Activate Quiz status
   updateActiveStatus(quiz: Quiz) {
 
     this._quizService.updateActiveStatus(quiz.title, quiz).subscribe(data => {
@@ -211,6 +228,8 @@ export class QuizComponent {
     }, error => console.log(error));
 
   }
+
+  //Routing back to panel
   back() {
 
     console.log("in method..")

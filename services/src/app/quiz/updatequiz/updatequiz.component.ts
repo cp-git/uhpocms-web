@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from 'app/category/category';
 import { CategoryService } from 'app/category/category.service';
-import { Course } from 'app/course/course';
-import { CourseService } from 'app/course/course.service';
+import { Course } from 'app/course/class/course';
+import { CourseService } from 'app/course/service/course.service';
+
 import { Module } from 'app/module/module';
 import { ModuleService } from 'app/module/module.service';
-import { Quiz } from '../quiz';
+import { Quiz } from '../class/quiz';
 import { QuizService } from '../service/quiz.service';
 
 @Component({
@@ -67,6 +68,8 @@ export class UpdatequizComponent {
   }
 
 
+
+  //getting the Courses As a Dropdown
   getAllCourses() {
     this._courseService._getAllCourses().subscribe(
       data => {
@@ -77,6 +80,8 @@ export class UpdatequizComponent {
       }
     )
   }
+
+  //getting Category as dropdown
   getAllCategorys() {
     this._categoryService._getAllCategorys().subscribe(
       data => {
@@ -86,6 +91,8 @@ export class UpdatequizComponent {
     )
   }
 
+
+  //getting modules as dropdown
   getAllModules() {
     this._moduleService._getAllModules().subscribe(
       data => {
@@ -99,6 +106,7 @@ export class UpdatequizComponent {
   }
 
 
+  //updating the quiz
   updateQuiz(quiz: Quiz) {
     this._service._updateQuiz(this.title, this._quiz).subscribe(data => {
       //console.log(data)
@@ -108,6 +116,8 @@ export class UpdatequizComponent {
     }, error => console.log(error));
   }
 
+
+  //Routing back to quiz home page
   back() {
     this._route.navigate(['quiz', this.userName]);
   }

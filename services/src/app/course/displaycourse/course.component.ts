@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminInstitution } from 'app/admindepartment/admin-institution/admin-institution';
 import { InstitutionSeriveService } from 'app/instituteadminprofile/institution-serive.service';
-import { Course } from '../course';
+import { Course } from '../class/course';
 import { CourseService } from '../service/course.service';
 import { Department } from 'app/admindepartment/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
-import { Coursedepartment } from '../coursedepartment';
-import { CourseDepartmentService } from '../course-department.service';
+import { Coursedepartment } from '../class/coursedepartment';
+import { CourseDepartmentService } from '../service/course-department.service';
 import { Location } from '@angular/common';
 
 @Component({
@@ -67,6 +67,8 @@ export class CourseComponent {
 
 
   }
+
+  //getting All Institute
   getAllInstitutes() {
     this._instService._getAllInstitutions().subscribe((data) => {
       this.institutions = data;
@@ -82,6 +84,8 @@ export class CourseComponent {
       }
     });
   }
+
+  //getting All COurses
   getAllCourses() {
     this._service._getAllCourses().subscribe((data) => {
       this.courses = data;
@@ -98,13 +102,20 @@ export class CourseComponent {
     });
   }
 
+
+  //Routing to the Add Course
   Add() {
     this._route.navigate(['addcourse']);
   }
 
+
+  //Routing to Update Course
   updatecourse(course: Course, courseName: string) {
     this._route.navigate(['updatecourse', courseName, this.userName]);
   }
+
+
+  //Navigating to Admin Panel
   Home() {
     this._route.navigate(['adminmodule/admin', this.userName])
     // if (this._activatedRoute.snapshot.params['role'] == 'admin') { this._route.navigate(['adminmodule/admin']); }
@@ -117,6 +128,8 @@ export class CourseComponent {
 
   }
 
+
+  //delete Course (Soft Delete)
   deletecourse(course: Course) {
     this._service.deleteCourseByName(course.courseName).subscribe(
       (data) => {
@@ -135,6 +148,8 @@ export class CourseComponent {
     );
   }
 
+
+  //Delete Course by CourseId
   deletecourseById(course: Course) {
     this._service.deleteCourseByCourseId(course.courseId).subscribe(
       (data) => {
@@ -153,10 +168,12 @@ export class CourseComponent {
     );
   }
 
+  //Redirected to Activating  Course
   redirectToActivateCourse() {
     this._route.navigate(['/activate']);
   }
 
+  //Getting AllDeactivatedCourse
   getAllDeactivateCourses() {
     this._service.getAllDeactivateCourses().subscribe(
       (response) => {
@@ -168,6 +185,8 @@ export class CourseComponent {
     );
   }
 
+
+  //Activating the course..
   activateCourse(courseId: number) {
     this._service.activateCourseById(courseId).subscribe(
       (response) => {
@@ -185,11 +204,14 @@ export class CourseComponent {
   //   this._route.navigate(['/course']);
   // }
 
+  //Boolean value for display screen
   activationScreen() {
     this.isActivationScreen = true;
     this.ngOnInit();
   }
 
+
+  //Fetching the all department
   loadAdminDepartments() {
     this.departmentService.fetchAllDepartments().subscribe(
       response => {
@@ -201,6 +223,8 @@ export class CourseComponent {
     );
   }
 
+
+  //Fetching the Department by Id
   loadCourseDepartment() {
     this.courseDepartmentService.getCoursesDepartmentId().subscribe(
       response => {
@@ -212,6 +236,8 @@ export class CourseComponent {
     )
   }
 
+
+  //Navigetting to Inactive Course
   inactivecourse() {
     this._route.navigate(['inactivecourse', this.adminId, this.userName])
   }

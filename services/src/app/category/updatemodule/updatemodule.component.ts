@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Course } from 'app/course/course';
+import { Course } from 'app/course/class/course';
 import { Module } from 'app/module/module';
 import { TeachermoduleserviceService } from 'app/teachermodule/teachermoduleservice.service';
 
