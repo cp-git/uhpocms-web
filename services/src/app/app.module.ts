@@ -17,7 +17,7 @@ import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-
 import { DepartmentComponent } from './admindepartment/components/department/department.component';
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
-import { QuestionComponent } from './teacherquestion/question/question.component';
+
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
 import { HomeComponent } from './home/home.component';
@@ -63,7 +63,7 @@ import { DepartmentModule } from './department/department.module';
 
 import { AuthUserModule } from './auth-user/auth-user.module';
 import { QuestionModule } from './question/question.module';
-import { TeacherCourseModule } from './teacher-course/teacher-course/teacher-course.module';
+
 import { CategoryComponent } from './category/component/component/category.component';
 import { MainComponent } from './category/UI/main/main.component';
 import { AddModuleComponent } from './category/UI/add-module/add-module.component';
@@ -74,6 +74,8 @@ import { AdminmdouleComponent } from './adminmdoule/components/admin-module/admi
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
 import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
 import { CourseComponent } from './course/displaycourse/course.component';
+import { TeacherCourseModule } from './teacher-course/teacher-course.module';
+// import { QuestionComponent } from './question/components/question/question.component';
 
 
 
@@ -85,9 +87,10 @@ import { CourseComponent } from './course/displaycourse/course.component';
     DisplayInstituteAdminComponent,
     DepartmentComponent,
     AdminroleComponent,
+    AdminroleComponent,
     LoginauthComponent,
     TeachermoduleComponent,
-    QuestionComponent,
+    // QuestionComponent,
     HomeComponent,
     CourseComponent,
     AddcourseComponent,

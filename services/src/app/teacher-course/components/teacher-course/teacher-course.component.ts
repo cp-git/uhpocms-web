@@ -5,7 +5,8 @@ import { Location } from '@angular/common';
 import { CourseAllColumn, CourseColumn } from 'app/teacher-course/teacher-course-column';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { Course } from 'app/teacher-course/course';
-import { AdminInstitution } from 'app/admin-institution/admininstitution';
+import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
+
 
 @Component({
   selector: 'app-teacher-course',
@@ -142,7 +143,7 @@ export class TeacherCourseComponent implements OnInit {
   // For updating course
   private updateCourse(currentData: Course) {
     // calling service for updating data
-    this.service.updateCourseById(currentData.courseId, currentData).subscribe(
+    this.service.updateCourseListById(currentData.courseId, currentData).subscribe(
       response => {
         alert(`Course updated successfully !`);
         this.back();
