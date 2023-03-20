@@ -42,7 +42,7 @@ import { UpdateinstituteadminprofileComponent } from './instituteadminprofile/up
 import { ViewinstiteadminprofileComponent } from './instituteadminprofile/viewinstiteadminprofile/viewinstiteadminprofile.component';
 import { AuthenticationloginComponent } from './authenticationlogin/authenticationlogin.component';
 import { AdminmdouleComponent } from './adminmdoule/adminmdoule.component';
-import { TeacherComponent } from './teacher/teacher.component';
+import { TeacherPanelComponent } from './teacher-panel/components/teacher-panel/teacher-panel.component';
 import { StudentdataComponent } from './studentdata/studentdata.component';
 import { EnrollstudentComponent } from './enrollstudent/enrollstudent.component';
 
@@ -65,12 +65,14 @@ import { AdminRoleComponent } from './admin-role/components/admin-role/admin-rol
 import { AuthUserComponent } from './auth-user/components/auth-user/auth-user.component';
 import { QuestionComponent } from './question/components/question/question.component';
 import { DepartmentComponent } from './department/components/department/department.component';
-import { TeacherCourseComponent } from './teacher-course/teacher-course/components/teacher-course/teacher-course.component';
+import { TeacherCourseComponent } from './teacher-course/components/teacher-course/teacher-course.component';
 import { CategoryComponent } from './category/component/component/category.component';
-
+import { TeacherQuestionComponent } from './teacher-question/components/teacher-question/teacher-question.component';
 
 
 const routes: Routes = [
+  //Teacher-question
+  {path:'question',component:TeacherQuestionComponent},
 
   //AuthUser
 
@@ -152,7 +154,7 @@ const routes: Routes = [
 
   { path: 'adminmodule/admin/:userName', component: AdminmdouleComponent },
 
-  { path: 'teacherdisplay/teacher/:userName', component: TeacherComponent },
+  { path: 'teacherdisplay/teacher/:userName', component: TeacherPanelComponent },
 
 
 
@@ -175,8 +177,7 @@ const routes: Routes = [
   //auth user routes
   // { path: 'authuser', component: AuthuserComponent },
 
-  //question routes
-  // { path: 'question', component: QuestionComponent },
+ 
   //login route
   { path: 'demo', component: LoginComponentComponent },
   { path: 'login', component: LoginauthComponent },

@@ -17,7 +17,7 @@ import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-
 import { DepartmentComponent } from './admindepartment/department/department.component';
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
-import { QuestionComponent } from './teacherquestion/question/question.component';
+import { TeacherQuestionComponent } from './teacher-question/components/teacher-question/teacher-question.component';
 import { EmailComponent } from './email/email/email.component';
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
@@ -45,7 +45,7 @@ import { UpdateinstituteadminprofileComponent } from './instituteadminprofile/up
 import { ViewinstiteadminprofileComponent } from './instituteadminprofile/viewinstiteadminprofile/viewinstiteadminprofile.component';
 import { AuthenticationloginComponent } from './authenticationlogin/authenticationlogin.component';
 import { AdminmdouleComponent } from './adminmdoule/adminmdoule.component';
-import { TeacherComponent } from './teacher/teacher.component';
+import { TeacherPanelComponent } from './teacher-panel/components/teacher-panel/teacher-panel.component';
 import { StudentdataComponent } from './studentdata/studentdata.component';
 import { ActivationScreenComponent } from './teachermodule/activation-screen/activation-screen.component';
 import { QuizComponent } from './quiz/quiz.component';
@@ -67,12 +67,13 @@ import { DepartmentModule } from './department/department.module';
 // import { ProfilesModule } from './profiles/profiles.module';
 import { AuthUserModule } from './auth-user/auth-user.module';
 import { QuestionModule } from './question/question.module';
-import { TeacherCourseModule } from './teacher-course/teacher-course/teacher-course.module';
+import { TeacherCourseModule } from './teacher-course/teacher-course.module';
 import { CategoryComponent } from './category/component/component/category.component';
 import { MainComponent } from './category/UI/main/main.component';
 import { AddModuleComponent } from './category/UI/add-module/add-module.component';
 import { AddCategoryComponent } from './category/UI/add-category/add-category.component';
 import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
+
 
 @NgModule({
   declarations: [
@@ -85,7 +86,7 @@ import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.comp
     LoginauthComponent,
     TeachermoduleComponent,
     EmailComponent,
-    QuestionComponent,
+    
     HomeComponent,
     CourseComponent,
     AddcourseComponent,
@@ -112,7 +113,7 @@ import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.comp
     ViewinstiteadminprofileComponent,
     AuthenticationloginComponent,
     AdminmdouleComponent,
-    TeacherComponent,
+    TeacherPanelComponent,
     StudentdataComponent,
     ActivationScreenComponent,
     QuizComponent,
@@ -128,6 +129,7 @@ import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.comp
 
     CreateinstituteadminprofileComponent,
     InactivecourseComponent,
+    TeacherQuestionComponent,
 
   ],
 
