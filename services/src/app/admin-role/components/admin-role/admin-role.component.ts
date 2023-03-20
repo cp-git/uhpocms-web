@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
 // Module specific imports
-import { AdminRole } from 'app/admin-role/admin-role';
+import { AdminRole } from 'app/admin-role/class/admin-role';
 import { AdminRoleService } from 'app/admin-role/services/admin-role.service';
-import { AdminRoleAllColumn, AdminRoleColumn } from 'app/admin-role/admin-role-column';
+import { AdminRoleAllColumn, AdminRoleColumn } from 'app/admin-role/column-names/admin-role-column';
+
 
 @Component({
   selector: 'app-admin-role',

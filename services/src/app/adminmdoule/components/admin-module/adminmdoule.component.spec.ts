@@ -8,9 +8,9 @@ describe('AdminmdouleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminmdouleComponent ]
+      declarations: [AdminmdouleComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AdminmdouleComponent);
     component = fixture.componentInstance;

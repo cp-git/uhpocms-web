@@ -1,42 +1,46 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
+import { AdmininstitutionService } from 'app/admin-institution/service/admininstitution.service';
 
 
-import { AdminInstitution } from '../admininstitution';
-import { AdmininstitutionService } from '../service/admininstitution.service';
 
 @Component({
   selector: 'app-addinstitute',
   templateUrl: './addinstitute.component.html',
   styleUrls: ['./addinstitute.component.css']
 })
+
 export class AddinstituteComponent {
+
+  //variable declarations
   fileName: string;
-  // _disablevar: boolean = false;
   buttonDisabled = true;
-  // Institution array
   admininstitutions: AdminInstitution[] = [];
   backupInst: AdminInstitution[] = [];
+  userName!: string;
+  adminId: any;
+
 
   // for extra row when there is no data
   isHidden: boolean = false;
   hideId: boolean = false;
   admininstitution: AdminInstitution;
 
-  userName!: string;
-  adminId: any;
 
-
+  //constructor
   constructor(private _institutionService: AdmininstitutionService, private _route: Router, private _activatedRoute: ActivatedRoute) {
     this.admininstitution = new AdminInstitution();
     this.fileName = '';
   }
 
+  //ngOninit function
   ngOnInit(): void {
 
+    //variables to store data form url
     this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
-    console.log(this.userName)
+
 
 
   }
@@ -44,11 +48,11 @@ export class AddinstituteComponent {
 
 
 
-
+  //file selection code
   onFileSelected(event: any) {
     this.fileName = event.target.files[0].name;
     if (this.fileName != '') {
-      //this.disablefunc();
+
     }
   }
 
@@ -117,7 +121,7 @@ export class AddinstituteComponent {
 
 
 
-
+  //back button routing
   Back() {
     this._route.navigate(['displayinstitute', this.userName]);
   }

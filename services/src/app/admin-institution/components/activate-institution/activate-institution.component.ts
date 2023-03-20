@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdminInstitution } from '../admininstitution';
-import { AdmininstitutionService } from '../service/admininstitution.service';
+import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
+
+import { AdmininstitutionService } from '../../service/admininstitution.service';
 
 @Component({
   selector: 'app-activate-institution',
@@ -10,23 +11,32 @@ import { AdmininstitutionService } from '../service/admininstitution.service';
 })
 export class ActivateInstitutionComponent implements OnInit {
 
+  //variable initialization
   institutions: AdminInstitution[] = [];
   userName!: string;
   adminId: any;
 
+  //constructor
   constructor(private _institutionService: AdmininstitutionService, private _router: Router,
     private _activatedRoute: ActivatedRoute) {
 
   }
 
+
+  //ngOnint method
   ngOnInit(): void {
+
+    //variables to get data from url
     this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
-    console.log(this.userName)
+
+    //onload of page this function should execute
     this.getAllDeactivatedInstitutions();
   }
 
+  //function to get all inactive institutions
   getAllDeactivatedInstitutions() {
+
     this._institutionService.getDeactivatedInstitutions().subscribe(
       response => {
         this.institutions = response;
@@ -37,6 +47,7 @@ export class ActivateInstitutionComponent implements OnInit {
     );
   }
 
+  //function to activate inactive institution by id
   activateInstitution(institutionId: number) {
     this._institutionService.activateInstitutionById(institutionId).subscribe(
       response => {
@@ -49,8 +60,9 @@ export class ActivateInstitutionComponent implements OnInit {
     );
   }
 
-  home() {
 
+  //routing function
+  home() {
     this._router.navigate(['displayinstitute', this.userName]);
   }
 
