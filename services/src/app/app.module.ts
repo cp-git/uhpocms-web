@@ -18,7 +18,6 @@ import { DepartmentComponent } from './admindepartment/department/department.com
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 import { QuestionComponent } from './teacherquestion/question/question.component';
-import { EmailComponent } from './email/email/email.component';
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
 import { HomeComponent } from './home/home.component';
@@ -49,7 +48,7 @@ import { TeacherComponent } from './teacher/teacher.component';
 import { StudentdataComponent } from './studentdata/studentdata.component';
 import { ActivationScreenComponent } from './teachermodule/activation-screen/activation-screen.component';
 import { QuizComponent } from './quiz/quiz.component';
-import { EnrollstudentComponent } from './enrollstudent/enrollstudent.component';
+import { EnrollstudentComponent } from './enrollstudent/components/entrollstudent/enrollstudent.component';
 import { StudentmoduleComponent } from './studentdata/component/studentmodule/studentmodule.component';
 import { StudentCourseComponent } from './student/student-course/student-course.component';
 import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';
@@ -73,6 +72,7 @@ import { MainComponent } from './category/UI/main/main.component';
 import { AddModuleComponent } from './category/UI/add-module/add-module.component';
 import { AddCategoryComponent } from './category/UI/add-category/add-category.component';
 import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
+import { EmailComponent } from './email/components/email/email.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +84,6 @@ import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.comp
     AdminroleComponent,
     LoginauthComponent,
     TeachermoduleComponent,
-    EmailComponent,
     QuestionComponent,
     HomeComponent,
     CourseComponent,
@@ -125,9 +124,9 @@ import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.comp
     AddDepartmentsComponent,
     StudentmoduleComponent,
     AssigncoursetoteacherComponent,
-
     CreateinstituteadminprofileComponent,
     InactivecourseComponent,
+    EmailComponent
 
   ],
 
