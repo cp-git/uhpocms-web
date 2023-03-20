@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'app/authlogin/auth.service';
-import { Authuser } from 'app/authuser/authuser';
+import { AuthService } from 'app/authlogin/service/auth.service';
+import { Authuser } from 'app/authuser/class/authuser';
 import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
 import { InsertinstituteadminprofileComponent } from '../insertinstituteadminprofile/insertinstituteadminprofile.component';
 import { InstituteAdmin } from '../institute-admin';

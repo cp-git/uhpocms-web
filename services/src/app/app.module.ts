@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { HttpInterceptorServiceService } from './authlogin/http-interceptor-service.service';
+import { HttpInterceptorServiceService } from './authlogin/service/http-interceptor-service.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CommonModule } from '@angular/common';
 

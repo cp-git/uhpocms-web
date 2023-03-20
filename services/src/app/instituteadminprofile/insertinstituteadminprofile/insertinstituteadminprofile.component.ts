@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Department } from 'app/admindepartment/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
-import { Authuser } from 'app/authuser/authuser';
+import { Authuser } from 'app/authuser/class/authuser';
 import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
 import { Admin } from 'app/roleadmin/admin';
 import { AdminroleserviceService } from 'app/roleadmin/adminroleservice.service';

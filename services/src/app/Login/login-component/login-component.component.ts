@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router'
 import { Department } from 'app/admindepartment/department';
+import { AuthService } from 'app/authlogin/service/auth.service';
 
-import { AuthService } from 'app/authlogin/auth.service';
+
 
 @Component({
   selector: 'app-login-component',

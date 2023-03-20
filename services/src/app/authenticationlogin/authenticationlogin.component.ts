@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Authuser } from 'app/authuser/authuser';
+import { Authuser } from 'app/authuser/class/authuser';
 import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 import { InstituteAdminServiceService } from 'app/instituteadminprofile/institute-admin-service.service';

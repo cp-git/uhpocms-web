@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Authuser } from '../authuser';
+import { Authuser } from '../class/authuser';
 import { AuthuserserviceService } from '../service/authuserservice.service';
 
 import { Location } from '@angular/common';
