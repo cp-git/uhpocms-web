@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Department } from 'app/admindepartment/department';
+import { Department } from 'app/admindepartment/class/department';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { environment } from 'environments/environment.development';
 import { Observable } from 'rxjs';
@@ -15,11 +15,8 @@ export class DepartmentService {
   constructor(private _http: HttpClient) {
 
 
-    // this.departmentUrl = environment.departmentUrl;
+    this.departmentUrl = environment.departmentUrl;
     this.adminInstitutionUrl = environment.adminInstitutionUrl;
-
-    this.departmentUrl = `http://localhost:8090/department/uhpocms`;
-    // this.adminInstitutionUrl = `http://localhost:8090/department/uhpocms`;
 
   }
 
@@ -47,8 +44,7 @@ export class DepartmentService {
     return this._http.get<Department>(`${this.departmentUrl}/getdept/` + name);
   }
 
-
-  getDepartmentByInstitutionId(id: number): Observable<Department[]> {
+  getDepartmentsByInstitutionId(id: number): Observable<Department[]> {
     return this._http.get<Department[]>(`${this.departmentUrl}/department/institutionId/` + id);
   }
 

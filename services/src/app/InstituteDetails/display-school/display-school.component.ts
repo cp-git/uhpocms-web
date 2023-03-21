@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Department } from 'app/admindepartment/department';
+import { Department } from 'app/admindepartment/class/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { Location } from '@angular/common';
@@ -13,22 +13,22 @@ import { Location } from '@angular/common';
 export class DisplaySchoolComponent {
   // Institution array
   admininstitutions: AdminInstitution[] = [];
-  backupInst: AdminInstitution[] = [];
+  backupInst: AdminInstitution[] = []; //backup array for admininstitutions
 
-  // for extra row when there is no data
+  //to show or hide extra rows in the HTML table when there is no data
   isHidden: boolean = false;
-  hideId: boolean = false;
-  admininstitution: AdminInstitution;
+  hideId: boolean = false; // to hide or show the institution ID in the HTML table
+  admininstitution: AdminInstitution; //AdminInstitution object used to store details of a particular institution
 
-  sessionData: any;
-  data: any;
+  sessionData: any;  //to store data retrieved from the session storage
+  data: any; //to store parsed session data
 
-  // department array
+  // array of Department objects used to store departments for a particular institution
   departments: Department[] = [];
   backupDept: Department[] = [];
-  id: any | undefined | null;
+  id: any | undefined | null;// used to store a particular institution's ID
 
-  public institutionId: any;
+  public institutionId: any; //to store the current institution's ID
 
   department = new Department();
 
@@ -78,7 +78,7 @@ export class DisplaySchoolComponent {
 
 
 
-
+// load and assign the current institution's details
     this.loadAdminInstitutions();
     this.assignInstitution();
 
@@ -93,6 +93,8 @@ export class DisplaySchoolComponent {
       }
     })
   }
+  //loads all the available institutions from the session storage and 
+  //adds them to the admininstitutions array
   private loadAdminInstitutions() {
     this.sessionData = sessionStorage.getItem('admininstitution');
 
@@ -102,15 +104,18 @@ export class DisplaySchoolComponent {
     }
   }
 
+  // method that navigates to the displayinstitute page with the current user's name as a parameter
   Display() {
-    //this.location.back();
+   
     this._route.navigate(['/displayinstitute', this.userName]);
   }
 
+  //method that navigates to the departments page
   addDepartment() {
     this._route.navigate(['departments'])
   }
 
+  //method that navigates to the departmentCourse page with the department ID and current user's name as parameters
   viewDepartment(id: number) {
     this._route.navigate(['departmentCourse', id, this.userName])
   }

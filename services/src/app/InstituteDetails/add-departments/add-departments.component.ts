@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Department } from 'app/admindepartment/department';
+import { Department } from 'app/admindepartment/class/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { Location } from '@angular/common';
@@ -36,6 +36,8 @@ export class AddDepartmentsComponent {
     this.department = new Department();
   }
 
+//checks if the user is authenticated, and if not, redirects to the login page.
+// Otherwise, it loads the admin institutions.
   ngOnInit(): void {
     if (sessionStorage.getItem('authenticatedUser') == null) {
       this._route.navigate(['login']);
@@ -44,7 +46,9 @@ export class AddDepartmentsComponent {
     }
   }
 
+  // adds a new department by calling the insertDepartment method of the DepartmentService
   addDepartment(dept: Department) {
+    // If the department name already exists, the method displays an alert message to the user
     if (this.backupDept.findIndex((data) => data.name === dept.name) >= 0) {
       alert('Department name already exist. please enter another.');
     } else {
@@ -71,7 +75,7 @@ export class AddDepartmentsComponent {
 
           this.departments.push(this.department);
           this.backupDept.push(Object.assign({}, this.department));
-          alert('Added Successfuly');
+          alert('Added Successfully');
           this.location.back();
 
 
@@ -88,6 +92,7 @@ export class AddDepartmentsComponent {
     }
   }
 
+  //loads the admin institutions from session storage
   private loadAdminInstitutions() {
     this.sessionData = sessionStorage.getItem('admininstitution');
 
@@ -97,6 +102,7 @@ export class AddDepartmentsComponent {
     }
   }
 
+  // allows the user to go back to the previous page
   HomeBtn() {
     this.location.back();
   }

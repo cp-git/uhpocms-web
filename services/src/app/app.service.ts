@@ -7,8 +7,9 @@ import { Module } from './class/module';
 import { Quiz } from './class/quiz';
 import { InstituteAdmin } from './instituteadminprofile/institute-admin';
 
-import { AdminInstitution } from './admindepartment/admin-institution/admin-institution';
+
 import { environment } from 'environments/environment.development';
+import { AdminInstitution } from './admin-institution/class/admininstitution';
 @Injectable({
   providedIn: 'root',
 })

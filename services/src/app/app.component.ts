@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { AdminInstitution } from './admin-institution/class/admininstitution';
 import { AppService } from './app.service';
-import { AdminInstitution } from './class/admin-institution';
+
 import { Category } from './class/category';
 import { Course } from './class/course';
 import { Module } from './class/module';

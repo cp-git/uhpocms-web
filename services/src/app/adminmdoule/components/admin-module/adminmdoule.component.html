@@ -1,0 +1,206 @@
+<div class="container-fluid mt-5 mb-3">
+
+    <head>
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    </head>
+
+    <div class="header">
+        <div class="row">
+            <div class="col-md-6" id="h1">
+                <h1>Admin Panel</h1>
+                <h3> Welcome {{userName | titlecase}}</h3>
+            </div>
+
+            <div class="col-md-6" id="h2">
+                <button class="btn btn-info" id="adminbtn" (click)="RedirectTOLogin()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="sub-head">
+        <div class="col-md-4" id="data1">
+            <div class="card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <i class="glyphicon glyphicon-user" id="icon1"></i>
+                        <div class="ms-2 c-details">
+                            <h2 class="mb-0" id="AuthUsername">User Administration</h2>
+                        </div>
+
+                        <button id="demo" class="btn btn-info" id="adminbtn" (click)="RedirectTOAuth()">Auth
+                            User</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-4" id="data1">
+            <div class="card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <i class="material-icons" id="icon1">computer</i>
+                        <div class="ms-2 c-details">
+                            <h2 class="mb-0" id="AuthUsername"> User Profile Administration </h2>
+                        </div>
+
+                        <button id="adminbtn" class="btn btn-info"
+                            (click)="RedirectToInstituteAdminProfile()">InstituteAdmin
+                            Profile</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-4" id="data1">
+            <div class="card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <i class="material-icons" id="icon1">class</i>
+                        <div class="ms-2 c-details">
+                            <h2 class="mb-0" id="AuthUsername"> Course Administration</h2>
+                        </div>
+
+                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToCourse()">Course</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="sub-head">
+        <div class="col-md-4" id="data1">
+            <div class="card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <i class="material-icons" id="icon1">important_devices</i>
+                        <div class="ms-2 c-details">
+                            <h2 class="mb-0" id="AuthUsername">Department Administration</h2>
+                        </div>
+
+                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToAdminDept()">Admin
+                            Department</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-4" id="data1">
+
+            <div class="card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <i class="material-icons" id="icon1">class</i>
+                        <div class="ms-2 c-details">
+                            <h2 class="mb-0" id="AuthUsername"> Student Administration</h2>
+                        </div>
+
+                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToEnrollStudent()">Enroll
+                            Student</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-4" id="data1">
+
+            <div class="card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <i class="material-icons" id="icon1">computer</i>
+                        <div class="ms-2 c-details">
+                            <h2 class="mb-0" id="AuthUsername"> Institution Administration </h2>
+                        </div>
+
+                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToAdminInstitution()">Institution
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row" id="sub-head">
+        <!-- Row 3-->
+        <div class="col-md-4" id="data1">
+            <div class="card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <i class="material-icons" id="icon1">class</i>
+                        <div class="ms-2 c-details">
+                            <h2 class="mb-0" id="AuthUsername">User Role Administration</h2>
+                        </div>
+
+                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToRole()">Role</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-4" id="data1">
+            <div class="card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <i class="material-icons" id="icon1">class</i>
+                        <div class="ms-2 c-details">
+                            <h2 class="mb-0" id="AuthUsername">Announcements </h2>
+                        </div>
+
+                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToAnnouncement()">Announcements
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!--End of row-->
+        <div class="col-md-4" id="data1">
+            <div class="card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <i class="material-icons" id="icon1">class</i>
+                        <div class="ms-2 c-details">
+                            <h2 class="mb-0" id="AuthUsername">Course Assigned To Teacher</h2>
+                        </div>
+
+                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToAssignTeacher()">Assign
+                            Teacher</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-4" id="data1">
+            <div class="card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <i class="material-icons" id="icon1">class</i>
+                        <div class="ms-2 c-details">
+                            <h2 class="mb-0" id="AuthUsername">Allocate Permissions to Teachers</h2>
+                        </div>
+
+                        <button id="adminbtn" class="btn btn-info" routerLink="/allotPermission">Allocate
+                            Permissions</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+</div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AdminRole } from '../admin-role';
+import { AdminRole } from '../class/admin-role';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'environments/environment.development';

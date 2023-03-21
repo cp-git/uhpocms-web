@@ -11,18 +11,21 @@ export class InstituteservicesService {
   private courseUrl: string = environment.courseUrl;
 
   constructor(private _http: HttpClient) {
-    this.courseUrl = environment.courseUrl;
+    this.courseUrl = environment.courseUrl+'/course';
   }
 
+  // get all courses
   _getAllCourses(): Observable<any> {
-    return this._http.get<any>("http://localhost:8090/course/uhpocms/course?name=all");
+    return this._http.get<any>(`${this.courseUrl}?name=all`);
   }
 
+  //get course by Institutionid
   getCourseByInstitutionId(id: string): Observable<any> {
-    return this._http.get<any>("http://localhost:8090/course/uhpocms/course/institutionId/" + id);
+    return this._http.get<any>(`${this.courseUrl}/institutionId/`+ id);
   }
 
+  //get course by departmentId
   getCourseByDepartmentId(deptid: string) {
-    return this._http.get<any>("http://localhost:8090/course/uhpocms/course/departmentId/" + deptid)
+    return this._http.get<any>(`${this.courseUrl}/departmentId/` + deptid)
   }
 }

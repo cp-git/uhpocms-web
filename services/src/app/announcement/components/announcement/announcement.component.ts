@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Announcement } from 'app/announcement/announcement';
+import { Announcement } from 'app/announcement/class/announcement';
 import { AnnouncementService } from 'app/announcement/service/announcement.service';
 import { AuthService } from 'app/authlogin/auth.service';
 import { Location } from '@angular/common';
@@ -11,37 +11,34 @@ import { Location } from '@angular/common';
   styleUrls: ['./announcement.component.css']
 })
 export class AnnouncementComponent implements OnInit {
+
+  //variables assignment
   announcements: Announcement[] = [];
   announcement: Announcement;
-
   currentAnnouncement: Announcement;
   isAutherisedToAdd: boolean = false;
   profileId: any;
   userRole: any;
-  constructor(
-    private location: Location,
-    private announcementService: AnnouncementService,
-    private router: Router,
-    private authService: AuthService,
-    private activatedRoute: ActivatedRoute
+
+  //constructor
+  constructor(private location: Location, private announcementService: AnnouncementService, private router: Router, private authService: AuthService, private activatedRoute: ActivatedRoute
   ) {
     this.announcement = new Announcement();
     this.currentAnnouncement = new Announcement();
   }
 
+  //ngoninit
   ngOnInit(): void {
-    // if (!this.authService.isUserLoggedIn()) {
-    //   this.router.navigate(['/login']);
-    // } else {
 
-    // }
+    //code to get data fromm urls
     this.profileId = this.activatedRoute.snapshot.paramMap.get('id');
     this.userRole = this.activatedRoute.snapshot.params['role'];
+
+    //function to be executed load on page
     this.changeRole(this.profileId, this.userRole);
-    // this.getAllAnnouncements();
-    // this.getAnnouncements(this.profileId, this.userRole);
   }
 
+  //function to get announcements by profile id
   private getAnnouncements(profileId: number) {
     this.announcementService.fetchAnnouncementByProfileId(profileId).subscribe(
       response => {
@@ -52,10 +49,11 @@ export class AnnouncementComponent implements OnInit {
       }
     );
   }
+
+  //function to change user role 
   private changeRole(profileId: number, userRole: string) {
     switch (userRole) {
       case "student":
-
         this.isAutherisedToAdd = false;
         this.getAnnouncements(profileId);
         break;
@@ -74,18 +72,14 @@ export class AnnouncementComponent implements OnInit {
     }
 
   }
+
+  //function to route back to page
   goBack(): void {
     this.location.back();
-    // if (this.userRole == 'admin') {
-    //   this.router.navigate(['adminmodule/admin', userName, { id: this.profileId }]);
-    // }
-    // else if (this.userRole == 'teacher') {
-    //   this.router.navigate(['teacherdisplay/teacher', userName, { id: this.profileId }]);
-    // }
-    // else if (this.userRole == 'student') {
-    //   this.router.navigate(['studentdata/student', userName, { id: this.profileId }]);
-    // }
+
   }
+
+  //function to get all announcements
   private getAllAnnouncements() {
     this.announcementService.fetchAllAnnouncements().subscribe(
       response => {
@@ -97,24 +91,14 @@ export class AnnouncementComponent implements OnInit {
     );
   }
 
+  //function to view all announcements
   viewAnnouncement(announement: Announcement) {
     // this.currentAnnouncement = announement;
     this.announcementService.selectedAnnouncement = announement;
     this.router.navigate([`/announcement/${this.userRole}/view`, announement.id])
   }
 
-  // public deleteAnnouncementByTitle(title: string) {
-  //   this.announcementService.deleteAnnouncement(title).subscribe(
-  //     response => {
-  //       alert("deleted successfuly");
-  //       this.ngOnInit();
-  //     },
-  //     error => {
-  //       alert("deleted failed");
-  //     }
-  //   );
-  // }
-
+  //function to delete announcemnet by announcement Id
   public deleteAnnouncementById(announcementId: number) {
     this.announcementService.deleteAnnouncementById(announcementId).subscribe(
       response => {
@@ -127,18 +111,7 @@ export class AnnouncementComponent implements OnInit {
     );
   }
 
-  private createAnnouncement(announcement: Announcement) {
-    this.announcementService.insertAnnouncement(announcement).subscribe(
-      response => {
-        alert("added successfuly");
-        this.ngOnInit();
-      },
-      error => {
-        alert("add failed");
-      }
-    );
-  }
-
+  //function to route back
   back() {
     this.location.back();
   }
