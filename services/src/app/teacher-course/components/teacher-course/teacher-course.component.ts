@@ -143,7 +143,7 @@ export class TeacherCourseComponent implements OnInit {
   // For updating course
   private updateCourse(currentData: Course) {
     // calling service for updating data
-    this.service.updateCourseListById(currentData.courseId, currentData).subscribe(
+    this.service.updateCourseById(currentData.courseId, currentData).subscribe(
       response => {
         alert(`Course updated successfully !`);
         this.back();

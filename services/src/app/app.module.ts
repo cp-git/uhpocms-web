@@ -18,7 +18,10 @@ import { DepartmentComponent } from './admindepartment/components/department/dep
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 
+import { TeacherQuestionComponent } from './teacher-question/components/teacher-question/teacher-question.component';
+
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
+
 import { AuthuserComponent } from './authuser/authuser/authuser.component';
 import { HomeComponent } from './home/home.component';
 import { AddcourseComponent } from './course/addcourse/addcourse.component';
@@ -41,7 +44,12 @@ import { UpdateinstituteadminprofileComponent } from './instituteadminprofile/up
 import { ViewinstiteadminprofileComponent } from './instituteadminprofile/viewinstiteadminprofile/viewinstiteadminprofile.component';
 import { AuthenticationloginComponent } from './authenticationlogin/authenticationlogin.component';
 
-import { TeacherComponent } from './teacher/teacher.component';
+
+
+
+
+import { TeacherPanelComponent } from './teacher-panel/components/teacher-panel/teacher-panel.component';
+
 import { StudentdataComponent } from './studentdata/studentdata.component';
 import { ActivationScreenComponent } from './teachermodule/activation-screen/activation-screen.component';
 import { QuizComponent } from './quiz/quiz.component';
@@ -63,6 +71,8 @@ import { DepartmentModule } from './department/department.module';
 import { AuthUserModule } from './auth-user/auth-user.module';
 import { QuestionModule } from './question/question.module';
 
+
+
 import { CategoryComponent } from './category/component/component/category.component';
 import { MainComponent } from './category/UI/main/main.component';
 import { AddModuleComponent } from './category/UI/add-module/add-module.component';
@@ -75,7 +85,8 @@ import { ViewDepartmentComponent } from './InstituteDetails/view-department/view
 import { CourseComponent } from './course/displaycourse/course.component';
 import { TeacherCourseModule } from './teacher-course/teacher-course.module';
 import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher/inactive-teacher-course/inactive-teacher-course.component';
-import { TeacherCourseComponent } from './teacher-course/components/teacher-course/teacher-course.component';
+
+
 
 
 
@@ -94,6 +105,9 @@ import { TeacherCourseComponent } from './teacher-course/components/teacher-cour
     AdminroleComponent,
     LoginauthComponent,
     TeachermoduleComponent,
+
+    EmailComponent,
+
     HomeComponent,
     CourseComponent,
     AddcourseComponent,
@@ -120,13 +134,12 @@ import { TeacherCourseComponent } from './teacher-course/components/teacher-cour
     ViewinstiteadminprofileComponent,
     AuthenticationloginComponent,
     AdminmdouleComponent,
-    TeacherComponent,
+    TeacherPanelComponent,
     StudentdataComponent,
     ActivationScreenComponent,
     QuizComponent,
     EnrollstudentComponent,
     StudentCourseComponent,
-
     InactiveTeacherCourseComponent,
     DisplaySchoolComponent,
     CoursedepartmentComponent,
@@ -135,7 +148,9 @@ import { TeacherCourseComponent } from './teacher-course/components/teacher-cour
     AssigncoursetoteacherComponent,
     CreateinstituteadminprofileComponent,
     InactivecourseComponent,
-    EmailComponent
+
+    TeacherQuestionComponent,
+
 
   ],
 

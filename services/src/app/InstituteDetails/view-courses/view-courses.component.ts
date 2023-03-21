@@ -39,6 +39,7 @@ export class ViewCoursesComponent {
 
   ) { this.admininstitution = new AdminInstitution(); }
 
+  //retrieves the institution ID from the route parameters 
   ngOnInit(): void {
     this.route.paramMap.subscribe(
       (params) => {
@@ -66,6 +67,8 @@ export class ViewCoursesComponent {
       }
     })
   }
+
+  //retrieves the admin institutions from the session storage
   private loadAdminInstitutions() {
     this.sessionData = sessionStorage.getItem('admininstitution');
 
@@ -74,6 +77,8 @@ export class ViewCoursesComponent {
       this.admininstitutions.push(this.data[inst]);
     }
   }
+
+  //navigates the user back to the institution display page
   Display() {
     this._route.navigate(['display', this.id]);
   }

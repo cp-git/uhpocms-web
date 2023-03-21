@@ -17,24 +17,25 @@ export class CoursedepartmentComponent {
 
   // Institution array
   admininstitutions: AdminInstitution[] = [];
+  //backup array of admininstitutions used to maintain the original list of institutions
   backupInst: AdminInstitution[] = [];
 
-  // for extra row when there is no data
+  //boolean variable used to hide an extra row when there is no data.
   isHidden: boolean = false;
-  hideId: boolean = false;
-  admininstitution: AdminInstitution;
+  hideId: boolean = false; //boolean variable used to hide an id in the UI
+  admininstitution: AdminInstitution; //object of type AdminInstitution
 
-  sessionData: any;
-  data: any;
+  sessionData: any; //variable used to store the session data
+  data: any; //variable used to store the JSON-parsed session data
 
 
   //course array
   courses: Course[] = [];
-  backupCourse: Course[] = [];
-  id: any | undefined | null;
+  backupCourse: Course[] = [];//backup array of courses used to maintain the original list of courses
+  id: any | undefined | null; //variable used to store the id of the selected department
 
-  userName!: string;
-  adminId: any;
+  userName!: string; //string variable used to store the user name of the admin user
+  adminId: any; //variable used to store the admin user id
   constructor(
     private _route: Router,
     private readonly courseService: CourseService,
@@ -43,6 +44,8 @@ export class CoursedepartmentComponent {
 
   ) { this.admininstitution = new AdminInstitution(); }
 
+  //to initialize the component and load the admin institutions and the 
+  //courses for the selected department
   ngOnInit(): void {
     this.adminId = this.route.snapshot.paramMap.get('id');
     this.userName = this.route.snapshot.params['userName'];
@@ -61,11 +64,11 @@ export class CoursedepartmentComponent {
         }
       }
     )
-    this.loadAdminInstitutions();
-    this.assignInstitution();
+    this.loadAdminInstitutions(); 
+    this.assignInstitution(); 
 
   }
-
+//to assign the current institution of the admin user
   private assignInstitution() {
     this.admininstitutions.forEach(institute => {
 
@@ -75,6 +78,7 @@ export class CoursedepartmentComponent {
       }
     })
   }
+  //to load the list of institutions for the admin user from the session storage
   private loadAdminInstitutions() {
     this.sessionData = sessionStorage.getItem('admininstitution');
 
@@ -84,11 +88,13 @@ export class CoursedepartmentComponent {
     }
   }
 
+  //to navigate to the "courses" page
   addCourses() {
     this._route.navigate(['courses']);
 
   }
 
+  //to navigate back to the previous page
   Display() {
 
     this.location.back();

@@ -26,13 +26,13 @@ body {
 }
 
 .badge span {
-    background-color: #fffbec;
+    background-color: #FFFBEC;
     width: 60px;
     height: 25px;
     padding-bottom: 3px;
     border-radius: 5px;
     display: flex;
-    color: #fed85d;
+    color: #FED85D;
     justify-content: center;
     align-items: center
 }
@@ -52,7 +52,7 @@ body {
 }
 
 .text2 {
-    color: #a5aec0
+    color: #A5AEC0
 }
 
 #h2 button {
@@ -63,9 +63,7 @@ body {
 }
 
 #sub-head {
-
     margin-top: 30px;
-
 }
 
 .card {
