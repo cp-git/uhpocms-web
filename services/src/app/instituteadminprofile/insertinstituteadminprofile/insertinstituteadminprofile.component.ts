@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Department } from 'app/admindepartment/class/department';
-import { DepartmentService } from 'app/admindepartment/service/department.service';
+
 import { Authuser } from 'app/authuser/authuser';
 import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
+import { Department } from 'app/department/class/department';
+import { DepartmentService } from 'app/department/services/department.service';
 import { Admin } from 'app/roleadmin/admin';
 import { AdminroleserviceService } from 'app/roleadmin/adminroleservice.service';
 import { AdminInstitution } from '../admin-institution';
@@ -161,7 +162,7 @@ export class InsertinstituteadminprofileComponent {
   }
 
   loadAdminDepartments() {
-    this.departmentService.fetchAllDepartments().subscribe(
+    this.departmentService.getAllDepartments().subscribe(
       response => {
         this.adminDepartments = response;
       },

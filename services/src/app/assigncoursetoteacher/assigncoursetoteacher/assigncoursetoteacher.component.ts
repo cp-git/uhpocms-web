@@ -1,7 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { AdmininstitutionService } from 'app/admin-institution/service/admininstitution.service';
-import { Department } from 'app/admindepartment/class/department';
-import { DepartmentService } from 'app/admindepartment/service/department.service';
+
 import { Course } from 'app/course/course';
 import { CourseService } from 'app/course/service/course.service';
 import { Location } from '@angular/common';
@@ -11,6 +10,8 @@ import { InstituteAdminServiceService } from 'app/instituteadminprofile/institut
 import { AssigncourseteacherService } from '../assigncourseteacher.service';
 import { Assignteacher } from '../assignteacher';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Department } from 'app/department/class/department';
+import { DepartmentService } from 'app/department/services/department.service';
 
 @Component({
   selector: 'app-assigncoursetoteacher',
@@ -126,7 +127,7 @@ export class AssigncoursetoteacherComponent {
 
     instId = this._profile.institutionId;
 
-    this._deptService.getDepartmentByInstitutionId(instId).subscribe(
+    this._deptService.getDepartmentsByInstitutionId(instId).subscribe(
       (response) => {
         this.departments = response;
         console.log("Inside getDepartmentByInstId")

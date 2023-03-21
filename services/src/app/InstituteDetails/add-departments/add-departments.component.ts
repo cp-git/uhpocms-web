@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Department } from 'app/admindepartment/class/department';
-import { DepartmentService } from 'app/admindepartment/service/department.service';
+
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { Location } from '@angular/common';
+import { Department } from 'app/department/class/department';
+import { DepartmentService } from 'app/department/services/department.service';
 
 @Component({
   selector: 'app-add-departments',
@@ -36,8 +37,8 @@ export class AddDepartmentsComponent {
     this.department = new Department();
   }
 
-//checks if the user is authenticated, and if not, redirects to the login page.
-// Otherwise, it loads the admin institutions.
+  //checks if the user is authenticated, and if not, redirects to the login page.
+  // Otherwise, it loads the admin institutions.
   ngOnInit(): void {
     if (sessionStorage.getItem('authenticatedUser') == null) {
       this._route.navigate(['login']);

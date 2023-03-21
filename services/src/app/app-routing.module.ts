@@ -32,7 +32,6 @@ import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.comp
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
 import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
 
-import { ActivateDepartmentComponent } from './admindepartment/components/activate-department/activate-department.component';
 import { ActivateRoleComponent } from './roleadmin/activate-role/activate-role.component';
 import { ActivateProfileComponent } from './instituteadminprofile/activate-profile/activate-profile.component';
 import { ActivateInstitutionComponent } from './admin-institution/components/activate-institution/activate-institution.component';
@@ -49,7 +48,7 @@ import { AuthenticationloginComponent } from './authenticationlogin/authenticati
 
 
 import { StudentdataComponent } from './studentdata/studentdata.component';
-import { EnrollstudentComponent } from './enrollstudent/enrollstudent.component';
+import { EnrollstudentComponent } from './enrollstudent/components/enrollstudent.component';
 
 import { StudentmoduleComponent } from './studentdata/component/studentmodule/studentmodule.component';
 
@@ -202,11 +201,6 @@ const routes: Routes = [
   { path: 'department', component: DepartmentComponent },
 
   { path: 'department/:userName', component: DepartmentComponent },
-
-  //admindepartment routes
-  { path: 'department/departmentactivation', component: ActivateDepartmentComponent },
-
-  { path: 'department/departmentactivation/:userName', component: ActivateDepartmentComponent },
 
 
   //quiz routes

@@ -8,31 +8,19 @@ import { Enrolltostudent } from '../class/enrolltostudent';
   providedIn: 'root'
 })
 export class EnrolltostudentService {
-  _loginUrl: string;
+
   enrollmentUrl: string;
 
-  private queryObj: {
-    offset?: number,
-    maxResults?: number
-  } = {};
-
+  //constructor
   constructor(private _http: HttpClient) {
-    //  this.courseUrl = `${environment.courseUrl}/course`;
-    this._loginUrl = `${environment.courseUrl}/basicauth`;
-    this.enrollmentUrl = 'http://localhost:8090/enrolltostudent/uhpocms/enrollstudent/';
+    this.enrollmentUrl = `${environment.enrollStudentUrl}/enrollstudent/`;
   }
 
+  //service for save enrolled student
   saveEnrolledStudents(enrolltostudent: Enrolltostudent): Observable<any> {
     return this._http.post<any>(this.enrollmentUrl, enrolltostudent);
   }
 
-  setParams(queryParams: { maxResults: number, offset: number }): void {
-    this.queryObj = Object.assign(
-      {},
-      this.queryObj,
-      queryParams,
-    );
-  }
 
 
 }

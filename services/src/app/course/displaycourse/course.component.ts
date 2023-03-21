@@ -4,12 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { InstitutionSeriveService } from 'app/instituteadminprofile/institution-serive.service';
 import { Course } from '../course';
 import { CourseService } from '../service/course.service';
-import { Department } from 'app/admindepartment/class/department';
-import { DepartmentService } from 'app/admindepartment/service/department.service';
 import { Coursedepartment } from '../coursedepartment';
 import { CourseDepartmentService } from '../course-department.service';
 import { Location } from '@angular/common';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
+import { DepartmentService } from 'app/department/services/department.service';
+import { Department } from 'app/department/class/department';
 
 @Component({
   selector: 'app-displaycourse',
@@ -192,7 +192,7 @@ export class CourseComponent {
   }
 
   loadAdminDepartments() {
-    this.departmentService.fetchAllDepartments().subscribe(
+    this.departmentService.getAllDepartments().subscribe(
       response => {
         this.adminDepartments = response;
       },

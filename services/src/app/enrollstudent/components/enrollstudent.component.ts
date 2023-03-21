@@ -1,7 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { AdmininstitutionService } from 'app/admin-institution/service/admininstitution.service';
-import { Department } from 'app/admindepartment/class/department';
-import { DepartmentService } from 'app/admindepartment/service/department.service';
+
 import { Course } from 'app/course/course';
 import { CourseService } from 'app/course/service/course.service';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
@@ -9,9 +8,11 @@ import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 import { InstituteAdminServiceService } from 'app/instituteadminprofile/institute-admin-service.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 
-import { EnrolltostudentService } from './service/enrolltostudent.service';
+import { EnrolltostudentService } from '../service/enrolltostudent.service';
 import { Location } from '@angular/common';
-import { Enrolltostudent } from './class/enrolltostudent';
+import { Enrolltostudent } from '../class/enrolltostudent';
+import { Department } from 'app/department/class/department';
+import { DepartmentService } from 'app/department/services/department.service';
 
 @Component({
   selector: 'app-enrollstudent',
@@ -22,6 +23,7 @@ import { Enrolltostudent } from './class/enrolltostudent';
 })
 export class EnrollstudentComponent {
 
+  //variable initialization
   _disablevar: boolean = false;
   _profile = new InstituteAdmin();
 
@@ -56,47 +58,19 @@ export class EnrollstudentComponent {
 
   selected = [];
 
-  getSelectedValue() {
-    console.log("getSelectedValue")
-    console.log(this.selected);
-  }
 
+  //constructor
   constructor(private _institutionService: AdmininstitutionService, private _deptService: DepartmentService, private courseService: CourseService, private profileService: InstituteAdminServiceService, private enrollstuService: EnrolltostudentService, private location: Location) { }
+
+  //ngoninit
   ngOnInit() {
+
+    // function to be loaded on page load
     this.getAllInstitution();
-
-    console.log("couresId  " + this.course.courseId)
-
-    console.log("this.selected.length " + this.selected.length)
-
-    console.log(this._profile.institutionId);
   }
 
 
-  selectAllForDropdownItems(items: any[]) {
-    let allSelect = (items: any[]) => {
-      items.forEach(element => {
-        element['selectedAllGroup'] = 'selectedAllGroup';
-      });
-    };
-
-    allSelect(items);
-  }
-
-
-  shouldEnableVirtualScroll(_profileArrayForSelect: InstituteAdmin[], size: number): boolean {
-
-    console.log("size" + size);
-    console.log("_profileArrayForSelect" + _profileArrayForSelect)
-
-    if (!_profileArrayForSelect) {
-      return false;
-    }
-    console.log(_profileArrayForSelect.length > size)
-
-    return _profileArrayForSelect.length > size;
-  }
-
+  // function to get all institutions
   private getAllInstitution() {
     // fetching all institution
     console.log("this.selected.length " + this.selected.length)
@@ -116,60 +90,52 @@ export class EnrollstudentComponent {
         }
       },
       (error) => {
-        // this.displayEmptyRow();
-        console.log('No data in table ');
+
       }
     );
   }
 
+
+  //function to get department based on institution id
   getDepartmentByInstId(instId: number) {
     console.log("this.selected.length " + this.selected.length)
     instId = this._profile.institutionId;
 
-    this._deptService.getDepartmentByInstitutionId(instId).subscribe(
+    this._deptService.getDepartmentsByInstitutionId(instId).subscribe(
       (response) => {
         this.departments = response;
-        console.log("Inside getDepartmentByInstId")
-        console.log(response)
-
-        //  this.getProfileByRoleAndInstId(instId);
 
       }
     )
   }
 
-  getCoursesByDeptId(deptId: number) {
 
-    console.log("this.selected.length " + this.selected.length)
-    console.log(this.department);
-    console.log(deptId);
+  //function to get courses based on department id
+  getCoursesByDeptId(deptId: number) {
     deptId = this.department.id;
 
     this.courseService.getCourseByDepartmentId(deptId).subscribe(
       (response) => {
         this.courses = response;
 
-        console.log(response);
       }
     )
   }
 
 
+
+  //function to get profile based on role and institute id
   getProfileByRoleAndInstId(instId: number) {
 
-    console.log("this.selected.length " + this.selected.length)
     this.selected = [];
     const userRole = "student";
     instId = this._profile.institutionId;
-    // console.log(instId);
+
     this.profileService._getProfileByRoleAndInstitutionId(userRole, instId).subscribe(
       (response) => {
         this._profileArray = response;
         this._profileArray.map((i) => { i.fullName = i.firstName + ' ' + i.lastName + ' - ' + i.adminEmail; return i; });
-        console.log(response)
-        // instId = this._profile.institutionId;
-        console.log(instId);
-        this.selectAllForDropdownItems(this._profileArray);
+
       }
     )
 
@@ -178,15 +144,9 @@ export class EnrollstudentComponent {
 
   //Function for assign course to student
   saveEnrolledStudent(courseId: number, profileId: number) {
-    console.log("Profile array copy down");
-    console.log(this._profileArrCopy);
 
-    console.log(this._profileArray);
     this.enrolledStudent.courseId = courseId;
     this.enrolledStudent.profileId = profileId;
-
-    console.log(this.enrolledStudent)
-
 
     for (let i = 0; i < this.selected.length; i++) {
 
@@ -203,52 +163,24 @@ export class EnrollstudentComponent {
     }
   }
 
-  onScrollToEnd() {
-    console.log('onscrollEend');
-    this.fetchMore();
-  }
 
 
 
-  @HostListener('window:scroll', ['$event'])
-  onScroll(event: any) {
-    if (this.loading || this.size <= this._profileArray.length) {
-      return;
-    }
-
-    if ((event + 0) >= this._profileArray.length) {
-      this.fetchMore();
-    }
-  }
-
-  fetchMore() {
-    this.loading = true;
-    this.enrollstuService.setParams({
-      maxResults: this.maxResults,
-      offset: this.offset,
-    });
-    this.offset += 1;
-    this._profileArray;
-
-  }
-
-
+  //function to enable submit button only after all fields selection
   disablefunc() {
-
-    console.log("this.selected.length " + this.selected.length)
 
     if ((this.selected.length != 0) && (this.course.courseId != undefined) && (this.department.id != undefined)) {
       this._disablevar = true;
-
     }
-
     else {
       this._disablevar = false;
     }
-    console.log("diasable var   " + this._disablevar)
+
   }
 
 
+
+  //back button route
   back() {
     this.location.back();
 
