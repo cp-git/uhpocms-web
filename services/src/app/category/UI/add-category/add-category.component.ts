@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Category } from 'app/category/category';
 import { CategoryService } from 'app/category/category.service';
-import { Course } from 'app/course/course';
+import { Course } from 'app/course/class/course';
 
 @Component({
   selector: 'app-add-category',

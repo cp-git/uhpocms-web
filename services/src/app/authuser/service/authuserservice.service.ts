@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment.development';
 import { map } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
-import { Authuser } from '../authuser';
+import { Authuser } from '../class/authuser';
 
 @Injectable({
   providedIn: 'root',

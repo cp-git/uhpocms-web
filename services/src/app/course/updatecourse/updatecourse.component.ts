@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstitutionSeriveService } from 'app/instituteadminprofile/institution-serive.service';
-import { Course } from '../course';
+import { Course } from '../class/course';
 import { CourseService } from '../service/course.service';
 import { Department } from 'app/admindepartment/class/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
-import { Coursedepartment } from '../coursedepartment';
-import { CourseDepartmentService } from '../course-department.service';
+import { Coursedepartment } from '../class/coursedepartment';
+import { CourseDepartmentService } from '../service/course-department.service';
 
 @Component({
   selector: 'app-updatecourse',
@@ -54,7 +54,7 @@ export class UpdatecourseComponent {
 
       this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
       this.userName = this._activatedRoute.snapshot.params['userName'];
-      console.log(this.userName)
+      // console.log(this.userName)
       this.getAllInstitutes();
       this.getCourse();
       this.loadAdminDepartments();
@@ -62,12 +62,13 @@ export class UpdatecourseComponent {
     }
   }
 
+  //Getting the Course by Course Name
   getCourse() {
     const courseName: any = this._activatedRoute.snapshot.params['courseName'];
 
     this._service.getCourse(courseName).subscribe(
       (data) => {
-        console.log(data);
+        //  console.log(data);
         this.course = data;
       },
       (error) => {
@@ -75,6 +76,8 @@ export class UpdatecourseComponent {
       }
     );
   }
+
+  //Fetching the Department as  Dropdown
   loadAdminDepartments() {
     this.departmentService.fetchAllDepartments().subscribe(
       response => {
@@ -85,6 +88,8 @@ export class UpdatecourseComponent {
       }
     );
   }
+
+  //getting the AllInstitute Name
   getAllInstitutes() {
     this._instService._getAllInstitutions().subscribe((data) => {
       this.institutions = data;
@@ -101,6 +106,8 @@ export class UpdatecourseComponent {
     });
   }
 
+
+  //Updating the course
   updateCourse(updatedCourse: Course) {
     this.course = {} as Course;
 
@@ -118,7 +125,7 @@ export class UpdatecourseComponent {
       .updateCourseListById(this.course.courseId, this.course)
       .subscribe(
         (data) => {
-          console.log(data);
+          //console.log(data);
           // this.module = data;
 
           this._backupModule.set(
@@ -139,9 +146,13 @@ export class UpdatecourseComponent {
         });
 
   }
+
+  //Navigetting the Course panel
   back() {
     this._route.navigate(['course/userrole', this.userName]);
   }
+
+  //Fetching getCourseDepartmentId
   loadCourseDepartment() {
     this.courseDepartmentService.getCoursesDepartmentId().subscribe(
       response => {

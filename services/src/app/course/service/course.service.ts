@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'environments/environment.development';
 
 import { map } from 'rxjs';
-import { Course } from '../course';
+import { Course } from '../class/course';
 @Injectable({
   providedIn: 'root',
 })
@@ -115,13 +115,35 @@ export class CourseService {
   }
 
 
+  // getCourseByInstitutionId(id: string): Observable<any> {
+  //   return this._http.get<any>("http://localhost:8090/course/uhpocms/course/institutionId/" + id);
+  // }
 
 
 
+  //fetching the course by InstituteId
+  getCourseByInstitutionId(id: string): Observable<any> {
+    return this._http.get<any>(this.courseUrl + '/institutionId/' + id);
+  }
+
+
+
+  //Fetching the CourseByDepartmentId
   getCourseByDepartmentId(deptid: number) {
-    return this._http.get<any>("http://localhost:8090/course/uhpocms/course/deptId/" + deptid)
+    return this._http.get<any>(this.courseUrl + '/deptId/' + deptid)
 
 
 
   }
+
+
+
+
+
+  // getCourseByDepartmentId(deptid: number) {
+  //   return this._http.get<any>("http://localhost:8090/course/uhpocms/course/deptId/" + deptid)
+
+
+
+  // }
 }

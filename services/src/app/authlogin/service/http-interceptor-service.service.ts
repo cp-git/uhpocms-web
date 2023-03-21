@@ -9,11 +9,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { AuthService } from './auth.service';
 
+
 @Injectable({
   providedIn: 'root',
 })
 export class HttpInterceptorServiceService implements HttpInterceptor {
-  constructor(private authenticationService: AuthService) {}
+  constructor(private authenticationService: AuthService) { }
 
   intercept(
     req: HttpRequest<any>,
@@ -28,8 +29,8 @@ export class HttpInterceptorServiceService implements HttpInterceptor {
           'Content-Type': 'application/json',
           Authorization: `Basic ${window.btoa(
             this.authenticationService.username +
-              ':' +
-              this.authenticationService.password
+            ':' +
+            this.authenticationService.password
           )}`,
         }),
       });

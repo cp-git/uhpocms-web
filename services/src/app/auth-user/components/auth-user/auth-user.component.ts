@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 // Module specific imports
-import { AuthUserAllColumn, AuthUserColumn } from 'app/auth-user/auth-user-column';
+
 import { AuthUserService } from 'app/auth-user/services/auth-user.service';
-import { Authuser } from 'app/auth-user/auth-user';
+import { Authuser } from 'app/auth-user/class/auth-user';
+import { AuthUserAllColumn, AuthUserColumn } from 'app/auth-user/column/auth-user-column';
 
 
 @Component({

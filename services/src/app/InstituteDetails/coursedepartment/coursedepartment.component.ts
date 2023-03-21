@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Department } from 'app/admindepartment/class/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
-import { Course } from 'app/course/course';
-import { CourseService } from 'app/course/course.service';
+
+
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { Location } from '@angular/common';
+import { CourseService } from 'app/course/service/course.service';
+import { Course } from 'app/course/class/course';
 
 @Component({
   selector: 'app-coursedepartment',
@@ -64,11 +66,11 @@ export class CoursedepartmentComponent {
         }
       }
     )
-    this.loadAdminInstitutions(); 
-    this.assignInstitution(); 
+    this.loadAdminInstitutions();
+    this.assignInstitution();
 
   }
-//to assign the current institution of the admin user
+  //to assign the current institution of the admin user
   private assignInstitution() {
     this.admininstitutions.forEach(institute => {
 
@@ -78,7 +80,9 @@ export class CoursedepartmentComponent {
       }
     })
   }
+
   //to load the list of institutions for the admin user from the session storage
+
   private loadAdminInstitutions() {
     this.sessionData = sessionStorage.getItem('admininstitution');
 

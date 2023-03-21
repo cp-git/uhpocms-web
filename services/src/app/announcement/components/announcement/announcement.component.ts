@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Announcement } from 'app/announcement/class/announcement';
 import { AnnouncementService } from 'app/announcement/service/announcement.service';
-import { AuthService } from 'app/authlogin/auth.service';
+
 import { Location } from '@angular/common';
+import { AuthService } from 'app/authlogin/service/auth.service';
 
 @Component({
   selector: 'app-announcement',
