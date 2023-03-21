@@ -23,7 +23,7 @@ export class AssigncourseteacherService {
   constructor(private _http: HttpClient) {
     //  this.courseUrl = `${environment.courseUrl}/course`;
     this._loginUrl = `${environment.courseUrl}/basicauth`;
-    this.assignTeacherUrl = 'http://localhost:8090/assigntoteacher/uhpocms/assigntoteacher';
+    this.assignTeacherUrl = environment.assignCourseUrl;
   }
 
 
@@ -32,13 +32,6 @@ export class AssigncourseteacherService {
     // alert(this.assignTeacherUrl + " and" + JSON.stringify(assignTeacher));
     return this._http.post<any>(this.assignTeacherUrl, assignTeacher);
   }
-
-
-
-
-
-
-
   setParams(queryParams: { maxResults: number, offset: number }): void {
     this.queryObj = Object.assign(
       {},

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Coursesyllabus } from 'app/class/coursesyllabus';
 import { Observable } from 'rxjs';
-
+import { environment } from 'environments/environment.development';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,8 +12,8 @@ export class TeacherCourseService {
   private assignCourseUrl: string;
 
   constructor(private _http: HttpClient) {
-    this.assignCourseUrl = `http://localhost:8090/course/uhpocms/course`;
-    this.syllabusUrl = `http://localhost:8090/courseSyllabus/uhpocms/courseSyllabus`;
+    this.assignCourseUrl = environment.assignCourseUrl;
+    this.syllabusUrl = environment.syllabusUrl;
   }
 
   //add course syllabus with course id

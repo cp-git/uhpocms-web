@@ -275,4 +275,17 @@ export class QuestionComponent implements OnInit {
       this.catagories.push(this.data[inst]);
     }
   }
+
+
+
+
+
+
+  /////////////////teacher Question components function///////////////
+
+
+
+
+
+
 }
