@@ -4,10 +4,10 @@ import { Department } from 'app/admindepartment/class/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstitutionSeriveService } from 'app/instituteadminprofile/institution-serive.service';
-import { Course } from '../course';
-import { CourseDepartmentService } from '../course-department.service';
+import { Course } from '../class/course';
+import { CourseDepartmentService } from '../service/course-department.service';
 
-import { Coursedepartment } from '../coursedepartment';
+import { Coursedepartment } from '../class/coursedepartment';
 import { CourseService } from '../service/course.service';
 
 @Component({
@@ -58,7 +58,7 @@ export class InactivecourseComponent {
     } else {
       this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
       this.userName = this._activatedRoute.snapshot.params['userName'];
-      console.log(this.userName)
+      // console.log(this.userName)
       this.getAllCourses();
       this.getAllInstitutes();
       this.getAllDeactivateCourses();
@@ -68,6 +68,8 @@ export class InactivecourseComponent {
 
   }
 
+
+  //Getting AllInstitute
   getAllInstitutes() {
     this._instService._getAllInstitutions().subscribe((data) => {
       this.institutions = data;
@@ -84,6 +86,7 @@ export class InactivecourseComponent {
     });
   }
 
+  //Getting All Courses
   getAllCourses() {
     this._service._getAllCourses().subscribe((data) => {
       this.courses = data;
@@ -100,6 +103,8 @@ export class InactivecourseComponent {
     });
   }
 
+
+  //Getting Deactivate Courses
   getAllDeactivateCourses() {
     this._service.getAllDeactivateCourses().subscribe(
       (response) => {
@@ -112,6 +117,7 @@ export class InactivecourseComponent {
   }
 
 
+  //Fetching the CourseDepartment by DepartmentId
   loadCourseDepartment() {
     this.courseDepartmentService.getCoursesDepartmentId().subscribe(
       response => {
@@ -123,6 +129,8 @@ export class InactivecourseComponent {
     )
   }
 
+
+  //Fetching All Department 
   loadAdminDepartments() {
     this.departmentService.fetchAllDepartments().subscribe(
       response => {
@@ -134,6 +142,8 @@ export class InactivecourseComponent {
     );
   }
 
+
+  //Function fot ActivateCourse
   activateCourse(courseId: number) {
     this._service.activateCourseById(courseId).subscribe(
       (response) => {
@@ -147,6 +157,8 @@ export class InactivecourseComponent {
     );
   }
 
+
+  //Back to Quiz Display All Data
   back() {
     this._route.navigate(['course/userrole', this.userName])
   }

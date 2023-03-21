@@ -1,7 +1,7 @@
-import { AuthUser } from './auth-user';
+import { Authuser } from './auth-user';
 
 describe('AuthUser', () => {
   it('should create an instance', () => {
-    expect(new AuthUser()).toBeTruthy();
+    expect(new Authuser()).toBeTruthy();
   });
 });

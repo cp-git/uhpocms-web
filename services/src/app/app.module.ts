@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { HttpInterceptorServiceService } from './authlogin/http-interceptor-service.service';
+
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CommonModule } from '@angular/common';
 
@@ -68,7 +68,7 @@ import { ReusableModule } from './reusable/module/reusable.module';
 import { AdminRoleModule } from './admin-role/module/admin-role.module';
 import { DepartmentModule } from './department/department.module';
 
-import { AuthUserModule } from './auth-user/auth-user.module';
+
 import { QuestionModule } from './question/question.module';
 
 
@@ -86,6 +86,9 @@ import { CourseComponent } from './course/displaycourse/course.component';
 import { TeacherCourseModule } from './teacher-course/teacher-course.module';
 import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher/inactive-teacher-course/inactive-teacher-course.component';
 
+import { TeacherCourseComponent } from './teacher-course/components/teacher-course/teacher-course.component';
+import { HttpInterceptorServiceService } from './authlogin/service/http-interceptor-service.service';
+import { AuthUserModule } from './auth-user/modules/auth-user.module';
 
 
 

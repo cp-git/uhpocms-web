@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthorizeServiceService } from '../authorize-service.service';
+import { AuthorizeServiceService } from '../service/authorize-service.service';
 import { AuthuserserviceService } from '../authuserservice.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class AuthorizationAuthComponent implements OnInit {
     private _auth: AuthuserserviceService,
     private _route: Router,
     private authenticationService: AuthorizeServiceService
-  ) {}
+  ) { }
 
   username!: string;
   password!: string;

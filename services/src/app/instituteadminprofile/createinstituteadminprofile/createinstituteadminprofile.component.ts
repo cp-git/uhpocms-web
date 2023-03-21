@@ -4,7 +4,7 @@ import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 
 import { Department } from 'app/admindepartment/class/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
-import { Authuser } from 'app/authuser/authuser';
+import { Authuser } from 'app/authuser/class/authuser';
 import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
 
 import { Admin } from 'app/roleadmin/admin';

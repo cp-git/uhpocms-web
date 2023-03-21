@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationserviceService } from 'app/authenticationlogin/service/authenticationservice.service';
-import { Authuser } from 'app/authuser/authuser';
-import { AuthuserserviceService } from 'app/authuser/authuserservice.service';
+import { Authuser } from 'app/authuser/class/authuser';
+import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
+
+
 
 @Component({
   selector: 'app-adminmdoule',
@@ -26,7 +28,7 @@ export class AdminmdouleComponent {
   }
 
   RedirectTOAuth() {
-    this._route.navigate(['authuser', this.userName]);
+    this._route.navigate(['AuthUser', this.userName]);
 
   }
   RedirectToAssignTeacher() {

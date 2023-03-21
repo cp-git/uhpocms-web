@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment.development';
 import { map } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
-import { Authuser } from '../auth-user';
+import { Authuser } from '../class/auth-user';
 
 
 @Injectable({
@@ -29,30 +29,41 @@ export class AuthUserService {
     this._baseUrl = "http://localhost:8090/authuser/uhpocms/authuser";
   }
 
+
+  //Fetching the Auth User List
   authUserList(): Observable<any> {
     return this._http.get<any>(this._baseUrl + '?username=all');
   }
 
+  //Adding Auth User
   addAuthUser(authuser: Authuser): Observable<any> {
     return this._http.post<any>(this._baseUrl, authuser);
   }
 
+  //Deleting the Auth User
   deleteAuthUser(authUserName: string): Observable<any> {
     return this._http.delete<any>(this._baseUrl + "/" + authUserName);
   }
 
+
+  //Get Authuser by Auth User Name
   getAuthUser(authUserName: string): Observable<any> {
     return this._http.get<any>(this._baseUrl + "/" + authUserName);
   }
 
+
+  //Update AuthUser
   updateAuthUser(authUserName: string, authuser: Authuser): Observable<any> {
     return this._http.put<any>(this._baseUrl + "/" + authUserName, authuser);
   }
 
+  //Login Service Using the DB
   loginDataAuthUser(authuser: Authuser): Observable<any> {
     return this._http.post<any>(this._loginUrl, authuser);
   }
 
+
+  //Authorization
   authenticationService(username: String, password: String) {
     return this._http
       .get(this._authUrl, {
@@ -96,10 +107,14 @@ export class AuthUserService {
     return user;
   }
 
+
+  //Get All Inactive Auth Users
   getAllInactiveAuthUsers(): Observable<Authuser[]> {
     return this._http.get<Authuser[]>(`${this._baseUrl}?username=inactive`);
   }
 
+
+  //Activate Auth Users
   activateAuthUserById(authUserId: number): Observable<any> {
     return this._http.patch<any>(`${this._baseUrl}/activate/` + authUserId, {});
   }

@@ -300,7 +300,7 @@ const routes: Routes = [
 
   { path: 'AdminRole', component: AdminRoleComponent },
   // { path: 'Profile', component: ProfileComponent },
-  { path: 'AuthUser', component: AuthUserComponent },
+  { path: 'AuthUser/:userName', component: AuthUserComponent },
   { path: 'Question', component: QuestionComponent },
   { path: 'Department', component: DepartmentComponent },
   { path: 'Course', component: TeacherCourseComponent }
