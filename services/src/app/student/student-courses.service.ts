@@ -7,9 +7,12 @@ import { Observable } from 'rxjs';
 })
 export class StudentCoursesService {
 
-  constructor(private _http: HttpClient) { }
+  private baseUrl: string;
+  constructor(private _http: HttpClient) {
+    this.baseUrl = `http://localhost:8090/course/uhpocms/course`;
+  }
 
   getCourseByProfileId(profileId: number): Observable<any> {
-    return this._http.get<any>("http://localhost:8090/course/uhpocms/course/profileId/" + profileId);
+    return this._http.get<any>(`${this.baseUrl}/profileId/` + profileId);
   }
 }

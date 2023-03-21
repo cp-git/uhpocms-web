@@ -25,23 +25,23 @@ import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
 import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
 import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
-import { AddinstituteComponent } from './admin-institution/addinstitute/addinstitute.component';
-import { DisplayinstituteComponent } from './admin-institution/displayinstitute/displayinstitute.component';
+import { AddinstituteComponent } from './admin-institution/components/addinstitute/addinstitute.component';
+import { DisplayinstituteComponent } from './admin-institution/components/displayinstitute/displayinstitute.component';
 import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
 
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
 import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
 
-import { ActivateDepartmentComponent } from './admindepartment/department/activate-department/activate-department.component';
+import { ActivateDepartmentComponent } from './admindepartment/components/activate-department/activate-department.component';
 import { ActivateRoleComponent } from './roleadmin/activate-role/activate-role.component';
 import { ActivateProfileComponent } from './instituteadminprofile/activate-profile/activate-profile.component';
-import { ActivateInstitutionComponent } from './admin-institution/activate-institution/activate-institution.component';
+import { ActivateInstitutionComponent } from './admin-institution/components/activate-institution/activate-institution.component';
 
 import { InsertinstituteadminprofileComponent } from './instituteadminprofile/insertinstituteadminprofile/insertinstituteadminprofile.component';
 import { UpdateinstituteadminprofileComponent } from './instituteadminprofile/updateinstituteadminprofile/updateinstituteadminprofile.component';
 import { ViewinstiteadminprofileComponent } from './instituteadminprofile/viewinstiteadminprofile/viewinstiteadminprofile.component';
 import { AuthenticationloginComponent } from './authenticationlogin/authenticationlogin.component';
-import { AdminmdouleComponent } from './adminmdoule/adminmdoule.component';
+
 import { TeacherComponent } from './teacher/teacher.component';
 import { StudentdataComponent } from './studentdata/studentdata.component';
 import { EnrollstudentComponent } from './enrollstudent/enrollstudent.component';
@@ -50,7 +50,7 @@ import { StudentmoduleComponent } from './studentdata/component/studentmodule/st
 
 import { StudentCourseComponent } from './student/student-course/student-course.component';
 // import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';
-import { InactiveTeacherCourseComponent } from './assignedCourseToTeacher/inactive-teacher-course/inactive-teacher-course.component';
+import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher/inactive-teacher-course/inactive-teacher-course.component';
 
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
@@ -65,8 +65,11 @@ import { AdminRoleComponent } from './admin-role/components/admin-role/admin-rol
 import { AuthUserComponent } from './auth-user/components/auth-user/auth-user.component';
 import { QuestionComponent } from './question/components/question/question.component';
 import { DepartmentComponent } from './department/components/department/department.component';
-import { TeacherCourseComponent } from './teacher-course/teacher-course/components/teacher-course/teacher-course.component';
+// import { TeacherCourseComponent } from './teacher-course/teacher-course/components/teacher-course/teacher-course.component';
 import { CategoryComponent } from './category/component/component/category.component';
+import { AdminmdouleComponent } from './adminmdoule/components/admin-module/adminmdoule.component';
+import { TeacherCourseComponent } from './teacher-course/components/teacher-course/teacher-course.component';
+
 
 
 
@@ -117,8 +120,10 @@ const routes: Routes = [
 
   { path: 'teachercourse', component: TeacherCourseComponent },
 
-  { path: 'teachercourse/:userName', component: TeacherCourseComponent },
-  { path: 'teacher/:id', component: TeacherCourseComponent },
+  {
+    path: 'teachercourse/:userName', component: TeacherCourseComponent
+  },
+  { path: 'teacher/:id', component: AssigncoursetoteacherComponent },
 
 
 

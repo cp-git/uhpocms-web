@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { AdmininstitutionService } from 'app/admin-institution/service/admininstitution.service';
-import { Department } from 'app/admindepartment/department';
+import { Department } from 'app/admindepartment/class/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
 import { Course } from 'app/course/class/course';
 import { CourseService } from 'app/course/service/course.service';
@@ -53,17 +53,6 @@ export class EnrollstudentComponent {
 
   maxResults = 10;
   offset = 0;
-
-  categories = [
-    { id: 1, name: 'Laravel' },
-    { id: 2, name: 'Codeigniter' },
-    { id: 3, name: 'React' },
-    { id: 4, name: 'PHP' },
-    { id: 5, name: 'Angular' },
-    { id: 6, name: 'Vue' },
-    { id: 7, name: 'JQuery', disabled: true },
-    { id: 8, name: 'Javascript' },
-  ];
 
   selected = [];
 
@@ -187,10 +176,8 @@ export class EnrollstudentComponent {
   }
 
 
+  //Function for assign course to student
   saveEnrolledStudent(courseId: number, profileId: number) {
-
-    // const profileIdList = [1, 2, 3];
-
     console.log("Profile array copy down");
     console.log(this._profileArrCopy);
 
@@ -212,15 +199,8 @@ export class EnrollstudentComponent {
             alert("Student Enrolled Successfully");
           }
         }
-
-
       )
-
-
     }
-
-
-
   }
 
   onScrollToEnd() {
@@ -249,10 +229,7 @@ export class EnrollstudentComponent {
     });
     this.offset += 1;
     this._profileArray;
-    // this.service.getTestsList()
-    //     .pipe(takeWhile(() => this.alive)).subscribe(() => {
-    //     this.loading = false
-    // })
+
   }
 
 

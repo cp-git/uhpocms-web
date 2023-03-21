@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdminInstitution } from 'app/admindepartment/admin-institution/admin-institution';
+
 import { InstitutionSeriveService } from 'app/instituteadminprofile/institution-serive.service';
 import { Course } from '../class/course';
 import { CourseService } from '../service/course.service';
-import { Department } from 'app/admindepartment/department';
+import { Department } from 'app/admindepartment/class/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
 import { Coursedepartment } from '../class/coursedepartment';
 import { CourseDepartmentService } from '../service/course-department.service';
 import { Location } from '@angular/common';
+import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 
 @Component({
   selector: 'app-displaycourse',

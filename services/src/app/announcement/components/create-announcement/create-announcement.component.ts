@@ -1,8 +1,8 @@
 
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Announcement } from 'app/announcement/announcement';
-import { AnnouncementTo } from 'app/announcement/announcement-to';
+import { Announcement } from 'app/announcement/class/announcement';
+import { AnnouncementTo } from 'app/announcement/class/announcement-to';
 import { AnnouncementService } from 'app/announcement/service/announcement.service';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 import { filter } from 'rxjs';
@@ -57,11 +57,11 @@ export class CreateAnnouncementComponent {
           response.forEach(profileId => {
             this.profileIDs.push(profileId.profileId);
           });
-          console.log("loaded profile ids");
+
         },
         error => {
           this.currentAnnouncementProfileIds = [];
-          console.log("failed to load profile ids" + error);
+
         }
       );
       this.isCreateScreen = false;
