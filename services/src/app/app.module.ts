@@ -14,7 +14,6 @@ import { CommonModule } from '@angular/common';
 
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
 import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-institute-admin/display-institute-admin.component';
-import { DepartmentComponent } from './admindepartment/components/department/department.component';
 import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 
@@ -35,7 +34,6 @@ import { DisplayinstituteComponent } from './admin-institution/components/displa
 
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
 import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
-import { ActivateDepartmentComponent } from './admindepartment/components/activate-department/activate-department.component';
 import { ActivateRoleComponent } from './roleadmin/activate-role/activate-role.component';
 import { ActivateProfileComponent } from './instituteadminprofile/activate-profile/activate-profile.component';
 import { ActivateInstitutionComponent } from './admin-institution/components/activate-institution/activate-institution.component';
@@ -53,7 +51,7 @@ import { TeacherPanelComponent } from './teacher-panel/components/teacher-panel/
 import { StudentdataComponent } from './studentdata/studentdata.component';
 import { ActivationScreenComponent } from './teachermodule/activation-screen/activation-screen.component';
 import { QuizComponent } from './quiz/quiz.component';
-import { EnrollstudentComponent } from './enrollstudent/enrollstudent.component';
+import { EnrollstudentComponent } from './enrollstudent/components/enrollstudent.component';
 import { StudentmoduleComponent } from './studentdata/component/studentmodule/studentmodule.component';
 import { StudentCourseComponent } from './student/student-course/student-course.component';
 
@@ -103,7 +101,7 @@ import { AuthUserModule } from './auth-user/modules/auth-user.module';
     AuthuserComponent,
     LoginComponentComponent,
     DisplayInstituteAdminComponent,
-    DepartmentComponent,
+
     AdminroleComponent,
     AdminroleComponent,
     LoginauthComponent,
@@ -128,7 +126,7 @@ import { AuthUserModule } from './auth-user/modules/auth-user.module';
     UpdatemoduleComponent,
     AnnouncementComponent,
     CreateAnnouncementComponent,
-    ActivateDepartmentComponent,
+
     ActivateRoleComponent,
     ActivateProfileComponent,
     ActivateInstitutionComponent,

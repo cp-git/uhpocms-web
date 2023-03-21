@@ -4,11 +4,14 @@ import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstitutionSeriveService } from 'app/instituteadminprofile/institution-serive.service';
 import { Course } from '../class/course';
 import { CourseService } from '../service/course.service';
-import { Department } from 'app/admindepartment/class/department';
-import { DepartmentService } from 'app/admindepartment/service/department.service';
+
+
 import { Coursedepartment } from '../class/coursedepartment';
 import { CourseDepartmentService } from '../service/course-department.service';
+
 import { Location } from '@angular/common';
+import { Department } from 'app/department/class/department';
+import { DepartmentService } from 'app/department/services/department.service';
 @Component({
   selector: 'app-addcourse',
   templateUrl: './addcourse.component.html',
@@ -74,7 +77,7 @@ export class AddcourseComponent {
 
   //Getting FetchAllDepartment
   loadAdminDepartments() {
-    this.departmentService.fetchAllDepartments().subscribe(
+    this.departmentService.getAllDepartments().subscribe(
       response => {
         this.adminDepartments = response;
       },

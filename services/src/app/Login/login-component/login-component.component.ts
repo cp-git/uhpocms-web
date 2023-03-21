@@ -3,9 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 
 
-
-
-import { Department } from 'app/admindepartment/class/department';
 import { AuthService } from 'app/authlogin/service/auth.service';
 
 

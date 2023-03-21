@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
-import { Department } from 'app/admindepartment/class/department';
-import { DepartmentService } from 'app/admindepartment/service/department.service';
+import { Department } from 'app/department/class/department';
+import { DepartmentService } from 'app/department/services/department.service';
+
 
 
 @Component({
@@ -52,7 +53,7 @@ export class ViewDepartmentComponent {
         this.id = params.get("id");
 
         if (this.id) {
-          this.deptService.getDepartmentByInstitutionId(this.id).subscribe(
+          this.deptService.getDepartmentsByInstitutionId(this.id).subscribe(
             (deptdata) => {
               this.departments = deptdata;
             }

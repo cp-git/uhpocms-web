@@ -1,19 +1,16 @@
 import { Component } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { Department } from 'app/admindepartment/class/department';
-import { DepartmentService } from 'app/admindepartment/service/department.service';
+
 import { Coursesyllabus } from 'app/class/coursesyllabus';
-<<<<<<< HEAD:services/src/app/assignedCourseToTeacher/teacher-course/teacher-course.component.ts
 import { Course } from 'app/course/class/course';
 import { CourseDepartmentService } from 'app/course/service/course-department.service';
 import { Coursedepartment } from 'app/course/class/coursedepartment';
-=======
-import { Course } from 'app/course/course';
-import { CourseDepartmentService } from 'app/course/course-department.service';
-import { Coursedepartment } from 'app/course/coursedepartment';
+
+
+import { Department } from 'app/department/class/department';
+import { DepartmentService } from 'app/department/services/department.service';
 import { TeacherCourseService } from 'app/displayAssignedCourseToTeacher/teacher-course.service';
->>>>>>> main:services/src/app/displayAssignedCourseToTeacher/assignedteachercourse/assignedteachercourse/assignedteachercourse.component.ts
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 
@@ -67,7 +64,7 @@ export class AssignedteachercourseComponent {
 
   //get department
   loadAdminDepartments() {
-    this.departmentService.fetchAllDepartments().subscribe(
+    this.departmentService.getAllDepartments().subscribe(
       response => {
         this.adminDepartments = response;
       },

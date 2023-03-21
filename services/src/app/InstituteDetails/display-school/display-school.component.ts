@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Department } from 'app/admindepartment/class/department';
-import { DepartmentService } from 'app/admindepartment/service/department.service';
+
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { Location } from '@angular/common';
+import { Department } from 'app/department/class/department';
+import { DepartmentService } from 'app/department/services/department.service';
 
 @Component({
   selector: 'app-display-school',
@@ -62,7 +63,7 @@ export class DisplaySchoolComponent {
 
         if (this.id) {
           console.log(this.id)
-          this.deptService.getDepartmentByInstitutionId(this.id).subscribe(
+          this.deptService.getDepartmentsByInstitutionId(this.id).subscribe(
             (deptdata) => {
               this.departments = deptdata;
               console.log(deptdata);
@@ -78,7 +79,7 @@ export class DisplaySchoolComponent {
 
 
 
-// load and assign the current institution's details
+    // load and assign the current institution's details
     this.loadAdminInstitutions();
     this.assignInstitution();
 
@@ -106,7 +107,7 @@ export class DisplaySchoolComponent {
 
   // method that navigates to the displayinstitute page with the current user's name as a parameter
   Display() {
-   
+
     this._route.navigate(['/displayinstitute', this.userName]);
   }
 
