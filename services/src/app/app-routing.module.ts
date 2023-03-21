@@ -8,7 +8,7 @@ import { EmailComponent } from './email/components/email/email.component';
 import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-institute-admin/display-institute-admin.component';
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
 import { QuizComponent } from './quiz/quiz.component';
-import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
+import { AdminroleComponent } from './roleadmin/components/adminrole/adminrole.component';
 // import { QuestionComponent } from './teacherquestion/question/question.component';
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 
@@ -33,7 +33,7 @@ import { AnnouncementComponent } from './announcement/components/announcement/an
 import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
 
 import { ActivateDepartmentComponent } from './admindepartment/components/activate-department/activate-department.component';
-import { ActivateRoleComponent } from './roleadmin/activate-role/activate-role.component';
+import { ActivateRoleComponent } from './roleadmin/components/activate-role/activate-role.component';
 import { ActivateProfileComponent } from './instituteadminprofile/activate-profile/activate-profile.component';
 import { ActivateInstitutionComponent } from './admin-institution/components/activate-institution/activate-institution.component';
 

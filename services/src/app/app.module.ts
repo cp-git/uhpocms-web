@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
 import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-institute-admin/display-institute-admin.component';
 import { DepartmentComponent } from './admindepartment/components/department/department.component';
-import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
+import { AdminroleComponent } from './roleadmin/components/adminrole/adminrole.component';
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 
 import { TeacherQuestionComponent } from './teacher-question/components/teacher-question/teacher-question.component';
@@ -36,7 +36,7 @@ import { DisplayinstituteComponent } from './admin-institution/components/displa
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
 import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
 import { ActivateDepartmentComponent } from './admindepartment/components/activate-department/activate-department.component';
-import { ActivateRoleComponent } from './roleadmin/activate-role/activate-role.component';
+import { ActivateRoleComponent } from './roleadmin/components/activate-role/activate-role.component';
 import { ActivateProfileComponent } from './instituteadminprofile/activate-profile/activate-profile.component';
 import { ActivateInstitutionComponent } from './admin-institution/components/activate-institution/activate-institution.component';
 import { InsertinstituteadminprofileComponent } from './instituteadminprofile/insertinstituteadminprofile/insertinstituteadminprofile.component';

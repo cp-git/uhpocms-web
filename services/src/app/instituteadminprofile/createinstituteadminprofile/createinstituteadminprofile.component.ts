@@ -7,8 +7,8 @@ import { DepartmentService } from 'app/admindepartment/service/department.servic
 import { Authuser } from 'app/authuser/authuser';
 import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
 
-import { Admin } from 'app/roleadmin/admin';
-import { AdminroleserviceService } from 'app/roleadmin/adminroleservice.service';
+import { Admin } from 'app/roleadmin/class/admin';
+import { AdminroleserviceService } from 'app/roleadmin/services/adminroleservice.service';
 import { InstituteAdmin } from '../institute-admin';
 import { InstituteAdminServiceService } from '../institute-admin-service.service';
 

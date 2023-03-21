@@ -2,8 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Admin } from 'app/roleadmin/admin';
-import { AdminroleserviceService } from '../adminroleservice.service';
+import { Admin } from 'app/roleadmin/class/admin';
+import { AdminroleserviceService } from '../../services/adminroleservice.service';
 
 @Component({
   selector: 'app-activate-role',
