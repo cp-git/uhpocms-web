@@ -48,19 +48,19 @@ import { AuthenticationloginComponent } from './authenticationlogin/authenticati
 
 
 
-import { StudentdataComponent } from './studentdata/studentdata.component';
+import { StudentdataComponent } from './student/components/studentdata/studentdata.component';
 import { EnrollstudentComponent } from './enrollstudent/enrollstudent.component';
 
-import { StudentmoduleComponent } from './studentdata/component/studentmodule/studentmodule.component';
+import { StudentmoduleComponent } from './student/components/student-course/studentmodule/studentmodule.component';
 
-import { StudentCourseComponent } from './student/student-course/student-course.component';
+import { StudentCourseComponent } from './student/components/student-course/student-course.component';
 // import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';
-import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher/inactive-teacher-course/inactive-teacher-course.component';
+import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher/components/inactive-teacher-course/inactive-teacher-course.component';
 
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
-import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
+import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/components/assigncoursetoteacher/assigncoursetoteacher.component';
 
 
 

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from 'app/course/course';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
-import { TeacherCourseService } from '../teacher-course.service';
+import { TeacherCourseService } from '../../services/teacher-course.service';
 import { Location } from '@angular/common';
 
 @Component({

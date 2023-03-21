@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment.development';
-import { Assignteacher } from './assignteacher';
+import { Assignteacher } from '../class/assignteacher';
 import { map, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'

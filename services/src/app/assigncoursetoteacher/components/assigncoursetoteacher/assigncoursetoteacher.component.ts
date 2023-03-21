@@ -8,8 +8,8 @@ import { Location } from '@angular/common';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 import { InstituteAdminServiceService } from 'app/instituteadminprofile/institute-admin-service.service';
-import { AssigncourseteacherService } from '../assigncourseteacher.service';
-import { Assignteacher } from '../assignteacher';
+import { AssigncourseteacherService } from '../../services/assigncourseteacher.service';
+import { Assignteacher } from '../../class/assignteacher';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 
 @Component({

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from 'app/course/course';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
-import { StudentCoursesService } from '../student-courses.service';
+import { StudentCoursesService } from 'app/student/services/student-courses.service';
 
 @Component({
   selector: 'app-student-course',

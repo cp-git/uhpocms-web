@@ -7,7 +7,7 @@ import { Coursesyllabus } from 'app/class/coursesyllabus';
 import { Course } from 'app/course/course';
 import { CourseDepartmentService } from 'app/course/course-department.service';
 import { Coursedepartment } from 'app/course/coursedepartment';
-import { TeacherCourseService } from 'app/displayAssignedCourseToTeacher/teacher-course.service';
+import { TeacherCourseService } from 'app/displayAssignedCourseToTeacher/services/teacher-course.service';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 
