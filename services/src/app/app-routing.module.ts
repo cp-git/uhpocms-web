@@ -42,7 +42,12 @@ import { UpdateinstituteadminprofileComponent } from './instituteadminprofile/up
 import { ViewinstiteadminprofileComponent } from './instituteadminprofile/viewinstiteadminprofile/viewinstiteadminprofile.component';
 import { AuthenticationloginComponent } from './authenticationlogin/authenticationlogin.component';
 
-import { TeacherComponent } from './teacher/teacher.component';
+
+
+
+
+
+
 import { StudentdataComponent } from './studentdata/studentdata.component';
 import { EnrollstudentComponent } from './enrollstudent/enrollstudent.component';
 
@@ -69,11 +74,16 @@ import { DepartmentComponent } from './department/components/department/departme
 import { CategoryComponent } from './category/component/component/category.component';
 import { AdminmdouleComponent } from './adminmdoule/components/admin-module/adminmdoule.component';
 import { TeacherCourseComponent } from './teacher-course/components/teacher-course/teacher-course.component';
+import { TeacherPanelComponent } from './teacher-panel/components/teacher-panel/teacher-panel.component';
 
 
+
+import { TeacherQuestionComponent } from './teacher-question/components/teacher-question/teacher-question.component';
 
 
 const routes: Routes = [
+  //Teacher-question
+  { path: 'question', component: TeacherQuestionComponent },
 
   //AuthUser
 
@@ -157,7 +167,7 @@ const routes: Routes = [
 
   { path: 'adminmodule/admin/:userName', component: AdminmdouleComponent },
 
-  { path: 'teacherdisplay/teacher/:userName', component: TeacherComponent },
+  { path: 'teacherdisplay/teacher/:userName', component: TeacherPanelComponent },
 
 
 
@@ -180,8 +190,7 @@ const routes: Routes = [
   //auth user routes
   // { path: 'authuser', component: AuthuserComponent },
 
-  //question routes
-  // { path: 'question', component: QuestionComponent },
+
   //login route
   { path: 'demo', component: LoginComponentComponent },
   { path: 'login', component: LoginauthComponent },
