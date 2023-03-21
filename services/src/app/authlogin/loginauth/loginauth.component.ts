@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-//import { AuthuserserviceService } from 'app/authuser/authuserservice.service';
 
-import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 import { InstituteAdminServiceService } from 'app/instituteadminprofile/institute-admin-service.service';
 
-import { AuthService } from '../auth.service';
-import { Authuser } from '../authuser';
+import { AuthService } from '../service/auth.service';
+import { Authuser } from '../class/authuser';
+import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
+
 
 @Component({
   selector: 'app-loginauth',

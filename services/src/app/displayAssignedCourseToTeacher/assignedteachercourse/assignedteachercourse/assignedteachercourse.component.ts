@@ -3,9 +3,11 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Coursesyllabus } from 'app/class/coursesyllabus';
-import { Course } from 'app/course/course';
-import { CourseDepartmentService } from 'app/course/course-department.service';
-import { Coursedepartment } from 'app/course/coursedepartment';
+import { Course } from 'app/course/class/course';
+import { CourseDepartmentService } from 'app/course/service/course-department.service';
+import { Coursedepartment } from 'app/course/class/coursedepartment';
+
+
 import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
 import { TeacherCourseService } from 'app/displayAssignedCourseToTeacher/teacher-course.service';

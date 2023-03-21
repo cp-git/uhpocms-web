@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstitutionSeriveService } from 'app/instituteadminprofile/institution-serive.service';
-import { Course } from '../course';
+import { Course } from '../class/course';
 import { CourseService } from '../service/course.service';
 
-import { Coursedepartment } from '../coursedepartment';
-import { CourseDepartmentService } from '../course-department.service';
+
+import { Coursedepartment } from '../class/coursedepartment';
+import { CourseDepartmentService } from '../service/course-department.service';
+
 import { Location } from '@angular/common';
 import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
@@ -54,6 +56,8 @@ export class AddcourseComponent {
       this.getAllInstitutes();
     }
   }
+
+  //getting AllInstitute as a dropdown
   getAllInstitutes() {
     this._instService._getAllInstitutions().subscribe((data) => {
       this.institutions = data;
@@ -70,6 +74,8 @@ export class AddcourseComponent {
     });
   }
 
+
+  //Getting FetchAllDepartment
   loadAdminDepartments() {
     this.departmentService.getAllDepartments().subscribe(
       response => {
@@ -81,6 +87,8 @@ export class AddcourseComponent {
     );
   }
 
+
+  //Adding Course
   addCourse(course: Course) {
     //alert(JSON.stringify(module));
 
@@ -128,6 +136,7 @@ export class AddcourseComponent {
 
 
 
+  //Navigating to quiz Panel
   back() {
     this.location.back();
     // this._route.navigate(['course']);

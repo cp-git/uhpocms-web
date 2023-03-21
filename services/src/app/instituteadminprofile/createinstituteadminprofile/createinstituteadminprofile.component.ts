@@ -3,7 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 
 
-import { Authuser } from 'app/authuser/authuser';
+import { Authuser } from 'app/authuser/class/authuser';
+
 import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
 import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';

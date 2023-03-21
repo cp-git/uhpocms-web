@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Course } from 'app/course/course';
-import { CourseService } from 'app/course/course.service';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { Location } from '@angular/common';
+import { CourseService } from 'app/course/service/course.service';
+import { Course } from 'app/course/class/course';
 
 @Component({
   selector: 'app-coursedepartment',
@@ -77,7 +77,9 @@ export class CoursedepartmentComponent {
       }
     })
   }
+
   //to load the list of institutions for the admin user from the session storage
+
   private loadAdminInstitutions() {
     this.sessionData = sessionStorage.getItem('admininstitution');
 
