@@ -24,8 +24,6 @@ export class CategoryComponent {
   // If all data is available or not
   dataAvailable: boolean = false;
 
-  // adminRoleHeader: any; // header for minimum visible column data
-  // adminRoleAllHeader: any;  // header for all visible column data
 
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
@@ -34,19 +32,16 @@ export class CategoryComponent {
   readonly primaryIdColumnName: string = 'roleId';
 
   // adminRoles: AdminRole[] = []; 
-  allData: Category[] = []; // list of active admin role
-  allInActiveData: Category[] = []; // list of inactive admin role
+  allData: Category[] = []; // list of active category
+  allInActiveData: Category[] = []; // list of inactive category
 
-  emptyCategory: Category;  // empty admin role
+  emptyCategory: Category;  // empty category
   currentData!: Category;  // for update and view, to show existing data
 
 
 
   constructor(private service: CategoryService, private location: Location, private _route: Router) {
 
-    // assigng headers
-    // this.adminRoleHeader = AdminRoleColumn;
-    // this.adminRoleAllHeader = AdminRoleAllColumn;
 
     this.columnNames = CategoryColumn;
     this.allColumnNames = CategoryAllColumn;
@@ -56,8 +51,8 @@ export class CategoryComponent {
   }
 
   ngOnInit(): void {
-    this.getAllCategories();  // for getting all active admin roles
-    this.getInActiveCategories(); // for getting all inactive admin roles
+    this.getAllCategories();  // for getting all active category
+    this.getInActiveCategories(); // for getting all inactive category
   }
 
   // back button functionality
@@ -78,7 +73,7 @@ export class CategoryComponent {
   // function will call when child view button is clicked 
   onChildViewClick(objectReceived: any): void {
 
-    // hiding view of all column and displaying all admin roles screen 
+    // hiding view of all column and displaying allcategory  screen 
     this.viewOne = true;
     this.viewAll = false;
 
@@ -89,7 +84,7 @@ export class CategoryComponent {
   // function will call when child update button is clicked 
   onChildUpdateClick(objectReceived: Category): void {
 
-    // hiding update screen and displaying all admin roles screen 
+    // hiding update screen and displaying all category screen 
     this.viewAll = false;
     this.viewUpdate = true;
 
@@ -135,7 +130,7 @@ export class CategoryComponent {
   // Funcation calls specific to this module
   ///////////////////////////////////////////
 
-  // For updating admin role
+  // For updating category
   private updateRole(currentData: Category) {
     // calling service for updating data
     console.log(currentData)
@@ -150,44 +145,20 @@ export class CategoryComponent {
     );
   }
 
-  // For adding admin role
-  //  private addCategory(currentData: Category) {
-
-  //    currentData.active = true;  // setting active true
-
-  //    // calling service for adding data
-  //    this.service.addAdminRole(currentData).subscribe(
-  //      (data) => {
-  //        alert('Role added Successfully');
-  //        this.emptyAdminRole = {} as AdminRole;
-  //        this.ngOnInit();
-  //        this.back();
-  //      },
-  //      (error) => {
-  //        alert("Failed to add role");
-  //      });
-  //  }
-
 
   addCategory(toCreateCategory: Category) {
 
     var categoryId = toCreateCategory.categoryId;
-    // toCreateCategory.categoryId = ;
+
     toCreateCategory.active = true;
 
     this.service.insertCategory(toCreateCategory).subscribe(
       response => {
-        // this.currentData = response;
 
         alert("Category added successfully");
         this.emptyCategory = {} as Category;
         this.ngOnInit();
         this.back();
-        // this._route.navigate(['category']);
-
-        // if (this.allData.length > 0) {
-        //   // this.isHidden = true;
-        // }
 
       },
       error => {
@@ -197,7 +168,7 @@ export class CategoryComponent {
     )
   }
 
-  // for getting all admin roles
+  // for getting all category
   private getAllCategories() {
     this.dataAvailable = true;
 
@@ -218,7 +189,7 @@ export class CategoryComponent {
     );
   }
 
-  //  // For deleting (soft delete) admin role using role name
+  //  // For deleting (soft delete) category using role name
   private deleteCategory(roleName: string) {
 
     // calling service to soft delete
@@ -235,7 +206,7 @@ export class CategoryComponent {
 
 
 
-  // For getting all inactive admin roles
+  // For getting all inactive category
   private getInActiveCategories() {
 
     // calling service to get all inactive record
@@ -250,13 +221,13 @@ export class CategoryComponent {
 
   }
 
-  // For activating admin role using role id
+  // For activating category
   private activateCategory(categoryName: string) {
 
-    // calling service to activating admin role
+    // calling service to activating category
     this.service.updateActiveStatus(categoryName).subscribe(
       response => {
-        alert("Activated admin role");
+        alert("Activated category");
         this.ngOnInit();
       },
       error => {

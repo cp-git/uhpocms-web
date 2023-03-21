@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -25,6 +26,7 @@ export class ActivateRoleComponent implements OnInit {
     console.log(this.userName)
     this.loadAdminRoles();
   }
+
 
   loadAdminRoles() {
     this._roleService.getAllDeactivatedRoles().subscribe(

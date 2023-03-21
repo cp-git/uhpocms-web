@@ -30,14 +30,15 @@ export class AdminroleComponent {
   userName!: string;
   adminId: any;
 
+
+  //Function for adding role
   addrole(role: Admin) {
-    //alert(JSON.stringify(role));
     this.admin.roleName = role.roleName;
     this.admin.roleDescription = role.roleDescription;
     this.admin.active = role.active;
     this._service.addAdminRole(this.admin).subscribe(
       (data) => {
-        // console.log(data);
+
         alert('Role added Successfully');
         this.ngOnInit();
       },
@@ -74,6 +75,8 @@ export class AdminroleComponent {
     }
   }
 
+
+  //function for update for update role
   updateAdminRole(role: Admin) {
     if (
       this._backupRole.findIndex((data) => data.roleName === role.roleName) < 0
@@ -85,7 +88,7 @@ export class AdminroleComponent {
       this.admin.active = role.active;
       this._service.updateadminlist(this.admin.roleName, this.admin).subscribe(
         (data) => {
-          // console.log(data)
+
           alert('Role Successfully Updated...');
           this.ngOnInit();
         },
@@ -94,6 +97,7 @@ export class AdminroleComponent {
     }
   }
 
+  //function for delete role by role name
   deleteAdminRole(roleName: string) {
     this._service.deleteAdmin(roleName).subscribe(
       (data) => {
@@ -104,6 +108,8 @@ export class AdminroleComponent {
     );
   }
 
+
+  //function for get role by roleName
   getAdminRole(roleName: string) {
     this._service.getAdmin(roleName).subscribe((response) => {
       this.admin = response;
@@ -111,8 +117,9 @@ export class AdminroleComponent {
     return this.admin;
   }
 
+
+  //routing 
   Home() {
-    //this.location.back();
     this._route.navigate(['adminmodule/admin', this.userName]);
   }
 

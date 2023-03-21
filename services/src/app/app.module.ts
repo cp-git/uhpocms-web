@@ -48,8 +48,7 @@ import { QuizComponent } from './quiz/quiz.component';
 import { EnrollstudentComponent } from './enrollstudent/enrollstudent.component';
 import { StudentmoduleComponent } from './studentdata/component/studentmodule/studentmodule.component';
 import { StudentCourseComponent } from './student/student-course/student-course.component';
-import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';
-import { InactiveTeacherCourseComponent } from './assignedCourseToTeacher/inactive-teacher-course/inactive-teacher-course.component';
+
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
@@ -75,7 +74,12 @@ import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-cours
 import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
 import { CourseComponent } from './course/displaycourse/course.component';
 import { TeacherCourseModule } from './teacher-course/teacher-course.module';
-// import { QuestionComponent } from './question/components/question/question.component';
+import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher/inactive-teacher-course/inactive-teacher-course.component';
+import { TeacherCourseComponent } from './teacher-course/components/teacher-course/teacher-course.component';
+
+
+
+
 
 
 
@@ -90,7 +94,6 @@ import { TeacherCourseModule } from './teacher-course/teacher-course.module';
     AdminroleComponent,
     LoginauthComponent,
     TeachermoduleComponent,
-    // QuestionComponent,
     HomeComponent,
     CourseComponent,
     AddcourseComponent,
@@ -123,7 +126,7 @@ import { TeacherCourseModule } from './teacher-course/teacher-course.module';
     QuizComponent,
     EnrollstudentComponent,
     StudentCourseComponent,
-    TeacherCourseComponent,
+
     InactiveTeacherCourseComponent,
     DisplaySchoolComponent,
     CoursedepartmentComponent,
@@ -154,7 +157,6 @@ import { TeacherCourseModule } from './teacher-course/teacher-course.module';
     NgSelectModule,
     CommonModule,
     TeacherCourseModule
-
   ],
 
   providers: [

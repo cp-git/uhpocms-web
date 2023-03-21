@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { Department } from 'app/admindepartment/class/department';
 import { DepartmentService } from 'app/admindepartment/service/department.service';
@@ -6,16 +7,17 @@ import { Coursesyllabus } from 'app/class/coursesyllabus';
 import { Course } from 'app/course/course';
 import { CourseDepartmentService } from 'app/course/course-department.service';
 import { Coursedepartment } from 'app/course/coursedepartment';
+import { TeacherCourseService } from 'app/displayAssignedCourseToTeacher/teacher-course.service';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
-import { TeacherCourseService } from '../teacher-course.service';
+
 
 @Component({
-  selector: 'app-teacher-course',
-  templateUrl: './teacher-course.component.html',
-  styleUrls: ['./teacher-course.component.css']
+  selector: 'app-assignedteachercourse',
+  templateUrl: './assignedteachercourse.component.html',
+  styleUrls: ['./assignedteachercourse.component.css']
 })
-export class TeacherCourseComponent {
+export class AssignedteachercourseComponent {
 
   adminDepartments: Department[] = [];
   instituteAdminProfile: InstituteAdmin[] = [];
@@ -56,6 +58,8 @@ export class TeacherCourseComponent {
   RedirectToCourseSyllabus() {
     this._route.navigate(['coursesyllabus']);
   }
+
+  //get department
   loadAdminDepartments() {
     this.departmentService.fetchAllDepartments().subscribe(
       response => {
@@ -68,6 +72,7 @@ export class TeacherCourseComponent {
   }
 
 
+  //get courses
   loadCourseDepartment() {
     this.courseDepartmentService.getCoursesDepartmentId().subscribe(
       response => {
@@ -127,11 +132,13 @@ export class TeacherCourseComponent {
     );
   }
 
+
+  //function for insert syllabus with course id
   addSyllabus(courseId: number, courseSyllabus: Coursesyllabus) {
     this.courseSyllabus.courseId = courseId;
     this.courseSyllabus.syllabusFile = courseSyllabus.syllabusFile;
     this.courseSyllabus.courseSyllabusIsActive = true;
-    // alert(this.courseSyllabus.syllabusFile);
+
     this.courseSyllabusServices.addCourseSyllabus(this.courseSyllabus).subscribe(
       (data) => {
         alert(this.courseSyllabus)

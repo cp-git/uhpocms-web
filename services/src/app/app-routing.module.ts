@@ -50,7 +50,7 @@ import { StudentmoduleComponent } from './studentdata/component/studentmodule/st
 
 import { StudentCourseComponent } from './student/student-course/student-course.component';
 // import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';
-import { InactiveTeacherCourseComponent } from './assignedCourseToTeacher/inactive-teacher-course/inactive-teacher-course.component';
+import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher/inactive-teacher-course/inactive-teacher-course.component';
 
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
@@ -68,7 +68,8 @@ import { DepartmentComponent } from './department/components/department/departme
 // import { TeacherCourseComponent } from './teacher-course/teacher-course/components/teacher-course/teacher-course.component';
 import { CategoryComponent } from './category/component/component/category.component';
 import { AdminmdouleComponent } from './adminmdoule/components/admin-module/adminmdoule.component';
-import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';
+import { TeacherCourseComponent } from './teacher-course/components/teacher-course/teacher-course.component';
+
 
 
 
@@ -119,8 +120,10 @@ const routes: Routes = [
 
   { path: 'teachercourse', component: TeacherCourseComponent },
 
-  { path: 'teachercourse/:userName', component: TeacherCourseComponent },
-  { path: 'teacher/:id', component: TeacherCourseComponent },
+  {
+    path: 'teachercourse/:userName', component: TeacherCourseComponent
+  },
+  { path: 'teacher/:id', component: AssigncoursetoteacherComponent },
 
 
 

@@ -26,7 +26,7 @@ export class InactiveTeacherCourseComponent {
 
   backToTeacherCourse() {
     this.location.back();
-    // this._route.navigate(['course/userrole/', this.userName, this.teacherId]);
+    this._route.navigate(['course/userrole/', this.userName, this.teacherId]);
   }
 
   courses: Course[] = [];
@@ -45,16 +45,14 @@ export class InactiveTeacherCourseComponent {
   institution = new AdminInstitution();
 
   Back() {
-    this.location.back();
-    // this._route.navigate(['teacher', { id: this.teacherId }]);
+    // this.location.back();
+    this._route.navigate(['teacher', { id: this.teacherId }]);
   }
 
   getInactiveCoursesByProfileId(teacherId: number) {
-    //alert("id" + teacherId)
     this.teacherCourseService.getInactiveAssignedCourseToTeacher(teacherId).subscribe(
       response => {
         this.courses = response;
-
       },
       error => {
         alert("failed to fetch data");
