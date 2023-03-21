@@ -73,6 +73,7 @@ export class UpdatemoduleComponent {
     );
   }
 
+  //function for update module by name
   updatemodule(module: Module) {
     // this.module = ({} as Module);
     this.module.moduleName = module.moduleName;
@@ -93,7 +94,7 @@ export class UpdatemoduleComponent {
             this.module.moduleId,
             Object.assign({}, this.module)
           );
-          // this.ngOnInit();
+
           alert('Data updated successfuly');
 
           if (this._teacherModule.length > 0) {
@@ -106,6 +107,8 @@ export class UpdatemoduleComponent {
       );
   }
 
+
+  //function for deleting module by module name
   deletemodule(toDeleteModule: Module) {
     this._service.deleteModule(toDeleteModule.moduleName).subscribe(
       (data) => {
@@ -114,7 +117,7 @@ export class UpdatemoduleComponent {
           1
         );
         this._backupModule.delete(toDeleteModule.moduleId);
-        // this.ngOnInit();
+
         alert(toDeleteModule.moduleName + ' deleted successfuly');
 
         if (this._teacherModule.length > 0) {
@@ -127,6 +130,8 @@ export class UpdatemoduleComponent {
     );
   }
 
+
+  //load the courses data
   private loadCourses() {
     this.sessionData = sessionStorage.getItem('course');
     this.data = JSON.parse(this.sessionData);
@@ -134,7 +139,6 @@ export class UpdatemoduleComponent {
     for (var course in this.data) {
       this.courses.push(this.data[course]);
     }
-    //alert(this.courses);
   }
 
   Back() {
