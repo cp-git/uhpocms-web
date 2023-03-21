@@ -118,7 +118,7 @@ const routes: Routes = [
 
   { path: 'inactivecourse/:id/:userName', component: InactiveTeacherCourseComponent },
 
-  { path: 'teachercourse', component: TeacherCourseComponent },
+  { path: 'Course', component: TeacherCourseComponent },
 
   {
     path: 'teachercourse/:userName', component: TeacherCourseComponent
