@@ -48,4 +48,8 @@ export class QuestionService {
     return this._http.patch<any>(`${this._baseUrl}/` + questionFigure, question);
   }
 
+  //get activate question
+  activateQuestion(questionFigure: string): Observable<Question> {
+    return this._http.patch<Question>(`${this._baseUrl}/${questionFigure}`, {});
+  }
 }

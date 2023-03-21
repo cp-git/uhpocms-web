@@ -11,6 +11,7 @@ import { StudentCoursesService } from '../student-courses.service';
 })
 export class StudentCourseComponent {
 
+  //institute admin profile array
   instituteAdminProfile: InstituteAdmin[] = [];
   profileId: any;
 
@@ -29,21 +30,20 @@ export class StudentCourseComponent {
   adminId: any;
 
   ngOnInit(): void {
+    // Get the value of the "id" parameter from the current route and assign it to the "profileId" 
     this.profileId = this.activatedRoute.snapshot.paramMap.get('id');
+    // Get the value of the "userName" parameter from the current route and assign it to the "userName"
     this.userName = this.activatedRoute.snapshot.params['userName'];
     console.log(this.userName);
-
-
-
     this.getStudentCoursesByProfileId(this.profileId);
-
   }
-
 
   Back() {
     this._route.navigate(['studentdata/student', this.userName]);
   }
 
+
+  //get student courses by profile id 
   getStudentCoursesByProfileId(profileId: any) {
     this.studentCourseService.getCourseByProfileId(profileId).subscribe(
       response => {

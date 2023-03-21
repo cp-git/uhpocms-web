@@ -12,6 +12,7 @@ export class StudentCoursesService {
     this.baseUrl = `http://localhost:8090/course/uhpocms/course`;
   }
 
+  //get courses by profile id 
   getCourseByProfileId(profileId: number): Observable<any> {
     return this._http.get<any>(`${this.baseUrl}/profileId/` + profileId);
   }
