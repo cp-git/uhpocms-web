@@ -8,7 +8,7 @@ import { EmailComponent } from './email/components/email/email.component';
 import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-institute-admin/display-institute-admin.component';
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
 import { QuizComponent } from './quiz/quiz.component';
-import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
+import { AdminroleComponent } from './roleadmin/components/adminrole/adminrole.component';
 // import { QuestionComponent } from './teacherquestion/question/question.component';
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 
@@ -32,14 +32,15 @@ import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.comp
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
 import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
 
-import { ActivateRoleComponent } from './roleadmin/activate-role/activate-role.component';
+
+import { ActivateRoleComponent } from './roleadmin/components/activate-role/activate-role.component';
+
 import { ActivateProfileComponent } from './instituteadminprofile/activate-profile/activate-profile.component';
 import { ActivateInstitutionComponent } from './admin-institution/components/activate-institution/activate-institution.component';
 
 import { InsertinstituteadminprofileComponent } from './instituteadminprofile/insertinstituteadminprofile/insertinstituteadminprofile.component';
 import { UpdateinstituteadminprofileComponent } from './instituteadminprofile/updateinstituteadminprofile/updateinstituteadminprofile.component';
 import { ViewinstiteadminprofileComponent } from './instituteadminprofile/viewinstiteadminprofile/viewinstiteadminprofile.component';
-import { AuthenticationloginComponent } from './authenticationlogin/authenticationlogin.component';
 
 
 
@@ -47,19 +48,23 @@ import { AuthenticationloginComponent } from './authenticationlogin/authenticati
 
 
 
-import { StudentdataComponent } from './studentdata/studentdata.component';
+
 import { EnrollstudentComponent } from './enrollstudent/components/enrollstudent.component';
 
-import { StudentmoduleComponent } from './studentdata/component/studentmodule/studentmodule.component';
+import { StudentdataComponent } from './student/components/studentdata/studentdata.component';
 
-import { StudentCourseComponent } from './student/student-course/student-course.component';
+
+
+import { StudentmoduleComponent } from './student/components/student-course/studentmodule/studentmodule.component';
+
+import { StudentCourseComponent } from './student/components/student-course/student-course.component';
 // import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';
-import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher/inactive-teacher-course/inactive-teacher-course.component';
+import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher/components/inactive-teacher-course/inactive-teacher-course.component';
 
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
-import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
+import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/components/assigncoursetoteacher/assigncoursetoteacher.component';
 
 
 
@@ -78,6 +83,7 @@ import { TeacherPanelComponent } from './teacher-panel/components/teacher-panel/
 
 
 import { TeacherQuestionComponent } from './teacher-question/components/teacher-question/teacher-question.component';
+import { AuthenticationloginComponent } from './authenticationlogin/authenticationlogin.component';
 
 
 const routes: Routes = [

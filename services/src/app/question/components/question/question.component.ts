@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
-import { Question } from 'app/question/question';
-import { QuestionAllColumn, QuestionColumn } from 'app/question/question-column';
+import { Question } from 'app/question/class/question';
+
+import { QuestionAllColumn, QuestionColumn } from 'app/question/class/question-column';
+
 import { QuestionService } from 'app/question/services/question.service';
 import { Quiz } from 'app/class/quiz';
 import { Category } from 'app/class/category';
@@ -275,4 +277,17 @@ export class QuestionComponent implements OnInit {
       this.catagories.push(this.data[inst]);
     }
   }
+
+
+
+
+
+
+  /////////////////teacher Question components function///////////////
+
+
+
+
+
+
 }

@@ -5,6 +5,7 @@ import { AnnouncementService } from 'app/announcement/service/announcement.servi
 
 import { Location } from '@angular/common';
 import { AuthService } from 'app/authlogin/service/auth.service';
+// import { AuthService } from 'app/authlogin/service/auth.service';
 
 @Component({
   selector: 'app-announcement',
@@ -116,6 +117,8 @@ export class AnnouncementComponent implements OnInit {
   back() {
     this.location.back();
   }
+
+
 
 
 }
