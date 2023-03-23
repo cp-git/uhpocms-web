@@ -2,7 +2,8 @@ import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Category } from 'app/category/class/category';
-import { CategoryAllColumn, CategoryColumn } from 'app/category/category-column';
+import { CategoryAllColumn, CategoryColumn } from 'app/category/column-name/category-column';
+
 import { CategoryService } from 'app/category/services/category.service';
 
 

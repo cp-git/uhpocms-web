@@ -36,7 +36,7 @@ export class UpdatequizComponent {
 
   title!: string;
   // _quiz: Quiz = new Quiz();
-  constructor(private _service: QuizService, private _activatedRoute: ActivatedRoute, private _route: Router, private _courseService: TeacherCourseService, private _categoryService: CategoryService, private _moduleService: ModuleService) { }
+  constructor(private _service: QuizService, private _activatedRoute: ActivatedRoute, private _route: Router, private _courseService: TeacherCourseService, private _moduleService: ModuleService, private _categoryService: CategoryService) { }
 
   ngOnInit(): void {
 

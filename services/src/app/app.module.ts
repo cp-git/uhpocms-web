@@ -27,7 +27,7 @@ import { HomeComponent } from './home/home.component';
 
 ;
 import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
-import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
+
 import { AddinstituteComponent } from './admin-institution/components/addinstitute/addinstitute.component';
 import { DisplayinstituteComponent } from './admin-institution/components/displayinstitute/displayinstitute.component';
 
@@ -94,6 +94,7 @@ import { AuthUserModule } from './auth-user/modules/auth-user.module';
 import { AuthenticationloginComponent } from './authenticationlogin/components/authenticationlogin/authenticationlogin.component';
 import { StudentPanelComponent } from './student-panel/components/student-panel/student-panel.component';
 import { StudentModuleComponent } from './student-module/components/student-module/student-module.component';
+import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
 
 
 

@@ -73,6 +73,7 @@ import { CategoryComponent } from './category/component/category/category.compon
 import { AdminmdouleComponent } from './adminmdoule/components/admin-module/adminmdoule.component';
 
 import { TeacherPanelComponent } from './teacher-panel/components/teacher-panel/teacher-panel.component';
+import { AuthenticationloginComponent } from './authenticationlogin/components/authenticationlogin/authenticationlogin.component';
 
 
 
