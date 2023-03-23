@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-adminrole',
   templateUrl: './adminrole.component.html',
-  styleUrls: ['../../app.component.css'],
+  styleUrls: ['../../../app.component.css'],
 })
 export class AdminroleComponent {
   admin = new Admin();

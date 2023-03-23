@@ -7,7 +7,7 @@ import { AdmininstitutionService } from '../../service/admininstitution.service'
 @Component({
   selector: 'app-activate-institution',
   templateUrl: './activate-institution.component.html',
-  styleUrls: ['./activate-institution.component.css', '../../app.component.css']
+  styleUrls: ['./activate-institution.component.css', '../../../app.component.css']
 })
 export class ActivateInstitutionComponent implements OnInit {
 
