@@ -20,7 +20,7 @@ export class StudentdataComponent {
     console.log(this.userName);
   }
   RedirectToStudentCourse() {
-    this._route.navigate(['studentcourse', this.userName, { id: this.profileId }]);
+    this._route.navigate(['studentcourse', { id: this.profileId }]);
   }
 
   RedirectToQuiz() {
