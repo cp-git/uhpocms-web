@@ -40,7 +40,7 @@ import { ActivateInstitutionComponent } from './admin-institution/components/act
 import { InsertinstituteadminprofileComponent } from './instituteadminprofile/insertinstituteadminprofile/insertinstituteadminprofile.component';
 import { UpdateinstituteadminprofileComponent } from './instituteadminprofile/updateinstituteadminprofile/updateinstituteadminprofile.component';
 import { ViewinstiteadminprofileComponent } from './instituteadminprofile/viewinstiteadminprofile/viewinstiteadminprofile.component';
-import { AuthenticationloginComponent } from './authenticationlogin/authenticationlogin.component';
+
 
 
 
@@ -58,7 +58,7 @@ import { StudentCourseComponent } from './student/student-course/student-course.
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
-import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/assigncoursetoteacher/assigncoursetoteacher.component';
+import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/components/assigncoursetoteacher/assigncoursetoteacher.component';
 import { CreateinstituteadminprofileComponent } from './instituteadminprofile/createinstituteadminprofile/createinstituteadminprofile.component';
 import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.component';
 
@@ -82,11 +82,12 @@ import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-cours
 import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
 import { CourseComponent } from './course/displaycourse/course.component';
 import { TeacherCourseModule } from './teacher-course/teacher-course.module';
-import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher/inactive-teacher-course/inactive-teacher-course.component';
+import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher/components/inactive-teacher-course/inactive-teacher-course.component';
 
 import { TeacherCourseComponent } from './teacher-course/components/teacher-course/teacher-course.component';
 import { HttpInterceptorServiceService } from './authlogin/service/http-interceptor-service.service';
 import { AuthUserModule } from './auth-user/modules/auth-user.module';
+import { AuthenticationloginComponent } from './authenticationlogin/authenticationlogin.component';
 
 
 

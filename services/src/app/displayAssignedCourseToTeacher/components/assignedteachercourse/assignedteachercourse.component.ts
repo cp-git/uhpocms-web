@@ -10,7 +10,7 @@ import { Coursedepartment } from 'app/course/class/coursedepartment';
 
 import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
-import { TeacherCourseService } from 'app/displayAssignedCourseToTeacher/teacher-course.service';
+import { TeacherCourseService } from 'app/displayAssignedCourseToTeacher/services/teacher-course.service';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 
