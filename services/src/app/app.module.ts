@@ -17,13 +17,13 @@ import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-
 
 import { AdminroleComponent } from './roleadmin/components/adminrole/adminrole.component';
 
-import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
+import { LoginauthComponent } from './authlogin/components/loginauth.component';
 
 import { TeacherQuestionComponent } from './teacher-question/components/teacher-question/teacher-question.component';
 
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 
-import { AuthuserComponent } from './authuser/authuser/authuser.component';
+import { AuthuserComponent } from './authuser/components/authuser/authuser.component';
 import { HomeComponent } from './home/home.component';
 
 
@@ -119,7 +119,7 @@ import { StudentModuleComponent } from './student-module/components/student-modu
     EmailComponent,
 
     HomeComponent,
-   
+
     CategoryComponent,
     MainComponent,
     AddModuleComponent,
@@ -143,7 +143,7 @@ import { StudentModuleComponent } from './student-module/components/student-modu
     AuthenticationloginComponent,
     AdminmdouleComponent,
     TeacherPanelComponent,
-  
+
     ActivationScreenComponent,
     QuizComponent,
     EnrollstudentComponent,
@@ -152,14 +152,14 @@ import { StudentModuleComponent } from './student-module/components/student-modu
     DisplaySchoolComponent,
     CoursedepartmentComponent,
     AddDepartmentsComponent,
-    
+
     AssigncoursetoteacherComponent,
     CreateinstituteadminprofileComponent,
-  
+
 
     TeacherQuestionComponent,
-          StudentPanelComponent,
-          StudentModuleComponent,
+    StudentPanelComponent,
+    StudentModuleComponent,
 
 
   ],
