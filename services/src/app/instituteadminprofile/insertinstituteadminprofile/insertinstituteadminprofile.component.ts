@@ -4,10 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Authuser } from 'app/authuser/class/authuser';
 
 import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
+
 import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
-import { Admin } from 'app/roleadmin/admin';
-import { AdminroleserviceService } from 'app/roleadmin/adminroleservice.service';
+
+import { Admin } from 'app/roleadmin/class/admin';
+import { AdminroleserviceService } from 'app/roleadmin/services/adminroleservice.service';
+
 import { AdminInstitution } from '../admin-institution';
 import { InstituteAdmin } from '../institute-admin';
 import { InstituteAdminServiceService } from '../institute-admin-service.service';

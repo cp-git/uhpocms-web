@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Admin } from '../admin';
-import { AdminroleserviceService } from '../adminroleservice.service';
+import { Admin } from '../../class/admin';
+import { AdminroleserviceService } from '../../services/adminroleservice.service';
 import { Location } from '@angular/common';
 
 @Component({

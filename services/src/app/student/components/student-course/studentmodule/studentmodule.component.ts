@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModuleFile } from 'app/class/module-file';
+
 import { Course } from 'app/course/class/course';
-import { StudentService } from 'app/studentdata/service/student.service';
+import { StudentService } from 'app/student/services/student.service';
+
+
 import { Module } from 'app/teachermodule/module';
 
 @Component({

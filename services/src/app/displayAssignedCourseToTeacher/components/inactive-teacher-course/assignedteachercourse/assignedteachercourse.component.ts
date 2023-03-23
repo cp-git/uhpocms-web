@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Coursesyllabus } from 'app/class/coursesyllabus';
+<<<<<<<< HEAD:services/src/app/displayAssignedCourseToTeacher/components/assignedteachercourse/assignedteachercourse.component.ts
 import { Course } from 'app/course/class/course';
 import { CourseDepartmentService } from 'app/course/service/course-department.service';
 import { Coursedepartment } from 'app/course/class/coursedepartment';
@@ -10,7 +11,11 @@ import { Coursedepartment } from 'app/course/class/coursedepartment';
 
 import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
-
+========
+import { Course } from 'app/course/course';
+import { CourseDepartmentService } from 'app/course/course-department.service';
+import { Coursedepartment } from 'app/course/coursedepartment';
+>>>>>>>> 960d72c9487e60e74c0c8cb896a9ba3a05509270:services/src/app/displayAssignedCourseToTeacher/components/inactive-teacher-course/assignedteachercourse/assignedteachercourse.component.ts
 import { TeacherCourseService } from 'app/displayAssignedCourseToTeacher/services/teacher-course.service';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';

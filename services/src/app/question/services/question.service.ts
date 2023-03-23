@@ -8,6 +8,7 @@ import { environment } from 'environments/environment.development';
 })
 export class QuestionService {
   questionUrl: string;
+
   constructor(private http: HttpClient) {
     this.questionUrl = `${environment.questionUrl}/question`;
   }

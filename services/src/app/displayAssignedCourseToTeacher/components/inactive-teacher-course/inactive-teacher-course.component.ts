@@ -3,7 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
-import { TeacherCourseService } from 'app/displayAssignedCourseToTeacher/services/teacher-course.service';
+
+import { TeacherCourseService } from '../../services/teacher-course.service';
+
 import { Location } from '@angular/common';
 import { Course } from 'app/course/class/course';
 

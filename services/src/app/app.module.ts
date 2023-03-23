@@ -14,7 +14,9 @@ import { CommonModule } from '@angular/common';
 
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
 import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-institute-admin/display-institute-admin.component';
-import { AdminroleComponent } from './roleadmin/adminrole/adminrole.component';
+
+import { AdminroleComponent } from './roleadmin/components/adminrole/adminrole.component';
+
 import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
 
 import { TeacherQuestionComponent } from './teacher-question/components/teacher-question/teacher-question.component';
@@ -34,7 +36,9 @@ import { DisplayinstituteComponent } from './admin-institution/components/displa
 
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
 import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
-import { ActivateRoleComponent } from './roleadmin/activate-role/activate-role.component';
+
+import { ActivateRoleComponent } from './roleadmin/components/activate-role/activate-role.component';
+
 import { ActivateProfileComponent } from './instituteadminprofile/activate-profile/activate-profile.component';
 import { ActivateInstitutionComponent } from './admin-institution/components/activate-institution/activate-institution.component';
 import { InsertinstituteadminprofileComponent } from './instituteadminprofile/insertinstituteadminprofile/insertinstituteadminprofile.component';
@@ -48,12 +52,14 @@ import { ViewinstiteadminprofileComponent } from './instituteadminprofile/viewin
 
 import { TeacherPanelComponent } from './teacher-panel/components/teacher-panel/teacher-panel.component';
 
-import { StudentdataComponent } from './studentdata/studentdata.component';
+import { StudentdataComponent } from './student/components/studentdata/studentdata.component';
 import { ActivationScreenComponent } from './teachermodule/activation-screen/activation-screen.component';
 import { QuizComponent } from './quiz/quiz.component';
+
 import { EnrollstudentComponent } from './enrollstudent/components/enrollstudent.component';
-import { StudentmoduleComponent } from './studentdata/component/studentmodule/studentmodule.component';
-import { StudentCourseComponent } from './student/student-course/student-course.component';
+import { StudentmoduleComponent } from './student/components/student-course/studentmodule/studentmodule.component';
+import { StudentCourseComponent } from './student/components/student-course/student-course.component';
+
 
 import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
 import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
@@ -67,7 +73,9 @@ import { AdminRoleModule } from './admin-role/module/admin-role.module';
 import { DepartmentModule } from './department/department.module';
 
 
-import { QuestionModule } from './question/question.module';
+
+import { QuestionModule } from './question/class/question.module';
+
 
 
 

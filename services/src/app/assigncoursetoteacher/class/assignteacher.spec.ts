@@ -1,4 +1,4 @@
-import { Assignteacher } from './assignteacher';
+import { Assignteacher } from './class/assignteacher';
 
 describe('Assignteacher', () => {
   it('should create an instance', () => {
