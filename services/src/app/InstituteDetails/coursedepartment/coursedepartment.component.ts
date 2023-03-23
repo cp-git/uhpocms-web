@@ -3,9 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { Location } from '@angular/common';
-import { CourseService } from 'app/course/service/course.service';
-import { Course } from 'app/course/class/course';
-
+import { Course } from 'app/teacher-course/class/course';
+import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 @Component({
   selector: 'app-coursedepartment',
   templateUrl: './coursedepartment.component.html',
@@ -37,7 +36,7 @@ export class CoursedepartmentComponent {
   adminId: any; //variable used to store the admin user id
   constructor(
     private _route: Router,
-    private readonly courseService: CourseService,
+    private readonly courseService: TeacherCourseService,
     private readonly route: ActivatedRoute,
     private location: Location
 

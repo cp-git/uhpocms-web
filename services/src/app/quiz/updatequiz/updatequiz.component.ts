@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from 'app/category/category';
 import { CategoryService } from 'app/category/category.service';
-import { Course } from 'app/course/class/course';
-import { CourseService } from 'app/course/service/course.service';
+import { Course } from 'app/teacher-course/class/course';
+import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 
 import { Module } from 'app/module/module';
 import { ModuleService } from 'app/module/module.service';
@@ -36,7 +36,7 @@ export class UpdatequizComponent {
 
   title!: string;
   // _quiz: Quiz = new Quiz();
-  constructor(private _service: QuizService, private _activatedRoute: ActivatedRoute, private _route: Router, private _courseService: CourseService, private _categoryService: CategoryService, private _moduleService: ModuleService) { }
+  constructor(private _service: QuizService, private _activatedRoute: ActivatedRoute, private _route: Router, private _courseService: TeacherCourseService, private _categoryService: CategoryService, private _moduleService: ModuleService) { }
 
   ngOnInit(): void {
 
@@ -71,7 +71,7 @@ export class UpdatequizComponent {
 
   //getting the Courses As a Dropdown
   getAllCourses() {
-    this._courseService._getAllCourses().subscribe(
+    this._courseService.getAllCourses().subscribe(
       data => {
         this._courseArray = data;
         this._courseArray.forEach(_courseObj => {

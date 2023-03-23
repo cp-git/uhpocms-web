@@ -47,7 +47,7 @@ export class TeacherPanelComponent {
     this._route.navigate(['announcement/teacher', { id: this.teacherId }])
   }
 
-  ////navigates the user to a route called Question
+  //navigates the user to a route called Question
   RedirectToQuestion() {
     this._route.navigate(['question'])
   }

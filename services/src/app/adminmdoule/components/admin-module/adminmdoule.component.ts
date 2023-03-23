@@ -43,12 +43,12 @@ export class AdminmdouleComponent {
 
   RedirectToCourse() {
 
-    this._route.navigate(['course/userrole', this.userName]);
+    this._route.navigate(['Course', this.userName]);
 
   }
 
   RedirectToAdminDept() {
-    this._route.navigate(['department', this.userName]);
+    this._route.navigate(['Department', this.userName]);
   }
 
   RedirectTOLogin() {
@@ -67,7 +67,7 @@ export class AdminmdouleComponent {
   }
 
   RedirectToRole() {
-    this._route.navigate(['adminrole', this.userName])
+    this._route.navigate(['AdminRole', this.userName])
   }
 
   RedirectToAnnouncement() {

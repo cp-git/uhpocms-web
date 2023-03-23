@@ -8,7 +8,7 @@ import { AdminroleserviceService } from '../../services/adminroleservice.service
 @Component({
   selector: 'app-activate-role',
   templateUrl: './activate-role.component.html',
-  styleUrls: ['./activate-role.component.css', '../../app.component.css']
+  styleUrls: ['./activate-role.component.css', '../../../app.component.css']
 })
 export class ActivateRoleComponent implements OnInit {
 

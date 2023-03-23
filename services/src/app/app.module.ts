@@ -17,14 +17,13 @@ import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-
 
 import { AdminroleComponent } from './roleadmin/components/adminrole/adminrole.component';
 
-import { LoginauthComponent } from './authlogin/loginauth/loginauth.component';
+import { LoginauthComponent } from './authlogin/components/loginauth.component';
 
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 
-import { AuthuserComponent } from './authuser/authuser/authuser.component';
+import { AuthuserComponent } from './authuser/components/authuser/authuser.component';
 import { HomeComponent } from './home/home.component';
-import { AddcourseComponent } from './course/addcourse/addcourse.component';
-import { UpdatecourseComponent } from './course/updatecourse/updatecourse.component';
+
 
 ;
 import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
@@ -47,15 +46,14 @@ import { ViewinstiteadminprofileComponent } from './instituteadminprofile/viewin
 
 
 
-
 import { TeacherPanelComponent } from './teacher-panel/components/teacher-panel/teacher-panel.component';
 
-import { StudentdataComponent } from './student/components/studentdata/studentdata.component';
+
 import { ActivationScreenComponent } from './teachermodule/activation-screen/activation-screen.component';
 import { QuizComponent } from './quiz/quiz.component';
 
 import { EnrollstudentComponent } from './enrollstudent/components/enrollstudent.component';
-import { StudentmoduleComponent } from './student/components/student-course/studentmodule/studentmodule.component';
+
 import { StudentCourseComponent } from './student/components/student-course/student-course.component';
 
 
@@ -64,7 +62,7 @@ import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/c
 import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/components/assigncoursetoteacher/assigncoursetoteacher.component';
 import { CreateinstituteadminprofileComponent } from './instituteadminprofile/createinstituteadminprofile/createinstituteadminprofile.component';
-import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.component';
+
 
 import { ReusableModule } from './reusable/module/reusable.module';
 import { AdminRoleModule } from './admin-role/module/admin-role.module';
@@ -86,7 +84,7 @@ import { EmailComponent } from './email/components/email/email.component';
 import { AdminmdouleComponent } from './adminmdoule/components/admin-module/adminmdoule.component';
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
 import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
-import { CourseComponent } from './course/displaycourse/course.component';
+
 import { TeacherCourseModule } from './teacher-course/teacher-course.module';
 import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher/components/inactive-teacher-course/inactive-teacher-course.component';
 
@@ -94,6 +92,8 @@ import { TeacherCourseComponent } from './teacher-course/components/teacher-cour
 import { HttpInterceptorServiceService } from './authlogin/service/http-interceptor-service.service';
 import { AuthUserModule } from './auth-user/modules/auth-user.module';
 import { AuthenticationloginComponent } from './authenticationlogin/authenticationlogin.component';
+import { StudentPanelComponent } from './student-panel/components/student-panel/student-panel.component';
+import { StudentModuleComponent } from './student-module/components/student-module/student-module.component';
 
 
 
@@ -117,9 +117,7 @@ import { AuthenticationloginComponent } from './authenticationlogin/authenticati
     EmailComponent,
 
     HomeComponent,
-    CourseComponent,
-    AddcourseComponent,
-    UpdatecourseComponent,
+
     CategoryComponent,
     MainComponent,
     AddModuleComponent,
@@ -143,7 +141,7 @@ import { AuthenticationloginComponent } from './authenticationlogin/authenticati
     AuthenticationloginComponent,
     AdminmdouleComponent,
     TeacherPanelComponent,
-    StudentdataComponent,
+
     ActivationScreenComponent,
     QuizComponent,
     EnrollstudentComponent,
@@ -152,10 +150,14 @@ import { AuthenticationloginComponent } from './authenticationlogin/authenticati
     DisplaySchoolComponent,
     CoursedepartmentComponent,
     AddDepartmentsComponent,
-    StudentmoduleComponent,
+
     AssigncoursetoteacherComponent,
     CreateinstituteadminprofileComponent,
-    InactivecourseComponent,
+
+
+
+    StudentPanelComponent,
+    StudentModuleComponent,
 
 
 

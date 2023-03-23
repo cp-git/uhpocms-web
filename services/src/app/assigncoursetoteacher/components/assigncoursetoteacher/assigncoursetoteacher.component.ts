@@ -1,10 +1,8 @@
 import { Component, HostListener } from '@angular/core';
 import { AdmininstitutionService } from 'app/admin-institution/service/admininstitution.service';
 
-
-import { Course } from 'app/course/class/course';
-
-import { CourseService } from 'app/course/service/course.service';
+import { Course } from 'app/teacher-course/class/course';
+import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { Location } from '@angular/common';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
@@ -65,7 +63,7 @@ export class AssigncoursetoteacherComponent {
     console.log(this.selected);
   }
 
-  constructor(private _institutionService: AdmininstitutionService, private _deptService: DepartmentService, private courseService: CourseService, private profileService: InstituteAdminServiceService, private assignTeacherService: AssigncourseteacherService,
+  constructor(private _institutionService: AdmininstitutionService, private _deptService: DepartmentService, private courseService: TeacherCourseService, private profileService: InstituteAdminServiceService, private assignTeacherService: AssigncourseteacherService,
     private location: Location, private _activatedRoute: ActivatedRoute, private _route: Router) { }
 
   ngOnInit() {
