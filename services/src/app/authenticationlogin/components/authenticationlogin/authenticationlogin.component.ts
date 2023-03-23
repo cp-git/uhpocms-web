@@ -4,7 +4,7 @@ import { Authuser } from 'app/authuser/class/authuser';
 import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 import { InstituteAdminServiceService } from 'app/instituteadminprofile/institute-admin-service.service';
-import { AuthenticationserviceService } from './service/authenticationservice.service';
+import { AuthenticationserviceService } from '../../service/authenticationservice.service';
 
 @Component({
   selector: 'app-authenticationlogin',

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Category } from 'app/category/category';
-import { CategoryService } from 'app/category/category.service';
+import { Category } from 'app/category/class/category';
+import { CategoryService } from 'app/category/services/category.service';
 import { Course } from 'app/teacher-course/class/course';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { Module } from 'app/module/module';
@@ -127,42 +127,6 @@ export class QuizComponent {
   //Navigating the route to quiz
   Add() {
     this._route.navigate(['createQuiz', this.userName]);
-    // let quizObj = new Quiz;
-    // quizObj.title = quiz.title;
-    // quizObj.description = quiz.description;
-    // quizObj.url = quiz.url;
-    // quizObj.randomOrder = quiz.randomOrder;
-    // quizObj.maxQuestions = quiz.maxQuestions;
-    // quizObj.answersAtEnd = quiz.answersAtEnd;
-    // quizObj.examPaper = quiz.examPaper;
-    // quizObj.singleAttempt = quiz.singleAttempt;
-    // quizObj.passMark = quiz.passMark;
-    // quizObj.successText = quiz.successText;
-    // quizObj.failText = quiz.failText;
-    // quizObj.draft = quiz.draft;
-    // quizObj.quizOrderNo = quiz.quizOrderNo;
-    // quizObj.courseId = quiz.courseId
-    // quizObj.moduleId = quiz.moduleId
-    // quizObj.categoryId = quiz.categoryId
-    // quizObj.active = true;
-
-    // this._quizService._addQuiz(quizObj).subscribe(
-    //   data => {
-    //     console.log(data);
-    //     if (this._quizMap.size > 0) {
-    //       this._quizArray[this._quizArray.indexOf(quiz)] = (Object.assign({}, this._quizMap.get(quiz.quizId)));
-    //     }
-    //     this._quizArray.push(this._quiz)
-    //     this._quizMap.set(this._quiz.quizId, (Object.assign({}, this._quiz)));
-    //     alert("Quiz Added Successfully");
-    //     location.reload();
-    //   }
-    //   ,
-    //   error => {
-    //     alert("Failed to add quiz data")
-    //   }
-    // )
-
 
 
   }

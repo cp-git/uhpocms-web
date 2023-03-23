@@ -27,7 +27,7 @@ import { HomeComponent } from './home/home.component';
 
 ;
 import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
-import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
+
 import { AddinstituteComponent } from './admin-institution/components/addinstitute/addinstitute.component';
 import { DisplayinstituteComponent } from './admin-institution/components/displayinstitute/displayinstitute.component';
 
@@ -75,11 +75,11 @@ import { QuestionModule } from './question/class/question.module';
 
 
 
-import { CategoryComponent } from './category/component/component/category.component';
-import { MainComponent } from './category/UI/main/main.component';
-import { AddModuleComponent } from './category/UI/add-module/add-module.component';
-import { AddCategoryComponent } from './category/UI/add-category/add-category.component';
-import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
+import { CategoryComponent } from './category/component/category/category.component';
+import { MainComponent } from './category/component/main/main.component';
+import { AddModuleComponent } from './category/component/add-module/add-module.component';
+import { AddCategoryComponent } from './category/component/add-category/add-category.component';
+import { UpdatemoduleComponent } from './category/component/updatemodule/updatemodule.component';
 import { EmailComponent } from './email/components/email/email.component';
 import { AdminmdouleComponent } from './adminmdoule/components/admin-module/adminmdoule.component';
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
@@ -91,9 +91,10 @@ import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher
 import { TeacherCourseComponent } from './teacher-course/components/teacher-course/teacher-course.component';
 import { HttpInterceptorServiceService } from './authlogin/service/http-interceptor-service.service';
 import { AuthUserModule } from './auth-user/modules/auth-user.module';
-import { AuthenticationloginComponent } from './authenticationlogin/authenticationlogin.component';
+import { AuthenticationloginComponent } from './authenticationlogin/components/authenticationlogin/authenticationlogin.component';
 import { StudentPanelComponent } from './student-panel/components/student-panel/student-panel.component';
 import { StudentModuleComponent } from './student-module/components/student-module/student-module.component';
+import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
 
 
 
