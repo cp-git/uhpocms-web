@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Category } from 'app/category/category';
-import { CategoryService } from 'app/category/category.service';
+import { Category } from 'app/category/class/category';
+import { CategoryService } from 'app/category/services/category.service';
 import { Course } from 'app/teacher-course/class/course';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { Module } from 'app/module/module';
