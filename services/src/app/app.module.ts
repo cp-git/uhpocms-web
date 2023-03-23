@@ -19,8 +19,6 @@ import { AdminroleComponent } from './roleadmin/components/adminrole/adminrole.c
 
 import { LoginauthComponent } from './authlogin/components/loginauth.component';
 
-import { TeacherQuestionComponent } from './teacher-question/components/teacher-question/teacher-question.component';
-
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 
 import { AuthuserComponent } from './authuser/components/authuser/authuser.component';
@@ -157,9 +155,10 @@ import { StudentModuleComponent } from './student-module/components/student-modu
     CreateinstituteadminprofileComponent,
 
 
-    TeacherQuestionComponent,
+
     StudentPanelComponent,
     StudentModuleComponent,
+
 
 
   ],
