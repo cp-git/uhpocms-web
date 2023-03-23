@@ -1,0 +1,76 @@
+
+
+
+<div class="container-fluid mt-5 mb-3">
+
+    <head>
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    </head>
+
+    <div class="header">
+        <div class="row">
+            <div class="col-md-6" id="h1">
+                <h1>Student Panel</h1>
+                <h3> Welcome {{userName | titlecase}}</h3>
+            </div>
+
+            <div class="col-md-6" id="h2">
+                <button class="btn btn-info" id="demo" (click)="RedirectTOLogin()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+   
+    <div class="col-md-4" id="data1">
+        <div class="card p-3 mb-2">
+            <div class="d-flex justify-content-between">
+                <div class="d-flex flex-row align-items-center">
+                    <i class="material-icons" id="icon1">computer</i>
+                    <div class="ms-2 c-details">
+                        <h2 class="mb-0" id="AuthUsername">Courses</h2>
+                    </div>
+
+                    <button id="demo" class="btn btn-info" (click)="RedirectToStudentCourse()">Courses
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-4" id="data1">
+        <div class="card p-3 mb-2">
+            <div class="d-flex justify-content-between">
+                <div class="d-flex flex-row align-items-center">
+                    <i class="material-icons" id="icon1">class</i>
+                    <div class="ms-2 c-details">
+                        <h2 class="mb-0" id="AuthUsername">Lessions</h2>
+                    </div>
+
+                    <button id="demo" class="btn btn-info" (click)="RedirectToStudentModule()">
+                        Lessions</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-4" id="data1">
+        <div class="card p-3 mb-2">
+            <div class="d-flex justify-content-between">
+                <div class="d-flex flex-row align-items-center">
+                    <i class="material-icons" id="icon1">class</i>
+                    <div class="ms-2 c-details">
+                        <h2 class="mb-0" id="notification" style="text-align: center;"> Notifications</h2>
+                    </div>
+
+                    <button id="demo" class="btn btn-info" (click)="redirectToNotification()">Notification</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+

@@ -1,9 +1,8 @@
 import { Component, HostListener } from '@angular/core';
 import { AdmininstitutionService } from 'app/admin-institution/service/admininstitution.service';
 
-import { Course } from 'app/course/class/course';
-
-import { CourseService } from 'app/course/service/course.service';
+import { Course } from 'app/teacher-course/class/course';
+import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 import { InstituteAdminServiceService } from 'app/instituteadminprofile/institute-admin-service.service';
@@ -61,7 +60,7 @@ export class EnrollstudentComponent {
 
 
   //constructor
-  constructor(private _institutionService: AdmininstitutionService, private _deptService: DepartmentService, private courseService: CourseService, private profileService: InstituteAdminServiceService, private enrollstuService: EnrolltostudentService, private location: Location) { }
+  constructor(private _institutionService: AdmininstitutionService, private _deptService: DepartmentService, private courseService: TeacherCourseService, private profileService: InstituteAdminServiceService, private enrollstuService: EnrolltostudentService, private location: Location) { }
 
   //ngoninit
   ngOnInit() {

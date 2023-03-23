@@ -2,19 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModuleFile } from 'app/class/module-file';
 
-import { Course } from 'app/course/class/course';
+import { Course } from 'app/teacher-course/class/course';
 import { StudentService } from 'app/student/services/student.service';
 
 
 import { Module } from 'app/teachermodule/module';
 
 @Component({
-  selector: 'app-studentmodule',
-  templateUrl: './studentmodule.component.html',
-  styleUrls: ['./studentmodule.component.css']
+  selector: 'app-student-module',
+  templateUrl: './student-module.component.html',
+  styleUrls: ['./student-module.component.css']
 })
-export class StudentmoduleComponent implements OnInit {
-  studentId: any;
+export class StudentModuleComponent {
+studentId: any;
   userName: any;
 
   courseId: any;
