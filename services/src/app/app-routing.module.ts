@@ -74,15 +74,12 @@ import { AdminmdouleComponent } from './adminmdoule/components/admin-module/admi
 
 import { TeacherPanelComponent } from './teacher-panel/components/teacher-panel/teacher-panel.component';
 
-
-
-import { TeacherQuestionComponent } from './teacher-question/components/teacher-question/teacher-question.component';
 import { AuthenticationloginComponent } from './authenticationlogin/authenticationlogin.component';
 
 
 const routes: Routes = [
   //Teacher-question
-  { path: 'question', component: TeacherQuestionComponent },
+  //{ path: 'question', component: TeacherQuestionComponent },
 
   //AuthUser
 
@@ -203,7 +200,7 @@ const routes: Routes = [
   { path: 'department/:userName', component: DepartmentComponent },
 
 
-  //quiz routes
+  //euiz routes
   { path: 'quiz/:userName', component: QuizComponent },
 
   { path: 'department/:id', component: ViewDepartmentComponent },
