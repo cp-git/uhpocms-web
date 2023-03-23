@@ -8,7 +8,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-authuser',
   templateUrl: './authuser.component.html',
-  styleUrls: ['../../app.component.css'],
+  styleUrls: ['../../../app.component.css'],
 })
 export class AuthuserComponent implements OnInit {
   authUser = new Authuser();

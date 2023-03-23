@@ -6,9 +6,10 @@
                     <ng-container *ngSwitchCase="'input'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
-                        <input name="{{column.key}}" type="text" [(ngModel)]="currentData[column.key]"
+                        <input name="{{column.key}}" type="{{column.subtype}}" [(ngModel)]="currentData[column.key]"
                             class="form-control" required="">
                     </ng-container>
+
 
                     <ng-container *ngSwitchCase="'email'">
                         <span class="form-bar"></span>
@@ -29,6 +30,13 @@
                         <label class="float-label">{{ column.label }}</label>
                         <textarea name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
                             required=""></textarea>
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'file'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <input name="{{column.key}}" type="file" [(ngModel)]="currentData[column.key]"
+                            class="form-control" required="">
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'dropdown1'">
@@ -54,8 +62,54 @@
                                 {{ option[dropdownColumnName2] }}
                             </option>
                         </select>
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'dropdown'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <select name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
+                            required="">
+                            <option value="undefined" disabled>Select</option>
+
+                            <ng-container *ngIf="[column.toSort] then sortDropdown else simpleDropdown"></ng-container>
+
+                            <ng-template #sortDropdown>
+                                <ng-container *ngFor="let option of dropdown[column.arrayName]">
+                                    <option
+                                        *ngIf="option[column.foreignKeyColumn]==currentData[column.sortBasedOn]?true:null"
+                                        [value]="option[column.columnId]">
+                                        {{ option[column.columnName] }}
+                                    </option>
+                                </ng-container>
+                            </ng-template>
+
+                            <ng-template #simpleDropdown>
+                                <option *ngFor="let option of dropdown[column.arrayName]"
+                                    [value]="option[column.columnId]">
+                                    {{ option[column.columnName] }}
+                                </option>
+                            </ng-template>
+
+                        </select>
 
                     </ng-container>
+
+                    <!-- <ng-container *ngSwitchCase="'toBeSortDropdown'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <select name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
+                            required="">
+                            <option value="undefined">Select</option>
+                            <ng-container *ngFor="let option of dropdown[column.arrayName]">
+                                <option
+                                    *ngIf="option[column.foreignKeyColumn]==currentData[column.sortBasedOn]?true:null"
+                                    [value]="option[column.columnId]">
+                                    {{ option[column.columnName] }}
+                                </option>
+                            </ng-container>
+                        </select>
+                    </ng-container> -->
+
                     <ng-container *ngSwitchCase="'checkbox'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
@@ -68,10 +122,20 @@
 
         </form>
     </div>
-    <div class="card-block row justify-content-between">
-        <div class="col-sm-6">
+    <div class="card-block row justify-content-between col-sm-12">
+        <div class="col-sm-3">
             <button class="btn btn-primary" (click)="onSubmitClicked(currentData)">Submit</button>
         </div>
-
     </div>
 </div>
+
+
+
+
+<ng-template #normalDropdown>
+
+</ng-template>
+
+<ng-template #sortDropdown>
+
+</ng-template>

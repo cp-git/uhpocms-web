@@ -12,3 +12,9 @@ table th {
     color: white;
     border: 1px groove black;
 }
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 25px;
+}

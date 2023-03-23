@@ -96,6 +96,7 @@ import { AuthUserModule } from './auth-user/modules/auth-user.module';
 import { AuthenticationloginComponent } from './authenticationlogin/authenticationlogin.component';
 import { StudentPanelComponent } from './student-panel/components/student-panel/student-panel.component';
 import { StudentModuleComponent } from './student-module/components/student-module/student-module.component';
+import { ProfilesModule } from './profiles/profiles.module';
 
 
 
@@ -167,7 +168,7 @@ import { StudentModuleComponent } from './student-module/components/student-modu
   imports: [
     QuestionModule,
     AuthUserModule,
-    // ProfilesModule,
+    ProfilesModule,
     DepartmentModule,
     ReusableModule,
     AdminRoleModule,

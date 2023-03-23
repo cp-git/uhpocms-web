@@ -78,6 +78,7 @@ import { TeacherPanelComponent } from './teacher-panel/components/teacher-panel/
 
 import { TeacherQuestionComponent } from './teacher-question/components/teacher-question/teacher-question.component';
 import { AuthenticationloginComponent } from './authenticationlogin/authenticationlogin.component';
+import { ProfileComponent } from './profiles/components/profile/profile.component';
 
 
 const routes: Routes = [
@@ -284,8 +285,10 @@ const routes: Routes = [
   },
 
   { path: 'AdminRole/:userName', component: AdminRoleComponent },
-  // { path: 'Profile', component: ProfileComponent },
+  { path: 'Profile', component: ProfileComponent },
   { path: 'AuthUser/:userName', component: AuthUserComponent },
+  { path: 'AuthUser', component: AuthUserComponent },
+
   { path: 'Question', component: QuestionComponent },
   { path: 'Department/:userName', component: DepartmentComponent },
   { path: 'Course/:userName', component: TeacherCourseComponent }
