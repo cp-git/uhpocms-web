@@ -2,13 +2,12 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-studentdata',
-  templateUrl: './studentdata.component.html',
-  styleUrls: ['./studentdata.component.css']
+  selector: 'app-student-panel',
+  templateUrl: './student-panel.component.html',
+  styleUrls: ['./student-panel.component.css']
 })
-export class StudentdataComponent {
-
-  profileId: any;
+export class StudentPanelComponent {
+profileId: any;
   userName!: string;
   constructor(private _route: Router, private _activatedRoute: ActivatedRoute) {
 

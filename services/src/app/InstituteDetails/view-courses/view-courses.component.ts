@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
-import { Course } from 'app/course/class/course';
-import { CourseService } from 'app/course/service/course.service';
+import { Course } from 'app/teacher-course/class/course';
+import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 
 
 @Component({
@@ -32,7 +32,7 @@ export class ViewCoursesComponent {
   id: any | undefined | null;
   constructor(
     private _route: Router,
-    private readonly courseService: CourseService,
+    private readonly courseService: TeacherCourseService,
     private readonly route: ActivatedRoute
 
   ) { this.admininstitution = new AdminInstitution(); }
