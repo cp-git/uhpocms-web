@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 // Module specific imports
 import { CourseAllColumn, CourseColumn } from 'app/teacher-course/teacher-course-column';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
-import { Course } from 'app/teacher-course/course';
+import { Course } from 'app/teacher-course/class/course';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 
 

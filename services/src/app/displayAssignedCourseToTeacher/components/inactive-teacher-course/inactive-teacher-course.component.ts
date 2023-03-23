@@ -4,10 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 
-import { TeacherCourseService } from '../../services/teacher-course.service';
+
 
 import { Location } from '@angular/common';
-import { Course } from 'app/course/class/course';
+import { Course } from 'app/teacher-course/class/course';
+import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 
 @Component({
   selector: 'app-inactive-teacher-course',

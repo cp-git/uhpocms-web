@@ -3,8 +3,8 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from 'app/category/category';
 import { CategoryService } from 'app/category/category.service';
-import { Course } from 'app/course/class/course';
-import { CourseService } from 'app/course/service/course.service';
+import { Course } from 'app/teacher-course/class/course';
+import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { Module } from 'app/module/module';
 import { ModuleService } from 'app/module/module.service';
 import { Quiz } from './class/quiz';
@@ -38,7 +38,7 @@ export class QuizComponent {
   constructor(
     private _quizService: QuizService,
     private _route: Router,
-    private _courseService: CourseService,
+    private _courseService: TeacherCourseService,
     private _categoryService: CategoryService,
     private _moduleService: ModuleService,
     private _activatedRoute: ActivatedRoute,
@@ -91,7 +91,7 @@ export class QuizComponent {
 
   //getting allcourses as dropdown
   getAllCourses() {
-    this._courseService._getAllCourses().subscribe((data) => {
+    this._courseService.getAllCourses().subscribe((data) => {
       this._courseArray = data;
       this._courseArray.forEach((_courseObj) => {
         this._courseMap.set(_courseObj.courseId, Object.assign({}, _courseObj));

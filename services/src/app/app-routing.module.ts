@@ -14,9 +14,7 @@ import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermod
 
 import { HomeComponent } from './home/home.component';
 
-import { AddcourseComponent } from './course/addcourse/addcourse.component';
-import { UpdatecourseComponent } from './course/updatecourse/updatecourse.component';
-import { CourseComponent } from './course/displaycourse/course.component';
+import { TeacherCourseComponent } from './teacher-course/components/teacher-course/teacher-course.component';
 
 import { MainComponent } from './category/UI/main/main.component';
 import { AddModuleComponent } from './category/UI/add-module/add-module.component';
@@ -51,12 +49,8 @@ import { ViewinstiteadminprofileComponent } from './instituteadminprofile/viewin
 
 import { EnrollstudentComponent } from './enrollstudent/components/enrollstudent.component';
 
-import { StudentdataComponent } from './student/components/studentdata/studentdata.component';
-
-
-
-import { StudentmoduleComponent } from './student/components/student-course/studentmodule/studentmodule.component';
-
+import { StudentModuleComponent } from './student-module/components/student-module/student-module.component';
+import { StudentPanelComponent } from './student-panel/components/student-panel/student-panel.component';
 import { StudentCourseComponent } from './student/components/student-course/student-course.component';
 // import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';
 import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher/components/inactive-teacher-course/inactive-teacher-course.component';
@@ -68,7 +62,7 @@ import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/componen
 
 
 
-import { InactivecourseComponent } from './course/inactivecourse/inactivecourse.component';
+
 import { AdminRoleComponent } from './admin-role/components/admin-role/admin-role.component';
 // import { ProfileComponent } from './profiles/components/profile/profile.component';
 import { AuthUserComponent } from './auth-user/components/auth-user/auth-user.component';
@@ -77,7 +71,7 @@ import { DepartmentComponent } from './department/components/department/departme
 // import { TeacherCourseComponent } from './teacher-course/teacher-course/components/teacher-course/teacher-course.component';
 import { CategoryComponent } from './category/component/component/category.component';
 import { AdminmdouleComponent } from './adminmdoule/components/admin-module/adminmdoule.component';
-import { TeacherCourseComponent } from './teacher-course/components/teacher-course/teacher-course.component';
+
 import { TeacherPanelComponent } from './teacher-panel/components/teacher-panel/teacher-panel.component';
 
 
@@ -176,7 +170,7 @@ const routes: Routes = [
 
 
 
-  { path: 'studentdata/student/:userName', component: StudentdataComponent },
+  { path: 'studentdata/student/:userName', component: StudentPanelComponent },
   // { path: 'studentdata', component: StudentdataComponent },
 
   { path: 'enrollstudent', component: EnrollstudentComponent },
@@ -248,8 +242,7 @@ const routes: Routes = [
   { path: 'departments/:userName', component: AddDepartmentsComponent },
 
 
-  //add multiple courses for department
-  { path: 'courses', component: AddcourseComponent },
+
 
   //inserting  the quiz
 
@@ -269,7 +262,7 @@ const routes: Routes = [
   { path: 'teachermodule/:userName', component: TeachermoduleComponent },
 
 
-  { path: 'studentmodule', component: StudentmoduleComponent },
+  { path: 'studentmodule', component: StudentModuleComponent },
 
   { path: 'email', component: EmailComponent },
 
@@ -277,15 +270,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
 
 
-  { path: 'course/userrole/:userName', component: CourseComponent },
 
-
-  { path: 'addcourse', component: AddcourseComponent },
-  { path: 'updatecourse/:courseName/:userName', component: UpdatecourseComponent },
-
-  { path: 'inactivecourse/:userName', component: InactivecourseComponent },
-
-  { path: 'updatecourse/:userName', component: UpdatecourseComponent },
   //announcement router
   {
     path: 'announcement/:role', component: AnnouncementComponent, children: [
