@@ -287,7 +287,7 @@ const routes: Routes = [
   // { path: 'Profile', component: ProfileComponent },
   { path: 'AuthUser/:userName', component: AuthUserComponent },
   { path: 'Question', component: QuestionComponent },
-  { path: 'Department', component: DepartmentComponent },
+  { path: 'Department/:userName', component: DepartmentComponent },
   { path: 'Course/:userName', component: TeacherCourseComponent }
 
 

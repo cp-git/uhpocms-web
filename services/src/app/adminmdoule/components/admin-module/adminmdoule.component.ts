@@ -48,7 +48,7 @@ export class AdminmdouleComponent {
   }
 
   RedirectToAdminDept() {
-    this._route.navigate(['department', this.userName]);
+    this._route.navigate(['Department', this.userName]);
   }
 
   RedirectTOLogin() {
