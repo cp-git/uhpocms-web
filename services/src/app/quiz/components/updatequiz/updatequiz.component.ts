@@ -7,8 +7,8 @@ import { TeacherCourseService } from 'app/teacher-course/services/teacher-course
 
 import { Module } from 'app/module/module';
 import { ModuleService } from 'app/module/module.service';
-import { Quiz } from '../class/quiz';
-import { QuizService } from '../service/quiz.service';
+import { Quiz } from '../../class/quiz';
+import { QuizService } from '../../service/quiz.service';
 
 @Component({
   selector: 'app-updatequiz',

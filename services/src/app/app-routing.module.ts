@@ -7,7 +7,7 @@ import { AuthuserComponent } from './authuser/components/authuser/authuser.compo
 import { EmailComponent } from './email/components/email/email.component';
 import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-institute-admin/display-institute-admin.component';
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
-import { QuizComponent } from './quiz/quiz.component';
+import { QuizComponent } from './quiz/components/quiz/quiz.component';
 import { AdminroleComponent } from './roleadmin/components/adminrole/adminrole.component';
 // import { QuestionComponent } from './teacherquestion/question/question.component';
 import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
@@ -19,8 +19,8 @@ import { TeacherCourseComponent } from './teacher-course/components/teacher-cour
 import { MainComponent } from './category/component/main/main.component';
 import { AddModuleComponent } from './category/component/add-module/add-module.component';
 import { AddCategoryComponent } from './category/component/add-category/add-category.component';
-import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
-import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
+import { CreateQuizComponent } from './quiz/components/create-quiz/create-quiz.component';
+import { UpdatequizComponent } from './quiz/components/updatequiz/updatequiz.component';
 import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
 import { AddinstituteComponent } from './admin-institution/components/addinstitute/addinstitute.component';

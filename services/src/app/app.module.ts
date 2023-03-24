@@ -26,7 +26,7 @@ import { HomeComponent } from './home/home.component';
 
 
 ;
-import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
+import { CreateQuizComponent } from './quiz/components/create-quiz/create-quiz.component';
 
 import { AddinstituteComponent } from './admin-institution/components/addinstitute/addinstitute.component';
 import { DisplayinstituteComponent } from './admin-institution/components/displayinstitute/displayinstitute.component';
@@ -50,7 +50,7 @@ import { TeacherPanelComponent } from './teacher-panel/components/teacher-panel/
 
 
 import { ActivationScreenComponent } from './teachermodule/activation-screen/activation-screen.component';
-import { QuizComponent } from './quiz/quiz.component';
+import { QuizComponent } from './quiz/components/quiz/quiz.component';
 
 import { EnrollstudentComponent } from './enrollstudent/components/enrollstudent.component';
 
@@ -70,7 +70,7 @@ import { DepartmentModule } from './department/department.module';
 
 
 
-import { QuestionModule } from './question/class/question.module';
+import { QuestionModule } from './question/module/question.module';
 
 
 
@@ -94,7 +94,7 @@ import { AuthUserModule } from './auth-user/modules/auth-user.module';
 import { AuthenticationloginComponent } from './authenticationlogin/components/authenticationlogin/authenticationlogin.component';
 import { StudentPanelComponent } from './student-panel/components/student-panel/student-panel.component';
 import { StudentModuleComponent } from './student-module/components/student-module/student-module.component';
-import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
+import { UpdatequizComponent } from './quiz/components/updatequiz/updatequiz.component';
 
 
 
