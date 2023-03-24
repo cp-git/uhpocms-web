@@ -5,8 +5,8 @@ import { Category } from 'app/category/class/category';
 import { Course } from 'app/teacher-course/class/course';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 
-import { Module } from 'app/module/module';
-import { ModuleService } from 'app/module/module.service';
+import { Module } from 'app/module/class/module';
+import { ModuleService } from 'app/module/services/module.service';
 import { Quiz } from '../class/quiz';
 import { QuizService } from '../service/quiz.service';
 import { CategoryService } from 'app/category/services/category.service';
@@ -90,7 +90,7 @@ export class CreateQuizComponent {
 
   //getting All Modules as dropdown
   getAllModules() {
-    this._moduleService._getAllModules().subscribe(
+    this._moduleService.getAllModules().subscribe(
       data => {
         this._moduleArray = data;
         this._moduleArray.forEach(_moduleObj => {

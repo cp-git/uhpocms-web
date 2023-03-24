@@ -10,7 +10,6 @@ import { LoginComponentComponent } from './Login/login-component/login-component
 import { QuizComponent } from './quiz/quiz.component';
 import { AdminroleComponent } from './roleadmin/components/adminrole/adminrole.component';
 // import { QuestionComponent } from './teacherquestion/question/question.component';
-import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
 
 import { HomeComponent } from './home/home.component';
 
@@ -81,6 +80,7 @@ import { AuthenticationloginComponent } from './authenticationlogin/components/a
 
 
 import { ProfileComponent } from './profiles/components/profile/profile.component';
+import { ModuleComponent } from './module/components/module/module.component';
 
 
 
@@ -260,10 +260,10 @@ const routes: Routes = [
   { path: 'updateQuiz/:title/:userName', component: UpdatequizComponent },
   // { path: 'updateQuiz', component: UpdatequizComponent },
 
-  //teacherModule routes
-  { path: 'teachermodule', component: TeachermoduleComponent },
+  // //teacherModule routes
+  // { path: 'teachermodule', component: TeachermoduleComponent },
 
-  { path: 'teachermodule/:userName', component: TeachermoduleComponent },
+  // { path: 'teachermodule/:userName', component: TeachermoduleComponent },
 
 
   { path: 'studentmodule', component: StudentModuleComponent },
@@ -294,7 +294,11 @@ const routes: Routes = [
 
   { path: 'Question', component: QuestionComponent },
   { path: 'Department/:userName', component: DepartmentComponent },
-  { path: 'Course/:userName', component: TeacherCourseComponent }
+  { path: 'Course/:userName', component: TeacherCourseComponent },
+  { path: 'Department', component: DepartmentComponent },
+  { path: 'Module/:userName', component: ModuleComponent },
+  { path: 'Module', component: ModuleComponent },
+  { path: 'AdminRole', component: AdminRoleComponent },
 
 
 ];

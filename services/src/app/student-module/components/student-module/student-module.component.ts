@@ -6,7 +6,7 @@ import { Course } from 'app/teacher-course/class/course';
 import { StudentService } from 'app/student/services/student.service';
 
 
-import { Module } from 'app/teachermodule/module';
+import { Module } from 'app/module/class/module';
 
 @Component({
   selector: 'app-student-module',
@@ -14,7 +14,7 @@ import { Module } from 'app/teachermodule/module';
   styleUrls: ['./student-module.component.css']
 })
 export class StudentModuleComponent {
-studentId: any;
+  studentId: any;
   userName: any;
 
   courseId: any;

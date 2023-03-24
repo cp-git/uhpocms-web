@@ -19,8 +19,6 @@ import { AdminroleComponent } from './roleadmin/components/adminrole/adminrole.c
 
 import { LoginauthComponent } from './authlogin/components/loginauth.component';
 
-import { TeachermoduleComponent } from './teachermodule/teachermodule/teachermodule.component';
-
 import { AuthuserComponent } from './authuser/components/authuser/authuser.component';
 import { HomeComponent } from './home/home.component';
 
@@ -49,7 +47,6 @@ import { ViewinstiteadminprofileComponent } from './instituteadminprofile/viewin
 import { TeacherPanelComponent } from './teacher-panel/components/teacher-panel/teacher-panel.component';
 
 
-import { ActivationScreenComponent } from './teachermodule/activation-screen/activation-screen.component';
 import { QuizComponent } from './quiz/quiz.component';
 
 import { EnrollstudentComponent } from './enrollstudent/components/enrollstudent.component';
@@ -96,6 +93,7 @@ import { StudentPanelComponent } from './student-panel/components/student-panel/
 import { StudentModuleComponent } from './student-module/components/student-module/student-module.component';
 import { ProfilesModule } from './profiles/profiles.module';
 import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
+import { ModuleModule } from './module/module/module.module';
 
 
 
@@ -111,16 +109,11 @@ import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
     AuthuserComponent,
     LoginComponentComponent,
     DisplayInstituteAdminComponent,
-
     AdminroleComponent,
     AdminroleComponent,
     LoginauthComponent,
-    TeachermoduleComponent,
-
     EmailComponent,
-
     HomeComponent,
-
     CategoryComponent,
     MainComponent,
     AddModuleComponent,
@@ -134,7 +127,6 @@ import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
     UpdatemoduleComponent,
     AnnouncementComponent,
     CreateAnnouncementComponent,
-
     ActivateRoleComponent,
     ActivateProfileComponent,
     ActivateInstitutionComponent,
@@ -144,8 +136,6 @@ import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
     AuthenticationloginComponent,
     AdminmdouleComponent,
     TeacherPanelComponent,
-
-    ActivationScreenComponent,
     QuizComponent,
     EnrollstudentComponent,
     StudentCourseComponent,
@@ -153,20 +143,15 @@ import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
     DisplaySchoolComponent,
     CoursedepartmentComponent,
     AddDepartmentsComponent,
-
     AssigncoursetoteacherComponent,
     CreateinstituteadminprofileComponent,
-
-
-
     StudentPanelComponent,
     StudentModuleComponent,
-
-
 
   ],
 
   imports: [
+    ModuleModule,
     QuestionModule,
     AuthUserModule,
     ProfilesModule,
