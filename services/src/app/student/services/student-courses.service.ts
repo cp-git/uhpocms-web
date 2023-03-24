@@ -10,8 +10,8 @@ export class StudentCoursesService {
 
   private baseUrl: string;
   constructor(private _http: HttpClient) {
-    //this.baseUrl = `http://localhost:8090/course/uhpocms/course`;
-    this.baseUrl = environment.courseUrl;
+    this.baseUrl = `http://localhost:8090/course/uhpocms/course`;
+    //this.baseUrl = environment.courseUrl;
   }
 
   //get courses by profile id 

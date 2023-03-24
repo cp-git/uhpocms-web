@@ -17,6 +17,8 @@ export class TeacherPanelComponent {
   ngOnInit(): void {
     this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
+    console.log(this.teacherId)
+
 
 
   }
@@ -28,7 +30,7 @@ export class TeacherPanelComponent {
 
   //navigates the user to a route called teachermodule and passes id and userName parameters
   RedirectToModule() {
-    this._route.navigate(['teachermodule', { id: this.teacherId }, this.userName]);
+    this._route.navigate(['Module', { id: this.teacherId }, this.userName]);
   }
 
   //navigates the user to a route called quiz and passes the userName parameter
@@ -49,7 +51,7 @@ export class TeacherPanelComponent {
 
   //navigates the user to a route called Question
   RedirectToQuestion() {
-    this._route.navigate(['question'])
+    this._route.navigate(['Question', this.userName])
   }
 
 }

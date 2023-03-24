@@ -6,7 +6,7 @@ import { Category } from './class/category';
 import { Course } from './class/course';
 import { Module } from './class/module';
 import { Quiz } from './class/quiz';
-import { InstituteAdmin } from './instituteadminprofile/institute-admin';
+import { Profile } from './profiles/class/profile';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -20,7 +20,7 @@ export class AppComponent {
   quizs: Quiz[] = [];
   courses: Course[] = [];
   modules: Module[] = [];
-  instituteProfiles: InstituteAdmin[] = [];
+  instituteProfiles: Profile[] = [];
 
   constructor(private _appService: AppService) { }
 

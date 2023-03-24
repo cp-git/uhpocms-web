@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Location } from '@angular/common';
 import { Email } from 'app/email/class/email';
 
 import { EmailAllColumn, EmailColumn } from 'app/email/column-names/email-column';
 import { EmailService } from 'app/email/service/email.service';
 import { ProfileService } from 'app/profiles/services/profile.service';
-import { Profile } from 'app/profiles/profile';
+import { Profile } from 'app/profiles/class/profile';
 
 @Component({
   selector: 'app-email',

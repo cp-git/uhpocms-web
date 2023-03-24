@@ -37,7 +37,7 @@ export class AdminmdouleComponent {
   }
 
   RedirectToInstituteAdminProfile() {
-    this._route.navigate(['displayInstituteAdmin/display', this.userName]);
+    this._route.navigate(['Profile', this.userName]);
 
   }
 

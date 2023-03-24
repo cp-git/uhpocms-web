@@ -11,10 +11,10 @@ import { Coursesyllabus } from 'app/class/coursesyllabus';
   providedIn: 'root'
 })
 export class TeacherCourseService {
-  
+
   private courseDepartmentUrl: string = environment.courseDepartmentUrl;
   private courseUrl: string = environment.courseUrl;
-   private syllabusUrl: string;
+  private syllabusUrl: string;
   private assignCourseUrl: string;
 
   constructor(private http: HttpClient) {
@@ -67,8 +67,8 @@ export class TeacherCourseService {
   getCourseByDepartmentId(deptid: number) {
     return this.http.get<any>(`${this.courseUrl}/deptId/` + deptid)
   }
-  
-   //fetching the course by InstituteId
+
+  //fetching the course by InstituteId
   getCourseByInstitutionId(id: string): Observable<any> {
     return this.http.get<any>(this.courseUrl + '/institutionId/' + id);
   }
@@ -78,13 +78,13 @@ export class TeacherCourseService {
   }
 
   getCoursesDepartmentId(): Observable<any> {
-    
+
     return this.http.get<any>(`${this.courseDepartmentUrl}/department?id=all`);
   }
 
-   
 
- 
+
+
 
   //add course syllabus with course id
   addCourseSyllabus(courseSyllabus: Coursesyllabus): Observable<any> {
@@ -102,7 +102,7 @@ export class TeacherCourseService {
     return this.http.get<any>(`${this.assignCourseUrl}/inactive/teacherid/` + teacherId);
   }
 
-   getCourseByStudentId(studentId: number): Observable<Course[]> {
+  getCourseByStudentId(studentId: number): Observable<Course[]> {
     return this.http.get<Course[]>(`${this.courseUrl}/course/profileId/${studentId}`);
   }
 
