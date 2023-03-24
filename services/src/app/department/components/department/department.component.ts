@@ -4,7 +4,7 @@ import { DepartmentService } from 'app/department/services/department.service';
 import { DepartmentColumn } from 'app/department/department-column';
 import { DepartmentAllColumn } from 'app/department/department-column';
 import { Location } from '@angular/common';
-import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
+import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
