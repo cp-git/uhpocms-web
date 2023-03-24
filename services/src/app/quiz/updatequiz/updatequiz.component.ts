@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Category } from 'app/category/category';
-import { CategoryService } from 'app/category/category.service';
+import { Category } from 'app/category/class/category';
+import { CategoryService } from 'app/category/services/category.service';
 import { Course } from 'app/teacher-course/class/course';
 
 
-import { Module } from 'app/module/module';
-import { ModuleService } from 'app/module/module.service';
+import { Module } from 'app/module/class/module';
+import { ModuleService } from 'app/module/services/module.service';
 import { Quiz } from '../class/quiz';
 import { QuizService } from '../service/quiz.service';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
@@ -38,7 +38,7 @@ export class UpdatequizComponent {
 
   title!: string;
   // _quiz: Quiz = new Quiz();
-  constructor(private _service: QuizService, private _activatedRoute: ActivatedRoute, private _route: Router, private _courseService: TeacherCourseService, private _categoryService: CategoryService, private _moduleService: ModuleService) { }
+  constructor(private _service: QuizService, private _activatedRoute: ActivatedRoute, private _route: Router, private _courseService: TeacherCourseService, private _moduleService: ModuleService, private _categoryService: CategoryService) { }
 
   ngOnInit(): void {
 
@@ -96,7 +96,7 @@ export class UpdatequizComponent {
 
   //getting modules as dropdown
   getAllModules() {
-    this._moduleService._getAllModules().subscribe(
+    this._moduleService.getAllModules().subscribe(
       data => {
         this._moduleArray = data;
         this._moduleArray.forEach(_moduleObj => {

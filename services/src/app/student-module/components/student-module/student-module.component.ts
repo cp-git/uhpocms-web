@@ -6,7 +6,7 @@ import { Course } from 'app/teacher-course/class/course';
 import { StudentService } from 'app/student/services/student.service';
 
 
-import { Module } from 'app/teachermodule/module';
+import { Module } from 'app/module/class/module';
 
 @Component({
   selector: 'app-student-module',
@@ -14,17 +14,17 @@ import { Module } from 'app/teachermodule/module';
   styleUrls: ['./student-module.component.css']
 })
 export class StudentModuleComponent {
-studentId: any;
+  studentId: any;
   userName: any;
 
   courseId: any;
   moduleId: any;
-  courses: Course[] = [];
-  modules: Module[] = [];
-  studentModuleFiles: ModuleFile[] = [];
+  courses: Course[] = []; //array of Course objects that stores the courses of the student
+  modules: Module[] = []; //array of Module objects that stores the modules of the courses
+  studentModuleFiles: ModuleFile[] = []; //array of ModuleFile objects that stores the module files assigned to the student
 
-  selectedCourse: any;
-  selectedModule: any;
+  selectedCourse: any; //stores the selected course by the student. 
+  selectedModule: any; //stores the selected module by the student.
   constructor(private activateRoute: ActivatedRoute, private studentService: StudentService, private route: Router) {
 
   }
@@ -36,6 +36,7 @@ studentId: any;
     this.loadStudentAssignedCourses(this.studentId);
   }
 
+  //loads the courses of the student using the getCourseByStudentId() method of StudentService
   loadCourseOfStudent(studentId: number) {
     this.studentService.getCourseByStudentId(studentId).subscribe(
       response => {
@@ -49,10 +50,11 @@ studentId: any;
     );
   }
 
+  //Loads the modules of the courses using the getModuleByCourseId() method of StudentService
   loadModuleOfCourse(studentCourses: Course[]) {
 
     studentCourses.forEach(course => {
-      // alert(JSON.stringify(course))
+      
       this.studentService.getModuleByCourseId(course.courseId).subscribe(
         response => {
           response.forEach(module => {
@@ -66,6 +68,7 @@ studentId: any;
     })
   }
 
+  //loads the module files assigned to the student using the getModuleFilesByStudentId() method of StudentService
   loadStudentAssignedCourses(studentId: number) {
     this.studentService.getModuleFilesByStudentId(studentId).subscribe(
       response => {
@@ -78,8 +81,9 @@ studentId: any;
 
   }
 
+  //sets the selected course by the student and resets the selected module
   onCourseSelect(courseId: any) {
-    // this.courseId = event.target.value;
+  
     if (courseId != 'undefined') {
       this.selectedCourse = courseId;
       this.selectedModule = undefined;
@@ -97,6 +101,7 @@ studentId: any;
   //   }
   // }
 
+  //navigates back to the student data page
   back() {
     this.route.navigate(['studentdata/student', this.userName])
   }

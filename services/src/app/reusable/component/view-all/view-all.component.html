@@ -41,6 +41,13 @@
                             </option>
                         </select>
 
+                        <select name="{{column.key}}" class="form-control" *ngSwitchCase="'dropdown'" disabled>
+                            <option *ngFor="let option of dropdown[column.arrayName]"
+                                [value]="option[column.columnName]"
+                                [selected]="option[column.columnId] === row[column.key]?true:null">
+                                {{ option[column.columnName] }}
+                            </option>
+                        </select>
                         <input name="{{column.key}}" class="form-control" *ngSwitchCase="'checkbox'" type="checkbox"
                             [(ngModel)]="row[column.key]" disabled>
                     </ng-container>

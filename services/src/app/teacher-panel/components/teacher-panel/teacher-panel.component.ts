@@ -20,6 +20,7 @@ export class TeacherPanelComponent {
     console.log(this.teacherId)
 
 
+
   }
 
   //navigates the user to a route called teachercourse and passes an id parameter

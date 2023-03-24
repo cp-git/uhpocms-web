@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Category } from 'app/category/category';
-import { CategoryService } from 'app/category/category.service';
+import { Category } from 'app/category/class/category';
+
 import { Course } from 'app/teacher-course/class/course';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 
-import { Module } from 'app/module/module';
-import { ModuleService } from 'app/module/module.service';
+import { Module } from 'app/module/class/module';
+import { ModuleService } from 'app/module/services/module.service';
 import { Quiz } from '../class/quiz';
 import { QuizService } from '../service/quiz.service';
+import { CategoryService } from 'app/category/services/category.service';
 
 @Component({
   selector: 'app-create-quiz',
@@ -89,7 +90,7 @@ export class CreateQuizComponent {
 
   //getting All Modules as dropdown
   getAllModules() {
-    this._moduleService._getAllModules().subscribe(
+    this._moduleService.getAllModules().subscribe(
       data => {
         this._moduleArray = data;
         this._moduleArray.forEach(_moduleObj => {
