@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Profile } from 'app/profiles/class/profile';
 import { AuthService } from '../service/auth.service';
 import { Authuser } from '../class/authuser';
-import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
+import { AuthUserService } from 'app/auth-user/services/auth-user.service';
 
 
 @Component({
@@ -28,7 +28,7 @@ export class LoginauthComponent {
 
 
   constructor(
-    private _auth: AuthuserserviceService,
+    private _auth: AuthUserService,
     private _route: Router,
     private authenticationService: AuthService,
   ) { }

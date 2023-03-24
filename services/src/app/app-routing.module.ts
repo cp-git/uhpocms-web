@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 // import { DepartmentComponent } from './admindepartment/department/department.component';
 import { LoginauthComponent } from './authlogin/components/loginauth.component';
-import { AuthuserComponent } from './authuser/components/authuser/authuser.component';
+
 import { EmailComponent } from './email/components/email/email.component';
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
 import { QuizComponent } from './quiz/components/quiz/quiz.component';
@@ -88,11 +88,6 @@ const routes: Routes = [
   //Teacher-question
   //{ path: 'question', component: TeacherQuestionComponent },
 
-  //AuthUser
-
-  { path: 'authuser', component: AuthuserComponent },
-
-  { path: 'authuser/:userName', component: AuthuserComponent },
 
 
   //InstituteAdminProfile Routes
