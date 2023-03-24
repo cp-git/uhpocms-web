@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ModuleFile } from 'app/class/module-file';
 import { Course } from 'app/teacher-course/class/course';
-import { Module } from 'app/teachermodule/module';
+import { Module } from 'app/module/class/module';
 import { environment } from 'environments/environment.development';
 import { Observable } from 'rxjs';
 

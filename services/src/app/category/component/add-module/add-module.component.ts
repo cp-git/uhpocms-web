@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from 'app/teacher-course/class/course';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
-import { Module } from 'app/module/module';
-import { TeachermoduleserviceService } from 'app/teachermodule/teachermoduleservice.service';
+import { Module } from 'app/module/class/module';
+import { ModuleService } from 'app/module/services/module.service';
 
 @Component({
   selector: 'app-add-module',
@@ -29,7 +29,7 @@ export class AddModuleComponent {
 
 
 
-  constructor(private _service: TeachermoduleserviceService, private _activatedRoute: ActivatedRoute, private _route: Router) {
+  constructor(private _service: ModuleService, private _activatedRoute: ActivatedRoute, private _route: Router) {
 
 
   }

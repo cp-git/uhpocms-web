@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from 'app/teacher-course/class/course';
-import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
-import { Module } from 'app/module/module';
-import { TeachermoduleserviceService } from 'app/teachermodule/teachermoduleservice.service';
+import { Module } from 'app/module/class/module';
+import { ModuleService } from 'app/module/services/module.service';
 
 @Component({
   selector: 'app-updatemodule',
@@ -43,7 +42,7 @@ export class UpdatemoduleComponent {
     }
   }
   constructor(
-    private _service: TeachermoduleserviceService,
+    private _service: ModuleService,
     private _activatedRoute: ActivatedRoute,
     private _route: Router
   ) { }
@@ -53,7 +52,7 @@ export class UpdatemoduleComponent {
 
 
   getAllModules() {
-    this._service.fetchModuleList().subscribe(
+    this._service.getAllModules().subscribe(
       (data) => {
         console.log('Response Received...');
         this._teacherModule = data;
@@ -85,27 +84,25 @@ export class UpdatemoduleComponent {
     this.module.moduleCourse = module.moduleCourse;
     this.module.moduleOrderNo = module.moduleOrderNo;
     this.module.courseId_id = module.courseId_id;
-    this._service
-      .updateModuleList(this.module.moduleName, this.module)
-      .subscribe(
-        (data) => {
-          // console.log(data)
-          this.module = data;
-          this._backupModule.set(
-            this.module.moduleId,
-            Object.assign({}, this.module)
-          );
+    this._service.updateModule(this.module.moduleName, this.module).subscribe(
+      (data) => {
+        // console.log(data)
+        this.module = data;
+        this._backupModule.set(
+          this.module.moduleId,
+          Object.assign({}, this.module)
+        );
 
-          alert('Data updated successfuly');
+        alert('Data updated successfuly');
 
-          if (this._teacherModule.length > 0) {
-            this.isVisible = false;
-          }
-        },
-        (error) => {
-          alert('Failed to update');
+        if (this._teacherModule.length > 0) {
+          this.isVisible = false;
         }
-      );
+      },
+      (error) => {
+        alert('Failed to update');
+      }
+    );
   }
 
 

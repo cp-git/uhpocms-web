@@ -1,43 +1,37 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Module } from './module';
+import { Module } from '../class/module';
 import { environment } from 'environments/environment.development';
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class TeachermoduleserviceService {
+export class ModuleService {
+
   private readonly moduleUrl: string;
   constructor(private _http: HttpClient) {
 
-
-
-    // this.moduleUrl = environment.moduleUrl + '/module';
-
-    this.moduleUrl = `http://localhost:8090/module/uhpocms/module`;
-
-
-    // this.moduleUrl = environment.moduleUrl + '/module';
-
-    this.moduleUrl = `http://localhost:8090/module/uhpocms/module`;
+    this.moduleUrl = environment.moduleUrl + '/module';
 
   }
 
-  fetchModuleList(): Observable<any> {
-    return this._http.get<any>(`${this.moduleUrl}/?name=all`);
+  getAllModules(): Observable<any> {
+    return this._http.get<any>(`${this.moduleUrl}?name=all`);
   }
 
   getInactivemoduleList(): Observable<any> {
+    //  alert(`${this.moduleUrl}/inactive?inactivemodules=all`);
+
     return this._http.get<any>(`${this.moduleUrl}/inactive?inactivemodules=all`);
   }
 
-  updateActiveStatus(moduleName: string, module: Module): Observable<any> {
-    return this._http.patch<any>(`${this.moduleUrl}/` + moduleName, module);
+  activateModule(moduleName: string): Observable<any> {
+    return this._http.patch<any>(`${this.moduleUrl}/` + moduleName, {});
   }
 
 
   addTeacherModule(module: Module): Observable<any> {
-
+    //   alert(`${this.moduleUrl}`);
     return this._http.post<any>(`${this.moduleUrl}`, module);
   }
 
@@ -49,9 +43,9 @@ export class TeachermoduleserviceService {
     return this._http.get<any>(`${this.moduleUrl}/` + moduleName);
   }
 
-  updateModuleList(moduleName: string, module: Module): Observable<any> {
-    alert(`${this.moduleUrl}/` + moduleName);
-    return this._http.put<any>(`${this.moduleUrl}/module/` + moduleName, module);
+  updateModule(moduleName: string, module: Module): Observable<any> {
+    //   alert(`${this.moduleUrl}/` + moduleName);
+    return this._http.put<any>(`${this.moduleUrl}/` + moduleName, module);
   }
 
   getModule(moduleName: string): Observable<Module> {
