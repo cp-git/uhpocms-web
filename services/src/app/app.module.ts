@@ -97,6 +97,7 @@ import { CourseDepartmentComponent } from './institute-details/components/course
 import { DisplaySchoolComponent } from './institute-details/components/display-school/display-school.component';
 import { ViewCoursesComponent } from './institute-details/components/view-courses/view-courses.component';
 import { ViewDepartmentComponent } from './institute-details/components/view-department/view-department.component';
+import { EmailModule } from './email/module/email.module';
 
 
 
@@ -109,7 +110,6 @@ import { ViewDepartmentComponent } from './institute-details/components/view-dep
     AdminroleComponent,
     AdminroleComponent,
     LoginauthComponent,
-    EmailComponent,
     HomeComponent,
     CategoryComponent,
     MainComponent,
@@ -148,6 +148,7 @@ import { ViewDepartmentComponent } from './institute-details/components/view-dep
   ],
 
   imports: [
+    EmailModule,
     ModuleModule,
     QuestionModule,
     AuthUserModule,

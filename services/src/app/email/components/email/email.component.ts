@@ -1,174 +1,240 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
+import { Component, OnInit } from '@angular/core';
+
 import { Location } from '@angular/common';
-import { Email } from '../../class/email';
-import { EmailService } from '../../service/email.service';
+import { Email } from 'app/email/class/email';
+
+import { EmailAllColumn, EmailColumn } from 'app/email/column-names/email-column';
+import { EmailService } from 'app/email/service/email.service';
+import { ProfileService } from 'app/profiles/services/profile.service';
+import { Profile } from 'app/profiles/profile';
 
 @Component({
   selector: 'app-email',
   templateUrl: './email.component.html',
   styleUrls: ['./email.component.css'],
 })
-export class EmailComponent {
-  emails: Email[] = []; // for all email data
-  backupEmails = new Map(); // for backup data
-  email: Email;
-  instituteAdmin: InstituteAdmin[] = []; // for dropdown data
+export class EmailComponent implements OnInit {
 
-  // empty row if data not available
-  isHidden: boolean = false;
+  // title heading
+  moduleName: string = "Email's Administration";
 
-  // For session data
-  sessionData: any;
-  data: any;
+  // for scren view
+  viewUpdate: boolean = false;
+  viewAdd: boolean = false;
+  viewAll: boolean = true;
+  viewOne: boolean = false;
+  viewActivate: boolean = false;
 
-  constructor(private emailService: EmailService, private router: Router, private location: Location) {
-    this.email = new Email();
-    this.loadInstituteProfile();
+  columnNames: any; // header for minimum visible column data
+  allColumnNames: any; // header for all visible column data
+
+  // To be assigned based on the module
+  readonly primaryIdColumnName: string = 'emailId';
+
+  allData: Email[] = []; // list of active Emails
+  allInActiveData: Email[] = []; // list of inactive Email
+
+  emptyEmail: Email;  // empty Email
+  currentData!: Email;  // for update and view, to show existing data
+
+  profiles: Profile[] = [];
+  constructor(
+    private location: Location,
+    private service: EmailService,
+    private profileService: ProfileService
+  ) {
+    // assigng Columns
+    this.columnNames = EmailColumn;
+    this.allColumnNames = EmailAllColumn;
+
+    // creating empty object
+    this.emptyEmail = new Email();
+
+    this.getAllAdminProfiles();
   }
 
   ngOnInit(): void {
+    this.getAllEmails();
+    // this.getInActiveEmails();
 
-    if (sessionStorage.getItem('authenticatedUser') == null) {
-      this.router.navigate(['login']);
+  }
+
+  // back button functionality
+  back() {
+    if (this.viewAll == false) {
+      this.viewAll = true;
+      this.viewOne = false;
+      this.viewAdd = false;
+      this.viewUpdate = false;
+      // this.viewActivate = false;
     } else {
-      this.getAllEmails();
+      this.location.back();
     }
   }
 
-  // to fetch all active emails
-  getAllEmails() {
-    this.emailService.fetchAllEmails().subscribe(
-      (response) => {
-        // assigning received data to emails
-        this.emails = response;
+  // for navigating to add screen
+  onAddClick() {
+    this.viewAll = false;
+    this.viewAdd = true;
+  }
 
-        // assigning received data to backup
-        this.emails.forEach((emailData) => {
-          this.backupEmails.set(
-            emailData.emailId,
-            Object.assign({}, emailData)
-          );
-        });
+  // for navigating to activate screen
+  onActivateClick() {
+    this.viewAll = true;
+    // this.viewActivate = true;
+  }
 
-        this.toggleExtraEmptyRow();
+  // For navigate to view screen with data
+  // function will call when child view button is clicked 
+  onChildViewClick(objectReceived: any): void {
+
+    // hiding view of all column and displaying all Email's screen
+    this.viewOne = true;
+    this.viewAll = false;
+
+    this.currentData = objectReceived;    // assingning data to current data for child component
+  }
+
+  // For navigate to update screen with data
+  // function will call when child update button is clicked 
+  onChildUpdateClick(objectReceived: Email): void {
+
+    // hiding update screen and displaying all Email's screen
+    this.viewAll = false;
+    this.viewUpdate = true;
+
+    // assingning data to current data for child component
+    this.currentData = objectReceived;
+  }
+
+  // For navigate to update screen with data
+  // function will call when child update button is clicked 
+  onChildDeleteClick(objectReceived: Email): void {
+    this.deleteEmail(objectReceived);
+  }
+
+  // For navigate to activate screen with data
+  // function will call when child update button is clicked 
+  onChildActivateClick(objectReceived: Email): void {
+    // this.activateEmail(objectReceived);
+  }
+
+  // on addComponents's submit button clicked
+  onAddEmailSubmit(objectReceived: Email): void {
+    this.addEmail(objectReceived);
+  }
+
+  // on updateComponents's submit button clicked
+  onUpdateEmailSubmit(objectReceived: Email) {
+    // alert(JSON.stringify(objectReceived))
+    this.updateEmail(objectReceived);
+  }
+
+  ///////////////////////////////////////////
+  // Funcation calls specific to this module
+  ///////////////////////////////////////////
+
+  // for getting all admin Profiles
+  private getAllAdminProfiles() {
+
+    // calling service to get all data
+    this.profileService.getAllProfiles().subscribe(
+      response => {
+        this.profiles = response; //assign data to local variable
       },
-      (error) => {
-        alert('Data not found');
+      error => {
+        console.log('No data in table ');
       }
     );
   }
 
-  // to add data in email table
-  addEmail(toCreateEmail: Email) {
-    // variable to store emailId(id)
-    var emailId = toCreateEmail.emailId;
+  // for getting all admin Emails
+  private getAllEmails() {
 
-    // setting emailId to null, to create new row(primary key must be unique)
-    toCreateEmail.emailId = null;
-
-    this.emailService.insertEmail(toCreateEmail).subscribe(
-      (response) => {
-        this.email = response;
-
-        // if data present in backup
-        if (this.backupEmails.size > 0) {
-          this.emails[this.emails.indexOf(toCreateEmail)] = Object.assign(
-            {},
-            this.backupEmails.get(emailId)
-          );
-        }
-
-        // adding data to emails and backup
-        this.emails.push(this.email);
-        this.backupEmails.set(
-          this.email.emailId,
-          Object.assign({}, this.email)
-        );
-
-        alert('Data added successfuly');
-
-        if (this.emails.length > 0) {
-          this.isHidden = false;
-        }
+    // calling service to get all data
+    this.service.getAllEmails().subscribe(
+      response => {
+        this.allData = response; //assign data to local variable
       },
-      (error) => {
-        alert('Failed to add');
+      error => {
+        console.log('No data available ');
       }
     );
   }
 
-  // for updating email
-  updateEmail(toUpdateEmail: Email) {
-    this.emailService.updateEmail(toUpdateEmail).subscribe(
-      (response) => {
-        this.email = response;
 
-        // replacing value of updated object in backup
-        this.backupEmails.set(
-          this.email.emailId,
-          Object.assign({}, this.email)
-        );
-        alert('Data updated successfuly');
-
-        if (this.emails.length > 0) {
-          this.isHidden = false;
-        }
+  // adding Email
+  private addEmail(currentData: Email) {
+    currentData.emailIsActive = true;
+    this.service.insertEmail(currentData).subscribe(
+      response => {
+        alert('Email added successfully');
+        this.emptyEmail = {} as Email;
+        this.ngOnInit();
+        this.back();
       },
-      (error) => {
-        alert('Failed to update');
+      error => {
+        alert("Failed to add Email");
+      }
+
+    );
+  }
+
+  // updating Email by usign title
+  private updateEmail(currentData: Email) {
+    this.service.updateEmail(currentData).subscribe(
+      response => {
+        alert('Email updated successfully');
+        this.back();
+      },
+      error => {
+        alert("Failed to update Email");
       }
     );
   }
 
-  // for deleting record using email title
-  deleteEmail(toDeleteEmail: Email) {
-    this.emailService.deleteEmail(toDeleteEmail.title).subscribe(
-      (response) => {
-        // removing object from emails array and backup
-        this.emails.splice(this.emails.indexOf(toDeleteEmail), 1);
-        this.backupEmails.delete(toDeleteEmail.emailId);
-
-        alert(toDeleteEmail.title + ' deleted successfuly');
-
-        this.toggleExtraEmptyRow();
+  // For deleting Email (soft delete) using title
+  private deleteEmail(currentData: Email) {
+    this.service.deleteEmail(currentData.title).subscribe(
+      response => {
+        alert('Email deleted successfully');
+        this.ngOnInit();
       },
-      (error) => {
-        alert('Failed to delete');
+      error => {
+        alert("Failed to delete Email");
       }
     );
   }
 
-  // for getting all institute profile data from sessionStorage
-  private loadInstituteProfile() {
-    this.sessionData = sessionStorage.getItem('instituteprofile');
+  // // For getting all inactive Email
+  // private getInActiveEmails() {
 
-    // convert string data to json
-    this.instituteAdmin = JSON.parse(this.sessionData);
+  //   // calling service to get all inactive record
+  //   this.service.getAllDeactivatedEmails().subscribe(
+  //     response => {
+  //       this.allInActiveData = response;
+  //     },
+  //     error => {
+  //       console.log('No data in table ');
+  //     }
+  //   );
 
-    this.data = JSON.parse(this.sessionData);
 
-    for (var inst in this.data) {
-      this.instituteAdmin.push(this.data[inst]);
-    }
-  }
+  // // for activate Email by using admin id
+  // activateEmail(Email: Email) {
+  //   // if (this.isObjectComplete(Email)) {
+  //   this.service.activateEmail(Email.emailId).subscribe(
+  //     response => {
 
-  // for empty row
-  private toggleExtraEmptyRow() {
-    if (this.emails.length <= 0) {
-      // setting empty object for empty row
-      this.email = {} as Email;
+  //       alert('Email activated successfully');
+  //       this.ngOnInit();
 
-      // default value while adding record
-      this.email.emailIsActive = true;
-      this.isHidden = true;
-    }
-  }
+  //     },
+  //     error => {
+  //       alert("Email activation failed");
+  //     }
+  //   );
 
-  // back button
-  homePage() {
-    this.location.back();
-    // this.router.navigate(['demo']);
-  }
+  // }
+
 }
