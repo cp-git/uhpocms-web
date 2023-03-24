@@ -4,7 +4,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Announcement } from 'app/announcement/class/announcement';
 import { AnnouncementTo } from 'app/announcement/class/announcement-to';
 import { AnnouncementService } from 'app/announcement/service/announcement.service';
-import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
+import { Profile } from 'app/profiles/class/profile';
 import { filter } from 'rxjs';
 import { Location } from '@angular/common';
 @Component({
@@ -21,15 +21,15 @@ export class CreateAnnouncementComponent {
 
 
   private announcementId: number;     // announcement id to add in to_list table
-  private instituteAdmins: InstituteAdmin[] = [];     // data of institute admin profile for dropdown
+  private instituteAdmins: Profile[] = [];     // data of institute admin profile for dropdown
   private sessionData: any;   // for session data
   private data: any;
-  private students: InstituteAdmin[] = [];
-  private admins: InstituteAdmin[] = [];
-  private coadmins: InstituteAdmin[] = [];
-  private teachers: InstituteAdmin[] = [];
-  private otherRoles: InstituteAdmin[] = [];
-  public filterRoles: InstituteAdmin[] = [];
+  private students: Profile[] = [];
+  private admins: Profile[] = [];
+  private coadmins: Profile[] = [];
+  private teachers: Profile[] = [];
+  private otherRoles: Profile[] = [];
+  public filterRoles: Profile[] = [];
 
   public announcement: Announcement;     // announcement for sending
   public profileIDs: number[] = [];    // for capturing ids of profiles

@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-
-import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
-import { InstituteAdminServiceService } from 'app/instituteadminprofile/institute-admin-service.service';
-
+import { Profile } from 'app/profiles/class/profile';
 import { AuthService } from '../service/auth.service';
 import { Authuser } from '../class/authuser';
 import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
@@ -24,7 +21,7 @@ export class LoginauthComponent {
   loginSuccess = false;
 
   authUser = new Authuser();
-  _instituteadminprofile = new InstituteAdmin();
+  _instituteadminprofile = new Profile();
 
   firstName!: string;
 
@@ -34,7 +31,6 @@ export class LoginauthComponent {
     private _auth: AuthuserserviceService,
     private _route: Router,
     private authenticationService: AuthService,
-    private _service: InstituteAdminServiceService
   ) { }
 
   ngOnInit(): void {

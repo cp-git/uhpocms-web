@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from 'app/teacher-course/class/course';
-import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
+import { Profile } from 'app/profiles/class/profile';
 import { StudentCoursesService } from 'app/student/services/student-courses.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { StudentCoursesService } from 'app/student/services/student-courses.serv
 export class StudentCourseComponent {
 
   //institute admin profile array
-  instituteAdminProfile: InstituteAdmin[] = [];
+  instituteAdminProfile: Profile[] = [];
   profileId: any;
 
   constructor(
