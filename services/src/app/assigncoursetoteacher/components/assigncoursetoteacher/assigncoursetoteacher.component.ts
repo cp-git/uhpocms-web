@@ -2,7 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { AdmininstitutionService } from 'app/admin-institution/service/admininstitution.service';
 
 import { Course } from 'app/teacher-course/class/course';
-import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
+
 import { Location } from '@angular/common';
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
@@ -12,6 +12,7 @@ import { Assignteacher } from '../../class/assignteacher';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
+import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 
 @Component({
   selector: 'app-assigncoursetoteacher',

@@ -2,7 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { AdmininstitutionService } from 'app/admin-institution/service/admininstitution.service';
 
 import { Course } from 'app/teacher-course/class/course';
-import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
+
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
 import { InstituteAdminServiceService } from 'app/instituteadminprofile/institute-admin-service.service';
@@ -13,6 +13,8 @@ import { Location } from '@angular/common';
 import { Enrolltostudent } from '../class/enrolltostudent';
 import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
+import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
+
 
 @Component({
   selector: 'app-enrollstudent',

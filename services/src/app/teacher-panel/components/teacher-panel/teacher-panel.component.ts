@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class TeacherPanelComponent {
 
- teacherId: any;
+  teacherId: any;
   userName!: string;
   constructor(private _route: Router, private _activatedRoute: ActivatedRoute) {
 
@@ -17,7 +17,8 @@ export class TeacherPanelComponent {
   ngOnInit(): void {
     this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
-   
+    console.log(this.teacherId)
+
 
   }
 
@@ -37,7 +38,7 @@ export class TeacherPanelComponent {
     this._route.navigate(['quiz', this.userName]);
   }
 
-//navigates the user to a route called authenticationlogin
+  //navigates the user to a route called authenticationlogin
   RedirectTOLogin() {
     this._route.navigate(['authenticationlogin'])
   }

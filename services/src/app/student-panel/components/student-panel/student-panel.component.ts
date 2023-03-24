@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./student-panel.component.css']
 })
 export class StudentPanelComponent {
-profileId: any;
+  profileId: any;
   userName!: string;
   constructor(private _route: Router, private _activatedRoute: ActivatedRoute) {
 
@@ -16,7 +16,7 @@ profileId: any;
   ngOnInit(): void {
     this.profileId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
-    console.log(this.userName);
+    console.log(this.profileId);
   }
   RedirectToStudentCourse() {
     this._route.navigate(['studentcourse', { id: this.profileId }]);

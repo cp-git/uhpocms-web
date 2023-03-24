@@ -19,7 +19,7 @@ export class TeachermoduleserviceService {
 
     // this.moduleUrl = environment.moduleUrl + '/module';
 
-    this.moduleUrl = `http://localhost:8090/module/uhpocms/module`;
+    // this.moduleUrl = `http://localhost:8090/module/uhpocms/module`;
 
   }
 
@@ -51,7 +51,7 @@ export class TeachermoduleserviceService {
 
   updateModuleList(moduleName: string, module: Module): Observable<any> {
     alert(`${this.moduleUrl}/` + moduleName);
-    return this._http.put<any>(`${this.moduleUrl}/module/` + moduleName, module);
+    return this._http.put<any>(`${this.moduleUrl}/` + moduleName, module);
   }
 
   getModule(moduleName: string): Observable<Module> {

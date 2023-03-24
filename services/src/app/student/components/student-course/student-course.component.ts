@@ -20,7 +20,7 @@ export class StudentCourseComponent {
     private activatedRoute: ActivatedRoute,
     private readonly studentCourseService: StudentCoursesService
   ) {
-    this.profileId = this.activatedRoute.snapshot.paramMap.get('id');;
+
   }
 
   courses: Course[] = [];
@@ -32,9 +32,9 @@ export class StudentCourseComponent {
   ngOnInit(): void {
     // Get the value of the "id" parameter from the current route and assign it to the "profileId" 
     this.profileId = this.activatedRoute.snapshot.paramMap.get('id');
+    console.log(this.profileId);
     // Get the value of the "userName" parameter from the current route and assign it to the "userName"
     this.userName = this.activatedRoute.snapshot.params['userName'];
-    console.log(this.userName);
     this.getStudentCoursesByProfileId(this.profileId);
   }
 
@@ -48,6 +48,7 @@ export class StudentCourseComponent {
     this.studentCourseService.getCourseByProfileId(profileId).subscribe(
       response => {
         this.courses = response;
+        console.log(response);
 
       },
       error => {

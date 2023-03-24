@@ -11,7 +11,8 @@ import { AnnouncementTo } from '../class/announcement-to';
 export class AnnouncementService {
   public selectedAnnouncement: Announcement;
 
-  announcementUrl = `${environment.announcementUrl}/announcement`;
+  announcementUrl = "http://localhost:8090/announcement/uhpocms/announcement"
+  //announcementUrl = `${environment.announcementUrl}/announcement`;
 
   constructor(private _http: HttpClient) {
     this.selectedAnnouncement = new Announcement;

@@ -120,10 +120,18 @@ const routes: Routes = [
 
   //teacherCourse
 
+
+
   { path: 'assignteacher', component: AssigncoursetoteacherComponent },
   { path: 'assignteacher/:userName', component: AssigncoursetoteacherComponent },
 
+
+
   { path: 'inactivecourse', component: InactiveTeacherCourseComponent },
+
+
+
+
 
   { path: 'inactivecourse/:id/:userName', component: InactiveTeacherCourseComponent },
 
