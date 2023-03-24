@@ -18,7 +18,7 @@ import { AdminroleComponent } from './roleadmin/components/adminrole/adminrole.c
 
 import { LoginauthComponent } from './authlogin/components/loginauth.component';
 
-import { AuthuserComponent } from './authuser/components/authuser/authuser.component';
+
 import { HomeComponent } from './home/home.component';
 
 
@@ -93,7 +93,6 @@ import { ViewDepartmentComponent } from './institute-details/components/view-dep
 @NgModule({
   declarations: [
     AppComponent,
-    AuthuserComponent,
     LoginComponentComponent,
     AdminroleComponent,
     AdminroleComponent,

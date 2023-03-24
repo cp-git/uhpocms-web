@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Authuser } from 'app/auth-user/class/auth-user';
+import { AuthUserService } from 'app/auth-user/services/auth-user.service';
 import { AuthenticationserviceService } from 'app/authenticationlogin/service/authenticationservice.service';
-import { Authuser } from 'app/authuser/class/authuser';
-import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
+
 
 
 
@@ -17,7 +18,7 @@ export class AdminmdouleComponent {
   role: string | undefined;
   userName!: string;
   adminId: any;
-  constructor(private _route: Router, private _auth: AuthuserserviceService, private _authenticationService: AuthenticationserviceService, private _activatedRoute: ActivatedRoute) { }
+  constructor(private _route: Router, private _auth: AuthUserService, private _authenticationService: AuthenticationserviceService, private _activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.adminId = this._activatedRoute.snapshot.paramMap.get('id');

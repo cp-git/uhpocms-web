@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Authuser } from 'app/authuser/class/authuser';
-import { AuthuserserviceService } from 'app/authuser/service/authuserservice.service';
+
+
 import { ProfileService } from 'app/profiles/services/profile.service';
 import { Profile } from 'app/profiles/class/profile';
 import { AuthenticationserviceService } from '../../service/authenticationservice.service';
+import { Authuser } from 'app/auth-user/class/auth-user';
+import { AuthUserService } from 'app/auth-user/services/auth-user.service';
 
 @Component({
   selector: 'app-authenticationlogin',
@@ -17,7 +19,7 @@ export class AuthenticationloginComponent {
 
   _instituteAdminArray: Profile[] = [];
   constructor(
-    private _auth: AuthuserserviceService,
+    private _auth: AuthUserService,
     private _route: Router,
     private _instituteadminprofile: ProfileService,
 
