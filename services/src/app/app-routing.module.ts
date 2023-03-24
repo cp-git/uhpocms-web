@@ -16,16 +16,16 @@ import { HomeComponent } from './home/home.component';
 
 import { TeacherCourseComponent } from './teacher-course/components/teacher-course/teacher-course.component';
 
-import { MainComponent } from './category/UI/main/main.component';
-import { AddModuleComponent } from './category/UI/add-module/add-module.component';
-import { AddCategoryComponent } from './category/UI/add-category/add-category.component';
+import { MainComponent } from './category/component/main/main.component';
+import { AddModuleComponent } from './category/component/add-module/add-module.component';
+import { AddCategoryComponent } from './category/component/add-category/add-category.component';
 import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
 import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
 import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
 import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
 import { AddinstituteComponent } from './admin-institution/components/addinstitute/addinstitute.component';
 import { DisplayinstituteComponent } from './admin-institution/components/displayinstitute/displayinstitute.component';
-import { UpdatemoduleComponent } from './category/updatemodule/updatemodule.component';
+import { UpdatemoduleComponent } from './category/component/updatemodule/updatemodule.component';
 
 import { AnnouncementComponent } from './announcement/components/announcement/announcement.component';
 import { CreateAnnouncementComponent } from './announcement/components/create-announcement/create-announcement.component';
@@ -69,21 +69,24 @@ import { AuthUserComponent } from './auth-user/components/auth-user/auth-user.co
 import { QuestionComponent } from './question/components/question/question.component';
 import { DepartmentComponent } from './department/components/department/department.component';
 // import { TeacherCourseComponent } from './teacher-course/teacher-course/components/teacher-course/teacher-course.component';
-import { CategoryComponent } from './category/component/component/category.component';
+import { CategoryComponent } from './category/component/category/category.component';
 import { AdminmdouleComponent } from './adminmdoule/components/admin-module/adminmdoule.component';
 
 import { TeacherPanelComponent } from './teacher-panel/components/teacher-panel/teacher-panel.component';
+import { AuthenticationloginComponent } from './authenticationlogin/components/authenticationlogin/authenticationlogin.component';
 
 
 
-import { TeacherQuestionComponent } from './teacher-question/components/teacher-question/teacher-question.component';
-import { AuthenticationloginComponent } from './authenticationlogin/authenticationlogin.component';
+
+
+
 import { ProfileComponent } from './profiles/components/profile/profile.component';
+
 
 
 const routes: Routes = [
   //Teacher-question
-  { path: 'question', component: TeacherQuestionComponent },
+  //{ path: 'question', component: TeacherQuestionComponent },
 
   //AuthUser
 
@@ -204,7 +207,7 @@ const routes: Routes = [
   { path: 'department/:userName', component: DepartmentComponent },
 
 
-  //quiz routes
+  //euiz routes
   { path: 'quiz/:userName', component: QuizComponent },
 
   { path: 'department/:id', component: ViewDepartmentComponent },
