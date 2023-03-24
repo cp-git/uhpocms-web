@@ -53,7 +53,7 @@ import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/componen
 
 import { ReusableModule } from './reusable/module/reusable.module';
 import { AdminRoleModule } from './admin-role/module/admin-role.module';
-import { DepartmentModule } from './department/department.module';
+import { DepartmentModule } from './department/module/department.module';
 
 
 

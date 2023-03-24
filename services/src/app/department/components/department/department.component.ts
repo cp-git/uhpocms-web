@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
-import { DepartmentColumn } from 'app/department/department-column';
-import { DepartmentAllColumn } from 'app/department/department-column';
+import { DepartmentAllColumn, DepartmentColumn } from 'app/department/column/department-column';
+
 import { Location } from '@angular/common';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 @Component({
