@@ -7,10 +7,12 @@ import { Course } from 'app/teacher-course/class/course';
 
 import { Module } from 'app/module/class/module';
 import { ModuleService } from 'app/module/services/module.service';
-import { Quiz } from '../class/quiz';
-import { QuizService } from '../service/quiz.service';
+
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 
+
+import { Quiz } from '../../class/quiz';
+import { QuizService } from '../../service/quiz.service';
 
 @Component({
   selector: 'app-updatequiz',
