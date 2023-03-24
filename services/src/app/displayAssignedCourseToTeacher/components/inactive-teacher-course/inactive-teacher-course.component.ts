@@ -10,6 +10,8 @@ import { Location } from '@angular/common';
 import { Course } from 'app/teacher-course/class/course';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 
+
+
 @Component({
   selector: 'app-inactive-teacher-course',
   templateUrl: './inactive-teacher-course.component.html',

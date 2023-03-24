@@ -3,17 +3,17 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Coursesyllabus } from 'app/class/coursesyllabus';
-import { Course } from 'app/course/class/course';
-import { CourseDepartmentService } from 'app/course/service/course-department.service';
-import { Coursedepartment } from 'app/course/class/coursedepartment';
 
 
 import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
 
-import { TeacherCourseService } from 'app/displayAssignedCourseToTeacher/services/teacher-course.service';
+
 import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
+import { Course } from 'app/teacher-course/class/course';
+import { CourseDepartment } from 'app/teacher-course/class/course-department';
+import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 
 
 @Component({
@@ -38,7 +38,7 @@ export class AssignedteachercourseComponent {
   id: any | undefined | null;
   userName!: string;
 
-  courseDepartments: Coursedepartment[] = [];
+  courseDepartments: CourseDepartment[] = [];
 
   sessionData: any
   data: any;
@@ -47,7 +47,7 @@ export class AssignedteachercourseComponent {
     private activatedRoute: ActivatedRoute,
     private departmentService: DepartmentService,
     private readonly teacherCourseService: TeacherCourseService,
-    private courseDepartmentService: CourseDepartmentService,
+    // private courseDepartmentService: CourseDepartmentService,
     private courseSyllabusServices: TeacherCourseService
 
   ) {
@@ -78,7 +78,7 @@ export class AssignedteachercourseComponent {
 
   //get courses
   loadCourseDepartment() {
-    this.courseDepartmentService.getCoursesDepartmentId().subscribe(
+    this.teacherCourseService.getCoursesDepartmentId().subscribe(
       response => {
         this.courseDepartments = response;
       },

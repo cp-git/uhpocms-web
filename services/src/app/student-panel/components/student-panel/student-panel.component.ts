@@ -8,8 +8,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class StudentPanelComponent {
 
-   // Declare class properties
-profileId: any;
+
+
+  // Declare class properties
+  profileId: any;
+
   userName!: string;
 
   // Inject Router and ActivatedRoute services into constructor
@@ -17,12 +20,12 @@ profileId: any;
 
   }
 
- 
+
   // Initialize component properties with current route parameters
   ngOnInit(): void {
     this.profileId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
-    console.log(this.userName);
+    console.log(this.profileId);
   }
 
   // Navigate to student course page with current profileId
@@ -30,7 +33,7 @@ profileId: any;
     this._route.navigate(['studentcourse', { id: this.profileId }]);
   }
 
-  
+
   // Navigate to quiz page with 'student' role
   RedirectToQuiz() {
     const role = 'student';
@@ -48,7 +51,7 @@ profileId: any;
     this._route.navigate(['authenticationlogin'])
   }
 
- //Navigate to student module page with current profileId
+  //Navigate to student module page with current profileId
   RedirectToStudentModule() {
     this._route.navigate(['studentmodule', { id: this.profileId }]);
   }

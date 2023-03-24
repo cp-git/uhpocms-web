@@ -17,6 +17,8 @@ export class TeacherPanelComponent {
   ngOnInit(): void {
     this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
+    console.log(this.teacherId)
+
 
 
   }
