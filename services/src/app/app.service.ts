@@ -5,7 +5,7 @@ import { Category } from './class/category';
 import { Course } from './class/course';
 import { Module } from './class/module';
 import { Quiz } from './class/quiz';
-import { InstituteAdmin } from './instituteadminprofile/institute-admin';
+import { Profile } from './profiles/class/profile';
 
 
 import { environment } from 'environments/environment.development';
@@ -57,8 +57,8 @@ export class AppService {
     return this._http.get<Module[]>(this.moduleURL);
   }
 
-  fetchAllInstituteProfile(): Observable<InstituteAdmin[]> {
+  fetchAllInstituteProfile(): Observable<Profile[]> {
     //alert(this.baseUrl + this.instituteProfileWar + this.instituteProfileURL)
-    return this._http.get<InstituteAdmin[]>(this.instituteProfileURL);
+    return this._http.get<Profile[]>(this.instituteProfileURL);
   }
 }
