@@ -4,9 +4,9 @@ import { AdmininstitutionService } from 'app/admin-institution/service/admininst
 import { Course } from 'app/teacher-course/class/course';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { Location } from '@angular/common';
-import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
-import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
-import { InstituteAdminServiceService } from 'app/instituteadminprofile/institute-admin-service.service';
+import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
+import { Profile } from 'app/profiles/class/profile';
+import { ProfileService } from 'app/profiles/services/profile.service';
 import { AssigncourseteacherService } from '../../services/assigncourseteacher.service';
 import { Assignteacher } from '../../class/assignteacher';
 import { ActivatedRoute, Route, Router } from '@angular/router';
@@ -20,11 +20,11 @@ import { DepartmentService } from 'app/department/services/department.service';
 })
 export class AssigncoursetoteacherComponent {
 
-  _profile = new InstituteAdmin();
+  _profile = new Profile();
 
-  _profileArray: InstituteAdmin[] = [];
+  _profileArray: Profile[] = [];
 
-  _profileArrCopy: InstituteAdmin[] = [];
+  _profileArrCopy: Profile[] = [];
 
   institutions: AdminInstitution[] = [];
 
@@ -63,8 +63,15 @@ export class AssigncoursetoteacherComponent {
     console.log(this.selected);
   }
 
-  constructor(private _institutionService: AdmininstitutionService, private _deptService: DepartmentService, private courseService: TeacherCourseService, private profileService: InstituteAdminServiceService, private assignTeacherService: AssigncourseteacherService,
-    private location: Location, private _activatedRoute: ActivatedRoute, private _route: Router) { }
+  constructor(
+    private _institutionService: AdmininstitutionService,
+    private _deptService: DepartmentService,
+    private courseService: TeacherCourseService,
+    private profileService: ProfileService,
+    private assignTeacherService: AssigncourseteacherService,
+    private location: Location,
+    private _activatedRoute: ActivatedRoute,
+    private _route: Router) { }
 
   ngOnInit() {
     this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
@@ -86,7 +93,7 @@ export class AssigncoursetoteacherComponent {
   }
 
 
-  shouldEnableVirtualScroll(_profileArrayForSelect: InstituteAdmin[], size: number): boolean {
+  shouldEnableVirtualScroll(_profileArrayForSelect: Profile[], size: number): boolean {
 
     console.log("size" + size);
     console.log("_profileArrayForSelect" + _profileArrayForSelect)
@@ -160,7 +167,7 @@ export class AssigncoursetoteacherComponent {
     const userRole = "teacher";
     instId = this._profile.institutionId;
     // console.log(instId);
-    this.profileService._getProfileByRoleAndInstitutionId(userRole, instId).subscribe(
+    this.profileService.getProfileByRoleAndInstitutionId(userRole, instId).subscribe(
       (response) => {
         this._profileArray = response;
         this._profileArray.map((i) => { i.fullName = i.firstName + ' ' + i.lastName + ' - ' + i.adminEmail; return i; });

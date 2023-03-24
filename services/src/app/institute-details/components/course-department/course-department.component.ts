@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
+import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { Location } from '@angular/common';
 import { Course } from 'app/teacher-course/class/course';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
@@ -13,7 +13,7 @@ import { TeacherCourseService } from 'app/teacher-course/services/teacher-course
 })
 export class CourseDepartmentComponent {
 
-// Institution array
+  // Institution array
   admininstitutions: AdminInstitution[] = [];
   //backup array of admininstitutions used to maintain the original list of institutions
   backupInst: AdminInstitution[] = [];

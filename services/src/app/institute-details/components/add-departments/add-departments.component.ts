@@ -2,7 +2,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
+import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { Location } from '@angular/common';
 import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';

@@ -5,7 +5,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginauthComponent } from './authlogin/components/loginauth.component';
 import { AuthuserComponent } from './authuser/components/authuser/authuser.component';
 import { EmailComponent } from './email/components/email/email.component';
-import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-institute-admin/display-institute-admin.component';
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
 import { QuizComponent } from './quiz/quiz.component';
 import { AdminroleComponent } from './roleadmin/components/adminrole/adminrole.component';
@@ -31,12 +30,8 @@ import { CreateAnnouncementComponent } from './announcement/components/create-an
 
 import { ActivateRoleComponent } from './roleadmin/components/activate-role/activate-role.component';
 
-import { ActivateProfileComponent } from './instituteadminprofile/activate-profile/activate-profile.component';
 import { ActivateInstitutionComponent } from './admin-institution/components/activate-institution/activate-institution.component';
 
-import { InsertinstituteadminprofileComponent } from './instituteadminprofile/insertinstituteadminprofile/insertinstituteadminprofile.component';
-import { UpdateinstituteadminprofileComponent } from './instituteadminprofile/updateinstituteadminprofile/updateinstituteadminprofile.component';
-import { ViewinstiteadminprofileComponent } from './instituteadminprofile/viewinstiteadminprofile/viewinstiteadminprofile.component';
 import { AddDepartmentsComponent } from './institute-details/components/add-departments/add-departments.component';
 import { CourseDepartmentComponent } from './institute-details/components/course-department/course-department.component';
 import { DisplaySchoolComponent } from './institute-details/components/display-school/display-school.component';
@@ -99,25 +94,18 @@ const routes: Routes = [
 
 
   //InstituteAdminProfile Routes
+  // { path: 'displayInstituteAdmin/display/:userName', component: DisplayInstituteAdminComponent },
 
-
-  { path: 'displayInstituteAdmin/display/:userName', component: DisplayInstituteAdminComponent },
-
-  { path: 'displayInstituteAdmin/display/activate/:userName', component: ActivateProfileComponent },
-
+  // { path: 'displayInstituteAdmin/display/activate/:userName', component: ActivateProfileComponent },
 
   //insert intituteadmin profile
-
-  { path: 'insertadminprofile/:userName', component: InsertinstituteadminprofileComponent },
+  // { path: 'insertadminprofile/:userName', component: InsertinstituteadminprofileComponent },
 
   //update instituteadminprofile
-
-
-  { path: 'updateinstituteadminprofile/:firstName/:userName', component: UpdateinstituteadminprofileComponent },
-
+  // { path: 'updateinstituteadminprofile/:firstName/:userName', component: UpdateinstituteadminprofileComponent },
 
   //view instituteadminprofile
-  { path: 'viewadminprofile/:firstName/:userName', component: ViewinstiteadminprofileComponent },
+  // { path: 'viewadminprofile/:firstName/:userName', component: ViewinstiteadminprofileComponent },
 
 
   //course Module
@@ -292,6 +280,7 @@ const routes: Routes = [
 
   { path: 'AdminRole/:userName', component: AdminRoleComponent },
   { path: 'Profile', component: ProfileComponent },
+  { path: 'Profile/:userName', component: ProfileComponent },
   { path: 'AuthUser/:userName', component: AuthUserComponent },
   { path: 'AuthUser', component: AuthUserComponent },
 

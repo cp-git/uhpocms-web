@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
-import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
+import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
+import { Profile } from 'app/profiles/class/profile';
 
 
 
@@ -17,7 +17,7 @@ import { TeacherCourseService } from 'app/teacher-course/services/teacher-course
 })
 export class InactiveTeacherCourseComponent {
 
-  instituteAdminProfile: InstituteAdmin[] = [];
+  instituteAdminProfile: Profile[] = [];
   teacherId: any;
   userName!: any;
 
