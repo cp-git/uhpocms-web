@@ -5,15 +5,15 @@ import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
 import { Location } from '@angular/common';
 import { Course } from 'app/teacher-course/class/course';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
+
 @Component({
-  selector: 'app-coursedepartment',
-  templateUrl: './coursedepartment.component.html',
-  styleUrls: ['./coursedepartment.component.css']
+  selector: 'app-course-department',
+  templateUrl: './course-department.component.html',
+  styleUrls: ['./course-department.component.css']
 })
-export class CoursedepartmentComponent {
+export class CourseDepartmentComponent {
 
-
-  // Institution array
+// Institution array
   admininstitutions: AdminInstitution[] = [];
   //backup array of admininstitutions used to maintain the original list of institutions
   backupInst: AdminInstitution[] = [];

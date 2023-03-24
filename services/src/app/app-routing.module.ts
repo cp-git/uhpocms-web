@@ -20,8 +20,7 @@ import { AddModuleComponent } from './category/component/add-module/add-module.c
 import { AddCategoryComponent } from './category/component/add-category/add-category.component';
 import { CreateQuizComponent } from './quiz/create-quiz/create-quiz.component';
 import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
-import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
-import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
+
 import { AddinstituteComponent } from './admin-institution/components/addinstitute/addinstitute.component';
 import { DisplayinstituteComponent } from './admin-institution/components/displayinstitute/displayinstitute.component';
 import { UpdatemoduleComponent } from './category/component/updatemodule/updatemodule.component';
@@ -38,7 +37,11 @@ import { ActivateInstitutionComponent } from './admin-institution/components/act
 import { InsertinstituteadminprofileComponent } from './instituteadminprofile/insertinstituteadminprofile/insertinstituteadminprofile.component';
 import { UpdateinstituteadminprofileComponent } from './instituteadminprofile/updateinstituteadminprofile/updateinstituteadminprofile.component';
 import { ViewinstiteadminprofileComponent } from './instituteadminprofile/viewinstiteadminprofile/viewinstiteadminprofile.component';
-
+import { AddDepartmentsComponent } from './institute-details/components/add-departments/add-departments.component';
+import { CourseDepartmentComponent } from './institute-details/components/course-department/course-department.component';
+import { DisplaySchoolComponent } from './institute-details/components/display-school/display-school.component';
+import { ViewCoursesComponent } from './institute-details/components/view-courses/view-courses.component';
+import { ViewDepartmentComponent } from './institute-details/components/view-department/view-department.component';
 
 
 
@@ -54,9 +57,9 @@ import { StudentCourseComponent } from './student/components/student-course/stud
 // import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';
 import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher/components/inactive-teacher-course/inactive-teacher-course.component';
 
-import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
-import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
-import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
+
+
+
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/components/assigncoursetoteacher/assigncoursetoteacher.component';
 
 
@@ -236,8 +239,8 @@ const routes: Routes = [
 
   //url for deprtment course
 
-  { path: 'departmentCourse', component: CoursedepartmentComponent },
-  { path: 'departmentCourse/:id/:userName', component: CoursedepartmentComponent },
+  { path: 'departmentCourse', component: CourseDepartmentComponent },
+  { path: 'departmentCourse/:id/:userName', component: CourseDepartmentComponent },
 
 
   //add department for institute

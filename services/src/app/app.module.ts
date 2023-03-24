@@ -54,9 +54,7 @@ import { EnrollstudentComponent } from './enrollstudent/components/enrollstudent
 import { StudentCourseComponent } from './student/components/student-course/student-course.component';
 
 
-import { DisplaySchoolComponent } from './InstituteDetails/display-school/display-school.component';
-import { CoursedepartmentComponent } from './InstituteDetails/coursedepartment/coursedepartment.component';
-import { AddDepartmentsComponent } from './InstituteDetails/add-departments/add-departments.component';
+
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/components/assigncoursetoteacher/assigncoursetoteacher.component';
 import { CreateinstituteadminprofileComponent } from './instituteadminprofile/createinstituteadminprofile/createinstituteadminprofile.component';
 
@@ -79,10 +77,9 @@ import { AddCategoryComponent } from './category/component/add-category/add-cate
 import { UpdatemoduleComponent } from './category/component/updatemodule/updatemodule.component';
 import { EmailComponent } from './email/components/email/email.component';
 import { AdminmdouleComponent } from './adminmdoule/components/admin-module/adminmdoule.component';
-import { ViewCoursesComponent } from './InstituteDetails/view-courses/view-courses.component';
-import { ViewDepartmentComponent } from './InstituteDetails/view-department/view-department.component';
 
-import { TeacherCourseModule } from './teacher-course/teacher-course.module';
+
+import { TeacherCourseModule } from './teacher-course/module-name/teacher-course.module';
 import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher/components/inactive-teacher-course/inactive-teacher-course.component';
 
 import { TeacherCourseComponent } from './teacher-course/components/teacher-course/teacher-course.component';
@@ -95,11 +92,11 @@ import { ProfilesModule } from './profiles/profiles.module';
 import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
 import { ModuleModule } from './module/module/module.module';
 
-
-
-
-
-
+import { AddDepartmentsComponent } from './institute-details/components/add-departments/add-departments.component';
+import { CourseDepartmentComponent } from './institute-details/components/course-department/course-department.component';
+import { DisplaySchoolComponent } from './institute-details/components/display-school/display-school.component';
+import { ViewCoursesComponent } from './institute-details/components/view-courses/view-courses.component';
+import { ViewDepartmentComponent } from './institute-details/components/view-department/view-department.component';
 
 
 
@@ -141,7 +138,7 @@ import { ModuleModule } from './module/module/module.module';
     StudentCourseComponent,
     InactiveTeacherCourseComponent,
     DisplaySchoolComponent,
-    CoursedepartmentComponent,
+    CourseDepartmentComponent,
     AddDepartmentsComponent,
     AssigncoursetoteacherComponent,
     CreateinstituteadminprofileComponent,

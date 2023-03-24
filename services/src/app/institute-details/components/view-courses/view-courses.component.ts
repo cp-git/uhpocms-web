@@ -1,3 +1,4 @@
+
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
@@ -81,3 +82,4 @@ export class ViewCoursesComponent {
     this._route.navigate(['display', this.id]);
   }
 }
+
