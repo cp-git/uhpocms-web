@@ -14,7 +14,7 @@ export class EmailService {
   }
 
   // api call for fetching all emails 
-  fetchAllEmails() {
+  getAllEmails() {
     return this.http.get<Email[]>(`${this.emailUrl}?title=all`);
   }
 

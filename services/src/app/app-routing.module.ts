@@ -301,6 +301,7 @@ const routes: Routes = [
   { path: 'Module/:userName', component: ModuleComponent },
   { path: 'Module', component: ModuleComponent },
   { path: 'AdminRole', component: AdminRoleComponent },
+  { path: 'Email', component: EmailComponent },
 
 
 ];
