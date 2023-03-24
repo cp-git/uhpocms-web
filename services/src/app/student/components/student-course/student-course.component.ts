@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from 'app/teacher-course/class/course';
-import { Profile } from 'app/profiles/class/profile';
+
 import { StudentCoursesService } from 'app/student/services/student-courses.service';
+import { Profile } from 'app/profiles/class/profile';
 
 @Component({
   selector: 'app-student-course',

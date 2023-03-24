@@ -5,6 +5,14 @@ import { Course } from 'app/teacher-course/class/course';
 
 
 
+// import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
+// import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
+// import { InstituteAdminServiceService } from 'app/instituteadminprofile/institute-admin-service.service';
+import { NgSelectModule } from '@ng-select/ng-select';
+
+
+
+
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { Profile } from 'app/profiles/class/profile';
@@ -16,6 +24,7 @@ import { Location } from '@angular/common';
 import { Enrolltostudent } from '../class/enrolltostudent';
 import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
+
 
 
 
