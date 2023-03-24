@@ -10,6 +10,7 @@ export class ViewOneComponent {
   @Input() data: { currentData: any, columnNames: any } = { currentData: null, columnNames: null };
   @Input() dropdown1?: { optionsArray1: any, dropdownColumnId1: string, dropdownColumnName1: string };
   @Input() dropdown2?: { optionsArray2: any, dropdownColumnId2: string, dropdownColumnName2: string };
+  @Input() dropdown?: any
 
   columnNames: any;
   currentData: any;

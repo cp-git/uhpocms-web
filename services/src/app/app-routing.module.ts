@@ -80,6 +80,10 @@ import { AuthenticationloginComponent } from './authenticationlogin/components/a
 
 
 
+import { ProfileComponent } from './profiles/components/profile/profile.component';
+
+
+
 const routes: Routes = [
   //Teacher-question
   //{ path: 'question', component: TeacherQuestionComponent },
@@ -284,8 +288,10 @@ const routes: Routes = [
   },
 
   { path: 'AdminRole/:userName', component: AdminRoleComponent },
-  // { path: 'Profile', component: ProfileComponent },
+  { path: 'Profile', component: ProfileComponent },
   { path: 'AuthUser/:userName', component: AuthUserComponent },
+  { path: 'AuthUser', component: AuthUserComponent },
+
   { path: 'Question', component: QuestionComponent },
   { path: 'Department/:userName', component: DepartmentComponent },
   { path: 'Course/:userName', component: TeacherCourseComponent }

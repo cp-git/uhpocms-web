@@ -15,7 +15,7 @@ export class ViewAllComponent implements OnInit {
   @Input() dropdown1?: { optionsArray1: any, dropdownColumnId1: string, dropdownColumnName1: string };
   @Input() dropdown2?: { optionsArray2: any, dropdownColumnId2: string, dropdownColumnName2: string };
 
-
+  @Input() dropdown?: any;
   @Output() viewClicked: EventEmitter<any> = new EventEmitter();
   @Output() updateClicked: EventEmitter<any> = new EventEmitter();
   @Output() deleteClicked: EventEmitter<any> = new EventEmitter();

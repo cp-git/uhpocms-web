@@ -11,7 +11,7 @@ export class AddUpdateComponent implements OnInit {
   @Input() data: { currentData: any, columnNames: any } = { currentData: null, columnNames: null };
   @Input() dropdown1?: { optionsArray1: any, dropdownColumnId1: string, dropdownColumnName1: string };
   @Input() dropdown2?: { optionsArray2: any, dropdownColumnId2: string, dropdownColumnName2: string };
-
+  @Input() dropdown?: any
   // event for parent component 
   @Output() submitClicked: EventEmitter<any> = new EventEmitter();
 
@@ -29,7 +29,6 @@ export class AddUpdateComponent implements OnInit {
   dropdownColumnName2: any;
 
   constructor(
-    private location: Location,
   ) { }
 
   onSubmitClicked(objectToAdd: any): void {

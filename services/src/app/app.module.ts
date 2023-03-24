@@ -94,7 +94,9 @@ import { AuthUserModule } from './auth-user/modules/auth-user.module';
 import { AuthenticationloginComponent } from './authenticationlogin/components/authenticationlogin/authenticationlogin.component';
 import { StudentPanelComponent } from './student-panel/components/student-panel/student-panel.component';
 import { StudentModuleComponent } from './student-module/components/student-module/student-module.component';
+import { ProfilesModule } from './profiles/profiles.module';
 import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
+
 
 
 
@@ -167,7 +169,7 @@ import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
   imports: [
     QuestionModule,
     AuthUserModule,
-    // ProfilesModule,
+    ProfilesModule,
     DepartmentModule,
     ReusableModule,
     AdminRoleModule,
