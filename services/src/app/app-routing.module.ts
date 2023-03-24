@@ -280,6 +280,7 @@ const routes: Routes = [
 
   { path: 'AdminRole/:userName', component: AdminRoleComponent },
   { path: 'Profile', component: ProfileComponent },
+  { path: 'Profile/:userName', component: ProfileComponent },
   { path: 'AuthUser/:userName', component: AuthUserComponent },
   { path: 'AuthUser', component: AuthUserComponent },
 
