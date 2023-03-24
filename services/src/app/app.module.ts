@@ -13,7 +13,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { CommonModule } from '@angular/common';
 
 import { LoginComponentComponent } from './Login/login-component/login-component.component';
-import { DisplayInstituteAdminComponent } from './instituteadminprofile/display-institute-admin/display-institute-admin.component';
 
 import { AdminroleComponent } from './roleadmin/components/adminrole/adminrole.component';
 
@@ -34,15 +33,7 @@ import { CreateAnnouncementComponent } from './announcement/components/create-an
 
 import { ActivateRoleComponent } from './roleadmin/components/activate-role/activate-role.component';
 
-import { ActivateProfileComponent } from './instituteadminprofile/activate-profile/activate-profile.component';
 import { ActivateInstitutionComponent } from './admin-institution/components/activate-institution/activate-institution.component';
-import { InsertinstituteadminprofileComponent } from './instituteadminprofile/insertinstituteadminprofile/insertinstituteadminprofile.component';
-import { UpdateinstituteadminprofileComponent } from './instituteadminprofile/updateinstituteadminprofile/updateinstituteadminprofile.component';
-import { ViewinstiteadminprofileComponent } from './instituteadminprofile/viewinstiteadminprofile/viewinstiteadminprofile.component';
-
-
-
-
 
 import { TeacherPanelComponent } from './teacher-panel/components/teacher-panel/teacher-panel.component';
 
@@ -56,7 +47,6 @@ import { StudentCourseComponent } from './student/components/student-course/stud
 
 
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/components/assigncoursetoteacher/assigncoursetoteacher.component';
-import { CreateinstituteadminprofileComponent } from './instituteadminprofile/createinstituteadminprofile/createinstituteadminprofile.component';
 
 
 import { ReusableModule } from './reusable/module/reusable.module';
@@ -88,7 +78,7 @@ import { AuthUserModule } from './auth-user/modules/auth-user.module';
 import { AuthenticationloginComponent } from './authenticationlogin/components/authenticationlogin/authenticationlogin.component';
 import { StudentPanelComponent } from './student-panel/components/student-panel/student-panel.component';
 import { StudentModuleComponent } from './student-module/components/student-module/student-module.component';
-import { ProfilesModule } from './profiles/profiles.module';
+import { ProfilesModule } from './profiles/module/profiles.module';
 import { UpdatequizComponent } from './quiz/updatequiz/updatequiz.component';
 import { ModuleModule } from './module/module/module.module';
 
@@ -105,7 +95,6 @@ import { ViewDepartmentComponent } from './institute-details/components/view-dep
     AppComponent,
     AuthuserComponent,
     LoginComponentComponent,
-    DisplayInstituteAdminComponent,
     AdminroleComponent,
     AdminroleComponent,
     LoginauthComponent,
@@ -125,11 +114,7 @@ import { ViewDepartmentComponent } from './institute-details/components/view-dep
     AnnouncementComponent,
     CreateAnnouncementComponent,
     ActivateRoleComponent,
-    ActivateProfileComponent,
     ActivateInstitutionComponent,
-    InsertinstituteadminprofileComponent,
-    UpdateinstituteadminprofileComponent,
-    ViewinstiteadminprofileComponent,
     AuthenticationloginComponent,
     AdminmdouleComponent,
     TeacherPanelComponent,
@@ -141,7 +126,6 @@ import { ViewDepartmentComponent } from './institute-details/components/view-dep
     CourseDepartmentComponent,
     AddDepartmentsComponent,
     AssigncoursetoteacherComponent,
-    CreateinstituteadminprofileComponent,
     StudentPanelComponent,
     StudentModuleComponent,
 

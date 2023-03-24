@@ -2,7 +2,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
+import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { Location } from '@angular/common';
 import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
@@ -40,8 +40,7 @@ export class DisplaySchoolComponent {
   constructor(
     private _route: Router,
     private readonly deptService: DepartmentService,
-    private readonly route: ActivatedRoute,
-    private location: Location
+    private readonly route: ActivatedRoute
   ) {
     this.admininstitution = new AdminInstitution();
     this.institutionId = 0;

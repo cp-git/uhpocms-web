@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
+import { Profile } from 'app/profiles/class/profile';
 import { Location } from '@angular/common';
 import { Email } from '../../class/email';
 import { EmailService } from '../../service/email.service';
@@ -14,7 +14,7 @@ export class EmailComponent {
   emails: Email[] = []; // for all email data
   backupEmails = new Map(); // for backup data
   email: Email;
-  instituteAdmin: InstituteAdmin[] = []; // for dropdown data
+  instituteAdmin: Profile[] = []; // for dropdown data
 
   // empty row if data not available
   isHidden: boolean = false;

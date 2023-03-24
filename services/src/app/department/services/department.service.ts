@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
+import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { environment } from 'environments/environment.development';
 import { Observable } from 'rxjs';
 import { Department } from '../class/department';

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { Profile } from 'app/profiles/profile';
-import { ProfileAllColumn, ProfileColumn } from 'app/profiles/profile-column';
+import { Profile } from 'app/profiles/class/profile';
+import { ProfileAllColumn, ProfileColumn } from 'app/profiles/column-names/profile-column';
 import { ProfileService } from 'app/profiles/services/profile.service';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { Department } from 'app/department/class/department';

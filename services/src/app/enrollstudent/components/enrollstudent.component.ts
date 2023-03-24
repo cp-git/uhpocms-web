@@ -3,10 +3,17 @@ import { AdmininstitutionService } from 'app/admin-institution/service/admininst
 
 import { Course } from 'app/teacher-course/class/course';
 
-import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
-import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
-import { InstituteAdminServiceService } from 'app/instituteadminprofile/institute-admin-service.service';
+
+// import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
+// import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
+// import { InstituteAdminServiceService } from 'app/instituteadminprofile/institute-admin-service.service';
 import { NgSelectModule } from '@ng-select/ng-select';
+
+
+import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
+import { Profile } from 'app/profiles/class/profile';
+import { ProfileService } from 'app/profiles/services/profile.service';
+
 
 import { EnrolltostudentService } from '../service/enrolltostudent.service';
 import { Location } from '@angular/common';
@@ -14,6 +21,7 @@ import { Enrolltostudent } from '../class/enrolltostudent';
 import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
+
 
 
 @Component({
@@ -27,11 +35,11 @@ export class EnrollstudentComponent {
 
   //variable initialization
   _disablevar: boolean = false;
-  _profile = new InstituteAdmin();
+  _profile = new Profile();
 
-  _profileArray: InstituteAdmin[] = [];
+  _profileArray: Profile[] = [];
 
-  _profileArrCopy: InstituteAdmin[] = [];
+  _profileArrCopy: Profile[] = [];
 
   institutions: AdminInstitution[] = [];
 
@@ -62,7 +70,13 @@ export class EnrollstudentComponent {
 
 
   //constructor
-  constructor(private _institutionService: AdmininstitutionService, private _deptService: DepartmentService, private courseService: TeacherCourseService, private profileService: InstituteAdminServiceService, private enrollstuService: EnrolltostudentService, private location: Location) { }
+  constructor(
+    private _institutionService: AdmininstitutionService,
+    private _deptService: DepartmentService,
+    private courseService: TeacherCourseService,
+    private profileService: ProfileService,
+    private enrollstuService: EnrolltostudentService,
+    private location: Location) { }
 
   //ngoninit
   ngOnInit() {
@@ -133,7 +147,7 @@ export class EnrollstudentComponent {
     const userRole = "student";
     instId = this._profile.institutionId;
 
-    this.profileService._getProfileByRoleAndInstitutionId(userRole, instId).subscribe(
+    this.profileService.getProfileByRoleAndInstitutionId(userRole, instId).subscribe(
       (response) => {
         this._profileArray = response;
         this._profileArray.map((i) => { i.fullName = i.firstName + ' ' + i.lastName + ' - ' + i.adminEmail; return i; });
