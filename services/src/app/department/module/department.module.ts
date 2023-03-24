@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DepartmentComponent } from './components/department/department.component';
+import { DepartmentComponent } from '../components/department/department.component';
 import { ReusableModule } from 'app/reusable/module/reusable.module';
 
 
