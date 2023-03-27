@@ -261,20 +261,30 @@ export class QuestionComponent implements OnInit {
   ////////////////////////////////////
 
   private loadQuizzes() {
-    this.sessionData = sessionStorage.getItem('quiz');
+    try {
+      this.sessionData = sessionStorage.getItem('quiz');
 
-    this.data = JSON.parse(this.sessionData);
-    for (var inst in this.data) {
-      this.quizzes.push(this.data[inst]);
+      this.data = JSON.parse(this.sessionData);
+      for (var inst in this.data) {
+        this.quizzes.push(this.data[inst]);
+      }
+    }
+    catch (err) {
+      console.log("Error", err);
     }
   }
 
   private loadCategories() {
-    this.sessionData = sessionStorage.getItem('category');
+    try {
+      this.sessionData = sessionStorage.getItem('category');
 
-    this.data = JSON.parse(this.sessionData);
-    for (var inst in this.data) {
-      this.catagories.push(this.data[inst]);
+      this.data = JSON.parse(this.sessionData);
+      for (var inst in this.data) {
+        this.catagories.push(this.data[inst]);
+      }
+    }
+    catch (err) {
+      console.log("Error", err)
     }
   }
 

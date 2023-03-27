@@ -4,6 +4,7 @@ import { Course } from 'app/teacher-course/class/course';
 
 import { StudentCoursesService } from 'app/student/services/student-courses.service';
 import { Profile } from 'app/profiles/class/profile';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-student-course',
@@ -19,7 +20,8 @@ export class StudentCourseComponent {
   constructor(
     private _route: Router,
     private activatedRoute: ActivatedRoute,
-    private readonly studentCourseService: StudentCoursesService
+    private readonly studentCourseService: StudentCoursesService,
+    private _location: Location
   ) {
 
   }
@@ -40,7 +42,8 @@ export class StudentCourseComponent {
   }
 
   Back() {
-    this._route.navigate(['studentdata/student', this.userName]);
+    this._location.back();
+    // this._route.navigate(['studentdata/student', this.userName]);
   }
 
 

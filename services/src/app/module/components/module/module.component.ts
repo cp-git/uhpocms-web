@@ -50,6 +50,9 @@ export class ModuleComponent {
     // creating empty object
     this.emptyModule = new Module();
     this.loadCourses();
+
+
+
   }
 
 
@@ -57,7 +60,10 @@ export class ModuleComponent {
     //  this.service.get
 
     this.getAllModules();
-    this.getInactiveModule()
+    this.getInactiveModule();
+
+
+
 
   }
 
@@ -134,12 +140,22 @@ export class ModuleComponent {
   }
 
   private loadCourses() {
-    this.sessionData = sessionStorage.getItem('course');
-    // alert(this.sessionData);
-    this.data = JSON.parse(this.sessionData);
-    for (var inst in this.data) {
-      this.courses.push(this.data[inst]);
+
+    try {
+      this.sessionData = sessionStorage.getItem('course');
+      // alert(this.sessionData);
+      this.data = JSON.parse(this.sessionData);
+      console.log(this.data);
+      for (var inst in this.data) {
+        this.courses.push(this.data[inst]);
+      }
+
     }
+    catch (err) {
+      console.log("Error", err);
+    }
+
+
   }
   ///////////////////////////////////////////
   // Funcation calls specific to this module

@@ -4,6 +4,7 @@ import { ModuleFile } from 'app/class/module-file';
 
 import { Course } from 'app/teacher-course/class/course';
 import { StudentService } from 'app/student/services/student.service';
+import { Location } from '@angular/common';
 
 
 import { Module } from 'app/module/class/module';
@@ -25,7 +26,7 @@ export class StudentModuleComponent {
 
   selectedCourse: any; //stores the selected course by the student. 
   selectedModule: any; //stores the selected module by the student.
-  constructor(private activateRoute: ActivatedRoute, private studentService: StudentService, private route: Router) {
+  constructor(private activateRoute: ActivatedRoute, private studentService: StudentService, private route: Router, private _location: Location) {
 
   }
   ngOnInit(): void {
@@ -54,7 +55,7 @@ export class StudentModuleComponent {
   loadModuleOfCourse(studentCourses: Course[]) {
 
     studentCourses.forEach(course => {
-      
+
       this.studentService.getModuleByCourseId(course.courseId).subscribe(
         response => {
           response.forEach(module => {
@@ -83,7 +84,7 @@ export class StudentModuleComponent {
 
   //sets the selected course by the student and resets the selected module
   onCourseSelect(courseId: any) {
-  
+
     if (courseId != 'undefined') {
       this.selectedCourse = courseId;
       this.selectedModule = undefined;
@@ -103,6 +104,7 @@ export class StudentModuleComponent {
 
   //navigates back to the student data page
   back() {
-    this.route.navigate(['studentdata/student', this.userName])
+    this._location.back();
+    // this.route.navigate(['studentdata/student', this.userName])
   }
 }
