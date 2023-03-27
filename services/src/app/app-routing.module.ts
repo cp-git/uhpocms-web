@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // import { DepartmentComponent } from './admindepartment/department/department.component';
@@ -18,10 +18,6 @@ import { MainComponent } from './category/component/main/main.component';
 import { AddModuleComponent } from './category/component/add-module/add-module.component';
 import { AddCategoryComponent } from './category/component/add-category/add-category.component';
 
-import { CreateQuizComponent } from './quiz/components/create-quiz/create-quiz.component';
-import { UpdatequizComponent } from './quiz/components/updatequiz/updatequiz.component';
-
-
 import { AddinstituteComponent } from './admin-institution/components/addinstitute/addinstitute.component';
 import { DisplayinstituteComponent } from './admin-institution/components/displayinstitute/displayinstitute.component';
 import { UpdatemoduleComponent } from './category/component/updatemodule/updatemodule.component';
@@ -37,51 +33,27 @@ import { ActivateInstitutionComponent } from './admin-institution/components/act
 import { AddDepartmentsComponent } from './institute-details/components/add-departments/add-departments.component';
 import { CourseDepartmentComponent } from './institute-details/components/course-department/course-department.component';
 import { DisplaySchoolComponent } from './institute-details/components/display-school/display-school.component';
-import { ViewCoursesComponent } from './institute-details/components/view-courses/view-courses.component';
 import { ViewDepartmentComponent } from './institute-details/components/view-department/view-department.component';
-
-
-
-
-
-
 
 import { EnrollstudentComponent } from './enrollstudent/components/enrollstudent.component';
 
 import { StudentModuleComponent } from './student-module/components/student-module/student-module.component';
 import { StudentPanelComponent } from './student-panel/components/student-panel/student-panel.component';
 import { StudentCourseComponent } from './student/components/student-course/student-course.component';
-// import { TeacherCourseComponent } from './assignedCourseToTeacher/teacher-course/teacher-course.component';
 import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher/components/inactive-teacher-course/inactive-teacher-course.component';
-
-
-
 
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/components/assigncoursetoteacher/assigncoursetoteacher.component';
 
-
-
-
 import { AdminRoleComponent } from './admin-role/components/admin-role/admin-role.component';
-// import { ProfileComponent } from './profiles/components/profile/profile.component';
 import { AuthUserComponent } from './auth-user/components/auth-user/auth-user.component';
 import { QuestionComponent } from './question/components/question/question.component';
 import { DepartmentComponent } from './department/components/department/department.component';
-// import { TeacherCourseComponent } from './teacher-course/teacher-course/components/teacher-course/teacher-course.component';
 import { CategoryComponent } from './category/component/category/category.component';
 import { AdminmdouleComponent } from './adminmdoule/components/admin-module/adminmdoule.component';
-
 import { TeacherPanelComponent } from './teacher-panel/components/teacher-panel/teacher-panel.component';
 import { AuthenticationloginComponent } from './authenticationlogin/components/authenticationlogin/authenticationlogin.component';
-
-
-
-
-
-
 import { ProfileComponent } from './profiles/components/profile/profile.component';
 import { ModuleComponent } from './module/components/module/module.component';
-
 
 
 const routes: Routes = [
@@ -202,10 +174,6 @@ const routes: Routes = [
 
   { path: 'department/:userName', component: DepartmentComponent },
 
-
-  //euiz routes
-  { path: 'quiz/:userName', component: QuizComponent },
-
   { path: 'department/:id', component: ViewDepartmentComponent },
 
   { path: 'addinstitute', component: AddinstituteComponent },
@@ -244,19 +212,23 @@ const routes: Routes = [
 
 
 
+  // **** commented because of reusable module
   //inserting  the quiz
 
-  { path: 'createQuiz/:userName', component: CreateQuizComponent },
-  { path: 'course/:id', component: ViewCoursesComponent },
+  // { path: 'createQuiz/:userName', component: CreateQuizComponent },
+  // { path: 'course/:id', component: ViewCoursesComponent },
 
 
-  //update Quiz
-  { path: 'updateQuiz/:title', component: UpdatequizComponent },
+  // //update Quiz
+  // { path: 'updateQuiz/:title', component: UpdatequizComponent },
 
-  { path: 'updateQuiz/:title/:userName', component: UpdatequizComponent },
+  // { path: 'updateQuiz/:title/:userName', component: UpdatequizComponent },
+
+
   // { path: 'updateQuiz', component: UpdatequizComponent },
 
-  // //teacherModule routes
+  // ***commented because of reusable module
+  //teacherModule routes
   // { path: 'teachermodule', component: TeachermoduleComponent },
 
   // { path: 'teachermodule/:userName', component: TeachermoduleComponent },
@@ -298,6 +270,9 @@ const routes: Routes = [
   { path: 'AdminRole', component: AdminRoleComponent },
   { path: 'Email', component: EmailComponent },
 
+  //quiz routes
+  { path: 'Quiz/:userName', component: QuizComponent },
+  { path: 'Quiz', component: QuizComponent },
 
 ];
 
