@@ -36,7 +36,7 @@ export class TeacherPanelComponent {
   //navigates the user to a route called quiz and passes the userName parameter
   RedirectToQuiz() {
 
-    this._route.navigate(['quiz', this.userName]);
+    this._route.navigate(['Quiz', this.userName]);
   }
 
   //navigates the user to a route called authenticationlogin
