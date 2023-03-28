@@ -92,7 +92,7 @@ export class TeacherCourseService {
   }
 
   //get assign Course to teacher by profile id 
-  getAssignedCourseToTeacher(teacherId: number): Observable<any> {
+  getAssignedCoursesOfTeacher(teacherId: number): Observable<any> {
 
     return this.http.get<any>(`${this.assignCourseUrl}/teacherid/` + teacherId);
   }
@@ -102,8 +102,9 @@ export class TeacherCourseService {
     return this.http.get<any>(`${this.assignCourseUrl}/inactive/teacherid/` + teacherId);
   }
 
+  // get coursesids of profileid (enrolled courses id )
   getCourseByStudentId(studentId: number): Observable<Course[]> {
-    return this.http.get<Course[]>(`${this.courseUrl}/course/profileId/${studentId}`);
+    return this.http.get<Course[]>(`${this.courseUrl}/profileId/${studentId}`);
   }
 
 }

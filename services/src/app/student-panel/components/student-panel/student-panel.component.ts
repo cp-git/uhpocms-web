@@ -30,7 +30,7 @@ export class StudentPanelComponent {
 
   // Navigate to student course page with current profileId
   RedirectToStudentCourse() {
-    this._route.navigate(['studentcourse', { id: this.profileId }]);
+    this._route.navigate(['/Course']);
   }
 
 
@@ -48,6 +48,8 @@ export class StudentPanelComponent {
 
   // Navigate to login page
   RedirectTOLogin() {
+    sessionStorage.removeItem('profileId');
+    sessionStorage.removeItem('userId');
     this._route.navigate(['authenticationlogin'])
   }
 
