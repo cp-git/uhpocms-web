@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 
 import { ProfileService } from 'app/profiles/services/profile.service';
 import { Profile } from 'app/profiles/class/profile';
-import { AuthenticationserviceService } from '../../service/authenticationservice.service';
 import { Authuser } from 'app/auth-user/class/auth-user';
 import { AuthUserService } from 'app/auth-user/services/auth-user.service';
 
@@ -21,7 +20,7 @@ export class AuthenticationloginComponent {
   constructor(
     private _auth: AuthUserService,
     private _route: Router,
-    private _instituteadminprofile: ProfileService,
+    private _instituteadminprofile: ProfileService
 
   ) {
     this._getAllList();
@@ -101,6 +100,9 @@ export class AuthenticationloginComponent {
                 this._route.navigate(['studentdata/student', userName, { id: this._instituteAdminArray[i].adminId }]);
               }
 
+              sessionStorage.setItem('userRole', this._instituteAdminArray[i].userRole);
+              sessionStorage.setItem('profileId', this._instituteAdminArray[i].adminId.toString());
+              sessionStorage.setItem('userId', this._instituteAdminArray[i].userId.toString());
 
             }
           }

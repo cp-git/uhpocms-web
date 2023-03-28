@@ -1,0 +1,10 @@
+<!-- <form (submit)="onSubmit()" >
+    <input type="file" name="files" multiple (change)="onFileSelected($event)">
+    <button type="submit">Upload</button>
+</form> -->
+
+<form (submit)="onSubmit()" enctype="multipart/form-data" method="post">
+    <input type="file" name="file" (change)="onFileSelected($event)" multiple>
+    <button type="submit">Upload</button>
+</form>
+

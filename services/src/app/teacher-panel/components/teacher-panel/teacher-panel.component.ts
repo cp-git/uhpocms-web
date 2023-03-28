@@ -25,7 +25,7 @@ export class TeacherPanelComponent {
 
   //navigates the user to a route called teachercourse and passes an id parameter
   RedirectToTeacherCourse() {
-    this._route.navigate(['teachercourse', { id: this.teacherId }]);
+    this._route.navigate(['Course']);
   }
 
   //navigates the user to a route called teachermodule and passes id and userName parameters
@@ -41,6 +41,8 @@ export class TeacherPanelComponent {
 
   //navigates the user to a route called authenticationlogin
   RedirectTOLogin() {
+    sessionStorage.removeItem('profileId');
+    sessionStorage.removeItem('userId');
     this._route.navigate(['authenticationlogin'])
   }
 

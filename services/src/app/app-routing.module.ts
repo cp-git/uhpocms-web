@@ -54,6 +54,7 @@ import { TeacherPanelComponent } from './teacher-panel/components/teacher-panel/
 import { AuthenticationloginComponent } from './authenticationlogin/components/authenticationlogin/authenticationlogin.component';
 import { ProfileComponent } from './profiles/components/profile/profile.component';
 import { ModuleComponent } from './module/components/module/module.component';
+import { UploadFileComponent } from './FileUpload/upload-file/upload-file.component';
 
 
 const routes: Routes = [
@@ -264,6 +265,7 @@ const routes: Routes = [
   { path: 'Question/:userName', component: QuestionComponent },
   { path: 'Department/:userName', component: DepartmentComponent },
   { path: 'Course/:userName', component: TeacherCourseComponent },
+  { path: 'Course', component: TeacherCourseComponent },
   { path: 'Department', component: DepartmentComponent },
   { path: 'Module/:userName', component: ModuleComponent },
   { path: 'Module', component: ModuleComponent },
@@ -273,6 +275,10 @@ const routes: Routes = [
   //quiz routes
   { path: 'Quiz/:userName', component: QuizComponent },
   { path: 'Quiz', component: QuizComponent },
+
+
+
+  { path: 'uploadfile', component: UploadFileComponent },
 
 ];
 
