@@ -7,5 +7,7 @@ export class ModuleFile {
     moduleFileCreatedBy!: string;
     moduleFileCreatedDate!: Date;
     moduleFileUpdatedBy!: string;
-    moduleFileUpdatedDate!: Date
+    moduleFileUpdatedDate!: Date;
+
+    courseId!: number;
 }

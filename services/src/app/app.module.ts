@@ -74,6 +74,7 @@ import { QuizModule } from './quiz/module/quiz.module';
 import { UploadFileComponent } from './FileUpload/upload-file/upload-file.component';
 import { FilterPipe } from './pipes/filter/filter.pipe';
 
+import { ModuleFileModule } from './module-file/module-names/module-file.module';
 
 
 @NgModule({
@@ -115,6 +116,7 @@ import { FilterPipe } from './pipes/filter/filter.pipe';
   ],
 
   imports: [
+    ModuleFileModule,
     QuizModule,
     EmailModule,
     ModuleModule,

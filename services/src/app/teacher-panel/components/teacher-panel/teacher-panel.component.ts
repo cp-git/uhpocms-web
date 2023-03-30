@@ -56,4 +56,8 @@ export class TeacherPanelComponent {
     this._route.navigate(['Question', this.userName])
   }
 
+  RedirectToModuleFile() {
+    this._route.navigate(['modulefile'])
+  }
+
 }
