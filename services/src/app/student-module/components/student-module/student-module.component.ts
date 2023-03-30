@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ModuleFile } from 'app/class/module-file';
 
 import { Course } from 'app/teacher-course/class/course';
 import { StudentService } from 'app/student/services/student.service';
 import { Location } from '@angular/common';
-
-
 import { Module } from 'app/module/class/module';
 
 @Component({
@@ -25,16 +23,21 @@ export class StudentModuleComponent {
   studentModuleFiles: ModuleFile[] = []; //array of ModuleFile objects that stores the module files assigned to the student
 
   selectedCourse: any; //stores the selected course by the student. 
+  selectedCourseName: any; //stores the selected course by the student. 
+
   selectedModule: any; //stores the selected module by the student.
-  constructor(private activateRoute: ActivatedRoute, private studentService: StudentService, private route: Router, private _location: Location) {
+  constructor(private activateRoute: ActivatedRoute,
+    private studentService: StudentService,
+    private _location: Location) {
 
   }
   ngOnInit(): void {
     this.studentId = this.activateRoute.snapshot.paramMap.get('id');
     this.userName = this.activateRoute.snapshot.params['userName'];
-    console.log(this.userName)
+
     this.loadCourseOfStudent(this.studentId);
     this.loadStudentAssignedCourses(this.studentId);
+    this.selectedCourse = '1'
   }
 
   //loads the courses of the student using the getCourseByStudentId() method of StudentService
@@ -43,6 +46,7 @@ export class StudentModuleComponent {
       response => {
         this.courses = response;
         this.loadModuleOfCourse(this.courses);
+
       },
       error => {
         console.log(error);
@@ -61,6 +65,10 @@ export class StudentModuleComponent {
           response.forEach(module => {
             this.modules.push(module);
           })
+          this.selectedCourseName = this.courses[0].courseName;
+          this.selectedCourse = this.courses[0].courseId;
+          this.selectedModule = this.modules[0].moduleId;
+
         },
         error => {
           console.log(error);
@@ -84,14 +92,11 @@ export class StudentModuleComponent {
 
   //sets the selected course by the student and resets the selected module
   onCourseSelect(courseId: any) {
+    this.changeSelectedCourseName(courseId);
 
-    if (courseId != 'undefined') {
-      this.selectedCourse = courseId;
-      this.selectedModule = undefined;
-    } else {
-      this.selectedCourse = undefined;
-      this.selectedModule = undefined;
-    }
+    this.selectedCourse = courseId;
+    this.selectedModule = undefined;
+
   }
   // onModuleSelect(event: any) {
   //   this.moduleId = event.target.value;
@@ -106,5 +111,17 @@ export class StudentModuleComponent {
   back() {
     this._location.back();
     // this.route.navigate(['studentdata/student', this.userName])
+  }
+
+  changeSelectedModule(moduleId: any) {
+    this.selectedModule = moduleId;
+  }
+
+  changeSelectedCourseName(courseId: number) {
+    this.courses.forEach(course => {
+      if (course.courseId == courseId) {
+        this.selectedCourseName = course.courseName;
+      }
+    })
   }
 }

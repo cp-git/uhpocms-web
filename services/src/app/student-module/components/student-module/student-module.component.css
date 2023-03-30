@@ -14,5 +14,44 @@
 
 .myheader h1 {
     text-align: center;
+}
 
+.header {
+    background-color: rgb(43, 159, 226);
+    height: 60px;
+    color: white
+}
+
+
+.videoscreen {
+    width: 100%;
+    height: 100%;
+}
+
+select {
+    width: 330px;
+    height: 30px;
+    margin: 5px;
+}
+
+select.form-select option {
+    height: 40px;
+    /* set the height as desired */
+}
+
+.module-list-container {
+    max-height: 200px;
+    /* Set the maximum height of the container */
+    overflow-y: scroll;
+    /* Add a vertical scroll bar when the content overflows */
+    border: 2px solid #ccc;
+    /* Add a 1px solid border */
+    margin: 10px;
+}
+
+.upperrow {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
