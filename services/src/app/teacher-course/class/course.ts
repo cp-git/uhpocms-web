@@ -11,4 +11,6 @@ export class Course {
     courseCreatedDate!: Date;
     courseUpdatedBy!: string;
     courseUpdatedDate!: Date;
+
+    departmentId!: any;
 }
