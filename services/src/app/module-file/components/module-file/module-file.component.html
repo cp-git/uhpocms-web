@@ -79,9 +79,9 @@
 
 <ng-template #viewactivate>
     <app-view-all *ngIf="allInActiveData.length>0" [dropdown]="{courses,modules}"
-        [data]="{moduleData:this.allInActiveData , columnNames:this.columnNames}"
-        [idsColumnName]="{columnName:primaryIdColumnName}" [isActivateScreen]="true"
-        >
+        [data]="{moduleData:this.allInActiveData , columnNames:this.columnNames}"[dropdown]="{courses,modules}"
+        [idsColumnName]="{columnName:primaryIdColumnName}" [isActivateScreen]="true"(activateClicked)="onChildActivateClick($event)">
+        
     </app-view-all>
     <div *ngIf="allInActiveData.length==0">
         <h3>No Inactive Modules content</h3>

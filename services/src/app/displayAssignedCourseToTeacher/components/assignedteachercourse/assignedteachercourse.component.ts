@@ -9,8 +9,8 @@ import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
 
 
-import { AdminInstitution } from 'app/instituteadminprofile/admin-institution';
-import { InstituteAdmin } from 'app/instituteadminprofile/institute-admin';
+import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
+import { Profile } from 'app/profiles/class/profile';
 import { Course } from 'app/teacher-course/class/course';
 import { CourseDepartment } from 'app/teacher-course/class/course-department';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
@@ -24,7 +24,7 @@ import { TeacherCourseService } from 'app/teacher-course/services/teacher-course
 export class AssignedteachercourseComponent {
 
   adminDepartments: Department[] = [];
-  instituteAdminProfile: InstituteAdmin[] = [];
+  instituteAdminProfile: Profile[] = [];
   teacherId: any;
 
   coursesSyllabus: Coursesyllabus[] = [];
@@ -125,7 +125,7 @@ export class AssignedteachercourseComponent {
 
 
   getCoursesByProfileId(teacherId: any) {
-    this.teacherCourseService.getAssignedCourseToTeacher(teacherId).subscribe(
+    this.teacherCourseService.getAssignedCourseOfTeacher(teacherId).subscribe(
       response => {
         this.courses = response;
         console.log(response);
