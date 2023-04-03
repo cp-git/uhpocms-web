@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, ElementRef, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ModuleFile } from 'app/class/module-file';
 
 import { Course } from 'app/teacher-course/class/course';
 import { StudentService } from 'app/student/services/student.service';
 import { Location } from '@angular/common';
-
-
 import { Module } from 'app/module/class/module';
 
 @Component({
@@ -15,6 +13,8 @@ import { Module } from 'app/module/class/module';
   styleUrls: ['./student-module.component.css']
 })
 export class StudentModuleComponent {
+  @ViewChild('videoPlayer', { static: false })
+  videoPlayerRef!: ElementRef<HTMLVideoElement>;
   studentId: any;
   userName: any;
 
@@ -25,24 +25,42 @@ export class StudentModuleComponent {
   studentModuleFiles: ModuleFile[] = []; //array of ModuleFile objects that stores the module files assigned to the student
 
   selectedCourse: any; //stores the selected course by the student. 
+  selectedCourseName: any; //stores the selected course by the student.
+
+  selectedModuleNameFile: any;
+  selectedFile: any;
   selectedModule: any; //stores the selected module by the student.
-  constructor(private activateRoute: ActivatedRoute, private studentService: StudentService, private route: Router, private _location: Location) {
+  Date: any;
+  constructor(private activateRoute: ActivatedRoute,
+    private studentService: StudentService,
+    private _location: Location,
+    private elRef: ElementRef) {
 
   }
+
   ngOnInit(): void {
     this.studentId = this.activateRoute.snapshot.paramMap.get('id');
     this.userName = this.activateRoute.snapshot.params['userName'];
-    console.log(this.userName)
-    this.loadCourseOfStudent(this.studentId);
-    this.loadStudentAssignedCourses(this.studentId);
-  }
 
+    this.loadCourseOfStudent(this.studentId);
+
+    this.selectedCourse = '1'
+  }
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   if (changes['selectedFile']) {
+  //     alert("")
+  //     const video = this.elRef.nativeElement.querySelector('video');
+  //     video.load();
+  //   }
+  // }
   //loads the courses of the student using the getCourseByStudentId() method of StudentService
   loadCourseOfStudent(studentId: number) {
     this.studentService.getCourseByStudentId(studentId).subscribe(
       response => {
         this.courses = response;
         this.loadModuleOfCourse(this.courses);
+        this.selectedCourseName = this.courses[0].courseName;
+        this.selectedCourse = this.courses[0].courseId;
       },
       error => {
         console.log(error);
@@ -51,6 +69,27 @@ export class StudentModuleComponent {
     );
   }
 
+
+
+
+
+  get videoPlayer() {
+    return this.videoPlayerRef.nativeElement;
+  }
+
+  get videoSrc() {
+    return `../../../../assets/video/${this.selectedFile.moduleFile}`;
+  }
+
+
+
+  onSelectedFileChanged() {
+    // Update the src attribute of the video player
+    this.videoPlayer.src = this.videoSrc;
+    this.videoPlayer.load(); // Reload the video
+    // this.videoPlayer.play(); // Start playing the new video
+
+  }
   //Loads the modules of the courses using the getModuleByCourseId() method of StudentService
   loadModuleOfCourse(studentCourses: Course[]) {
 
@@ -60,7 +99,13 @@ export class StudentModuleComponent {
         response => {
           response.forEach(module => {
             this.modules.push(module);
+            if (this.selectedCourse.courseId == module.courseId_id && module == null) {
+              this.selectedModule = module;
+            }
           })
+
+          this.loadModuleFilesOfCourses(this.studentId);
+
         },
         error => {
           console.log(error);
@@ -70,10 +115,17 @@ export class StudentModuleComponent {
   }
 
   //loads the module files assigned to the student using the getModuleFilesByStudentId() method of StudentService
-  loadStudentAssignedCourses(studentId: number) {
+  loadModuleFilesOfCourses(studentId: number) {
     this.studentService.getModuleFilesByStudentId(studentId).subscribe(
       response => {
         this.studentModuleFiles = response;
+        this.studentModuleFiles.forEach(file => {
+          if (file.moduleId == this.selectedModule.moduleId) {
+            this.selectedFile = file;
+          }
+
+        })
+
       },
       error => {
         alert("Failed to load student course");
@@ -84,14 +136,11 @@ export class StudentModuleComponent {
 
   //sets the selected course by the student and resets the selected module
   onCourseSelect(courseId: any) {
+    this.changeSelectedCourseName(courseId);
 
-    if (courseId != 'undefined') {
-      this.selectedCourse = courseId;
-      this.selectedModule = undefined;
-    } else {
-      this.selectedCourse = undefined;
-      this.selectedModule = undefined;
-    }
+    this.selectedCourse = courseId;
+    this.selectedModule = undefined;
+
   }
   // onModuleSelect(event: any) {
   //   this.moduleId = event.target.value;
@@ -107,4 +156,24 @@ export class StudentModuleComponent {
     this._location.back();
     // this.route.navigate(['studentdata/student', this.userName])
   }
+
+  changeselectedModuleName(moduleId: any) {
+    this.selectedModule = moduleId;
+  }
+
+  changeSelectedCourseName(courseId: number) {
+    this.courses.forEach(course => {
+      if (course.courseId == courseId) {
+        this.selectedCourseName = course.courseName;
+      }
+    })
+  }
+
+  changeSelectedFileAndModule(file: any, module: any) {
+    this.selectedFile = [];
+    this.selectedFile = file;
+    this.selectedModule = module;
+    this.onSelectedFileChanged();
+  }
+
 }

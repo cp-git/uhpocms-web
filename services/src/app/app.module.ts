@@ -72,6 +72,8 @@ import { ViewDepartmentComponent } from './institute-details/components/view-dep
 import { EmailModule } from './email/module/email.module';
 import { QuizModule } from './quiz/module/quiz.module';
 import { UploadFileComponent } from './FileUpload/upload-file/upload-file.component';
+import { FilterPipe } from './pipes/filter/filter.pipe';
+
 import { ModuleFileModule } from './module-file/module-names/module-file.module';
 
 
@@ -108,7 +110,8 @@ import { ModuleFileModule } from './module-file/module-names/module-file.module'
     AssigncoursetoteacherComponent,
     StudentPanelComponent,
     StudentModuleComponent,
-    UploadFileComponent
+    UploadFileComponent,
+    FilterPipe
 
   ],
 
