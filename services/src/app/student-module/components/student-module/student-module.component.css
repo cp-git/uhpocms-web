@@ -1,37 +1,26 @@
-.container {
-    margin-top: 50px;
-}
-
 .row>div>select {
-    margin: 10px;
     border: 1px solid rgb(0, 0, 0);
-}
-
-.myheader {
-    border: 1px groove grey;
-    background-color: aqua;
-}
-
-.myheader h1 {
-    text-align: center;
 }
 
 .header {
     background-color: rgb(43, 159, 226);
-    height: 60px;
-    color: white
+    /* height: 60px; */
+    color: white;
+    vertical-align: center;
 }
 
-
 .videoscreen {
+    margin-top: 15px;
     width: 100%;
-    height: 100%;
+    height: 80%;
+    padding-inline-start: 5px;
 }
 
 select {
-    width: 330px;
+    width: 100%;
     height: 30px;
     margin: 5px;
+    border-radius: 10px;
 }
 
 select.form-select option {
@@ -40,13 +29,13 @@ select.form-select option {
 }
 
 .module-list-container {
-    max-height: 200px;
+    max-height: 300px;
     /* Set the maximum height of the container */
     overflow-y: scroll;
     /* Add a vertical scroll bar when the content overflows */
     border: 2px solid #ccc;
     /* Add a 1px solid border */
-    margin: 10px;
+    border-radius: 10px;
 }
 
 .upperrow {
@@ -54,4 +43,24 @@ select.form-select option {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+}
+
+.dropdown-toggle {
+    width: 98%;
+}
+
+.modules {
+    margin: 10px;
+    width: 93%;
+    border: 1px solid;
+    border-radius: 10px;
+}
+
+ul {
+    padding-inline-start: 5px;
+    list-style-type: none;
+}
+
+li {
+    cursor: pointer;
 }
