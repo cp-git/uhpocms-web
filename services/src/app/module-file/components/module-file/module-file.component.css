@@ -1,0 +1,22 @@
+button {
+    margin: 2px;
+}
+
+.container {
+    margin-top: 10px;
+}
+
+table th {
+    background-color: #566787;
+    text-align: center;
+    color: white;
+    border: 1px groove black;
+}
+
+table td {
+    text-align: center;
+}
+
+.btn {
+    border-radius: 15px;
+}

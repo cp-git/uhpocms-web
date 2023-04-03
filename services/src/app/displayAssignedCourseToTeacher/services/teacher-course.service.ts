@@ -22,7 +22,7 @@ export class TeacherCourseService {
   }
 
   //get assign Course to teacher by profile id 
-  getAssignedCourseToTeacher(teacherId: number): Observable<any> {
+  getAssignedCourseOfTeacher(teacherId: number): Observable<any> {
 
     return this._http.get<any>(`${this.assignCourseUrl}/teacherid/` + teacherId);
   }

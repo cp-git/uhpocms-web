@@ -4,7 +4,8 @@ import { ModuleService } from 'app/module/services/module.service';
 import { ModuleColumn, ModuleAllColumn } from 'app/module/column-names/module-column';
 import { Course } from 'app/teacher-course/class/course';
 import { Location } from '@angular/common';
-
+import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
+import { Profile } from 'app/profiles/class/profile';
 @Component({
   selector: 'app-module',
   templateUrl: './module.component.html',
@@ -34,13 +35,16 @@ export class ModuleComponent {
   sessionData: any;
   data: any;
 
+
+  profileId: any;
+
   emptyModule: Module;  // empty admin role
   currentData!: Module;  // for update and view, to show existing data
 
 
 
 
-  constructor(private service: ModuleService, private location: Location) {
+  constructor(private service: ModuleService, private location: Location, private courseService: TeacherCourseService) {
 
     // assigng headers
 
@@ -50,7 +54,7 @@ export class ModuleComponent {
     // creating empty object
     this.emptyModule = new Module();
     this.loadCourses();
-
+    this.profileId = sessionStorage.getItem('profileId');
 
 
   }
@@ -61,7 +65,7 @@ export class ModuleComponent {
 
     this.getAllModules();
     this.getInactiveModule();
-
+    this.getAssignedCoursesOfTeacher(this.profileId)
 
 
 
@@ -192,6 +196,20 @@ export class ModuleComponent {
       (error) => {
         alert("Failed to add Module");
       });
+  }
+
+  //getting courses assigned to teacher using profileId
+  private getAssignedCoursesOfTeacher(teacherId: number) {
+    this.courseService.getAssignedCourseOfTeacher(teacherId).subscribe(
+      (data) => {
+        console.log(data);
+
+        this.courses = data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Module } from 'app/module/class/module';
@@ -8,6 +8,8 @@ import { ModuleFileService } from 'app/module-file/services/module-file.service'
 import { ModuleFileAllColumn, ModuleFileColumn } from 'app/module-file/column-name/modulefile-column';
 import { Course } from 'app/teacher-course/class/course';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
+
+import { UploadFileService } from 'app/FileUpload/services/upload-file.service';
 // import { Profile } from 'app/profiles/class/profile';
 // import { AssignedteachercourseComponent } from 'app/displayAssignedCourseToTeacher/components/assignedteachercourse/assignedteachercourse.component';
 @Component({
@@ -16,6 +18,8 @@ import { TeacherCourseService } from 'app/teacher-course/services/teacher-course
   styleUrls: ['./module-file.component.css']
 })
 export class ModuleFileComponent {
+
+
 
   // title heading
   moduleName: string = "Module Contents";
@@ -64,8 +68,10 @@ export class ModuleFileComponent {
     private _route: Router,
     private location: Location,
     private moduleFileService: ModuleFileService,
-    private service: TeacherCourseService
+    private service: TeacherCourseService,
+    private uploadfileService: UploadFileService
   ) {
+
     this.columnNames = ModuleFileColumn;
     this.allColumnNames = ModuleFileAllColumn;
     this.profileId = sessionStorage.getItem('profileId');
@@ -73,12 +79,16 @@ export class ModuleFileComponent {
     this.emptyModuleFile = new ModuleFile();
     this.loadCourses();
     this.loadModules();
+
+    //this.profileId = sessionStorage.getItem('profileId');
   }
 
   ngOnInit(): void {
     this.activationScreenStatus = false;
+
     this.getAllModulesFile();
-    // this.getCoursesByProfileId(this.teacherId);
+    this.getAssignedCoursesOfTeacher(this.profileId);
+    this.getInactiveModuleFiles();
   }
 
 
@@ -140,14 +150,14 @@ export class ModuleFileComponent {
   // For navigate to update screen with data
   // function will call when child update button is clicked 
   onChildDeleteClick(objectReceived: ModuleFile): void {
-    this.deleteModuleFile(objectReceived.moduleFile);
+    this.deleteModuleFileById(objectReceived.moduleFileId);
   }
 
   // For navigate to activate screen with data
   // function will call when child update button is clicked 
-  // onChildActivateClick(objectReceived: ModuleFile): void {
-  //   this.activeModuleFile(objectReceived.moduleFile);
-  // }
+  onChildActivateClick(objectReceived: ModuleFile): void {
+    this.activeModuleFile(objectReceived.moduleFileId);
+  }
 
   // for navigating to add screen
   onAddClick() {
@@ -168,7 +178,7 @@ export class ModuleFileComponent {
 
   // on updateComponents's submit button clicked
   onUpdateModuleSubmit(objectReceived: ModuleFile) {
-    this.updateModuleFile(objectReceived);
+    this.updateModuleFileById(objectReceived);
   }
 
 
@@ -193,11 +203,11 @@ export class ModuleFileComponent {
 
   //getting courses assigned to teacher using profileId
   private getAssignedCoursesOfTeacher(teacherId: number) {
-    this.service.getAssignedCourseToTeacher(teacherId).subscribe(
+    this.service.getAssignedCourseOfTeacher(teacherId).subscribe(
       (data) => {
         console.log(data);
 
-        this.allData = data;
+        this.courses = data;
       },
       error => {
         console.log(error);
@@ -237,7 +247,10 @@ export class ModuleFileComponent {
       (data) => {
         // alert(this.moduleFile)
         // console.log(data);
+        //this.uploadfileService.uploadFiles();
         this.moduleFile = data;
+
+
         alert('File Added successfully');
         this.ngOnInit();
         this.back();
@@ -246,10 +259,10 @@ export class ModuleFileComponent {
     );
   }
 
-  // For updating module files
-  private updateModuleFile(currentData: ModuleFile) {
+  // For updating module files by id
+  private updateModuleFileById(currentData: ModuleFile) {
     // calling service for updating data
-    this.moduleFileService.updateModuleFileList(currentData.moduleFile, currentData).subscribe(
+    this.moduleFileService.updateModuleFileById(currentData.moduleFileId, currentData).subscribe(
       response => {
         alert(`Module File updated successfully !`);
         this.back();
@@ -288,11 +301,11 @@ export class ModuleFileComponent {
   }
 
 
-  // For deleting (soft delete) 
-  private deleteModuleFile(moduleFile: string) {
+  // For deleting (soft delete) by Id
+  private deleteModuleFileById(moduleFileId: number) {
 
     // calling service to soft delte
-    this.moduleFileService.deleteModuleFile(moduleFile).subscribe(
+    this.moduleFileService.deleteModuleFileById(moduleFileId).subscribe(
       (response) => {
         alert('Module File deleted successfully');
         this.ngOnInit();
@@ -317,15 +330,13 @@ export class ModuleFileComponent {
     );
 
   }
+  // For activating moduleFile using Id
+  private activeModuleFile(moduleFileId: number) {
 
 
-  // For activating 
-  private activeModuleFile(moduleFile: string, modulefile: ModuleFile) {
-
-    // calling service to activating 
-    this.moduleFileService.updateActiveStatus(moduleFile, modulefile).subscribe(
+    this.moduleFileService.activatemoduleFileById(moduleFileId).subscribe(
       response => {
-        alert("Activated Module");
+        alert("Activated modulefile");
         this.ngOnInit();
       },
       error => {
@@ -336,3 +347,8 @@ export class ModuleFileComponent {
 
 
 }
+
+
+
+
+
