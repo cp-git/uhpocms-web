@@ -41,6 +41,7 @@ export class TeacherPanelComponent {
 
   //navigates the user to a route called authenticationlogin
   RedirectTOLogin() {
+    sessionStorage.removeItem('')
     sessionStorage.removeItem('profileId');
     sessionStorage.removeItem('userId');
     this._route.navigate(['authenticationlogin'])

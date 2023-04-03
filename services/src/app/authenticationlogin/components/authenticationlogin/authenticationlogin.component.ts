@@ -6,6 +6,7 @@ import { ProfileService } from 'app/profiles/services/profile.service';
 import { Profile } from 'app/profiles/class/profile';
 import { Authuser } from 'app/auth-user/class/auth-user';
 import { AuthUserService } from 'app/auth-user/services/auth-user.service';
+import { AuthenticationserviceService } from 'app/authenticationlogin/service/authenticationservice.service';
 
 @Component({
   selector: 'app-authenticationlogin',
@@ -20,7 +21,8 @@ export class AuthenticationloginComponent {
   constructor(
     private _auth: AuthUserService,
     private _route: Router,
-    private _instituteadminprofile: ProfileService
+    private _instituteadminprofile: ProfileService,
+    private authenticationService: AuthenticationserviceService
 
   ) {
     this._getAllList();
@@ -103,7 +105,7 @@ export class AuthenticationloginComponent {
               sessionStorage.setItem('userRole', this._instituteAdminArray[i].userRole);
               sessionStorage.setItem('profileId', this._instituteAdminArray[i].adminId.toString());
               sessionStorage.setItem('userId', this._instituteAdminArray[i].userId.toString());
-
+              this.authenticationService.registerSuccessfulLogin(userName);
             }
           }
 
