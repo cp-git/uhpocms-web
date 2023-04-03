@@ -8,7 +8,7 @@ import { Course } from 'app/teacher-course/class/course';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { DepartmentService } from 'app/department/services/department.service';
 import { CourseDepartment } from 'app/teacher-course/class/course-department';
-
+import { AppService } from 'app/app.service';
 @Component({
   selector: 'app-teacher-course',
   templateUrl: './teacher-course.component.html',
@@ -37,8 +37,8 @@ export class TeacherCourseComponent implements OnInit {
   // To be assigned based on the module
   readonly primaryIdColumnName: string = 'courseId';
 
-  // readonly dropdownColumnId1: string = 'adminInstitutionId';
-  // readonly dropdownColumnName1: string = 'adminInstitutionName';
+  readonly dropdownColumnId1: string = 'adminInstitutionId';
+  readonly dropdownColumnName1: string = 'adminInstitutionName';
 
 
   allData: Course[] = []; // list of course
@@ -46,6 +46,10 @@ export class TeacherCourseComponent implements OnInit {
 
   emptyCourse: Course;  // empty course
   currentData!: Course;  // for update and view, to show existing data
+
+  userId: any;
+  profileId: any;
+  userRole: any;
 
   sessionData: any;
   data: any;
@@ -64,10 +68,16 @@ export class TeacherCourseComponent implements OnInit {
     this.loadAllCoursesWithDepartmentId();
     this.courseDepartment = new CourseDepartment();
 
+
+    this.userId = sessionStorage.getItem('userId');
+    this.profileId = sessionStorage.getItem('profileId');
+    this.userRole = sessionStorage.getItem('userRole');
+
   }
 
   ngOnInit(): void {
-    this.getAllCourse();  // for getting all active course
+    // this.getAllCourse();  // for getting all active course
+    this.loadCoursesBasedOnRole(this.userRole);
     this.getInActiveCourse(); // for getting all inactive course
   }
 
@@ -170,13 +180,9 @@ export class TeacherCourseComponent implements OnInit {
     this.service.addCourse(currentData).subscribe(
       (data) => {
 
-        console.log(currentData);
         this.courseDepartment.courseId = data.courseId;
 
         this.courseDepartment.departmentId = currentData.departmentId;
-
-
-        console.log(this.courseDepartment);
 
         this.service.assignCourseToDepartment(this.courseDepartment).subscribe(
           response => {
@@ -301,6 +307,51 @@ export class TeacherCourseComponent implements OnInit {
       }
     );
   }
+
+  private loadCoursesBasedOnRole(userRole: string) {
+    console.log(userRole);
+
+    switch (userRole) {
+      case 'admin' || 'coadmin':
+        this.getAllCourse();
+        break;
+      case 'teacher':
+        this.getAssignedCoursesOfTeacher(this.profileId);
+        break;
+      case 'student':
+        this.getCoursesEnrolledToStudent(this.profileId);
+        break;
+    }
+  }
+
+  // for getting courses enroll for the student using  profileId
+  private getCoursesEnrolledToStudent(studentId: number) {
+
+    this.service.getCourseByStudentId(studentId).subscribe(
+      (data) => {
+        this.allData = data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+
+  //getting courses assigned to teacher using profileId
+  private getAssignedCoursesOfTeacher(teacherId: number) {
+    this.service.getAssignedCourseOfTeacher(teacherId).subscribe(
+      (data) => {
+        console.log(data);
+
+        this.allData = data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
 
 }
 
