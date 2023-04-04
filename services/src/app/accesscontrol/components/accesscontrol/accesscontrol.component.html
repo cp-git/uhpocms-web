@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-sm-6 text-right">
                     <ng-container *ngTemplateOutlet="addButton;"></ng-container>
-                    <ng-container *ngTemplateOutlet="activateButton;"></ng-container>
+
                     <ng-container *ngTemplateOutlet="backButton;"></ng-container>
 
                 </div>
@@ -66,44 +66,37 @@
 
 <ng-template #viewall>
     <app-view-all *ngIf="allData.length>0" [data]="{moduleData:this.allData , columnNames:this.columnNames}"
-        [dropdown]="{adminInstitutions,departments,adminRoles}" [idsColumnName]="{columnName:primaryIdColumnName}"
-        [isViewAllScreen]="true" (viewClicked)="onChildViewClick($event)" (updateClicked)="onChildUpdateClick($event)"
+        [dropdown]="{users,profiles}"   [idsColumnName]="{columnName:primaryIdColumnName}" [isViewAllScreen]="true"
+        (viewClicked)="onChildViewClick($event)" (updateClicked)="onChildUpdateClick($event)"
         (deleteClicked)="onChildDeleteClick($event)">
     </app-view-all>
     <div *ngIf="allData.length==0">
-        <h3>No data</h3>
+        <h3>No active controls</h3>
     </div>
 </ng-template>
 
 
 <ng-template #viewadd>
-    <app-add-update [data]="{currentData:emptyProfile , columnNames:allColumnNames}"
-        [dropdown]="{adminInstitutions,departments,adminRoles,inactiveAuthUsers,genders}"
+    <app-add-update [data]="{currentData:emptyAccesscontrol , columnNames:allColumnNames}" [dropdown]="{users}"
         (submitClicked)="onAddProfileSubmit($event)"></app-add-update>
 </ng-template>
 
 <ng-template #viewactivate>
     <app-view-all *ngIf="allInActiveData.length>0"
-        [data]="{moduleData:this.allInActiveData , columnNames:this.columnNames}"
-        [dropdown]="{adminInstitutions,departments,adminRoles,activeAuthUsers,genders}"
-        [idsColumnName]="{columnName:primaryIdColumnName}" [isActivateScreen]="true"
-        (activateClicked)="onChildActivateClick($event)">
+        [data]="{moduleData:this.allInActiveData , columnNames:this.columnNames}" [dropdown]="{users,profiles}" 
+        [idsColumnName]="{columnName:primaryIdColumnName}" [isActivateScreen]="true">
     </app-view-all>
     <div *ngIf="allInActiveData.length==0">
-
-        <h3>No inactive profiles</h3>
-
+        <h3>No inactive controls</h3>
     </div>
 </ng-template>
 
 
 <ng-template #viewone>
-    <app-view-one [data]="{currentData:currentData , columnNames:allColumnNames}"
-        [dropdown]="{adminInstitutions,departments,adminRoles,activeAuthUsers,genders}"></app-view-one>
+    <app-view-one [data]="{currentData:currentData , columnNames:allColumnNames}" [dropdown]="{users}"></app-view-one>
 </ng-template>
 
 <ng-template #viewupdate>
-    <app-add-update [data]="{currentData:currentData , columnNames:allColumnNames}"
-        [dropdown]="{adminInstitutions,departments,adminRoles,activeAuthUsers,genders}"
+    <app-add-update [data]="{currentData:currentData , columnNames:updateColumnNames}" [dropdown]="{users}"
         (submitClicked)="onUpdateProfileSubmit($event)"></app-add-update>
 </ng-template>

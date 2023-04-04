@@ -41,6 +41,7 @@ export class ViewAllComponent implements OnInit {
   ) { }
 
   initialiseDropdownData() {
+    
     if (this.dropdown1?.optionsArray1 != undefined) {
       this.optionsArray1 = this.dropdown1?.optionsArray1;
       this.dropdownColumnId1 = this.dropdown1?.dropdownColumnId1;
@@ -52,6 +53,7 @@ export class ViewAllComponent implements OnInit {
       this.dropdownColumnId2 = this.dropdown2?.dropdownColumnId2;
       this.dropdownColumnName2 = this.dropdown2?.dropdownColumnName2;
     }
+
   }
 
   ngOnInit(): void {

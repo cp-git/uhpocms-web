@@ -47,4 +47,8 @@ export class ProfileService {
     return this.http.get<any>(`${this.profileUrl}/${userRole}/${instId}`);
   }
 
+
+  getProfileByUserId( userId: number): Observable<any> {
+    return this.http.get<any>(`${this.profileUrl}/userId/${userId}`);
+  }
 }

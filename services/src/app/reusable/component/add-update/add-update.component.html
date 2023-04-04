@@ -94,6 +94,36 @@
 
                     </ng-container>
 
+                    <ng-container *ngSwitchCase="'disableddropdown'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <select name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control disableddropdown"
+                            required="" disabled>
+                            <option value="undefined" disabled>Select</option>
+
+                            <ng-container *ngIf="[column.toSort] then sortDropdown else simpleDropdown"></ng-container>
+
+                            <ng-template #sortDropdown>
+                                <ng-container *ngFor="let option of dropdown[column.arrayName]">
+                                    <option
+                                        *ngIf="option[column.foreignKeyColumn]==currentData[column.sortBasedOn]?true:null"
+                                        [value]="option[column.columnId]">
+                                        {{ option[column.columnName] }}
+                                    </option>
+                                </ng-container>
+                            </ng-template>
+
+                            <ng-template #simpleDropdown>
+                                <option *ngFor="let option of dropdown[column.arrayName]"
+                                    [value]="option[column.columnId]">
+                                    {{ option[column.columnName] }}
+                                </option>
+                            </ng-template>
+
+                        </select>
+
+                    </ng-container>
+
                     <!-- <ng-container *ngSwitchCase="'toBeSortDropdown'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>

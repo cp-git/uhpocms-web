@@ -71,7 +71,10 @@ import { ViewDepartmentComponent } from './institute-details/components/view-dep
 import { EmailModule } from './email/module/email.module';
 import { QuizModule } from './quiz/module/quiz.module';
 import { UploadFileComponent } from './FileUpload/upload-file/upload-file.component';
+import { AccessControlModule } from './accesscontrol/module/accesscontrol.module';
+
 import { FilterPipe } from './shared/pipes/filter/filter.pipe';
+
 
 import { ModuleFileModule } from './module-file/module-names/module-file.module';
 import { HttpInterceptorService } from './shared/services/HttpInterceptor/http-interceptor.service';
@@ -113,6 +116,7 @@ import { HttpInterceptorService } from './shared/services/HttpInterceptor/http-i
     UploadFileComponent,
     FilterPipe
 
+
   ],
 
   imports: [
@@ -136,7 +140,9 @@ import { HttpInterceptorService } from './shared/services/HttpInterceptor/http-i
     BrowserModule,
     NgSelectModule,
     CommonModule,
-    TeacherCourseModule
+    TeacherCourseModule,
+    AccessControlModule
+    
   ],
 
   providers: [

@@ -14,7 +14,6 @@ export class ViewOneComponent {
 
   columnNames: any;
   currentData: any;
-
   // for dropdown
   optionsArray1: any;
   dropdownColumnId1: any;
@@ -32,6 +31,7 @@ export class ViewOneComponent {
   ngOnInit(): void {
 
     // assigning variable coming from parent
+
     this.currentData = this.data.currentData;
     this.columnNames = this.data.columnNames;
     this.initialiseDropdownData();

@@ -415,7 +415,7 @@ export class ProfileComponent implements OnInit {
       if (column.key === 'userId' && (this.viewAdd === true)) {
         column.arrayName = 'inactiveAuthUsers';
       }
-    });
+        });
 
   }
 

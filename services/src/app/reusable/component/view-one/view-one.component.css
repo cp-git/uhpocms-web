@@ -18,3 +18,10 @@ table th {
     height: 150px;
     border-radius: 25px;
 }
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+  }
