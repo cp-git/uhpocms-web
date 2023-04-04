@@ -11,41 +11,57 @@ export class ModuleFileService {
 
   private readonly moduleFileUrl: string;
   constructor(private _http: HttpClient) {
-    this.moduleFileUrl = environment.moduleFileUrl + '/modulefile';
+    this.moduleFileUrl = environment.moduleFileUrl;
   }
 
   // for add module File 
   addModuleFile(modulefile: ModuleFile): Observable<any> {
-    return this._http.post<any>(`${this.moduleFileUrl}`, modulefile);
+    return this._http.post<any>(`${this.moduleFileUrl}/modulefile`, modulefile);
   }
 
-  // fetchModuleFileList(): Observable<any> {
-  //   return this._http.get<any>(`${this.moduleFileUrl}/?name=all`);
-  // }
+  // get all module file
+  fetchModuleFileList(): Observable<any> {
+    return this._http.get<any>(`${this.moduleFileUrl}/modulefile?file=all`);
+  }
 
-  // getInactivemoduleFileList(): Observable<any> {
-  //   return this._http.get<any>(`${this.moduleFileUrl}/inactive?inactivemodulesfile=all`);
-  // }
+  // get all inactive module file
+  getInactivemoduleFileList(): Observable<any> {
+    return this._http.get<any>(`${this.moduleFileUrl}/inactive?inactivemodulesfile=all`);
+  }
 
-  // updateActiveStatus(moduleFile: string, modulefile: ModuleFile): Observable<any> {
-  //   return this._http.patch<any>(`${this.moduleFileUrl}/` + moduleFile, modulefile);
-  // }
+  //activate a modulefile by id
+  activatemoduleFileById(moduleFileId: number): Observable<any> {
+    return this._http.patch<any>(`${this.moduleFileUrl}/modulefile/activate/` + moduleFileId, {});
+  }
 
-  // deleteModuleFile(moduleFile: string): Observable<any> {
-  //   return this._http.delete<any>(`${this.moduleFileUrl}/` + moduleFile);
-  // }
+  // delete module file by file name
+  deleteModuleFile(moduleFile: string): Observable<any> {
+    return this._http.delete<any>(`${this.moduleFileUrl}/` + moduleFile);
+  }
 
-  // getModuleFileList(moduleFile: string): Observable<any> {
-  //   return this._http.get<any>(`${this.moduleFileUrl}/` + moduleFile);
-  // }
+  getModuleFileList(moduleFile: string): Observable<any> {
+    return this._http.get<any>(`${this.moduleFileUrl}/` + moduleFile);
+  }
 
-  // updateModuleFileList(moduleFile: string, modulefile: ModuleFile): Observable<any> {
-  //   alert(`${this.moduleFileUrl}/` + moduleFile);
-  //   return this._http.put<any>(`${this.moduleFileUrl}/modulefile/` + moduleFile, modulefile);
-  // }
+  // update module file by file name
+  updateModuleFileList(moduleFile: string, modulefile: ModuleFile): Observable<any> {
+    alert(`${this.moduleFileUrl}/` + moduleFile);
+    return this._http.put<any>(`${this.moduleFileUrl}/modulefile/` + moduleFile, modulefile);
+  }
 
-  // getModuleFile(moduleFile: string): Observable<ModuleFile> {
-  //   return this._http.get<ModuleFile>(`${this.moduleFileUrl}/modulefile/` + moduleFile);
-  // }
+  // update module File by id
+  updateModuleFileById(moduleFileId: number, modulefile: ModuleFile): Observable<any> {
+    return this._http.put<any>(`${this.moduleFileUrl}/modulefileById/` + moduleFileId, modulefile);
+  }
+
+  // delete module File by id
+  deleteModuleFileById(moduleFileId: number): Observable<any> {
+    return this._http.delete<any>(`${this.moduleFileUrl}/modulefileById/` + moduleFileId);
+  }
+
+  // get module file by file name
+  getModuleFile(moduleFile: string): Observable<ModuleFile> {
+    return this._http.get<ModuleFile>(`${this.moduleFileUrl}/modulefile/` + moduleFile);
+  }
 }
 

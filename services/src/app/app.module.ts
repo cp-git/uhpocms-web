@@ -57,7 +57,6 @@ import { AdminmdouleComponent } from './adminmdoule/components/admin-module/admi
 import { TeacherCourseModule } from './teacher-course/module-name/teacher-course.module';
 import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher/components/inactive-teacher-course/inactive-teacher-course.component';
 
-import { HttpInterceptorServiceService } from './authlogin/service/http-interceptor-service.service';
 import { AuthUserModule } from './auth-user/modules/auth-user.module';
 import { AuthenticationloginComponent } from './authenticationlogin/components/authenticationlogin/authenticationlogin.component';
 import { StudentPanelComponent } from './student-panel/components/student-panel/student-panel.component';
@@ -74,8 +73,11 @@ import { QuizModule } from './quiz/module/quiz.module';
 import { UploadFileComponent } from './FileUpload/upload-file/upload-file.component';
 import { AccessControlModule } from './accesscontrol/module/accesscontrol.module';
 
+import { FilterPipe } from './shared/pipes/filter/filter.pipe';
 
 
+import { ModuleFileModule } from './module-file/module-names/module-file.module';
+import { HttpInterceptorService } from './shared/services/HttpInterceptor/http-interceptor.service';
 
 
 @NgModule({
@@ -111,12 +113,14 @@ import { AccessControlModule } from './accesscontrol/module/accesscontrol.module
     AssigncoursetoteacherComponent,
     StudentPanelComponent,
     StudentModuleComponent,
-    UploadFileComponent
+    UploadFileComponent,
+    FilterPipe
 
 
   ],
 
   imports: [
+    ModuleFileModule,
     QuizModule,
     EmailModule,
     ModuleModule,
@@ -144,7 +148,7 @@ import { AccessControlModule } from './accesscontrol/module/accesscontrol.module
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: HttpInterceptorServiceService,
+      useClass: HttpInterceptorService,
       multi: true,
     },
   ],

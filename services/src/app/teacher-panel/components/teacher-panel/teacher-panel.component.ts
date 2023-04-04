@@ -41,6 +41,7 @@ export class TeacherPanelComponent {
 
   //navigates the user to a route called authenticationlogin
   RedirectTOLogin() {
+    sessionStorage.removeItem('')
     sessionStorage.removeItem('profileId');
     sessionStorage.removeItem('userId');
     this._route.navigate(['authenticationlogin'])
@@ -54,6 +55,10 @@ export class TeacherPanelComponent {
   //navigates the user to a route called Question
   RedirectToQuestion() {
     this._route.navigate(['Question', this.userName])
+  }
+
+  RedirectToModuleFile() {
+    this._route.navigate(['modulefile'])
   }
 
 }

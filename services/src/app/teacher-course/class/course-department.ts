@@ -1,5 +1,5 @@
 export class CourseDepartment {
-     courseDepartmentId!: number;
+    courseDepartmentId!: number;
     courseId!: number;
-    departmentId!: number;
+    departmentId!: any;
 }

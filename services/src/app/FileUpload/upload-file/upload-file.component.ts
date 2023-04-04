@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { UploadFileService } from '../services/upload-file.service';
 @Component({
   selector: 'app-upload-file',
   templateUrl: './upload-file.component.html',
@@ -10,59 +10,23 @@ import { Observable } from 'rxjs';
 export class UploadFileComponent {
   files!: FileList;
 
-  constructor(private http: HttpClient) { }
+  constructor(private uploadService: UploadFileService) { }
 
   onFileSelected(event: Event) {
+    console.log(event);
     const input = event.target as HTMLInputElement;
+    console.log(input);
     if (input && input.files) {
       this.files = input.files;
+      console.log(this.files);
     }
   }
-  // onSubmit() {
-  //   const formData = new FormData();
-  //   for (let i = 0; i < this.files.length; i++) {
-  //     formData.append('files', this.files[i]);
-  //   }
-  //   // this.http.post('http://localhost:8090/uhpocms/file/upload', formData).subscribe(response => {
-
-  //   //   console.log(response);
-
-  //   const headers = new HttpHeaders().set('Content-Type', 'multipart/form-data');
-  //   this.http.post('http://localhost:8090/uhpocms/file/upload', formData, { headers }).subscribe(response => {
-  //     console.log(response);
-  //   });
-
-
-
-  // }
-
-  // ...
 
   onSubmit() {
-    const formData = new FormData();
-    for (let i = 0; i < this.files.length; i++) {
-      formData.append('files', this.files[i]);
-    }
-
-    const headers = new HttpHeaders().set('Content-Type', 'multipart/form-data');
-    this.http.post('http://localhost:8090/uploadfile/uhpocms/file/upload', formData, { headers }).subscribe(response => {
+    this.uploadService.uploadFiles(this.files).subscribe(response => {
       console.log(response);
     });
   }
-  // onSubmit() {
-  //   const formData = new FormData();
-  //   for (let i = 0; i < this.files.length; i++) {
-  //     formData.append('files', this.files[i]);
-  //   }
-
-  //   const headers = new HttpHeaders();
-  //   headers.append('Content-Type', 'multipart/form-data; boundary=---------------------------1234567890');
-  //   this.http.post('http://localhost:8096/uhpocms/file/upload', formData, { headers }).subscribe(response => {
-  //     console.log(response);
-  //   });
-
-
-
 }
 
 

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-
+import { Department } from 'app/department/class/department';
 // Module specific imports
 import { CourseAllColumn, CourseColumn } from 'app/teacher-course/column-name/teacher-course-column';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { Course } from 'app/teacher-course/class/course';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
+import { DepartmentService } from 'app/department/services/department.service';
+import { CourseDepartment } from 'app/teacher-course/class/course-department';
 import { AppService } from 'app/app.service';
-
-
 @Component({
   selector: 'app-teacher-course',
   templateUrl: './teacher-course.component.html',
@@ -26,6 +26,10 @@ export class TeacherCourseComponent implements OnInit {
   viewAll: boolean = true;
   viewOne: boolean = false;
   viewActivate: boolean = false;
+  // If all data is available or not
+  dataAvailable: boolean = false;
+
+  courseDepartment: CourseDepartment;
 
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
@@ -43,25 +47,27 @@ export class TeacherCourseComponent implements OnInit {
   emptyCourse: Course;  // empty course
   currentData!: Course;  // for update and view, to show existing data
 
-  sessionData: any;
-  data: any;
-  adminInstitutions: AdminInstitution[] = [];
-
-
   userId: any;
   profileId: any;
   userRole: any;
 
-  constructor(
-    private appService: AppService,
-    private service: TeacherCourseService,
-    private location: Location) {
+  sessionData: any;
+  data: any;
+  adminInstitutions: AdminInstitution[] = [];
+  departments: Department[] = [];
+
+  courseDepartments: CourseDepartment[] = [];
+  constructor(private service: TeacherCourseService, private location: Location, private departmentService: DepartmentService) {
     this.columnNames = CourseColumn;
     this.allColumnNames = CourseAllColumn;
 
     // creating empty object
     this.emptyCourse = new Course();
     this.loadAdminInstitutions();
+    this.loadDepartments();
+    this.loadAllCoursesWithDepartmentId();
+    this.courseDepartment = new CourseDepartment();
+
 
     this.userId = sessionStorage.getItem('userId');
     this.profileId = sessionStorage.getItem('profileId');
@@ -70,8 +76,8 @@ export class TeacherCourseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadCoursesBasedOnRole(this.userRole);
     // this.getAllCourse();  // for getting all active course
+    this.loadCoursesBasedOnRole(this.userRole);
     this.getInActiveCourse(); // for getting all inactive course
   }
 
@@ -166,17 +172,31 @@ export class TeacherCourseComponent implements OnInit {
   }
 
   // For adding course
-  private addCourse(currentData: Course) {
+  private addCourse(currentData: any) {
 
     currentData.courseIsActive = true;  // setting active true
 
     // calling service for adding data
     this.service.addCourse(currentData).subscribe(
       (data) => {
-        alert('Courses added Successfully');
+
+        this.courseDepartment.courseId = data.courseId;
+
+        this.courseDepartment.departmentId = currentData.departmentId;
+
+        this.service.assignCourseToDepartment(this.courseDepartment).subscribe(
+          response => {
+            alert('Course Added successfully');
+
+          },
+          error => {
+            alert("Course added but failed to assign");
+          }
+        );
         this.emptyCourse = {} as Course;
         this.ngOnInit();
         this.back();
+
       },
       (error) => {
         alert("Failed to add Course");
@@ -190,7 +210,22 @@ export class TeacherCourseComponent implements OnInit {
     // calling service to get all data
     this.service.getAllCourses().subscribe(
       response => {
-        this.allData = response; //assign data to local variable
+
+        // this.allData = response; //assign data to local variable
+        this.allData = [];
+        response.forEach((course: Course) => {
+          this.courseDepartments.find((coursedepartment: CourseDepartment) => {
+            if (course.courseId == coursedepartment.courseId) {
+              this.allData.push({
+                ...course,
+                departmentId: coursedepartment.departmentId,
+              });
+            }
+          })
+        })
+        console.log(this.allData);
+
+
       },
       error => {
         console.log('No data in table ');
@@ -227,19 +262,24 @@ export class TeacherCourseComponent implements OnInit {
     );
   }
 
-  private loadAdminInstitutions() {
-    try {
-      this.sessionData = sessionStorage.getItem('admininstitution');
-      // alert(this.sessionData);
-      this.data = JSON.parse(this.sessionData);
-      for (var inst in this.data) {
-        this.adminInstitutions.push(this.data[inst]);
+  // fetching department data
+  private loadDepartments() {
+    this.departmentService.getAllDepartments().subscribe(
+      response => {
+        this.departments = response;
+      },
+      error => {
+        console.log("failed to get departments");
       }
+    )
+  }
+  private loadAdminInstitutions() {
+    this.sessionData = sessionStorage.getItem('admininstitution');
+    // alert(this.sessionData);
+    this.data = JSON.parse(this.sessionData);
+    for (var inst in this.data) {
+      this.adminInstitutions.push(this.data[inst]);
     }
-    catch (err) {
-      console.log("Error", err);
-    }
-
   }
 
 
@@ -257,6 +297,17 @@ export class TeacherCourseComponent implements OnInit {
       }
     );
   }
+
+  private loadAllCoursesWithDepartmentId() {
+    this.service.getCoursesDepartmentId().subscribe(
+      (data) => {
+        this.courseDepartments = data;
+      }, error => {
+        console.log("no data fetched");
+      }
+    );
+  }
+
   private loadCoursesBasedOnRole(userRole: string) {
     console.log(userRole);
 
@@ -289,7 +340,7 @@ export class TeacherCourseComponent implements OnInit {
 
   //getting courses assigned to teacher using profileId
   private getAssignedCoursesOfTeacher(teacherId: number) {
-    this.service.getAssignedCoursesOfTeacher(teacherId).subscribe(
+    this.service.getAssignedCourseOfTeacher(teacherId).subscribe(
       (data) => {
         console.log(data);
 
@@ -300,6 +351,7 @@ export class TeacherCourseComponent implements OnInit {
       }
     );
   }
+
 
 }
 

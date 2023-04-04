@@ -55,7 +55,10 @@ import { AuthenticationloginComponent } from './authenticationlogin/components/a
 import { ProfileComponent } from './profiles/components/profile/profile.component';
 import { ModuleComponent } from './module/components/module/module.component';
 import { UploadFileComponent } from './FileUpload/upload-file/upload-file.component';
+
 import { AccesscontrolComponent } from './accesscontrol/components/accesscontrol/accesscontrol.component';
+
+import { ModuleFileComponent } from './module-file/components/module-file/module-file.component';
 
 
 const routes: Routes = [
@@ -96,7 +99,7 @@ const routes: Routes = [
   { path: 'inactivecourse', component: InactiveTeacherCourseComponent },
 
 
-
+  { path: 'modulefile', component: ModuleFileComponent },
 
 
   { path: 'inactivecourse/:id/:userName', component: InactiveTeacherCourseComponent },
