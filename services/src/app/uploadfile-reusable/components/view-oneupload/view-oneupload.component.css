@@ -1,0 +1,23 @@
+button {
+    margin: 2px;
+}
+
+.container {
+    margin-top: 10px;
+}
+
+table th {
+    background-color: #566787;
+    text-align: center;
+    color: white;
+    border: 1px groove black;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 25px;
+}
+select {
+    -webkit-appearance: none;
+}

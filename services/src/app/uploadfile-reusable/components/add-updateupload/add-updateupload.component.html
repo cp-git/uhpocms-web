@@ -1,0 +1,170 @@
+<div class="container">
+    <div class="card-block">
+        <form class="form-material">
+            <div *ngFor="let column of columnNames" class="form-group form-default col-sm-4">
+                <ng-container [ngSwitch]="column.type">
+                    <ng-container *ngSwitchCase="'input'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <input name="{{column.key}}" type="{{column.subtype}}" [(ngModel)]="currentData[column.key]"
+                            class="form-control" required="">
+                    </ng-container>
+
+
+                    <ng-container *ngSwitchCase="'email'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <input name="{{column.key}}" type="email" [(ngModel)]="currentData[column.key]"
+                            class="form-control" required="">
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'date'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <input name="{{column.key}}" type="date" [(ngModel)]="currentData[column.key]"
+                            class="form-control" required="">
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'textarea'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <textarea name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
+                            required=""></textarea>
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'file'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <input name="{{column.key}}" type="file" [(ngModel)]="currentData[column.key]" 
+                        (change)="onFileSelected($event)" class="form-control" required="">
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'dropdown1'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <select name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
+                            required="">
+                            <option value="undefined">Select</option>
+                            <option *ngFor="let option of optionsArray1" [value]="option[dropdownColumnId1]">
+                                {{ option[dropdownColumnName1] }}
+                            </option>
+                        </select>
+
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'dropdown2'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <select name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
+                            required="">
+                            <option value="undefined">Select</option>
+                            <option *ngFor="let option of optionsArray2" [value]="option[dropdownColumnId2]">
+                                {{ option[dropdownColumnName2] }}
+                            </option>
+                        </select>
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'dropdown'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <select name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
+                            required="" [disabled]="column.disabled">
+                            <option value="undefined" disabled>Select</option>
+
+                            <ng-container *ngIf="[column.toSort] then sortDropdown else simpleDropdown"></ng-container>
+
+                            <ng-template #sortDropdown>
+                                <ng-container *ngFor="let option of dropdown[column.arrayName]">
+                                    <option
+                                        *ngIf="option[column.foreignKeyColumn]==currentData[column.sortBasedOn]?true:null"
+                                        [value]="option[column.columnId]">
+                                        {{ option[column.columnName] }}
+                                    </option>
+                                </ng-container>
+                            </ng-template>
+
+                            <ng-template #simpleDropdown>
+                                <option *ngFor="let option of dropdown[column.arrayName]"
+                                    [value]="option[column.columnId]">
+                                    {{ option[column.columnName] }}
+                                </option>
+                            </ng-template>
+
+                        </select>
+
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'dropdownInput'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <!-- <select name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control" required=""
+                            [disabled]="column.disabled">
+                            <option value="undefined" disabled>Select</option>
+                     -->
+                            <ng-container *ngIf="[column.toSort] then sortDropdown else simpleDropdown"></ng-container>
+                    
+                            <ng-template #sortDropdown>
+                                <ng-container *ngFor="let option of dropdown[column.arrayName]">
+                                    <option *ngIf="option[column.foreignKeyColumn]==currentData[column.sortBasedOn]?true:null"
+                                        [value]="option[column.columnId]">
+                                        {{ option[column.columnName] }}
+                                    </option>
+                                </ng-container>
+                            </ng-template>
+                    
+                            <ng-template #simpleDropdown>
+                                <option *ngFor="let option of dropdown[column.arrayName]" [value]="option[column.columnId]">
+                                    {{ option[column.columnName] }}
+                                </option>
+                            </ng-template>
+                    
+                        <!-- </select> -->
+                    
+                    </ng-container>
+
+
+                    <!-- <ng-container *ngSwitchCase="'toBeSortDropdown'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <select name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
+                            required="">
+                            <option value="undefined">Select</option>
+                            <ng-container *ngFor="let option of dropdown[column.arrayName]">
+                                <option
+                                    *ngIf="option[column.foreignKeyColumn]==currentData[column.sortBasedOn]?true:null"
+                                    [value]="option[column.columnId]">
+                                    {{ option[column.columnName] }}
+                                </option>
+                            </ng-container>
+                        </select>
+                    </ng-container> -->
+
+                    <ng-container *ngSwitchCase="'checkbox'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <input name="{{column.key}}" class="form-control" *ngSwitchCase="'checkbox'" type="checkbox"
+                            [(ngModel)]="currentData[column.key]">
+                    </ng-container>
+                </ng-container>
+            </div>
+
+
+        </form>
+    </div>
+    <div class="card-block row justify-content-between col-sm-12">
+        <div class="col-sm-3">
+            <button class="btn btn-primary" (click)="onSubmitClicked(currentData)">Submit</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+<ng-template #normalDropdown>
+
+</ng-template>
+
+<ng-template #sortDropdown>
+
+</ng-template>
