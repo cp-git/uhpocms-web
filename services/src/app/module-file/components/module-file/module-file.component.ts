@@ -183,21 +183,31 @@ export class ModuleFileComponent {
 
 
   private loadModules() {
-    this.sessionData = sessionStorage.getItem('module');
-    this.data = JSON.parse(this.sessionData);
+    try {
+      this.sessionData = sessionStorage.getItem('module');
+      this.data = JSON.parse(this.sessionData);
 
-    for (var module in this.data) {
-      this.modules.push(this.data[module]);
+      for (var module in this.data) {
+        this.modules.push(this.data[module]);
+      }
+      //alert(this.courses);
     }
-    //alert(this.courses);
+    catch (err) {
+      console.log("Error", err);
+    }
   }
 
   private loadCourses() {
-    this.sessionData = sessionStorage.getItem('course');
-    // alert(this.sessionData);
-    this.data = JSON.parse(this.sessionData);
-    for (var inst in this.data) {
-      this.courses.push(this.data[inst]);
+    try {
+      this.sessionData = sessionStorage.getItem('course');
+      // alert(this.sessionData);
+      this.data = JSON.parse(this.sessionData);
+      for (var inst in this.data) {
+        this.courses.push(this.data[inst]);
+      }
+    }
+    catch (err) {
+      console.log("Error", err);
     }
   }
 
