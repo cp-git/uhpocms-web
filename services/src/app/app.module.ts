@@ -78,8 +78,7 @@ import { FilterPipe } from './shared/pipes/filter/filter.pipe';
 
 import { ModuleFileModule } from './module-file/module-names/module-file.module';
 import { HttpInterceptorService } from './shared/services/HttpInterceptor/http-interceptor.service';
-
-
+import { UploadfileReusableModule } from './uploadfile-reusable/uploadfile-reusable.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -141,8 +140,9 @@ import { HttpInterceptorService } from './shared/services/HttpInterceptor/http-i
     NgSelectModule,
     CommonModule,
     TeacherCourseModule,
-    AccessControlModule
-    
+    AccessControlModule,
+    UploadfileReusableModule
+
   ],
 
   providers: [

@@ -1,0 +1,69 @@
+<div class="container">
+    <table class="table table-bordered">
+        <thead id="deptHeader">
+            <tr>
+                <th *ngFor="let column of columnNames">{{ column.label }}</th>
+                <ng-container *ngIf="isViewAllScreen">
+                    <th>Update</th>
+                    <th>View</th>
+                    <th>Delete</th>
+                </ng-container>
+                <ng-container *ngIf="isActivateScreen">
+                    <th>Activate</th>
+                </ng-container>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of tableData">
+                <td *ngFor="let column of columnNames">
+                    <ng-container [ngSwitch]="column.type">
+                        <input name="{{column.key}}" class="form-control" *ngSwitchCase="'input'" type="text"
+                            [(ngModel)]="row[column.key]" disabled>
+                        <input name="{{column.key}}" class="form-control" *ngSwitchCase="'email'" type="email"
+                            [(ngModel)]="row[column.key]" disabled>
+                        <!-- handle email type -->
+                        <input name="{{column.key}}" class="form-control" *ngSwitchCase="'date'" type="date"
+                            [(ngModel)]="row[column.key]" disabled>
+                        <!-- handle date type -->
+                        <textarea name="{{column.key}}" class="form-control" *ngSwitchCase="'textarea'"
+                            [(ngModel)]="row[column.key]" disabled></textarea>
+                        <select name="{{column.key}}" class="form-control" *ngSwitchCase="'dropdown1'" disabled>
+                            <option *ngFor="let option of optionsArray1" [value]="option[dropdownColumnName1]"
+                                [selected]="option[dropdownColumnId1] === row[column.key]?true:null">
+                                {{ option[dropdownColumnName1] }}
+                            </option>
+                        </select>
+
+                        <select name="{{column.key}}" class="form-control" *ngSwitchCase="'dropdown2'" disabled>
+                            <option *ngFor="let option of optionsArray2" [value]="option[dropdownColumnName2]"
+                                [selected]="option[dropdownColumnId2] === row[column.key]?true:null">
+                                {{ option[dropdownColumnName2] }}
+                            </option>
+                        </select>
+
+                        <select name="{{column.key}}" class="form-control" *ngSwitchCase="'dropdown'" disabled>
+                            <option *ngFor="let option of dropdown[column.arrayName]"
+                                [value]="option[column.columnName]"
+                                [selected]="option[column.columnId] === row[column.key]?true:null">
+                                {{ option[column.columnName] }}
+                            </option>
+                        </select>
+                        <input name="{{column.key}}" class="form-control" *ngSwitchCase="'checkbox'" type="checkbox"
+                            [(ngModel)]="row[column.key]" disabled>
+                    </ng-container>
+                </td>
+
+                <ng-container *ngIf="isViewAllScreen">
+                    <td><button (click)="onUpdatClicked(row)" class="btn btn-primary">Update</button></td>
+                    <td><button (click)="onViewClicked(row)" class="btn btn-primary">View</button></td>
+                    <td><button (click)="onDeleteClicked(row)" class="btn btn-danger">Delete</button></td>
+
+                </ng-container>
+                <ng-container *ngIf="isActivateScreen">
+                    <td><button (click)="onActivateClicked(row)" class="btn btn-danger">Activate</button></td>
+                </ng-container>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

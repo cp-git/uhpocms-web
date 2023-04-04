@@ -5,7 +5,7 @@ import { Module } from 'app/module/class/module';
 import { ModuleService } from 'app/module/services/module.service';
 import { ModuleFile } from 'app/module-file/class/module-file';
 import { ModuleFileService } from 'app/module-file/services/module-file.service';
-import { ModuleFileAllColumn, ModuleFileColumn } from 'app/module-file/column-name/modulefile-column';
+import { ModuleFileAllColumn, ModuleFileColumn, ModuleFileUpdateColumn, ModuleFileViewColumn } from 'app/module-file/column-name/modulefile-column';
 import { Course } from 'app/teacher-course/class/course';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 
@@ -44,7 +44,8 @@ export class ModuleFileComponent {
 
   columnNames: any;
   allColumnNames: any;
-
+  updateColumnNames: any;
+  viewColumnNames: any;
   readonly primaryIdColumnName: string = 'id';
 
   allData: ModuleFile[] = [];
@@ -60,7 +61,7 @@ export class ModuleFileComponent {
 
 
   _backupModule = new Map();
-
+  files!: FileList;
 
 
   constructor(
@@ -74,6 +75,8 @@ export class ModuleFileComponent {
 
     this.columnNames = ModuleFileColumn;
     this.allColumnNames = ModuleFileAllColumn;
+    this.updateColumnNames = ModuleFileUpdateColumn;
+    this.viewColumnNames = ModuleFileViewColumn;
     this.profileId = sessionStorage.getItem('profileId');
     // creating empty object
     this.emptyModuleFile = new ModuleFile();
@@ -84,6 +87,7 @@ export class ModuleFileComponent {
   }
 
   ngOnInit(): void {
+
     this.activationScreenStatus = false;
 
     this.getAllModulesFile();
@@ -91,7 +95,10 @@ export class ModuleFileComponent {
     this.getInactiveModuleFiles();
   }
 
-
+  submitClicked(eventData: any) {
+    // Handle the emitted data here
+    console.log("Received event data:", eventData);
+  }
   navAddModuleFile() {
     this._route.navigate(['addModuleFile']);
   }
@@ -137,7 +144,7 @@ export class ModuleFileComponent {
 
   // For navigate to update screen with data
   // function will call when child update button is clicked 
-  onChildUpdateClick(objectReceived: ModuleFile): void {
+  onChildUpdateClick(objectReceived: any): void {
 
     // hiding update screen and displaying all module files screen 
     this.viewAll = false;
@@ -172,12 +179,20 @@ export class ModuleFileComponent {
   }
 
   // on addComponents's submit button clicked
-  onAddModuleSubmit(objectReceived: ModuleFile): void {
-    this.addModuleFile(objectReceived);
+  onAddModuleSubmit(receivedArray: any): void {
+    // console.log("my" + JSON.stringify(receivedArray));
+
+    this.addModuleFile(receivedArray);
+  }
+
+  onRecievedFiles(recievedFiles: FileList) {
+    this.files = recievedFiles;
+    // console.log(this.files);
+
   }
 
   // on updateComponents's submit button clicked
-  onUpdateModuleSubmit(objectReceived: ModuleFile) {
+  onUpdateModuleSubmit(objectReceived: any) {
     this.updateModuleFileById(objectReceived);
   }
 
@@ -215,7 +230,7 @@ export class ModuleFileComponent {
   private getAssignedCoursesOfTeacher(teacherId: number) {
     this.service.getAssignedCourseOfTeacher(teacherId).subscribe(
       (data) => {
-        console.log(data);
+        //console.log(data);
 
         this.courses = data;
       },
@@ -252,12 +267,14 @@ export class ModuleFileComponent {
   // Add module file
   addModuleFile(objectReceived: ModuleFile) {
     objectReceived.moduleFileIsActive = true;
+    // console.log("view " + JSON.stringify(files));
 
     this.moduleFileService.addModuleFile(objectReceived).subscribe(
       (data) => {
         // alert(this.moduleFile)
         // console.log(data);
-        //this.uploadfileService.uploadFiles();
+        this.uploadfileService.uploadFiles(this.files).subscribe();
+
         this.moduleFile = data;
 
 
@@ -274,6 +291,7 @@ export class ModuleFileComponent {
     // calling service for updating data
     this.moduleFileService.updateModuleFileById(currentData.moduleFileId, currentData).subscribe(
       response => {
+        this.uploadfileService.uploadFiles(this.files).subscribe();
         alert(`Module File updated successfully !`);
         this.back();
       },

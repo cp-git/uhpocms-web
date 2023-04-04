@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReusableModule } from 'app/reusable/module/reusable.module';
-import { ModuleFileComponent } from '../components/module-file/module-file.component';
 
+import { ModuleFileComponent } from '../components/module-file/module-file.component';
+import { UploadfileReusableModule } from 'app/uploadfile-reusable/uploadfile-reusable.module';
 
 
 @NgModule({
@@ -11,7 +11,8 @@ import { ModuleFileComponent } from '../components/module-file/module-file.compo
   ],
   imports: [
     CommonModule,
-    ReusableModule
+    UploadfileReusableModule
+
   ]
 })
 export class ModuleFileModule { }
