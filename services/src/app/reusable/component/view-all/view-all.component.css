@@ -20,3 +20,10 @@ table td {
 .btn {
     border-radius: 15px;
 }
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+  }

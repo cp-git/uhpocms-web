@@ -55,6 +55,7 @@ import { AuthenticationloginComponent } from './authenticationlogin/components/a
 import { ProfileComponent } from './profiles/components/profile/profile.component';
 import { ModuleComponent } from './module/components/module/module.component';
 import { UploadFileComponent } from './FileUpload/upload-file/upload-file.component';
+import { AccesscontrolComponent } from './accesscontrol/components/accesscontrol/accesscontrol.component';
 
 
 const routes: Routes = [
@@ -279,6 +280,7 @@ const routes: Routes = [
 
 
   { path: 'uploadfile', component: UploadFileComponent },
+  { path: 'access', component: AccesscontrolComponent },
 
 ];
 

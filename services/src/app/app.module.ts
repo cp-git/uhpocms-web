@@ -72,6 +72,9 @@ import { ViewDepartmentComponent } from './institute-details/components/view-dep
 import { EmailModule } from './email/module/email.module';
 import { QuizModule } from './quiz/module/quiz.module';
 import { UploadFileComponent } from './FileUpload/upload-file/upload-file.component';
+import { AccessControlModule } from './accesscontrol/module/accesscontrol.module';
+
+
 
 
 
@@ -110,6 +113,7 @@ import { UploadFileComponent } from './FileUpload/upload-file/upload-file.compon
     StudentModuleComponent,
     UploadFileComponent
 
+
   ],
 
   imports: [
@@ -132,7 +136,9 @@ import { UploadFileComponent } from './FileUpload/upload-file/upload-file.compon
     BrowserModule,
     NgSelectModule,
     CommonModule,
-    TeacherCourseModule
+    TeacherCourseModule,
+    AccessControlModule
+    
   ],
 
   providers: [
