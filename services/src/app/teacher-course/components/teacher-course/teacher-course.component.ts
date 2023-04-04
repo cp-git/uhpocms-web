@@ -274,11 +274,16 @@ export class TeacherCourseComponent implements OnInit {
     )
   }
   private loadAdminInstitutions() {
-    this.sessionData = sessionStorage.getItem('admininstitution');
-    // alert(this.sessionData);
-    this.data = JSON.parse(this.sessionData);
-    for (var inst in this.data) {
-      this.adminInstitutions.push(this.data[inst]);
+    try {
+      this.sessionData = sessionStorage.getItem('admininstitution');
+      // alert(this.sessionData);
+      this.data = JSON.parse(this.sessionData);
+      for (var inst in this.data) {
+        this.adminInstitutions.push(this.data[inst]);
+      }
+    }
+    catch (err) {
+      console.log("Error", err)
     }
   }
 
