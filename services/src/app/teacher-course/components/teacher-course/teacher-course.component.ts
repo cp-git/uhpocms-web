@@ -254,7 +254,20 @@ export class TeacherCourseComponent implements OnInit {
     // calling service to get all inactive record
     this.service.getAllDeactivateCourses().subscribe(
       response => {
-        this.allInActiveData = response;
+        this.allInActiveData = [];
+
+        response.forEach((course: Course) => {
+          this.courseDepartments.find((coursedepartment: CourseDepartment) => {
+            if (course.courseId == coursedepartment.courseId) {
+              this.allInActiveData.push({
+                ...course,
+                departmentId: coursedepartment.departmentId,
+              });
+
+            }
+          })
+        })
+        console.log(this.allInActiveData);
       },
       error => {
         console.log('No data in table ');
