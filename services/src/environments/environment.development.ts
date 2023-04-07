@@ -28,7 +28,7 @@ export const environment = {
   moduleUrl: `http://localhost:8090/module/uhpocms`,
   quizUrl: `http://localhost:8090/quiz/uhpocms`,
   adminRoleUrl: `http://localhost:8090/adminrole/uhpocms`,
-  questionUrl: `http://localhost:8090/question/uhpocms`,
+  questionUrl: `http://localhost:8080/uhpocms`,
   announcementUrl: `http://localhost:8090/announcement/uhpocms`,
   moduleFileUrl: `http://localhost:8090/modulefile/uhpocms`,
 
@@ -36,6 +36,8 @@ export const environment = {
   assignCourseUrl: `http://localhost:8090/course/uhpocms/course`,
   syllabusUrl: `http://localhost:8090/courseSyllabus/uhpocms/courseSyllabus`,
   assignTeacherUrl: 'http://localhost:8090/assigntoteacher/uhpocms/assigntoteacher',
-  accesscontrolUrl:'http://localhost:8090/accesscontrol/uhpocms/access'
+  accesscontrolUrl: 'http://localhost:8090/accesscontrol/uhpocms/access',
+  answerUrl: 'http://localhost:8090/answer/uhpocms/answer'
+
 
 };

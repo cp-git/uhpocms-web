@@ -59,6 +59,7 @@ import { UploadFileComponent } from './FileUpload/upload-file/upload-file.compon
 import { AccesscontrolComponent } from './accesscontrol/components/accesscontrol/accesscontrol.component';
 
 import { ModuleFileComponent } from './module-file/components/module-file/module-file.component';
+import { AddQuestionAnswerComponent } from './question/components/add-question-answer/add-question-answer.component';
 
 
 const routes: Routes = [
@@ -260,27 +261,32 @@ const routes: Routes = [
     ]
   },
 
+
+  { path: 'AdminRole', component: AdminRoleComponent },
   { path: 'AdminRole/:userName', component: AdminRoleComponent },
+
   { path: 'Profile', component: ProfileComponent },
   { path: 'Profile/:userName', component: ProfileComponent },
-  { path: 'AuthUser/:userName', component: AuthUserComponent },
-  { path: 'AuthUser', component: AuthUserComponent },
 
-  { path: 'Question/:userName', component: QuestionComponent },
-  { path: 'Department/:userName', component: DepartmentComponent },
-  { path: 'Course/:userName', component: TeacherCourseComponent },
-  { path: 'Course', component: TeacherCourseComponent },
+  { path: 'AuthUser', component: AuthUserComponent },
+  { path: 'AuthUser/:userName', component: AuthUserComponent },
+
+  { path: 'Question', component: QuestionComponent },
+  { path: 'Question/:userName', component: AddQuestionAnswerComponent },
+
   { path: 'Department', component: DepartmentComponent },
-  { path: 'Module/:userName', component: ModuleComponent },
+  { path: 'Department/:userName', component: DepartmentComponent },
+
+  { path: 'Course', component: TeacherCourseComponent },
+  { path: 'Course/:userName', component: TeacherCourseComponent },
+
   { path: 'Module', component: ModuleComponent },
-  { path: 'AdminRole', component: AdminRoleComponent },
+  { path: 'Module/:userName', component: ModuleComponent },
+
   { path: 'Email', component: EmailComponent },
 
-  //quiz routes
-  { path: 'Quiz/:userName', component: QuizComponent },
   { path: 'Quiz', component: QuizComponent },
-
-
+  { path: 'Quiz/:userName', component: QuizComponent },
 
   { path: 'uploadfile', component: UploadFileComponent },
   { path: 'access', component: AccesscontrolComponent },

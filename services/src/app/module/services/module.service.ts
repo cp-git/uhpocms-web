@@ -11,19 +11,7 @@ export class ModuleService {
   private readonly moduleUrl: string;
   constructor(private _http: HttpClient) {
 
-
-
-
-    // this.moduleUrl = environment.moduleUrl + '/module';
-
-    this.moduleUrl = `http://localhost:8090/module/uhpocms/module`;
-
-
-    // this.moduleUrl = environment.moduleUrl + '/module';
-
-    // this.moduleUrl = `http://localhost:8090/module/uhpocms/module`;
-
-    //this.moduleUrl = environment.moduleUrl + '/module';
+    this.moduleUrl = environment.moduleUrl + '/module';
 
 
   }
