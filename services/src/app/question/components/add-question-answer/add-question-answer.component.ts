@@ -46,7 +46,7 @@ export class AddQuestionAnswerComponent implements OnInit {
   viewAll: boolean = true;
   viewOne: boolean = false;
   viewActivate: boolean = false;
-
+  viewQuePaper: boolean = false;
   sessionData: any;
   data: any;
 
@@ -66,6 +66,7 @@ export class AddQuestionAnswerComponent implements OnInit {
   questionAnswers: QuestionAnswer[] = [];
   questionAnswer: QuestionAnswer;  // empty question
 
+  answers: Answer[] = [];
   selectedQuiz: any
 
   profileId: any;
@@ -102,10 +103,11 @@ export class AddQuestionAnswerComponent implements OnInit {
   }
 
   onFormSubmit(queAns: QuestionAnswer): void {
+    this.emptyQuestion = {} as Question;
     this.questionAnswer = {} as QuestionAnswer;
 
     // Form is valid, do something with the form data
-    // console.log(form.value);
+    console.log("queAns " + JSON.stringify(this.questionAnswer));
 
     this.questionAnswer = queAns;
     // separating question from object 
@@ -118,9 +120,9 @@ export class AddQuestionAnswerComponent implements OnInit {
     this.emptyQuestion.questionIsActive = true;
 
     // separating answer from object
-    this.emptyAnswer = {} as Answer;
+    // this.emptyAnswer = {} as Answer;
 
-    this.emptyAnswer.content = this.questionAnswer.answerContent;
+    this.emptyAnswer.content = this.questionAnswer.content;
     this.emptyAnswer.correct = true;
     this.emptyAnswer.questionorderno = this.questionAnswer.questionOrderNo;
 
@@ -128,23 +130,24 @@ export class AddQuestionAnswerComponent implements OnInit {
     console.log(this.emptyQuestion);
     console.log(this.emptyAnswer);
 
-    // this.service.addQuestion(this.emptyQuestion).subscribe(
-    //   (response) => {
-    //     this.emptyQuestion = response;
-    //     this.emptyAnswer.questionid = this.emptyQuestion.questionId;
-    //     this.service.addAnswer(this.emptyAnswer).subscribe(
-    //       (response) => {
-    //         alert("Question Added Successfully");
-    //       },
-    //       (error) => {
-    //         alert("Question added but failed to assign answer;")
-    //       }
-    //     )
-    //   },
-    //   (error) => {
-    //     alert("failed to add Question");
-    //   }
-    // )
+    this.service.addQuestion(this.emptyQuestion).subscribe(
+      (response) => {
+
+        this.emptyQuestion = response;
+        this.emptyAnswer.questionid = this.emptyQuestion.questionId;
+        this.service.addAnswer(this.emptyAnswer).subscribe(
+          (response) => {
+            alert("Question Added Successfully");
+          },
+          (error) => {
+            alert("Question added but failed to add answer;")
+          }
+        )
+      },
+      (error) => {
+        alert("failed to add Question");
+      }
+    )
 
 
 
@@ -176,13 +179,21 @@ export class AddQuestionAnswerComponent implements OnInit {
   }
 
   onChangeSelectedQuiz() {
+    this.questionAnswers = [];
     this.selectedQuiz = this.quizzes.find(quiz => quiz.quizId == this.selectedQuizId);
     // this.currentQuestions.length = this.selectedQuiz.maxQuestions;
     this.currentAnswers.length = this.selectedQuiz.maxQuestions;
-    this.initialiseQuestion(this.selectedQuiz.maxQuestions);
+
+    console.log(this.selectedQuiz);
+
     this.service.getAllQuestionsByQuizId(this.selectedQuizId).subscribe(
       response => {
         this.allData = response; //assign data to local variable
+
+        this.getAllQuestionAnswers();
+        console.log(this.questionAnswers);
+
+
       },
       error => {
         console.log('No data in table ');
@@ -191,15 +202,65 @@ export class AddQuestionAnswerComponent implements OnInit {
   }
 
   private initialiseQuestion(length: number) {
-    this.questionAnswers = [];
-    for (let i = 0; i < length; i++) {
+    // this.questionAnswers = [];
+    const quesAnsLength = this.questionAnswers.length;
+
+    for (let i = 0; i < length - quesAnsLength; i++) {
       this.questionAnswers.push(new QuestionAnswer);
     }
   }
   // for navigating to add screen
   onAddClick() {
+    this.questionAnswers = [];
     this.viewAll = false;
     this.viewAdd = true;
+    this.viewQuePaper = false;
+    this.getAllQuestionAnswers();
+
+  }
+
+  // for navigating to view question paper screen all question of quiz
+  viewQuestionPaper() {
+    this.viewAll = false;
+    this.viewQuePaper = true;
+    this.questionAnswers = [];
+    this.getAllQuestionAnswers();
+
+  }
+  private getAllQuestionAnswers() {
+
+
+    this.service.getAllAnswers().subscribe(
+      (data) => {
+        this.answers = data;
+        this.service.getAllQuestionsByQuizId(this.selectedQuizId).subscribe(
+          (response) => {
+            response.forEach(
+              question => {
+                this.questionAnswer = {} as QuestionAnswer;
+
+                this.answers.filter(answer => {
+                  if (answer.questionid == question.questionId) {
+                    this.questionAnswers.push({
+                      ...question,
+                      ...answer
+                    });
+                  }
+                })
+              })
+
+            if (this.viewAdd == true) {
+              this.initialiseQuestion(this.selectedQuiz.maxQuestions);
+
+            }
+          }
+        )
+
+      },
+      error => {
+        console.log("failed to get answers");
+      }
+    )
   }
 
   // back button functionality
@@ -210,6 +271,7 @@ export class AddQuestionAnswerComponent implements OnInit {
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
+      this.viewQuePaper = false;
     } else {
       this.location.back();
     }
@@ -223,8 +285,15 @@ export class AddQuestionAnswerComponent implements OnInit {
     this.viewActivate = true;
   }
 
-  onSubmitClicked(currentQuestions: Question[], currentAnswers: Answer[]) {
-
+  onUpdateQuestionSubmit(currentData: Question) {
+    this.service.updatedQuestion(currentData).subscribe(
+      (response) => {
+        alert("Question updated successfuly");
+      },
+      (error) => {
+        alert("Question updation failed");
+      }
+    )
   }
 
   onCategoryChange(categoryId: any) {
@@ -243,11 +312,24 @@ export class AddQuestionAnswerComponent implements OnInit {
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
 
-  // For navigate to update screen with data
-  // function will call when child update button is clicked 
+  // function will call when child delete button is clicked 
   onChildDeleteClick(objectReceived: Question): void {
     this.deleteQuestion(objectReceived.questionFigure);
   }
+
+  // For navigate to update screen with data
+  // function will call when child update button is clicked 
+  onChildUpdateClick(objectReceived: Question): void {
+    // hiding update screen and displaying all admin roles screen 
+    this.viewAll = false;
+    this.viewUpdate = true;
+
+    // assingning data to current data for child component
+    this.currentData = objectReceived;
+
+    // this.addQuestion(objectReceived.questionFigure);
+  }
+
 
 
 

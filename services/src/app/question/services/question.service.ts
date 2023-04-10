@@ -14,7 +14,7 @@ export class QuestionService {
 
   constructor(private http: HttpClient) {
     this.questionUrl = `${environment.questionUrl}`;
-    this.answerUrl = `${environment.answerUrl}/answer`;
+    this.answerUrl = `${environment.answerUrl}`;
 
   }
 
@@ -39,8 +39,8 @@ export class QuestionService {
   }
 
   //update question by question figure
-  updatedQuestion(questionFigure: string, question: Question): Observable<Question> {
-    return this.http.put<Question>(`${this.questionUrl}/question/${questionFigure}`, question);
+  updatedQuestion(question: Question): Observable<Question> {
+    return this.http.put<Question>(`${this.questionUrl}/question/byid/${question.questionId}`, question);
   }
 
   //get inactive question list
@@ -54,11 +54,14 @@ export class QuestionService {
   }
 
   addAnswer(answer: Answer) {
-    return this.http.post<Answer>(`${this.answerUrl}/question`, answer);
+    return this.http.post<Answer>(`${this.answerUrl}/answer`, answer);
   }
 
   getAllQuestionsByQuizId(quizId: number) {
     return this.http.get<Question[]>(`${this.questionUrl}/questions?quizId=${quizId}`);
+  }
 
+  getAllAnswers(): Observable<Answer[]> {
+    return this.http.get<Answer[]>(`${this.answerUrl}/answer?id=all`);
   }
 }

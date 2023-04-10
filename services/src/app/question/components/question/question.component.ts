@@ -197,7 +197,7 @@ export class QuestionComponent implements OnInit {
   // For updating Question
   private updateQuestion(currentData: Question) {
     // calling service for updating data
-    this.service.updatedQuestion(currentData.questionFigure, currentData).subscribe(
+    this.service.updatedQuestion(currentData).subscribe(
       response => {
         alert(`Question updated successfully !`);
         this.back();

@@ -1,5 +1,5 @@
 export class Question {
-    questionId!: number | null;
+    questionId!: number;
     questionFigure!: string;
     questionContent!: string;
     questionExplanation!: string;

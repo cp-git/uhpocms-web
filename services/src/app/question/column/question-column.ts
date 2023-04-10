@@ -1,5 +1,4 @@
 export const QuestionColumn = [
-    { key: 'questionFigure', label: 'Question Figure', type: 'input' },
     { key: 'questionContent', label: 'Question Content', type: 'input' },
     { key: 'questionExplanation', label: 'Question Explanation', type: 'textarea' },
     { key: 'questionQuizId', label: 'Quiz', type: 'dropdown', arrayName: 'quizzes', columnId: 'quizId', columnName: 'title' },

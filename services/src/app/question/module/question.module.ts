@@ -7,6 +7,7 @@ import { AddQuestionAnswerComponent } from '../components/add-question-answer/ad
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AdvFilterPipe } from 'app/shared/pipes/adv-filter/adv-filter.pipe';
+import { QuestionAnswerComponent } from '../components/question-answer/question-answer.component';
 
 
 
@@ -14,6 +15,7 @@ import { AdvFilterPipe } from 'app/shared/pipes/adv-filter/adv-filter.pipe';
   declarations: [
     AddQuestionAnswerComponent,
     QuestionComponent,
+    QuestionAnswerComponent,
     FilterPipe,
     AdvFilterPipe
   ],
