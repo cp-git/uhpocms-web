@@ -31,21 +31,22 @@
                             required="" disabled></textarea>
                     </ng-container>
 
-                    <ng-container *ngSwitchCase="'file'">
+                    <!-- <ng-container *ngSwitchCase="'file'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }} - {{ currentData[column.key]}}</label>
                         <input name="{{column.key}}" type="file" [(ngModel)]="currentData[column.key]"
                             class="form-control" required="" disabled>
-                    </ng-container>
+                    </ng-container> -->
 
-                    <!-- HTML template code 
+                    <!-- HTML template code -->
                     <ng-container *ngSwitchCase="'file'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
                         <img *ngIf="currentData[column.key]" src="../../../../assets/img/{{currentData[column.key]}}"
                             class="profile-pic form-control">
-                        <!-- <input name="{{column.key}}" type="file" class="form-control" required="" disabled>
-                    </ng-container>-->
+                          
+                        <!-- <input name="{{column.key}}" type="file" class="form-control" required="" disabled>-->
+                    </ng-container>
 
 
                     <ng-container *ngSwitchCase="'dropdown1'">

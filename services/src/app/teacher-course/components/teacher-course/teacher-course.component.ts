@@ -204,6 +204,7 @@ export class TeacherCourseComponent implements OnInit {
   }
 
 
+
   // for getting all courses
   private getAllCourse() {
 
@@ -347,7 +348,17 @@ export class TeacherCourseComponent implements OnInit {
 
     this.service.getCourseByStudentId(studentId).subscribe(
       (data) => {
-        this.allData = data;
+        this.allData = [];
+        data.forEach((course: Course) => {
+          this.courseDepartments.find((coursedepartment: CourseDepartment) => {
+            if (course.courseId == coursedepartment.courseId) {
+              this.allData.push({
+                ...course,
+                departmentId: coursedepartment.departmentId,
+              });
+            }
+          })
+        })
       },
       error => {
         console.log(error);
@@ -359,10 +370,22 @@ export class TeacherCourseComponent implements OnInit {
   //getting courses assigned to teacher using profileId
   private getAssignedCoursesOfTeacher(teacherId: number) {
     this.service.getAssignedCourseOfTeacher(teacherId).subscribe(
-      (data) => {
-        console.log(data);
+      (response) => {
 
-        this.allData = data;
+        // this.allData = data;
+        this.allData = [];
+        response.forEach((course: Course) => {
+          this.courseDepartments.find((coursedepartment: CourseDepartment) => {
+            if (course.courseId == coursedepartment.courseId) {
+              this.allData.push({
+                ...course,
+                departmentId: coursedepartment.departmentId,
+              });
+            }
+          })
+        })
+        console.log(this.allData);
+
       },
       error => {
         console.log(error);

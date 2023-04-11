@@ -309,8 +309,17 @@ export class ProfileComponent implements OnInit {
     currentData.activeUser = false;
     this.service.saveOrUpdateProfile(currentData.userId, currentData).subscribe(
       response => {
-        alert('Profile deleted successfully');
-        this.ngOnInit();
+        console.log(currentData);
+        this.activeAuthUsers.find(authUser => {
+          if (authUser.authUserId == currentData.userId) {
+            this.authUserService.deleteAuthUser(authUser.authUserName).subscribe(
+              response => {
+                alert('Profile deleted successfully');
+                this.ngOnInit();
+              }
+            );
+          }
+        })
       },
       error => {
         alert("Failed to delete profile");
@@ -325,6 +334,7 @@ export class ProfileComponent implements OnInit {
     this.service.getAllDeactivatedProfiles().subscribe(
       response => {
         this.allInActiveData = response;
+
       },
       error => {
         console.log('No data in table ');
@@ -415,7 +425,7 @@ export class ProfileComponent implements OnInit {
       if (column.key === 'userId' && (this.viewAdd === true)) {
         column.arrayName = 'inactiveAuthUsers';
       }
-        });
+    });
 
   }
 

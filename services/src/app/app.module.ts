@@ -36,7 +36,6 @@ import { TeacherPanelComponent } from './teacher-panel/components/teacher-panel/
 
 import { EnrollstudentComponent } from './enrollstudent/components/enrollstudent.component';
 
-import { StudentCourseComponent } from './student/components/student-course/student-course.component';
 
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/components/assigncoursetoteacher/assigncoursetoteacher.component';
 
@@ -104,7 +103,6 @@ import { UploadfileReusableModule } from './uploadfile-reusable/uploadfile-reusa
     AdminmdouleComponent,
     TeacherPanelComponent,
     EnrollstudentComponent,
-    StudentCourseComponent,
     InactiveTeacherCourseComponent,
     DisplaySchoolComponent,
     CourseDepartmentComponent,
