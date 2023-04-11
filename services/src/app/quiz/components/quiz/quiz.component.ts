@@ -42,6 +42,8 @@ export class QuizComponent implements OnInit {
   allQuizData: Quiz[] = []; // list of active Quiz
   allInActiveData: Quiz[] = []; // list of inactive Quiz
 
+  profileId: any;
+
   courses: Course[] = [];
   modules: Module[] = [];
   categories: Category[] = [];
@@ -63,8 +65,9 @@ export class QuizComponent implements OnInit {
 
     //calling services for foreign key data (dropdown)
     this.loadAllCategories();
-    this.loadAllCourses();
+    // this.loadAllCourses();
     this.loadAllModules();
+    this.profileId = sessionStorage.getItem('profileId');
 
   }
 
@@ -72,6 +75,7 @@ export class QuizComponent implements OnInit {
   ngOnInit(): void {
     this.getAllQuizzes();  // for getting all active Quizs
     this.getInActiveQuiz(); // for getting all inactive Quizs
+    this.getAssignedCoursesOfTeacher(this.profileId)
 
   }
 
@@ -279,5 +283,19 @@ export class QuizComponent implements OnInit {
         console.log("No categories loaded");
       }
     )
+  }
+
+  //getting courses assigned to teacher using profileId
+  private getAssignedCoursesOfTeacher(teacherId: number) {
+    this.courseService.getAssignedCourseOfTeacher(teacherId).subscribe(
+      (data) => {
+        console.log(data);
+
+        this.courses = data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 }
