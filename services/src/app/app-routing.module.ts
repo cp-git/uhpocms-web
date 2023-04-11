@@ -39,7 +39,7 @@ import { EnrollstudentComponent } from './enrollstudent/components/enrollstudent
 
 import { StudentModuleComponent } from './student-module/components/student-module/student-module.component';
 import { StudentPanelComponent } from './student-panel/components/student-panel/student-panel.component';
-import { StudentCourseComponent } from './student/components/student-course/student-course.component';
+
 import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher/components/inactive-teacher-course/inactive-teacher-course.component';
 
 import { AssigncoursetoteacherComponent } from './assigncoursetoteacher/components/assigncoursetoteacher/assigncoursetoteacher.component';
@@ -119,9 +119,7 @@ const routes: Routes = [
 
 
   //category routing
-  { path: 'studentcourse', component: StudentCourseComponent },
-  { path: 'studentcourse', component: StudentCourseComponent },
-  { path: 'profile/:id', component: StudentCourseComponent },
+
 
   { path: 'addCategory', component: AddCategoryComponent },
   { path: 'addModule', component: AddModuleComponent },

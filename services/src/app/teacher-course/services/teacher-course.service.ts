@@ -103,7 +103,7 @@ export class TeacherCourseService {
   }
 
   getCourseByStudentId(studentId: number): Observable<Course[]> {
-    return this.http.get<Course[]>(`${this.courseUrl}/course/profileId/${studentId}`);
+    return this.http.get<Course[]>(`${this.courseUrl}/profileId/${studentId}`);
   }
 
 }

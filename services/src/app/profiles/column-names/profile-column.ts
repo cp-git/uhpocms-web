@@ -25,7 +25,7 @@ export const ProfileAllColumn = [
     { key: 'adminState', label: 'State', type: 'input', subtype: 'text' },
     { key: 'adminCity', label: 'City', type: 'input', subtype: 'text' },
     { key: 'adminZip', label: 'Zip', type: 'input', subtype: 'number' },
-    { key: 'profilePics', label: 'Profile Pic', type: 'file', },
+    { key: 'profilePics', label: 'Profile Pic:', type: 'file', },
     { key: 'activeUser', label: 'Is Active', type: 'checkbox', },
 
 

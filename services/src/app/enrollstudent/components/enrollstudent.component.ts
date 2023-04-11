@@ -93,7 +93,7 @@ export class EnrollstudentComponent {
   // function to get all institutions
   private getAllInstitution() {
     // fetching all institution
-    console.log("this.selected.length " + this.selected.length)
+    //console.log("this.selected.length " + this.selected.length)
     this._institutionService.fetchAdminInstitutionList().subscribe(
       (response) => {
         // assigning received data to institutionfo
@@ -197,6 +197,8 @@ export class EnrollstudentComponent {
     }
 
   }
+
+
 
 
 

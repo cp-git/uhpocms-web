@@ -63,5 +63,9 @@ export class ModuleFileService {
   getModuleFile(moduleFile: string): Observable<ModuleFile> {
     return this._http.get<ModuleFile>(`${this.moduleFileUrl}/modulefile/` + moduleFile);
   }
+
+  getModuleFilesByStudentId(studentId: number): Observable<ModuleFile[]> {
+    return this._http.get<ModuleFile[]>(`${this.moduleFileUrl}/modulefile/student?id=${studentId}`);
+  }
 }
 

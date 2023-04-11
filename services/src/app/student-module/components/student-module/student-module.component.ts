@@ -3,9 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { ModuleFile } from 'app/class/module-file';
 
 import { Course } from 'app/teacher-course/class/course';
-import { StudentService } from 'app/student/services/student.service';
+import { ModuleService } from 'app/module/services/module.service';
 import { Location } from '@angular/common';
 import { Module } from 'app/module/class/module';
+import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
+import { ModuleFileService } from 'app/module-file/services/module-file.service';
 
 @Component({
   selector: 'app-student-module',
@@ -32,7 +34,9 @@ export class StudentModuleComponent {
   selectedModule: any; //stores the selected module by the student.
   Date: any;
   constructor(private activateRoute: ActivatedRoute,
-    private studentService: StudentService,
+    private courseService: TeacherCourseService,
+    private moduleService: ModuleService,
+    private modulefileService: ModuleFileService,
     private _location: Location,
     private elRef: ElementRef) {
 
@@ -55,7 +59,7 @@ export class StudentModuleComponent {
   // }
   //loads the courses of the student using the getCourseByStudentId() method of StudentService
   loadCourseOfStudent(studentId: number) {
-    this.studentService.getCourseByStudentId(studentId).subscribe(
+    this.courseService.getCourseByStudentId(studentId).subscribe(
       response => {
         this.courses = response;
         this.loadModuleOfCourse(this.courses);
@@ -95,7 +99,7 @@ export class StudentModuleComponent {
 
     studentCourses.forEach(course => {
 
-      this.studentService.getModuleByCourseId(course.courseId).subscribe(
+      this.moduleService.getModuleByCourseId(course.courseId).subscribe(
         response => {
           response.forEach(module => {
             this.modules.push(module);
@@ -116,7 +120,7 @@ export class StudentModuleComponent {
 
   //loads the module files assigned to the student using the getModuleFilesByStudentId() method of StudentService
   loadModuleFilesOfCourses(studentId: number) {
-    this.studentService.getModuleFilesByStudentId(studentId).subscribe(
+    this.modulefileService.getModuleFilesByStudentId(studentId).subscribe(
       response => {
         this.studentModuleFiles = response;
         this.studentModuleFiles.forEach(file => {

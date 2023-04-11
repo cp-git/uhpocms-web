@@ -67,4 +67,8 @@ export class ModuleService {
   getModule(moduleName: string): Observable<Module> {
     return this._http.get<Module>(`${this.moduleUrl}/module/` + moduleName);
   }
+
+  getModuleByCourseId(moduleId: number): Observable<Module[]> {
+    return this._http.get<Module[]>(`${this.moduleUrl}/module/courseId/${moduleId}`);
+  }
 }
