@@ -5,7 +5,7 @@ import { Category } from 'app/category/class/category';
 import { Course } from 'app/teacher-course/class/course';
 import { Module } from 'app/module/class/module';
 import { Question } from 'app/question/class/question';
-import { QuestionAllColumn, QuestionColumn } from 'app/question/column/question-column';
+import { QuestionAllColumn, QuestionColumn, TeacherQuizColumn, TeacherQuizAllColumn } from 'app/question/column/question-column';
 import { QuestionService } from 'app/question/services/question.service';
 import { Answer } from 'app/question/class/answer';
 import { NgForm } from '@angular/forms';
@@ -29,7 +29,7 @@ export class AddQuestionAnswerComponent implements OnInit {
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
 
-  allData: Question[] = []; // list of active question
+  allData: any[] = []; // list of active question
   allInActiveData: Question[] = []; // list of inactive question
 
   emptyAnswer: Answer;
@@ -76,8 +76,8 @@ export class AddQuestionAnswerComponent implements OnInit {
   ) {
     // 
     this.profileId = sessionStorage.getItem('profileId');
-    this.columnNames = QuestionColumn;
-    this.allColumnNames = QuestionAllColumn;
+    this.columnNames = TeacherQuizColumn;
+    this.allColumnNames = TeacherQuizAllColumn;
 
     // creating empty object
     this.emptyQuestion = new Question();
@@ -111,6 +111,8 @@ export class AddQuestionAnswerComponent implements OnInit {
 
     this.questionAnswer = queAns;
     // separating question from object 
+    this.emptyQuestion.questionId = this.questionAnswer.questionId;
+    this.emptyQuestion.questionFigure = this.questionAnswer.questionFigure;
     this.emptyQuestion.questionContent = this.questionAnswer.questionContent;
     this.emptyQuestion.questionExplanation = this.questionAnswer.questionExplanation;
     this.emptyQuestion.questionOrderNo = this.questionAnswer.questionOrderNo;
@@ -121,7 +123,7 @@ export class AddQuestionAnswerComponent implements OnInit {
 
     // separating answer from object
     // this.emptyAnswer = {} as Answer;
-
+    this.emptyAnswer.id = this.questionAnswer.id;
     this.emptyAnswer.content = this.questionAnswer.content;
     this.emptyAnswer.correct = true;
     this.emptyAnswer.questionorderno = this.questionAnswer.questionOrderNo;
@@ -167,15 +169,15 @@ export class AddQuestionAnswerComponent implements OnInit {
 
   onChangeCourse() {
     this.selectedModuleId = undefined;
-    this.selectedQuiz = {} as Quiz;
-    this.selectedQuizId = undefined;
-    this.allData = []
+    // this.selectedQuiz = {} as Quiz;
+    // this.selectedQuizId = undefined;
+    // this.allData = []
   }
 
   onChangeModule() {
-    this.selectedQuiz = {} as Quiz;
-    this.selectedQuizId = undefined;
-    this.allData = []
+    // this.selectedQuiz = {} as Quiz;
+    // this.selectedQuizId = undefined;
+    // this.allData = []
   }
 
   onChangeSelectedQuiz() {
@@ -211,10 +213,11 @@ export class AddQuestionAnswerComponent implements OnInit {
   }
   // for navigating to add screen
   onAddClick() {
-    this.questionAnswers = [];
+
     this.viewAll = false;
     this.viewAdd = true;
     this.viewQuePaper = false;
+    this.questionAnswers = [];
     this.getAllQuestionAnswers();
 
   }
@@ -297,8 +300,8 @@ export class AddQuestionAnswerComponent implements OnInit {
   }
 
   onCategoryChange(categoryId: any) {
-    this.selectedQuiz = {} as Quiz;
-    this.selectedQuizId = 'undefined';
+    this.questionAnswers = [];
+    this.getAllQuestionAnswers();
   }
 
   // For navigate to view screen with data
@@ -322,11 +325,16 @@ export class AddQuestionAnswerComponent implements OnInit {
   onChildUpdateClick(objectReceived: Question): void {
     // hiding update screen and displaying all admin roles screen 
     this.viewAll = false;
-    this.viewUpdate = true;
+    this.viewAdd = true;
+    this.viewQuePaper = false;
 
     // assingning data to current data for child component
     this.currentData = objectReceived;
+    this.selectedQuiz = objectReceived;
+    this.selectedQuizId = this.selectedQuiz.quizId;
+    this.questionAnswers = [];
 
+    this.getAllQuestionAnswers();
     // this.addQuestion(objectReceived.questionFigure);
   }
 
@@ -400,7 +408,7 @@ export class AddQuestionAnswerComponent implements OnInit {
 
       this.data = JSON.parse(this.sessionData);
       for (var inst in this.data) {
-        this.quizzes.push(this.data[inst]);
+        this.allData.push(this.data[inst]);
       }
     }
     catch (err) {
@@ -461,6 +469,32 @@ export class AddQuestionAnswerComponent implements OnInit {
     catch (err) {
       console.log("Error", err)
     }
+
+  }
+
+  onAddUpdatClicked(object: any) {
+    // alert(JSON.stringify(object))
+    this.selectedQuiz = object;
+    this.selectedQuizId = this.selectedQuiz.quizId;
+    this.selectedCategoryId = this.selectedQuiz.categoryId;
+
+    this.viewAll = false;
+    this.viewAdd = true;
+    this.viewQuePaper = false;
+    this.questionAnswers = [];
+    this.getAllQuestionAnswers();
+  }
+  onViewClicked(object: any) {
+    this.selectedQuiz = object;
+    this.selectedQuizId = this.selectedQuiz.quizId;
+    this.selectedCategoryId = this.selectedQuiz.categoryId;
+    this.viewAll = false;
+    this.viewQuePaper = true;
+    this.questionAnswers = [];
+    this.getAllQuestionAnswers();
+
+  }
+  onDeleteClicked(object: any) {
 
   }
 }

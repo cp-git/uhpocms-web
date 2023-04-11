@@ -7,10 +7,10 @@
                 </div>
                 <div class="col-sm-6 text-right">
                     <!-- <ng-container *ngIf="selectedQuizId!='undefined' && selectedQuizId!='' && selectedQuizId!=null "> -->
-                    <ng-container *ngTemplateOutlet="questionPaperButton;"></ng-container>
+                    <!-- <ng-container *ngTemplateOutlet="questionPaperButton;"></ng-container> -->
 
                     <!-- </ng-container> -->
-                    <ng-container *ngTemplateOutlet="addButton;"></ng-container>
+                    <!-- <ng-container *ngTemplateOutlet="addButton;"></ng-container> -->
 
 
                     <!-- <ng-container *ngTemplateOutlet="activateButton;"></ng-container> -->
@@ -30,10 +30,10 @@
                 </div>
             </div>
         </ng-container>
-        <ng-container *ngIf="viewAdd || viewAll ">
+        <ng-container *ngIf="viewAll">
             <ng-container *ngTemplateOutlet="dropdowns"></ng-container>
         </ng-container>
-        <ng-container *ngIf="viewAll">
+        <ng-container *ngIf="viewAll && selectedModuleId">
             <ng-container *ngTemplateOutlet="viewall;"></ng-container>
         </ng-container>
 
@@ -59,7 +59,6 @@
     </div>
 </div>
 
-
 <ng-template #title let-headerTitle>
     <h1>{{headerTitle}}</h1>
 </ng-template>
@@ -79,11 +78,65 @@
 </ng-template>
 
 <ng-template #viewall>
-    <app-view-all *ngIf="allData.length>0" [data]="{moduleData:this.allData, columnNames:this.columnNames}"
-        [dropdown]="{quizzes,categories}" [idsColumnName]="{columnName:primaryIdColumnName}" [isViewAllScreen]="true"
-        (viewClicked)="onChildViewClick($event)" (deleteClicked)="onChildDeleteClick($event)"
+    <!-- <app-view-all *ngIf="allData.length>0"
+        [data]="{moduleData:this.allData | filter:'courseId':selectedCourseId| filter:'moduleId':selectedModuleId | filter:'categoryId':selectedCategoryId, columnNames:this.columnNames}"
+        [dropdown]="{courses,modules,categories}" [idsColumnName]="{columnName:primaryIdColumnName}"
+        [isViewAllScreen]="true" (viewClicked)="onChildViewClick($event)" (deleteClicked)="onChildDeleteClick($event)"
         (updateClicked)="onChildUpdateClick($event)">
-    </app-view-all>
+    </app-view-all> -->
+
+    <div class="innercontainer">
+        <table class="table table-bordered">
+            <thead id="deptHeader">
+                <tr>
+                    <th *ngFor="let column of columnNames">{{ column.label }}</th>
+
+                    <th>Add/ Update</th>
+                    <th>View</th>
+                    <!-- <th>Delete</th> -->
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    *ngFor="let row of allData | filter:'courseId':selectedCourseId| filter:'moduleId':selectedModuleId | filter:'categoryId':selectedCategoryId">
+                    <td *ngFor="let column of columnNames">
+                        <ng-container [ngSwitch]="column.type">
+                            <input name="{{column.key}}" class="form-control" *ngSwitchCase="'input'" type="text"
+                                [(ngModel)]="row[column.key]" disabled>
+                            <input name="{{column.key}}" class="form-control" *ngSwitchCase="'email'" type="email"
+                                [(ngModel)]="row[column.key]" disabled>
+                            <!-- handle email type -->
+                            <input name="{{column.key}}" class="form-control" *ngSwitchCase="'date'" type="date"
+                                [(ngModel)]="row[column.key]" disabled>
+                            <!-- handle date type -->
+                            <textarea name="{{column.key}}" class="form-control" *ngSwitchCase="'textarea'"
+                                [(ngModel)]="row[column.key]" disabled></textarea>
+
+                            <select name="{{column.key}}" class="form-control" *ngSwitchCase="'dropdown'">
+                                <option value="">{{column.arrayName}}</option>
+                                <option *ngFor="let option of [column.arrayName]" [value]="option[column.columnName]"
+                                    [selected]="option[column.columnId] === row[column.key]?true:null">
+                                    {{ option[column.columnName] }}
+                                </option>
+                            </select>
+                            <input name="{{column.key}}" class="form-control" *ngSwitchCase="'checkbox'" type="checkbox"
+                                [(ngModel)]="row[column.key]" disabled>
+                        </ng-container>
+                    </td>
+
+
+                    <td><button (click)="onAddUpdatClicked(row)" class="btn btn-primary">Add/ Update</button></td>
+                    <td><button (click)="onViewClicked(row)" class="btn btn-primary">View</button></td>
+                    <!-- <td><button (click)="onDeleteClicked(row)" class="btn btn-danger">Delete</button></td> -->
+
+
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
 
 </ng-template>
 
@@ -101,15 +154,19 @@
 
     </div>
 </ng-template>
-
+<!-- {{questionAnswers|json}} -->
 <ng-template #viewone>
-    <app-view-one [data]="{currentData:currentData , columnNames:allColumnNames}"
-        [dropdown]="{quizzes,categories}"></app-view-one>
+    <div class="container">
+        <h3 class="text-center">Question Paper</h3>
+        <app-question-answer [questionAnswers]="questionAnswers" [selectedQuizId]="selectedQuizId"
+            [selectedCategoryId]="selectedCategoryId" [disable]="true">
+        </app-question-answer>
+    </div>
 </ng-template>
 
 <ng-template #viewupdate>
-    <app-add-update [data]="{currentData:currentData , columnNames:columnNames}" [dropdown]="{quizzes,categories}"
-        (submitClicked)="onUpdateQuestionSubmit($event)"></app-add-update>
+    <app-add-update [data]="{currentData:currentData , columnNames:columnNames}"
+        [dropdown]="{courses,modules,categories}" (submitClicked)="onUpdateQuestionSubmit($event)"></app-add-update>
 </ng-template>
 
 <ng-template #dropdowns>
@@ -117,7 +174,7 @@
         <div class="col-sm-3">
             <h4>Select Course</h4>
             <select name="dropdown" (change)="onChangeCourse()" [(ngModel)]="selectedCourseId" class="form-control"
-                required="">
+                required="" [disabled]="viewAdd || viewQuePaper">
                 <option value="undefined" selected>Select Course</option>
                 <option *ngFor="let option of courses" [ngValue]="option['courseId']">
                     {{ option['courseName'] }}
@@ -127,7 +184,8 @@
         <div class="col-sm-3">
             <h4>Select Module</h4>
             <select name="dropdown" (change)="onChangeModule()" [(ngModel)]="selectedModuleId" class="form-control"
-                required="" [disabled]="selectedCourseId==undefined || selectedCourseId=='undefined'">
+                required=""
+                [disabled]="viewAdd || viewQuePaper || selectedCourseId==undefined || selectedCourseId=='undefined'">
                 <option value="undefined" selected>Select Module</option>
                 <option *ngFor="let option of modules | advFilter:'courseId_id':selectedCourseId" [ngValue]="
                         option['moduleId']">
@@ -138,14 +196,14 @@
         <div class="col-sm-3">
             <h4>Select Category</h4>
             <select name="dropdown" (change)="onCategoryChange(selectedCategoryId)" [(ngModel)]="selectedCategoryId"
-                class="form-control" required="">
+                class="form-control" required="" [disabled]="viewAdd || viewQuePaper">
                 <option value="undefined">Select Category</option>
                 <option *ngFor="let option of categories" [ngValue]="option['categoryId']">
                     {{ option['categoryName'] }}
                 </option>
             </select>
         </div>
-        <div class="col-sm-3">
+        <!-- <div class="col-sm-3">
             <h4>Select Quiz</h4>
             <select (change)="onChangeSelectedQuiz()" name="dropdown" [(ngModel)]="selectedQuizId" class="form-control"
                 required="" [disabled]="selectedModuleId==undefined || selectedModuleId=='undefined'">
@@ -156,14 +214,14 @@
                     {{ option['title'] }}
                 </option>
             </select>
-        </div>
+        </div> -->
     </div>
 </ng-template>
-
+<!-- {{viewQuePaper}} -->
 
 <ng-template #queans let-questionAnswers>
     <div class="container">
-        <h3 class="text-center">Add Quiz Questions</h3>
+        <h3 class="text-center">Add/ Update Questions</h3>
         <ng-container
             *ngIf="selectedQuizId!='undefined' && selectedQuizId!='' && selectedQuizId!=null && selectedCategoryId!='undefined'  && selectedCategoryId!='' && selectedCategoryId!=null">
             <app-question-answer [questionAnswers]="questionAnswers" [pagination]="true"
@@ -181,5 +239,3 @@
 <!-- 
 {{selectedQuizId|json}}
 {{selectedCategoryId|json}} -->
-
-<!-- {{questionAnswers|json}} -->
