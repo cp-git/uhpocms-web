@@ -73,7 +73,7 @@
     <div *ngIf="allData.length==0">
         <h3>No active Courses</h3>
     </div>
-   
+
 </ng-template>
 
 <ng-template #viewactivate>
@@ -102,4 +102,3 @@
     <app-add-update [data]="{currentData:currentData , columnNames:allColumnNames}"
         [dropdown]="{adminInstitutions,departments}" (submitClicked)="onUpdateCourseSubmit($event)"></app-add-update>
 </ng-template>
-
