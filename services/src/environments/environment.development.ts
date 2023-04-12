@@ -37,7 +37,7 @@ export const environment = {
   syllabusUrl: `http://localhost:8090/courseSyllabus/uhpocms/courseSyllabus`,
   assignTeacherUrl: 'http://localhost:8090/assigntoteacher/uhpocms/assigntoteacher',
   accesscontrolUrl: 'http://localhost:8090/accesscontrol/uhpocms/access',
-  answerUrl: 'http://localhost:8080/uhpocms'
+  answerUrl: 'http://localhost:8090/answer/uhpocms'
 
 
 };
