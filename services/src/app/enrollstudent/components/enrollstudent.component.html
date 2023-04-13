@@ -61,9 +61,9 @@
                                 <select [(ngModel)]="_profile.institutionId" class="form-control"
                                     (click)=" getDepartmentByInstId(_profile.institutionId); getProfileByRoleAndInstId(_profile.institutionId)"
                                     (change)="disablefunc()">
+                                    <option value="undefined" selected>Select</option>
                                     <option *ngFor="let institute of institutions"
-                                        value="{{institute.adminInstitutionId}}"
-                                        [selected]="institute.adminInstitutionId " class="dropdown-item">
+                                        value="{{institute.adminInstitutionId}}" class="dropdown-item">
                                         {{institute.adminInstitutionName}}
                                     </option>
                                 </select>
@@ -102,8 +102,8 @@
                             <div class="form-group">
                                 <select [(ngModel)]="department.id" class="form-control"
                                     (click)=" getCoursesByDeptId(department.id)">
-                                    <option *ngFor="let department of departments" value="{{department.id}}"
-                                        [selected]="department.id">
+                                    <option value="undefined" selected>Select</option>
+                                    <option *ngFor="let department of departments" value="{{department.id}}">
                                         {{department.name}}
                                     </option>
                                 </select>
@@ -114,8 +114,8 @@
                             <div><label>Course</label></div>
                             <div class="form-group">
                                 <select [(ngModel)]="course.courseId" class="form-control">
-                                    <option *ngFor="let course of courses" value="{{course.courseId}}"
-                                        [selected]="course.courseId">
+                                    <option value="undefined" selected>Select</option>
+                                    <option *ngFor="let course of courses" value="{{course.courseId}}">
                                         {{course.courseName}}
                                     </option>
                                 </select>

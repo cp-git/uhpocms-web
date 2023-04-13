@@ -35,8 +35,8 @@
                     <ng-container *ngSwitchCase="'file'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
-                        <input name="{{column.key}}" type="file" [(ngModel)]="currentData[column.key]" 
-                        (change)="onFileSelected($event)" class="form-control" required="">
+                        <input name="{{column.key}}" type="file" [(ngModel)]="currentData[column.key]"
+                            (change)="onFileSelected($event)" class="form-control" required="">
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'dropdown1'">
@@ -101,25 +101,26 @@
                             [disabled]="column.disabled">
                             <option value="undefined" disabled>Select</option>
                      -->
-                            <ng-container *ngIf="[column.toSort] then sortDropdown else simpleDropdown"></ng-container>
-                    
-                            <ng-template #sortDropdown>
-                                <ng-container *ngFor="let option of dropdown[column.arrayName]">
-                                    <option *ngIf="option[column.foreignKeyColumn]==currentData[column.sortBasedOn]?true:null"
-                                        [value]="option[column.columnId]">
-                                        {{ option[column.columnName] }}
-                                    </option>
-                                </ng-container>
-                            </ng-template>
-                    
-                            <ng-template #simpleDropdown>
-                                <option *ngFor="let option of dropdown[column.arrayName]" [value]="option[column.columnId]">
+                        <ng-container *ngIf="[column.toSort] then sortDropdown else simpleDropdown"></ng-container>
+
+                        <ng-template #sortDropdown>
+                            <ng-container *ngFor="let option of dropdown[column.arrayName]">
+                                <option
+                                    *ngIf="option[column.foreignKeyColumn]==currentData[column.sortBasedOn]?true:null"
+                                    [value]="option[column.columnId]">
                                     {{ option[column.columnName] }}
                                 </option>
-                            </ng-template>
-                    
+                            </ng-container>
+                        </ng-template>
+
+                        <ng-template #simpleDropdown>
+                            <option *ngFor="let option of dropdown[column.arrayName]" [value]="option[column.columnId]">
+                                {{ option[column.columnName] }}
+                            </option>
+                        </ng-template>
+
                         <!-- </select> -->
-                    
+
                     </ng-container>
 
 
