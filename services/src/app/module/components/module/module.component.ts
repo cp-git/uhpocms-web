@@ -35,7 +35,7 @@ export class ModuleComponent {
   sessionData: any;
   data: any;
 
-
+  courseId: any;
   profileId: any;
 
   emptyModule: Module;  // empty admin role
@@ -55,7 +55,7 @@ export class ModuleComponent {
     this.emptyModule = new Module();
     this.loadCourses();
     this.profileId = sessionStorage.getItem('profileId');
-
+    this.courseId = sessionStorage.getItem('courseId');
 
   }
 
@@ -63,9 +63,10 @@ export class ModuleComponent {
   ngOnInit(): void {
     //  this.service.get
 
-    this.getAllModules();
+
     this.getInactiveModule();
-    this.getAssignedCoursesOfTeacher(this.profileId)
+    this.getAssignedCoursesOfTeacher(this.profileId);
+
 
 
 
@@ -202,9 +203,10 @@ export class ModuleComponent {
   private getAssignedCoursesOfTeacher(teacherId: number) {
     this.courseService.getAssignedCourseOfTeacher(teacherId).subscribe(
       (data) => {
-        console.log(data);
+        console.log("courses " + JSON.stringify(data));
 
         this.courses = data;
+        this.getAllModules();
       },
       error => {
         console.log(error);
@@ -213,7 +215,10 @@ export class ModuleComponent {
   }
 
 
-  // for getting all 
+
+
+
+  // for getting all modules by course id
   private getAllModules() {
     this.dataAvailable = true;
 
@@ -221,7 +226,14 @@ export class ModuleComponent {
     this.service.getAllModules().subscribe(
       response => {
 
-        this.allData = response; //assign data to local variable
+        this.allData = response;
+        this.allData = this.allData.filter(data =>
+          this.courses.map(
+            course => course.courseId).includes(data.courseId_id));
+
+
+        console.log("filtered daTA " + JSON.stringify(this.allData));
+
 
         // if no data available
         if (this.allData.length > 0) {
