@@ -34,7 +34,7 @@ export class TeacherCourseComponent implements OnInit {
   dataAvailable: boolean = false;
 
   courseDepartment: CourseDepartment;
-
+  institutionId: number = 0;
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
 

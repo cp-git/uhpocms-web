@@ -72,12 +72,10 @@ import { QuizModule } from './quiz/module/quiz.module';
 import { UploadFileComponent } from './FileUpload/upload-file/upload-file.component';
 import { AccessControlModule } from './accesscontrol/module/accesscontrol.module';
 
-import { FilterPipe } from './shared/pipes/filter/filter.pipe';
-
-
 import { ModuleFileModule } from './module-file/module-names/module-file.module';
 import { HttpInterceptorService } from './shared/services/HttpInterceptor/http-interceptor.service';
 import { UploadfileReusableModule } from './uploadfile-reusable/uploadfile-reusable.module';
+import { QuestionAnswerComponent } from './question/components/question-answer/question-answer.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -111,8 +109,6 @@ import { UploadfileReusableModule } from './uploadfile-reusable/uploadfile-reusa
     StudentPanelComponent,
     StudentModuleComponent,
     UploadFileComponent,
-    FilterPipe
-
 
   ],
 

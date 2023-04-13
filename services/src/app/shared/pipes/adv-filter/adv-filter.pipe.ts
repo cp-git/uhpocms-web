@@ -1,14 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'filter'
+  name: 'advFilter'
 })
-export class FilterPipe implements PipeTransform {
+export class AdvFilterPipe implements PipeTransform {
 
   transform(items: any[], field: string, value: any): any[] {
 
-    if (!items) return [];
-    if (value === undefined || value === null || value === 'undefined') return items;
+    if (!items || value == 'undefined') return [];
+    if (value === null || value === 'undefined') return items;
 
     return items.filter(item =>
       item[field] === value

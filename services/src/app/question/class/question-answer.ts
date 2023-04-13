@@ -1,4 +1,4 @@
-export class Question {
+export class QuestionAnswer {
     questionId!: number;
     questionFigure!: string;
     questionContent!: string;
@@ -12,4 +12,10 @@ export class Question {
     questionCreatedOn!: Date;
     questionModifiedBy!: string;
     questionModifiedOn!: Date;
+
+    id!: number;
+    content!: string;
+    correct!: boolean;
+    questionorderno!: number;
+    questionid!: number | null;
 }

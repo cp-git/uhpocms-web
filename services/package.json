@@ -26,6 +26,7 @@
     "jquery": "^3.6.3",
     "ng-scrollbar": "^0.0.8",
     "ng2-pdf-viewer": "^9.1.4",
+    "ngx-pagination": "^6.0.3",
     "ngx-scrollbar": "^11.0.0",
     "rxjs": "~7.5.0",
     "zone.js": "~0.12.0"
