@@ -14,8 +14,9 @@
                         <div class="form-group">
                             <select [(ngModel)]="_profile.institutionId" class="form-control"
                                 (click)=" getDepartmentByInstId(_profile.institutionId); getProfileByRoleAndInstId(_profile.institutionId)">
+                                <option value="undefined" selected>Select</option>
                                 <option *ngFor="let institute of institutions" value="{{institute.adminInstitutionId}}"
-                                    [selected]="institute.adminInstitutionId " class="dropdown-item">
+                                    class="dropdown-item">
                                     {{institute.adminInstitutionName}}
                                 </option>
                             </select>
@@ -30,8 +31,8 @@
                         <div class="form-group">
                             <select name="departmentid" [(ngModel)]="department.id" class="form-control"
                                 (click)=" getCoursesByDeptId(department.id)">
-                                <option *ngFor="let department of departments" value="{{department.id}}"
-                                    [selected]="department.id">
+                                <option value="undefined" selected>Select</option>
+                                <option *ngFor="let department of departments" value="{{department.id}}">
                                     {{department.name}}
                                 </option>
                             </select>
@@ -42,6 +43,7 @@
                         <div><label>Course</label></div>
                         <div class="form-group">
                             <select name="courseid" [(ngModel)]="course.courseId" class="form-control">
+                                <option value="undefined" selected>Select</option>
                                 <option *ngFor="let courseObj of courses" [value]="courseObj.courseId">
                                     {{courseObj.courseName}}
                                 </option>

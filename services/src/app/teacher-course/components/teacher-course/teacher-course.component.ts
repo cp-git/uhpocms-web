@@ -26,6 +26,10 @@ export class TeacherCourseComponent implements OnInit {
   viewAll: boolean = true;
   viewOne: boolean = false;
   viewActivate: boolean = false;
+
+  // buttons
+  showAddButton: boolean = false;
+  showActivateButton: boolean = false;
   // If all data is available or not
   dataAvailable: boolean = false;
 
@@ -332,10 +336,13 @@ export class TeacherCourseComponent implements OnInit {
 
     switch (userRole) {
       case 'admin' || 'coadmin':
+        this.showAddButton = true;
+        this.showActivateButton = true;
         this.getAllCourse();
         break;
       case 'teacher':
         this.getAssignedCoursesOfTeacher(this.profileId);
+
         break;
       case 'student':
         this.getCoursesEnrolledToStudent(this.profileId);

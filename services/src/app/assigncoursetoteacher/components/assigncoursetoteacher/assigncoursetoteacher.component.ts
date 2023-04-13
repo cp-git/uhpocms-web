@@ -181,10 +181,10 @@ export class AssigncoursetoteacherComponent {
 
   }
 
-
+  inserted: boolean = false;
   //function for save the course id with profile ID
   saveAssignTeacher(courseId: number, profileId: number) {
-
+    this.inserted = false;
     console.log("Profile array copy down");
     console.log(this._profileArrCopy);
 
@@ -202,15 +202,20 @@ export class AssigncoursetoteacherComponent {
       // alert(JSON.stringify(this.assignTeacher));
       this.assignTeacherService.assignTeacherToCourse(this.assignTeacher).subscribe(
         (response) => {
-
-          alert("Teacher Assign Successfully");
+          this.inserted = true;
 
         }, error => {
+          this.inserted = false;
           alert("Failed to Assign course");
         }
       )
     }
-
+    if (this.inserted = true) {
+      alert("Teacher assigned successfully");
+    }
+    else {
+      alert("Failed to assign");
+    }
   }
 
   onScrollToEnd() {

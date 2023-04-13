@@ -183,6 +183,16 @@ export class EnrollstudentComponent {
     }
   }
 
+  // checkFields() {
+  //   // Check if any fields are empty
+  //   if (!this.admininstitution.adminInstitutionName || !this.department.name || !this.course.courseName|| !) {
+  //     // If any field is empty, disable the button
+  //     this.buttonDisabled = true;
+  //   } else {
+  //     // If all fields have a value, enable the button
+  //     this.buttonDisabled = false;
+  //   }
+  // }
 
 
 
