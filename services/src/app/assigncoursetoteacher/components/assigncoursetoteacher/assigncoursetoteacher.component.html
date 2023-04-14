@@ -1,97 +1,91 @@
 <div class="container">
-    <div class="d-flex  h-100">
-        <div class="card">
-            <div class="card-header">
-                <h3>Assign Teacher To Course</h3>
+    <h1 class="text-center">Assign Course To Teacher</h1>
+    <div class="jumbotron">
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <label class="badg">Institution</label>
+                <div class="form-group">
+                    <select [(ngModel)]="_profile.institutionId" class="form-control"
+                        (click)=" getDepartmentByInstId(_profile.institutionId); getProfileByRoleAndInstId(_profile.institutionId)">
+                        <option *ngFor="let institute of institutions" value="{{institute.adminInstitutionId}}"
+                            [selected]="institute.adminInstitutionId " class="dropdown-item">
+                            {{institute.adminInstitutionName}}
+                        </option>
+                    </select>
 
+                </div>
             </div>
-            <div class="card-body">
-
-
-                <div class="first-row">
-                    <div class="first-row-child">
-                        <div><label>Institution</label></div>
-                        <div class="form-group">
-                            <select [(ngModel)]="_profile.institutionId" class="form-control"
-                                (click)=" getDepartmentByInstId(_profile.institutionId); getProfileByRoleAndInstId(_profile.institutionId)">
-                                <option *ngFor="let institute of institutions" value="{{institute.adminInstitutionId}}"
-                                    [selected]="institute.adminInstitutionId " class="dropdown-item">
-                                    {{institute.adminInstitutionName}}
-                                </option>
-                            </select>
-
-                        </div>
-                    </div>
-
-
-                    <div class="first-row-child">
-                        <div><label>Department</label></div>
-
-                        <div class="form-group">
-                            <select name="departmentid" [(ngModel)]="department.id" class="form-control"
-                                (click)=" getCoursesByDeptId(department.id)">
-                                <option *ngFor="let department of departments" value="{{department.id}}"
-                                    [selected]="department.id">
-                                    {{department.name}}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="first-row-child">
-                        <div><label>Course</label></div>
-                        <div class="form-group">
-                            <select name="courseid" [(ngModel)]="course.courseId" class="form-control">
-                                <option *ngFor="let courseObj of courses" [value]="courseObj.courseId">
-                                    {{courseObj.courseName}}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
+            <div class="col-sm-4">
+                <label class="badg">Department</label>
+                <div class="form-group">
+                    <select name="departmentid" [(ngModel)]="department.id" class="form-control"
+                        (click)=" getCoursesByDeptId(department.id)">
+                        <option *ngFor="let department of departments" value="{{department.id}}"
+                            [selected]="department.id">
+                            {{department.name}}
+                        </option>
+                    </select>
                 </div>
-                <div class="first-row">
-                    <div class="first-row-child">
-                        <div><label>Teacher Name</label></div>
-                        <div class="form-group">
-
-                            <ng-select [items]="_profileArray" bindLabel="fullName" [searchable]="true"
-                                [closeOnSelect]="false" bindValue="adminId" placeholder="Select Teacher"
-                                [clearable]="true" appendTo="body" [multiple]="true" [(ngModel)]="selected"
-                                groupBy="selectedAllGroup" [selectableGroup]="true" [selectableGroupAsModel]="false"
-                                [virtualScroll]="true">
-
-
-                                <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
-                                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" />
-                                    Select
-                                    All
-                                </ng-template>
-
-
-                                <ng-template ng-multi-label-tmp>
-                                    <span style="display:block" class="ng-placeholder">Select Teacher</span>
-                                </ng-template>
-                                <!-- code to display checkbox  -->
-                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                    <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />
-                                    {{item.fullName}}
-                                </ng-template>
-                            </ng-select>
-                        </div>
-                    </div>
+            </div>
+            <div class="col-sm-4">
+                <label class="badg">Course</label>
+                <div class="form-group">
+                    <select name="courseid" [(ngModel)]="course.courseId" class="form-control">
+                        <option *ngFor="let courseObj of courses" [value]="courseObj.courseId">
+                            {{courseObj.courseName}}
+                        </option>
+                    </select>
                 </div>
+            </div>
 
-                <div class="last-row">
+
+
+
+            <div class="col-sm-12">
+
+                <div class="first-row-child">
+                    <label class="badg">Teacher Name</label>
                     <div class="form-group">
 
-                        <button class="form-control" id="loginbtn" class="btn  login_btn"
-                            (click)="saveAssignTeacher(course.courseId,_profile.adminId); getSelectedValue()"
-                            title="Save Course">SAVE</button>
+                        <ng-select [items]="_profileArray" bindLabel="fullName" [searchable]="true"
+                            [closeOnSelect]="false" bindValue="adminId" placeholder="Select Teacher" [clearable]="true"
+                            appendTo="body" [multiple]="true" [(ngModel)]="selected" groupBy="selectedAllGroup"
+                            [selectableGroup]="true" [selectableGroupAsModel]="false" [virtualScroll]="true">
 
-                        <button class="btn btn-primary" style="margin-left: 30px;" (click)="back()">Back</button>
+
+                            <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" />
+                                Select
+                                All
+                            </ng-template>
+
+
+                            <ng-template ng-multi-label-tmp>
+                                <span style="display:block" class="ng-placeholder">Select Teacher</span>
+                            </ng-template>
+                            <!-- code to display checkbox  -->
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />
+                                {{item.fullName}}
+                            </ng-template>
+                        </ng-select>
                     </div>
                 </div>
+
             </div>
         </div>
+
+
+        <div class="last-row">
+            <div class="form-group">
+
+                <button class="form-control" id="loginbtn" class="btn btn-primary"
+                    (click)="saveAssignTeacher(course.courseId,_profile.adminId); getSelectedValue()"
+                    title="Save Course">SAVE</button>
+
+                <button class="btn btn-primary" style="margin-left: 30px;" (click)="back()">Back</button>
+            </div>
+        </div>
+
     </div>
 </div>

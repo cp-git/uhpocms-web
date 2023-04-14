@@ -17,3 +17,20 @@
     background-color: #fafafa;
     border: 1px solid black;
 }
+
+.img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-check-input {
+    margin-right: 10px;
+    margin-bottom: 30px;
+}
+
+.float-label {
+    margin-bottom: 10px;
+    margin-top: 15px;
+    font-size: 16px;
+}
