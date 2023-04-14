@@ -39,50 +39,59 @@
             </div>
 
 
+            <div class="first-row-child">
+                <div class="col-sm-12">
+                    <div class="first-row-child">
+                        <label class="badg">Student Name</label>
+                        <div class="form-group">
+                            <ng-select [items]="_profileArray" bindLabel="fullName" [searchable]="true"
+                                [closeOnSelect]="false" bindValue="adminId" placeholder="Select Students"
+                                [clearable]="true" appendTo="body" [multiple]="true" [(ngModel)]="selected"
+                                groupBy="selectedAllGroup" [selectableGroup]="true" [selectableGroupAsModel]="false"
+                                [virtualScroll]="true" (change)="disablefunc()">
+                                //code to display select all checkbox
+                                <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" />
+                                    Select
+                                    All
+                                </ng-template>
+                                <!-- code to disable display of selected students in input field -->
+                                <ng-template ng-multi-label-tmp>
+                                    <span style="display:block" class="ng-placeholder">Select
+                                        Students</span>
+                                </ng-template>
+                                <!-- code to display checkbox  -->
+                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                    <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />
+                                    {{item.fullName}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
 
-
-            <div class="col-sm-12">
-
-                <div class="first-row-child">
-                    <label class="badg">Student Name</label>
-                    <div class="form-group">
-                        <ng-select [items]="_profileArray" bindLabel="fullName" [searchable]="true"
-                            [closeOnSelect]="false" bindValue="adminId" placeholder="Select Students" [clearable]="true"
-                            appendTo="body" [multiple]="true" [(ngModel)]="selected" groupBy="selectedAllGroup"
-                            [selectableGroup]="true" [selectableGroupAsModel]="false" [virtualScroll]="true"
-                            (change)="disablefunc()">
-                            //code to display select all checkbox
-                            <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
-                                <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" />
-                                Select
-                                All
-                            </ng-template>
-                            <!-- code to disable display of selected students in input field -->
-                            <ng-template ng-multi-label-tmp>
-                                <span style="display:block" class="ng-placeholder">Select
-                                    Students</span>
-                            </ng-template>
-                            <!-- code to display checkbox  -->
-                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />
-                                {{item.fullName}}
-                            </ng-template>
-                        </ng-select>
                     </div>
                 </div>
 
             </div>
-        </div>
 
+        </div>
 
         <div class="last-row">
             <div class="form-group">
                 <!-- <button class="form-control" id="loginbtn" class="btn  login_btn">SAVE</button> -->
-                <button class="form-control" id="loginbtn" class="btn btn-primary" [disabled]="true"
+                <!-- <button class="form-control" id="loginbtn" class="btn btn-primary" [disabled]="true"
                     *ngIf="!_disablevar" (click)="saveEnrolledStudent(course.courseId,_profile.adminId)">SAVE</button>
                 <button class="form-control" id="loginbtn" class="btn btn-primary " *ngIf="_disablevar"
-                    (click)="saveEnrolledStudent(course.courseId,_profile.adminId)">SAVE</button>
-                <button class="btn btn-primary" style="margin-left: 30px;">Back</button>
+                    (click)="saveEnrolledStudent(course.courseId,_profile.adminId)">SAVE</button> -->
+
+                <button #submitButton class="form-control" id="loginbtn" class="btn btn-primary"
+                    (click)="saveEnrolledStudent(course.courseId,_profile.adminId);" title="Save Course"
+                    [disabled]="!isFormComplete()">SAVE</button>
+
+
+
+
+                <button class="btn btn-primary" style="margin-left: 30px; " (click)="back()">Back</button>
+
             </div>
         </div>
 

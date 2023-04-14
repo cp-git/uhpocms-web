@@ -12,16 +12,15 @@
                             {{institute.adminInstitutionName}}
                         </option>
                     </select>
-
                 </div>
             </div>
             <div class="col-sm-4">
-                <label class="badg">Department</label>
+                <div><label>Department</label></div>
                 <div class="form-group">
                     <select name="departmentid" [(ngModel)]="department.id" class="form-control"
                         (click)=" getCoursesByDeptId(department.id)">
-                        <option *ngFor="let department of departments" value="{{department.id}}"
-                            [selected]="department.id">
+                        <option value="undefined" selected>Select</option>
+                        <option *ngFor="let department of departments" value="{{department.id}}">
                             {{department.name}}
                         </option>
                     </select>
@@ -37,28 +36,19 @@
                     </select>
                 </div>
             </div>
-
-
-
-
             <div class="col-sm-12">
-
                 <div class="first-row-child">
                     <label class="badg">Teacher Name</label>
                     <div class="form-group">
-
                         <ng-select [items]="_profileArray" bindLabel="fullName" [searchable]="true"
                             [closeOnSelect]="false" bindValue="adminId" placeholder="Select Teacher" [clearable]="true"
                             appendTo="body" [multiple]="true" [(ngModel)]="selected" groupBy="selectedAllGroup"
                             [selectableGroup]="true" [selectableGroupAsModel]="false" [virtualScroll]="true">
-
-
                             <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
                                 <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" />
                                 Select
                                 All
                             </ng-template>
-
 
                             <ng-template ng-multi-label-tmp>
                                 <span style="display:block" class="ng-placeholder">Select Teacher</span>
@@ -75,15 +65,15 @@
             </div>
         </div>
 
-
         <div class="last-row">
             <div class="form-group">
-
-                <button class="form-control" id="loginbtn" class="btn btn-primary"
+                <button #submitButton class="form-control" id="loginbtn" class="btn btn-primary"
                     (click)="saveAssignTeacher(course.courseId,_profile.adminId); getSelectedValue()"
-                    title="Save Course">SAVE</button>
+                    title="Save Course" [disabled]="!isFormComplete()" style="margin-left: 450px;">SAVE</button>
 
-                <button class="btn btn-primary" style="margin-left: 30px;" (click)="back()">Back</button>
+
+                <button class="form-control" class="btn btn-primary" (click)=" back()"
+                    style="margin-left: 20px;">Back</button>
             </div>
         </div>
 

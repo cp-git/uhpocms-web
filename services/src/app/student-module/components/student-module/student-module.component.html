@@ -1,19 +1,20 @@
 <div class="container-fluid">
-
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-3">
             <div class="header text-center">
-                <h1>{{selectedCourseName |titlecase}}</h1>
+                <h1>{{ selectedCourseName | titlecase }}</h1>
             </div>
             <div class="form-group">
-                <label for="course">Course Name</label><br>
+                <label for="course">Course Name</label><br />
                 <select (change)="onCourseSelect(selectedCourse)" [(ngModel)]="selectedCourse" class="form-select"
                     aria-label="Default select example">
                     <option *ngFor="let course of courses" [value]="course.courseId">
-                        {{course.courseName}}</option>
+                        {{ course.courseName }}
+                    </option>
                 </select>
             </div>
-            <div><label for="module">Module Name</label>
+            <div>
+                <label for="module">Module Name</label>
                 <div class="module-list-container">
                     <ng-container *ngFor="let module of modules">
                         <!-- <div class="dropdown">
@@ -34,16 +35,21 @@
                                 </div>
                                 <ng-container>-->
 
-                        <ng-container *ngIf="selectedCourse==module.courseId_id">
+                        <ng-container *ngIf="selectedCourse == module.courseId_id">
                             <ul class="modules">
-                                <span class="fa fa-book"></span> <label for="" class="modulelist">
-                                    &nbsp;&nbsp;{{module.moduleName}}</label>
+                                <span class="fa fa-book"></span>
+                                <label for="" class="modulelist">
+                                    &nbsp;&nbsp;{{ module.moduleName }}</label>
                                 <ng-container *ngFor="let file of studentModuleFiles">
-                                    <ng-container
-                                        *ngIf="module.moduleId==file.moduleId && selectedCourse==module.courseId_id">
+                                    <ng-container *ngIf="
+                      module.moduleId == file.moduleId &&
+                      selectedCourse == module.courseId_id
+                    ">
                                         <div class="dropdown-item">
-                                            <li><span class="fa fa-file"></span>&nbsp;&nbsp;
-                                                <a (click)="changeSelectedFileAndModule(file,module)">{{file.moduleFile}}
+                                            <li>
+                                                <span class="fa fa-file"></span>&nbsp;&nbsp;
+                                                <a (click)="changeSelectedFileAndModule(file, module)">{{
+                                                    file.moduleFile }}
                                                 </a>
                                             </li>
                                         </div>
@@ -63,8 +69,10 @@
                     {{selectedModule.moduleName |titlecase}} - {{(selectedFile.moduleFile)}}
                 </h3> -->
                 <video class="videoscreen" controls #videoPlayer>
-                    <source [src]="videoSrc" type="video/mp4">
+                    <source [src]="videoSrc" type="video/mp4" />
                 </video>
+
+
                 <!-- </div>
                         </ng-container> -->
             </div>

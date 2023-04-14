@@ -74,6 +74,14 @@ export class AssigncoursetoteacherComponent {
     private _activatedRoute: ActivatedRoute,
     private _route: Router) { }
 
+  isFormComplete(): boolean {
+    // Check if all required fields are filled in
+    if (this._profile.institutionId && this.department.id && this.course.courseId && this.selected.length > 0) {
+      return true;
+    }
+    return false;
+  }
+
   ngOnInit() {
     this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
@@ -181,19 +189,16 @@ export class AssigncoursetoteacherComponent {
 
   }
 
-
+  inserted: boolean = false;
   //function for save the course id with profile ID
   saveAssignTeacher(courseId: number, profileId: number) {
-
+    this.inserted = false;
     console.log("Profile array copy down");
     console.log(this._profileArrCopy);
 
     console.log(this._profileArray);
     this.assignTeacher.courseId = (courseId);
     this.assignTeacher.profileId = profileId;
-
-
-
     for (let i = 0; i < this.selected.length; i++) {
 
       this.assignTeacher.profileId = this.selected[i];
@@ -202,15 +207,21 @@ export class AssigncoursetoteacherComponent {
       // alert(JSON.stringify(this.assignTeacher));
       this.assignTeacherService.assignTeacherToCourse(this.assignTeacher).subscribe(
         (response) => {
-
-          alert("Teacher Assign Successfully");
+          this.inserted = true;
+          location.reload();
 
         }, error => {
+          this.inserted = false;
           alert("Failed to Assign course");
         }
       )
     }
-
+    if (this.inserted = true) {
+      alert("Teacher assigned successfully");
+    }
+    else {
+      alert("Already Course Assigned");
+    }
   }
 
   onScrollToEnd() {

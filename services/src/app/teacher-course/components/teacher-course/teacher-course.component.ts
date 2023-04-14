@@ -26,6 +26,10 @@ export class TeacherCourseComponent implements OnInit {
   viewAll: boolean = true;
   viewOne: boolean = false;
   viewActivate: boolean = false;
+
+  // buttons
+  showAddButton: boolean = false;
+  showActivateButton: boolean = false;
   // If all data is available or not
   dataAvailable: boolean = false;
 
@@ -175,7 +179,7 @@ export class TeacherCourseComponent implements OnInit {
   private addCourse(currentData: any) {
 
     currentData.courseIsActive = true;  // setting active true
-
+    console.log("currentda" + JSON.stringify(currentData));
     // calling service for adding data
     this.service.addCourse(currentData).subscribe(
       (data) => {
@@ -183,7 +187,7 @@ export class TeacherCourseComponent implements OnInit {
         this.courseDepartment.courseId = data.courseId;
 
         this.courseDepartment.departmentId = currentData.departmentId;
-
+        console.log("coursedept" + JSON.stringify(this.courseDepartment));
         this.service.assignCourseToDepartment(this.courseDepartment).subscribe(
           response => {
             alert('Course Added successfully');
@@ -332,10 +336,13 @@ export class TeacherCourseComponent implements OnInit {
 
     switch (userRole) {
       case 'admin' || 'coadmin':
+        this.showAddButton = true;
+        this.showActivateButton = true;
         this.getAllCourse();
         break;
       case 'teacher':
         this.getAssignedCoursesOfTeacher(this.profileId);
+
         break;
       case 'student':
         this.getCoursesEnrolledToStudent(this.profileId);

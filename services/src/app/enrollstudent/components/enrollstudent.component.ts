@@ -177,15 +177,38 @@ export class EnrollstudentComponent {
           if (i == 0) {
 
             alert("Student Enrolled Successfully");
+            location.reload();
+          } else {
+            alert("Already Enrolled Course OR Failed to Enrolled")
           }
         }
       )
     }
   }
 
+  // checkFields() {
+  //   // Check if any fields are empty
+  //   if (!this.admininstitution.adminInstitutionName || !this.department.name || !this.course.courseName|| !) {
+  //     // If any field is empty, disable the button
+  //     this.buttonDisabled = true;
+  //   } else {
+  //     // If all fields have a value, enable the button
+  //     this.buttonDisabled = false;
+  //   }
+  // }
+  formComplete: boolean = false;
 
 
-
+  isFormComplete(): boolean {
+    if (this._profile.institutionId && this.department.id && this.course.courseId && this.selected.length > 0) {
+      // All required fields are filled out
+      this.formComplete = true;
+    } else {
+      // Some required fields are missing
+      this.formComplete = false;
+    }
+    return this.formComplete;
+  }
   //function to enable submit button only after all fields selection
   disablefunc() {
 

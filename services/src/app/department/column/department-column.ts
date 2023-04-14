@@ -1,8 +1,8 @@
 export const DepartmentColumn = [
-
+    { key: 'institutionId', label: 'Institution', type: 'dropdown1' },
     { key: 'name', label: 'Department Name', type: 'input' },
     { key: 'description', label: 'Description', type: 'input' },
-    { key: 'institutionId', label: 'Institution', type: 'dropdown1' },
+
 
 ]
 
