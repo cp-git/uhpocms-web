@@ -5,12 +5,13 @@ import { Category } from 'app/category/class/category';
 import { Course } from 'app/teacher-course/class/course';
 import { Module } from 'app/module/class/module';
 import { Question } from 'app/question/class/question';
-import { QuestionAllColumn, QuestionColumn, TeacherQuizColumn, TeacherQuizAllColumn } from 'app/question/column/question-column';
+import { TeacherQuizColumn, TeacherQuizAllColumn } from 'app/question/column/question-column';
 import { QuestionService } from 'app/question/services/question.service';
 import { Answer } from 'app/question/class/answer';
 import { NgForm } from '@angular/forms';
 import { QuestionAnswer } from 'app/question/class/question-answer';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
+import { OneQuestionAnswer } from 'app/question/class/one-question-answer';
 
 @Component({
   selector: 'app-add-question-answer',
@@ -59,17 +60,21 @@ export class AddQuestionAnswerComponent implements OnInit {
   selectedModuleId: any;
   selectedCategoryId: any;
   selectedQuizId: any;
+  selectedCategoryName: any;
 
   currentQuestions: Question[] = [];
   currentAnswers: Answer[] = [];
-
-  questionAnswers: QuestionAnswer[] = [];
-  questionAnswer: QuestionAnswer;  // empty question
+  answer!: Answer;
+  questionAnswers: OneQuestionAnswer[] = [];
+  oneQuestionAnswer: OneQuestionAnswer;  // empty question
+  questionAnswer!: QuestionAnswer;  // empty question
 
   answers: Answer[] = [];
   selectedQuiz: any
 
   profileId: any;
+
+  generatedQuestionAnswerId: number = 0;;
   constructor(private location: Location,
     private service: QuestionService,
     private courseService: TeacherCourseService
@@ -83,18 +88,12 @@ export class AddQuestionAnswerComponent implements OnInit {
     this.emptyQuestion = new Question();
     this.emptyAnswer = new Answer();
 
-    this.questionAnswer = new QuestionAnswer();
+    this.oneQuestionAnswer = new OneQuestionAnswer();
     this.loadCategories();
     this.loadQuizzes();
     this.loadCourses();
     this.loadModules();
-    const str = '2024-07-21';
 
-    const date = new Date(str);
-    // this.emptyQuestion = {
-    //   "questionId": 33, "questionFigure": "figure1", "questionContent": "What is Addition of 2 and 3?", "questionExplanation": "sum of 2 and 3", "questionOrderNo": 0, "questionIsMCQ": false, "questionQuizId": 90, "questionCategoryId": 2, "questionIsActive": true, "questionCreatedBy": "admin", "questionCreatedOn": date, "questionModifiedBy": "admin", "questionModifiedOn": date
-    // }
-    // this.currentQuestions.push(this.emptyQuestion);
   }
 
   ngOnInit(): void {
@@ -102,69 +101,91 @@ export class AddQuestionAnswerComponent implements OnInit {
     // this.getInActiveQuestions(); // for getting all inactive questions
   }
 
-  onFormSubmit(queAns: QuestionAnswer): void {
-    this.emptyQuestion = {} as Question;
+  onFormSubmit(queAns: OneQuestionAnswer): void {
     this.questionAnswer = {} as QuestionAnswer;
+    this.oneQuestionAnswer = {} as OneQuestionAnswer;
 
     // Form is valid, do something with the form data
-    console.log("queAns " + JSON.stringify(this.questionAnswer));
+    // console.log("queAns " + JSON.stringify(queAns));
 
-    this.questionAnswer = queAns;
+    // this.oneQuestionAnswer = queAns;
     // separating question from object 
-    this.emptyQuestion.questionId = this.questionAnswer.questionId;
-    this.emptyQuestion.questionFigure = this.questionAnswer.questionFigure;
-    this.emptyQuestion.questionContent = this.questionAnswer.questionContent;
-    this.emptyQuestion.questionExplanation = this.questionAnswer.questionExplanation;
-    this.emptyQuestion.questionOrderNo = this.questionAnswer.questionOrderNo;
-    this.emptyQuestion.questionIsMCQ = false;
-    this.emptyQuestion.questionQuizId = this.selectedQuizId;
-    this.emptyQuestion.questionCategoryId = this.selectedQuiz.categoryId;
-    this.emptyQuestion.questionIsActive = true;
+    console.log(queAns.questionId);
+    this.questionAnswer.question = {} as Question;
+    this.questionAnswer.question['questionId'] = queAns.questionId;
+    this.questionAnswer.question['questionFigure'] = queAns.questionFigure;
+    this.questionAnswer.question['questionContent'] = queAns.questionContent;
+    this.questionAnswer.question['questionExplanation'] = queAns.questionExplanation;
+    this.questionAnswer.question['questionOrderNo'] = queAns.questionOrderNo;
+    if (this.selectedCategoryName == 'MCQ' || this.selectedCategoryName == 'mcq') {
+      this.questionAnswer.question.questionIsMCQ = true;
+    } else {
+      this.questionAnswer.question.questionIsMCQ = false;
+
+    }
+    this.questionAnswer.question.questionQuizId = this.selectedQuizId;
+    this.questionAnswer.question.questionCategoryId = this.selectedQuiz.categoryId;
+    this.questionAnswer.question.questionIsActive = true;
 
     // separating answer from object
     // this.emptyAnswer = {} as Answer;
-    this.emptyAnswer.id = this.questionAnswer.id;
-    this.emptyAnswer.content = this.questionAnswer.content;
-    this.emptyAnswer.correct = true;
-    this.emptyAnswer.questionorderno = this.questionAnswer.questionOrderNo;
+    // this.emptyAnswer.id = this.questionAnswer.answers['id'];
+    // this.emptyAnswer.content = this.questionAnswer.answers['content'];
+    // this.emptyAnswer.correct = true;
+    // this.emptyAnswer.questionorderno = this.questionAnswer.answers['questionorderno'];
+    this.questionAnswer.answers = [];
 
 
-    console.log(this.emptyQuestion);
-    console.log(this.emptyAnswer);
+    // making object of answers
+    if (queAns['content1'] != '' || queAns['content1'] != undefined) {
+      this.answer = {} as Answer;
+      this.answer.content = queAns['content1'];
+      this.answer.correct = queAns['correct1'];
+      this.answer.questionorderno = queAns['questionOrderNo'];
 
-    this.service.addQuestion(this.emptyQuestion).subscribe(
+      this.questionAnswer.answers.push(this.answer);
+    }
+    if (queAns['content2'] != '' || queAns['content2'] != undefined) {
+      this.answer = {} as Answer;
+      this.answer.content = queAns['content2'];
+      this.answer.correct = queAns['correct2'];
+      this.answer.questionorderno = queAns['questionOrderNo'];
+
+      this.questionAnswer.answers.push(this.answer);
+    }
+
+    if (queAns['content3'] != '' || queAns['content3'] != undefined) {
+      this.answer = {} as Answer;
+
+      this.answer.content = queAns['content3'];
+      this.answer.correct = queAns['correct3'];
+      this.answer.questionorderno = queAns['questionOrderNo'];
+
+      this.questionAnswer.answers.push(this.answer);
+    }
+
+    if (queAns['content4'] != '' || queAns['content4'] != undefined) {
+      this.answer = {} as Answer;
+
+      this.answer.content = queAns['content4'];
+      this.answer.correct = queAns['correct4'];
+      this.answer.questionorderno = queAns['questionOrderNo'];
+      this.questionAnswer.answers.push(this.answer);
+    }
+
+    console.log(this.questionAnswer);
+
+    this.service.addQuestion(this.questionAnswer).subscribe(
       (response) => {
+        this.generatedQuestionAnswerId = response;
 
-        this.emptyQuestion = response;
-        this.emptyAnswer.questionid = this.emptyQuestion.questionId;
-        this.service.addAnswer(this.emptyAnswer).subscribe(
-          (response) => {
-            alert("Question Added Successfully");
-          },
-          (error) => {
-            alert("Question added but failed to add answer;")
-          }
-        )
+        alert("Question Added Successfully");
       },
       (error) => {
-        alert("failed to add Question");
+        alert("Question added failed")
       }
     )
 
-
-
-
-    // this.questionAnswers.forEach(queAns => {
-    //   this.emptyQuestion.questionContent = queAns.questionContent;
-    //   this.emptyQuestion.questionExplanation = queAns.questionExplanation;
-    //   this.emptyQuestion.questionExplanation = queAns.questionExplanation;
-
-    //   this.currentQuestions.push(
-
-    //   )
-    // })
-    // ... other form submission logic ...
-    // }
   }
 
   onChangeCourse() {
@@ -184,16 +205,16 @@ export class AddQuestionAnswerComponent implements OnInit {
     this.questionAnswers = [];
     this.selectedQuiz = this.quizzes.find(quiz => quiz.quizId == this.selectedQuizId);
     // this.currentQuestions.length = this.selectedQuiz.maxQuestions;
-    this.currentAnswers.length = this.selectedQuiz.maxQuestions;
+    // this.currentAnswers.length = this.selectedQuiz.maxQuestions;
 
-    console.log(this.selectedQuiz);
+    // console.log(this.selectedQuiz);
 
     this.service.getAllQuestionsByQuizId(this.selectedQuizId).subscribe(
       response => {
         this.allData = response; //assign data to local variable
 
-        this.getAllQuestionAnswers();
-        console.log(this.questionAnswers);
+        this.getAllQuestionAnswers(this.selectedQuizId);
+        // console.log(this.questionAnswers);
 
 
       },
@@ -208,7 +229,7 @@ export class AddQuestionAnswerComponent implements OnInit {
     const quesAnsLength = this.questionAnswers.length;
 
     for (let i = 0; i < length - quesAnsLength; i++) {
-      this.questionAnswers.push(new QuestionAnswer);
+      this.questionAnswers.push(new OneQuestionAnswer);
     }
   }
   // for navigating to add screen
@@ -218,7 +239,7 @@ export class AddQuestionAnswerComponent implements OnInit {
     this.viewAdd = true;
     this.viewQuePaper = false;
     this.questionAnswers = [];
-    this.getAllQuestionAnswers();
+    this.getAllQuestionAnswers(this.selectedQuizId);
 
   }
 
@@ -227,43 +248,81 @@ export class AddQuestionAnswerComponent implements OnInit {
     this.viewAll = false;
     this.viewQuePaper = true;
     this.questionAnswers = [];
-    this.getAllQuestionAnswers();
+    this.getAllQuestionAnswers(this.selectedQuizId);
 
   }
-  private getAllQuestionAnswers() {
+
+  queAns!: OneQuestionAnswer;
+  private getAllQuestionAnswers(quizId: number) {
 
 
     this.service.getAllAnswers().subscribe(
       (data) => {
         this.answers = data;
-        this.service.getAllQuestionsByQuizId(this.selectedQuizId).subscribe(
+        this.questionAnswers = []; // Initialize questionAnswers as an array
+        this.service.getAllQuestionsByQuizId(quizId).subscribe(
           (response) => {
             response.forEach(
               question => {
-                this.questionAnswer = {} as QuestionAnswer;
+                this.queAns = {} as OneQuestionAnswer;
 
-                this.answers.filter(answer => {
-                  if (answer.questionid == question.questionId) {
-                    this.questionAnswers.push({
-                      ...question,
-                      ...answer
-                    });
+                // Filter the answers based on questionId
+                const filteredAnswers = this.answers.filter(answer => answer.questionid == question.questionId);
+                console.log(filteredAnswers);
+
+
+
+                filteredAnswers.forEach((answer: Answer, index: number) => {
+                  // console.log(answer);
+                  // alert(index)
+                  if (index === 0) {
+                    this.queAns.correct1 = answer.correct;
+                    this.queAns.content1 = answer.content;
+                  } else if (index === 1) {
+                    this.queAns.correct2 = answer.correct;
+                    this.queAns.content2 = answer.content;
+                  } else if (index === 2) {
+                    this.queAns.correct3 = answer.correct;
+                    this.queAns.content3 = answer.content;
+                  } else if (index === 3) {
+                    this.queAns.correct4 = answer.correct;
+                    this.queAns.content4 = answer.content;
                   }
                 })
-              })
+
+
+                // Push question and filtered answers into questionAnswers array
+                let isFormSubmitted = false;
+                if (question.questionId > 0) {
+                  isFormSubmitted = true;
+                }
+                this.questionAnswers.push({
+                  ...question,
+                  correct1: this.queAns.correct1,
+                  content1: this.queAns.content1,
+                  correct2: this.queAns.correct2,
+                  content2: this.queAns.content2,
+                  correct3: this.queAns.correct3,
+                  content3: this.queAns.content3,
+                  correct4: this.queAns.correct4,
+                  content4: this.queAns.content4,
+                  isFormDirty: false,
+                  isFormSubmitted: isFormSubmitted
+                });
+              });
+            console.log("questionAnswer " + JSON.stringify(this.questionAnswers));
 
             if (this.viewAdd == true) {
               this.initialiseQuestion(this.selectedQuiz.maxQuestions);
-
             }
           }
-        )
-
+        );
       },
       error => {
         console.log("failed to get answers");
       }
-    )
+    );
+
   }
 
   // back button functionality
@@ -301,7 +360,7 @@ export class AddQuestionAnswerComponent implements OnInit {
 
   onCategoryChange(categoryId: any) {
     this.questionAnswers = [];
-    this.getAllQuestionAnswers();
+    this.getAllQuestionAnswers(this.selectedQuizId);
   }
 
   // For navigate to view screen with data
@@ -334,7 +393,7 @@ export class AddQuestionAnswerComponent implements OnInit {
     this.selectedQuizId = this.selectedQuiz.quizId;
     this.questionAnswers = [];
 
-    this.getAllQuestionAnswers();
+    this.getAllQuestionAnswers(this.selectedQuizId);
     // this.addQuestion(objectReceived.questionFigure);
   }
 
@@ -363,15 +422,15 @@ export class AddQuestionAnswerComponent implements OnInit {
 
 
   // For adding question
-  private addQuestion(currentData: Question) {
+  private addQuestion(questionAnswer: QuestionAnswer) {
 
-    currentData.questionIsActive = true;  // setting active true
+    questionAnswer.question['questionIsActive'] = true;  // setting active true
 
     // calling service for adding data
-    this.service.addQuestion(currentData).subscribe(
+    this.service.addQuestion(questionAnswer).subscribe(
       response => {
         alert('Question added Successfully');
-        this.emptyQuestion = {} as Question;
+        // this.emptyQuestion = {} as Question;
         this.ngOnInit();
         this.back();
       },
@@ -478,12 +537,21 @@ export class AddQuestionAnswerComponent implements OnInit {
     this.selectedQuizId = this.selectedQuiz.quizId;
     this.selectedCategoryId = this.selectedQuiz.categoryId;
 
+    // console.log(this.categories);
+
+    this.categories.find(c => {
+      if (c.categoryId === this.selectedCategoryId) {
+        this.selectedCategoryName = c.categoryName;
+      }
+    });
+    // alert(this.selectedCategoryName)
     this.viewAll = false;
     this.viewAdd = true;
     this.viewQuePaper = false;
     this.questionAnswers = [];
-    this.getAllQuestionAnswers();
+    this.getAllQuestionAnswers(this.selectedQuizId);
   }
+
   onViewClicked(object: any) {
     this.selectedQuiz = object;
     this.selectedQuizId = this.selectedQuiz.quizId;
@@ -491,9 +559,10 @@ export class AddQuestionAnswerComponent implements OnInit {
     this.viewAll = false;
     this.viewQuePaper = true;
     this.questionAnswers = [];
-    this.getAllQuestionAnswers();
+    this.getAllQuestionAnswers(this.selectedQuizId);
 
   }
+
   onDeleteClicked(object: any) {
 
   }
