@@ -113,7 +113,7 @@ export class AddQuestionAnswerComponent implements OnInit {
 
     // this.oneQuestionAnswer = queAns;
     // separating question from object 
-    console.log(queAns.questionId);
+    // console.log(queAns.questionId);
     this.questionAnswer.question = {} as Question;
     this.questionAnswer.question['questionId'] = queAns.questionId;
     this.questionAnswer.question['questionFigure'] = queAns.questionFigure;
@@ -176,7 +176,7 @@ export class AddQuestionAnswerComponent implements OnInit {
       this.questionAnswer.answers.push(this.answer);
     }
 
-    console.log(this.questionAnswer);
+    // console.log(this.questionAnswer);
 
     this.service.addQuestion(this.questionAnswer).subscribe(
       (response) => {
@@ -271,7 +271,7 @@ export class AddQuestionAnswerComponent implements OnInit {
 
                 // Filter the answers based on questionId
                 const filteredAnswers = this.answers.filter(answer => answer.questionid == question.questionId);
-                console.log(filteredAnswers);
+                // console.log(filteredAnswers);
 
 
 
@@ -313,7 +313,7 @@ export class AddQuestionAnswerComponent implements OnInit {
                   isFormSubmitted: isFormSubmitted
                 });
               });
-            console.log("questionAnswer " + JSON.stringify(this.questionAnswers));
+            // console.log("questionAnswer " + JSON.stringify(this.questionAnswers));
 
             if (this.viewAdd == true) {
               this.initialiseQuestion(this.selectedQuiz.maxQuestions);
@@ -540,15 +540,13 @@ export class AddQuestionAnswerComponent implements OnInit {
     this.selectedQuiz = object;
     this.selectedQuizId = this.selectedQuiz.quizId;
     this.selectedCategoryId = this.selectedQuiz.categoryId;
-    alert(this.selectedCategoryId);
+    // alert(this.selectedCategoryId);
     this.categories.find(c => {
       if (c.categoryId === this.selectedCategoryId) {
         this.selectedCategoryName = c.categoryName;
       }
     });
-    alert(this.selectedCategoryName);
-
-
+    // alert(this.selectedCategoryName);
     // console.log(this.categories);
 
     this.categories.find(c => {
