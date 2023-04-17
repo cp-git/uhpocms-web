@@ -18,24 +18,67 @@ export class QuestionAnswerComponent implements OnInit {
   @Input() disable: boolean = false;
 
   @Input() selectedCategoryId: any;
-  @Input() selectedQuizId: any;
   @Input() selectedCategoryName: any;
+  @Input() selectedQuizId: any;
   @Input() generatedQuestionAnswerId: number = 0;
+
   @Output() submitClicked: EventEmitter<any> = new EventEmitter();
+
+
+  mcqAnswer: any;
+  options = ['Option 1', 'Option 2', 'Option3', 'Option4'];
+
 
   // for pagination 
   currentPage = 1;
+  page = 1;
+  // selectedCategory: string;
+  isMcqFormVisible: boolean = false;
+  isNonMcqFormVisible: boolean = false;
 
-  tempQuestionAnswers: QuestionAnswer[] = [];
+
+
+  addOption() {
+    this.options.push('Option ' + (this.options.length + 1));
+  }
+  // Define a function to handle page changes
+
+  removeOption(index: any) {
+    this.options.splice(index, 1);
+  }
+
+
+  // onCategorySelected() {
+  //   if (this.selectedCategory === 'mcq') {
+  //     this.isMcqFormVisible = true;
+  //     this.isNonMcqFormVisible = false;
+  //   } else if (this.selectedCategory === 'non-mcq') {
+  //     this.isMcqFormVisible = false;
+  //     this.isNonMcqFormVisible = true;
+  //   } else {
+  //     this.isMcqFormVisible = false;
+  //     this.isNonMcqFormVisible = false;
+  //   }
+  // }
+
+  //pagination
+
+  // sessionData: any;
+  // data: any;
+
   imageUrl: string | undefined;
 
+  // tempQuestionAnswers: QuestionAnswer[] = [];
+
   submittedQuestionAnswer!: OneQuestionAnswer;
-  constructor(private renderer: Renderer2, private el: ElementRef) {
+
+  constructor() {
   }
 
   ngOnInit(): void {
 
   }
+
   onFileSelected(event: any) {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -50,7 +93,6 @@ export class QuestionAnswerComponent implements OnInit {
       this.submittedQuestionAnswer.questionId = this.generatedQuestionAnswerId;
     }
     // console.log(this.submittedQuestionAnswer);
-
 
     if (changes['questionAnswers']) {
       this.questionAnswers = this.questionAnswers;
@@ -78,35 +120,35 @@ export class QuestionAnswerComponent implements OnInit {
     queAns.isFormSubmitted = true;
   }
 
-  private initialisedMcqOptions() {
-    this.questionAnswers.forEach(queAns => {
-      queAns.answers.forEach((answer: Answer, index: number) => {
-        if (index === 0) {
-          queAns.answers[0] = answer;
-        } else if (index === 1) {
-          queAns.answers[1] = answer;
-        } else if (index === 2) {
-          queAns.answers[2] = answer;
-        } else if (index === 3) {
-          queAns.answers[3] = answer;
-        }
-      })
-      for (let i = queAns.answers.length; i < 4; i++) {
-        alert(i)
-        if (i === 0) {
-          queAns.answers[0] = new Answer();
-        } else if (i === 1) {
-          queAns.answers[1] = new Answer();
-        } else if (i === 2) {
-          queAns.answers[2] = new Answer();
-        } else if (i === 3) {
-          queAns.answers[3] = new Answer();
-        }
-      }
-    })
-  }
+  // private initialisedMcqOptions() {
+  //   this.questionAnswers.forEach(queAns => {
+  //     queAns.answers.forEach((answer: Answer, index: number) => {
+  //       if (index === 0) {
+  //         queAns.answers[0] = answer;
+  //       } else if (index === 1) {
+  //         queAns.answers[1] = answer;
+  //       } else if (index === 2) {
+  //         queAns.answers[2] = answer;
+  //       } else if (index === 3) {
+  //         queAns.answers[3] = answer;
+  //       }
+  //     })
+  //     for (let i = queAns.answers.length; i < 4; i++) {
+  //       alert(i)
+  //       if (i === 0) {
+  //         queAns.answers[0] = new Answer();
+  //       } else if (i === 1) {
+  //         queAns.answers[1] = new Answer();
+  //       } else if (i === 2) {
+  //         queAns.answers[2] = new Answer();
+  //       } else if (i === 3) {
+  //         queAns.answers[3] = new Answer();
+  //       }
+  //     }
+  //   })
+  // }
 
-  onCorrectAnswerSelected(queAns: any, option: any) {
+  onAnswerSelected(queAns: any, option: any) {
     this.questionAnswers[0].correct2 = "true"
     switch (option) {
       case 'correct1':

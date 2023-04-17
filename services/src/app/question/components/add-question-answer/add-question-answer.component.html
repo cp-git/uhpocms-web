@@ -196,7 +196,7 @@
         </div>
         <div class="col-sm-3">
             <h4>Select Category</h4>
-            <select name="dropdown" (change)="onCategoryChange(selectedCategoryId)" [(ngModel)]="selectedCategoryId"
+            <select name="dropdown" (change)="onCategoryChange(selectedCategoryId )" [(ngModel)]="selectedCategoryId"
                 class="form-control" required="" [disabled]="viewAdd || viewQuePaper">
                 <option value="undefined">Select Category</option>
                 <option *ngFor="let option of categories" [ngValue]="option['categoryId']">
@@ -218,3 +218,26 @@
         </div> -->
     </div>
 </ng-template>
+
+<!-- {{viewQuePaper}} -->
+<ng-template #queans let-questionAnswers>
+    <div class="container">
+        <h3 class="text-center">Add/ Update Questions</h3>
+        <ng-container
+            *ngIf="selectedQuizId!='undefined' && selectedQuizId!='' && selectedQuizId!=null && selectedCategoryId!='undefined'  && selectedCategoryId!='' && selectedCategoryId!=null">
+            <app-question-answer [questionAnswers]="questionAnswers" [pagination]="true"
+                [selectedQuizId]="selectedQuizId" [selectedCategoryId]="selectedCategoryId" [submitOption]="true"
+                [selectedCategoryName]="selectedCategoryName" (submitClicked)="onFormSubmit($event)">
+            </app-question-answer>
+        </ng-container>
+        <!-- <div class="text-center"
+            *ngIf="selectedQuizId!='undefined' && selectedQuizId!='' && selectedQuizId!=null && selectedCategoryId!='undefined'  && selectedCategoryId!='' && selectedCategoryId!=null">
+            <pagination-controls (pageChange)="currentPage=$event"></pagination-controls>
+        </div> -->
+    </div>
+
+</ng-template>
+<!-- 
+{{selectedQuizId|json}}
+{{selectedCategoryId|json}} -->
+<!-- {{selectedCategoryName|json}} -->

@@ -38,6 +38,9 @@ export class AddQuestionAnswerComponent implements OnInit {
   currentData!: Question;  // for update and view, to show existing data
 
 
+  mcqAnswer: any;
+  options = ['Option 1', 'Option 2', 'Option3', 'Option4'];
+
   // To be assigned based on the module
   readonly primaryIdColumnName: string = 'questionId';
 
@@ -59,8 +62,8 @@ export class AddQuestionAnswerComponent implements OnInit {
   selectedCourseId: any;
   selectedModuleId: any;
   selectedCategoryId: any;
-  selectedQuizId: any;
   selectedCategoryName: any;
+  selectedQuizId: any;
 
   currentQuestions: Question[] = [];
   currentAnswers: Answer[] = [];
@@ -68,7 +71,7 @@ export class AddQuestionAnswerComponent implements OnInit {
   questionAnswers: OneQuestionAnswer[] = [];
   oneQuestionAnswer: OneQuestionAnswer;  // empty question
   questionAnswer!: QuestionAnswer;  // empty question
-
+  queAns!: OneQuestionAnswer;
   answers: Answer[] = [];
   selectedQuiz: any
 
@@ -252,7 +255,7 @@ export class AddQuestionAnswerComponent implements OnInit {
 
   }
 
-  queAns!: OneQuestionAnswer;
+
   private getAllQuestionAnswers(quizId: number) {
 
 
@@ -531,11 +534,20 @@ export class AddQuestionAnswerComponent implements OnInit {
 
   }
 
+  // selectedCategory!: Category;
   onAddUpdatClicked(object: any) {
     // alert(JSON.stringify(object))
     this.selectedQuiz = object;
     this.selectedQuizId = this.selectedQuiz.quizId;
     this.selectedCategoryId = this.selectedQuiz.categoryId;
+    alert(this.selectedCategoryId);
+    this.categories.find(c => {
+      if (c.categoryId === this.selectedCategoryId) {
+        this.selectedCategoryName = c.categoryName;
+      }
+    });
+    alert(this.selectedCategoryName);
+
 
     // console.log(this.categories);
 
@@ -556,6 +568,7 @@ export class AddQuestionAnswerComponent implements OnInit {
     this.selectedQuiz = object;
     this.selectedQuizId = this.selectedQuiz.quizId;
     this.selectedCategoryId = this.selectedQuiz.categoryId;
+
     this.viewAll = false;
     this.viewQuePaper = true;
     this.questionAnswers = [];

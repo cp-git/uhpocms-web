@@ -1,4 +1,3 @@
-import { Answer } from "./answer";
 
 export class OneQuestionAnswer {
     questionId!: number;

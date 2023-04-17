@@ -179,7 +179,7 @@ export class TeacherCourseComponent implements OnInit {
   private addCourse(currentData: any) {
 
     currentData.courseIsActive = true;  // setting active true
-
+    // console.log("currentda" + JSON.stringify(currentData));
     // calling service for adding data
     this.service.addCourse(currentData).subscribe(
       (data) => {
@@ -187,7 +187,7 @@ export class TeacherCourseComponent implements OnInit {
         this.courseDepartment.courseId = data.courseId;
 
         this.courseDepartment.departmentId = currentData.departmentId;
-
+        // console.log("coursedept" + JSON.stringify(this.courseDepartment));
         this.service.assignCourseToDepartment(this.courseDepartment).subscribe(
           response => {
             alert('Course Added successfully');

@@ -3,19 +3,21 @@
         <ng-container *ngTemplateOutlet="form; context: {$implicit: queAns, index:currentPage }"></ng-container>
     </ng-container>
 </ng-container>
+
 <ng-container *ngIf="!pagination">
     <ng-container *ngFor="let queAns of questionAnswers;let i= index">
         <ng-container *ngTemplateOutlet="form; context: {$implicit: queAns,index:i+1 }"></ng-container>
     </ng-container>
 </ng-container>
+
 <ng-container *ngIf="pagination">
     <div class="text-center"
         *ngIf="selectedQuizId!='undefined' && selectedQuizId!='' && selectedQuizId!=null && selectedCategoryId!='undefined'  && selectedCategoryId!='' && selectedCategoryId!=null">
         <pagination-controls (pageChange)="currentPage=$event"></pagination-controls>
     </div>
 </ng-container>
+
 <ng-template #form let-queAns let-index="index">
-    {{queAns|json}}
     <form #myForm="ngForm" (ngSubmit)="onFormSubmit(queAns)">
         <div class="jumbotron">
             <h4>Question : {{ index }}</h4>
@@ -47,7 +49,7 @@
                 <!-- <input name=" queFigure" type="text" class="form-control" required=""> -->
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="ansCorrect{{index}}" id="option1"
-                        value="{{queAns['correct1']}}" (click)="onCorrectAnswerSelected(queAns,'correct1')"
+                        value="{{queAns['correct1']}}" (click)="onAnswerSelected(queAns,'correct1')"
                         [checked]="queAns['correct1']" (ngModelChange)="onFormDirty(queAns)">
                     <label class="form-check-label" for="option1">
                         <input name="ansContent1{{index}}" [(ngModel)]="queAns['content1']" class="form-control"
@@ -57,7 +59,7 @@
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="ansCorrect{{index}}" id="option2"
-                        value="{{queAns['correct2']}}" (click)="onCorrectAnswerSelected(queAns,'correct2')"
+                        value="{{queAns['correct2']}}" (click)="onAnswerSelected(queAns,'correct2')"
                         [checked]="queAns['correct2']" (ngModelChange)="onFormDirty(queAns)">
                     <label class="form-check-label" for="option2">
                         <input name="ansContent2{{index}}" [(ngModel)]="queAns['content2']" class="form-control"
@@ -67,7 +69,7 @@
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="ansCorrect{{index}}" id="option3"
-                        value="{{queAns['correct3']}}" (click)="onCorrectAnswerSelected(queAns,'correct3')"
+                        value="{{queAns['correct3']}}" (click)="onAnswerSelected(queAns,'correct3')"
                         [checked]="queAns['correct3']" (ngModelChange)="onFormDirty(queAns)">
                     <label class="form-check-label" for="option3">
                         <input name="ansContent3{{index}}" [(ngModel)]="queAns['content3']" class="form-control"
@@ -76,7 +78,7 @@
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="ansCorrect{{index}}" id="option4"
-                        value="{{queAns['correct4']}}" (click)="onCorrectAnswerSelected(queAns,'correct4')"
+                        value="{{queAns['correct4']}}" (click)="onAnswerSelected(queAns,'correct4')"
                         [checked]="queAns['correct4']" (ngModelChange)="onFormDirty(queAns)">
                     <label class="form-check-label" for="option4">
                         <input name="ansContent4{{index}}" [(ngModel)]="queAns['content4']" class="form-control"
@@ -102,6 +104,6 @@
 
             </div>
         </div>
-        {{myForm.dirty}} {{ queAns['isFormDirty']}}{{ queAns['isFormSubmitted']}}
+
     </form>
 </ng-template>
