@@ -80,8 +80,8 @@ export class ModuleFileComponent {
     this.profileId = sessionStorage.getItem('profileId');
     // creating empty object
     this.emptyModuleFile = new ModuleFile();
-    this.loadCourses();
-    this.loadModules();
+    // this.loadCourses();
+
 
     //this.profileId = sessionStorage.getItem('profileId');
   }
@@ -93,6 +93,7 @@ export class ModuleFileComponent {
     this.getAllModulesFile();
     this.getAssignedCoursesOfTeacher(this.profileId);
     this.getInactiveModuleFiles();
+
   }
 
   submitClicked(eventData: any) {
@@ -198,6 +199,7 @@ export class ModuleFileComponent {
 
 
   private loadModules() {
+    this.modules = [];
     try {
       this.sessionData = sessionStorage.getItem('module');
       this.data = JSON.parse(this.sessionData);
@@ -210,8 +212,22 @@ export class ModuleFileComponent {
     catch (err) {
       console.log("Error", err);
     }
-  }
+    console.log(this.courses);
+    this.filteredModules = [];
+    this.courses.forEach(course => {
+      this.modules.forEach(module => {
+        if (course.courseId == module.courseId_id) {
+          this.filteredModules.push(module);
+        }
+      })
+    })
 
+    // console.log(this.filteredModules);
+
+
+
+  }
+  filteredModules: Module[] = [];
   private loadCourses() {
     try {
       this.sessionData = sessionStorage.getItem('course');
@@ -224,6 +240,8 @@ export class ModuleFileComponent {
     catch (err) {
       console.log("Error", err);
     }
+    this.loadModules();
+
   }
 
   //getting courses assigned to teacher using profileId
@@ -233,6 +251,8 @@ export class ModuleFileComponent {
         //console.log(data);
 
         this.courses = data;
+        this.loadModules();
+
       },
       error => {
         console.log(error);
@@ -292,30 +312,38 @@ export class ModuleFileComponent {
     this.moduleFileService.updateModuleFileById(currentData.moduleFileId, currentData).subscribe(
       response => {
         this.uploadfileService.uploadFiles(this.files).subscribe();
-        alert(`Module File updated successfully !`);
-        this.back();
+
       },
       error => {
-        alert(`Module File updation failed !`);
+        alert('Module File updation failed !');
       }
+
     );
+    alert('Module File updated successfully !');
+    this.back();
   }
+
+
 
 
   // for getting all module files
   private getAllModulesFile() {
     // calling service to get all data
+    console.log(this.modules);
     this.moduleFileService.fetchModuleFileList().subscribe(
       response => {
 
         this.allData = [];
+        console.log(this.allData);
         response.forEach((moduleFile: ModuleFile) => {
-          this.modules.find((module: Module) => {
+          this.filteredModules.find((module: Module) => {
             if (moduleFile.moduleId == module.moduleId) {
               this.allData.push({
                 ...moduleFile,
                 courseId: module.courseId_id,
+
               });
+
             }
           })
         })
@@ -327,6 +355,10 @@ export class ModuleFileComponent {
       }
     );
   }
+
+
+
+
 
 
   // For deleting (soft delete) by Id
