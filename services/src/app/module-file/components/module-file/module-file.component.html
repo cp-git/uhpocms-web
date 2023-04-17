@@ -3,7 +3,7 @@
         <ng-container *ngIf="viewAll">
             <div class="row justify-content-between">
                 <div class="col-sm-6">
-                    <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container> 
+                    <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container>
                 </div>
                 <div class="col-sm-6 text-right">
                     <ng-container *ngTemplateOutlet="addButton;"></ng-container>
@@ -17,7 +17,7 @@
         <ng-container *ngIf="viewAdd || viewOne || viewUpdate || viewActivate">
             <div class="row justify-content-between">
                 <div class="col-sm-6">
-                     <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container> 
+                    <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container>
                 </div>
                 <div class="col-sm-6 text-right">
                     <ng-container *ngTemplateOutlet="backButton;"></ng-container>
@@ -33,17 +33,17 @@
             <ng-container *ngTemplateOutlet="viewadd;"></ng-container>
         </ng-container>
 
-         <ng-container *ngIf="viewUpdate">
+        <ng-container *ngIf="viewUpdate">
             <ng-container *ngTemplateOutlet="viewupdate;"></ng-container>
-        </ng-container> 
+        </ng-container>
 
         <ng-container *ngIf="viewOne">
             <ng-container *ngTemplateOutlet="viewone;"></ng-container>
         </ng-container>
 
-         <ng-container *ngIf="viewActivate">
+        <ng-container *ngIf="viewActivate">
             <ng-container *ngTemplateOutlet="viewactivate;"></ng-container>
-        </ng-container> 
+        </ng-container>
     </div>
 </div>
 
@@ -65,12 +65,12 @@
 </ng-template>
 
 <ng-template #viewall>
-     <app-view-allupload *ngIf="allData.length>0" [data]="{moduleData:this.allData , columnNames:this.columnNames}"
+    <app-view-allupload *ngIf="allData.length>0" [data]="{moduleData:this.allData , columnNames:this.columnNames}"
         [dropdown]="{courses,modules}" [idsColumnName]="{columnName:primaryIdColumnName}" [isViewAllScreen]="true"
-        (viewClicked)="onChildViewClick($event)"  (updateClicked)="onChildUpdateClick($event)"
+        (viewClicked)="onChildViewClick($event)" (updateClicked)="onChildUpdateClick($event)"
         (deleteClicked)="onChildDeleteClick($event)">
-      
-    </app-view-allupload> 
+
+    </app-view-allupload>
     <div *ngIf="allData.length==0">
         <h3>No Modules File Content</h3>
     </div>
@@ -79,29 +79,32 @@
 
 <ng-template #viewactivate>
     <app-view-allupload *ngIf="allInActiveData.length>0" [dropdown]="{courses,modules}"
-        [data]="{moduleData:this.allInActiveData , columnNames:this.columnNames}"[dropdown]="{courses,modules}"
-        [idsColumnName]="{columnName:primaryIdColumnName}" [isActivateScreen]="true"(activateClicked)="onChildActivateClick($event)">
-        
+        [data]="{moduleData:this.allInActiveData , columnNames:this.columnNames}" [dropdown]="{courses,modules}"
+        [idsColumnName]="{columnName:primaryIdColumnName}" [isActivateScreen]="true"
+        (activateClicked)="onChildActivateClick($event)">
+
     </app-view-allupload>
     <div *ngIf="allInActiveData.length==0">
         <h3>No Inactive Modules content</h3>
     </div>
-</ng-template> 
+</ng-template>
 
 
 <ng-template #viewadd>
 
-    <app-add-updateupload [data]="{currentData:emptyModuleFile , columnNames:allColumnNames}" [dropdown]="{courses,modules}"
-        (submitClicked)="onAddModuleSubmit($event)" (sentFileData)="onRecievedFiles($event);"></app-add-updateupload>
+    <app-add-updateupload [data]="{currentData:emptyModuleFile , columnNames:allColumnNames}"
+        [dropdown]="{courses,modules}" (submitClicked)="onAddModuleSubmit($event)"
+        (sentFileData)="onRecievedFiles($event);"></app-add-updateupload>
 </ng-template>
 
 <ng-template #viewone>
 
-    <app-view-oneupload [data]="{currentData:currentData , columnNames:viewColumnNames}" [dropdown]="{courses,modules}"></app-view-oneupload>
+    <app-view-oneupload [data]="{currentData:currentData , columnNames:viewColumnNames}"
+        [dropdown]="{courses,modules}"></app-view-oneupload>
 </ng-template>
 
- <ng-template #viewupdate>
-    <app-add-updateupload [data]="{currentData:currentData , columnNames:updateColumnNames}" [dropdown]="{courses,modules}"
-        (submitClicked)="onUpdateModuleSubmit($event)"  (sentFileData)="onRecievedFiles($event);"></app-add-updateupload>
-</ng-template> 
-
+<ng-template #viewupdate>
+    <app-add-updateupload [data]="{currentData:currentData , columnNames:updateColumnNames}"
+        [dropdown]="{courses,modules}" (submitClicked)="onUpdateModuleSubmit($event)"
+        (sentFileData)="onRecievedFiles($event);"></app-add-updateupload>
+</ng-template>
