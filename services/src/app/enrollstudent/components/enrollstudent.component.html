@@ -1,5 +1,6 @@
 <div class="container">
-    <h1 class="text-center">Enroll Course To Student</h1>
+    <h1 class="text-left">Enroll Course To Student</h1>
+    <button class="btn btn-primary top-right" (click)="back()">Back</button>
     <div class="jumbotron">
         <div class="form-group row">
             <div class="col-sm-4">
@@ -8,8 +9,9 @@
                     <select [(ngModel)]="_profile.institutionId" class="form-control"
                         (click)=" getDepartmentByInstId(_profile.institutionId); getProfileByRoleAndInstId(_profile.institutionId)"
                         (change)="disablefunc()">
+                        <option value="undefined" selected>Select</option>
                         <option *ngFor="let institute of institutions" value="{{institute.adminInstitutionId}}"
-                            [selected]="institute.adminInstitutionId " class="dropdown-item">
+                            class="dropdown-item">
                             {{institute.adminInstitutionName}}
                         </option>
                     </select>
@@ -19,9 +21,9 @@
                 <label class="badg">Department</label>
                 <div class="form-group">
                     <select [(ngModel)]="department.id" class="form-control"
-                        (click)=" getCoursesByDeptId(department.id)">
-                        <option *ngFor="let department of departments" value="{{department.id}}"
-                            [selected]="department.id">
+                        (click)="getCoursesByDeptId(department.id)">
+                        <option value="undefined" selected>Select</option>
+                        <option *ngFor="let department of departments" value="{{department.id}}">
                             {{department.name}}
                         </option>
                     </select>
@@ -30,8 +32,9 @@
             <div class="col-sm-4">
                 <label class="badg">Course</label>
                 <div class="form-group">
-                    <select [(ngModel)]="course.courseId" class="form-control">
-                        <option *ngFor="let course of courses" value="{{course.courseId}}" [selected]="course.courseId">
+                    <select name="courseid" [(ngModel)]="course.courseId" class="form-control">
+                        <option value="undefined" selected>Select</option>
+                        <option *ngFor="let course of courses" value="{{course.courseId}}">
                             {{course.courseName}}
                         </option>
                     </select>
@@ -85,12 +88,7 @@
 
                 <button #submitButton class="form-control" id="loginbtn" class="btn btn-primary"
                     (click)="saveEnrolledStudent(course.courseId,_profile.adminId);" title="Save Course"
-                    [disabled]="!isFormComplete()">SAVE</button>
-
-
-
-
-                <button class="btn btn-primary" style="margin-left: 30px; " (click)="back()">Back</button>
+                    [disabled]="!isFormComplete()" style="margin-left: 450px; ">SAVE</button>
 
             </div>
         </div>

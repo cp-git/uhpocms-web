@@ -1,5 +1,7 @@
 <div class="container">
-    <h1 class="text-center">Assign Course To Teacher</h1>
+    <h1 class="text-left">Assign Course To Teacher</h1>
+    <button class="form-control" class="btn btn-primary top-right" (click)=" back()"
+        style="margin-left: 20px;">Back</button>
     <div class="jumbotron">
         <div class="form-group row">
             <div class="col-sm-4">
@@ -7,8 +9,9 @@
                 <div class="form-group">
                     <select [(ngModel)]="_profile.institutionId" class="form-control"
                         (click)=" getDepartmentByInstId(_profile.institutionId); getProfileByRoleAndInstId(_profile.institutionId)">
+                        <option value="undefined" selected>Select</option>
                         <option *ngFor="let institute of institutions" value="{{institute.adminInstitutionId}}"
-                            [selected]="institute.adminInstitutionId " class="dropdown-item">
+                            class="dropdown-item">
                             {{institute.adminInstitutionName}}
                         </option>
                     </select>
@@ -30,6 +33,7 @@
                 <label class="badg">Course</label>
                 <div class="form-group">
                     <select name="courseid" [(ngModel)]="course.courseId" class="form-control">
+                        <option value="undefined" selected>Select</option>
                         <option *ngFor="let courseObj of courses" [value]="courseObj.courseId">
                             {{courseObj.courseName}}
                         </option>
@@ -72,8 +76,7 @@
                     title="Save Course" [disabled]="!isFormComplete()" style="margin-left: 450px;">SAVE</button>
 
 
-                <button class="form-control" class="btn btn-primary" (click)=" back()"
-                    style="margin-left: 20px;">Back</button>
+
             </div>
         </div>
 

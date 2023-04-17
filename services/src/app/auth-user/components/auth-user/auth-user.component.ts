@@ -151,9 +151,12 @@ export class AuthUserComponent implements OnInit {
     );
   }
 
+  currentDate = new Date();
+
   // For adding auth user
   private addAuthuser(currentData: Authuser) {
 
+    currentData.authUserLastLogin = this.currentDate;
     currentData.authUserIsActive = true;  // setting active true
 
     // calling service for adding data

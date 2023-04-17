@@ -6,3 +6,9 @@
 .form-control {
     font-size: 1.3rem;
 }
+
+.top-right {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
