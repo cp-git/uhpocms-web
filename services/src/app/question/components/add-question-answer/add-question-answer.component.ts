@@ -37,6 +37,9 @@ export class AddQuestionAnswerComponent implements OnInit {
   currentData!: Question;  // for update and view, to show existing data
 
 
+  mcqAnswer: any;
+  options = ['Option 1', 'Option 2', 'Option3', 'Option4'];
+
   // To be assigned based on the module
   readonly primaryIdColumnName: string = 'questionId';
 
@@ -58,10 +61,12 @@ export class AddQuestionAnswerComponent implements OnInit {
   selectedCourseId: any;
   selectedModuleId: any;
   selectedCategoryId: any;
+  selectedCategoryName: any;
   selectedQuizId: any;
 
   currentQuestions: Question[] = [];
   currentAnswers: Answer[] = [];
+
 
   questionAnswers: QuestionAnswer[] = [];
   questionAnswer: QuestionAnswer;  // empty question
@@ -82,7 +87,7 @@ export class AddQuestionAnswerComponent implements OnInit {
     // creating empty object
     this.emptyQuestion = new Question();
     this.emptyAnswer = new Answer();
-
+    this.selectedCategory = new Category();
     this.questionAnswer = new QuestionAnswer();
     this.loadCategories();
     this.loadQuizzes();
@@ -231,8 +236,6 @@ export class AddQuestionAnswerComponent implements OnInit {
 
   }
   private getAllQuestionAnswers() {
-
-
     this.service.getAllAnswers().subscribe(
       (data) => {
         this.answers = data;
@@ -472,11 +475,20 @@ export class AddQuestionAnswerComponent implements OnInit {
 
   }
 
+  selectedCategory: Category;
   onAddUpdatClicked(object: any) {
     // alert(JSON.stringify(object))
     this.selectedQuiz = object;
     this.selectedQuizId = this.selectedQuiz.quizId;
     this.selectedCategoryId = this.selectedQuiz.categoryId;
+    alert(this.selectedCategoryId);
+    this.categories.find(c => {
+      if (c.categoryId === this.selectedCategoryId) {
+        this.selectedCategoryName = c.categoryName;
+      }
+    });
+    alert(this.selectedCategoryName);
+
 
     this.viewAll = false;
     this.viewAdd = true;
@@ -488,6 +500,7 @@ export class AddQuestionAnswerComponent implements OnInit {
     this.selectedQuiz = object;
     this.selectedQuizId = this.selectedQuiz.quizId;
     this.selectedCategoryId = this.selectedQuiz.categoryId;
+
     this.viewAll = false;
     this.viewQuePaper = true;
     this.questionAnswers = [];

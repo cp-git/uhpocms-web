@@ -149,7 +149,7 @@
     <div class="container">
         <h3 class="text-center">Question Paper</h3>
         <app-question-answer [questionAnswers]="questionAnswers" [selectedQuizId]="selectedQuizId"
-            [selectedCategoryId]="selectedCategoryId" [disable]="true">
+            [selectedCategoryId]="selectedCategoryId" [selectedCategoryName]="selectedCategoryName" [disable]="true">
         </app-question-answer>
 
     </div>
@@ -195,7 +195,7 @@
         </div>
         <div class="col-sm-3">
             <h4>Select Category</h4>
-            <select name="dropdown" (change)="onCategoryChange(selectedCategoryId)" [(ngModel)]="selectedCategoryId"
+            <select name="dropdown" (change)="onCategoryChange(selectedCategoryId )" [(ngModel)]="selectedCategoryId"
                 class="form-control" required="" [disabled]="viewAdd || viewQuePaper">
                 <option value="undefined">Select Category</option>
                 <option *ngFor="let option of categories" [ngValue]="option['categoryId']">
@@ -226,7 +226,7 @@
             *ngIf="selectedQuizId!='undefined' && selectedQuizId!='' && selectedQuizId!=null && selectedCategoryId!='undefined'  && selectedCategoryId!='' && selectedCategoryId!=null">
             <app-question-answer [questionAnswers]="questionAnswers" [pagination]="true"
                 [selectedQuizId]="selectedQuizId" [selectedCategoryId]="selectedCategoryId" [submitOption]="true"
-                (submitClicked)="onFormSubmit($event)">
+                [selectedCategoryName]="selectedCategoryName" (submitClicked)="onFormSubmit($event)">
             </app-question-answer>
         </ng-container>
         <!-- <div class="text-center"
@@ -239,3 +239,4 @@
 <!-- 
 {{selectedQuizId|json}}
 {{selectedCategoryId|json}} -->
+<!-- {{selectedCategoryName|json}} -->
