@@ -78,16 +78,18 @@ export class AuthenticationloginComponent {
 
     this._auth.loginDataAuthUser(this.authUser).subscribe(
       (data) => {
+        console.log(data);
+
         const userName = data.authUserFirstName + " " + data.authUserLastName;
         this._instituteadminprofile.getAllProfiles().subscribe((data) => {
           this._instituteAdminArray = data;
-          // console.log(data);
+          console.log(data);
 
           for (let i = 0; i <= this._instituteAdminArray.length; i++) {
 
             //console.log(this._authList[i].authUserId);
 
-            if (this._instituteAdminArray[i].userId === this.authUser.authUserId) {
+            if (this._instituteAdminArray[i].userId == this.authUser.authUserId) {
               //console.log(this._instituteAdminArray[i].userId + "authuser_id in instituteadmin profile..")
               //console.log(this.authUser.authUserId + "authuser_id in Auth User profile..")
               alert(this._instituteAdminArray[i].userRole);
