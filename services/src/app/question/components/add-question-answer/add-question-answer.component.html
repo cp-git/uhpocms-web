@@ -6,16 +6,7 @@
                     <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <!-- <ng-container *ngIf="selectedQuizId!='undefined' && selectedQuizId!='' && selectedQuizId!=null "> -->
-                    <!-- <ng-container *ngTemplateOutlet="questionPaperButton;"></ng-container> -->
-
-                    <!-- </ng-container> -->
-                    <!-- <ng-container *ngTemplateOutlet="addButton;"></ng-container> -->
-
-
-                    <!-- <ng-container *ngTemplateOutlet="activateButton;"></ng-container> -->
                     <ng-container *ngTemplateOutlet="backButton;"></ng-container>
-
                 </div>
             </div>
         </ng-container>
@@ -41,17 +32,17 @@
             <ng-container *ngTemplateOutlet="queans; context: {$implicit: questionAnswers }"></ng-container>
         </ng-container>
 
-        <ng-container *ngIf=" viewUpdate">
+        <!-- <ng-container *ngIf=" viewUpdate">
             <ng-container *ngTemplateOutlet="viewupdate;"></ng-container>
-        </ng-container>
+        </ng-container> -->
 
-        <ng-container *ngIf="viewOne">
+        <!-- <ng-container *ngIf="viewOne">
             <ng-container *ngTemplateOutlet="viewone;"></ng-container>
-        </ng-container>
+        </ng-container> -->
 
-        <ng-container *ngIf="viewActivate">
+        <!-- <ng-container *ngIf="viewActivate">
             <ng-container *ngTemplateOutlet="viewactivate;"></ng-container>
-        </ng-container>
+        </ng-container> -->
         <ng-container *ngIf="viewQuePaper">
             <ng-container *ngTemplateOutlet="viewQP; context: {$implicit: questionAnswers }"></ng-container>
         </ng-container>
@@ -77,6 +68,26 @@
     <button class="btn btn-primary" (click)="onActivateClick()">Inactive</button>
 </ng-template>
 
+<!-- <ng-template #viewactivate>
+    activate screen
+</ng-template> -->
+
+<!-- <ng-template #viewone>
+    <div class="container">
+        <h3 class="text-center">Question Paper</h3>
+        <app-question-answer [questionAnswers]="questionAnswers" [selectedQuizId]="selectedQuizId"
+            [selectedCategoryId]="selectedCategoryId" [selectedCategoryName]="selectedCategoryName" [disable]="true">
+        </app-question-answer>
+    </div>
+</ng-template> -->
+
+<!-- <ng-template #viewupdate>
+    <app-add-update [data]="{currentData:currentData , columnNames:columnNames}"
+        [dropdown]="{courses,modules,categories}" (submitClicked)="onUpdateQuestionSubmit($event)"></app-add-update>
+</ng-template> -->
+
+
+<!-- this is usable viewAll page -->
 <ng-template #viewall>
     <!-- <app-view-all *ngIf="allData.length>0"
         [data]="{moduleData:this.allData | filter:'courseId':selectedCourseId| filter:'moduleId':selectedModuleId | filter:'categoryId':selectedCategoryId, columnNames:this.columnNames}"
@@ -90,11 +101,8 @@
             <thead id="deptHeader">
                 <tr>
                     <th *ngFor="let column of columnNames">{{ column.label }}</th>
-
                     <th>Add/ Update</th>
                     <th>View</th>
-                    <!-- <th>Delete</th> -->
-
                 </tr>
             </thead>
             <tbody>
@@ -125,26 +133,32 @@
                         </ng-container>
                     </td>
 
-
                     <td><button (click)="onAddUpdatClicked(row)" class="btn btn-primary">Add/ Update</button></td>
                     <td><button (click)="onViewClicked(row)" class="btn btn-primary">View</button></td>
                     <!-- <td><button (click)="onDeleteClicked(row)" class="btn btn-danger">Delete</button></td> -->
-
-
                 </tr>
             </tbody>
         </table>
 
     </div>
-
-
 </ng-template>
 
-<ng-template #viewactivate>
-    activate screen
+<!-- this is usable for vieadd screen when we click on add/update -->
+<ng-template #queans let-questionAnswers>
+    <div class="container">
+        <h3 class="text-center">Add/ Update Questions - {{selectedQuiz.title}}</h3>
+        <ng-container
+            *ngIf="selectedQuizId!='undefined' && selectedQuizId!='' && selectedQuizId!=null && selectedCategoryId!='undefined'  && selectedCategoryId!='' && selectedCategoryId!=null">
+            <app-question-answer [generatedQuestionAnswerId]="generatedQuestionAnswerId"
+                [questionAnswers]="questionAnswers" [pagination]="true" [selectedQuizId]="selectedQuizId"
+                [selectedCategoryId]="selectedCategoryId" [selectedCategoryName]="selectedCategoryName"
+                [submitOption]="true" (submitClicked)="onFormSubmit($event)">
+            </app-question-answer>
+        </ng-container>
+    </div>
 </ng-template>
 
-
+<!-- this is for viewing all question of quiz -->
 <ng-template #viewQP let-questionAnswers>
     <div class="container">
         <h3 class="text-center">Question Paper</h3>
@@ -154,21 +168,8 @@
 
     </div>
 </ng-template>
-<!-- {{questionAnswers|json}} -->
-<ng-template #viewone>
-    <div class="container">
-        <h3 class="text-center">Question Paper</h3>
-        <app-question-answer [questionAnswers]="questionAnswers" [selectedQuizId]="selectedQuizId"
-            [selectedCategoryId]="selectedCategoryId" [disable]="true">
-        </app-question-answer>
-    </div>
-</ng-template>
 
-<ng-template #viewupdate>
-    <app-add-update [data]="{currentData:currentData , columnNames:columnNames}"
-        [dropdown]="{courses,modules,categories}" (submitClicked)="onUpdateQuestionSubmit($event)"></app-add-update>
-</ng-template>
-
+<!-- // template for dropdowns -->
 <ng-template #dropdowns>
     <div class="row">
         <div class="col-sm-3">
@@ -217,8 +218,8 @@
         </div> -->
     </div>
 </ng-template>
-<!-- {{viewQuePaper}} -->
 
+<!-- {{viewQuePaper}} -->
 <ng-template #queans let-questionAnswers>
     <div class="container">
         <h3 class="text-center">Add/ Update Questions</h3>

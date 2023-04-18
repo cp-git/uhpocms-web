@@ -8,6 +8,7 @@ import { QuestionAllColumn, QuestionColumn } from 'app/question/column/question-
 import { QuestionService } from 'app/question/services/question.service';
 import { Quiz } from 'app/class/quiz';
 import { Category } from 'app/class/category';
+import { QuestionAnswer } from 'app/question/class/question-answer';
 
 @Component({
   selector: 'app-question',
@@ -141,7 +142,7 @@ export class QuestionComponent implements OnInit {
   }
 
   // on addComponents's submit button clicked
-  onAddQuestionSubmit(objectReceived: Question): void {
+  onAddQuestionSubmit(objectReceived: QuestionAnswer): void {
     this.addQuestion(objectReceived);
   }
 
@@ -177,15 +178,15 @@ export class QuestionComponent implements OnInit {
 
 
   // For adding question
-  private addQuestion(currentData: Question) {
+  private addQuestion(questionAnswer: QuestionAnswer) {
 
-    currentData.questionIsActive = true;  // setting active true
+    questionAnswer.question['questionIsActive'] = true;  // setting active true
 
     // calling service for adding data
-    this.service.addQuestion(currentData).subscribe(
+    this.service.addQuestion(questionAnswer).subscribe(
       response => {
         alert('Question added Successfully');
-        this.emptyQuestion = {} as Question;
+        // this.emptyQuestion = {} as Question;
         this.ngOnInit();
         this.back();
       },
