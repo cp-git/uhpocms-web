@@ -301,6 +301,7 @@ export class AddQuestionAnswerComponent implements OnInit {
                 if (question.questionId > 0) {
                   isFormSubmitted = true;
                 }
+
                 this.questionAnswers.push({
                   ...question,
                   correct1: this.queAns.correct1,
@@ -314,7 +315,7 @@ export class AddQuestionAnswerComponent implements OnInit {
                   isFormDirty: false,
                   isFormSubmitted: isFormSubmitted,
                   image: false,
-                  isOptionSelected: false
+                  isOptionSelected: true
                 });
               });
             // console.log("questionAnswer " + JSON.stringify(this.questionAnswers));
