@@ -30,4 +30,5 @@ export class OneQuestionAnswer {
     isFormDirty!: boolean;
     isFormSubmitted!: boolean;
     image!: boolean;
+    isOptionSelected!: boolean;
 }

@@ -71,7 +71,7 @@ export class QuestionAnswerComponent implements OnInit {
   // tempQuestionAnswers: QuestionAnswer[] = [];
 
   submittedQuestionAnswer!: OneQuestionAnswer;
-
+  isOptionSelected: boolean = false;
   constructor() {
   }
 
@@ -163,7 +163,7 @@ export class QuestionAnswerComponent implements OnInit {
   // }
 
   onAnswerSelected(queAns: any, option: any) {
-    this.questionAnswers[0].correct2 = "true"
+
     switch (option) {
       case 'correct1':
         queAns['correct1'] = true;
@@ -193,10 +193,14 @@ export class QuestionAnswerComponent implements OnInit {
 
         break;
     }
+    if (queAns.correct1 == true || queAns.correct2 == true || queAns.correct3 == true || queAns.correct4 == true) {
+      queAns.isOptionSelected = true;
+    } else {
+      queAns.isOptionSelected = false;
+    }
   }
 
   onFormDirty(queAns: any) {
-    alert()
     if (queAns.isFormDirty == false) {
       queAns.isFormDirty = true;
       queAns.isFormSubmitted = false;
