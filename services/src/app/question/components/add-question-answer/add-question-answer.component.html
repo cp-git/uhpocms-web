@@ -146,7 +146,7 @@
 <!-- this is usable for vieadd screen when we click on add/update -->
 <ng-template #queans let-questionAnswers>
     <div class="container">
-        <h3 class="text-center">Add/ Update Questions</h3>
+        <h3 class="text-center">Add/ Update Questions - {{selectedQuiz.title}}</h3>
         <ng-container
             *ngIf="selectedQuizId!='undefined' && selectedQuizId!='' && selectedQuizId!=null && selectedCategoryId!='undefined'  && selectedCategoryId!='' && selectedCategoryId!=null">
             <app-question-answer [generatedQuestionAnswerId]="generatedQuestionAnswerId"

@@ -28,7 +28,7 @@ export class QuestionAnswerComponent implements OnInit {
   mcqAnswer: any;
   options = ['Option 1', 'Option 2', 'Option3', 'Option4'];
 
-
+  fileName!: string;
   // for pagination 
   currentPage = 1;
   page = 1;
@@ -66,7 +66,7 @@ export class QuestionAnswerComponent implements OnInit {
   // sessionData: any;
   // data: any;
 
-  imageUrl: string | undefined;
+  image: string | undefined;
 
   // tempQuestionAnswers: QuestionAnswer[] = [];
 
@@ -79,13 +79,27 @@ export class QuestionAnswerComponent implements OnInit {
 
   }
 
-  onFileSelected(event: any) {
+  onFileSelected(event: any, queAns: OneQuestionAnswer) {
+    // alert(JSON.stringify(queAns))
     const file = event.target.files[0];
+    this.fileName = file.name;
+
     const reader = new FileReader();
     reader.onload = () => {
-      this.imageUrl = reader.result as string;
+      this.image = reader.result as string;
+      queAns.image = true;
     };
     reader.readAsDataURL(file);
+    queAns.questionFigure = this.fileName;
+
+    // alert(queAns.questionFigure)
+
+    if (queAns.isFormDirty == false) {
+      queAns.isFormDirty = true;
+      queAns.isFormSubmitted = false;
+    }
+
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -182,6 +196,7 @@ export class QuestionAnswerComponent implements OnInit {
   }
 
   onFormDirty(queAns: any) {
+    alert()
     if (queAns.isFormDirty == false) {
       queAns.isFormDirty = true;
       queAns.isFormSubmitted = false;

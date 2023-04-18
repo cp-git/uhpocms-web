@@ -265,6 +265,8 @@ export class AddQuestionAnswerComponent implements OnInit {
         this.questionAnswers = []; // Initialize questionAnswers as an array
         this.service.getAllQuestionsByQuizId(quizId).subscribe(
           (response) => {
+            console.log(response);
+
             response.forEach(
               question => {
                 this.queAns = {} as OneQuestionAnswer;
@@ -310,7 +312,8 @@ export class AddQuestionAnswerComponent implements OnInit {
                   correct4: this.queAns.correct4,
                   content4: this.queAns.content4,
                   isFormDirty: false,
-                  isFormSubmitted: isFormSubmitted
+                  isFormSubmitted: isFormSubmitted,
+                  image: false
                 });
               });
             // console.log("questionAnswer " + JSON.stringify(this.questionAnswers));
