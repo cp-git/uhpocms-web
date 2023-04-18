@@ -186,7 +186,7 @@ export class TeacherCourseComponent implements OnInit {
 
         this.courseDepartment.courseId = data.courseId;
 
-        this.courseDepartment.departmentId = currentData.departmentId;
+        this.courseDepartment.department_id = currentData.departmentId;
         console.log("coursedept" + JSON.stringify(this.courseDepartment));
         this.service.assignCourseToDepartment(this.courseDepartment).subscribe(
           response => {
@@ -223,7 +223,7 @@ export class TeacherCourseComponent implements OnInit {
             if (course.courseId == coursedepartment.courseId) {
               this.allData.push({
                 ...course,
-                departmentId: coursedepartment.departmentId,
+                departmentId: coursedepartment.department_id,
               });
             }
           })
@@ -266,7 +266,7 @@ export class TeacherCourseComponent implements OnInit {
             if (course.courseId == coursedepartment.courseId) {
               this.allInActiveData.push({
                 ...course,
-                departmentId: coursedepartment.departmentId,
+                departmentId: coursedepartment.department_id,
               });
 
             }
@@ -361,7 +361,7 @@ export class TeacherCourseComponent implements OnInit {
             if (course.courseId == coursedepartment.courseId) {
               this.allData.push({
                 ...course,
-                departmentId: coursedepartment.departmentId,
+                departmentId: coursedepartment.department_id,
               });
             }
           })
@@ -386,7 +386,7 @@ export class TeacherCourseComponent implements OnInit {
             if (course.courseId == coursedepartment.courseId) {
               this.allData.push({
                 ...course,
-                departmentId: coursedepartment.departmentId,
+                departmentId: coursedepartment.department_id,
               });
             }
           })
