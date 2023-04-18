@@ -3,8 +3,7 @@ export const ProfileColumn = [
     { key: 'lastName', label: 'Last Name', type: 'input', subtype: 'text' },
     { key: 'adminEmail', label: 'Email', type: 'email' },
     { key: 'institutionId', label: 'Institution', type: 'dropdown', arrayName: 'adminInstitutions', columnId: 'adminInstitutionId', columnName: 'adminInstitutionName' },
-    { key: 'adminDepartment', label: 'Department', type: 'dropdown', arrayName: 'departments', columnId: 'id', columnName: 'name' },
-
+    { key: 'adminDepartment', label: 'Department', type: 'dropdown', 'toSort': true, arrayName: 'departments', columnId: 'id', columnName: 'name', sortBasedOn: 'institutionId', foreignKeyColumn: 'institutionId' },
 ]
 
 

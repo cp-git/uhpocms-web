@@ -194,6 +194,23 @@ export class ProfileComponent implements OnInit {
   }
 
 
+
+  //   // Assuming you have a function to retrieve all profiles
+  // getAllProfilesByInstitution(institutionName) {
+  //   const profiles = this.getAllAdminProfiles(); // Replace with your function to retrieve all profiles
+  //   const activeInstitutionProfiles = profiles.filter((profile:any) => {
+  //     return profile.institution === institutionName && profile.institution.isActive;
+  //   });
+
+  //   return activeInstitutionProfiles;
+  // }
+
+  // const institutionName = "exampleInstitution";
+  // const activeInstitutionProfiles = getAllProfilesByInstitution(institutionName);
+
+  // console.log(activeInstitutionProfiles);
+
+
   // fetching institutions data from session storage
   private loadAdminInstitutions() {
 
@@ -202,6 +219,7 @@ export class ProfileComponent implements OnInit {
       this.data = JSON.parse(this.sessionData);
       for (var inst in this.data) {
         this.adminInstitutions.push(this.data[inst]);
+
       }
     }
     catch (err) {
