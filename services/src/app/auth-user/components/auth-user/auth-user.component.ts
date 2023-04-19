@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { AuthUserService } from 'app/auth-user/services/auth-user.service';
 import { Authuser } from 'app/auth-user/class/auth-user';
 import { AuthUserAllColumn, AuthUserColumn } from 'app/auth-user/column/auth-user-column';
+import { json } from 'body-parser';
 
 
 @Component({
@@ -151,12 +152,16 @@ export class AuthUserComponent implements OnInit {
     );
   }
 
+  currentDate = new Date();
+
   // For adding auth user
   private addAuthuser(currentData: Authuser) {
 
+    currentData.authUserLastLogin = this.currentDate;
     currentData.authUserIsActive = true;  // setting active true
 
     // calling service for adding data
+    alert(JSON.stringify(currentData));
     this.service.addAuthUser(currentData).subscribe(
       (data) => {
         alert('AuthUser added Successfully');

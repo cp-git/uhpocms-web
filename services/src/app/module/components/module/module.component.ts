@@ -113,7 +113,9 @@ export class ModuleComponent {
   // For navigate to update screen with data
   // function will call when child update button is clicked 
   onChildDeleteClick(objectReceived: Module): void {
-    this.deleteModule(objectReceived.moduleName);
+    if (objectReceived.moduleId !== null) {
+      this.deleteModule(objectReceived.moduleId);
+    }
   }
 
   // For navigate to activate screen with data
@@ -167,25 +169,41 @@ export class ModuleComponent {
   ///////////////////////////////////////////
 
   // For updating admin role
+  // private updateModule(currentData: Module) {
+  //   // calling service for updating data
+  //   this.service.updateModule(currentData.moduleName, currentData).subscribe(
+  //     response => {
+  //       alert(`Module updated successfully !`);
+  //       this.back();
+  //     },
+  //     error => {
+  //       alert(`Module updation failed !`);
+  //     }
+  //   );
+  // }
+
+  ///update module by id
+  // For updating admin role
   private updateModule(currentData: Module) {
     // calling service for updating data
-    this.service.updateModule(currentData.moduleName, currentData).subscribe(
-      response => {
-        alert(`Module updated successfully !`);
-        this.back();
-      },
-      error => {
-        alert(`Module updation failed !`);
-      }
-    );
+    if (currentData.moduleId !== null) {
+      this.service.updateModuleById(currentData.moduleId, currentData).subscribe(
+        response => {
+          alert(`Module updated successfully !`);
+          this.back();
+        },
+        error => {
+          alert(`Module updation failed !`);
+        }
+      );
+    }
   }
-
 
   // For adding 
   private addModule(currentData: Module) {
     currentData.moduleIsActive = true;  // setting active true
     // calling service for adding data
-
+    alert(JSON.stringify(currentData));
     this.service.addTeacherModule(currentData).subscribe(
       (data) => {
         //  alert(this.currentData)
@@ -246,11 +264,27 @@ export class ModuleComponent {
     );
   }
 
+  // // For deleting (soft delete) 
+  // private deleteModule(name: string) {
+
+  //   // calling service to soft delte
+  //   this.service.deleteModule(name).subscribe(
+  //     (response) => {
+  //       alert('Module deleted successfully');
+  //       this.ngOnInit();
+  //     },
+  //     (error) => {
+  //       alert('Module deletion failed');
+  //     }
+  //   );
+  // }
+
   // For deleting (soft delete) 
-  private deleteModule(name: string) {
+  private deleteModule(moduleId: number) {
+
 
     // calling service to soft delte
-    this.service.deleteModule(name).subscribe(
+    this.service.deleteModuleById(moduleId).subscribe(
       (response) => {
         alert('Module deleted successfully');
         this.ngOnInit();
@@ -259,6 +293,7 @@ export class ModuleComponent {
         alert('Module deletion failed');
       }
     );
+
   }
 
   // For getting all inactive admin roles
