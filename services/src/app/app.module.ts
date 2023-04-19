@@ -76,6 +76,7 @@ import { ModuleFileModule } from './module-file/module-names/module-file.module'
 import { HttpInterceptorService } from './shared/services/HttpInterceptor/http-interceptor.service';
 import { UploadfileReusableModule } from './uploadfile-reusable/uploadfile-reusable.module';
 import { QuestionAnswerComponent } from './question/components/question-answer/question-answer.component';
+import { RemoveExtensionPipe } from './shared/pipes/removeExtension/remove-extension.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -109,6 +110,7 @@ import { QuestionAnswerComponent } from './question/components/question-answer/q
     StudentPanelComponent,
     StudentModuleComponent,
     UploadFileComponent,
+    RemoveExtensionPipe,
 
   ],
 

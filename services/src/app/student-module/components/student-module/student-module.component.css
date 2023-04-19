@@ -10,10 +10,10 @@
 }
 
 .videoscreen {
+    border: 4px solid black;
     margin-top: 15px;
     width: 100%;
     height: 80%;
-    padding-inline-start: 5px;
 }
 
 select {
@@ -63,4 +63,19 @@ ul {
 
 li {
     cursor: pointer;
+}
+
+.container-fluid {
+    height: 100%;
+    overflow: auto;
+    width: 100%;
+    border: 10px solid darkblue;
+}
+
+.btn {
+    border-radius: 15px;
+}
+
+.sidebar {
+    border: 4px solid darkblue;
 }
