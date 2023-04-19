@@ -203,7 +203,7 @@ export class ModuleComponent {
   private addModule(currentData: Module) {
     currentData.moduleIsActive = true;  // setting active true
     // calling service for adding data
-
+    alert(JSON.stringify(currentData));
     this.service.addTeacherModule(currentData).subscribe(
       (data) => {
         //  alert(this.currentData)

@@ -26,7 +26,7 @@ export class AuthUserService {
     this._loginUrl = `${environment.authUserUrl}/login`;
 
 
-    this._baseUrl = "http://localhost:8090/authuser/uhpocms/authuser";
+    this._baseUrl = "http://localhost:8080/uhpocms/authuser";
   }
 
 
@@ -44,6 +44,7 @@ export class AuthUserService {
   deleteAuthUser(authUserName: string): Observable<any> {
     return this._http.delete<any>(this._baseUrl + "/" + authUserName);
   }
+
 
 
   //Get Authuser by Auth User Name

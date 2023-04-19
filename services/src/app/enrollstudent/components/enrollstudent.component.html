@@ -1,7 +1,7 @@
 <div class="container">
     <h1 class="text-left">Enroll Course To Student</h1>
-    <button class="btn btn-primary top-right" (click)="back()">Back</button>
-    <div class="jumbotron">
+    <button class="btn btn-primary top-right rounded-button" (click)="back()">Back</button>
+    <div class="container">
         <div class="form-group row">
             <div class="col-sm-4">
                 <label class="badg">Institution</label>
@@ -77,21 +77,16 @@
             </div>
 
         </div>
-
-        <div class="last-row">
-            <div class="form-group">
-                <!-- <button class="form-control" id="loginbtn" class="btn  login_btn">SAVE</button> -->
-                <!-- <button class="form-control" id="loginbtn" class="btn btn-primary" [disabled]="true"
-                    *ngIf="!_disablevar" (click)="saveEnrolledStudent(course.courseId,_profile.adminId)">SAVE</button>
-                <button class="form-control" id="loginbtn" class="btn btn-primary " *ngIf="_disablevar"
-                    (click)="saveEnrolledStudent(course.courseId,_profile.adminId)">SAVE</button> -->
-
-                <button #submitButton class="form-control" id="loginbtn" class="btn btn-primary"
-                    (click)="saveEnrolledStudent(course.courseId,_profile.adminId);" title="Save Course"
-                    [disabled]="!isFormComplete()" style="margin-left: 450px; ">SAVE</button>
+        <div class="card-block row justify-content-between col-sm-12">
+            <div class="col-sm-3">
+                <button #submitButton class="form-control" id="loginbtn" class="btn btn-primary rounded-button"
+                    (click)="saveEnrolledStudent(course.courseId,_profile.adminId);"
+                    [disabled]="!isFormComplete()">Submit</button>
 
             </div>
         </div>
+
+
 
     </div>
 </div>

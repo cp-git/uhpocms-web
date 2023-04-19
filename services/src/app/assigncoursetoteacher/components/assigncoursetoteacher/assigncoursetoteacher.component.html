@@ -1,8 +1,8 @@
 <div class="container">
     <h1 class="text-left">Assign Course To Teacher</h1>
-    <button class="form-control" class="btn btn-primary top-right" (click)=" back()"
+    <button class="form-control" class="btn btn-primary top-right rounded-button" (click)=" back()"
         style="margin-left: 20px;">Back</button>
-    <div class="jumbotron">
+    <div class="container">
         <div class="form-group row">
             <div class="col-sm-4">
                 <label class="badg">Institution</label>
@@ -68,17 +68,14 @@
 
             </div>
         </div>
-
-        <div class="last-row">
-            <div class="form-group">
-                <button #submitButton class="form-control" id="loginbtn" class="btn btn-primary"
+        <div class="card-block row justify-content-between col-sm-12">
+            <div class="col-sm-3">
+                <button #submitButton class="form-control" id="loginbtn" class="btn btn-primary rounded-button "
                     (click)="saveAssignTeacher(course.courseId,_profile.adminId); getSelectedValue()"
-                    title="Save Course" [disabled]="!isFormComplete()" style="margin-left: 450px;">SAVE</button>
-
-
-
+                    title="Save Course" [disabled]="!isFormComplete()">Submit</button>
             </div>
         </div>
 
     </div>
+
 </div>
