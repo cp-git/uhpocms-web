@@ -291,8 +291,8 @@ export class ModuleFileComponent {
 
     this.moduleFileService.addModuleFile(objectReceived).subscribe(
       (data) => {
-        // alert(this.moduleFile)
-        // console.log(data);
+        //alert(this.moduleFile)
+        //console.log(data);
         this.uploadfileService.uploadFiles(this.files).subscribe();
 
         this.moduleFile = data;

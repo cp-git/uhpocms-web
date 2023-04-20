@@ -26,7 +26,7 @@ export class AuthUserService {
     this._loginUrl = `${environment.authUserUrl}/login`;
 
 
-    this._baseUrl = "http://localhost:8080/uhpocms/authuser";
+    this._baseUrl = "http://localhost:8090/authuser/uhpocms/authuser";
   }
 
 
