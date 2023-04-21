@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
-import { DepartmentAllColumn, DepartmentColumn } from 'app/department/column/department-column';
+import { DepartmentAllColumn, DepartmentColumn ,DepartmentUpdateColumn} from 'app/department/column/department-column';
 
 import { Location } from '@angular/common';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
@@ -24,6 +24,8 @@ export class DepartmentComponent implements OnInit {
 
   columnNames: any;
   allColumnNames: any;
+  updateColumnNames: any;
+
 
   // For dropdown
   readonly primaryIdColumnName: string = 'id';
@@ -43,6 +45,7 @@ export class DepartmentComponent implements OnInit {
     // assigng headers
     this.columnNames = DepartmentColumn;
     this.allColumnNames = DepartmentAllColumn;
+    this.updateColumnNames = DepartmentUpdateColumn;
 
     // creating empty object
     this.emptyDepartment = new Department();

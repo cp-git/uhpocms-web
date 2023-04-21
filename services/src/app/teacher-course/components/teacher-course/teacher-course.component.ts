@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Department } from 'app/department/class/department';
 // Module specific imports
-import { CourseAllColumn, CourseColumn } from 'app/teacher-course/column-name/teacher-course-column';
+import { CourseAllColumn, CourseColumn  , CourseUpdateColumn} from 'app/teacher-course/column-name/teacher-course-column';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { Course } from 'app/teacher-course/class/course';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
@@ -33,10 +33,16 @@ export class TeacherCourseComponent implements OnInit {
   // If all data is available or not
   dataAvailable: boolean = false;
 
+  updateButton : boolean = true;
+  deleteButton : boolean = true;
+
+
   courseDepartment: CourseDepartment;
   institutionId: number = 0;
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
+  updateColumnNanmes : any;
+
 
   // To be assigned based on the module
   readonly primaryIdColumnName: string = 'courseId';
@@ -64,6 +70,7 @@ export class TeacherCourseComponent implements OnInit {
   constructor(private service: TeacherCourseService, private location: Location, private departmentService: DepartmentService) {
     this.columnNames = CourseColumn;
     this.allColumnNames = CourseAllColumn;
+    this.updateColumnNanmes = CourseUpdateColumn;
 
     // creating empty object
     this.emptyCourse = new Course();
@@ -341,10 +348,14 @@ export class TeacherCourseComponent implements OnInit {
         this.getAllCourse();
         break;
       case 'teacher':
+        this.updateButton = false;
+        this.deleteButton =false;
         this.getAssignedCoursesOfTeacher(this.profileId);
 
         break;
       case 'student':
+        this.updateButton = false;
+        this.deleteButton =false;
         this.getCoursesEnrolledToStudent(this.profileId);
         break;
     }

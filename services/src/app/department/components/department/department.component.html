@@ -103,7 +103,7 @@
 </ng-template>
  
 <ng-template #viewupdate>
-    <app-add-update [data]="{currentData:currentData , columnNames:columnNames}"
+    <app-add-update [data]="{currentData:currentData , columnNames:updateColumnNames}"
         [dropdown1]="{optionsArray1:this.adminInstitutions ,dropdownColumnId1:dropdownColumnId1 , dropdownColumnName1:dropdownColumnName1}"
         (submitClicked)="onUpdateDepartmentSubmit($event)"></app-add-update>
 </ng-template>
