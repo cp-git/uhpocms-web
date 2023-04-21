@@ -46,8 +46,8 @@
                                         <div class="dropdown-item">
                                             <li>
                                                 <span class="fa fa-file"></span>&nbsp;&nbsp;
-                                                <a (click)="changeSelectedFileAndModule(file, module)">{{
-                                                    file.moduleFile|removeExtension }}
+                                                <a (click)="changeSelectedFileAndModule(file, module)"><b>{{
+                                                        file.moduleFile|removeExtension }}</b>
                                                 </a>
                                             </li>
                                         </div>
@@ -63,9 +63,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-9">
-            <div *ngIf="selectedFile; else quizview">
 
+        <div class="col-xs-12 col-sm-6 col-md-9 viewpanel">
+            <div *ngIf="selectedFile; else quizview">
+                <!-- <ng-container *ngFor="let file of studentModuleFiles">
+                            <div *ngIf="selectedModule==file.moduleId"> -->
+                <!-- <h3><span class="fa fa-book"></span> &nbsp;&nbsp;
+                    {{selectedModule.moduleName |titlecase}} - {{(selectedFile.moduleFile)}}
+                </h3> -->
                 <video class="videoscreen" controls #videoPlayer>
                     <source [src]="videoSrc" type="video/mp4" />
                 </video>
