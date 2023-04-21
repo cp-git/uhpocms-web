@@ -118,7 +118,7 @@ export class QuestionAnswerComponent implements OnInit {
     this.submittedQuestionAnswer = queAns;
     console.log(queAns);
 
-    if ((this.selectedCategoryName != 'MCQ' || this.selectedCategoryName != 'mcq') && (queAns.content1 != '' || queAns.content1 != undefined)) {
+    if ((this.selectedCategoryName.toUpperCase() != 'MCQ')) {
       queAns.correct1 = true;
     }
 
@@ -205,6 +205,11 @@ export class QuestionAnswerComponent implements OnInit {
       queAns.isFormDirty = true;
       queAns.isFormSubmitted = false;
     }
+  }
+
+  onAnswerEntered(queAns: OneQuestionAnswer) {
+    queAns.correct1 = true;
+    queAns.isOptionSelected = true;
   }
 
 }
