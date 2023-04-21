@@ -8,6 +8,8 @@ import { Location } from '@angular/common';
 import { Module } from 'app/module/class/module';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { ModuleFileService } from 'app/module-file/services/module-file.service';
+import { QuizService } from 'app/quiz/services/quiz.service';
+import { Quiz } from 'app/quiz/class/quiz';
 
 @Component({
   selector: 'app-student-module',
@@ -25,6 +27,7 @@ export class StudentModuleComponent {
   courses: Course[] = []; //array of Course objects that stores the courses of the student
   modules: Module[] = []; //array of Module objects that stores the modules of the courses
   studentModuleFiles: ModuleFile[] = []; //array of ModuleFile objects that stores the module files assigned to the student
+  quizzes: Quiz[] = [];
 
   selectedCourse: any; //stores the selected course by the student. 
   selectedCourseName: any; //stores the selected course by the student.
@@ -32,13 +35,15 @@ export class StudentModuleComponent {
   selectedModuleNameFile: any;
   selectedFile: any;
   selectedModule: any; //stores the selected module by the student.
+  selectedQuiz!: Quiz;
   Date: any;
+
   constructor(private activateRoute: ActivatedRoute,
     private courseService: TeacherCourseService,
     private moduleService: ModuleService,
     private modulefileService: ModuleFileService,
     private _location: Location,
-    private elRef: ElementRef) {
+    private quizService: QuizService) {
 
   }
 
@@ -47,7 +52,7 @@ export class StudentModuleComponent {
     this.userName = this.activateRoute.snapshot.params['userName'];
 
     this.loadCourseOfStudent(this.studentId);
-
+    this.getAllQuizzesByProfileId(this.studentId);
     this.selectedCourse = '1'
   }
   // ngOnChanges(changes: SimpleChanges): void {
@@ -174,10 +179,27 @@ export class StudentModuleComponent {
   }
 
   changeSelectedFileAndModule(file: any, module: any) {
+
     this.selectedFile = [];
     this.selectedFile = file;
     this.selectedModule = module;
+    this.quizzes.filter(quiz => quiz.moduleId == module.moduleId)
     this.onSelectedFileChanged();
+
+
   }
 
+
+  private getAllQuizzesByProfileId(studentId: number) {
+    this.quizService.getAllQuizzesByProfileId(studentId).subscribe(
+      (data) => {
+        this.quizzes = data;
+      }
+    )
+  }
+
+  onQuizClicked(quiz: Quiz) {
+    this.selectedFile = '';
+    this.selectedQuiz = quiz;
+  }
 }

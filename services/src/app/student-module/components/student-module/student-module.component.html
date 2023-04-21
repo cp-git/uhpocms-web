@@ -41,10 +41,8 @@
                                 <label for="" class="modulelist">
                                     &nbsp;&nbsp;{{ module.moduleName }}</label>
                                 <ng-container *ngFor="let file of studentModuleFiles">
-                                    <ng-container *ngIf="
-                      module.moduleId == file.moduleId &&
-                      selectedCourse == module.courseId_id
-                    ">
+                                    <ng-container
+                                        *ngIf="module.moduleId == file.moduleId && selectedCourse == module.courseId_id">
                                         <div class="dropdown-item">
                                             <li>
                                                 <span class="fa fa-file"></span>&nbsp;&nbsp;
@@ -55,6 +53,10 @@
                                         </div>
                                     </ng-container>
                                 </ng-container>
+                                <ng-container *ngFor="let quiz of quizzes |filter2:'moduleId':module.moduleId">
+                                    <span class="fa fa-file-text-o"></span> &nbsp;&nbsp;<a
+                                        (click)="onQuizClicked(quiz)">{{quiz.title}}</a><br>
+                                </ng-container>
                             </ul>
                         </ng-container>
                     </ng-container>
@@ -62,23 +64,22 @@
             </div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-9">
-            <div *ngIf="selectedFile">
-                <!-- <ng-container *ngFor="let file of studentModuleFiles">
-                            <div *ngIf="selectedModule==file.moduleId"> -->
-                <!-- <h3><span class="fa fa-book"></span> &nbsp;&nbsp;
-                    {{selectedModule.moduleName |titlecase}} - {{(selectedFile.moduleFile)}}
-                </h3> -->
+            <div *ngIf="selectedFile; else quizview">
+
                 <video class="videoscreen" controls #videoPlayer>
                     <source [src]="videoSrc" type="video/mp4" />
                 </video>
-
-
-                <!-- </div>
-                        </ng-container> -->
             </div>
+            <ng-template #quizview>
+                <div *ngIf="selectedQuiz">
+                    <app-student-quiz [quizData]="selectedQuiz"></app-student-quiz>
+                </div>
+
+            </ng-template>
+
         </div>
     </div>
-    <div class="row text-right">
+    <div class="row text-right backbtn">
         <button class="btn btn-primary" (click)="back()">Back</button>
     </div>
 

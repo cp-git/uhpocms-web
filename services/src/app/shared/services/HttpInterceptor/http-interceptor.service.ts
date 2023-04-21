@@ -37,7 +37,6 @@ export class HttpInterceptorService {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-
     const newRequest = request.clone({
       headers: new HttpHeaders({
         Authorization: 'Basic ' + btoa('uhpocadmin:P@55w0rd')

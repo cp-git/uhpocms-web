@@ -77,6 +77,11 @@ import { HttpInterceptorService } from './shared/services/HttpInterceptor/http-i
 import { UploadfileReusableModule } from './uploadfile-reusable/uploadfile-reusable.module';
 import { QuestionAnswerComponent } from './question/components/question-answer/question-answer.component';
 import { RemoveExtensionPipe } from './shared/pipes/removeExtension/remove-extension.pipe';
+import { StudentQuizComponent } from './student-module/components/student-quiz/student-quiz.component';
+import { Filter2Pipe } from './shared/pipes/filter2/filter2.pipe';
+import { StudentModuleModule } from './student-module/student-module.module';
+import { TitleCasePipe } from '@angular/common';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -107,11 +112,8 @@ import { RemoveExtensionPipe } from './shared/pipes/removeExtension/remove-exten
     CourseDepartmentComponent,
     AddDepartmentsComponent,
     AssigncoursetoteacherComponent,
-    StudentPanelComponent,
-    StudentModuleComponent,
     UploadFileComponent,
-    RemoveExtensionPipe,
-
+    StudentPanelComponent
   ],
 
   imports: [
@@ -137,8 +139,8 @@ import { RemoveExtensionPipe } from './shared/pipes/removeExtension/remove-exten
     CommonModule,
     TeacherCourseModule,
     AccessControlModule,
-    UploadfileReusableModule
-
+    UploadfileReusableModule,
+    StudentModuleModule
   ],
 
   providers: [

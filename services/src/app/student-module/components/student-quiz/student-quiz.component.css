@@ -1,0 +1,40 @@
+.submitbutton {
+    bottom: 10px;
+    position: absolute;
+    left: 50%;
+}
+
+.jumbotron {
+    position: relative;
+    padding-right: 10px;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #FAFAFA;
+    border: 1px solid black;
+    margin-top: 20px;
+    height: 515px;
+    width: 960px;
+}
+
+.img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-check-input {
+    margin-right: 10px;
+    margin-bottom: 30px;
+}
+
+.float-label {
+    margin-bottom: 10px;
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+.form-check-input {
+    margin-left: 10%;
+    margin-right: 5px;
+}
