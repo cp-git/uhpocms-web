@@ -161,7 +161,7 @@ export class AuthUserComponent implements OnInit {
     currentData.authUserIsActive = true;  // setting active true
 
     // calling service for adding data
-    alert(JSON.stringify(currentData));
+    //alert(JSON.stringify(currentData));
     this.service.addAuthUser(currentData).subscribe(
       (data) => {
         alert('AuthUser added Successfully');

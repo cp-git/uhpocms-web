@@ -97,8 +97,8 @@
                     <ng-container *ngSwitchCase="'disableddropdown'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
-                        <select name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control disableddropdown"
-                            required="" disabled>
+                        <select name="{{column.key}}" [(ngModel)]="currentData[column.key]"
+                            class="form-control disableddropdown" required="" disabled>
                             <option value="undefined" disabled>Select</option>
 
                             <ng-container *ngIf="[column.toSort] then sortDropdown else simpleDropdown"></ng-container>
