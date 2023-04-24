@@ -27,6 +27,7 @@ export class AnnouncementComponent implements OnInit {
   ) {
     this.announcement = new Announcement();
     this.currentAnnouncement = new Announcement();
+    this.userRole = sessionStorage.getItem('userRole');
   }
 
   //ngoninit
