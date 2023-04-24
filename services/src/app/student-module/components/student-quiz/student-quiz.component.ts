@@ -20,6 +20,7 @@ export class StudentQuizComponent implements OnInit {
   @Input() quizData: any;
 
   studentId: any;
+  quizProgress!: QuizProgress;
   quizProgresses: QuizProgress[] = [];
   questions: Question[] = [];
   selectedQuizId!: number;
@@ -44,6 +45,7 @@ export class StudentQuizComponent implements OnInit {
     private questionService: QuestionService,
 
   ) {
+
     this.studentId = sessionStorage.getItem("profileId");
     this.loadCategories();
   }
@@ -185,6 +187,7 @@ export class StudentQuizComponent implements OnInit {
   }
 
   onFormSubmit() {
+    this.quizProgress = new QuizProgress();
     console.log(this.questionAnswers);
     console.log(this.quizData);
 
@@ -206,9 +209,29 @@ export class StudentQuizComponent implements OnInit {
         score = score + 10;
       }
 
+
     })
 
-    alert("Total score : " + score)
+    this.quizProgress.studentId = this.studentId;
+    this.quizProgress.quizId = this.selectedQuizId;
+    this.quizProgress.score = score;
+    if (score >= this.quizData.passMark) {
+      this.quizProgress.completed = true;
+    } else {
+      this.quizProgress.completed = false;
+    }
+    this.quizProgress.numberOfAttempts = 1;
+
+    this.quizProgressService.addQuizProgressOfStudent(this.quizProgress).subscribe(
+      (response) => {
+        alert("Quiz progress saved");
+      },
+      (error) => {
+        alert("Failed to save Progress");
+      }
+    );
+
+    alert("Total score : " + score);
 
   }
 

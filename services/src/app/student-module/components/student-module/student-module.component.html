@@ -5,7 +5,7 @@
                 <h1>{{ selectedCourseName | titlecase }}</h1>
             </div>
             <div class="form-group">
-                <label for="course">Course Name</label><br />
+                <label for="course">Course Name</label><br>
                 <select (change)="onCourseSelect(selectedCourse)" [(ngModel)]="selectedCourse" class="form-select"
                     aria-label="Default select example">
                     <option *ngFor="let course of courses" [value]="course.courseId">
@@ -53,9 +53,9 @@
                                         </div>
                                     </ng-container>
                                 </ng-container>
-                                <ng-container *ngFor="let quiz of quizzes |filter2:'moduleId':module.moduleId">
-                                    <span class="fa fa-file-text-o"></span> &nbsp;&nbsp;<a
-                                        (click)="onQuizClicked(quiz)">{{quiz.title}}</a><br>
+                                <ng-container *ngFor="let quiz of quizzes |filter:'moduleId':module.moduleId">
+                                    <br><span class="fa fa-file-text-o"></span> &nbsp;&nbsp;<a
+                                        (click)="onQuizClicked(quiz)">{{quiz.title}}</a>
                                 </ng-container>
                             </ul>
                         </ng-container>

@@ -7,19 +7,20 @@ import { environment } from 'environments/environment.development';
 @Injectable({
   providedIn: 'root'
 })
-export class QuizProgressService implements OnInit {
+export class QuizProgressService {
 
   private quizProgressUrl: string;
 
   constructor(private http: HttpClient) {
-    this.quizProgressUrl = `http://localhost:8090/quizprogress/uhpocms/quizprogress`;
-  }
-
-  ngOnInit(): void {
-
+    this.quizProgressUrl = `${environment.quizProgressUrl}/quizprogress`;
   }
 
   getQuizProgressesByStudentId(studentId: number): Observable<QuizProgress[]> {
     return this.http.get<QuizProgress[]>(`${this.quizProgressUrl}/${studentId}`);
+  }
+
+  addQuizProgressOfStudent(quizProgress: QuizProgress): Observable<QuizProgress> {
+    return this.http.post<QuizProgress>(`${this.quizProgressUrl}`, quizProgress);
+
   }
 }
