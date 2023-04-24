@@ -3,6 +3,7 @@ body {
 }
 
 #adminbtn {
+    text-align: center;
     color: white;
     background-color: rgba(26, 115, 232, 0.83);
     margin-left: 180px;
@@ -86,6 +87,7 @@ body {
 }
 
 #demo {
+   
     margin-left: 180px;
     width: 160px;
     height: 40px;
