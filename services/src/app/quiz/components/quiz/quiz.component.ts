@@ -63,7 +63,7 @@ export class QuizComponent implements OnInit {
 
     // creating empty object
     this.emptyQuiz = new Quiz();
-
+    this.loadAllCourses();
 
     //calling services for foreign key data (dropdown)
     this.loadAllCategories();
@@ -75,7 +75,6 @@ export class QuizComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getAllQuizzes();  // for getting all active Quizs
     this.getInActiveQuiz(); // for getting all inactive Quizs
     this.getAssignedCoursesOfTeacher(this.profileId)
 
@@ -157,11 +156,17 @@ export class QuizComponent implements OnInit {
   ///////////////////////////////////////////
 
   // for getting all quizzes
-  getAllQuizzes() {
+  getAllQuizzes(courses: Course[]) {
     this.quizService.getAllQuizzes().subscribe(
-      (data) => {
-        this.allQuizData = data;
-        console.log(data);
+      response => {
+
+        this.allQuizData = response;
+        this.allQuizData = this.allQuizData.filter(data =>
+          courses.map(
+            course => course.courseId).includes(data.courseId));
+
+
+        console.log("filtered daTA " + JSON.stringify(this.allQuizData));
 
       },
       (error) => {
@@ -294,6 +299,8 @@ export class QuizComponent implements OnInit {
         console.log(data);
 
         this.courses = data;
+        this.getAllQuizzes(this.courses);  // for getting all active Quizs
+
       },
       error => {
         console.log(error);

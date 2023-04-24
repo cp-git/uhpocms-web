@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+
 // Module specific imports
 
 import { AuthUserService } from 'app/auth-user/services/auth-user.service';
@@ -158,7 +159,7 @@ export class AuthUserComponent implements OnInit {
   private addAuthuser(currentData: Authuser) {
 
     currentData.authUserLastLogin = this.currentDate;
-    currentData.authUserIsActive = true;  // setting active true
+    currentData.authUserIsActive = false;  // setting active true
 
     // calling service for adding data
     //alert(JSON.stringify(currentData));
@@ -184,11 +185,13 @@ export class AuthUserComponent implements OnInit {
       response => {
 
         this.allData = response; //assign data to local variable
-
+        this.allData.sort((a, b) => a.authUserName.toLowerCase() > b.authUserName.toLowerCase() ? 1 : -1) // order by alphabets for authusername
         // if no data available
         if (this.allData.length > 0) {
           this.dataAvailable = true;
         }
+
+
       },
       error => {
         console.log('No data in table ');
