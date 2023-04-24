@@ -17,7 +17,7 @@ import { Category } from 'app/category/class/category';
 export class QuizComponent implements OnInit {
 
   // title heading for Quiz
-  moduleName: string = "Quiz Administration";
+  moduleName: string = "Quiz";
 
   viewUpdate: boolean = false;
   viewAdd: boolean = false;
@@ -47,6 +47,7 @@ export class QuizComponent implements OnInit {
   courses: Course[] = [];
   modules: Module[] = [];
   categories: Category[] = [];
+  userRole: any;
   constructor(
     private quizService: QuizService,
     private location: Location,
@@ -55,6 +56,7 @@ export class QuizComponent implements OnInit {
     private categotyService: CategoryService
   ) {
 
+    this.userRole = sessionStorage.getItem('userRole');
     // assigng headers
     this.columnNames = TeacherQuizColumn;
     this.allColumnNames = TeacherQuizAllColumn;

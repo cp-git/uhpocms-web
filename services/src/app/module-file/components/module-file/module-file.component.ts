@@ -22,7 +22,7 @@ export class ModuleFileComponent {
 
 
   // title heading
-  moduleName: string = "Module Contents";
+  moduleName: string = "Module Content";
 
   controlEnabled: boolean = true;
   module = new Module();
@@ -53,7 +53,7 @@ export class ModuleFileComponent {
 
   sessionData: any;
   data: any;
-
+  userRole: any;
   profileId: any;
 
   emptyModuleFile: ModuleFile;  // empty module file
@@ -72,7 +72,7 @@ export class ModuleFileComponent {
     private service: TeacherCourseService,
     private uploadfileService: UploadFileService
   ) {
-
+    this.userRole = sessionStorage.getItem('userRole');
     this.columnNames = ModuleFileColumn;
     this.allColumnNames = ModuleFileAllColumn;
     this.updateColumnNames = ModuleFileUpdateColumn;

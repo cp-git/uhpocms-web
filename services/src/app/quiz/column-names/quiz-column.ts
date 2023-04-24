@@ -23,7 +23,7 @@ export const TeacherQuizAllColumn = [
     { key: 'failText', label: 'Fail Text', type: 'input', subtype: 'text' },
     { key: 'quizOrderNo', label: 'QuizOrderNo', type: 'input', subtype: 'number' },
     { key: 'answersAtEnd', label: 'AnswerAtEnd', type: 'checkbox' },
-    { key: 'randomOrder', label: 'Random Order', type: 'input' },
+    { key: 'randomOrder', label: 'Random Order', type: 'checkbox' },
     { key: 'examPaper', label: 'Exam Paper', type: 'checkbox' },
     { key: 'singleAttempt', label: 'Single Attempt', type: 'checkbox' },
     { key: 'draft', label: 'Quiz Draft', type: 'checkbox' },

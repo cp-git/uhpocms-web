@@ -25,7 +25,7 @@ export class AddQuestionAnswerComponent implements OnInit {
   currentPage = 1;
 
   // title heading
-  moduleName: string = "Question Administration";
+  moduleName: string = "Q/A";
 
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
@@ -37,7 +37,7 @@ export class AddQuestionAnswerComponent implements OnInit {
   emptyQuestion: Question;  // empty question
   currentData!: Question;  // for update and view, to show existing data
 
-
+  userRole: any;
   mcqAnswer: any;
   options = ['Option 1', 'Option 2', 'Option3', 'Option4'];
 
@@ -86,6 +86,7 @@ export class AddQuestionAnswerComponent implements OnInit {
     this.profileId = sessionStorage.getItem('profileId');
     this.columnNames = TeacherQuizColumn;
     this.allColumnNames = TeacherQuizAllColumn;
+    this.userRole = sessionStorage.getItem('userRole');
 
     // creating empty object
     this.emptyQuestion = new Question();

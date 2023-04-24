@@ -18,7 +18,7 @@ export class TeacherCourseComponent implements OnInit {
 
 
   // title heading
-  moduleName: string = "Courses Administration";
+  moduleName: string = "Courses";
 
   // for scren view
   viewUpdate: boolean = false;
