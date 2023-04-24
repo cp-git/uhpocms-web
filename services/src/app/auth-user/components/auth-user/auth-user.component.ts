@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 
 import { AuthUserService } from 'app/auth-user/services/auth-user.service';
 import { Authuser } from 'app/auth-user/class/auth-user';
-import { AuthUserAllColumn, AuthUserColumn } from 'app/auth-user/column/auth-user-column';
+import { AuthUserAllColumn, AuthUserColumn , AuthUserUpdateColumn } from 'app/auth-user/column/auth-user-column';
 import { json } from 'body-parser';
 
 
@@ -32,6 +32,7 @@ export class AuthUserComponent implements OnInit {
 
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
+  updateColumnNames: any;
 
   // To be assigned based on the module
   readonly primaryIdColumnName: string = 'authUserId';
@@ -53,6 +54,7 @@ export class AuthUserComponent implements OnInit {
 
     this.columnNames = AuthUserColumn;
     this.allColumnNames = AuthUserAllColumn;
+    this.updateColumnNames = AuthUserUpdateColumn;
 
     // creating empty object
     this.emptyAuthUser = new Authuser();

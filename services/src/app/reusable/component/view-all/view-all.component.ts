@@ -11,7 +11,7 @@ export class ViewAllComponent implements OnInit {
   @Input() idsColumnName: { columnName: string } = { columnName: '' };
   @Input() isViewAllScreen?: boolean = false;
   @Input() isActivateScreen?: boolean = false;
-
+  @Input() buttons:{updateButton:boolean,deleteButton:boolean} = {updateButton:true,deleteButton:true}
   @Input() dropdown1?: { optionsArray1: any, dropdownColumnId1: string, dropdownColumnName1: string };
   @Input() dropdown2?: { optionsArray2: any, dropdownColumnId2: string, dropdownColumnName2: string };
 
