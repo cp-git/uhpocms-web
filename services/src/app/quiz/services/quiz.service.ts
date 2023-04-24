@@ -45,4 +45,10 @@ export class QuizService {
   updateActiveStatus(title: string, quiz: Quiz): Observable<any> {
     return this.http.patch<any>(`${this.quizUrl}/` + title, quiz);
   }
+
+  getAllQuizzesByProfileId(studentId: number): Observable<Quiz[]> {
+    // return this.http.get<any>("http://localhost:8090/quiz/uhpocms/quiz?title=all");
+    return this.http.get<Quiz[]>(`http://localhost:8090/quiz/uhpocms/quiz/studentId?id=${studentId}`);
+  }
+
 }

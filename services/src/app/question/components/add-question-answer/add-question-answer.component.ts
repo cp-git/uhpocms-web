@@ -316,7 +316,8 @@ export class AddQuestionAnswerComponent implements OnInit {
                   isFormDirty: false,
                   isFormSubmitted: isFormSubmitted,
                   image: false,
-                  isOptionSelected: true
+                  isOptionSelected: true,
+                  selectedAnswer: ''
                 });
               });
             // console.log("questionAnswer " + JSON.stringify(this.questionAnswers));
