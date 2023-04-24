@@ -44,7 +44,7 @@ export class TeacherCourseComponent implements OnInit {
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
 
-  updateColumnNanmes : any;
+  updateColumnNames : any;
 
 
 
@@ -70,8 +70,7 @@ export class TeacherCourseComponent implements OnInit {
   adminInstitutions: AdminInstitution[] = [];
   departments: Department[] = [];
 
-  updateButton : boolean = true;
-  deleteButton : boolean = true;
+  
 
   courseDepartments: CourseDepartment[] = [];
   constructor(private service: TeacherCourseService, private location: Location, private departmentService: DepartmentService) {

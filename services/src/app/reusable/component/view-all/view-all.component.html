@@ -24,6 +24,9 @@
                         <!-- handle email type -->
                         <input name="{{column.key}}" class="form-control" *ngSwitchCase="'date'" type="date"
                             [(ngModel)]="row[column.key]" disabled>
+
+                            <input name="{{column.key}}" class="form-control" *ngSwitchCase="'password'" type="password"
+                            [(ngModel)]="row[column.key]" disabled>
                         <!-- handle date type -->
                         <textarea name="{{column.key}}" class="form-control" *ngSwitchCase="'textarea'"
                             [(ngModel)]="row[column.key]" disabled></textarea>
