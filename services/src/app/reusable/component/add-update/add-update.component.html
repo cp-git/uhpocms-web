@@ -7,7 +7,7 @@
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
                         <input name="{{column.key}}" type="{{column.subtype}}" [(ngModel)]="currentData[column.key]"
-                            class="form-control" required="">
+                            class="form-control" required="" [disabled]="column.disable">
                     </ng-container>
 
 
@@ -15,35 +15,35 @@
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
                         <input name="{{column.key}}" type="email" [(ngModel)]="currentData[column.key]"
-                            class="form-control" required="">
+                            class="form-control" required="" [disabled]="column.disable">
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'date'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
                         <input name="{{column.key}}" type="date" [(ngModel)]="currentData[column.key]"
-                            class="form-control" required="">
+                            class="form-control" required="" [disabled]="column.disable">
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'textarea'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
                         <textarea name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
-                            required=""></textarea>
+                            required="" [disabled]="column.disable"></textarea>
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'file'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
                         <input name="{{column.key}}" type="file" [(ngModel)]="currentData[column.key]"
-                            class="form-control" required="">
+                            class="form-control" required=""[disabled]="column.disable">
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'dropdown1'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
                         <select name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
-                            required="">
+                            required="" [disabled]="column.disable">
                             <option value="undefined">Select</option>
                             <option *ngFor="let option of optionsArray1" [value]="option[dropdownColumnId1]">
                                 {{ option[dropdownColumnName1] }}
@@ -56,7 +56,7 @@
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
                         <select name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
-                            required="">
+                            required="" [disabled]="column.disable">
                             <option value="undefined">Select</option>
                             <option *ngFor="let option of optionsArray2" [value]="option[dropdownColumnId2]">
                                 {{ option[dropdownColumnName2] }}
@@ -68,7 +68,7 @@
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
                         <select name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
-                            required="">
+                            required="" [disabled]="column.disable">
                             <option value="undefined" disabled>Select</option>
 
                             <ng-container *ngIf="[column.toSort] then sortDropdown else simpleDropdown"></ng-container>
@@ -91,7 +91,7 @@
                             </ng-template>
 
                         </select>
-
+                        
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'disableddropdown'">
