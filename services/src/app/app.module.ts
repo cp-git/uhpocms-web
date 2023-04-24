@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -135,7 +135,9 @@ import { QuestionAnswerComponent } from './question/components/question-answer/q
     CommonModule,
     TeacherCourseModule,
     AccessControlModule,
-    UploadfileReusableModule
+    UploadfileReusableModule,
+    ReactiveFormsModule,
+    FormsModule
 
   ],
 

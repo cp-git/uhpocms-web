@@ -40,7 +40,8 @@ export class HttpInterceptorService {
 
     const newRequest = request.clone({
       headers: new HttpHeaders({
-        Authorization: 'Basic ' + btoa('uhpocadmin:P@55w0rd')
+        Authorization: 'Basic ' + btoa('uhpocadmin:P@55w0rd'),
+        // 'Content-Type': 'multipart/form-data',
       })
     });
     return next.handle(newRequest);

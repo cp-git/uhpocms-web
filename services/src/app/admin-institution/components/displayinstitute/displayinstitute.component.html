@@ -13,8 +13,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-3 text-center" *ngFor="let institution of admininstitutions">
-                    <div><img src="../../assets/img/{{institution.adminInstitutionPicture}}"
-                            (click)="display(institution.adminInstitutionId)" />
+                    <div><img (click)="display(institution.adminInstitutionId)" />
                     </div>
 
                     <div><button #btn1 id="demo" class="btn btn-info"

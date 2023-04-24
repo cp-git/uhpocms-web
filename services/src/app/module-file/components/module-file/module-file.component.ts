@@ -180,14 +180,14 @@ export class ModuleFileComponent {
 
   // on addComponents's submit button clicked
   onAddModuleSubmit(receivedArray: any): void {
-    // console.log("my" + JSON.stringify(receivedArray));
+    console.log("my" + JSON.stringify(receivedArray));
 
     this.addModuleFile(receivedArray);
   }
 
   onRecievedFiles(recievedFiles: FileList) {
     this.files = recievedFiles;
-    // console.log(this.files);
+    console.log(this.files);
 
   }
 
@@ -267,9 +267,18 @@ export class ModuleFileComponent {
   // Add module file
   addModuleFile(objectReceived: ModuleFile) {
     objectReceived.moduleFileIsActive = true;
-    // console.log("view " + JSON.stringify(files));
+    console.log("view " + JSON.stringify(this.files));
 
-    this.moduleFileService.addModuleFile(objectReceived).subscribe(
+
+
+    let formData = new FormData();
+    for (let i = 0; i <= this.files.length; i++) {
+      formData.append("files", this.files[i]);
+    }
+    formData.append("admin", new Blob([JSON.stringify(objectReceived)], { type: 'application/json' }));
+
+
+    this.moduleFileService.addModuleFile(formData).subscribe(
       (data) => {
         // alert(this.moduleFile)
         // console.log(data);

@@ -14,9 +14,16 @@ export class ModuleFileService {
     this.moduleFileUrl = environment.moduleFileUrl;
   }
 
+  // // for add module File 
+  // addModuleFile(formData: FormData): Observable<any> {
+  //   return this._http.post<any>("http://localhost:8091/uhpocms/modulefile", formData);
+  // }
+
+
+
   // for add module File 
-  addModuleFile(modulefile: ModuleFile): Observable<any> {
-    return this._http.post<any>(`${this.moduleFileUrl}/modulefile`, modulefile);
+  addModuleFile(formData: FormData): Observable<any> {
+    return this._http.post<any>("http://localhost:8090/modulefile/uhpocms/modulefile", formData);
   }
 
   // get all module file
