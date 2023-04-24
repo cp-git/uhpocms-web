@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Department } from 'app/department/class/department';
 // Module specific imports
-import { CourseAllColumn, CourseColumn  , CourseUpdateColumn} from 'app/teacher-course/column-name/teacher-course-column';
+
+import { CourseAllColumn, CourseColumn ,CourseUpdateColumn} from 'app/teacher-course/column-name/teacher-course-column';
+
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { Course } from 'app/teacher-course/class/course';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
@@ -18,7 +20,7 @@ export class TeacherCourseComponent implements OnInit {
 
 
   // title heading
-  moduleName: string = "Courses Administration";
+  moduleName: string = "Courses";
 
   // for scren view
   viewUpdate: boolean = false;
@@ -41,7 +43,9 @@ export class TeacherCourseComponent implements OnInit {
   institutionId: number = 0;
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
+
   updateColumnNanmes : any;
+
 
 
   // To be assigned based on the module
@@ -66,11 +70,16 @@ export class TeacherCourseComponent implements OnInit {
   adminInstitutions: AdminInstitution[] = [];
   departments: Department[] = [];
 
+  updateButton : boolean = true;
+  deleteButton : boolean = true;
+
   courseDepartments: CourseDepartment[] = [];
   constructor(private service: TeacherCourseService, private location: Location, private departmentService: DepartmentService) {
     this.columnNames = CourseColumn;
     this.allColumnNames = CourseAllColumn;
-    this.updateColumnNanmes = CourseUpdateColumn;
+
+    this.updateColumnNames = CourseUpdateColumn;
+
 
     // creating empty object
     this.emptyCourse = new Course();

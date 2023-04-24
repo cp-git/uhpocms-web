@@ -51,7 +51,7 @@
 </div>
 
 <ng-template #title let-headerTitle>
-    <h1>{{ headerTitle }}</h1>
+    <h1>{{userRole |titlecase}}'s {{headerTitle}}</h1>
 </ng-template>
 
 <ng-template #addButton>
@@ -100,6 +100,8 @@
 </ng-template>
 
 <ng-template #viewupdate>
-    <app-add-update [data]="{ currentData: currentData, columnNames: updateColumnNanmes }"
-        [dropdown]="{adminInstitutions,departments}" (submitClicked)="onUpdateCourseSubmit($event)" ></app-add-update>
+
+    <app-add-update [data]="{ currentData: currentData, columnNames: updateColumnNames }"
+        [dropdown]="{adminInstitutions,departments}" (submitClicked)="onUpdateCourseSubmit($event)"></app-add-update>
+
 </ng-template>

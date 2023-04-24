@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+
 // Module specific imports
 
 import { AuthUserService } from 'app/auth-user/services/auth-user.service';
 import { Authuser } from 'app/auth-user/class/auth-user';
+
 import { AuthUserAllColumn, AuthUserColumn ,AuthUserUpdateColumn} from 'app/auth-user/column/auth-user-column';
+
 import { json } from 'body-parser';
 
 
@@ -32,7 +35,9 @@ export class AuthUserComponent implements OnInit {
 
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
+
 updateColumnNames : any;
+
   // To be assigned based on the module
   readonly primaryIdColumnName: string = 'authUserId';
 
@@ -159,10 +164,12 @@ updateColumnNames : any;
   private addAuthuser(currentData: Authuser) {
 
     currentData.authUserLastLogin = this.currentDate;
-    currentData.authUserIsActive = true;  // setting active true
+    currentData.authUserIsActive = false;  // setting active true
 
     // calling service for adding data
-   // alert(JSON.stringify(currentData));
+
+    //alert(JSON.stringify(currentData));
+
     this.service.addAuthUser(currentData).subscribe(
       (data) => {
         alert('AuthUser added Successfully'); 
@@ -185,11 +192,13 @@ updateColumnNames : any;
       response => {
 
         this.allData = response; //assign data to local variable
-
+        this.allData.sort((a, b) => a.authUserName.toLowerCase() > b.authUserName.toLowerCase() ? 1 : -1) // order by alphabets for authusername
         // if no data available
         if (this.allData.length > 0) {
           this.dataAvailable = true;
         }
+
+
       },
       error => {
         console.log('No data in table ');

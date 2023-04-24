@@ -13,7 +13,7 @@ import { Profile } from 'app/profiles/class/profile';
 })
 export class ModuleComponent {
 
-  moduleName: string = 'Module Administration';
+  moduleName: string = 'Module';
 
   //screen view
   viewUpdate: boolean = false;
@@ -34,6 +34,8 @@ export class ModuleComponent {
 
   sessionData: any;
   data: any;
+
+  userRole: any;
 
   courseId: any;
   profileId: any;
@@ -56,6 +58,8 @@ export class ModuleComponent {
     this.loadCourses();
     this.profileId = sessionStorage.getItem('profileId');
     this.courseId = sessionStorage.getItem('courseId');
+
+    this.userRole = sessionStorage.getItem('userRole');
 
   }
 
@@ -203,7 +207,7 @@ export class ModuleComponent {
   private addModule(currentData: Module) {
     currentData.moduleIsActive = true;  // setting active true
     // calling service for adding data
-    alert(JSON.stringify(currentData));
+    //alert(JSON.stringify(currentData));
     this.service.addTeacherModule(currentData).subscribe(
       (data) => {
         //  alert(this.currentData)

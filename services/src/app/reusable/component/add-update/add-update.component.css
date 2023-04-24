@@ -27,3 +27,9 @@ table td {
     text-indent: 1px;
     text-overflow: '';
 }
+
+input[type=checkbox],
+input[type=radio] {
+    width: 10%;
+    margin: 0px 0 0;
+}

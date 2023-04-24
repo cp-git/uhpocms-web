@@ -5,7 +5,7 @@
                 <h1>{{ selectedCourseName | titlecase }}</h1>
             </div>
             <div class="form-group">
-                <label for="course">Course Name</label><br />
+                <label for="course">Course Name</label><br>
                 <select (change)="onCourseSelect(selectedCourse)" [(ngModel)]="selectedCourse" class="form-select"
                     aria-label="Default select example">
                     <option *ngFor="let course of courses" [value]="course.courseId">
@@ -41,10 +41,8 @@
                                 <label for="" class="modulelist">
                                     &nbsp;&nbsp;{{ module.moduleName }}</label>
                                 <ng-container *ngFor="let file of studentModuleFiles">
-                                    <ng-container *ngIf="
-                      module.moduleId == file.moduleId &&
-                      selectedCourse == module.courseId_id
-                    ">
+                                    <ng-container
+                                        *ngIf="module.moduleId == file.moduleId && selectedCourse == module.courseId_id">
                                         <div class="dropdown-item">
                                             <li>
                                                 <span class="fa fa-file"></span>&nbsp;&nbsp;
@@ -55,14 +53,19 @@
                                         </div>
                                     </ng-container>
                                 </ng-container>
+                                <ng-container *ngFor="let quiz of quizzes |filter:'moduleId':module.moduleId">
+                                    <br><span class="fa fa-file-text-o"></span> &nbsp;&nbsp;<a
+                                        (click)="onQuizClicked(quiz)">{{quiz.title}}</a>
+                                </ng-container>
                             </ul>
                         </ng-container>
                     </ng-container>
                 </div>
             </div>
         </div>
+
         <div class="col-xs-12 col-sm-6 col-md-9 viewpanel">
-            <div *ngIf="selectedFile">
+            <div *ngIf="selectedFile; else quizview">
                 <!-- <ng-container *ngFor="let file of studentModuleFiles">
                             <div *ngIf="selectedModule==file.moduleId"> -->
                 <!-- <h3><span class="fa fa-book"></span> &nbsp;&nbsp;
@@ -71,11 +74,14 @@
                 <video class="videoscreen" controls #videoPlayer>
                     <source [src]="videoSrc" type="video/mp4" />
                 </video>
-
-
-                <!-- </div>
-                        </ng-container> -->
             </div>
+            <ng-template #quizview>
+                <div *ngIf="selectedQuiz">
+                    <app-student-quiz [quizData]="selectedQuiz"></app-student-quiz>
+                </div>
+
+            </ng-template>
+
         </div>
     </div>
     <div class="row text-right backbtn">
