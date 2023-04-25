@@ -42,7 +42,7 @@
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
                         <input name="{{column.key}}" type="file" [(ngModel)]="currentData[column.key]"
-                            class="form-control" required=""[disabled]="column.disable">
+                            class="form-control" required="" [disabled]="column.disable">
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'dropdown1'">
@@ -97,7 +97,7 @@
                             </ng-template>
 
                         </select>
-                        
+
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'disableddropdown'">

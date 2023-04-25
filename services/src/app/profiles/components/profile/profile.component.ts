@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Profile } from 'app/profiles/class/profile';
-import { ProfileAllColumn, ProfileColumn } from 'app/profiles/column-names/profile-column';
+import { ProfileAllColumn, ProfileColumn, ProfileUpdateColumn } from 'app/profiles/column-names/profile-column';
 import { ProfileService } from 'app/profiles/services/profile.service';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { Department } from 'app/department/class/department';
@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
 
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
-
+  updateColumn: any;
   // To be assigned based on the module
   readonly primaryIdColumnName: string = 'adminId';
 
@@ -63,7 +63,7 @@ export class ProfileComponent implements OnInit {
     // assigng Columns
     this.columnNames = ProfileColumn;
     this.allColumnNames = ProfileAllColumn;
-
+    this.updateColumn = ProfileUpdateColumn;
     // creating empty object
     this.emptyProfile = new Profile();
 
