@@ -29,7 +29,9 @@ export class QuizComponent implements OnInit {
 
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
+
   updateColumnNames : any;
+
 
   allColumnViewNames: any; // header for all visible column data
 
@@ -61,7 +63,10 @@ export class QuizComponent implements OnInit {
     // assigng headers
     this.columnNames = TeacherQuizColumn;
     this.allColumnNames = TeacherQuizAllColumn;
-this.updateColumnNames = TeacherQuizUpdateColumn;
+
+    this.updateColumnNames = TeacherQuizUpdateColumn;
+
+
     // creating empty object
     this.emptyQuiz = new Quiz();
     this.loadAllCourses();
