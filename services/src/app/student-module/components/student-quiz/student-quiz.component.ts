@@ -29,7 +29,7 @@ export class StudentQuizComponent implements OnInit {
   categories: Category[] = [];
   categoryName: string = ''
 
-  pagination: boolean = false;
+  pagination: boolean = true;
   currentPage = 1;
 
   sessionData: any;
