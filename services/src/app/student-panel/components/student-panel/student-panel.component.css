@@ -3,9 +3,14 @@ body {
 }
 
 .card {
-    border: none;
+    border: 5px solid #566787;
     border-radius: 10px;
     padding: 10px;
+    margin: 10px;
+}
+
+.card-header {
+    margin-top: 20px;
 }
 
 .c-details span {
@@ -65,10 +70,6 @@ body {
 
     margin-top: 30px;
 
-}
-
-.card {
-    border: 1px groove red;
 }
 
 #AuthUsername {

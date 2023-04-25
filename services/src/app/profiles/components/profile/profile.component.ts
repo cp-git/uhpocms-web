@@ -168,6 +168,20 @@ export class ProfileComponent implements OnInit {
     this.updateProfile(objectReceived);
   }
 
+  getSelectedOptionOfDropdown(dataReceived: Profile) {
+    this.authUserService.getAuthUserById(dataReceived.userId).subscribe(
+      (data: Authuser) => {
+        this.emptyProfile.firstName = data.authUserFirstName;
+        this.emptyProfile.lastName = data.authUserLastName;
+        this.emptyProfile.adminEmail = data.authUserEmail;
+      },
+      (error) => {
+        console.log("failed to fetch auth user");
+
+      }
+    )
+  }
+
   ///////////////////////////////////////////
   // Funcation calls specific to this module
   ///////////////////////////////////////////
@@ -298,6 +312,9 @@ export class ProfileComponent implements OnInit {
           );
         } else {
           alert('Profile saved successfully. NOTE - Profile is not activated!');
+          this.emptyProfile = {} as Profile;
+          this.ngOnInit();
+          this.back();
         }
 
       },
@@ -444,6 +461,7 @@ export class ProfileComponent implements OnInit {
         column.arrayName = 'inactiveAuthUsers';
       }
     });
+
 
   }
 

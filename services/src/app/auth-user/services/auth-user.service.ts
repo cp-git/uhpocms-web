@@ -22,12 +22,9 @@ export class AuthUserService {
   _loginUrl: string;
 
   constructor(private _http: HttpClient) {
-    //  this._baseUrl = `${environment.authUserUrl}/authuser`;
+    this._baseUrl = `${environment.authUserUrl}/authuser`;
     this._authUrl = `${environment.authUserUrl}/basicauth`;
     this._loginUrl = `${environment.authUserUrl}/login`;
-
-
-    this._baseUrl = "http://localhost:8090/authuser/uhpocms/authuser";
   }
 
 
@@ -119,5 +116,10 @@ export class AuthUserService {
   //Activate Auth Users
   activateAuthUserById(authUserId: number): Observable<any> {
     return this._http.patch<any>(`${this._baseUrl}/activate/` + authUserId, {});
+  }
+
+  //Get Authuser by Auth User Id
+  getAuthUserById(authUserId: number): Observable<any> {
+    return this._http.get<any>(`${this._baseUrl}/user?id=${authUserId}`);
   }
 }

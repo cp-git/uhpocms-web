@@ -79,7 +79,8 @@
 <ng-template #viewadd>
     <app-add-update [data]="{currentData:emptyProfile , columnNames:allColumnNames}"
         [dropdown]="{adminInstitutions,departments,adminRoles,inactiveAuthUsers,genders}"
-        (submitClicked)="onAddProfileSubmit($event)"></app-add-update>
+        (submitClicked)="onAddProfileSubmit($event)"
+        (getSelectedOptionOfDropdown)="getSelectedOptionOfDropdown($event)"></app-add-update>
 </ng-template>
 
 <ng-template #viewactivate>

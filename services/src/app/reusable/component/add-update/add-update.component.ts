@@ -11,10 +11,10 @@ export class AddUpdateComponent implements OnInit {
   @Input() data: { currentData: any, columnNames: any } = { currentData: null, columnNames: null };
   @Input() dropdown1?: { optionsArray1: any, dropdownColumnId1: string, dropdownColumnName1: string };
   @Input() dropdown2?: { optionsArray2: any, dropdownColumnId2: string, dropdownColumnName2: string };
-  @Input() dropdown?: any
+  @Input() dropdown?: any;
   // event for parent component 
   @Output() submitClicked: EventEmitter<any> = new EventEmitter();
-
+  @Output() getSelectedOptionOfDropdown: EventEmitter<any> = new EventEmitter();
   columnNames: any;
   currentData: any;
 
@@ -59,5 +59,10 @@ export class AddUpdateComponent implements OnInit {
       // alert( this.optionsArray2)
       console.log(this.optionsArray2)
     }
+  }
+
+  onDropdownSelected(option: any) {
+    console.log('called onDropdownSelected');
+    this.getSelectedOptionOfDropdown.emit(option);
   }
 }

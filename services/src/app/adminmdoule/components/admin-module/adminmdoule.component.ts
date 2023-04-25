@@ -28,7 +28,7 @@ export class AdminmdouleComponent {
 
   }
 
-  RedirectTOAuth() {
+  RedirectToAuth() {
     this._route.navigate(['AuthUser', this.userName]);
 
   }
