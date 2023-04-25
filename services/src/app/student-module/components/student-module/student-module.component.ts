@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModuleFile } from 'app/class/module-file';
 
@@ -8,6 +8,10 @@ import { Location } from '@angular/common';
 import { Module } from 'app/module/class/module';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { ModuleFileService } from 'app/module-file/services/module-file.service';
+import { ModulefileprogressService } from 'app/student-module/services/modulefileprogress.service';
+import { Modulefileprogress } from 'app/student-module/class/modulefileprogress';
+import { Moduleprogress } from 'app/student-module/class/moduleprogress';
+import { CourseProgress } from 'app/student-module/class/courseprogress';
 
 @Component({
   selector: 'app-student-module',
@@ -17,47 +21,83 @@ import { ModuleFileService } from 'app/module-file/services/module-file.service'
 export class StudentModuleComponent {
   @ViewChild('videoPlayer', { static: false })
   videoPlayerRef!: ElementRef<HTMLVideoElement>;
+
+
+
+
   studentId: any;
   userName: any;
-
   courseId: any;
   moduleId: any;
   courses: Course[] = []; //array of Course objects that stores the courses of the student
+  courseList: Course[] = [];
   modules: Module[] = []; //array of Module objects that stores the modules of the courses
   studentModuleFiles: ModuleFile[] = []; //array of ModuleFile objects that stores the module files assigned to the student
+  moduleFileProgress: Modulefileprogress = new Modulefileprogress;// Object of ModuleFileProgress
+  moduleFileProgressArr: Modulefileprogress[] = [];// Array of Object of ModuleFileProgress
+  updatedModuleFileProgressArr: Modulefileprogress[] = [];// Array of Object of ModuleFileProgress
 
+  newModuleFileProgressArr: Modulefileprogress[] = [];// Array of Object of ModuleFileProgress
+  uniquemofileprogarr: Modulefileprogress[] = [];
   selectedCourse: any; //stores the selected course by the student. 
   selectedCourseName: any; //stores the selected course by the student.
-
+  moduleFileId: number = 0;
+  studentIdProg: number = 0;
+  fileIdArr: number[] = [];
+  uniqueFileIdArr: number[] = [];
+  studentIdArr: number[] = [];
+  uniqueStudentIdArr: number[] = [];
   selectedModuleNameFile: any;
   selectedFile: any;
   selectedModule: any; //stores the selected module by the student.
   Date: any;
-  constructor(private activateRoute: ActivatedRoute,
-    private courseService: TeacherCourseService,
-    private moduleService: ModuleService,
-    private modulefileService: ModuleFileService,
-    private _location: Location,
-    private elRef: ElementRef) {
+  flag: boolean = false;
+  secondflag!: boolean;
+  completionPercentage: number = 0;
+  moduleFileArr: ModuleFile[] = [];
+  modFileArrLen!: number;
+  private currentTime!: number;
+  modprogress!: number;
+  progressArr: number[] = [];
+  uniqueProgressArr: number[] = [];
+  modulebasedArr: Modulefileprogress[] = [];
+  moduleProgress: Moduleprogress = new Moduleprogress;
+  refVar: number = 0;
+  statusModuleProg: Moduleprogress = new Moduleprogress;
+  statusModuleProgArr: number[] = [];
+  unistatusModuleProgArr: number[] = [];
+  updatedPercentage: number = 0;
+  courseProgress: CourseProgress = new CourseProgress();
+  moduleProgressArr: Moduleprogress[] = [];
+  moduleArr: Module[] = [];
+  couresFlag :boolean = false; 
+
+
+  constructor(private activateRoute: ActivatedRoute, private courseService: TeacherCourseService, private moduleService: ModuleService, private modulefileService: ModuleFileService,
+    private fileProgService: ModulefileprogressService, private _location: Location, private elRef: ElementRef, private modFileServc: ModuleFileService) {
+
 
   }
 
   ngOnInit(): void {
+    // this.videoPlayer;
+
+
     this.studentId = this.activateRoute.snapshot.paramMap.get('id');
     this.userName = this.activateRoute.snapshot.params['userName'];
-
     this.loadCourseOfStudent(this.studentId);
+    // console.log(this.courses)
+    // console.log(this.statusModuleProg.moduleId);
 
     this.selectedCourse = '1'
+
+    // this.trackModuleProgress(this.selectedCourse)
+    this.filterUniqueModuleIds();
+    // this.chkCoursePogress(this.selectedCourse);
+
   }
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['selectedFile']) {
-  //     alert("")
-  //     const video = this.elRef.nativeElement.querySelector('video');
-  //     video.load();
-  //   }
-  // }
-  //loads the courses of the student using the getCourseByStudentId() method of StudentService
+
+
   loadCourseOfStudent(studentId: number) {
     this.courseService.getCourseByStudentId(studentId).subscribe(
       response => {
@@ -65,14 +105,302 @@ export class StudentModuleComponent {
         this.loadModuleOfCourse(this.courses);
         this.selectedCourseName = this.courses[0].courseName;
         this.selectedCourse = this.courses[0].courseId;
+
+        // console.log(this.courses)
+
+        // try{ 
+        //   this.couresFlag = false;
+        //   this.trackModuleProgress(this.selectedCourse)
+        //   this.chkCoursePogress(this.selectedCourse)
+          
+  
+        // }
+        //   catch(e)
+        //   {
+        //     console.log(e)
+        //   }
+       
+
       },
       error => {
         console.log(error);
-        this.courses = [];
+
       }
     );
+    console.log(this.courses)
+    console.log(this.selectedCourse);
+
+
   }
 
+  onVideoTimeUpdate() {
+
+
+
+    console.log("this.updatedPercentage")
+    console.log(this.updatedPercentage)
+
+    //initialize flag to false
+    this.flag = false
+
+    //video element from html
+    const videoElement: HTMLVideoElement = this.videoPlayerRef.nativeElement;
+    const videoDuration = videoElement.duration;
+    const currentTime = videoElement.currentTime;
+
+
+    let percentage = (currentTime / videoDuration) * 100;
+
+    //percentage
+
+
+    percentage = Math.trunc(percentage);
+
+    if (percentage % 20 == 0) {
+      this.completionPercentage = percentage;
+    }
+
+    console.log(`Video completion percentage: ${this.completionPercentage}%`);
+
+    if ((this.completionPercentage > this.updatedPercentage) && (this.completionPercentage != 0)) {
+      this.updatedPercentage = this.completionPercentage;
+
+      //service to get all data from modulefileprogress table
+      // this.fileProgService.getAllFileProgressStatus().subscribe(
+      //   response => {
+
+      //     // console.log(response)
+      //     this.moduleFileProgressArr = response;
+
+      //     console.log(this.moduleFileProgressArr)
+
+      // //loop through all data in file progress table
+      // for (let z = 0; z < this.moduleFileProgressArr.length; z++) {
+      //   //filter data as per current student id
+      //   if (this.moduleFileProgressArr[z].studentId == this.studentId) {
+
+      //     //array for filtered entries in modulefileprogress table as per current student id
+      //     this.updatedModuleFileProgressArr.push(this.moduleFileProgressArr[z])
+
+
+      //     this.moduleFileId = this.moduleFileProgressArr[z].fileId;
+
+      //     //array for filtered entries for file id's as per current student id
+      //     this.fileIdArr.push(this.moduleFileId);
+
+      //     //array with unique values
+      //     this.uniqueFileIdArr = this.fileIdArr.filter((value, index, self) => self.indexOf(value) === index);
+
+      //     // this.uniquemofileprogarr = this.updatedModuleFileProgressArr.filter((value, index, self) => self.indexOf(value) === index);
+      //     console.log(this.fileIdArr)
+      //     console.log(this.uniqueFileIdArr)
+      //   }
+      // }
+
+
+      console.log(this.selectedModule.moduleId)
+
+      this.fileProgService.getAllFileProgressByModIdStudId(this.selectedModule.moduleId, this.studentId).subscribe(
+        (response) => {
+
+
+          this.newModuleFileProgressArr = response;
+          console.log("gffgfgfg")
+          console.log(this.newModuleFileProgressArr)
+
+          // //loop through all data in file progress table
+          for (let z = 0; z < this.newModuleFileProgressArr.length; z++) {
+            //filter data as per current student id
+
+
+
+
+
+            this.moduleFileId = this.newModuleFileProgressArr[z].fileId;
+
+            //array for filtered entries for file id's as per current student id
+            this.fileIdArr.push(this.moduleFileId);
+
+            //array with unique values
+            this.uniqueFileIdArr = this.fileIdArr.filter((value, index, self) => self.indexOf(value) === index);
+
+            // this.uniquemofileprogarr = this.updatedModuleFileProgressArr.filter((value, index, self) => self.indexOf(value) === index);
+            console.log(this.fileIdArr)
+            console.log(this.uniqueFileIdArr)
+          }
+
+        }
+      )
+
+
+      //   console.log("outside loop")
+
+      console.log(this.uniqueFileIdArr)
+      console.log("result value")
+      console.log(this.newModuleFileProgressArr)
+      console.log(this.uniqueFileIdArr.includes(this.selectedFile.moduleFileId))
+
+
+      if (this.uniqueFileIdArr.includes(this.selectedFile.moduleFileId) == true) {
+        //loop through filtered module file progress array
+        console.log("ffggfgffgf")
+        for (let k = 0; k < this.newModuleFileProgressArr.length; k++) {
+          // console.log(this.selectedFile.moduleFileId)
+          // console.log(this.updatedModuleFileProgressArr[k])
+
+
+          if (this.selectedFile.moduleFileId === this.newModuleFileProgressArr[k].fileId) {
+
+            // console.log(this.updatedModuleFileProgressArr[k])
+            console.log("  if(this.selectedFile.moduleFileId == this.fileIdArr[i] )")
+            this.moduleFileProgress = this.newModuleFileProgressArr[k];
+            this.flag = true;
+            k = this.newModuleFileProgressArr.length;
+            //  console.log(this.moduleFileProgress)
+          }
+          // console.log("outside flag value")
+          // console.log(this.flag)'
+          console.log("this.moduleFileProgress outside")
+          console.log(this.moduleFileProgress)
+          //if flag is true
+          if (this.flag == true) {
+
+            // console.log("Entered in flag loop")
+
+
+            if (this.moduleFileProgress.progress == 100) {
+              // console.log("Enered in  this.moduleFileProgress.progress == 10")
+              // alert("reached 100")
+
+              let moduleArr: ModuleFile[] = [];
+
+
+              this.modulefileService.getModuleFilesByModuleId(this.selectedModule.moduleId).subscribe(
+                (response) => {
+
+                  moduleArr = response;
+
+                }
+              )
+              console.log(moduleArr.length);
+              console.log(" if (this.moduleFileProgress.progress == 100)")
+              // console.log(this.uniquemofileprogarr);
+              // console.log(this.selectedModule.moduleId)
+              // for(let i= 0;i<this.uniquemofileprogarr.length;i++)
+              // {
+              //   if(this.uniquemofileprogarr[i].moduleId == this.selectedModule.moduleId)
+              //   {
+              //       this.modulebasedArr.push(this.uniquemofileprogarr[i]);
+
+              //   }
+
+
+              // }
+
+              // for(let m = 0; m<this.modulebasedArr.length; m++)
+              //   {
+              //       if(this.modulebasedArr[m].progress == 100)
+              //       this.refVar = m + 1;
+              //   }
+
+              this.fileProgService.getAllFileProgressByModIdStudIdProg(this.selectedModule.moduleId, this.studentId).subscribe(
+                (response) => {
+
+                  this.modulebasedArr = response;
+
+                }
+              )
+              if (moduleArr.length == this.modulebasedArr.length) {
+                console.log("moduleArr.length == this.modulebasedArr.length")
+
+
+                this.moduleProgress.moduleId = this.selectedModule.moduleId;
+                this.moduleProgress.courseId = this.selectedCourse;
+                this.moduleProgress.studentId = this.studentId;
+                this.moduleProgress.progress = 100;
+
+                //service to save data in module progress table
+                this.fileProgService.addModuleProgressStatus(this.moduleProgress).subscribe(
+                  (reponse) => {
+
+                    this.trackModuleProgress(this.selectedCourse);
+                    this.filterUniqueModuleIds()
+
+                  }
+                )
+
+              }
+
+              console.log(" this.trackCourseProgress() called")
+                this.trackCourseProgress();
+
+
+            }
+
+            else if ((this.moduleFileProgress.progress < 100 || this.completionPercentage == 100) && (this.completionPercentage > this.moduleFileProgress.progress)) {
+              this.moduleFileProgress.progress = this.completionPercentage;
+
+              this.moduleFileProgress.currentFilePageNo = 1
+              console.log("Entered in else if loop")
+              console.log("Value caught true");
+              console.log(this.moduleFileProgress.progress)
+              this.fileProgService.updatedModuleFileProgress(this.moduleFileProgress).subscribe(
+                response => {
+                  // alert("file status saved successfully through put method");
+
+                }
+              )
+            }
+            //cond. to end the loop as action performed
+
+            // }
+
+          }
+
+
+        }
+      }
+      //if file not present in table enter new entry
+      else if (this.uniqueFileIdArr.includes(this.selectedFile.moduleFileId) == false) {
+        this.moduleFileProgress.id = 0;
+        this.moduleFileProgress.progress = this.completionPercentage;
+        this.moduleFileProgress.currentFilePageNo = 1;
+        this.moduleFileProgress.moduleId = this.selectedModule.moduleId;
+        this.moduleFileProgress.fileId = this.selectedFile.moduleFileId;
+        this.moduleFileProgress.studentId = this.studentId;
+        console.log("object for post")
+        console.log(this.moduleFileProgress)
+        this.fileProgService.addFileProgressStatus(this.moduleFileProgress).subscribe(
+          response => {
+
+            return true;
+          }
+        )
+      }
+
+      // })
+    }
+
+
+
+  }
+
+  pauseVideo() {
+    this.videoPlayerRef.nativeElement.pause(); // Pause the video
+  }
+
+
+
+  videoEnd() {
+    this.flag = false;
+    
+    console.log(File);
+    this.changeSelectedFileAndModule(this.selectedFile, this.selectedModule)
+    console.log(this.selectedFile)
+    console.log(this.selectedModule)
+    console.log(this.studentId)
+
+  }
 
 
 
@@ -92,6 +420,10 @@ export class StudentModuleComponent {
     this.videoPlayer.src = this.videoSrc;
     this.videoPlayer.load(); // Reload the video
     // this.videoPlayer.play(); // Start playing the new video
+    console.log("onSelectedFileChanged() called")
+    this.updatedPercentage = 0;
+    this.completionPercentage = 0;
+    console.log(this.updatedPercentage)
 
   }
   //Loads the modules of the courses using the getModuleByCourseId() method of StudentService
@@ -99,13 +431,15 @@ export class StudentModuleComponent {
 
     studentCourses.forEach(course => {
 
-      this.moduleService.getModuleByCourseId(course.courseId).subscribe(
+      this.moduleService.getModuleByModuleId(course.courseId).subscribe(
         response => {
           response.forEach(module => {
             this.modules.push(module);
-            if (this.selectedCourse.courseId == module.courseId_id && module == null) {
+            if (this.selectedCourse.courseId == module.courseId_id) {
               this.selectedModule = module;
+              console.log(module)
             }
+
           })
 
           this.loadModuleFilesOfCourses(this.studentId);
@@ -116,6 +450,8 @@ export class StudentModuleComponent {
         }
       );
     })
+
+
   }
 
   //loads the module files assigned to the student using the getModuleFilesByStudentId() method of StudentService
@@ -145,15 +481,10 @@ export class StudentModuleComponent {
     this.selectedCourse = courseId;
     this.selectedModule = undefined;
 
+
+
   }
-  // onModuleSelect(event: any) {
-  //   this.moduleId = event.target.value;
-  //   if (this.moduleId) {
-  //     // this.selectedModule = this.selectedCourse.modules.find(m => m.moduleId === +this.moduleId);
-  //   } else {
-  //     this.selectedModule = undefined;
-  //   }
-  // }
+
 
   //navigates back to the student data page
   back() {
@@ -163,6 +494,7 @@ export class StudentModuleComponent {
 
   changeselectedModuleName(moduleId: any) {
     this.selectedModule = moduleId;
+
   }
 
   changeSelectedCourseName(courseId: number) {
@@ -171,6 +503,11 @@ export class StudentModuleComponent {
         this.selectedCourseName = course.courseName;
       }
     })
+
+    
+
+   
+    
   }
 
   changeSelectedFileAndModule(file: any, module: any) {
@@ -178,6 +515,120 @@ export class StudentModuleComponent {
     this.selectedFile = file;
     this.selectedModule = module;
     this.onSelectedFileChanged();
+  }
+
+
+
+  trackModuleProgress(courseId: number) {
+    console.log("Called")
+    let moduleId: number;
+    this.moduleService.getModuleByModuleId(courseId).subscribe(
+      response => {
+        console.log("Inside getModuleByModuleId(courseId)")
+        response.forEach(module => {
+          this.modules.push(module);
+          console.log(module);
+          console.log(courseId)
+          if (courseId == module.courseId_id) {
+            this.selectedModule = module;
+            console.log(module.courseId_id)
+
+            try{
+         
+            this.fileProgService.getModuleProgressByModIdStudId(module.moduleId, this.studentId).subscribe(
+              (response) => {
+
+                this.statusModuleProg = response;
+                console.log(this.statusModuleProg)
+                this.statusModuleProgArr.push(this.statusModuleProg.moduleId)
+                this.filterUniqueModuleIds();
+              }
+
+            )
+        
+            }
+            catch(e)
+            {}
+          }
+        })
+
+
+      })
+    console.log(this.statusModuleProgArr);
+    this.unistatusModuleProgArr = this.statusModuleProgArr.filter((value, index, self) => self.indexOf(value) === index);
+
+    console.log(this.unistatusModuleProgArr);
+
+  }
+
+
+  filterUniqueModuleIds() {
+    // Filter and store unique values in unistatusModuleProgArr
+    this.unistatusModuleProgArr = this.statusModuleProgArr.filter((value, index, self) => self.indexOf(value) === index);
+    console.log(this.unistatusModuleProgArr);
+  }
+
+  trackCourseProgress() {
+
+
+    this.moduleService.getModulesByCourseId(this.selectedCourse).subscribe(
+      (response) => {
+
+        this.moduleArr = response;
+
+      })
+
+
+    this.fileProgService.getModuleProgByCourseId(this.selectedCourse).subscribe(
+      (response) => {
+
+        this.moduleProgressArr = response;
+
+      }
+    )
+
+    if (this.moduleArr.length == this.moduleProgressArr.length) {
+      this.courseProgress.id = 0;
+      this.courseProgress.courseId = this.selectedCourse;
+      this.courseProgress.studentId = this.studentId;
+      this.courseProgress.currentAssignNo = 1;
+      this.courseProgress.currentModuleNo = 1;
+      this.courseProgress.currentUnitNo = 1;
+      this.courseProgress.grade = 100;
+      this.courseProgress.progress = 100;
+      this.fileProgService.addCourseProgressStatus(this.courseProgress).subscribe(
+        (response) => {
+
+        }
+      )
+
+      this.chkCoursePogress(this.selectedCourse);
+    }
+  }
+
+
+  chkCoursePogress(courseId:number)
+   { 
+
+    console.log(this.selectedCourse)
+   try{
+    this.fileProgService.getCourseProgByCourseIdStudId(courseId,this.studentId).subscribe(
+      (response) => {
+        this.couresFlag = true;
+
+        console.log("courseFlag value" + this.couresFlag)
+
+      }
+    )
+   }
+   catch(e)
+   {}
+    
+    
+  }
+  // Filter the modules array based on selectedCourse
+  getFilteredModules(): any[] {
+    return this.modules.filter(module => module.courseId_id === this.selectedCourse);
   }
 
 }
