@@ -1,12 +1,13 @@
+<!-- {{questionAnswers|json}} -->
 <ng-container *ngIf="pagination">
     <ng-container *ngFor="let question of questionAnswers | paginate: { itemsPerPage: 1, currentPage: currentPage }">
-        <!-- <ng-container *ngTemplateOutlet="form; context: {$implicit: question, index:currentPage }"></ng-container> -->
+        <ng-container *ngTemplateOutlet="quizpanel; context: {$implicit: question, index:currentPage }"></ng-container>
     </ng-container>
 </ng-container>
 
 <ng-container *ngIf="!pagination">
     <ng-container *ngFor="let question of questionAnswers;let i= index">
-        <!-- <ng-container *ngTemplateOutlet="form; context: {$implicit: question,index:i+1 }"></ng-container> -->
+        <ng-container *ngTemplateOutlet="quizpanel; context: {$implicit: question,index:i }"></ng-container>
     </ng-container>
 </ng-container>
 
@@ -16,10 +17,13 @@
     </div>
 </ng-container>
 
-<ng-container *ngFor="let question of questionAnswers;let index= index">
+<ng-template #quizpanel let-question let-index="index">
+    <!-- ******************************************************************************************************************************** -->
+    <!-- {{question|json}} -->
+    <!-- <ng-container *ngFor="let question of questionAnswers;let index= index"> -->
     <form #myForm="ngForm">
         <div class="jumbotron">
-            <h4>Question : {{ index+1 }}</h4>
+            <h4>Question : {{ index }}</h4>
             <div *ngIf="question['questionFigure']" class="img">
                 <img src="../../../../assets/img/{{question['questionFigure']}}" style="max-height: 220px">
             </div>
@@ -63,7 +67,8 @@
             </div> -->
         </div>
     </form>
-</ng-container>
+</ng-template>
+<!-- </ng-container> -->
 <div class="text-center">
     <button class="btn btn-primary" (click)="onFormSubmit()" type="submit">Submit</button>
 </div>
