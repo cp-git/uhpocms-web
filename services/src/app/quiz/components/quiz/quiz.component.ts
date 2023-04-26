@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Quiz } from 'app/quiz/class/quiz';
-import { TeacherQuizAllColumn, TeacherQuizColumn , TeacherQuizUpdateColumn } from 'app/quiz/column-names/quiz-column';
+import { TeacherQuizAllColumn, TeacherQuizColumn, TeacherQuizUpdateColumn } from 'app/quiz/column-names/quiz-column';
 import { QuizService } from 'app/quiz/services/quiz.service';
 import { Location } from '@angular/common';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
@@ -30,7 +30,7 @@ export class QuizComponent implements OnInit {
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
 
-  updateColumnNames : any;
+  updateColumnNames: any;
 
 
   allColumnViewNames: any; // header for all visible column data
