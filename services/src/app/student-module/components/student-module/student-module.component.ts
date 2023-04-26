@@ -192,7 +192,7 @@ export class StudentModuleComponent {
 
   private getAllQuizzesByProfileId(studentId: number) {
     this.quizService.getAllQuizzesByProfileId(studentId).subscribe(
-      (data) => {
+      (data: Quiz[]) => {
         this.quizzes = data;
       }
     )
