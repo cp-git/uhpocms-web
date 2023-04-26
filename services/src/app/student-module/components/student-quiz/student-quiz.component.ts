@@ -55,7 +55,9 @@ export class StudentQuizComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+
     if (changes['quizData']) {
+      this.currentPage = 1;
       this.selectedQuiz = this.quizData;
       this.selectedQuizId = this.quizData['quizId'];
 
@@ -89,7 +91,7 @@ export class StudentQuizComponent implements OnInit {
 
   private getQuestionByQuizId(quizId: number) {
     this.questionService.getAllQuestionsByQuizId(quizId).subscribe(
-      (data) => {
+      (data: Question[]) => {
         this.questions = data;
       }
     )
@@ -119,7 +121,7 @@ export class StudentQuizComponent implements OnInit {
         this.answers = data;
         this.questionAnswers = []; // Initialize questionAnswers as an array
         this.questionService.getAllQuestionsByQuizId(quizId).subscribe(
-          (response) => {
+          (response: any[]) => {
             console.log(response);
 
             response.forEach(

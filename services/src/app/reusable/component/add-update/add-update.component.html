@@ -158,7 +158,7 @@
 
             <div class="card-block row justify-content-between col-sm-12">
                 <div class="col-sm-3">
-                    <button class="btn btn-primary" (click)="
+                    <button [disabled]="!addUpdateForm.valid" class=" btn btn-primary" (click)="
                         onSubmitClicked(currentData)">Submit</button>
                 </div>
             </div>

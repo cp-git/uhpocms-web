@@ -269,7 +269,7 @@ export class ProfileComponent implements OnInit {
   // For dropdown fetching inactive authusers required for add screen
   private loadInactiveAuthUsers() {
     this.authUserService.getAllInactiveAuthUsers().subscribe(
-      response => {
+      (response: Authuser[]) => {
         this.inactiveAuthUsers = response;
       }
     );
@@ -279,7 +279,7 @@ export class ProfileComponent implements OnInit {
   // For dropdown fetching active authusers required for update view and view all, view one screen
   private loadActiveAuthUsers() {
     this.authUserService.authUserList().subscribe(
-      response => {
+      (response: Authuser[]) => {
         this.activeAuthUsers = response;
       }
     );
@@ -348,7 +348,7 @@ export class ProfileComponent implements OnInit {
         this.activeAuthUsers.find(authUser => {
           if (authUser.authUserId == currentData.userId) {
             this.authUserService.deleteAuthUser(authUser.authUserName).subscribe(
-              response => {
+              (response: any) => {
                 alert('Profile deleted successfully');
                 this.ngOnInit();
               }

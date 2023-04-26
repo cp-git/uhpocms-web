@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { Department } from 'app/department/class/department';
 // Module specific imports
 
-import { CourseAllColumn, CourseColumn ,CourseUpdateColumn} from 'app/teacher-course/column-name/teacher-course-column';
+import { CourseAllColumn, CourseColumn, CourseUpdateColumn } from 'app/teacher-course/column-name/teacher-course-column';
 
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { Course } from 'app/teacher-course/class/course';
@@ -35,8 +35,8 @@ export class TeacherCourseComponent implements OnInit {
   // If all data is available or not
   dataAvailable: boolean = false;
 
-  updateButton : boolean = true;
-  deleteButton : boolean = true;
+  updateButton: boolean = true;
+  deleteButton: boolean = true;
 
 
   courseDepartment: CourseDepartment;
@@ -44,7 +44,7 @@ export class TeacherCourseComponent implements OnInit {
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
 
-  updateColumnNames : any;
+  updateColumnNames: any;
 
 
 
@@ -70,7 +70,7 @@ export class TeacherCourseComponent implements OnInit {
   adminInstitutions: AdminInstitution[] = [];
   departments: Department[] = [];
 
-  
+
 
   courseDepartments: CourseDepartment[] = [];
   constructor(private service: TeacherCourseService, private location: Location, private departmentService: DepartmentService) {
@@ -357,13 +357,13 @@ export class TeacherCourseComponent implements OnInit {
         break;
       case 'teacher':
         this.updateButton = false;
-        this.deleteButton =false;
+        this.deleteButton = false;
         this.getAssignedCoursesOfTeacher(this.profileId);
 
         break;
       case 'student':
         this.updateButton = false;
-        this.deleteButton =false;
+        this.deleteButton = false;
         this.getCoursesEnrolledToStudent(this.profileId);
         break;
     }
@@ -376,6 +376,8 @@ export class TeacherCourseComponent implements OnInit {
       (data) => {
         this.allData = [];
         data.forEach((course: Course) => {
+          // console.log(course);
+
           this.courseDepartments.find((coursedepartment: CourseDepartment) => {
             if (course.courseId == coursedepartment.courseId) {
               this.allData.push({

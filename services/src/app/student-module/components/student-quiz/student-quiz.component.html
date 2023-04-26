@@ -11,12 +11,6 @@
     </ng-container>
 </ng-container>
 
-<ng-container *ngIf="pagination">
-    <div class="text-center">
-        <pagination-controls (pageChange)="currentPage=$event"></pagination-controls>
-    </div>
-</ng-container>
-
 <ng-template #quizpanel let-question let-index="index">
     <!-- ******************************************************************************************************************************** -->
     <!-- {{question|json}} -->
@@ -65,10 +59,16 @@
             <!-- <div class="text-center submitbutton">
                 <button class="btn btn-primary" type=" submit">Submit</button>
             </div> -->
+
         </div>
     </form>
+    <div class="row submitbutton">
+        <button class="btn btn-primary" (click)="onFormSubmit()" type="submit">Submit</button>
+    </div>
+    <ng-container *ngIf="pagination">
+        <div class="text-center ngx-pagination">
+            <pagination-controls (pageChange)="currentPage=$event"></pagination-controls>
+        </div>
+    </ng-container>
 </ng-template>
 <!-- </ng-container> -->
-<div class="text-center">
-    <button class="btn btn-primary" (click)="onFormSubmit()" type="submit">Submit</button>
-</div>

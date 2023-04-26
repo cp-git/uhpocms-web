@@ -65,12 +65,11 @@
 <ng-template #activateButton>
     <button class="btn btn-primary" (click)="onActivateClick()">Inactive</button>
 </ng-template>
-
 <ng-template #viewall>
     <app-view-all *ngIf="allData.length > 0" [data]="{ moduleData: this.allData, columnNames: this.columnNames }"
         [dropdown]="{adminInstitutions,departments}" [idsColumnName]="{ columnName: primaryIdColumnName }"
         [isViewAllScreen]="true" (viewClicked)="onChildViewClick($event)" (updateClicked)="onChildUpdateClick($event)"
-        (deleteClicked)="onChildDeleteClick($event)"  [buttons]="{updateButton:updateButton, deleteButton:deleteButton}">
+        (deleteClicked)="onChildDeleteClick($event)" [buttons]="{updateButton:updateButton, deleteButton:deleteButton}">
     </app-view-all>
     <div *ngIf="allData.length == 0">
         <h3>No active Courses</h3>

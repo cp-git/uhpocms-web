@@ -1,7 +1,11 @@
 .submitbutton {
-    bottom: 10px;
+    bottom: 0;
     position: absolute;
-    left: 50%;
+    right: 50px;
+}
+
+.btn {
+    border-radius: 15px;
 }
 
 .jumbotron {
@@ -37,4 +41,10 @@
 .form-check-input {
     margin-left: 10%;
     margin-right: 5px;
+}
+
+.ngx-pagination {
+    margin-left: 0;
+    margin-bottom: 1rem;
+    padding: 10px !important;
 }
