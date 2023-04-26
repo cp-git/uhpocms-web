@@ -4,6 +4,10 @@
     right: 50px;
 }
 
+.btn {
+    border-radius: 15px;
+}
+
 .jumbotron {
     position: relative;
     padding-top: 10px;
