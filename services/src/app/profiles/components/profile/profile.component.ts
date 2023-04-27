@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Profile } from 'app/profiles/class/profile';
-import { ProfileAllColumn, ProfileColumn } from 'app/profiles/column-names/profile-column';
+import { ProfileAllColumn, ProfileColumn, ProfileUpdateColumn } from 'app/profiles/column-names/profile-column';
 import { ProfileService } from 'app/profiles/services/profile.service';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { Department } from 'app/department/class/department';
@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
 
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
-
+  updateColumn: any;
   // To be assigned based on the module
   readonly primaryIdColumnName: string = 'adminId';
 
@@ -63,7 +63,7 @@ export class ProfileComponent implements OnInit {
     // assigng Columns
     this.columnNames = ProfileColumn;
     this.allColumnNames = ProfileAllColumn;
-
+    this.updateColumn = ProfileUpdateColumn;
     // creating empty object
     this.emptyProfile = new Profile();
 
@@ -168,6 +168,20 @@ export class ProfileComponent implements OnInit {
     this.updateProfile(objectReceived);
   }
 
+  getSelectedOptionOfDropdown(dataReceived: Profile) {
+    this.authUserService.getAuthUserById(dataReceived.userId).subscribe(
+      (data: Authuser) => {
+        this.emptyProfile.firstName = data.authUserFirstName;
+        this.emptyProfile.lastName = data.authUserLastName;
+        this.emptyProfile.adminEmail = data.authUserEmail;
+      },
+      (error) => {
+        console.log("failed to fetch auth user");
+
+      }
+    )
+  }
+
   ///////////////////////////////////////////
   // Funcation calls specific to this module
   ///////////////////////////////////////////
@@ -255,7 +269,7 @@ export class ProfileComponent implements OnInit {
   // For dropdown fetching inactive authusers required for add screen
   private loadInactiveAuthUsers() {
     this.authUserService.getAllInactiveAuthUsers().subscribe(
-      response => {
+      (response: Authuser[]) => {
         this.inactiveAuthUsers = response;
       }
     );
@@ -265,7 +279,7 @@ export class ProfileComponent implements OnInit {
   // For dropdown fetching active authusers required for update view and view all, view one screen
   private loadActiveAuthUsers() {
     this.authUserService.authUserList().subscribe(
-      response => {
+      (response: Authuser[]) => {
         this.activeAuthUsers = response;
       }
     );
@@ -298,6 +312,9 @@ export class ProfileComponent implements OnInit {
           );
         } else {
           alert('Profile saved successfully. NOTE - Profile is not activated!');
+          this.emptyProfile = {} as Profile;
+          this.ngOnInit();
+          this.back();
         }
 
       },
@@ -331,7 +348,7 @@ export class ProfileComponent implements OnInit {
         this.activeAuthUsers.find(authUser => {
           if (authUser.authUserId == currentData.userId) {
             this.authUserService.deleteAuthUser(authUser.authUserName).subscribe(
-              response => {
+              (response: any) => {
                 alert('Profile deleted successfully');
                 this.ngOnInit();
               }
@@ -444,6 +461,7 @@ export class ProfileComponent implements OnInit {
         column.arrayName = 'inactiveAuthUsers';
       }
     });
+
 
   }
 

@@ -1,6 +1,9 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-3">
+        <div class="col text-right backbtn">
+            <button class=" btn btn-primary" (click)="back()">Back</button>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3 sidebar">
             <div class="header text-center">
 
                 <h1>{{ selectedCourseName | titlecase }}
@@ -43,7 +46,7 @@
                                                 *ngIf="filteredProgressFileIds && file.moduleFileId && filteredProgressFileIds.includes(file.moduleFileId); else elseBlock"
                                                 class="fa fa-check-circle" aria-hidden="true"></span>
                                             <ng-template #elseBlock>
-                                                <span class="fa fa-file-text-o" aria-hidden="true"></span>
+                                                <span class="fas fa-video" aria-hidden="true"></span>
                                             </ng-template>
 
 
@@ -56,16 +59,17 @@
                                 </ng-container>
 
 
-                            </ng-container>
-                            <!-- </ng-container>  -->
-                            <ng-container *ngFor="let quiz of quizzes |filter:'moduleId':module.moduleId">
-                                <br><span class="fa fa-file-text-o"></span> &nbsp;&nbsp;<a
-                                    (click)="onQuizClicked(quiz)">{{quiz.title}}</a>
+
                             </ng-container>
 
+                                <ng-container *ngFor="let quiz of quizzes |filter:'moduleId':module.moduleId">
+                                    <br><span class="far fa-file-alt"></span> &nbsp;&nbsp;<a
+                                        (click)="onQuizClicked(quiz)">{{quiz.title}}</a>
+                                </ng-container>
+                            </ul>
+                        </ng-container>
 
-                        </ul>
-                    </ng-container>
+                  
                 </div>
             </div>
         </div>
@@ -79,7 +83,7 @@
                     <source [src]="videoSrc" type="video/mp4" />
                 </video>
 
-                <div>{{ completionPercentage }}%</div>
+                <!-- <div>{{ completionPercentage }}%</div> -->
 
             </div>
             <ng-template #quizview>
@@ -93,8 +97,4 @@
 
         </div>
     </div>
-    <div class="row text-right backbtn">
-        <button class="btn btn-primary" (click)="back()">Back</button>
-    </div>
-
 </div>

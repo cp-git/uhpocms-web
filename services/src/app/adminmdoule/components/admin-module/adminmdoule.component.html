@@ -1,11 +1,12 @@
 <div class="container-fluid mt-5 mb-3">
-
+    <!-- 
     <head>
         <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    </head>
+    </head> -->
 
     <div class="header">
+
         <div class="row">
             <div class="col-md-6" id="h1">
                 <h1>Admin Panel</h1>
@@ -13,212 +14,158 @@
             </div>
 
             <div class="col-md-6" id="h2">
-                <button class="btn btn-info" id="adminbtn" (click)="RedirectTOLogin()">Logout</button>
+                <button class="btn btn-primary" id="adminbtn" (click)="RedirectTOLogin()">Logout</button>
             </div>
         </div>
     </div>
 
-    <div class="row" id="sub-head">
-        <div class="col-md-4" id="data1">
-            <div class="card p-3 mb-2">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <i class="glyphicon glyphicon-user" id="icon1"></i>
-                        <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername">User Administration</h2>
-                        </div>
-
-                        <button id="demo" class="btn btn-info" id="adminbtn" (click)="RedirectTOAuth()">Auth
-                            User</button>
+    <div class="container">
+        <!-- first row  -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-center" (click)="RedirectToAuth()">
+                    <div class="card-header">
+                        <span class="fas fa-user-cog fa-4x"></span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Users</h3>
+                        <button class="btn btn-primary">Users</button>
                     </div>
 
                 </div>
-
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center" (click)="RedirectToInstituteAdminProfile()">
+                    <div class="card-header">
+                        <span class="fas fa-users fa-4x"></span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">User Profiles</h3>
+                        <button class="btn btn-primary">User
+                            Profiles</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center" (click)="RedirectToRole()">
+                    <div class="card-header">
+                        <span class="fas fa-user-alt fa-4x"></span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">User Roles</h3>
+                        <button class="btn btn-primary">User Roles</button>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-md-4" id="data1">
-            <div class="card p-3 mb-2">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <i class="material-icons" id="icon1">computer</i>
-                        <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername"> User Profile Administration </h2>
-                        </div>
 
-                        <button id="adminbtn" class="btn btn-info"
-                            (click)="RedirectToInstituteAdminProfile()">InstituteAdmin
-                            Profile</button>
+
+        <!-- second row -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-center" (click)="RedirectToAdminInstitution()">
+                    <div class="card-header">
+                        <span class="fas fa-school fa-4x"></span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Institutions</h3>
+                        <button class="btn btn-primary">Institutions</button>
                     </div>
 
                 </div>
-
             </div>
-        </div>
-        <div class="col-md-4" id="data1">
-            <div class="card p-3 mb-2">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <i class="material-icons" id="icon1">class</i>
-                        <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername"> Course Administration</h2>
-                        </div>
-
-                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToCourse()">Course</button>
+            <div class="col-md-4">
+                <div class="card text-center" (click)="RedirectToAdminDept()">
+                    <div class="card-header">
+                        <span class="fas fa-building fa-4x"></span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Departments</h3>
+                        <button class="btn btn-primary">Departments</button>
                     </div>
 
                 </div>
-
             </div>
-        </div>
-    </div>
-
-    <div class="row" id="sub-head">
-        <div class="col-md-4" id="data1">
-            <div class="card p-3 mb-2">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <i class="material-icons" id="icon1">important_devices</i>
-                        <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername">Department Administration</h2>
-                        </div>
-
-                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToAdminDept()">Admin
-                            Department</button>
+            <div class="col-md-4">
+                <div class="card text-center" (click)="RedirectToCourse()">
+                    <div class="card-header">
+                        <span class="fas fa-book-open fa-4x"></span>
                     </div>
-
-                </div>
-
-            </div>
-        </div>
-        <div class="col-md-4" id="data1">
-
-            <div class="card p-3 mb-2">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <i class="material-icons" id="icon1">class</i>
-                        <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername"> Student Administration</h2>
-                        </div>
-
-                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToEnrollStudent()">Enroll
-                            Student</button>
+                    <div class="card-body">
+                        <h3 class="card-title">Courses</h3>
+                        <button class="btn btn-primary">Courses</button>
                     </div>
-
                 </div>
-
             </div>
         </div>
-        <div class="col-md-4" id="data1">
 
-            <div class="card p-3 mb-2">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <i class="material-icons" id="icon1">computer</i>
-                        <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername"> Institution Administration </h2>
-                        </div>
-
-                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToAdminInstitution()">Institution
-                        </button>
+        <!-- third row -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-center" (click)="RedirectToAssignTeacher()">
+                    <div class="card-header">
+                        <span class="fas fa-book-reader fa-4x"></span>
                     </div>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <div class="row" id="sub-head">
-        <!-- Row 3-->
-        <div class="col-md-4" id="data1">
-            <div class="card p-3 mb-2">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <i class="material-icons" id="icon1">class</i>
-                        <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername">User Role Administration</h2>
-                        </div>
-
-                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToRole()">Role</button>
+                    <div class="card-body">
+                        <h3 class="card-title">Assign Course To Teachers</h3>
+                        <button class="btn btn-primary">Assign Course</button>
                     </div>
-
                 </div>
-
             </div>
-        </div>
-        <div class="col-md-4" id="data1">
-            <div class="card p-3 mb-2">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <i class="material-icons" id="icon1">class</i>
-                        <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername">Announcements </h2>
-                        </div>
 
-                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToAnnouncement()">Announcements
-                        </button>
+            <div class="col-md-4">
+                <div class="card text-center" (click)="RedirectToEnrollStudent()">
+                    <div class="card-header">
+                        <span class="fas fa-book-reader fa-4x"></span>
                     </div>
-
-                </div>
-
-            </div>
-        </div>
-
-        <!--End of row-->
-        <div class="col-md-4" id="data1">
-            <div class="card p-3 mb-2">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <i class="material-icons" id="icon1">class</i>
-                        <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername">Course Assigned To Teacher</h2>
-                        </div>
-
-                        <button id="adminbtn" class="btn btn-info" (click)="RedirectToAssignTeacher()">Assign
-                            Teacher</button>
+                    <div class="card-body">
+                        <h3 class="card-title">Enroll Students To Course</h3>
+                        <button class="btn btn-primary">Enroll Students</button>
                     </div>
-
                 </div>
-
             </div>
+
+            <div class="col-md-4">
+                <div class="card text-center" (click)="RedirectToAnnouncement()">
+                    <div class="card-header">
+                        <span class="fas fa-bell fa-4x"></span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Announcements</h3>
+                        <button class="btn btn-primary">Announcements</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
+        <!-- third row -->
+        <!-- <div class="row">
+            <div class="col-md-4">
+                <div class="card text-center" routerLink="/access">
+                    <div class="card-header">
+                        <span class="fas fa-user-lock fa-4x"></span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Access Control</h3>
+                        <button class="btn btn-primary">Access Control</button>
+                    </div>
+                </div>
+            </div>
 
-        <!-- <div class="col-md-4" id="data1">
-            <div class="card p-3 mb-2 mt-5">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <i class="material-icons" id="icon1">class</i>
-                        <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername">Allocate Permissions to Teachers</h2>
-                        </div>
-
-                        <button id="adminbtn" class="btn btn-info" routerLink="/allotPermission">Allocate
+            <div class="col-md-4">
+                <div class="card text-center" routerLink="/allotPermission">
+                    <div class="card-header">
+                        <span class="fas fa-file-contract fa-3x"></span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Allocate Permissions to Teachers</h3>
+                        <button class="btn btn-primary">Allocate
                             Permissions</button>
                     </div>
 
                 </div>
-
             </div>
-        </div>
 
-        <div class="col-md-4" id="data1">
-            <div class="card p-3 mb-2 mt-5">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <i class="material-icons" id="icon1">class</i>
-                        <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername">Access Control </h2>
-                        </div>
-
-                        <button id="adminbtn" class="btn btn-info" routerLink="/access">Access Control
-                        </button>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-
-    </div> -->
+        </div> -->
     </div>
 </div>

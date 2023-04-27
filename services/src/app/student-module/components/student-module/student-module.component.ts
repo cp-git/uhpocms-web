@@ -670,7 +670,7 @@ export class StudentModuleComponent implements OnInit {
 
   private getAllQuizzesByProfileId(studentId: number) {
     this.quizService.getAllQuizzesByProfileId(studentId).subscribe(
-      (data) => {
+      (data: Quiz[]) => {
         this.quizzes = data;
       }
     )

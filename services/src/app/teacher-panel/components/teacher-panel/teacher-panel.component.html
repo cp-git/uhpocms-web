@@ -1,9 +1,9 @@
 <div class="container-fluid mt-5 mb-3">
 
-    <head>
+    <!-- <head>
         <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    </head>
+    </head> -->
 
     <div class="header">
         <div class="row">
@@ -13,115 +13,86 @@
             </div>
 
             <div class="col-md-6" id="h2">
-                <button class="btn btn-info" id="demo" (click)="RedirectTOLogin()">Logout</button>
+                <button class="btn btn-primary" id="demo" (click)="RedirectTOLogin()">Logout</button>
             </div>
         </div>
     </div>
 
-    <div class="row" id="sub-head">
-        <div class="col-md-4" id="data1">
-            <div class="card p-3 mb-2">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <i class="glyphicon glyphicon-user" id="icon1"></i>
-                        <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername">Quiz Creation</h2>
-                        </div>
-
-                        <button id="demo" class="btn btn-info" (click)="RedirectToQuiz()">Create Quiz</button>
+    <div class="container">
+        <!-- first row  -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-center" (click)="RedirectToTeacherCourse()">
+                    <div class="card-header">
+                        <span class="fas fa-book-open fa-4x"></span>
                     </div>
-
+                    <div class="card-body">
+                        <h3 class="card-title">Courses</h3>
+                        <button class="btn btn-primary">Courses</button>
+                    </div>
                 </div>
-
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center" (click)="RedirectToModule()">
+                    <div class="card-header">
+                        <span class="fas fa-book fa-4x"></span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Modules</h3>
+                        <button class="btn btn-primary">Modules</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center" (click)="RedirectToModuleFile()">
+                    <div class="card-header">
+                        <span class="fas fa-clone fa-4x"></span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Module Content</h3>
+                        <button class="btn btn-primary">Module Content</button>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-md-4" id="data1">
-            <div class="card p-3 mb-2">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <i class="material-icons" id="icon1">computer</i>
-                        <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername">Assigned Courses</h2>
-                        </div>
 
-                        <button id="demo" class="btn btn-info" (click)="RedirectToTeacherCourse()">Courses Assigned to
-                            Teacher</button>
+
+        <!-- second row -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-center" (click)="RedirectToQuiz()">
+                    <div class="card-header">
+                        <span class="fas fa-lightbulb fa-4x"></span>
                     </div>
-
+                    <div class="card-body">
+                        <h3 class="card-title">Quizzes</h3>
+                        <button class="btn btn-primary">Quizzes</button>
+                    </div>
                 </div>
-
             </div>
-        </div>
-        <div class="col-md-4" id="data1">
-            <div class="card p-3 mb-2">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <i class="material-icons" id="icon1">class</i>
-                        <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername">Notification</h2>
-                        </div>
 
-                        <button id="demo" class="btn btn-info" (click)="redirectToAnnouncements()">Notification</button>
-
+            <div class="col-md-4">
+                <div class="card text-center" (click)="RedirectToQuestion()">
+                    <div class="card-header">
+                        <span class="fas fa-question-circle fa-4x"></span>
                     </div>
-
+                    <div class="card-body">
+                        <h3 class="card-title">Questions & Answers</h3>
+                        <button class="btn btn-primary">Q / A</button>
+                    </div>
                 </div>
-
             </div>
-        </div>
-        <div class="col-md-4" id="data1">
-            <div class="card p-3 mb-2">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <i class="material-icons" id="icon1">class</i>
-                        <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername">Module</h2>
-                        </div>
-
-                        <button id="demo" class="btn btn-info" (click)="RedirectToModule()">Module</button>
-
+            <div class="col-md-4">
+                <div class="card text-center" (click)="redirectToAnnouncements()">
+                    <div class="card-header">
+                        <span class="fas fa-bell fa-4x"></span>
                     </div>
-
-                </div>
-
-            </div>
-        </div>
-        <div class="col-md-4" id="data1">
-            <div class="card p-3 mb-2">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <i class="material-icons" id="icon1">class</i>
-                        <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername">Module Content</h2>
-                        </div>
-
-                        <button id="demo" class="btn btn-info" (click)="RedirectToModuleFile()">Module File</button>
-
+                    <div class="card-body">
+                        <h3 class="card-title">Announcements</h3>
+                        <button class="btn btn-primary">Announcements</button>
                     </div>
-
                 </div>
-
-            </div>
-        </div>
-        <div class="col-md-4" id="data1">
-            <div class="card p-3 mb-2">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <i class="material-icons" id="icon1">class</i>
-                        <div class="ms-2 c-details">
-                            <h2 class="mb-0" id="AuthUsername">Question/Answer</h2>
-                        </div>
-
-                        <button id="demo" class="btn btn-info" (click)="RedirectToQuestion()">Q/A</button>
-
-                    </div>
-
-                </div>
-
             </div>
         </div>
 
     </div>
-
-
-</div>
