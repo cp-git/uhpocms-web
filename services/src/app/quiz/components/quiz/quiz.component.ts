@@ -176,7 +176,7 @@ export class QuizComponent implements OnInit {
 
       },
       (error) => {
-        alert('Quiz data not found');
+        console.log('Quiz data not found');
       }
     );
   }
@@ -187,11 +187,11 @@ export class QuizComponent implements OnInit {
     this.quizService.deleteQuiz(title).subscribe(
       (data) => {
 
-        alert('Data Deleted Successfully');
+        console.log('Data Deleted Successfully');
         this.ngOnInit();
       },
       (error) => {
-        alert('Failed to delete quiz data');
+        console.log('Failed to delete quiz data');
       }
     );
   }
@@ -202,7 +202,7 @@ export class QuizComponent implements OnInit {
     currentData.active = true;
     this.quizService.addQuiz(currentData).subscribe(
       data => {
-        alert("Quiz added successfuly!")
+        console.log("Quiz added successfuly!")
         this.emptyQuiz = {} as Quiz;
         this.ngOnInit();
         this.back();
@@ -210,7 +210,7 @@ export class QuizComponent implements OnInit {
       }
       ,
       error => {
-        alert("Failed to add quiz data!")
+        console.log("Failed to add quiz data!")
       }
     )
 
@@ -222,12 +222,12 @@ export class QuizComponent implements OnInit {
     // calling service for updating data
     this.quizService.updateQuiz(currentData.title, currentData).subscribe(
       response => {
-        alert(`Quiz updated successfully !`);
+        console.log(`Quiz updated successfully !`);
         this.ngOnInit();
         this.back();
       },
       error => {
-        alert(`Quiz updation failed !`);
+        console.log(`Quiz updation failed !`);
       }
     );
   }
@@ -253,11 +253,11 @@ export class QuizComponent implements OnInit {
     // calling service to activating Quiz
     this.quizService.updateActiveStatus(quiz.title, quiz).subscribe(
       response => {
-        alert("Activated Quiz");
+        console.log("Activated Quiz");
         this.ngOnInit();
       },
       error => {
-        alert("Failed to activate");
+        console.log("Failed to activate");
       }
     );
   }

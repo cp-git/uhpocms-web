@@ -47,7 +47,7 @@ export class AuthenticationloginComponent {
     //           if (this._instituteAdminArray[i].userId === this.authUser.authUserId) {
     //             console.log(this._instituteAdminArray[i].userId + "authuser_id in instituteadmin profile..")
     //             console.log(this.authUser.authUserId + "authuser_id in Auth User profile..")
-    //             alert(this._instituteAdminArray[i].userRole);
+    //             console.log(this._instituteAdminArray[i].userRole);
 
     //             if (this._instituteAdminArray[i].userRole == 'admin') {
     //               this._route.navigate(['adminmodule/admin/', userName])
@@ -65,12 +65,12 @@ export class AuthenticationloginComponent {
 
 
     //       },
-    //         (error) => alert("error"));
+    //         (error) => console.log("error"));
 
 
     //     this.authUser = data;
     //     console.log(this.authUser.authUserId);
-    //     alert('User Successfully Logged In..');
+    //     console.log('User Successfully Logged In..');
     //     //this._route.navigate(['demo']);
     //   },
     //   (error) => console.log(error)
@@ -92,7 +92,7 @@ export class AuthenticationloginComponent {
             if (this._instituteAdminArray[i].userId == this.authUser.authUserId) {
               //console.log(this._instituteAdminArray[i].userId + "authuser_id in instituteadmin profile..")
               //console.log(this.authUser.authUserId + "authuser_id in Auth User profile..")
-              // alert(this._instituteAdminArray[i].userRole);
+              // console.log(this._instituteAdminArray[i].userRole);
 
               if (this._instituteAdminArray[i].userRole == 'admin') {
                 this._route.navigate(['adminmodule/admin', userName]);
@@ -117,7 +117,7 @@ export class AuthenticationloginComponent {
 
         this.authUser = data;
         //console.log(this.authUser.authUserId);
-        // alert('User Successfully Logged In..');
+        // console.log('User Successfully Logged In..');
         //this._route.navigate(['demo']);
       },
       (error) => console.log(error)

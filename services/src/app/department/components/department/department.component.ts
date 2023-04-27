@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
 
-import { DepartmentAllColumn, DepartmentColumn , DepartmentUpdateColumn } from 'app/department/column/department-column';
+import { DepartmentAllColumn, DepartmentColumn, DepartmentUpdateColumn } from 'app/department/column/department-column';
 
 
 import { Location } from '@angular/common';
@@ -27,7 +27,7 @@ export class DepartmentComponent implements OnInit {
   columnNames: any;
   allColumnNames: any;
 
-  updateColumnNames  :any; 
+  updateColumnNames: any;
 
 
   // For dropdown
@@ -134,7 +134,7 @@ export class DepartmentComponent implements OnInit {
   private loadAdminInstitutions() {
     try {
       this.sessionData = sessionStorage.getItem('admininstitution');
-      //alert(this.sessionData);
+      //console.log(this.sessionData);
       this.data = JSON.parse(this.sessionData);
       for (var inst in this.data) {
         this.adminInstitutions.push(this.data[inst]);
@@ -154,11 +154,11 @@ export class DepartmentComponent implements OnInit {
     // calling service for updating data
     this.service.updateDepartment(currentData.id, currentData).subscribe(
       (response) => {
-        alert(`Department updated successfully !`);
+        console.log(`Department updated successfully !`);
         this.back();
       },
       (error) => {
-        alert(`Department updation failed !`);
+        console.log(`Department updation failed !`);
       }
     );
   }
@@ -170,13 +170,13 @@ export class DepartmentComponent implements OnInit {
     // calling service for adding data
     this.service.insertDepartment(currentData).subscribe(
       (data) => {
-        alert('Department added Successfully');
+        console.log('Department added Successfully');
         this.emptyDepartment = {} as Department;
         this.ngOnInit();
         this.back();
       },
       (error) => {
-        alert('Failed to add Department');
+        console.log('Failed to add Department');
       }
     );
   }
@@ -189,7 +189,7 @@ export class DepartmentComponent implements OnInit {
     this.service.getAllDepartments().subscribe(
       (response) => {
         this.allData = response; //assign data to local variable
-
+        this.allData.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1) // order by alphabets for department name
         // if no data available
         if (this.allData.length > 0) {
           // this.dataAvailable = true;
@@ -206,11 +206,11 @@ export class DepartmentComponent implements OnInit {
     // calling service to soft delte
     this.service.deleteDepartment(name).subscribe(
       (response) => {
-        alert('Department deleted successfully');
+        console.log('Department deleted successfully');
         this.ngOnInit();
       },
       (error) => {
-        alert('Department deletion failed');
+        console.log('Department deletion failed');
       }
     );
   }
@@ -233,11 +233,11 @@ export class DepartmentComponent implements OnInit {
     // calling service to activating department
     this.service.activateDepartment(id).subscribe(
       (response) => {
-        alert('Activated department');
+        console.log('Activated department');
         this.ngOnInit();
       },
       (error) => {
-        alert('Failed to activate');
+        console.log('Failed to activate');
       }
     );
   }
