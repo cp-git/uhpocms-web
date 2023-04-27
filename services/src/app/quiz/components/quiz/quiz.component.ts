@@ -171,7 +171,7 @@ export class QuizComponent implements OnInit {
           courses.map(
             course => course.courseId).includes(data.courseId));
 
-
+        this.allQuizData.sort((a, b) => a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1) // order by alphabets for title
         console.log("filtered daTA " + JSON.stringify(this.allQuizData));
 
       },
@@ -240,6 +240,8 @@ export class QuizComponent implements OnInit {
     this.quizService.getInactiveQuizList().subscribe(
       response => {
         this.allInActiveData = response;
+        this.allInActiveData.sort((a, b) => a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1) // order by alphabets for title
+
       },
       error => {
         console.log('No data in table ');

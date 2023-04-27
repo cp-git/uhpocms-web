@@ -178,7 +178,7 @@ export class CategoryComponent {
       response => {
 
         this.allData = response; //assign data to local variable
-
+        this.allData.sort((a, b) => a.categoryName.toLowerCase() > b.categoryName.toLowerCase() ? 1 : -1) // order by alphabets for category name
         // if no data available
         if (this.allData.length > 0) {
           this.dataAvailable = true;

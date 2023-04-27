@@ -234,6 +234,7 @@ export class AuthUserComponent implements OnInit {
     this.service.getAllInactiveAuthUsers().subscribe(
       response => {
         this.allInActiveData = response;
+        this.allInActiveData.sort((a, b) => a.authUserName.toLowerCase() > b.authUserName.toLowerCase() ? 1 : -1) // order by alphabets for authuser name
       },
       error => {
         console.log('No data in table ');
