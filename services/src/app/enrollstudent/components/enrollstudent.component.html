@@ -32,7 +32,7 @@
             <div class="col-sm-4">
                 <label class="badg">Course</label>
                 <div class="form-group">
-                    <select name="courseid" [(ngModel)]="course.courseId" class="form-control">
+                    <select name="courseid" [(ngModel)]="course.courseId" class="form-control" (click)="onCourseSelect(course.courseId)">
                         <option value="undefined" selected>Select</option>
                         <option *ngFor="let course of courses" value="{{course.courseId}}">
                             {{course.courseName}}
@@ -60,12 +60,17 @@
                                 </ng-template>
                                 <!-- code to disable display of selected students in input field -->
                                 <ng-template ng-multi-label-tmp>
-                                    <span style="display:block" class="ng-placeholder">Select
-                                        Students</span>
+                                    <span style="display:block" class="ng-value" *ngFor="let teacher of selected">
+                                       <ng-container *ngFor="let profile of _profileArray">
+                                            <ng-container *ngIf="profile.adminId==teacher">
+                                                {{profile.firstName}}
+                                            </ng-container>
+                                       </ng-container>
+                                    </span>
                                 </ng-template>
                                 <!-- code to display checkbox  -->
                                 <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                    <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />
+                                    <input id="item-{{index}}" type="checkbox" [checked]="item$.selected || enrolledStudentArr.includes(item.adminId)" [disabled]="enrolledStudentArr.includes(item.adminId)" />
                                     {{item.fullName}}
                                 </ng-template>
                             </ng-select>
