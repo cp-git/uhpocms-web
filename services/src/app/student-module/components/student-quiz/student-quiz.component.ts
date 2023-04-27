@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Category } from 'app/category/class/category';
 import { Answer } from 'app/question/class/answer';
 import { OneQuestionAnswer } from 'app/question/class/one-question-answer';
@@ -17,33 +17,35 @@ import { QuizService } from 'app/quiz/services/quiz.service';
 })
 export class StudentQuizComponent implements OnInit {
 
+  // Quiz Data comming from parent
   @Input() quizData: any;
 
-  studentId: any;
-  quizProgress!: QuizProgress;
-  quizProgresses: QuizProgress[] = [];
-  questions: Question[] = [];
-  selectedQuizId!: number;
-  selectedQuiz!: Quiz;
+  // function to be called in parent component
+  @Output() onSaveQuizProgress: EventEmitter<any> = new EventEmitter();
 
-  categories: Category[] = [];
-  categoryName: string = ''
+  studentId: any;   // logged in student id
+  quizProgress!: QuizProgress;  // quizProgress object used to save progress in table
 
-  pagination: boolean = true;
-  currentPage = 1;
+  questions: Question[] = [];   // for storing questions of selected quiz
+  selectedQuizId!: number;      // selected Quiz id
+  selectedQuiz!: Quiz;          // selected Quiz object
 
-  sessionData: any;
-  jsonData: any;
+  categories: Category[] = [];  // category array
+  categoryName: string = ''     // storing category name, for detecitng which panel to show 
 
-  queAns!: OneQuestionAnswer;
-  answers: Answer[] = [];
-  questionAnswers: OneQuestionAnswer[] = [];
+  pagination: boolean = true;   // for pagination
+  currentPage = 1;              // currentPage of pagination bydefault it's 1
+
+  sessionData: any;             // for getting data from session
+  jsonData: any;                // to store session data into json format
+
+  queAns!: OneQuestionAnswer;   // temp vairable storing question Answer in object to get data
+  answers: Answer[] = [];       // all answers with questionId
+  questionAnswers: OneQuestionAnswer[] = [];    // array of question and answers
 
   constructor(
     private quizProgressService: QuizProgressService,
-    private quizService: QuizService,
     private questionService: QuestionService,
-
   ) {
 
     this.studentId = sessionStorage.getItem("profileId");
@@ -56,39 +58,51 @@ export class StudentQuizComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
 
+    // if quizDate value is changed then this condition will be true
     if (changes['quizData']) {
-      this.currentPage = 1;
-      this.selectedQuiz = this.quizData;
-      this.selectedQuizId = this.quizData['quizId'];
-
-      this.getQuizPorgressesByStudentId(this.studentId);
-      this.getQuestionByQuizId(this.selectedQuizId);
-
-      this.categories.forEach(category => {
-        if (category.categoryId == this.selectedQuiz.categoryId) {
-          this.categoryName = category.categoryName;
-        }
-      })
-
-      this.getAllQuestionAnswers(this.selectedQuizId);
+      this.loadQuizData();
     }
   }
 
 
-  private getQuizPorgressesByStudentId(studentId: number) {
-    this.quizProgressService.getQuizProgressesByStudentId(studentId).subscribe(
-      (data) => {
-        this.quizProgresses = data;
-        console.log(data);
+  // for adding new changed data in quizData variable and settign some variables
+  // currentPage for pagination
+  // selectedQuiz and selectedQuizId 
+  // getting questions and Answers of quiz
+  // and category name 
+  private loadQuizData() {
+    this.currentPage = 1;
+    this.selectedQuiz = this.quizData;
+    this.selectedQuizId = this.quizData['quizId'];
 
-      },
-      (error) => {
-        console.log("failed to fetch progress data");
+    // this.getQuizPorgressesByStudentId(this.studentId);
+    this.getQuestionByQuizId(this.selectedQuizId);
 
+    this.categories.forEach(category => {
+      if (category.categoryId == this.selectedQuiz.categoryId) {
+        this.categoryName = category.categoryName;
       }
-    )
+    })
+
+    this.getAllQuestionAnswers(this.selectedQuizId);
   }
 
+  // private getQuizPorgressesByStudentId(studentId: number) {
+  //   this.quizProgressService.getQuizProgressesByStudentId(studentId).subscribe(
+  //     (data) => {
+  //       this.quizProgresses = data;
+  //       console.log(data);
+
+  //     },
+  //     (error) => {
+  //       console.log("failed to fetch progress data");
+
+  //     }
+  //   )
+  // }
+
+
+  // Getting all question by quiz Id
   private getQuestionByQuizId(quizId: number) {
     this.questionService.getAllQuestionsByQuizId(quizId).subscribe(
       (data: Question[]) => {
@@ -97,6 +111,8 @@ export class StudentQuizComponent implements OnInit {
     )
   }
 
+
+  // loading all Categories from session storage
   private loadCategories() {
     try {
       this.sessionData = sessionStorage.getItem('category');
@@ -105,21 +121,22 @@ export class StudentQuizComponent implements OnInit {
       for (var inst in this.jsonData) {
         this.categories.push(this.jsonData[inst]);
       }
-
     }
     catch (err) {
       console.log("Error", err)
     }
-
   }
 
+  // Getting all Question and Answer using quizId and storing all data in array
   private getAllQuestionAnswers(quizId: number) {
 
-
+    // Fetching all answers
     this.questionService.getAllAnswers().subscribe(
       (data) => {
         this.answers = data;
         this.questionAnswers = []; // Initialize questionAnswers as an array
+
+        //Fetching all Questions by quiz Id 
         this.questionService.getAllQuestionsByQuizId(quizId).subscribe(
           (response: any[]) => {
             console.log(response);
@@ -133,7 +150,7 @@ export class StudentQuizComponent implements OnInit {
                 // console.log(filteredAnswers);
 
 
-
+                // assigning answers to question of questionAnswer array of object
                 filteredAnswers.forEach((answer: Answer, index: number) => {
                   // console.log(answer);
                   // console.log(index)
@@ -188,15 +205,16 @@ export class StudentQuizComponent implements OnInit {
 
   }
 
+
+  // function called when form is submitted from frontend
   onFormSubmit() {
     this.quizProgress = new QuizProgress();
-    console.log(this.questionAnswers);
-    console.log(this.quizData);
+
     let notAttendedQuestions: any[] = [];
     let score: number = 0;
     const marksPerQuestion: number = 100 / (this.questionAnswers.length);
+
     this.questionAnswers.forEach((queAns, index) => {
-      console.log(index + 1);
 
       let trueAnswer: string = '';
       if (queAns.correct1) {
@@ -237,7 +255,10 @@ export class StudentQuizComponent implements OnInit {
 
     this.quizProgressService.addQuizProgressOfStudent(this.quizProgress).subscribe(
       (response) => {
+        let addedQuizProgress: QuizProgress;
+        addedQuizProgress = response;
         console.log("Quiz progress saved");
+        this.onSaveQuizProgress.emit(addedQuizProgress);
       },
       (error) => {
         console.log("Failed to save Progress");
@@ -247,11 +268,5 @@ export class StudentQuizComponent implements OnInit {
     console.log("Total score : " + score);
 
   }
-
-  onAnswerSelected(question: Question) {
-    console.log(this.questionAnswers);
-    console.log(this.quizData);
-  }
-
 
 }
