@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Quiz } from 'app/quiz/class/quiz';
-import { TeacherQuizAllColumn, TeacherQuizColumn } from 'app/quiz/column-names/quiz-column';
+import { TeacherQuizAllColumn, TeacherQuizColumn , TeacherQuizUpdateColumn } from 'app/quiz/column-names/quiz-column';
 import { QuizService } from 'app/quiz/services/quiz.service';
 import { Location } from '@angular/common';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
@@ -17,7 +17,7 @@ import { Category } from 'app/category/class/category';
 export class QuizComponent implements OnInit {
 
   // title heading for Quiz
-  moduleName: string = "Quiz Administration";
+  moduleName: string = "Quiz";
 
   viewUpdate: boolean = false;
   viewAdd: boolean = false;
@@ -29,6 +29,9 @@ export class QuizComponent implements OnInit {
 
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
+
+  updateColumnNames : any;
+
 
   allColumnViewNames: any; // header for all visible column data
 
@@ -47,6 +50,7 @@ export class QuizComponent implements OnInit {
   courses: Course[] = [];
   modules: Module[] = [];
   categories: Category[] = [];
+  userRole: any;
   constructor(
     private quizService: QuizService,
     private location: Location,
@@ -55,13 +59,17 @@ export class QuizComponent implements OnInit {
     private categotyService: CategoryService
   ) {
 
+    this.userRole = sessionStorage.getItem('userRole');
     // assigng headers
     this.columnNames = TeacherQuizColumn;
     this.allColumnNames = TeacherQuizAllColumn;
 
+    this.updateColumnNames = TeacherQuizUpdateColumn;
+
+
     // creating empty object
     this.emptyQuiz = new Quiz();
-
+    this.loadAllCourses();
 
     //calling services for foreign key data (dropdown)
     this.loadAllCategories();
@@ -73,7 +81,6 @@ export class QuizComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getAllQuizzes();  // for getting all active Quizs
     this.getInActiveQuiz(); // for getting all inactive Quizs
     this.getAssignedCoursesOfTeacher(this.profileId)
 
@@ -155,11 +162,17 @@ export class QuizComponent implements OnInit {
   ///////////////////////////////////////////
 
   // for getting all quizzes
-  getAllQuizzes() {
+  getAllQuizzes(courses: Course[]) {
     this.quizService.getAllQuizzes().subscribe(
-      (data) => {
-        this.allQuizData = data;
-        console.log(data);
+      response => {
+
+        this.allQuizData = response;
+        this.allQuizData = this.allQuizData.filter(data =>
+          courses.map(
+            course => course.courseId).includes(data.courseId));
+
+
+        console.log("filtered daTA " + JSON.stringify(this.allQuizData));
 
       },
       (error) => {
@@ -292,6 +305,8 @@ export class QuizComponent implements OnInit {
         console.log(data);
 
         this.courses = data;
+        this.getAllQuizzes(this.courses);  // for getting all active Quizs
+
       },
       error => {
         console.log(error);

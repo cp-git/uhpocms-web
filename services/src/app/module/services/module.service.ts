@@ -41,6 +41,11 @@ export class ModuleService {
     return this._http.delete<any>(`${this.moduleUrl}/` + moduleName);
   }
 
+  // delete module by module name
+  deleteModuleById(moduleId: number): Observable<any> {
+    return this._http.delete<any>(`${this.moduleUrl}/moduleId/` + moduleId);
+  }
+
   getModuleList(moduleName: string): Observable<any> {
     return this._http.get<any>(`${this.moduleUrl}/` + moduleName);
   }
@@ -49,6 +54,11 @@ export class ModuleService {
   // update module by module name
   updateModule(moduleName: string, module: Module): Observable<any> {
     return this._http.put<any>(`${this.moduleUrl}/` + moduleName, module);
+  }
+
+  // update module by module id
+  updateModuleById(moduleId: number, module: Module): Observable<any> {
+    return this._http.put<any>(`${this.moduleUrl}/moduleId/` + moduleId, module);
   }
 
   // get module by module name

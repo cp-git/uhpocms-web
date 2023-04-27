@@ -88,15 +88,15 @@
 
 
 <ng-template #viewadd>
-    <app-add-update [data]="{currentData:emptyAuthUser, columnNames:columnNames}"
+    <app-add-update [data]="{currentData:emptyAuthUser, columnNames:allColumnNames}"
         (submitClicked)="onAddAuthUserSubmit($event)"></app-add-update>
 </ng-template>
 
 <ng-template #viewone>
-    <app-view-one [data]="{currentData:currentData , columnNames:allColumnNames}"></app-view-one>
+    <app-view-one [data]="{currentData:currentData , columnNames:columnNames}"></app-view-one>
 </ng-template>
 
 <ng-template #viewupdate>
-    <app-add-update [data]="{currentData:currentData , columnNames:columnNames}"
+    <app-add-update [data]="{currentData:currentData , columnNames:updateColumnNames}"
         (submitClicked)="onUpdateAuthUserSubmit($event)"></app-add-update>
 </ng-template>

@@ -13,6 +13,7 @@ export class AuthUserService {
   // BASE_PATH: 'http://localhost:8080'
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser';
 
+
   public username: String = 'uhpocadmin';
   public password: String = 'P@55w0rd';
   _baseUrl: string;
@@ -44,6 +45,7 @@ export class AuthUserService {
   deleteAuthUser(authUserName: string): Observable<any> {
     return this._http.delete<any>(this._baseUrl + "/" + authUserName);
   }
+
 
 
   //Get Authuser by Auth User Name

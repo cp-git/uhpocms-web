@@ -1,6 +1,7 @@
 export class Module {
 
   moduleId!: number ;
+
   moduleName!: string;
   moduleDescription!: string;
   moduleIsActive!: boolean;

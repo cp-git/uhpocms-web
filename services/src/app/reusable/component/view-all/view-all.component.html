@@ -4,9 +4,9 @@
             <tr>
                 <th *ngFor="let column of columnNames">{{ column.label }}</th>
                 <ng-container *ngIf="isViewAllScreen">
-                    <th>Update</th>
+                    <th *ngIf="buttons.updateButton">Update</th>
                     <th>View</th>
-                    <th>Delete</th>
+                    <th *ngIf="buttons.deleteButton">Delete</th>
                 </ng-container>
                 <ng-container *ngIf="isActivateScreen">
                     <th>Activate</th>
@@ -23,6 +23,9 @@
                             [(ngModel)]="row[column.key]" disabled>
                         <!-- handle email type -->
                         <input name="{{column.key}}" class="form-control" *ngSwitchCase="'date'" type="date"
+                            [(ngModel)]="row[column.key]" disabled>
+
+                            <input name="{{column.key}}" class="form-control" *ngSwitchCase="'password'" type="password"
                             [(ngModel)]="row[column.key]" disabled>
                         <!-- handle date type -->
                         <textarea name="{{column.key}}" class="form-control" *ngSwitchCase="'textarea'"
@@ -54,9 +57,9 @@
                 </td>
 
                 <ng-container *ngIf="isViewAllScreen">
-                    <td><button (click)="onUpdatClicked(row)" class="btn btn-primary">Update</button></td>
+                    <td *ngIf="buttons.updateButton"><button (click)="onUpdatClicked(row)" class="btn btn-primary">Update</button></td>
                     <td><button (click)="onViewClicked(row)" class="btn btn-primary">View</button></td>
-                    <td><button (click)="onDeleteClicked(row)" class="btn btn-danger">Delete</button></td>
+                    <td *ngIf="buttons.deleteButton"><button (click)="onDeleteClicked(row)" class="btn btn-danger">Delete</button></td>
 
                 </ng-container>
                 <ng-container *ngIf="isActivateScreen">

@@ -13,7 +13,7 @@ import { Profile } from 'app/profiles/class/profile';
 })
 export class ModuleComponent {
 
-  moduleName: string = 'Module Administration';
+  moduleName: string = 'Module';
 
   //screen view
   viewUpdate: boolean = false;
@@ -35,7 +35,9 @@ export class ModuleComponent {
   sessionData: any;
   data: any;
 
+  userRole: any;
 
+  courseId: any;
   profileId: any;
 
   emptyModule: Module;  // empty admin role
@@ -55,7 +57,9 @@ export class ModuleComponent {
     this.emptyModule = new Module();
     this.loadCourses();
     this.profileId = sessionStorage.getItem('profileId');
+    this.courseId = sessionStorage.getItem('courseId');
 
+    this.userRole = sessionStorage.getItem('userRole');
 
   }
 
@@ -63,9 +67,10 @@ export class ModuleComponent {
   ngOnInit(): void {
     //  this.service.get
 
-    this.getAllModules();
+
     this.getInactiveModule();
-    this.getAssignedCoursesOfTeacher(this.profileId)
+    this.getAssignedCoursesOfTeacher(this.profileId);
+
 
 
 
@@ -112,7 +117,9 @@ export class ModuleComponent {
   // For navigate to update screen with data
   // function will call when child update button is clicked 
   onChildDeleteClick(objectReceived: Module): void {
-    this.deleteModule(objectReceived.moduleName);
+    if (objectReceived.moduleId !== null) {
+      this.deleteModule(objectReceived.moduleId);
+    }
   }
 
   // For navigate to activate screen with data
@@ -166,25 +173,45 @@ export class ModuleComponent {
   ///////////////////////////////////////////
 
   // For updating admin role
+  // private updateModule(currentData: Module) {
+  //   // calling service for updating data
+  //   this.service.updateModule(currentData.moduleName, currentData).subscribe(
+  //     response => {
+  //       alert(`Module updated successfully !`);
+  //       this.back();
+  //     },
+  //     error => {
+  //       alert(`Module updation failed !`);
+  //     }
+  //   );
+  // }
+
+  ///update module by id
+  // For updating admin role
   private updateModule(currentData: Module) {
     // calling service for updating data
-    this.service.updateModule(currentData.moduleName, currentData).subscribe(
-      response => {
-        alert(`Module updated successfully !`);
-        this.back();
-      },
-      error => {
-        alert(`Module updation failed !`);
-      }
-    );
+    if (currentData.moduleId !== null) {
+      this.service.updateModuleById(currentData.moduleId, currentData).subscribe(
+        response => {
+          alert(`Module updated successfully !`);
+          this.back();
+        },
+        error => {
+          alert(`Module updation failed !`);
+        }
+      );
+    }
   }
-
 
   // For adding 
   private addModule(currentData: Module) {
+    if (currentData.moduleStartDate && currentData.moduleEndDate && currentData.moduleEndDate <= currentData.moduleStartDate) {
+      alert("End date must be after start date");
+      return;
+    }
     currentData.moduleIsActive = true;  // setting active true
     // calling service for adding data
-
+    //alert(JSON.stringify(currentData));
     this.service.addTeacherModule(currentData).subscribe(
       (data) => {
         //  alert(this.currentData)
@@ -202,9 +229,10 @@ export class ModuleComponent {
   private getAssignedCoursesOfTeacher(teacherId: number) {
     this.courseService.getAssignedCourseOfTeacher(teacherId).subscribe(
       (data) => {
-        console.log(data);
+        console.log("courses " + JSON.stringify(data));
 
         this.courses = data;
+        this.getAllModules();
       },
       error => {
         console.log(error);
@@ -213,7 +241,10 @@ export class ModuleComponent {
   }
 
 
-  // for getting all 
+
+
+
+  // for getting all modules by course id
   private getAllModules() {
     this.dataAvailable = true;
 
@@ -221,7 +252,14 @@ export class ModuleComponent {
     this.service.getAllModules().subscribe(
       response => {
 
-        this.allData = response; //assign data to local variable
+        this.allData = response;
+        this.allData = this.allData.filter(data =>
+          this.courses.map(
+            course => course.courseId).includes(data.courseId_id));
+
+
+        console.log("filtered daTA " + JSON.stringify(this.allData));
+
 
         // if no data available
         if (this.allData.length > 0) {
@@ -234,11 +272,27 @@ export class ModuleComponent {
     );
   }
 
+  // // For deleting (soft delete) 
+  // private deleteModule(name: string) {
+
+  //   // calling service to soft delte
+  //   this.service.deleteModule(name).subscribe(
+  //     (response) => {
+  //       alert('Module deleted successfully');
+  //       this.ngOnInit();
+  //     },
+  //     (error) => {
+  //       alert('Module deletion failed');
+  //     }
+  //   );
+  // }
+
   // For deleting (soft delete) 
-  private deleteModule(name: string) {
+  private deleteModule(moduleId: number) {
+
 
     // calling service to soft delte
-    this.service.deleteModule(name).subscribe(
+    this.service.deleteModuleById(moduleId).subscribe(
       (response) => {
         alert('Module deleted successfully');
         this.ngOnInit();
@@ -247,6 +301,7 @@ export class ModuleComponent {
         alert('Module deletion failed');
       }
     );
+
   }
 
   // For getting all inactive admin roles

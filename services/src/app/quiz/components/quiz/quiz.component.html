@@ -1,8 +1,10 @@
 <div class="container">
     <div>
+
         <ng-container *ngIf="viewAll">
             <div class="row justify-content-between">
                 <div class="col-sm-6">
+
                     <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container>
                 </div>
                 <div class="col-sm-6 text-right">
@@ -49,7 +51,7 @@
 
 
 <ng-template #title let-headerTitle>
-    <h1>{{headerTitle}}</h1>
+    <h1>{{userRole |titlecase}}'s {{headerTitle}}</h1>
 </ng-template>
 
 <ng-template #addButton>
@@ -98,6 +100,6 @@
 </ng-template>
 
 <ng-template #viewupdate>
-    <app-add-update [data]="{currentData:currentData , columnNames:allColumnNames}"
+    <app-add-update [data]="{currentData:currentData , columnNames:updateColumnNames}"
         [dropdown]="{courses,modules,categories}" (submitClicked)="onUpdateQuizSubmit($event)"></app-add-update>
 </ng-template>

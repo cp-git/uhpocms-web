@@ -20,3 +20,6 @@ table td {
 .btn {
     border-radius: 15px;
 }
+.disableddropdown {
+    -webkit-appearance: none;
+}

@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+
 // Module specific imports
 
 import { AuthUserService } from 'app/auth-user/services/auth-user.service';
 import { Authuser } from 'app/auth-user/class/auth-user';
-import { AuthUserAllColumn, AuthUserColumn } from 'app/auth-user/column/auth-user-column';
+
+import { AuthUserAllColumn, AuthUserColumn ,AuthUserUpdateColumn} from 'app/auth-user/column/auth-user-column';
+
+import { json } from 'body-parser';
 
 
 @Component({
@@ -32,6 +36,8 @@ export class AuthUserComponent implements OnInit {
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
 
+updateColumnNames : any;
+
   // To be assigned based on the module
   readonly primaryIdColumnName: string = 'authUserId';
 
@@ -52,6 +58,7 @@ export class AuthUserComponent implements OnInit {
 
     this.columnNames = AuthUserColumn;
     this.allColumnNames = AuthUserAllColumn;
+    this.updateColumnNames = AuthUserUpdateColumn;
 
     // creating empty object
     this.emptyAuthUser = new Authuser();
@@ -151,15 +158,21 @@ export class AuthUserComponent implements OnInit {
     );
   }
 
+  currentDate = new Date();
+
   // For adding auth user
   private addAuthuser(currentData: Authuser) {
 
-    currentData.authUserIsActive = true;  // setting active true
+    currentData.authUserLastLogin = this.currentDate;
+    currentData.authUserIsActive = false;  // setting active true
 
     // calling service for adding data
+
+    //alert(JSON.stringify(currentData));
+
     this.service.addAuthUser(currentData).subscribe(
       (data) => {
-        alert('AuthUser added Successfully');
+        alert('AuthUser added Successfully'); 
         this.emptyAuthUser = {} as Authuser;
         this.ngOnInit();
         this.back();
@@ -179,11 +192,13 @@ export class AuthUserComponent implements OnInit {
       response => {
 
         this.allData = response; //assign data to local variable
-
+        this.allData.sort((a, b) => a.authUserName.toLowerCase() > b.authUserName.toLowerCase() ? 1 : -1) // order by alphabets for authusername
         // if no data available
         if (this.allData.length > 0) {
           this.dataAvailable = true;
         }
+
+
       },
       error => {
         console.log('No data in table ');

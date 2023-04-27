@@ -4,6 +4,7 @@ import { Question } from '../class/question';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment.development';
 import { Answer } from '../class/answer';
+import { QuestionAnswer } from '../class/question-answer';
 @Injectable({
   providedIn: 'root'
 })
@@ -22,8 +23,8 @@ export class QuestionService {
     return this.http.get<Question[]>(`${this.questionUrl}/question?figure=all`);
   }
 
-  addQuestion(question: Question): Observable<Question> {
-    return this.http.post<Question>(`${this.questionUrl}/question`, question);
+  addQuestion(questionAnswer: QuestionAnswer): Observable<number> {
+    return this.http.post<number>(`${this.questionUrl}/question/add`, questionAnswer);
   }
 
 

@@ -16,67 +16,63 @@ export class ModulefileprogressService {
 
   //constructor
   constructor(private http: HttpClient) {
-    this. moduleFileProgressUrl  = `${environment. moduleFileProgressUrl }`;
-    this. moduleProgressUrl  = `${environment. moduleProgressUrl }`;
-    this. courseProgressUrl  = `${environment. courseProgressUrl }`;
+    this.moduleFileProgressUrl = `${environment.moduleFileProgressUrl}`;
+    this.moduleProgressUrl = `${environment.moduleProgressUrl}`;
+    this.courseProgressUrl = `${environment.courseProgressUrl}`;
   }
 
   //add data to module filee progress table
-  addFileProgressStatus(fileProgress : Modulefileprogress): Observable<Modulefileprogress> {
+  addFileProgressStatus(fileProgress: Modulefileprogress): Observable<Modulefileprogress> {
     console.log(fileProgress)
     return this.http.post<Modulefileprogress>(`${this.moduleFileProgressUrl}/modulefileprog`, fileProgress);
   }
 
-  //add data to module filee progress table
-  getAllFileProgressStatus(){
+  //get all module filee progress table
+  getAllFileProgressStatus() {
     return this.http.get<Modulefileprogress[]>(`${this.moduleFileProgressUrl}/modulefileprog?id=all`);
   }
-   
+
 
   //update question by question figure
-  updatedModuleFileProgress(fileProgress : Modulefileprogress): Observable<Modulefileprogress> {
+  updatedModuleFileProgress(fileProgress: Modulefileprogress): Observable<Modulefileprogress> {
     console.log(fileProgress.fileId)
     console.log(fileProgress.progress)
     return this.http.put<Modulefileprogress>(`${this.moduleFileProgressUrl}/modulefileprog/${fileProgress.id}`, fileProgress);
   }
 
   //add data to moduleprogress table
-  addModuleProgressStatus(moduleProgress : Moduleprogress): Observable<Moduleprogress> {
+  addModuleProgressStatus(moduleProgress: Moduleprogress): Observable<Moduleprogress> {
     console.log(moduleProgress)
     return this.http.post<Moduleprogress>(`${this.moduleProgressUrl}/moduleprog`, moduleProgress);
   }
-  
+
   //add data to module filee progress table
- getModuleProgressByModIdStudId(modId:number,studId:number){
-  return this.http.get<Moduleprogress>(`${this.moduleProgressUrl}/moduleprog/${modId}/${studId}`);
-}
+  getModuleProgressByModIdStudId(modId: number, studId: number) {
+    return this.http.get<Moduleprogress>(`${this.moduleProgressUrl}/moduleprog/${modId}/${studId}`);
+  }
 
- //add data to module filee progress table
- getAllFileProgressByModIdStudIdProg(modId:number,studId:number){
-  return this.http.get<Modulefileprogress[]>(`${this.moduleFileProgressUrl}/modulefileprog/${modId}/${studId}`);
-}
-
-
-//add data to module filee progress table
-getAllFileProgressByModIdStudId(modId:number,studId:number){
-  return this.http.get<Modulefileprogress[]>(`${this.moduleFileProgressUrl}/modulefileprog/mod_studId/${modId}/${studId}`);
-}
-
-//add data to moduleprogress table
-addCourseProgressStatus(courseProgress : CourseProgress): Observable<CourseProgress> {
-  console.log(courseProgress)
-  return this.http.post<CourseProgress>(`${this.courseProgressUrl}/courseprog`, courseProgress);
-}
-
-getModuleProgByCourseId(courseId: number)
-{
-  return this.http.get<Moduleprogress[]>(`${this.moduleProgressUrl}/courseId/${courseId}`);
-}
-
-getCourseProgByCourseIdStudId(courseId: number, studId: number)
-{
-  return this.http.get<CourseProgress[]>(`${this.courseProgressUrl}/courseprog/${courseId}/${studId}`);
-}
+  //add data to module filee progress table
+  getAllFileProgressByModIdStudIdProg(modId: number, studId: number) {
+    return this.http.get<Modulefileprogress[]>(`${this.moduleFileProgressUrl}/modulefileprog/${modId}/${studId}`);
+  }
 
 
+  //add data to module filee progress table
+  getAllFileProgressByModIdStudId(modId: number, studId: number) {
+    return this.http.get<Modulefileprogress[]>(`${this.moduleFileProgressUrl}/modulefileprog/mod_studId/${modId}/${studId}`);
+  }
+
+  //add data to moduleprogress table
+  addCourseProgressStatus(courseProgress: CourseProgress): Observable<CourseProgress> {
+    console.log(courseProgress)
+    return this.http.post<CourseProgress>(`${this.courseProgressUrl}/courseprog`, courseProgress);
+  }
+
+  getModuleProgByCourseId(courseId: number) {
+    return this.http.get<Moduleprogress[]>(`${this.moduleProgressUrl}/courseId/${courseId}`);
+  }
+
+  getCourseProgByCourseIdStudId(courseId: number, studId: number) {
+    return this.http.get<CourseProgress[]>(`${this.courseProgressUrl}/courseprog/${courseId}/${studId}`);
+  }
 }
