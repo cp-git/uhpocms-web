@@ -20,7 +20,10 @@ export class EnrolltostudentService {
   saveEnrolledStudents(enrolltostudent: Enrolltostudent): Observable<any> {
     return this._http.post<any>(this.enrollmentUrl, enrolltostudent);
   }
-
+  getStudentByCourseId(courseId : number) {
+    //  alert(this.enrollmentUrl);
+   return this._http.get<any>(`${this.enrollmentUrl}courseid/`+ courseId)
+   } 
 
 
 }
