@@ -23,7 +23,7 @@ export class UploadFileComponent {
   }
 
   onSubmit() {
-    this.uploadService.uploadFiles(this.files).subscribe(response => {
+    this.uploadService.uploadFiles(this.files).subscribe((response: any) => {
       console.log(response);
     });
   }

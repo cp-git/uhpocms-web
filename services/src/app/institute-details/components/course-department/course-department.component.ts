@@ -54,7 +54,7 @@ export class CourseDepartmentComponent {
         if (this.id) {
           console.log(this.id)
           this.courseService.getCourseByDepartmentId(this.id).subscribe(
-            (coursedata) => {
+            (coursedata: Course[]) => {
               this.courses = coursedata;
               console.log(coursedata);
             }

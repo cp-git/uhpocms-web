@@ -125,7 +125,7 @@ export class EmailComponent implements OnInit {
 
   // on updateComponents's submit button clicked
   onUpdateEmailSubmit(objectReceived: Email) {
-    // alert(JSON.stringify(objectReceived))
+    // console.log(JSON.stringify(objectReceived))
     this.updateEmail(objectReceived);
   }
 
@@ -167,13 +167,13 @@ export class EmailComponent implements OnInit {
     currentData.emailIsActive = true;
     this.service.insertEmail(currentData).subscribe(
       response => {
-        alert('Email added successfully');
+        console.log('Email added successfully');
         this.emptyEmail = {} as Email;
         this.ngOnInit();
         this.back();
       },
       error => {
-        alert("Failed to add Email");
+        console.log("Failed to add Email");
       }
 
     );
@@ -183,11 +183,11 @@ export class EmailComponent implements OnInit {
   private updateEmail(currentData: Email) {
     this.service.updateEmail(currentData).subscribe(
       response => {
-        alert('Email updated successfully');
+        console.log('Email updated successfully');
         this.back();
       },
       error => {
-        alert("Failed to update Email");
+        console.log("Failed to update Email");
       }
     );
   }
@@ -196,11 +196,11 @@ export class EmailComponent implements OnInit {
   private deleteEmail(currentData: Email) {
     this.service.deleteEmail(currentData.title).subscribe(
       response => {
-        alert('Email deleted successfully');
+        console.log('Email deleted successfully');
         this.ngOnInit();
       },
       error => {
-        alert("Failed to delete Email");
+        console.log("Failed to delete Email");
       }
     );
   }
@@ -225,12 +225,12 @@ export class EmailComponent implements OnInit {
   //   this.service.activateEmail(Email.emailId).subscribe(
   //     response => {
 
-  //       alert('Email activated successfully');
+  //       console.log('Email activated successfully');
   //       this.ngOnInit();
 
   //     },
   //     error => {
-  //       alert("Email activation failed");
+  //       console.log("Email activation failed");
   //     }
   //   );
 

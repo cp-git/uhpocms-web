@@ -94,11 +94,12 @@ export class DisplayinstituteComponent {
       (response) => {
         this.admininstitutions.splice(this.admininstitutions.indexOf(inst), 1);
         this.backupInst.splice(this.admininstitutions.indexOf(inst), 1);
-        alert(inst.adminInstitutionName + ' Institution deleted successfully');
+        // console.log(inst.adminInstitutionName + ' Institution deleted successfully');
+        console.log(inst.adminInstitutionName + ' Institution deleted successfully');
         this.displayEmptyRow();
       },
       (error) => {
-        alert('not able to delete \n' + JSON.stringify(error.error));
+        console.log('not able to delete \n' + JSON.stringify(error.error));
       }
     );
   }

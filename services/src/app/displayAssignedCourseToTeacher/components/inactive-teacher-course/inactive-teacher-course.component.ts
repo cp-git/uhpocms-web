@@ -61,7 +61,7 @@ export class InactiveTeacherCourseComponent {
         this.courses = response;
       },
       error => {
-        alert("failed to fetch data");
+        console.log("failed to fetch data");
       }
     );
   }

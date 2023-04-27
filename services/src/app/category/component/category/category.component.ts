@@ -137,11 +137,11 @@ export class CategoryComponent {
     console.log(currentData)
     this.service.updateCategory(currentData, currentData.categoryId).subscribe(
       response => {
-        alert(`Category updated successfully !`);
+        console.log(`Category updated successfully !`);
         this.back();
       },
       error => {
-        alert(`Category updation failed !`);
+        console.log(`Category updation failed !`);
       }
     );
   }
@@ -156,14 +156,14 @@ export class CategoryComponent {
     this.service.insertCategory(toCreateCategory).subscribe(
       response => {
 
-        alert("Category added successfully");
+        console.log("Category added successfully");
         this.emptyCategory = {} as Category;
         this.ngOnInit();
         this.back();
 
       },
       error => {
-        alert("Cannot add category successfully ");
+        console.log("Cannot add category successfully ");
       }
 
     )
@@ -196,11 +196,11 @@ export class CategoryComponent {
     // calling service to soft delete
     this.service.deleteCategory(roleName).subscribe(
       (response) => {
-        alert('Category deleted successfully');
+        console.log('Category deleted successfully');
         this.ngOnInit();
       },
       (error) => {
-        alert('Category deletion failed');
+        console.log('Category deletion failed');
       }
     );
   }
@@ -228,11 +228,11 @@ export class CategoryComponent {
     // calling service to activating category
     this.service.updateActiveStatus(categoryName).subscribe(
       response => {
-        alert("Activated category");
+        console.log("Activated category");
         this.ngOnInit();
       },
       error => {
-        alert("Failed to activate");
+        console.log("Failed to activate");
       }
     );
   }

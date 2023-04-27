@@ -154,7 +154,7 @@ export class ModuleComponent {
 
     try {
       this.sessionData = sessionStorage.getItem('course');
-      // alert(this.sessionData);
+      // console.log(this.sessionData);
       this.data = JSON.parse(this.sessionData);
       console.log(this.data);
       for (var inst in this.data) {
@@ -177,11 +177,11 @@ export class ModuleComponent {
   //   // calling service for updating data
   //   this.service.updateModule(currentData.moduleName, currentData).subscribe(
   //     response => {
-  //       alert(`Module updated successfully !`);
+  //       console.log(`Module updated successfully !`);
   //       this.back();
   //     },
   //     error => {
-  //       alert(`Module updation failed !`);
+  //       console.log(`Module updation failed !`);
   //     }
   //   );
   // }
@@ -193,11 +193,11 @@ export class ModuleComponent {
     if (currentData.moduleId !== null) {
       this.service.updateModuleById(currentData.moduleId, currentData).subscribe(
         response => {
-          alert(`Module updated successfully !`);
+          console.log(`Module updated successfully !`);
           this.back();
         },
         error => {
-          alert(`Module updation failed !`);
+          console.log(`Module updation failed !`);
         }
       );
     }
@@ -206,22 +206,22 @@ export class ModuleComponent {
   // For adding 
   private addModule(currentData: Module) {
     if (currentData.moduleStartDate && currentData.moduleEndDate && currentData.moduleEndDate <= currentData.moduleStartDate) {
-      alert("End date must be after start date");
+      console.log("End date must be after start date");
       return;
     }
     currentData.moduleIsActive = true;  // setting active true
     // calling service for adding data
-    //alert(JSON.stringify(currentData));
+    //console.log(JSON.stringify(currentData));
     this.service.addTeacherModule(currentData).subscribe(
       (data) => {
-        //  alert(this.currentData)
-        alert('Module added Successfully');
+        //  console.log(this.currentData)
+        console.log('Module added Successfully');
         this.emptyModule = {} as Module;
         this.ngOnInit();
         this.back();
       },
       (error) => {
-        alert("Failed to add Module");
+        console.log("Failed to add Module");
       });
   }
 
@@ -278,11 +278,11 @@ export class ModuleComponent {
   //   // calling service to soft delte
   //   this.service.deleteModule(name).subscribe(
   //     (response) => {
-  //       alert('Module deleted successfully');
+  //       console.log('Module deleted successfully');
   //       this.ngOnInit();
   //     },
   //     (error) => {
-  //       alert('Module deletion failed');
+  //       console.log('Module deletion failed');
   //     }
   //   );
   // }
@@ -294,11 +294,11 @@ export class ModuleComponent {
     // calling service to soft delte
     this.service.deleteModuleById(moduleId).subscribe(
       (response) => {
-        alert('Module deleted successfully');
+        console.log('Module deleted successfully');
         this.ngOnInit();
       },
       (error) => {
-        alert('Module deletion failed');
+        console.log('Module deletion failed');
       }
     );
 
@@ -326,11 +326,11 @@ export class ModuleComponent {
     // calling service to activating admin role
     this.service.activateModule(name).subscribe(
       response => {
-        alert("Activated Module");
+        console.log("Activated Module");
         this.ngOnInit();
       },
       error => {
-        alert("Failed to activate");
+        console.log("Failed to activate");
       }
     );
   }

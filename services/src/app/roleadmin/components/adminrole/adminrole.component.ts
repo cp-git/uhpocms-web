@@ -39,11 +39,11 @@ export class AdminroleComponent {
     this._service.addAdminRole(this.admin).subscribe(
       (data) => {
 
-        alert('Role added Successfully');
+        console.log('Role added Successfully');
         this.ngOnInit();
       },
       (error) =>
-        alert(
+        console.log(
           'Please Select Value in between admin,student,teacher and coadmin'
         )
     );
@@ -81,7 +81,7 @@ export class AdminroleComponent {
     if (
       this._backupRole.findIndex((data) => data.roleName === role.roleName) < 0
     ) {
-      alert('roleName not exist for update. please enter another.');
+      console.log('roleName not exist for update. please enter another.');
     } else {
       this.admin.roleName = role.roleName;
       this.admin.roleDescription = role.roleDescription;
@@ -89,7 +89,7 @@ export class AdminroleComponent {
       this._service.updateadminlist(this.admin.roleName, this.admin).subscribe(
         (data) => {
 
-          alert('Role Successfully Updated...');
+          console.log('Role Successfully Updated...');
           this.ngOnInit();
         },
         (error) => console.log(error)
@@ -101,7 +101,7 @@ export class AdminroleComponent {
   deleteAdminRole(roleName: string) {
     this._service.deleteAdmin(roleName).subscribe(
       (data) => {
-        alert('Data Deleted...');
+        console.log('Data Deleted...');
         this.ngOnInit();
       },
       (error) => console.log(error)
@@ -111,7 +111,7 @@ export class AdminroleComponent {
 
   //function for get role by roleName
   getAdminRole(roleName: string) {
-    this._service.getAdmin(roleName).subscribe((response) => {
+    this._service.getAdmin(roleName).subscribe((response: Admin) => {
       this.admin = response;
     });
     return this.admin;

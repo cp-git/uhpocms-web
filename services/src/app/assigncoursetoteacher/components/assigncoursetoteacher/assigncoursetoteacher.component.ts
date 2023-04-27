@@ -144,7 +144,7 @@ export class AssigncoursetoteacherComponent {
     instId = this._profile.institutionId;
 
     this._deptService.getDepartmentsByInstitutionId(instId).subscribe(
-      (response) => {
+      (response: Department[]) => {
         this.departments = response;
         console.log("Inside getDepartmentByInstId")
         console.log(response)
@@ -162,7 +162,7 @@ export class AssigncoursetoteacherComponent {
     deptId = this.department.id;
 
     this.courseService.getCourseByDepartmentId(deptId).subscribe(
-      (response) => {
+      (response: Course[]) => {
         this.courses = response;
 
         console.log(response);
@@ -177,7 +177,7 @@ export class AssigncoursetoteacherComponent {
     instId = this._profile.institutionId;
     // console.log(instId);
     this.profileService.getProfileByRoleAndInstitutionId(userRole, instId).subscribe(
-      (response) => {
+      (response: Profile[]) => {
         this._profileArray = response;
         this._profileArray.map((i) => { i.fullName = i.firstName + ' ' + i.lastName + ' - ' + i.adminEmail; return i; });
         console.log(response)
@@ -204,7 +204,7 @@ export class AssigncoursetoteacherComponent {
       this.assignTeacher.profileId = this.selected[i];
 
       this.assignTeacher.courseId = +(this.course.courseId);
-      // alert(JSON.stringify(this.assignTeacher));
+      // console.log(JSON.stringify(this.assignTeacher));
       this.assignTeacherService.assignTeacherToCourse(this.assignTeacher).subscribe(
         (response) => {
           this.inserted = true;
@@ -212,15 +212,15 @@ export class AssigncoursetoteacherComponent {
 
         }, error => {
           this.inserted = false;
-          alert("Failed to Assign course");
+          console.log("Failed to Assign course");
         }
       )
     }
     if (this.inserted = true) {
-      alert("Teacher assigned successfully");
+      console.log("Teacher assigned successfully");
     }
     else {
-      alert("Already Course Assigned");
+      console.log("Already Course Assigned");
     }
   }
 

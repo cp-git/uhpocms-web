@@ -119,7 +119,14 @@ export class StudentModuleComponent implements OnInit {
     console.log("modules" + this.getFilteredModules());
 
   }
-
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   if (changes['selectedFile']) {
+  //     console.log("")
+  //     const video = this.elRef.nativeElement.querySelector('video');
+  //     video.load();
+  //   }
+  // }
+  //loads the courses of the student using the getCourseByStudentId() method of StudentService
 
   loadCourseOfStudent(studentId: number) {
     this.courseService.getCourseByStudentId(studentId).subscribe(
@@ -463,7 +470,7 @@ export class StudentModuleComponent implements OnInit {
 
       },
       error => {
-        alert("Failed to load student course");
+        console.log("Failed to load student course");
       }
     );
 

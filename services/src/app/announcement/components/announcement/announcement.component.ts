@@ -48,7 +48,7 @@ export class AnnouncementComponent implements OnInit {
         this.announcements = response;
       },
       error => {
-        alert("Not able to fetch record");
+        console.log("Not able to fetch record");
       }
     );
   }
@@ -89,7 +89,7 @@ export class AnnouncementComponent implements OnInit {
         this.announcements = response;
       },
       error => {
-        // alert("Not able to fetch record");
+        // console.log("Not able to fetch record");
       }
     );
   }
@@ -105,11 +105,11 @@ export class AnnouncementComponent implements OnInit {
   public deleteAnnouncementById(announcementId: number) {
     this.announcementService.deleteAnnouncementById(announcementId).subscribe(
       response => {
-        alert("deleted successfuly");
+        console.log("deleted successfuly");
         this.ngOnInit();
       },
       error => {
-        alert("deleted failed");
+        console.log("deleted failed");
       }
     );
   }

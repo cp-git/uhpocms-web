@@ -122,7 +122,7 @@ export class EnrollstudentComponent {
     instId = this._profile.institutionId;
 
     this._deptService.getDepartmentsByInstitutionId(instId).subscribe(
-      (response) => {
+      (response: Department[]) => {
         this.departments = response;
 
       }
@@ -135,7 +135,7 @@ export class EnrollstudentComponent {
     deptId = this.department.id;
 
     this.courseService.getCourseByDepartmentId(deptId).subscribe(
-      (response) => {
+      (response: Course[]) => {
         this.courses = response;
 
       }
@@ -152,7 +152,7 @@ export class EnrollstudentComponent {
     instId = this._profile.institutionId;
 
     this.profileService.getProfileByRoleAndInstitutionId(userRole, instId).subscribe(
-      (response) => {
+      (response: Profile[]) => {
         this._profileArray = response;
         this._profileArray.map((i) => { i.fullName = i.firstName + ' ' + i.lastName + ' - ' + i.adminEmail; return i; });
 
@@ -172,14 +172,14 @@ export class EnrollstudentComponent {
 
       this.enrolledStudent.profileId = this.selected[i];
       this.enrollstuService.saveEnrolledStudents(this.enrolledStudent).subscribe(
-        (response) => {
+        (response: any) => {
 
           if (i == 0) {
 
-            alert("Student Enrolled Successfully");
+            console.log("Student Enrolled Successfully");
             location.reload();
           } else {
-            alert("Already Enrolled Course OR Failed to Enrolled")
+            console.log("Already Enrolled Course OR Failed to Enrolled")
           }
         }
       )

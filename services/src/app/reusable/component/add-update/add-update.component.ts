@@ -48,7 +48,7 @@ export class AddUpdateComponent implements OnInit {
       this.optionsArray1 = this.dropdown1?.optionsArray1;
       this.dropdownColumnId1 = this.dropdown1?.dropdownColumnId1;
       this.dropdownColumnName1 = this.dropdown1?.dropdownColumnName1;
-      // alert( this.optionsArray1 )
+      // console.log( this.optionsArray1 )
       console.log(this.optionsArray1)
     }
 
@@ -56,7 +56,7 @@ export class AddUpdateComponent implements OnInit {
       this.optionsArray2 = this.dropdown2?.optionsArray2;
       this.dropdownColumnId2 = this.dropdown2?.dropdownColumnId2;
       this.dropdownColumnName2 = this.dropdown2?.dropdownColumnName2;
-      // alert( this.optionsArray2)
+      // console.log( this.optionsArray2)
       console.log(this.optionsArray2)
     }
   }
