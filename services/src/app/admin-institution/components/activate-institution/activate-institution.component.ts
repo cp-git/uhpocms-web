@@ -42,6 +42,7 @@ export class ActivateInstitutionComponent implements OnInit {
     this._institutionService.getDeactivatedInstitutions().subscribe(
       response => {
         this.institutions = response;
+        this.institutions.sort((a, b) => a.adminInstitutionName.toLowerCase() > b.adminInstitutionName.toLowerCase() ? 1 : -1) // order by alphabets for institution name
       },
       error => {
         // alert("Failed to fetch data");

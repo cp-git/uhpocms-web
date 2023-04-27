@@ -69,6 +69,7 @@ export class DisplayinstituteComponent {
       (response) => {
         // assigning received data to institution
         this.admininstitutions = response;
+        this.admininstitutions.sort((a, b) => a.adminInstitutionName.toLowerCase() > b.adminInstitutionName.toLowerCase() ? 1 : -1) // order by alphabets for institution name
 
         //  cloning array from instituion to backupinst
         this.admininstitutions.forEach((inst) => {

@@ -195,7 +195,7 @@ export class ProfileComponent implements OnInit {
       response => {
 
         this.allData = response; //assign data to local variable
-
+        this.allData.sort((a, b) => a.firstName.toLowerCase() > b.firstName.toLowerCase() ? 1 : -1) // order by alphabets for first name
         // if no data available
         if (this.allData.length > 0) {
           this.dataAvailable = true;
@@ -369,7 +369,7 @@ export class ProfileComponent implements OnInit {
     this.service.getAllDeactivatedProfiles().subscribe(
       response => {
         this.allInActiveData = response;
-
+        this.allInActiveData.sort((a, b) => a.firstName.toLowerCase() > b.firstName.toLowerCase() ? 1 : -1) // order by alphabets for first name
       },
       error => {
         console.log('No data in table ');

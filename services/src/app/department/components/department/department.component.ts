@@ -221,6 +221,7 @@ export class DepartmentComponent implements OnInit {
     this.service.getAllDeactivatedDepartments().subscribe(
       (response) => {
         this.allInActiveData = response;
+        this.allInActiveData.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1) // order by alphabets for department name
       },
       (error) => {
         console.log('No data in table ');

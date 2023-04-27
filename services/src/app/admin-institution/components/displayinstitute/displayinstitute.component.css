@@ -37,10 +37,13 @@ img:hover {
 
 }
 
-button {
-    margin: 10px;
+.institutebtn {
+    margin: 10px;      
 }
 
+.btn{
+border-radius: 15px;
+}
 /* .row {
     padding-top: 2%;
 } */
