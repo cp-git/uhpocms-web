@@ -5,10 +5,15 @@
         </div>
         <div class="col-xs-12 col-sm-6 col-md-3 sidebar">
             <div class="header text-center">
-                <h1>{{ selectedCourseName | titlecase }}</h1>
+
+                <h1>{{ selectedCourseName | titlecase }}
+
+
+                </h1>
             </div>
             <div class="form-group">
                 <label for="course">Course Name</label><br>
+
                 <select (change)="onCourseSelect(selectedCourse)" [(ngModel)]="selectedCourse" class="form-select"
                     aria-label="Default select example">
                     <option *ngFor="let course of courses" [value]="course.courseId">
@@ -20,69 +25,74 @@
                 <label for="module">Module Name</label>
                 <div class="module-list-container">
                     <ng-container *ngFor="let module of modules">
-                        <!-- <div class="dropdown">
-                                    <button (click)="changeSelectedModule(module.moduleId)" class="btn btn-default dropdown-toggle"
-                                        type="button" data-toggle="dropdown"
-                                        *ngIf="selectedCourse==module.courseId_id">{{module.moduleName}}
-                                        <span class="caret"></span>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-wide" aria-labelledby="dropdownMenuButton">
-                                        <ng-container *ngFor="let file of studentModuleFiles">
-                                            <ng-container *ngIf="selectedModule==file.moduleId">
-                                                <div class="dropdown-item"><a
-                                                        (click)="changeSelectedFile(file)">{{file.moduleFile}}</a>
-                                                </div>
-                                            </ng-container>
-                                        </ng-container>
-                                    </div>
-                                </div>
-                                <ng-container>-->
 
-                        <ng-container *ngIf="selectedCourse == module.courseId_id">
-                            <ul class="modules">
-                                <span class="fa fa-book"></span>
-                                <label for="" class="modulelist">
-                                    &nbsp;&nbsp;{{ module.moduleName }}</label>
-                                <ng-container *ngFor="let file of studentModuleFiles">
-                                    <ng-container
-                                        *ngIf="module.moduleId == file.moduleId && selectedCourse == module.courseId_id">
-                                        <div class="dropdown-item">
-                                            <li>
-                                                <span class="fa fa-file"></span>&nbsp;&nbsp;
-                                                <a (click)="changeSelectedFileAndModule(file, module)"><b>{{
-                                                        file.moduleFile|removeExtension }}</b>
-                                                </a>
-                                            </li>
-                                        </div>
-                                    </ng-container>
+                        <ul class="modules" *ngIf="selectedCourse == module.courseId_id">
+
+
+                            <span class="fa fa-book"></span>
+
+
+                            <label for="" class="modulelist">
+                                &nbsp;&nbsp;{{ module.moduleName }}</label>
+                            &nbsp;&nbsp;
+
+                            <ng-container *ngFor="let file of studentModuleFiles">
+
+                                <ng-container
+                                    *ngIf="module.moduleId == file.moduleId && selectedCourse == module.courseId_id">
+                                    <div class="dropdown-item">
+                                        <li>
+                                            <span
+                                                *ngIf="filteredProgressFileIds && file.moduleFileId && filteredProgressFileIds.includes(file.moduleFileId); else elseBlock"
+                                                class="fa fa-check-circle" aria-hidden="true"></span>
+                                            <ng-template #elseBlock>
+                                                <span class="fas fa-video" aria-hidden="true"></span>
+                                            </ng-template>
+
+
+                                            &nbsp;&nbsp;
+                                            <a (click)="changeSelectedFileAndModule(file, module)"><b>{{
+                                                    file.moduleFile|removeExtension }}</b>
+                                            </a>
+                                        </li>
+                                    </div>
                                 </ng-container>
+
+
+
+                            </ng-container>
+
                                 <ng-container *ngFor="let quiz of quizzes |filter:'moduleId':module.moduleId">
                                     <br><span class="far fa-file-alt"></span> &nbsp;&nbsp;<a
                                         (click)="onQuizClicked(quiz)">{{quiz.title}}</a>
                                 </ng-container>
                             </ul>
                         </ng-container>
-                    </ng-container>
+
+                  
                 </div>
             </div>
         </div>
 
         <div class="col-xs-12 col-sm-6 col-md-9 viewpanel">
             <div *ngIf="selectedFile; else quizview">
-                <!-- <ng-container *ngFor="let file of studentModuleFiles">
-                            <div *ngIf="selectedModule==file.moduleId"> -->
-                <!-- <h3><span class="fa fa-book"></span> &nbsp;&nbsp;
-                    {{selectedModule.moduleName |titlecase}} - {{(selectedFile.moduleFile)}}
-                </h3> -->
-                <video class="videoscreen" controls #videoPlayer>
+
+
+                <video class="videoscreen" (ended)="videoEnd()" (timeupdate)="onVideoTimeUpdate()"
+                    (pause)="pauseVideo()" controls #videoPlayer>
                     <source [src]="videoSrc" type="video/mp4" />
                 </video>
+
+                <!-- <div>{{ completionPercentage }}%</div> -->
+
             </div>
             <ng-template #quizview>
                 <div *ngIf="selectedQuiz">
                     <app-student-quiz [quizData]="selectedQuiz"></app-student-quiz>
                 </div>
 
+
+                -
             </ng-template>
 
         </div>
