@@ -185,13 +185,13 @@ export class QuestionComponent implements OnInit {
     // calling service for adding data
     this.service.addQuestion(questionAnswer).subscribe(
       response => {
-        alert('Question added Successfully');
+        console.log('Question added Successfully');
         // this.emptyQuestion = {} as Question;
         this.ngOnInit();
         this.back();
       },
       error => {
-        alert("Failed to add question");
+        console.log("Failed to add question");
       });
   }
 
@@ -200,11 +200,11 @@ export class QuestionComponent implements OnInit {
     // calling service for updating data
     this.service.updatedQuestion(currentData).subscribe(
       response => {
-        alert(`Question updated successfully !`);
+        console.log(`Question updated successfully !`);
         this.back();
       },
       error => {
-        alert(`Question updation failed !`);
+        console.log(`Question updation failed !`);
       }
     );
   }
@@ -215,11 +215,11 @@ export class QuestionComponent implements OnInit {
     // calling service to soft delete
     this.service.deleteQuestion(questionFigure).subscribe(
       (response) => {
-        alert('Question deleted successfully');
+        console.log('Question deleted successfully');
         this.ngOnInit();
       },
       (error) => {
-        alert('Question deletion failed');
+        console.log('Question deletion failed');
       }
     );
   }
@@ -246,11 +246,11 @@ export class QuestionComponent implements OnInit {
     // calling service to activating question
     this.service.activateQuestion(questionFigure).subscribe(
       response => {
-        alert("Activated question");
+        console.log("Activated question");
         this.ngOnInit();
       },
       error => {
-        alert("Failed to activate");
+        console.log("Failed to activate");
       }
     );
   }

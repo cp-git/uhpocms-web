@@ -57,7 +57,7 @@ export class StudentModuleComponent {
   }
   // ngOnChanges(changes: SimpleChanges): void {
   //   if (changes['selectedFile']) {
-  //     alert("")
+  //     console.log("")
   //     const video = this.elRef.nativeElement.querySelector('video');
   //     video.load();
   //   }
@@ -137,7 +137,7 @@ export class StudentModuleComponent {
 
       },
       error => {
-        alert("Failed to load student course");
+        console.log("Failed to load student course");
       }
     );
 

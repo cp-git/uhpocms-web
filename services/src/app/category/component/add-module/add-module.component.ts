@@ -41,7 +41,7 @@ export class AddModuleComponent {
 
 
   addmodule(module: Module) {
-    alert(JSON.stringify(module));
+    console.log(JSON.stringify(module));
     var moduleId = module.moduleId;
 
     module.moduleIsActive = true;
@@ -52,14 +52,14 @@ export class AddModuleComponent {
         //console.log(data);
         this.module = data;
 
-        alert("Module Added successfully");
+        console.log("Module Added successfully");
 
         if (this._teacherModule.length > 0) {
           this.isVisible = false;
         }
         this._route.navigate(['teachermodule']);
       },
-      error => alert("Module Name already exists")
+      error => console.log("Module Name already exists")
     )
   }
 
@@ -70,7 +70,7 @@ export class AddModuleComponent {
     for (var course in this.data) {
       this.courses.push(this.data[course]);
     }
-    //alert(this.courses);
+    //console.log(this.courses);
   }
 
   ngOnInit(): void {
