@@ -80,7 +80,7 @@ export class QuestionAnswerComponent implements OnInit {
   }
 
   onFileSelected(event: any, queAns: OneQuestionAnswer) {
-    // alert(JSON.stringify(queAns))
+    // console.log(JSON.stringify(queAns))
     const file = event.target.files[0];
     this.fileName = file.name;
 
@@ -92,7 +92,7 @@ export class QuestionAnswerComponent implements OnInit {
     reader.readAsDataURL(file);
     queAns.questionFigure = this.fileName;
 
-    // alert(queAns.questionFigure)
+    // console.log(queAns.questionFigure)
 
     if (queAns.isFormDirty == false) {
       queAns.isFormDirty = true;
@@ -148,7 +148,7 @@ export class QuestionAnswerComponent implements OnInit {
   //       }
   //     })
   //     for (let i = queAns.answers.length; i < 4; i++) {
-  //       alert(i)
+  //       console.log(i)
   //       if (i === 0) {
   //         queAns.answers[0] = new Answer();
   //       } else if (i === 1) {

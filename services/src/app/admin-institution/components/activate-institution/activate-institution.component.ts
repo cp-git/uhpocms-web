@@ -44,7 +44,8 @@ export class ActivateInstitutionComponent implements OnInit {
         this.institutions = response;
       },
       error => {
-        alert("Failed to fetch data");
+        // alert("Failed to fetch data");
+        console.log("Failed to fetch data");
       }
     );
   }
@@ -53,11 +54,13 @@ export class ActivateInstitutionComponent implements OnInit {
   activateInstitution(institutionId: number) {
     this._institutionService.activateInstitutionById(institutionId).subscribe(
       response => {
-        alert("Institution activated");
+        // alert("Institution activated");
+        console.log("Institution activated");
         this.ngOnInit();
       },
       error => {
-        alert("Institution activation failed");
+        // alert("Institution activation failed");
+        console.log("Institution activation failed");
       }
     );
   }

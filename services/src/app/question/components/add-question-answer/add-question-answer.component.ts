@@ -183,10 +183,10 @@ export class AddQuestionAnswerComponent implements OnInit {
       (response) => {
         this.generatedQuestionAnswerId = response;
 
-        alert("Question Added Successfully");
+        console.log("Question Added Successfully");
       },
       (error) => {
-        alert("Question added failed")
+        console.log("Question added failed")
       }
     )
 
@@ -265,7 +265,7 @@ export class AddQuestionAnswerComponent implements OnInit {
         this.answers = data;
         this.questionAnswers = []; // Initialize questionAnswers as an array
         this.service.getAllQuestionsByQuizId(quizId).subscribe(
-          (response) => {
+          (response: any[]) => {
             console.log(response);
 
             response.forEach(
@@ -280,7 +280,7 @@ export class AddQuestionAnswerComponent implements OnInit {
 
                 filteredAnswers.forEach((answer: Answer, index: number) => {
                   // console.log(answer);
-                  // alert(index)
+                  // console.log(index)
                   if (index === 0) {
                     this.queAns.correct1 = answer.correct;
                     this.queAns.content1 = answer.content;
@@ -360,10 +360,10 @@ export class AddQuestionAnswerComponent implements OnInit {
   onUpdateQuestionSubmit(currentData: Question) {
     this.service.updatedQuestion(currentData).subscribe(
       (response) => {
-        alert("Question updated successfuly");
+        console.log("Question updated successfuly");
       },
       (error) => {
-        alert("Question updation failed");
+        console.log("Question updation failed");
       }
     )
   }
@@ -439,13 +439,13 @@ export class AddQuestionAnswerComponent implements OnInit {
     // calling service for adding data
     this.service.addQuestion(questionAnswer).subscribe(
       response => {
-        alert('Question added Successfully');
+        console.log('Question added Successfully');
         // this.emptyQuestion = {} as Question;
         this.ngOnInit();
         this.back();
       },
       error => {
-        alert("Failed to add question");
+        console.log("Failed to add question");
       });
   }
 
@@ -455,11 +455,11 @@ export class AddQuestionAnswerComponent implements OnInit {
     // calling service to soft delete
     this.service.deleteQuestion(questionFigure).subscribe(
       (response) => {
-        alert('Question deleted successfully');
+        console.log('Question deleted successfully');
         this.ngOnInit();
       },
       (error) => {
-        alert('Question deletion failed');
+        console.log('Question deletion failed');
       }
     );
   }
@@ -543,17 +543,17 @@ export class AddQuestionAnswerComponent implements OnInit {
 
   // selectedCategory!: Category;
   onAddUpdatClicked(object: any) {
-    // alert(JSON.stringify(object))
+    // console.log(JSON.stringify(object))
     this.selectedQuiz = object;
     this.selectedQuizId = this.selectedQuiz.quizId;
     this.selectedCategoryId = this.selectedQuiz.categoryId;
-    // alert(this.selectedCategoryId);
+    // console.log(this.selectedCategoryId);
     this.categories.find(c => {
       if (c.categoryId === this.selectedCategoryId) {
         this.selectedCategoryName = c.categoryName;
       }
     });
-    // alert(this.selectedCategoryName);
+    // console.log(this.selectedCategoryName);
     // console.log(this.categories);
 
     this.categories.find(c => {
@@ -561,7 +561,7 @@ export class AddQuestionAnswerComponent implements OnInit {
         this.selectedCategoryName = c.categoryName;
       }
     });
-    // alert(this.selectedCategoryName)
+    // console.log(this.selectedCategoryName)
     this.viewAll = false;
     this.viewAdd = true;
     this.viewQuePaper = false;

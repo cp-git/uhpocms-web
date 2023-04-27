@@ -136,7 +136,7 @@ export class StudentQuizComponent implements OnInit {
 
                 filteredAnswers.forEach((answer: Answer, index: number) => {
                   // console.log(answer);
-                  // alert(index)
+                  // console.log(index)
                   if (index === 0) {
                     this.queAns.correct1 = answer.correct;
                     this.queAns.content1 = answer.content;
@@ -237,14 +237,14 @@ export class StudentQuizComponent implements OnInit {
 
     this.quizProgressService.addQuizProgressOfStudent(this.quizProgress).subscribe(
       (response) => {
-        alert("Quiz progress saved");
+        console.log("Quiz progress saved");
       },
       (error) => {
-        alert("Failed to save Progress");
+        console.log("Failed to save Progress");
       }
     );
 
-    alert("Total score : " + score);
+    console.log("Total score : " + score);
 
   }
 

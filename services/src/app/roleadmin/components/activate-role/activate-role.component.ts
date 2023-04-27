@@ -34,7 +34,7 @@ export class ActivateRoleComponent implements OnInit {
         this.adminRoles = response;
       },
       error => {
-        alert("module data not fetched");
+        console.log("module data not fetched");
       }
     );
   }
@@ -42,11 +42,11 @@ export class ActivateRoleComponent implements OnInit {
   activateRole(roleId: number) {
     this._roleService.activateAdminRole(roleId).subscribe(
       response => {
-        alert("Role activated");
+        console.log("Role activated");
         this.ngOnInit();
       },
       error => {
-        alert("Failed");
+        console.log("Failed");
       }
     );
   }

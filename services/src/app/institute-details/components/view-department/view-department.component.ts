@@ -52,7 +52,7 @@ export class ViewDepartmentComponent {
         // Load departments associated with the given institution ID
         if (this.id) {
           this.deptService.getDepartmentsByInstitutionId(this.id).subscribe(
-            (deptdata) => {
+            (deptdata: Department[]) => {
               this.departments = deptdata;
             }
           )
