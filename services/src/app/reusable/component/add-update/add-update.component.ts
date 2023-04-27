@@ -65,4 +65,10 @@ export class AddUpdateComponent implements OnInit {
     console.log('called onDropdownSelected');
     this.getSelectedOptionOfDropdown.emit(option);
   }
+
+  isValidDate(dateStr: string): boolean {
+    const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
+    return isoDatePattern.test(dateStr) && !isNaN(Date.parse(dateStr));
+  }
+
 }

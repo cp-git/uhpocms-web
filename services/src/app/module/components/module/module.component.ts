@@ -205,10 +205,10 @@ export class ModuleComponent {
 
   // For adding 
   private addModule(currentData: Module) {
-    if (currentData.moduleStartDate && currentData.moduleEndDate && currentData.moduleEndDate <= currentData.moduleStartDate) {
-      alert("End date must be after start date");
-      return;
-    }
+    // if (currentData.moduleStartDate && currentData.moduleEndDate && currentData.moduleEndDate <= currentData.moduleStartDate) {
+    //   alert("End date must be after start date");
+    //   return;
+    // }
     currentData.moduleIsActive = true;  // setting active true
     // calling service for adding data
     //alert(JSON.stringify(currentData));

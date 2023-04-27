@@ -192,9 +192,11 @@ export class StudentQuizComponent implements OnInit {
     this.quizProgress = new QuizProgress();
     console.log(this.questionAnswers);
     console.log(this.quizData);
-
+    let notAttendedQuestions: any[] = [];
     let score: number = 0;
-    this.questionAnswers.forEach(queAns => {
+    const marksPerQuestion: number = 100 / (this.questionAnswers.length);
+    this.questionAnswers.forEach((queAns, index) => {
+      console.log(index + 1);
 
       let trueAnswer: string = '';
       if (queAns.correct1) {
@@ -207,12 +209,21 @@ export class StudentQuizComponent implements OnInit {
         trueAnswer = queAns.content4;
       }
 
+      if (queAns.selectedAnswer == undefined || queAns.selectedAnswer == '') {
+        notAttendedQuestions.push(index + 1);
+      }
+
       if (queAns.selectedAnswer == trueAnswer) {
-        score = score + 10;
+        score = score + (marksPerQuestion);
       }
 
 
     })
+
+    if (notAttendedQuestions.length > 0) {
+      alert("Please answer the questions  " + (notAttendedQuestions))
+      return;
+    }
 
     this.quizProgress.studentId = this.studentId;
     this.quizProgress.quizId = this.selectedQuizId;
