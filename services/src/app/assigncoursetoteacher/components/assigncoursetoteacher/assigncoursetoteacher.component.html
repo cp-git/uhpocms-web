@@ -32,7 +32,7 @@
             <div class="col-sm-4">
                 <label class="badg">Course</label>
                 <div class="form-group">
-                    <select name="courseid" [(ngModel)]="course.courseId" class="form-control">
+                    <select name="courseid" [(ngModel)]="course.courseId" class="form-control" (click)="onCourseSelect(course.courseId)">
                         <option value="undefined" selected>Select</option>
                         <option *ngFor="let courseObj of courses" [value]="courseObj.courseId">
                             {{courseObj.courseName}}
@@ -46,20 +46,22 @@
                     <div class="form-group">
                         <ng-select [items]="_profileArray" bindLabel="fullName" [searchable]="true"
                             [closeOnSelect]="false" bindValue="adminId" placeholder="Select Teacher" [clearable]="true"
-                            appendTo="body" [multiple]="true" [(ngModel)]="selected" groupBy="selectedAllGroup"
+                            appendTo="body" [multiple]="true" [(ngModel)]="selected" 
                             [selectableGroup]="true" [selectableGroupAsModel]="false" [virtualScroll]="true">
-                            <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
-                                <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" />
-                                Select
-                                All
-                            </ng-template>
+                            
 
                             <ng-template ng-multi-label-tmp>
-                                <span style="display:block" class="ng-placeholder">Select Teacher</span>
+                                <span style="display:block" class="ng-value" *ngFor="let teacher of selected">
+                                   <ng-container *ngFor="let profile of _profileArray">
+                                        <ng-container *ngIf="profile.adminId==teacher">
+                                            {{profile.firstName}}
+                                        </ng-container>
+                                   </ng-container>
+                                </span>
                             </ng-template>
                             <!-- code to display checkbox  -->
                             <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />
+                                <input id="item-{{index}}" type="checkbox" [checked]="item$.selected || assignTeacherArr.includes(item.adminId)" [disabled]="assignTeacherArr.includes(item.adminId)" />
                                 {{item.fullName}}
                             </ng-template>
                         </ng-select>
