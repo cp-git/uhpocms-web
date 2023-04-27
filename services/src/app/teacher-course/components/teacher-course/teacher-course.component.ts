@@ -241,6 +241,7 @@ export class TeacherCourseComponent implements OnInit {
                 departmentId: coursedepartment.departmentId,
               });
             }
+            this.allData.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name
           })
         })
         console.log(this.allData);
@@ -285,6 +286,7 @@ export class TeacherCourseComponent implements OnInit {
               });
 
             }
+            this.allInActiveData.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name
           })
         })
         console.log(this.allInActiveData);
@@ -385,6 +387,7 @@ export class TeacherCourseComponent implements OnInit {
                 departmentId: coursedepartment.departmentId,
               });
             }
+            this.allData.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name
           })
         })
       },
@@ -410,6 +413,7 @@ export class TeacherCourseComponent implements OnInit {
                 departmentId: coursedepartment.departmentId,
               });
             }
+            this.allData.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name
           })
         })
         console.log(this.allData);

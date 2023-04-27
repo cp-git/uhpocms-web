@@ -128,6 +128,7 @@ export class AssignedteachercourseComponent {
     this.teacherCourseService.getAssignedCourseOfTeacher(teacherId).subscribe(
       response => {
         this.courses = response;
+
         console.log(response);
       },
       error => {

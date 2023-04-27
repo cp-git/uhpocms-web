@@ -1,8 +1,9 @@
 export const ModuleColumn = [
 
-    { key: 'courseId_id', label: 'Course Name', type: 'dropdown1' },
+
     { key: 'moduleName', label: 'Module Name', type: 'input' },
     { key: 'moduleDescription', label: 'Description', type: 'input' },
+    { key: 'courseId_id', label: 'Course Name', type: 'dropdown1' },
     { key: 'moduleStartDate', label: 'Start Date', type: 'date' },
     { key: 'moduleEndDate', label: 'End Date', type: 'date' },
     { key: 'moduleOrderNo', label: 'Module Order No', type: 'input' },

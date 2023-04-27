@@ -257,7 +257,7 @@ export class ModuleComponent {
           this.courses.map(
             course => course.courseId).includes(data.courseId_id));
 
-
+        this.allData.sort((a, b) => a.moduleName.toLowerCase() > b.moduleName.toLowerCase() ? 1 : -1) // order by alphabets for module name
         console.log("filtered daTA " + JSON.stringify(this.allData));
 
 
@@ -311,6 +311,7 @@ export class ModuleComponent {
     this.service.getInactivemoduleList().subscribe(
       response => {
         this.allInActiveData = response;
+        this.allInActiveData.sort((a, b) => a.moduleName.toLowerCase() > b.moduleName.toLowerCase() ? 1 : -1) // order by alphabets for module name
       },
       error => {
         console.log('No data in table ');

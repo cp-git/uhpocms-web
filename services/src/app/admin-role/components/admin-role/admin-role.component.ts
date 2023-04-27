@@ -179,7 +179,7 @@ export class AdminRoleComponent implements OnInit {
       response => {
 
         this.allData = response; //assign data to local variable
-
+        this.allData.sort((a, b) => a.roleName.toLowerCase() > b.roleName.toLowerCase() ? 1 : -1) // order by alphabets for role name
         // if no data available
         if (this.allData.length > 0) {
           this.dataAvailable = true;
@@ -213,6 +213,7 @@ export class AdminRoleComponent implements OnInit {
     this.service.getAllDeactivatedRoles().subscribe(
       response => {
         this.allInActiveData = response;
+        this.allInActiveData.sort((a, b) => a.roleName.toLowerCase() > b.roleName.toLowerCase() ? 1 : -1) // order by alphabets for role name
       },
       error => {
         console.log('No data in table ');
