@@ -15,6 +15,8 @@ import { CourseProgress } from 'app/student-module/class/courseprogress';
 
 import { QuizService } from 'app/quiz/services/quiz.service';
 import { Quiz } from 'app/quiz/class/quiz';
+import { QuizProgressService } from 'app/quiz-progress/services/quiz-progress.service';
+import { QuizProgress } from 'app/quiz-progress/class/quiz-progress';
 
 
 @Component({
@@ -86,10 +88,13 @@ export class StudentModuleComponent implements OnInit {
   moduleArr: Module[] = [];
   couresFlag: boolean = false;
   fileFlag: boolean = false;
-
+  quizPassedProgresses: any[] = [];
+  quizFailedProgresses: any[] = [];
 
   constructor(private activateRoute: ActivatedRoute, private courseService: TeacherCourseService, private moduleService: ModuleService, private modulefileService: ModuleFileService,
-    private fileProgService: ModulefileprogressService, private _location: Location, private elRef: ElementRef, private modFileServc: ModuleFileService, private quizService: QuizService, private cdr: ChangeDetectorRef) {
+    private fileProgService: ModulefileprogressService, private _location: Location, private elRef: ElementRef, private modFileServc: ModuleFileService, private quizService: QuizService, private cdr: ChangeDetectorRef,
+    private quizProgressService: QuizProgressService
+  ) {
 
   }
 
@@ -109,7 +114,7 @@ export class StudentModuleComponent implements OnInit {
 
     this.getAllQuizzesByProfileId(this.studentId);
     this.getAllFileProgress();
-
+    this.getQuizPorgressesByStudentId(this.studentId);
     this.selectedCourse = '1'
 
     // this.trackModuleProgress(this.selectedCourse)
@@ -688,8 +693,54 @@ export class StudentModuleComponent implements OnInit {
     this.selectedQuiz = quiz;
   }
 
+
+  getQuizPorgressesByStudentId(studentId: number) {
+    this.quizProgressService.getQuizProgressesByStudentId(studentId).subscribe(
+      (data) => {
+        data.forEach(quiz => {
+          if (quiz.completed == true) {
+            this.quizPassedProgresses.push(quiz.quizId);
+          } else {
+            this.quizFailedProgresses.push(quiz.quizId);
+          }
+
+        })
+        console.log(this.quizPassedProgresses);
+        console.log(this.quizFailedProgresses);
+
+
+      },
+      (error) => {
+        console.log("failed to fetch progress data");
+
+      }
+    )
+  }
+
+  onSaveQuizProgress(quizProgress: any) {
+    this.quizPassedProgresses = this.removeElementFromStringArray(this.quizPassedProgresses, quizProgress.quizId)
+    this.quizFailedProgresses = this.removeElementFromStringArray(this.quizFailedProgresses, quizProgress.quizId)
+    if (quizProgress.completed == true) {
+      this.quizPassedProgresses.push(quizProgress.quizId);
+    } else {
+      this.quizFailedProgresses.push(quizProgress.quizId);
+    }
+    console.log(this.quizPassedProgresses);
+    console.log(this.quizFailedProgresses);
+
+  }
+
+  removeElementFromStringArray(array: any[], element: any) {
+    array.forEach((value, index) => {
+      if (value == element) array.splice(index, 1);
+    });
+    return array;
+  }
 }
+
 function ngOnInit() {
   throw new Error('Function not implemented.');
 }
+
+
 
