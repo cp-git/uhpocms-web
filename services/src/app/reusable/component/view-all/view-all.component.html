@@ -57,15 +57,20 @@
                 </td>
 
                 <ng-container *ngIf="isViewAllScreen">
-                    <td *ngIf="buttons.updateButton"><button (click)="onUpdatClicked(row)"
-                            class="btn btn-primary">Update</button></td>
-                    <td><button (click)="onViewClicked(row)" class="btn btn-primary">View</button></td>
-                    <td *ngIf="buttons.deleteButton"><button (click)="onDeleteClicked(row)"
-                            class="btn btn-danger">Delete</button></td>
+                    <td title="Edit" *ngIf="buttons.updateButton"><span (click)="onUpdatClicked(row)"
+                            class="fa-solid fa-pencil" style='font-size:24px;color: orange;'></span>
+                    </td>
+                    <td title="View"><span (click)=" onViewClicked(row)" class="fa-solid fa-eye"
+                            style="font-size:24px;color: #6197f5;"></span>
+                    </td>
+                    <td title="Delete" *ngIf="buttons.deleteButton"><span (click)="onDeleteClicked(row)"
+                            class='fas fa-trash-alt' style='font-size:24px;color: red;'></span></td>
 
                 </ng-container>
                 <ng-container *ngIf="isActivateScreen">
-                    <td><button (click)="onActivateClicked(row)" class="btn btn-danger">Activate</button></td>
+                    <td title="Activate"><span (click)="onActivateClicked(row)" class="fas fa-sync-alt"
+                            style="font-size:24px;color: green;"></span>
+                    </td>
                 </ng-container>
             </tr>
         </tbody>
