@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Category } from 'app/category/class/category';
 import { Answer } from 'app/question/class/answer';
 import { OneQuestionAnswer } from 'app/question/class/one-question-answer';
@@ -19,8 +19,11 @@ export class StudentQuizComponent implements OnInit {
 
   @Input() quizData: any;
 
+  @Output() quizProgressAdded: EventEmitter<any> = new EventEmitter();
+
   studentId: any;
   quizProgress!: QuizProgress;
+  addeedQuizProgress : QuizProgress = new QuizProgress();;
   quizProgresses: QuizProgress[] = [];
   questions: Question[] = [];
   selectedQuizId!: number;
@@ -35,6 +38,7 @@ export class StudentQuizComponent implements OnInit {
   sessionData: any;
   jsonData: any;
 
+  quizStatus :boolean = false;
   queAns!: OneQuestionAnswer;
   answers: Answer[] = [];
   questionAnswers: OneQuestionAnswer[] = [];
@@ -190,6 +194,7 @@ export class StudentQuizComponent implements OnInit {
 
   onFormSubmit() {
     this.quizProgress = new QuizProgress();
+    this.quizStatus = false;
     console.log(this.questionAnswers);
     console.log(this.quizData);
 
@@ -226,6 +231,9 @@ export class StudentQuizComponent implements OnInit {
 
     this.quizProgressService.addQuizProgressOfStudent(this.quizProgress).subscribe(
       (response) => {
+        
+        this.addeedQuizProgress = response;
+        this.quizProgressAdded.emit(this.addeedQuizProgress);
         alert("Quiz progress saved");
       },
       (error) => {

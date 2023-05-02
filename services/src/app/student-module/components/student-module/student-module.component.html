@@ -88,7 +88,9 @@
             </div>
             <ng-template #quizview>
                 <div *ngIf="selectedQuiz">
-                    <app-student-quiz [quizData]="selectedQuiz"></app-student-quiz>
+                    <app-student-quiz [quizData]="selectedQuiz" (quizProgressAdded)="onQuizProgressAdded($event)"></app-student-quiz>
+                    <!-- <app-student-quiz (quizProgressAdded)="onQuizProgressAdded($event)"></app-student-quiz> -->
+
                 </div>
 
 

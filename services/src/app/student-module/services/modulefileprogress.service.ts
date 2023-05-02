@@ -46,7 +46,7 @@ export class ModulefileprogressService {
     return this.http.post<Moduleprogress>(`${this.moduleProgressUrl}/moduleprog`, moduleProgress);
   }
 
-  //add data to module filee progress table
+  //get data to module filee progress table
   getModuleProgressByModIdStudId(modId: number, studId: number) {
     return this.http.get<Moduleprogress>(`${this.moduleProgressUrl}/moduleprog/${modId}/${studId}`);
   }
@@ -75,4 +75,12 @@ export class ModulefileprogressService {
   getCourseProgByCourseIdStudId(courseId: number, studId: number) {
     return this.http.get<CourseProgress[]>(`${this.courseProgressUrl}/courseprog/${courseId}/${studId}`);
   }
+
+
+  //update module Progress
+  updateModuleProgress(moduleProgress: Moduleprogress): Observable<Moduleprogress> 
+  {
+      return this.http.put<Moduleprogress>(`${this.moduleProgressUrl}/moduleprog/${moduleProgress.id}`,moduleProgress);
+  }
+
 }
