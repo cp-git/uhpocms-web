@@ -23,4 +23,17 @@ export class QuizProgressService {
     return this.http.post<QuizProgress>(`${this.quizProgressUrl}`, quizProgress);
 
   }
+
+  getQuizProgressesByQuizIdAndStudId(quizId: number,studentId: number): Observable<QuizProgress> {
+    return this.http.get<QuizProgress>(`${this.quizProgressUrl}/${quizId}/${studentId}`);
+  }
+
+  getQuizProgressesByQuizIdAndStudIdProg(quizId: number,studentId: number): Observable<QuizProgress> {
+    return this.http.get<QuizProgress>(`${this.quizProgressUrl}/progress/${quizId}/${studentId}`);
+  }
+
+
+  getAllQuizProgressdata(): Observable<QuizProgress[]> {
+    return this.http.get<QuizProgress[]>(`${this.quizProgressUrl}?data=all`);
+  }
 }

@@ -20,9 +20,13 @@ export class StudentQuizComponent implements OnInit {
   // Quiz Data comming from parent
   @Input() quizData: any;
 
-  // function to be called in parent component
-  @Output() onSaveQuizProgress: EventEmitter<any> = new EventEmitter();
-
+//function to pass data when quiz added
+  @Output() quizProgressAdded: EventEmitter<any> = new EventEmitter();
+// function to be called in parent component
+@Output() onSaveQuizProgress: EventEmitter<any> = new EventEmitter();
+  
+  addeedQuizProgress : QuizProgress = new QuizProgress();; //to store quizprogress data
+  quizProgresses: QuizProgress[] = [];
   studentId: any;   // logged in student id
   quizProgress!: QuizProgress;  // quizProgress object used to save progress in table
 
@@ -42,6 +46,7 @@ export class StudentQuizComponent implements OnInit {
   queAns!: OneQuestionAnswer;   // temp vairable storing question Answer in object to get data
   answers: Answer[] = [];       // all answers with questionId
   questionAnswers: OneQuestionAnswer[] = [];    // array of question and answers
+
 
   constructor(
     private quizProgressService: QuizProgressService,
@@ -210,6 +215,10 @@ export class StudentQuizComponent implements OnInit {
   onFormSubmit() {
     this.quizProgress = new QuizProgress();
 
+    console.log(this.questionAnswers);
+    console.log(this.quizData);
+
+
     let notAttendedQuestions: any[] = [];
     let score: number = 0;
     const marksPerQuestion: number = 100 / (this.questionAnswers.length);
@@ -252,13 +261,20 @@ export class StudentQuizComponent implements OnInit {
       this.quizProgress.completed = false;
     }
     this.quizProgress.numberOfAttempts = 1;
-
+    let addedQuizProgress: QuizProgress;
     this.quizProgressService.addQuizProgressOfStudent(this.quizProgress).subscribe(
       (response) => {
-        let addedQuizProgress: QuizProgress;
+
+        
+        this.addeedQuizProgress = response;
+        this.quizProgressAdded.emit(this.addeedQuizProgress);
+        alert("Quiz progress saved");
+
+  
         addedQuizProgress = response;
         console.log("Quiz progress saved");
         this.onSaveQuizProgress.emit(addedQuizProgress);
+
       },
       (error) => {
         console.log("Failed to save Progress");

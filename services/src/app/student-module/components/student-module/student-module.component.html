@@ -100,12 +100,15 @@
             </div>
             <ng-template #quizview>
                 <div *ngIf="selectedQuiz">
-                    <app-student-quiz [quizData]="selectedQuiz"
-                        (onSaveQuizProgress)="onSaveQuizProgress($event)"></app-student-quiz>
+
+                    <app-student-quiz [quizData]="selectedQuiz" (quizProgressAdded)="onQuizProgressAdded($event)" (onSaveQuizProgress)="onSaveQuizProgress($event)"></app-student-quiz>
+                    <!-- <app-student-quiz (quizProgressAdded)="onQuizProgressAdded($event)"></app-student-quiz> -->
+
+
                 </div>
 
 
-                -
+                
             </ng-template>
 
         </div>
