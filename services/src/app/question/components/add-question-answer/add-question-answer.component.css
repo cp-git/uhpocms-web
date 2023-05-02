@@ -37,3 +37,12 @@ table td {
 .btn {
     border-radius: 15px;
 }
+
+.buttons {
+    margin-top: 20px;
+}
+
+.header {
+    margin-top: -15px;
+    /* margin-bottom: -5px; */
+}
