@@ -21,8 +21,20 @@
                     <ng-container *ngSwitchCase="'date'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
-                        <input name="{{column.key}}" type="date" [(ngModel)]="currentData[column.key]"
-                            class="form-control" required="" [disabled]="column.disable">
+                        <ng-container *ngIf="column.minValue && isValidDate(column.minValue); else isStringBlock">
+                            <input name="{{column.key}}" type="date" [(ngModel)]="currentData[column.key]"
+                                class="form-control" required="" [disabled]="column.disable" [min]="column.minValue">
+                        </ng-container>
+                        <ng-template #isStringBlock>
+                            <ng-container>
+                                <input name="{{column.key}}" type="date" [(ngModel)]="currentData[column.key]"
+                                    class="form-control" required="" [disabled]="column.disable"
+                                    [min]="currentData[column.minValue]">
+                            </ng-container>
+                        </ng-template>
+
+
+
                     </ng-container>
                     <ng-container *ngSwitchCase="'password'">
                         <span class="form-bar"></span>

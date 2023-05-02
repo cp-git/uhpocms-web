@@ -46,7 +46,7 @@ export class ViewCoursesComponent {
         this.id = params.get("id");
         if (this.id) {
           this.courseService.getCourseByInstitutionId(this.id).subscribe(
-            (coursedata) => {
+            (coursedata: Course[]) => {
               this.courses = coursedata;
             }
           )

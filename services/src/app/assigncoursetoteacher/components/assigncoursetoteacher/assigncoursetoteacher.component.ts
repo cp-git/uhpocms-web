@@ -40,7 +40,7 @@ export class AssigncoursetoteacherComponent {
   courses: Course[] = [];
 
   assignTeacher = new Assignteacher();
-  assignTeacherArr: Assignteacher[] = [];
+  assignTeacherArr: any [] = [];
 
   userName!: string;
   adminId: any;
@@ -55,9 +55,8 @@ export class AssigncoursetoteacherComponent {
   maxResults = 10;
   offset = 0;
 
-  selected = [
-
-  ];
+  selected = [];
+  prevSelected= [];
 
   getSelectedValue() {
     console.log("getSelectedValue")
@@ -144,7 +143,7 @@ export class AssigncoursetoteacherComponent {
     instId = this._profile.institutionId;
 
     this._deptService.getDepartmentsByInstitutionId(instId).subscribe(
-      (response) => {
+      (response: Department[]) => {
         this.departments = response;
         console.log("Inside getDepartmentByInstId")
         console.log(response)
@@ -162,7 +161,7 @@ export class AssigncoursetoteacherComponent {
     deptId = this.department.id;
 
     this.courseService.getCourseByDepartmentId(deptId).subscribe(
-      (response) => {
+      (response: Course[]) => {
         this.courses = response;
 
         console.log(response);
@@ -177,7 +176,7 @@ export class AssigncoursetoteacherComponent {
     instId = this._profile.institutionId;
     // console.log(instId);
     this.profileService.getProfileByRoleAndInstitutionId(userRole, instId).subscribe(
-      (response) => {
+      (response: Profile[]) => {
         this._profileArray = response;
         this._profileArray.map((i) => { i.fullName = i.firstName + ' ' + i.lastName + ' - ' + i.adminEmail; return i; });
         console.log(response)
@@ -189,6 +188,80 @@ export class AssigncoursetoteacherComponent {
 
   }
 
+
+
+  /////////////////////////////////////////////////disable already assigned teacher/////////////////
+
+  onCourseSelect(courseId:any){
+    // console.log(courseId);
+    
+    this.getTeacherByCourseId(courseId);
+  
+  }
+
+  getTeacherByCourseId(courseId: any) {
+    this.assignTeacherService.getTeacherByCourseId(courseId).subscribe(
+      response => {
+        // this.courses = response;
+        console.log(response);
+       response.forEach((data:Assignteacher)=>{
+        this.assignTeacherArr.push(data.profileId);
+        console.log(this.assignTeacherArr);
+        
+       })
+      },
+      error => {
+        console.log("failed to fetch data");
+      }
+    );
+  }
+
+  onOptionSelected(item:any){
+    console.log(JSON.stringify(item))
+    console.log(this.selected);
+  
+    // this.selected = this.selected.filter(profileId=> this.assignTeacherArr.includes(item.adminId));
+    this.selected.forEach((profileId,index)=>{
+      if(this.assignTeacherArr.includes(profileId)) this.selected.splice(index,1);
+   });
+  }
+
+  ngDoCheck() {
+
+    if (!this.arraysEqual(this.selected, this.prevSelected)) {
+      // console.log('Items changed:', this.selected);
+      for (let i = this.selected.length - 1; i >= 0; i--) {
+        const profileId = this.selected[i];
+        if (this.assignTeacherArr.includes(profileId)) {
+          this.selected.splice(i, 1);
+        }
+      }
+      ;
+    //  console.log('new items changed:', this.selected);
+      this.prevSelected = [...this.selected];
+    }
+
+    // if (this.selected.length !== this.prevSelected.length) {
+    //   console.log('Selected items changed:', this.selected);
+    //   this.selected.forEach((profileId,index)=>{
+    //     if(this.assignTeacherArr.includes(profileId)) this.selected.splice(index,1);
+    //  });
+    //  console.log('new items changed:', this.selected);
+
+    //   this.prevSelected = [...this.selected];
+    // }
+  }
+  private arraysEqual(a: any[], b: any[]): boolean {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length !== b.length) return false;
+
+    for (let i = 0; i < a.length; ++i) {
+      if (a[i] !== b[i]) return false;
+    }
+
+    return true;
+  }
   inserted: boolean = false;
   //function for save the course id with profile ID
   saveAssignTeacher(courseId: number, profileId: number) {
@@ -204,7 +277,7 @@ export class AssigncoursetoteacherComponent {
       this.assignTeacher.profileId = this.selected[i];
 
       this.assignTeacher.courseId = +(this.course.courseId);
-      // alert(JSON.stringify(this.assignTeacher));
+      // console.log(JSON.stringify(this.assignTeacher));
       this.assignTeacherService.assignTeacherToCourse(this.assignTeacher).subscribe(
         (response) => {
           this.inserted = true;
@@ -212,15 +285,15 @@ export class AssigncoursetoteacherComponent {
 
         }, error => {
           this.inserted = false;
-          alert("Failed to Assign course");
+          console.log("Failed to Assign course");
         }
       )
     }
     if (this.inserted = true) {
-      alert("Teacher assigned successfully");
+      console.log("Teacher assigned successfully");
     }
     else {
-      alert("Already Course Assigned");
+      console.log("Already Course Assigned");
     }
   }
 

@@ -69,6 +69,7 @@ export class DisplayinstituteComponent {
       (response) => {
         // assigning received data to institution
         this.admininstitutions = response;
+        this.admininstitutions.sort((a, b) => a.adminInstitutionName.toLowerCase() > b.adminInstitutionName.toLowerCase() ? 1 : -1) // order by alphabets for institution name
 
         //  cloning array from instituion to backupinst
         this.admininstitutions.forEach((inst) => {
@@ -94,11 +95,12 @@ export class DisplayinstituteComponent {
       (response) => {
         this.admininstitutions.splice(this.admininstitutions.indexOf(inst), 1);
         this.backupInst.splice(this.admininstitutions.indexOf(inst), 1);
-        alert(inst.adminInstitutionName + ' Institution deleted successfully');
+        // console.log(inst.adminInstitutionName + ' Institution deleted successfully');
+        console.log(inst.adminInstitutionName + ' Institution deleted successfully');
         this.displayEmptyRow();
       },
       (error) => {
-        alert('not able to delete \n' + JSON.stringify(error.error));
+        console.log('not able to delete \n' + JSON.stringify(error.error));
       }
     );
   }

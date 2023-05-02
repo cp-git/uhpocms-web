@@ -1,13 +1,15 @@
 <div class="container-fluid">
     <div class="container">
+        <div class="row justify-content-between header">
 
-        <div class="header1">
-            <h1>Institute Administration</h1>
-        </div>
-        <div class="row text-right">
-            <button class="btn btn-success" (click)="redirectToActivateInstitution()">Activate Institutions</button>
-            <button class="btn btn-success" (click)="addInstitute()">ADD New
-                Institute</button>
+            <div class="col-sm-6">
+                <h1>Institute Administration</h1>
+            </div>
+            <div class="col-sm-6 text-right buttons">
+                <button class="btn btn-primary" (click)="addInstitute()">Add</button>
+                <button class="btn btn-primary" (click)="redirectToActivateInstitution()">Inactive</button>
+                <button class="btn btn-primary" (click)="Back()">Back</button>
+            </div>
         </div>
 
         <div class="container">
@@ -17,16 +19,16 @@
                             (click)="display(institution.adminInstitutionId)" />
                     </div>
 
-                    <div><button #btn1 id="demo" class="btn btn-info"
+                    <div><button #btn1 id="demo" class="btn btn-primary institutebtn"
                             (click)="display(institution.adminInstitutionId)">{{institution.adminInstitutionName}}</button>
                     </div>
-                    <div><button class="btn btn-danger" id="deletebtn"
+                    <div><button class="btn btn-danger institutebtn" id="deletebtn"
                             (click)="deleteInstitution(institution)">DeActivate</button>
                     </div>
                 </div>
 
             </div>
         </div>
-        <div class="row text-left"><button class="btn btn-primary" (click)="Back()">Back</button></div>
+
 
     </div>

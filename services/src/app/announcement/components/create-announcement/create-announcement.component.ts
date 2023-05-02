@@ -82,7 +82,7 @@ export class CreateAnnouncementComponent {
 
   ngAfterViewInit() {
     // subscribe to NavigationEnd event
-    // alert();
+    // console.log();
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
@@ -117,7 +117,7 @@ export class CreateAnnouncementComponent {
     if (this.validate(announcement) && this.profileIDs.length > 0) {
       this.insertAnnouncement(announcement);
     } else {
-      alert("Fields are empty or Select users to send announcement");
+      console.log("Fields are empty or Select users to send announcement");
     }
 
   }
@@ -148,7 +148,7 @@ export class CreateAnnouncementComponent {
         this.sendAnnouncementsToProfileIDs()
       },
       error => {
-        alert("Subject should not be repeat");
+        console.log("Subject should not be repeat");
       }
     );
   }
@@ -157,7 +157,7 @@ export class CreateAnnouncementComponent {
   private sendAnnouncementsToProfileIDs() {
     this.announcementService.sendAnnouncementsToProfileIDs(this.announcementId, this.profileIDs).subscribe(
       success => {
-        alert("Announcement sent successfully")
+        console.log("Announcement sent successfully")
 
         // for after successfully sending announcement modal is close 
         this.closeModalBtn.nativeElement.click();
@@ -165,7 +165,7 @@ export class CreateAnnouncementComponent {
         location.reload();
       },
       failure => {
-        alert("Failed to sent");
+        console.log("Failed to sent");
       }
     );
   }
@@ -192,7 +192,7 @@ export class CreateAnnouncementComponent {
   private sortProfiles() {
 
     this.instituteAdmins.forEach(profile => {
-      // alert(profile.userRole)
+      // console.log(profile.userRole)
       switch (profile.userRole) {
         case 'admin':
           this.admins.push(profile);

@@ -1,11 +1,11 @@
 <div class="container">
     <div>
         <ng-container *ngIf="viewAll">
-            <div class="row justify-content-between">
+            <div class="row justify-content-between header">
                 <div class="col-sm-6">
                     <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container>
                 </div>
-                <div class="col-sm-6 text-right">
+                <div class="col-sm-6 text-right buttons">
                     <ng-container *ngTemplateOutlet="addButton;"></ng-container>
                     <ng-container *ngTemplateOutlet="activateButton;"></ng-container>
                     <ng-container *ngTemplateOutlet="backButton;"></ng-container>
@@ -15,11 +15,11 @@
         </ng-container>
 
         <ng-container *ngIf="viewAdd || viewOne || viewUpdate || viewActivate">
-            <div class="row justify-content-between">
+            <div class="row justify-content-between header">
                 <div class="col-sm-6">
                     <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container>
                 </div>
-                <div class="col-sm-6 text-right">
+                <div class="col-sm-6 text-right buttons">
                     <ng-container *ngTemplateOutlet="backButton;"></ng-container>
                 </div>
             </div>

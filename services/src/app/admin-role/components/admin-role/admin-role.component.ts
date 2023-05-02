@@ -142,11 +142,11 @@ export class AdminRoleComponent implements OnInit {
     // calling service for updating data
     this.service.updateAdminRole(currentData.roleName, currentData).subscribe(
       response => {
-        alert(`AdminRole updated successfully !`);
+        console.log(`AdminRole updated successfully !`);
         this.back();
       },
       error => {
-        alert(`AdminRole updation failed !`);
+        console.log(`AdminRole updation failed !`);
       }
     );
   }
@@ -159,13 +159,13 @@ export class AdminRoleComponent implements OnInit {
     // calling service for adding data
     this.service.addAdminRole(currentData).subscribe(
       (data) => {
-        alert('Role added Successfully');
+        console.log('Role added Successfully');
         this.emptyAdminRole = {} as AdminRole;
         this.ngOnInit();
         this.back();
       },
       (error) => {
-        alert("Failed to add role");
+        console.log("Failed to add role");
       });
   }
 
@@ -179,7 +179,7 @@ export class AdminRoleComponent implements OnInit {
       response => {
 
         this.allData = response; //assign data to local variable
-
+        this.allData.sort((a, b) => a.roleName.toLowerCase() > b.roleName.toLowerCase() ? 1 : -1) // order by alphabets for role name
         // if no data available
         if (this.allData.length > 0) {
           this.dataAvailable = true;
@@ -197,11 +197,11 @@ export class AdminRoleComponent implements OnInit {
     // calling service to soft delte
     this.service.deleteAdminRole(roleName).subscribe(
       (response) => {
-        alert('Admin Role deleted successfully');
+        console.log('Admin Role deleted successfully');
         this.ngOnInit();
       },
       (error) => {
-        alert('Admin Role deletion failed');
+        console.log('Admin Role deletion failed');
       }
     );
   }
@@ -213,6 +213,7 @@ export class AdminRoleComponent implements OnInit {
     this.service.getAllDeactivatedRoles().subscribe(
       response => {
         this.allInActiveData = response;
+        this.allInActiveData.sort((a, b) => a.roleName.toLowerCase() > b.roleName.toLowerCase() ? 1 : -1) // order by alphabets for role name
       },
       error => {
         console.log('No data in table ');
@@ -228,11 +229,11 @@ export class AdminRoleComponent implements OnInit {
     // calling service to activating admin role
     this.service.activateAdminRole(roleId).subscribe(
       response => {
-        alert("Activated admin role");
+        console.log("Activated admin role");
         this.ngOnInit();
       },
       error => {
-        alert("Failed to activate");
+        console.log("Failed to activate");
       }
     );
   }

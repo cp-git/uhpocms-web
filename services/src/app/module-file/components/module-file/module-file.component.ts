@@ -207,7 +207,7 @@ export class ModuleFileComponent {
       for (var module in this.data) {
         this.modules.push(this.data[module]);
       }
-      //alert(this.courses);
+      //console.log(this.courses);
     }
     catch (err) {
       console.log("Error", err);
@@ -231,7 +231,7 @@ export class ModuleFileComponent {
   private loadCourses() {
     try {
       this.sessionData = sessionStorage.getItem('course');
-      // alert(this.sessionData);
+      // console.log(this.sessionData);
       this.data = JSON.parse(this.sessionData);
       for (var inst in this.data) {
         this.courses.push(this.data[inst]);
@@ -267,7 +267,7 @@ export class ModuleFileComponent {
   //       console.log(response);
   //     },
   //     error => {
-  //       alert("failed to fetch data");
+  //       console.log("failed to fetch data");
   //     }
   //   );
   // }
@@ -291,18 +291,18 @@ export class ModuleFileComponent {
 
     this.moduleFileService.addModuleFile(objectReceived).subscribe(
       (data) => {
-        //alert(this.moduleFile)
+        //console.log(this.moduleFile)
         //console.log(data);
         this.uploadfileService.uploadFiles(this.files).subscribe();
 
         this.moduleFile = data;
 
 
-        alert('File Added successfully');
+        console.log('File Added successfully');
         this.ngOnInit();
         this.back();
       },
-      (error) => alert('failed to upload ')
+      (error) => console.log('failed to upload ')
     );
   }
 
@@ -315,11 +315,11 @@ export class ModuleFileComponent {
 
       },
       error => {
-        alert('Module File updation failed !');
+        console.log('Module File updation failed !');
       }
 
     );
-    alert('Module File updated successfully !');
+    console.log('Module File updated successfully !');
     this.back();
   }
 
@@ -367,11 +367,11 @@ export class ModuleFileComponent {
     // calling service to soft delte
     this.moduleFileService.deleteModuleFileById(moduleFileId).subscribe(
       (response) => {
-        alert('Module File deleted successfully');
+        console.log('Module File deleted successfully');
         this.ngOnInit();
       },
       (error) => {
-        alert('Module File deletion failed');
+        console.log('Module File deletion failed');
       }
     );
   }
@@ -396,11 +396,11 @@ export class ModuleFileComponent {
 
     this.moduleFileService.activatemoduleFileById(moduleFileId).subscribe(
       response => {
-        alert("Activated modulefile");
+        console.log("Activated modulefile");
         this.ngOnInit();
       },
       error => {
-        alert("Failed to activate");
+        console.log("Failed to activate");
       }
     );
   }

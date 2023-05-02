@@ -64,7 +64,7 @@ export class DisplaySchoolComponent {
         if (this.id) {
           console.log(this.id)
           this.deptService.getDepartmentsByInstitutionId(this.id).subscribe(
-            (deptdata) => {
+            (deptdata: Department[]) => {
               this.departments = deptdata;
               console.log(deptdata);
             }

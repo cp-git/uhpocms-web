@@ -2,14 +2,14 @@ body {
     background-color: #eee
 }
 
-#adminbtn {
+/* #adminbtn {
     text-align: center;
     color: white;
     background-color: rgba(26, 115, 232, 0.83);
     margin-left: 180px;
     width: 160px;
     height: 40px;
-}
+} */
 
 .card {
     height: 200px;
@@ -68,12 +68,13 @@ body {
     color: #a5aec0
 }
 
+/* 
 #h2 button {
     margin-top: 20px;
     margin-left: 560px;
     width: 90px;
     height: 40px;
-}
+} */
 
 #sub-head {
 
@@ -105,4 +106,13 @@ body {
 
 #data1 {
     margin-top: 20px;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+.header {
+    margin-top: -15px;
+    margin-bottom: -5px;
 }

@@ -39,7 +39,7 @@ export class AddCategoryComponent {
       response => {
         this.category = response;
 
-        alert("category add successfully");
+        console.log("category add successfully");
         this._route.navigate(['category']);
 
         if (this.categories.length > 0) {
@@ -48,7 +48,7 @@ export class AddCategoryComponent {
 
       },
       error => {
-        alert("please enter valid details");
+        console.log("please enter valid details");
       }
 
     )

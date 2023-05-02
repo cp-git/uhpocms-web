@@ -34,6 +34,10 @@ export class AssigncourseteacherService {
     // alert(this.assignTeacherUrl + " and" + JSON.stringify(assignTeacher));
     return this._http.post<any>(this.assignTeacherUrl, assignTeacher);
   }
+
+  getTeacherByCourseId(courseId :number){
+    return this._http.get<any>(`${this.assignTeacherUrl}/courseid/` + courseId)
+  }
   setParams(queryParams: { maxResults: number, offset: number }): void {
     this.queryObj = Object.assign(
       {},

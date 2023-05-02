@@ -15,10 +15,12 @@ import { CourseProgress } from 'app/student-module/class/courseprogress';
 
 import { QuizService } from 'app/quiz/services/quiz.service';
 import { Quiz } from 'app/quiz/class/quiz';
+
 import { QuizProgress } from 'app/quiz-progress/class/quiz-progress';
 import { QuizProgressService } from 'app/quiz-progress/services/quiz-progress.service';
 import { map, switchMap } from 'rxjs/operators';
 import { StudentQuizComponent } from '../student-quiz/student-quiz.component';
+
 
 
 @Component({
@@ -98,14 +100,21 @@ export class StudentModuleComponent implements OnInit {
   moduleArr: Module[] = [];
   couresFlag: boolean = false;
   fileFlag: boolean = false;
+
   modulePercentage: number = 0;
   quizIdArr1 : number[] =[];
   quizIdArr2: number[] =[];
+  quizPassedProgresses: any[] = [];
+ quizFailedProgresses: any[] = [];
+
 
   constructor(private activateRoute: ActivatedRoute, private courseService: TeacherCourseService, private moduleService: ModuleService, private modulefileService: ModuleFileService, private quizProgServ: QuizProgressService,
     private fileProgService: ModulefileprogressService, private _location: Location, private elRef: ElementRef, private modFileServc: ModuleFileService, private quizService: QuizService, private cdr: ChangeDetectorRef) {
+    }
 
-  }
+    
+
+  
 
 
 
@@ -124,7 +133,7 @@ export class StudentModuleComponent implements OnInit {
 
     this.getAllQuizzesByProfileId(this.studentId);
     this.getAllFileProgress();
-
+    this.getQuizPorgressesByStudentId(this.studentId);
     this.selectedCourse = '1'
 
     // this.trackModuleProgress(this.selectedCourse)
@@ -135,7 +144,14 @@ export class StudentModuleComponent implements OnInit {
 
     
   }
-
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   if (changes['selectedFile']) {
+  //     console.log("")
+  //     const video = this.elRef.nativeElement.querySelector('video');
+  //     video.load();
+  //   }
+  // }
+  //loads the courses of the student using the getCourseByStudentId() method of StudentService
 
   loadCourseOfStudent(studentId: number) {
     this.courseService.getCourseByStudentId(studentId).subscribe(
@@ -471,7 +487,7 @@ export class StudentModuleComponent implements OnInit {
 
       },
       error => {
-        alert("Failed to load student course");
+        console.log("Failed to load student course");
       }
     );
 
@@ -876,8 +892,54 @@ onQuizProgressAdded(addeedQuizProgress: any) {
     this.selectedQuiz = quiz;
   }
 
+
+  getQuizPorgressesByStudentId(studentId: number) {
+    this.quizProgServ.getQuizProgressesByStudentId(studentId).subscribe(
+      (data) => {
+        data.forEach(quiz => {
+          if (quiz.completed == true) {
+            this.quizPassedProgresses.push(quiz.quizId);
+          } else {
+            this.quizFailedProgresses.push(quiz.quizId);
+          }
+
+        })
+        console.log(this.quizPassedProgresses);
+        console.log(this.quizFailedProgresses);
+
+
+      },
+      (error) => {
+        console.log("failed to fetch progress data");
+
+      }
+    )
+  }
+
+  onSaveQuizProgress(quizProgress: any) {
+    this.quizPassedProgresses = this.removeElementFromStringArray(this.quizPassedProgresses, quizProgress.quizId)
+    this.quizFailedProgresses = this.removeElementFromStringArray(this.quizFailedProgresses, quizProgress.quizId)
+    if (quizProgress.completed == true) {
+      this.quizPassedProgresses.push(quizProgress.quizId);
+    } else {
+      this.quizFailedProgresses.push(quizProgress.quizId);
+    }
+    console.log(this.quizPassedProgresses);
+    console.log(this.quizFailedProgresses);
+
+  }
+
+  removeElementFromStringArray(array: any[], element: any) {
+    array.forEach((value, index) => {
+      if (value == element) array.splice(index, 1);
+    });
+    return array;
+  }
 }
+
 function ngOnInit() {
   throw new Error('Function not implemented.');
 }
+
+
 

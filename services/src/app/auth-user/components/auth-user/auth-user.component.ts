@@ -149,11 +149,13 @@ export class AuthUserComponent implements OnInit {
     // calling service for updating data
     this.service.updateAuthUser(currentData.authUserName, currentData).subscribe(
       response => {
-        alert(`Auth User updated successfully !`);
+        // alert(`Auth User updated successfully !`);
+        console.log(`Auth User updated successfully !`);
         this.back();
       },
       error => {
-        alert(`AuthUser updation failed !`);
+        // alert(`AuthUser updation failed !`);
+        console.log(`AuthUser updation failed !`);
       }
     );
   }
@@ -172,13 +174,15 @@ export class AuthUserComponent implements OnInit {
 
     this.service.addAuthUser(currentData).subscribe(
       (data) => {
-        alert('AuthUser added Successfully');
+        // alert('AuthUser added Successfully');
+        console.log('User added Successfully');
         this.emptyAuthUser = {} as Authuser;
         this.ngOnInit();
         this.back();
       },
       (error) => {
-        alert("Failed to add User");
+        //alert("Failed to add User");
+        console.log("Failed to add User");
       });
   }
 
@@ -212,11 +216,13 @@ export class AuthUserComponent implements OnInit {
     // calling service to soft delete
     this.service.deleteAuthUser(authUserName).subscribe(
       (response) => {
-        alert('Auth user deleted successfully');
+        // alert('Auth user deleted successfully');
+        console.log('user deleted successfully');
         this.ngOnInit();
       },
       (error) => {
-        alert('Auth user deletion failed');
+        //alert('Auth user deletion failed');
+        console.log('user deletion failed');
       }
     );
   }
@@ -228,6 +234,7 @@ export class AuthUserComponent implements OnInit {
     this.service.getAllInactiveAuthUsers().subscribe(
       response => {
         this.allInActiveData = response;
+        this.allInActiveData.sort((a, b) => a.authUserName.toLowerCase() > b.authUserName.toLowerCase() ? 1 : -1) // order by alphabets for authuser name
       },
       error => {
         console.log('No data in table ');
@@ -243,11 +250,13 @@ export class AuthUserComponent implements OnInit {
     // calling service to activating admin role
     this.service.activateAuthUserById(authUserId).subscribe(
       response => {
-        alert("Activated auth user");
+        // alert("Activated auth user");
+        console.log("Activated auth user");
         this.ngOnInit();
       },
       error => {
-        alert("Failed to activate");
+        // alert("Failed to activate");
+        console.log("Failed to activate");
       }
     );
   }

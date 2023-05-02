@@ -59,7 +59,7 @@ export class EnrollstudentComponent {
 
   enrolledStudent = new Enrolltostudent();
 
-  enrolledStudentArr: Enrolltostudent[] = [];
+  enrolledStudentArr: any[] = [];
 
   end: any;
   size: number = 1;
@@ -71,6 +71,7 @@ export class EnrollstudentComponent {
   offset = 0;
 
   selected = [];
+  prevSelected= [];
 
 
   //constructor
@@ -122,7 +123,7 @@ export class EnrollstudentComponent {
     instId = this._profile.institutionId;
 
     this._deptService.getDepartmentsByInstitutionId(instId).subscribe(
-      (response) => {
+      (response: Department[]) => {
         this.departments = response;
 
       }
@@ -135,7 +136,7 @@ export class EnrollstudentComponent {
     deptId = this.department.id;
 
     this.courseService.getCourseByDepartmentId(deptId).subscribe(
-      (response) => {
+      (response: Course[]) => {
         this.courses = response;
 
       }
@@ -152,7 +153,7 @@ export class EnrollstudentComponent {
     instId = this._profile.institutionId;
 
     this.profileService.getProfileByRoleAndInstitutionId(userRole, instId).subscribe(
-      (response) => {
+      (response: Profile[]) => {
         this._profileArray = response;
         this._profileArray.map((i) => { i.fullName = i.firstName + ' ' + i.lastName + ' - ' + i.adminEmail; return i; });
 
@@ -161,6 +162,82 @@ export class EnrollstudentComponent {
 
   }
 
+
+   //////////////////////////////////////////////////////////////////////////////////////////////////////
+                           ///disablestudent who already enroll
+////////////////////////////////////////////////////////////////////////////////////////////
+
+
+getStudentByCourseId(courseId: any) {
+  this.enrollstuService.getStudentByCourseId(courseId).subscribe(
+    response => {
+      // this.courses = response;
+      console.log(response);
+     response.forEach((data:Enrolltostudent)=>{
+     this.enrolledStudentArr.push(data.profileId);
+      console.log(this.enrolledStudentArr);
+      
+     })
+    },
+    error => {
+      console.log("failed to fetch data");
+    }
+  );
+}
+
+onOptionSelected(item:any){
+  console.log(JSON.stringify(item))
+  console.log(this.selected);
+
+  // this.selected = this.selected.filter(profileId=> this.assignTeacherArr.includes(item.adminId));
+  this.selected.forEach((profileId,index)=>{
+    if(this.enrolledStudentArr.includes(profileId)) this.selected.splice(index,1);
+ });
+}
+
+ngDoCheck() {
+
+  if (!this.arraysEqual(this.selected, this.prevSelected)) {
+    // console.log('Items changed:', this.selected);
+    for (let i = this.selected.length - 1; i >= 0; i--) {
+      const profileId = this.selected[i];
+      if (this.enrolledStudentArr.includes(profileId)) {
+        this.selected.splice(i, 1);
+      }
+    }
+    ;
+  //  console.log('new items changed:', this.selected);
+    this.prevSelected = [...this.selected];
+  }
+
+  // if (this.selected.length !== this.prevSelected.length) {
+  //   console.log('Selected items changed:', this.selected);
+  //   this.selected.forEach((profileId,index)=>{
+  //     if(this.assignTeacherArr.includes(profileId)) this.selected.splice(index,1);
+  //  });
+  //  console.log('new items changed:', this.selected);
+
+  //   this.prevSelected = [...this.selected];
+  // }
+}
+
+onCourseSelect(courseId:any){
+  // console.log(courseId);
+  
+  this.getStudentByCourseId(courseId);
+
+}
+
+private arraysEqual(a: any[], b: any[]): boolean {
+  if (a === b) return true;
+  if (a == null || b == null) return false;
+  if (a.length !== b.length) return false;
+
+  for (let i = 0; i < a.length; ++i) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
+}
 
   //Function for assign course to student
   saveEnrolledStudent(courseId: number, profileId: number) {
@@ -172,14 +249,14 @@ export class EnrollstudentComponent {
 
       this.enrolledStudent.profileId = this.selected[i];
       this.enrollstuService.saveEnrolledStudents(this.enrolledStudent).subscribe(
-        (response) => {
+        (response: any) => {
 
           if (i == 0) {
 
-            alert("Student Enrolled Successfully");
+            console.log("Student Enrolled Successfully");
             location.reload();
           } else {
-            alert("Already Enrolled Course OR Failed to Enrolled")
+            console.log("Already Enrolled Course OR Failed to Enrolled")
           }
         }
       )

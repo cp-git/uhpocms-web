@@ -14,6 +14,7 @@
     border: 4px solid black;
     width: 100%;
     height: 80%;
+    border-radius: 6px;
 }
 
 select {
@@ -94,6 +95,6 @@ li {
     height: 544px; */
 }
 
-.fa-check-circle{
-    color:green;
+.fa-check-circle {
+    color: green;
 }

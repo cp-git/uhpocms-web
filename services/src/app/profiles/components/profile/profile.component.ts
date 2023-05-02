@@ -164,7 +164,7 @@ export class ProfileComponent implements OnInit {
 
   // on updateComponents's submit button clicked
   onUpdateProfileSubmit(objectReceived: Profile) {
-    // alert(JSON.stringify(objectReceived))
+    // console.log(JSON.stringify(objectReceived))
     this.updateProfile(objectReceived);
   }
 
@@ -195,7 +195,7 @@ export class ProfileComponent implements OnInit {
       response => {
 
         this.allData = response; //assign data to local variable
-
+        this.allData.sort((a, b) => a.firstName.toLowerCase() > b.firstName.toLowerCase() ? 1 : -1) // order by alphabets for first name
         // if no data available
         if (this.allData.length > 0) {
           this.dataAvailable = true;
@@ -301,17 +301,17 @@ export class ProfileComponent implements OnInit {
         if (currentData.activeUser === true) {
           this.authUserService.activateAuthUserById(currentData.userId).subscribe(
             response => {
-              alert('Profile added successfully');
+              console.log('Profile added successfully');
               this.emptyProfile = {} as Profile;
               this.ngOnInit();
               this.back();
             },
             error => {
-              alert("Failed to add profile");
+              console.log("Failed to add profile");
             }
           );
         } else {
-          alert('Profile saved successfully. NOTE - Profile is not activated!');
+          console.log('Profile saved successfully. NOTE - Profile is not activated!');
           this.emptyProfile = {} as Profile;
           this.ngOnInit();
           this.back();
@@ -319,7 +319,7 @@ export class ProfileComponent implements OnInit {
 
       },
       error => {
-        alert("Failed to add profile");
+        console.log("Failed to add profile");
       });
   }
 
@@ -327,11 +327,11 @@ export class ProfileComponent implements OnInit {
   private updateProfile(currentData: Profile) {
     this.service.saveOrUpdateProfile(currentData.userId, currentData).subscribe(
       response => {
-        alert('Profile updated successfully');
+        console.log('Profile updated successfully');
         this.back();
       },
       error => {
-        alert("Failed to update profile");
+        console.log("Failed to update profile");
       }
     );
   }
@@ -349,7 +349,7 @@ export class ProfileComponent implements OnInit {
           if (authUser.authUserId == currentData.userId) {
             this.authUserService.deleteAuthUser(authUser.authUserName).subscribe(
               (response: any) => {
-                alert('Profile deleted successfully');
+                console.log('Profile deleted successfully');
                 this.ngOnInit();
               }
             );
@@ -357,7 +357,7 @@ export class ProfileComponent implements OnInit {
         })
       },
       error => {
-        alert("Failed to delete profile");
+        console.log("Failed to delete profile");
       }
     );
   }
@@ -369,7 +369,7 @@ export class ProfileComponent implements OnInit {
     this.service.getAllDeactivatedProfiles().subscribe(
       response => {
         this.allInActiveData = response;
-
+        this.allInActiveData.sort((a, b) => a.firstName.toLowerCase() > b.firstName.toLowerCase() ? 1 : -1) // order by alphabets for first name
       },
       error => {
         console.log('No data in table ');
@@ -386,33 +386,33 @@ export class ProfileComponent implements OnInit {
       response => {
         this.authUserService.activateAuthUserById(profile.userId).subscribe(
           response => {
-            alert('Profile activated successfully');
+            console.log('Profile activated successfully');
             this.ngOnInit();
           },
           error => {
-            alert("Failed to activate profile");
+            console.log("Failed to activate profile");
           }
         );
 
       },
       error => {
-        alert("Profile activation failed");
+        console.log("Profile activation failed");
       }
     );
     // } else {
-    //   alert("profile is incomplete to activate!");
+    //   console.log("profile is incomplete to activate!");
     // }
 
   }
 
 
   // getCurrentAuthUser(id: any) {
-  //   // alert(id)
+  //   // console.log(id)
 
   //   this.allInActiveData.forEach(profile => {
-  //     // alert("check " + profile.userId + " " + parseInt(id) + (profile.userId === parseInt(id)))
+  //     // console.log("check " + profile.userId + " " + parseInt(id) + (profile.userId === parseInt(id)))
   //     if (profile.userId === parseInt(id)) {
-  //       // alert(JSON.stringify(profile))
+  //       // console.log(JSON.stringify(profile))
   //       this.emptyProfile = Object.assign({}, profile);
   //       this.foundMatch = true;
   //       return;

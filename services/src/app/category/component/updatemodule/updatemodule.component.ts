@@ -68,7 +68,7 @@ export class UpdatemoduleComponent {
         }
       },
       (error) => {
-        alert('Data not found');
+        console.log('Data not found');
       }
     );
   }
@@ -93,14 +93,14 @@ export class UpdatemoduleComponent {
           Object.assign({}, this.module)
         );
 
-        alert('Data updated successfuly');
+        console.log('Data updated successfuly');
 
         if (this._teacherModule.length > 0) {
           this.isVisible = false;
         }
       },
       (error) => {
-        alert('Failed to update');
+        console.log('Failed to update');
       }
     );
   }
@@ -116,14 +116,14 @@ export class UpdatemoduleComponent {
         );
         this._backupModule.delete(toDeleteModule.moduleId);
 
-        alert(toDeleteModule.moduleName + ' deleted successfuly');
+        console.log(toDeleteModule.moduleName + ' deleted successfuly');
 
         if (this._teacherModule.length > 0) {
           this.isVisible = false;
         }
       },
       (error) => {
-        alert('Failed to delete');
+        console.log('Failed to delete');
       }
     );
   }

@@ -62,14 +62,26 @@
 
                             </ng-container>
 
-                                <ng-container *ngFor="let quiz of quizzes |filter:'moduleId':module.moduleId">
-                                    <br><span class="far fa-file-alt"></span> &nbsp;&nbsp;<a
-                                        (click)="onQuizClicked(quiz)">{{quiz.title}}</a>
+                            <ng-container *ngFor="let quiz of quizzes |filter:'moduleId':module.moduleId">
+                                <br>
+                                <ng-container *ngIf="quizPassedProgresses.includes(quiz.quizId); else failedIcon">
+                                    <span class="fa fa-check-circle" style="color:blue"></span>
                                 </ng-container>
-                            </ul>
-                        </ng-container>
+                                <ng-template #failedIcon>
+                                    <ng-container *ngIf="quizFailedProgresses.includes(quiz.quizId); else fileIcon">
+                                        <span class="fa fa-times-circle" style="color:red"></span>
+                                    </ng-container>
+                                </ng-template> &nbsp;&nbsp;
+                                <ng-template #fileIcon>
+                                    <span class="far fa-file-alt"></span>
+                                </ng-template> &nbsp;&nbsp;
 
-                  
+                                <a (click)="onQuizClicked(quiz)">{{quiz.title}}</a>
+                            </ng-container>
+                        </ul>
+                    </ng-container>
+
+
                 </div>
             </div>
         </div>
@@ -88,13 +100,15 @@
             </div>
             <ng-template #quizview>
                 <div *ngIf="selectedQuiz">
-                    <app-student-quiz [quizData]="selectedQuiz" (quizProgressAdded)="onQuizProgressAdded($event)"></app-student-quiz>
+
+                    <app-student-quiz [quizData]="selectedQuiz" (quizProgressAdded)="onQuizProgressAdded($event)" (onSaveQuizProgress)="onSaveQuizProgress($event)"></app-student-quiz>
                     <!-- <app-student-quiz (quizProgressAdded)="onQuizProgressAdded($event)"></app-student-quiz> -->
+
 
                 </div>
 
 
-                -
+                
             </ng-template>
 
         </div>

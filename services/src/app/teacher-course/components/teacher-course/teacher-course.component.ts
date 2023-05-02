@@ -181,11 +181,11 @@ export class TeacherCourseComponent implements OnInit {
     // calling service for updating data
     this.service.updateCourseById(currentData.courseId, currentData).subscribe(
       response => {
-        alert(`Course updated successfully !`);
+        console.log(`Course updated successfully !`);
         this.back();
       },
       error => {
-        alert(`Course updation failed !`);
+        console.log(`Course updation failed !`);
       }
     );
   }
@@ -205,11 +205,11 @@ export class TeacherCourseComponent implements OnInit {
         // console.log("coursedept" + JSON.stringify(this.courseDepartment));
         this.service.assignCourseToDepartment(this.courseDepartment).subscribe(
           response => {
-            alert('Course Added successfully');
+            console.log('Course Added successfully');
 
           },
           error => {
-            alert("Course added but failed to assign");
+            console.log("Course added but failed to assign");
           }
         );
         this.emptyCourse = {} as Course;
@@ -218,7 +218,7 @@ export class TeacherCourseComponent implements OnInit {
 
       },
       (error) => {
-        alert("Failed to add Course");
+        console.log("Failed to add Course");
       });
   }
 
@@ -241,6 +241,7 @@ export class TeacherCourseComponent implements OnInit {
                 departmentId: coursedepartment.departmentId,
               });
             }
+            this.allData.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name
           })
         })
         console.log(this.allData);
@@ -259,11 +260,11 @@ export class TeacherCourseComponent implements OnInit {
     // calling service to soft delete
     this.service.deleteCourseByCourseId(courseId).subscribe(
       (response) => {
-        alert('Course deleted successfully');
+        console.log('Course deleted successfully');
         this.ngOnInit();
       },
       (error) => {
-        alert('course deletion failed');
+        console.log('course deletion failed');
       }
     );
   }
@@ -285,6 +286,7 @@ export class TeacherCourseComponent implements OnInit {
               });
 
             }
+            this.allInActiveData.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name
           })
         })
         console.log(this.allInActiveData);
@@ -309,7 +311,7 @@ export class TeacherCourseComponent implements OnInit {
   private loadAdminInstitutions() {
     try {
       this.sessionData = sessionStorage.getItem('admininstitution');
-      // alert(this.sessionData);
+      // console.log(this.sessionData);
       this.data = JSON.parse(this.sessionData);
       for (var inst in this.data) {
         this.adminInstitutions.push(this.data[inst]);
@@ -327,11 +329,11 @@ export class TeacherCourseComponent implements OnInit {
     // calling service to activating admin role
     this.service.activateCourseById(courseId).subscribe(
       response => {
-        alert("Activated course");
+        console.log("Activated course");
         this.ngOnInit();
       },
       error => {
-        alert("Failed to activate");
+        console.log("Failed to activate");
       }
     );
   }
@@ -385,6 +387,7 @@ export class TeacherCourseComponent implements OnInit {
                 departmentId: coursedepartment.departmentId,
               });
             }
+            this.allData.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name
           })
         })
       },
@@ -410,6 +413,7 @@ export class TeacherCourseComponent implements OnInit {
                 departmentId: coursedepartment.departmentId,
               });
             }
+            this.allData.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name
           })
         })
         console.log(this.allData);
