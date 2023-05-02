@@ -38,12 +38,22 @@ img:hover {
 }
 
 .institutebtn {
-    margin: 10px;      
+    margin: 10px;
 }
 
-.btn{
-border-radius: 15px;
+.btn {
+    border-radius: 15px;
 }
+
 /* .row {
     padding-top: 2%;
 } */
+
+.buttons {
+    margin-top: 20px;
+}
+
+.header {
+    margin-top: -15px;
+    margin-bottom: -5px;
+}
