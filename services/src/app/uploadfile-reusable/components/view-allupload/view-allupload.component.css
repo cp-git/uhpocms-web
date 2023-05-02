@@ -7,14 +7,20 @@ button {
 }
 
 table th {
-    background-color: #566787;
+    background-color: #435D7D;
     text-align: center;
+    vertical-align: middle;
     color: white;
     border: 1px groove black;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 17px;
+    /* color: black; */
+
 }
 
 table td {
     text-align: center;
+    vertical-align: middle;
 }
 
 .btn {

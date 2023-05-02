@@ -90,3 +90,12 @@ body {
     margin-left: 200px;
     font-size: 60px;
 }
+
+.buttons {
+    margin-top: 20px;
+}
+
+.header {
+    margin-top: -15px;
+    margin-bottom: -5px;
+}
