@@ -1,7 +1,7 @@
 <div class="container">
     <div>
         <ng-container *ngIf="viewAll">
-            <div class="row justify-content-between header">
+            <!-- <div class="row justify-content-between header">
                 <div class="col-sm-6">
                     <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container>
                 </div>
@@ -11,18 +11,24 @@
                     <ng-container *ngTemplateOutlet="backButton;"></ng-container>
 
                 </div>
-            </div>
+            </div> -->
+
+            <app-module-header [moduleName]="moduleName" [buttons]="{addButton:true,activateButton:true}"
+                (addButtonClicked)="onAddClick()" (activateButtonClicked)="onActivateClick()"
+                (backButtonClicked)="back()"></app-module-header>
         </ng-container>
 
         <ng-container *ngIf="viewAdd || viewOne || viewUpdate || viewActivate">
-            <div class="row justify-content-between header">
+            <!-- <div class="row justify-content-between header">
                 <div class="col-sm-6">
                     <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container>
                 </div>
                 <div class="col-sm-6 text-right buttons">
                     <ng-container *ngTemplateOutlet="backButton;"></ng-container>
                 </div>
-            </div>
+            </div> -->
+            <app-module-header [moduleName]="moduleName" (backButtonClicked)="back()"
+                [buttons]="{addButton:false,activateButton:false}"></app-module-header>
         </ng-container>
 
         <ng-container *ngIf="viewAll">
