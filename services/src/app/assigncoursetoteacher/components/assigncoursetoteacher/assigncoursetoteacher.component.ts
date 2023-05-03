@@ -20,7 +20,7 @@ import { TeacherCourseService } from 'app/teacher-course/services/teacher-course
   styleUrls: ['./assigncoursetoteacher.component.css']
 })
 export class AssigncoursetoteacherComponent {
-
+  moduleName = 'Assign Course To Teacher';
   _profile = new Profile();
 
   _profileArray: Profile[] = [];
@@ -40,11 +40,10 @@ export class AssigncoursetoteacherComponent {
   courses: Course[] = [];
 
   assignTeacher = new Assignteacher();
-  assignTeacherArr: any [] = [];
+  assignTeacherArr: any[] = [];
 
   userName!: string;
   adminId: any;
-
 
   end: any;
   size: number = 1;
@@ -56,7 +55,11 @@ export class AssigncoursetoteacherComponent {
   offset = 0;
 
   selected = [];
-  prevSelected= [];
+  prevSelected = [];
+
+  // for buttons to view
+  showAddButton: boolean = false;
+  showActivateButton: boolean = false;
 
   getSelectedValue() {
     console.log("getSelectedValue")
@@ -192,11 +195,11 @@ export class AssigncoursetoteacherComponent {
 
   /////////////////////////////////////////////////disable already assigned teacher/////////////////
 
-  onCourseSelect(courseId:any){
+  onCourseSelect(courseId: any) {
     // console.log(courseId);
-    
+
     this.getTeacherByCourseId(courseId);
-  
+
   }
 
   getTeacherByCourseId(courseId: any) {
@@ -204,11 +207,11 @@ export class AssigncoursetoteacherComponent {
       response => {
         // this.courses = response;
         console.log(response);
-       response.forEach((data:Assignteacher)=>{
-        this.assignTeacherArr.push(data.profileId);
-        console.log(this.assignTeacherArr);
-        
-       })
+        response.forEach((data: Assignteacher) => {
+          this.assignTeacherArr.push(data.profileId);
+          console.log(this.assignTeacherArr);
+
+        })
       },
       error => {
         console.log("failed to fetch data");
@@ -216,14 +219,14 @@ export class AssigncoursetoteacherComponent {
     );
   }
 
-  onOptionSelected(item:any){
+  onOptionSelected(item: any) {
     console.log(JSON.stringify(item))
     console.log(this.selected);
-  
+
     // this.selected = this.selected.filter(profileId=> this.assignTeacherArr.includes(item.adminId));
-    this.selected.forEach((profileId,index)=>{
-      if(this.assignTeacherArr.includes(profileId)) this.selected.splice(index,1);
-   });
+    this.selected.forEach((profileId, index) => {
+      if (this.assignTeacherArr.includes(profileId)) this.selected.splice(index, 1);
+    });
   }
 
   ngDoCheck() {
@@ -237,7 +240,7 @@ export class AssigncoursetoteacherComponent {
         }
       }
       ;
-    //  console.log('new items changed:', this.selected);
+      //  console.log('new items changed:', this.selected);
       this.prevSelected = [...this.selected];
     }
 

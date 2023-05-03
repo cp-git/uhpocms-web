@@ -51,6 +51,12 @@ export class AddQuestionAnswerComponent implements OnInit {
   viewOne: boolean = false;
   viewActivate: boolean = false;
   viewQuePaper: boolean = false;
+
+  // for buttons to view
+  showAddButton: boolean = false;
+  showActivateButton: boolean = false;
+  titleWithUserRole: boolean = true;
+
   sessionData: any;
   data: any;
 
@@ -344,6 +350,7 @@ export class AddQuestionAnswerComponent implements OnInit {
       this.viewUpdate = false;
       this.viewActivate = false;
       this.viewQuePaper = false;
+
     } else {
       this.location.back();
     }

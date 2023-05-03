@@ -76,6 +76,7 @@ import { ModuleFileModule } from './module-file/module-names/module-file.module'
 import { HttpInterceptorService } from './shared/services/HttpInterceptor/http-interceptor.service';
 import { UploadfileReusableModule } from './uploadfile-reusable/uploadfile-reusable.module';
 import { StudentModuleModule } from './student-module/student-module.module';
+import { ModuleHeaderComponent } from './reusable/component/module-header/module-header.component';
 
 @NgModule({
   declarations: [

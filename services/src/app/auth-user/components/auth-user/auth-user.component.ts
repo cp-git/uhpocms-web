@@ -30,6 +30,10 @@ export class AuthUserComponent implements OnInit {
   // If all data is available or not
   dataAvailable: boolean = false;
 
+  // for buttons to view
+  showAddButton: boolean = true;
+  showActivateButton: boolean = true;
+
   // adminRoleHeader: any; // header for minimum visible column data
   // adminRoleAllHeader: any;  // header for all visible column data
 
@@ -77,6 +81,9 @@ export class AuthUserComponent implements OnInit {
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
+
+      this.showAddButton = true;
+      this.showActivateButton = true;
     } else {
       this.location.back();
     }
@@ -90,6 +97,8 @@ export class AuthUserComponent implements OnInit {
     // hiding view of all column and displaying all auth users screen 
     this.viewOne = true;
     this.viewAll = false;
+    this.showAddButton = false;
+    this.showActivateButton = false;
 
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
@@ -101,6 +110,8 @@ export class AuthUserComponent implements OnInit {
     // hiding update screen and displaying all admin roles screen 
     this.viewAll = false;
     this.viewUpdate = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
 
     // assingning data to current data for child component
     this.currentData = objectReceived;
@@ -122,12 +133,16 @@ export class AuthUserComponent implements OnInit {
   onAddClick() {
     this.viewAll = false;
     this.viewAdd = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // for navigating to activate screen
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // on addComponents's submit button clicked

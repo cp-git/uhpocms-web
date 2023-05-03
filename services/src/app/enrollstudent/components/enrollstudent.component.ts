@@ -37,6 +37,8 @@ import { DepartmentService } from 'app/department/services/department.service';
 })
 export class EnrollstudentComponent {
 
+  moduleName = 'Enroll Course To Student'
+
   //variable initialization
   _disablevar: boolean = false;
 
@@ -62,6 +64,11 @@ export class EnrollstudentComponent {
   offset = 0;
   selected = [];
   prevSelected = [];
+
+  // for buttons to view
+  showAddButton: boolean = false;
+  showActivateButton: boolean = false;
+
   userRole: any;
   //constructor
   constructor(
@@ -200,9 +207,13 @@ export class EnrollstudentComponent {
       }
     )
   }
+
+
   //////////////////////////////////////////////////////////////////////////////////////////////////////
   ///disablestudent who already enroll
   ////////////////////////////////////////////////////////////////////////////////////////////
+
+
   getStudentByCourseId(courseId: any) {
     this.enrollstuService.getStudentByCourseId(courseId).subscribe(
       response => {
