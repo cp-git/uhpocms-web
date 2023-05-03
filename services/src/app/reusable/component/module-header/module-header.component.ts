@@ -8,13 +8,17 @@ import { Location } from '@angular/common';
 export class ModuleHeaderComponent {
 
   @Input() moduleName: string = 'Space For Module Name';
-  @Input() buttons: { addButton: boolean, activateButton: boolean } = { addButton: true, activateButton: true }
+  @Input() buttons: { showAddButton: boolean, showActivateButton: boolean } = { showAddButton: true, showActivateButton: true }
+  @Input() titleWithUserRole: boolean = false;
 
   @Output() backButtonClicked = new EventEmitter();
   @Output() addButtonClicked = new EventEmitter();
   @Output() activateButtonClicked = new EventEmitter();
 
-  constructor() { }
+  userRole: any;
+  constructor() {
+    this.userRole = sessionStorage.getItem('userRole');
+  }
 
   back() {
     this.backButtonClicked.emit();

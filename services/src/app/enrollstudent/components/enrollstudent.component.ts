@@ -37,6 +37,8 @@ import { DepartmentService } from 'app/department/services/department.service';
 })
 export class EnrollstudentComponent {
 
+  moduleName = 'Enroll Course To Student'
+
   //variable initialization
   _disablevar: boolean = false;
   _profile = new Profile();
@@ -71,8 +73,11 @@ export class EnrollstudentComponent {
   offset = 0;
 
   selected = [];
-  prevSelected= [];
+  prevSelected = [];
 
+  // for buttons to view
+  showAddButton: boolean = false;
+  showActivateButton: boolean = false;
 
   //constructor
   constructor(
@@ -163,81 +168,81 @@ export class EnrollstudentComponent {
   }
 
 
-   //////////////////////////////////////////////////////////////////////////////////////////////////////
-                           ///disablestudent who already enroll
-////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///disablestudent who already enroll
+  ////////////////////////////////////////////////////////////////////////////////////////////
 
 
-getStudentByCourseId(courseId: any) {
-  this.enrollstuService.getStudentByCourseId(courseId).subscribe(
-    response => {
-      // this.courses = response;
-      console.log(response);
-     response.forEach((data:Enrolltostudent)=>{
-     this.enrolledStudentArr.push(data.profileId);
-      console.log(this.enrolledStudentArr);
-      
-     })
-    },
-    error => {
-      console.log("failed to fetch data");
-    }
-  );
-}
+  getStudentByCourseId(courseId: any) {
+    this.enrollstuService.getStudentByCourseId(courseId).subscribe(
+      response => {
+        // this.courses = response;
+        console.log(response);
+        response.forEach((data: Enrolltostudent) => {
+          this.enrolledStudentArr.push(data.profileId);
+          console.log(this.enrolledStudentArr);
 
-onOptionSelected(item:any){
-  console.log(JSON.stringify(item))
-  console.log(this.selected);
-
-  // this.selected = this.selected.filter(profileId=> this.assignTeacherArr.includes(item.adminId));
-  this.selected.forEach((profileId,index)=>{
-    if(this.enrolledStudentArr.includes(profileId)) this.selected.splice(index,1);
- });
-}
-
-ngDoCheck() {
-
-  if (!this.arraysEqual(this.selected, this.prevSelected)) {
-    // console.log('Items changed:', this.selected);
-    for (let i = this.selected.length - 1; i >= 0; i--) {
-      const profileId = this.selected[i];
-      if (this.enrolledStudentArr.includes(profileId)) {
-        this.selected.splice(i, 1);
+        })
+      },
+      error => {
+        console.log("failed to fetch data");
       }
+    );
+  }
+
+  onOptionSelected(item: any) {
+    console.log(JSON.stringify(item))
+    console.log(this.selected);
+
+    // this.selected = this.selected.filter(profileId=> this.assignTeacherArr.includes(item.adminId));
+    this.selected.forEach((profileId, index) => {
+      if (this.enrolledStudentArr.includes(profileId)) this.selected.splice(index, 1);
+    });
+  }
+
+  ngDoCheck() {
+
+    if (!this.arraysEqual(this.selected, this.prevSelected)) {
+      // console.log('Items changed:', this.selected);
+      for (let i = this.selected.length - 1; i >= 0; i--) {
+        const profileId = this.selected[i];
+        if (this.enrolledStudentArr.includes(profileId)) {
+          this.selected.splice(i, 1);
+        }
+      }
+      ;
+      //  console.log('new items changed:', this.selected);
+      this.prevSelected = [...this.selected];
     }
-    ;
-  //  console.log('new items changed:', this.selected);
-    this.prevSelected = [...this.selected];
+
+    // if (this.selected.length !== this.prevSelected.length) {
+    //   console.log('Selected items changed:', this.selected);
+    //   this.selected.forEach((profileId,index)=>{
+    //     if(this.assignTeacherArr.includes(profileId)) this.selected.splice(index,1);
+    //  });
+    //  console.log('new items changed:', this.selected);
+
+    //   this.prevSelected = [...this.selected];
+    // }
   }
 
-  // if (this.selected.length !== this.prevSelected.length) {
-  //   console.log('Selected items changed:', this.selected);
-  //   this.selected.forEach((profileId,index)=>{
-  //     if(this.assignTeacherArr.includes(profileId)) this.selected.splice(index,1);
-  //  });
-  //  console.log('new items changed:', this.selected);
+  onCourseSelect(courseId: any) {
+    // console.log(courseId);
 
-  //   this.prevSelected = [...this.selected];
-  // }
-}
+    this.getStudentByCourseId(courseId);
 
-onCourseSelect(courseId:any){
-  // console.log(courseId);
-  
-  this.getStudentByCourseId(courseId);
-
-}
-
-private arraysEqual(a: any[], b: any[]): boolean {
-  if (a === b) return true;
-  if (a == null || b == null) return false;
-  if (a.length !== b.length) return false;
-
-  for (let i = 0; i < a.length; ++i) {
-    if (a[i] !== b[i]) return false;
   }
-  return true;
-}
+
+  private arraysEqual(a: any[], b: any[]): boolean {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length !== b.length) return false;
+
+    for (let i = 0; i < a.length; ++i) {
+      if (a[i] !== b[i]) return false;
+    }
+    return true;
+  }
 
   //Function for assign course to student
   saveEnrolledStudent(courseId: number, profileId: number) {

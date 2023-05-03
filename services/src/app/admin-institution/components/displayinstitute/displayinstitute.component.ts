@@ -11,7 +11,7 @@ import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
   styleUrls: ['./displayinstitute.component.css']
 })
 export class DisplayinstituteComponent {
-
+  moduleName = 'Institute Administration';
   // Institution array
   admininstitutions: AdminInstitution[] = [];
   backupInst: AdminInstitution[] = [];
@@ -22,6 +22,10 @@ export class DisplayinstituteComponent {
   admininstitution: AdminInstitution;
   userName!: string;
   adminId: any;
+
+  // for buttons to view
+  showAddButton: boolean = true;
+  showActivateButton: boolean = true;
 
   //constructor
   constructor(private _institutionService: AdmininstitutionService, private _route: Router, private location: Location, private _activatedRoute: ActivatedRoute) {
@@ -105,7 +109,7 @@ export class DisplayinstituteComponent {
     );
   }
 
-  Back() {
+  back() {
     //this.location.back();
     this._route.navigate(['adminmodule/admin', this.userName]);
   }

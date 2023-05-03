@@ -27,6 +27,11 @@ export class ProfileComponent implements OnInit {
   viewAll: boolean = true;
   viewOne: boolean = false;
   viewActivate: boolean = false;
+
+  // for buttons to view
+  showAddButton: boolean = true;
+  showActivateButton: boolean = true;
+
   // If all data is available or not
   dataAvailable: boolean = false;
 
@@ -90,6 +95,9 @@ export class ProfileComponent implements OnInit {
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
+
+      this.showAddButton = true;
+      this.showActivateButton = true;
     } else {
       this.location.back();
     }
@@ -102,6 +110,9 @@ export class ProfileComponent implements OnInit {
 
     this.viewAll = false;
     this.viewAdd = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
+
     // changing column array
     this.changePassingArray();
   }
@@ -110,6 +121,8 @@ export class ProfileComponent implements OnInit {
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // For navigate to view screen with data
@@ -125,6 +138,8 @@ export class ProfileComponent implements OnInit {
     // hiding view of all column and displaying all Profile's screen
     this.viewOne = true;
     this.viewAll = false;
+    this.showAddButton = false;
+    this.showActivateButton = false;
 
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
@@ -140,7 +155,8 @@ export class ProfileComponent implements OnInit {
     // hiding update screen and displaying all Profile's screen
     this.viewAll = false;
     this.viewUpdate = true;
-
+    this.showAddButton = false;
+    this.showActivateButton = false;
     // assingning data to current data for child component
     this.currentData = objectReceived;
   }

@@ -19,8 +19,6 @@ import { UploadFileService } from 'app/FileUpload/services/upload-file.service';
 })
 export class ModuleFileComponent {
 
-
-
   // title heading
   moduleName: string = "Module Content";
 
@@ -31,16 +29,21 @@ export class ModuleFileComponent {
   modulesFile: ModuleFile[] = [];
   moduleFile = new ModuleFile();
 
-
   inActivationScreenStatus: boolean = false;
   activationScreenStatus: boolean = false;
   isVisible: boolean = true;
+
   //screen view
   viewUpdate: boolean = false;
   viewAdd: boolean = false;
   viewOne: boolean = false;
   viewAll: boolean = true;
   viewActivate: boolean = false;
+
+  // for buttons to view
+  showAddButton: boolean = true;
+  showActivateButton: boolean = true;
+  titleWithUserRole: boolean = true;
 
   columnNames: any;
   allColumnNames: any;
@@ -125,6 +128,9 @@ export class ModuleFileComponent {
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
+
+      this.showAddButton = true;
+      this.showActivateButton = true;
     } else {
       this.location.back();
     }
@@ -140,6 +146,8 @@ export class ModuleFileComponent {
     // hiding view of all column and displaying all module file screen 
     this.viewOne = true;
     this.viewAll = false;
+    this.showAddButton = false;
+    this.showActivateButton = false;
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
 
@@ -150,7 +158,8 @@ export class ModuleFileComponent {
     // hiding update screen and displaying all module files screen 
     this.viewAll = false;
     this.viewUpdate = true;
-
+    this.showAddButton = false;
+    this.showActivateButton = false;
     // assingning data to current data for child component
     this.currentData = objectReceived;
   }
@@ -171,12 +180,16 @@ export class ModuleFileComponent {
   onAddClick() {
     this.viewAll = false;
     this.viewAdd = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // for navigating to activate screen
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // on addComponents's submit button clicked

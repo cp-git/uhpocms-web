@@ -1,6 +1,10 @@
 <div class="container">
-    <h1 class="text-left">Enroll Course To Student</h1>
-    <button class="btn btn-primary top-right rounded-button" (click)="back()">Back</button>
+    <!-- <h1 class="text-left">Enroll Course To Student</h1>
+    <button class="btn btn-primary top-right rounded-button" (click)="back()">Back</button> -->
+
+    <app-module-header [moduleName]="moduleName"
+        [buttons]="{showAddButton:showAddButton,showActivateButton:showActivateButton}"
+        (backButtonClicked)="back()"></app-module-header>
     <div class="container">
         <div class="form-group row">
             <div class="col-sm-4">
@@ -32,7 +36,8 @@
             <div class="col-sm-4">
                 <label class="badg">Course</label>
                 <div class="form-group">
-                    <select name="courseid" [(ngModel)]="course.courseId" class="form-control" (click)="onCourseSelect(course.courseId)">
+                    <select name="courseid" [(ngModel)]="course.courseId" class="form-control"
+                        (click)="onCourseSelect(course.courseId)">
                         <option value="undefined" selected>Select</option>
                         <option *ngFor="let course of courses" value="{{course.courseId}}">
                             {{course.courseName}}
@@ -61,16 +66,18 @@
                                 <!-- code to disable display of selected students in input field -->
                                 <ng-template ng-multi-label-tmp>
                                     <span style="display:block" class="ng-value" *ngFor="let teacher of selected">
-                                       <ng-container *ngFor="let profile of _profileArray">
+                                        <ng-container *ngFor="let profile of _profileArray">
                                             <ng-container *ngIf="profile.adminId==teacher">
                                                 {{profile.firstName}}
                                             </ng-container>
-                                       </ng-container>
+                                        </ng-container>
                                     </span>
                                 </ng-template>
                                 <!-- code to display checkbox  -->
                                 <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                    <input id="item-{{index}}" type="checkbox" [checked]="item$.selected || enrolledStudentArr.includes(item.adminId)" [disabled]="enrolledStudentArr.includes(item.adminId)" />
+                                    <input id="item-{{index}}" type="checkbox"
+                                        [checked]="item$.selected || enrolledStudentArr.includes(item.adminId)"
+                                        [disabled]="enrolledStudentArr.includes(item.adminId)" />
                                     {{item.fullName}}
                                 </ng-template>
                             </ng-select>

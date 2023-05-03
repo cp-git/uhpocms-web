@@ -24,6 +24,10 @@ export class EmailComponent implements OnInit {
   viewOne: boolean = false;
   viewActivate: boolean = false;
 
+  // for buttons to view
+  showAddButton: boolean = true;
+  showActivateButton: boolean = false;
+
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
 
@@ -66,6 +70,9 @@ export class EmailComponent implements OnInit {
       this.viewAdd = false;
       this.viewUpdate = false;
       // this.viewActivate = false;
+
+      this.showAddButton = true;
+      this.showActivateButton = false;
     } else {
       this.location.back();
     }
@@ -75,12 +82,18 @@ export class EmailComponent implements OnInit {
   onAddClick() {
     this.viewAll = false;
     this.viewAdd = true;
+
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // for navigating to activate screen
   onActivateClick() {
     this.viewAll = true;
     // this.viewActivate = true;
+
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // For navigate to view screen with data
@@ -90,7 +103,8 @@ export class EmailComponent implements OnInit {
     // hiding view of all column and displaying all Email's screen
     this.viewOne = true;
     this.viewAll = false;
-
+    this.showAddButton = false;
+    this.showActivateButton = false;
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
 
@@ -101,7 +115,8 @@ export class EmailComponent implements OnInit {
     // hiding update screen and displaying all Email's screen
     this.viewAll = false;
     this.viewUpdate = true;
-
+    this.showAddButton = false;
+    this.showActivateButton = false;
     // assingning data to current data for child component
     this.currentData = objectReceived;
   }

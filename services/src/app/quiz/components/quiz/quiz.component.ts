@@ -25,6 +25,10 @@ export class QuizComponent implements OnInit {
   viewOne: boolean = false;
   viewActivate: boolean = false;
 
+  // for buttons to view
+  showAddButton: boolean = true;
+  showActivateButton: boolean = true;
+
   //Display Column Names
 
   columnNames: any; // header for minimum visible column data
@@ -51,6 +55,7 @@ export class QuizComponent implements OnInit {
   modules: Module[] = [];
   categories: Category[] = [];
   userRole: any;
+  titleWithUserRole: boolean = true;
   constructor(
     private quizService: QuizService,
     private location: Location,
@@ -98,6 +103,8 @@ export class QuizComponent implements OnInit {
     // hiding view of all column and displaying all Quizs screen 
     this.viewOne = true;
     this.viewAll = false;
+    this.showAddButton = false;
+    this.showActivateButton = false;
 
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
@@ -109,6 +116,8 @@ export class QuizComponent implements OnInit {
     // hiding update screen and displaying all Quizs screen 
     this.viewAll = false;
     this.viewUpdate = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
 
     // assingning data to current data for child component
     this.currentData = objectReceived;
@@ -129,6 +138,8 @@ export class QuizComponent implements OnInit {
   onAddClick() {
     this.viewAll = false;
     this.viewAdd = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // For navigate to activate screen with data
@@ -136,6 +147,8 @@ export class QuizComponent implements OnInit {
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // on updateComponents's submit button clicked
@@ -151,6 +164,9 @@ export class QuizComponent implements OnInit {
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
+
+      this.showAddButton = true;
+      this.showActivateButton = true;
     } else {
       this.location.back();
     }
