@@ -72,6 +72,11 @@ export class TeacherCourseService {
   getCourseByInstitutionId(id: string): Observable<any> {
     return this.http.get<any>(this.courseUrl + '/institutionId/' + id);
   }
+  //fetching the course by dept id and profile id
+  getCourseByDepartmentIdAndProfileId(department_id: number, profileId: number): Observable<any> {
+    return this.http.get<any>(this.courseUrl + '/department/' + department_id + '/profile/' + profileId);
+  }
+
 
   assignCourseToDepartment(coursedepartment: CourseDepartment): Observable<any> {
     return this.http.post<any>(`${this.courseDepartmentUrl}/department`, coursedepartment);

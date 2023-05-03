@@ -1,4 +1,5 @@
 export class Profile {
+
     fullName: string | undefined;
     adminId!: number;
     activeUser!: boolean;
