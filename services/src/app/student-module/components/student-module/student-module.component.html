@@ -3,6 +3,8 @@
         <div class="col-xs-12 col-sm-6 col-md-3">
             <div class="header text-center">
                 <h1>{{ selectedCourseName | titlecase }}</h1>
+
+
             </div>
             <div class="form-group">
                 <label for="course">Course Name</label><br />
@@ -69,7 +71,9 @@
                     {{selectedModule.moduleName |titlecase}} - {{(selectedFile.moduleFile)}}
                 </h3> -->
                 <video class="videoscreen" controls #videoPlayer>
-                    <source [src]="videoSrc" type="video/mp4" />
+                    <source
+                        src="http://127.0.0.1:8080/institute/{{instituteName}}/{{departmentName}}/{{courseName}}/{{moduleName}}/{{this.selectedFile.moduleFile}}"
+                        type="video/mp4" />
                 </video>
 
 

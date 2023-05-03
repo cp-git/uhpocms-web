@@ -8,6 +8,11 @@ import { Location } from '@angular/common';
 import { Module } from 'app/module/class/module';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { ModuleFileService } from 'app/module-file/services/module-file.service';
+import { AdmininstitutionService } from 'app/admin-institution/service/admininstitution.service';
+import { AdminInstitution } from 'app/class/admin-institution';
+import { DepartmentService } from 'app/department/services/department.service';
+import { Department } from 'app/department/class/department';
+import { CourseDepartment } from 'app/teacher-course/class/course-department';
 
 @Component({
   selector: 'app-student-module',
@@ -20,8 +25,15 @@ export class StudentModuleComponent {
   studentId: any;
   userName: any;
 
+  moduleFileId: any;
+
   courseId: any;
   moduleId: any;
+
+  instituteName: any;
+  moduleName: any;
+  courseName: any;
+  departmentName: any;
   courses: Course[] = []; //array of Course objects that stores the courses of the student
   modules: Module[] = []; //array of Module objects that stores the modules of the courses
   studentModuleFiles: ModuleFile[] = []; //array of ModuleFile objects that stores the module files assigned to the student
@@ -33,10 +45,33 @@ export class StudentModuleComponent {
   selectedFile: any;
   selectedModule: any; //stores the selected module by the student.
   Date: any;
+
+
+  moduleFileName: any;
+
+
+  modulesArray: Module[] = []; //array of Module objects that stores the modules of the courses
+
+  courseArray: Course[] = []; //array of Module objects that stores the modules of the courses
+
+  instituteArray: AdminInstitution[] = []; //array of Module objects that stores the modules of the courses
+
+  departmentArray: Department[] = []; //array of Module objects that stores the modules of the courses
+
+  coursedepartmentArray: CourseDepartment[] = []; //array of Module objects that stores the modules of the courses
+
+  moduleArray: Module[] = [];
+
+
+  moduledata: Module[] = [];
+
   constructor(private activateRoute: ActivatedRoute,
     private courseService: TeacherCourseService,
     private moduleService: ModuleService,
     private modulefileService: ModuleFileService,
+    private instituteadminService: AdmininstitutionService,
+    private departmentService: DepartmentService,
+    private moduleFileService: ModuleFileService,
     private _location: Location,
     private elRef: ElementRef) {
 
@@ -49,6 +84,15 @@ export class StudentModuleComponent {
     this.loadCourseOfStudent(this.studentId);
 
     this.selectedCourse = '1'
+
+    //this.getModuleFiles(this.studentId);
+
+
+
+
+
+
+
   }
   // ngOnChanges(changes: SimpleChanges): void {
   //   if (changes['selectedFile']) {
@@ -81,15 +125,12 @@ export class StudentModuleComponent {
     return this.videoPlayerRef.nativeElement;
   }
 
-  get videoSrc() {
-    return `../../../../assets/video/${this.selectedFile.moduleFile}`;
-  }
 
 
 
   onSelectedFileChanged() {
     // Update the src attribute of the video player
-    this.videoPlayer.src = this.videoSrc;
+    // this.videoPlayer.src = this.videoSrc;
     this.videoPlayer.load(); // Reload the video
     // this.videoPlayer.play(); // Start playing the new video
 
@@ -123,9 +164,16 @@ export class StudentModuleComponent {
     this.modulefileService.getModuleFilesByStudentId(studentId).subscribe(
       response => {
         this.studentModuleFiles = response;
+
         this.studentModuleFiles.forEach(file => {
+
           if (file.moduleId == this.selectedModule.moduleId) {
+
             this.selectedFile = file;
+
+
+
+
           }
 
         })
@@ -138,12 +186,163 @@ export class StudentModuleComponent {
 
   }
 
+
+  getModuleFiles(studentId: number) {
+    this.moduleFileService.getModuleFilesByStudentId(studentId).subscribe(
+      response => {
+        console.log(response);
+      }
+    )
+  }
+
+
+
   //sets the selected course by the student and resets the selected module
   onCourseSelect(courseId: any) {
     this.changeSelectedCourseName(courseId);
-
     this.selectedCourse = courseId;
     this.selectedModule = undefined;
+
+
+    //names of attributes
+    let departmentname: any;
+
+
+
+
+    let departId: any;
+
+
+
+
+
+
+    let modulecourseId: any;
+    let institutioncourseId: any;
+    let deptinstituteId: any;
+    this.moduleService.getAllModules().subscribe(
+      response => {
+        //console.log(response);
+        this.modulesArray = response;
+        //  console.log(this.modulesArray);
+
+        for (let i = 0; i < this.modulesArray.length; i++) {
+          // console.log(this.modulesArray[i]);
+
+          if (courseId == this.modulesArray[i].courseId_id) {
+            modulecourseId = this.modulesArray[i].courseId_id;
+
+            let modulesId = this.modulesArray[i].moduleId;
+            console.log("Modules Id" + modulesId)
+            console.log("module course : " + this.modulesArray[i].moduleName);
+
+            // console.log("module course id" + this.modulesArray[i].courseId_id);
+
+            // console.log("course table" + courseId);
+
+            this.courseService.getAllCourses().subscribe(
+              response => {
+
+                this.courseArray = response;
+                for (let k = 0; k < this.courseArray.length; k++) {
+                  // console.log(this.courseArray[i])
+
+                  if (modulecourseId == this.courseArray[k].courseId) {
+                    institutioncourseId = this.courseArray[k].instId;
+                    // console.log("course name :" + this.courseArray[k].courseName)
+
+                    this.courseName = this.courseArray[k].courseName;
+                    console.log("Course Name :" + this.courseName)
+
+                    this.instituteadminService.fetchAdminInstitutionList().subscribe(
+                      response => {
+                        this.instituteArray = response;
+
+                        for (let h = 0; h < this.instituteArray.length; h++) {
+                          //console.log(this.instituteArray[i]);
+
+                          if (institutioncourseId == this.instituteArray[h].adminInstitutionId) {
+                            deptinstituteId = this.instituteArray[h].adminInstitutionId;
+                            //console.log("institute name : " + this.instituteArray[h].adminInstitutionName);
+                            this.instituteName = this.instituteArray[h].adminInstitutionName;
+                            console.log(this.instituteName);
+
+                            this.courseService.getCoursesDepartmentId().subscribe(
+                              response => {
+                                this.coursedepartmentArray = response;
+
+                                for (let z = 0; z < this.coursedepartmentArray.length; z++) {
+                                  //  console.log(this.coursedepartmentArray[z]);
+
+                                  if (courseId == this.coursedepartmentArray[z].courseId) {
+                                    // console.log(courseId);
+                                    // console.log(this.coursedepartmentArray[z].department_id);
+                                    departId = this.coursedepartmentArray[z].department_id;
+
+
+                                    this.departmentService.getAllDepartments().subscribe(
+                                      response => {
+                                        this.departmentArray = response;
+                                        // console.log(response)
+
+                                        for (let c = 0; c < this.departmentArray.length; c++) {
+
+                                          //console.log(this.departmentArray[c]);
+
+                                          if (departId == this.departmentArray[c].id) {
+                                            // console.log(this.departmentArray[c].name);
+                                            this.departmentName = this.departmentArray[c].name;
+                                            console.log(this.departmentName);
+
+
+
+
+
+
+
+
+
+
+                                          }
+                                        }
+                                      })
+
+
+
+                                  }
+
+                                }
+
+                              })
+
+
+
+                          }
+                        }
+                        // console.log(response)
+
+                      })
+
+
+                  }
+                }
+                // console.log(response);
+                //console.log("in course" + modulecourseId);
+              }
+            )
+
+
+
+
+
+
+          }
+        }
+
+      })
+
+
+
 
   }
   // onModuleSelect(event: any) {
@@ -163,6 +362,7 @@ export class StudentModuleComponent {
 
   changeselectedModuleName(moduleId: any) {
     this.selectedModule = moduleId;
+    //console.log(moduleId);
   }
 
   changeSelectedCourseName(courseId: number) {
@@ -173,11 +373,40 @@ export class StudentModuleComponent {
     })
   }
 
+
+
   changeSelectedFileAndModule(file: any, module: any) {
+    let modulefileId: any;
     this.selectedFile = [];
     this.selectedFile = file;
     this.selectedModule = module;
     this.onSelectedFileChanged();
+
+
+    this.moduleName = module.moduleName;
+    console.log(this.moduleName)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   }
 
 }
