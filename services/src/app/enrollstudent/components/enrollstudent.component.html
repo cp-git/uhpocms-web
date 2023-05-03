@@ -11,7 +11,7 @@
                 <label class="badg">Institution</label>
                 <div class="form-group">
                     <select [(ngModel)]="_profile.institutionId" class="form-control"
-                        (click)=" getDepartmentByInstId(_profile.institutionId); getProfileByRoleAndInstId(_profile.institutionId)"
+                        (click)="  getDepartmentsByInstId(_profile.institutionId); getProfileByRoleAndInstId(_profile.institutionId)"
                         (change)="disablefunc()">
                         <option value="undefined" selected>Select</option>
                         <option *ngFor="let institute of institutions" value="{{institute.adminInstitutionId}}"

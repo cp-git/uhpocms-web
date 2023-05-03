@@ -81,7 +81,10 @@ export class DepartmentService {
     return this._http.delete<any>(this.departmentUrl + '/department' + '/deptId/' + departmentId);
   }
 
-
+  //service to get dept by provided profile id
+  getDepartmentsByProfileId(id: number): Observable<Department[]> {
+    return this._http.get<Department[]>(`${this.departmentUrl}/department/profile/` + id);
+  }
 
 
 }
