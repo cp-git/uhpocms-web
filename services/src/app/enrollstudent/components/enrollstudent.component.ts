@@ -342,7 +342,7 @@ export class EnrollstudentComponent {
       this.enrollstuService.saveEnrolledStudents(this.enrolledStudent).subscribe(
         (response) => {
           if (i == 0) {
-            alert("Student Enrolled Successfully");
+            console.log("Student Enrolled Successfully");
             location.reload();
           }
         }

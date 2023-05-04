@@ -74,7 +74,7 @@ export class QuizComponent implements OnInit {
 
     // creating empty object
     this.emptyQuiz = new Quiz();
-    this.loadAllCourses();
+    //this.loadAllCourses();
 
     //calling services for foreign key data (dropdown)
     this.loadAllCategories();
