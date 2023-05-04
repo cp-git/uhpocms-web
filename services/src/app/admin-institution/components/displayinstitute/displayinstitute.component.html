@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="container">
-        <div class="row justify-content-between header">
+        <!-- <div class="row justify-content-between header">
 
             <div class="col-sm-6">
                 <h1>Institute Administration</h1>
@@ -10,7 +10,12 @@
                 <button class="btn btn-primary" (click)="redirectToActivateInstitution()">Inactive</button>
                 <button class="btn btn-primary" (click)="Back()">Back</button>
             </div>
-        </div>
+        </div> -->
+
+        <app-module-header [moduleName]="moduleName"
+            [buttons]="{showAddButton:showAddButton,showActivateButton:showActivateButton}"
+            (addButtonClicked)="addInstitute()" (activateButtonClicked)="redirectToActivateInstitution()"
+            (backButtonClicked)="back()"></app-module-header>
 
         <div class="container">
             <div class="row">

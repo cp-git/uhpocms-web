@@ -23,6 +23,11 @@ export class AdminRoleComponent implements OnInit {
   viewAll: boolean = true;
   viewOne: boolean = false;
   viewActivate: boolean = false;
+
+  // for buttons to view
+  showAddButton: boolean = true;
+  showActivateButton: boolean = true;
+
   // If all data is available or not
   dataAvailable: boolean = false;
 
@@ -41,8 +46,6 @@ export class AdminRoleComponent implements OnInit {
 
   emptyAdminRole: AdminRole;  // empty admin role
   currentData!: AdminRole;  // for update and view, to show existing data
-
-
 
   constructor(private service: AdminRoleService, private location: Location) {
 
@@ -70,6 +73,10 @@ export class AdminRoleComponent implements OnInit {
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
+
+      this.showAddButton = true;
+      this.showActivateButton = true;
+
     } else {
       this.location.back();
     }
@@ -83,6 +90,8 @@ export class AdminRoleComponent implements OnInit {
     // hiding view of all column and displaying all admin roles screen 
     this.viewOne = true;
     this.viewAll = false;
+    this.showAddButton = false;
+    this.showActivateButton = false;
 
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
@@ -94,6 +103,8 @@ export class AdminRoleComponent implements OnInit {
     // hiding update screen and displaying all admin roles screen 
     this.viewAll = false;
     this.viewUpdate = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
 
     // assingning data to current data for child component
     this.currentData = objectReceived;
@@ -115,12 +126,16 @@ export class AdminRoleComponent implements OnInit {
   onAddClick() {
     this.viewAll = false;
     this.viewAdd = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // for navigating to activate screen
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // on addComponents's submit button clicked

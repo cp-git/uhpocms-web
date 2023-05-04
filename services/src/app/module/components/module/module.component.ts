@@ -22,6 +22,10 @@ export class ModuleComponent {
   viewAll: boolean = true;
   viewActivate: boolean = false;
 
+  // for buttons to view
+  showAddButton: boolean = true;
+  showActivateButton: boolean = true;
+
   dataAvailable: boolean = false;
 
   columnNames: any;
@@ -31,20 +35,18 @@ export class ModuleComponent {
 
   allData: Module[] = [];
   allInActiveData: Module[] = [];
+  courses: Course[] = [];
 
   sessionData: any;
   data: any;
 
   userRole: any;
-
+  titleWithUserRole: boolean = true;
   courseId: any;
   profileId: any;
 
   emptyModule: Module;  // empty admin role
   currentData!: Module;  // for update and view, to show existing data
-
-
-
 
   constructor(private service: ModuleService, private location: Location, private courseService: TeacherCourseService) {
 
@@ -66,13 +68,8 @@ export class ModuleComponent {
 
   ngOnInit(): void {
     //  this.service.get
-
-
     this.getInactiveModule();
     this.getAssignedCoursesOfTeacher(this.profileId);
-
-
-
 
   }
 
@@ -84,13 +81,14 @@ export class ModuleComponent {
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
+
+      this.showAddButton = true;
+      this.showActivateButton = true;
     } else {
       this.location.back();
     }
 
   }
-
-  courses: Course[] = [];
 
   // For navigate to view screen with data
   // function will call when child view button is clicked 
@@ -99,6 +97,8 @@ export class ModuleComponent {
     // hiding view of all column and displaying all admin roles screen 
     this.viewOne = true;
     this.viewAll = false;
+    this.showAddButton = false;
+    this.showActivateButton = false;
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
 
@@ -109,7 +109,8 @@ export class ModuleComponent {
     // hiding update screen and displaying all admin roles screen 
     this.viewAll = false;
     this.viewUpdate = true;
-
+    this.showAddButton = false;
+    this.showActivateButton = false;
     // assingning data to current data for child component
     this.currentData = objectReceived;
   }
@@ -132,12 +133,16 @@ export class ModuleComponent {
   onAddClick() {
     this.viewAll = false;
     this.viewAdd = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // for navigating to activate screen
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // on addComponents's submit button clicked

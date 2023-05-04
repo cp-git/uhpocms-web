@@ -1,0 +1,38 @@
+<div class="row justify-content-between header">
+    <div class="col-sm-6">
+        <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container>
+    </div>
+    <div class="col-sm-6 text-right buttons">
+        <ng-container *ngIf="buttons.showAddButton">
+            <ng-container *ngTemplateOutlet="addButton;"></ng-container>
+        </ng-container>
+        <ng-container *ngIf="buttons.showActivateButton">
+            <ng-container *ngTemplateOutlet="activateButton;"></ng-container>
+        </ng-container>
+        <ng-container *ngTemplateOutlet="backButton;"></ng-container>
+
+    </div>
+</div>
+
+<ng-template #title let-headerTitle>
+    <ng-container *ngIf="titleWithUserRole; else titleWithoutUserRole">
+        <h1>{{userRole |titlecase}}'s {{headerTitle}}</h1>
+    </ng-container>
+
+    <ng-template #titleWithoutUserRole>
+        <h1>{{headerTitle}}</h1>
+    </ng-template>
+
+</ng-template>
+
+<ng-template #addButton>
+    <button class="btn btn-primary" (click)="onAddClick()">Add</button>
+</ng-template>
+
+<ng-template #backButton>
+    <button class="btn btn-primary" (click)="back()">Back</button>
+</ng-template>
+
+<ng-template #activateButton>
+    <button class="btn btn-primary" (click)="onActivateClick()">Inactive</button>
+</ng-template>

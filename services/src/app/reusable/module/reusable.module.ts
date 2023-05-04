@@ -5,13 +5,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ViewOneComponent } from '../component/view-one/view-one.component';
 import { AddUpdateComponent } from '../component/add-update/add-update.component';
+import { ModuleHeaderComponent } from '../component/module-header/module-header.component';
 
 
 @NgModule({
   declarations: [
     ViewAllComponent,
     AddUpdateComponent,
-    ViewOneComponent
+    ViewOneComponent,
+    ModuleHeaderComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,8 @@ import { AddUpdateComponent } from '../component/add-update/add-update.component
   exports: [
     ViewAllComponent,
     AddUpdateComponent,
-    ViewOneComponent
+    ViewOneComponent,
+    ModuleHeaderComponent
   ],
   providers: [Location]
 })

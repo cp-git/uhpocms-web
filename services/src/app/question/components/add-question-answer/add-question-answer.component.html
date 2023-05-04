@@ -1,28 +1,36 @@
 <div class="container">
     <div>
         <ng-container *ngIf="viewAll">
-            <div class="row justify-content-between header">
+            <!-- <div class="row justify-content-between header">
                 <div class="col-sm-6">
                     <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container>
                 </div>
                 <div class="col-sm-6 text-right buttons">
-                    <!-- <ng-container *ngTemplateOutlet="addButton;"></ng-container>
-                <ng-container *ngTemplateOutlet="activateButton;"></ng-container> -->
+                    <ng-container *ngTemplateOutlet="addButton;"></ng-container>
+                <ng-container *ngTemplateOutlet="activateButton;"></ng-container>
                     <ng-container *ngTemplateOutlet="backButton;"></ng-container>
 
                 </div>
-            </div>
+            </div> -->
+            <app-module-header [titleWithUserRole]="titleWithUserRole" [moduleName]="moduleName"
+                [buttons]="{showAddButton:showAddButton,showActivateButton:showActivateButton}"
+                (addButtonClicked)="onAddClick()" (activateButtonClicked)="onActivateClick()"
+                (backButtonClicked)="back()"></app-module-header>
         </ng-container>
 
         <ng-container *ngIf="viewAdd || viewOne || viewUpdate || viewActivate || viewQuePaper">
-            <div class="row justify-content-between header">
+            <!-- <div class="row justify-content-between header">
                 <div class="col-sm-6">
                     <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container>
                 </div>
                 <div class="col-sm-6 text-right buttons">
                     <ng-container *ngTemplateOutlet="backButton;"></ng-container>
                 </div>
-            </div>
+            </div> -->
+
+            <app-module-header [titleWithUserRole]="titleWithUserRole" [moduleName]="moduleName"
+                [buttons]="{showAddButton:showAddButton,showActivateButton:showActivateButton}"
+                (backButtonClicked)="back()"></app-module-header>
         </ng-container>
         <ng-container *ngIf="viewAll">
             <ng-container *ngTemplateOutlet="dropdowns"></ng-container>
@@ -52,7 +60,7 @@
 
     </div>
 </div>
-
+<!-- 
 <ng-template #title let-headerTitle>
     <h1>{{userRole |titlecase}}'s {{headerTitle}}</h1>
 </ng-template>
@@ -65,11 +73,11 @@
 </ng-template>
 <ng-template #backButton>
     <button class="btn btn-primary" (click)="back()">Back</button>
-</ng-template>
+</ng-template> 
 
 <ng-template #activateButton>
     <button class="btn btn-primary" (click)="onActivateClick()">Inactive</button>
-</ng-template>
+</ng-template>-->
 
 <!-- <ng-template #viewactivate>
     activate screen
