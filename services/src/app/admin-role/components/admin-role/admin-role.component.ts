@@ -15,7 +15,7 @@ import { AdminRoleAllColumn, AdminRoleColumn } from 'app/admin-role/column-names
 export class AdminRoleComponent implements OnInit {
 
   // title heading
-  moduleName: string = "AdminRole Administration";
+  moduleName: string = "Role Administration";
 
   // for scren view
   viewUpdate: boolean = false;
