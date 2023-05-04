@@ -32,11 +32,14 @@ export class CreateAnnouncementComponent {
   public filterRoles: Profile[] = [];
 
   public announcement: Announcement;     // announcement for sending
-  public profileIDs: number[] = [];    // for capturing ids of profiles
+  public profileIDs: number[] = [];    // for capturing ids of profiles to whom we are sending
   public searchValue: any;     // for filter list of profiles in tropdown
   public filteredList: any = [];
   public selectedRole: any;    // array of student, admin, coadmin, teachers ids
   public users = new Map();
+  userId: any;
+  profileId: any;
+  userRole: any;
   public currentAnnouncementProfileIds: AnnouncementTo[] = [];
 
   public isCreateScreen: boolean = true;
@@ -44,11 +47,18 @@ export class CreateAnnouncementComponent {
     this.announcement = new Announcement();
     this.announcementId = 0;
     this.selectedRole = "All";
+    // const teacherId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.userId = sessionStorage.getItem('userId');
+    this.profileId = sessionStorage.getItem('profileId');
+    this.userRole = sessionStorage.getItem('userRole');
   }
 
   ngOnInit(): void {
+
+
     // getting institution profile data from session 
     this.announcementId = this.activatedRoute.snapshot.params['id'];
+
     if (this.announcementId > 0) {
       this.announcement = this.announcementService.selectedAnnouncement;
       this.announcementService.fetchProfileIdsByAnnouncementId(this.announcementId).subscribe(
@@ -68,18 +78,41 @@ export class CreateAnnouncementComponent {
     } else {
       this.isCreateScreen = true;
     }
+    console.log(this.profileIDs);
 
-    // loading all user profiles
-    this.loadInstitutionProfile();
 
-    // for separting orignal and filter list
-    this.filteredList = this.instituteAdmins;
-    this.filterRoles = this.instituteAdmins;
+    switch (this.userRole) {
+      case 'admin':
+        // loading all user profiles
+        this.loadInstitutionProfile();
+        break;
+
+      case 'teacher':
+        // loading all user profiles
+        this.studentsAssignedToTeacherCourse(this.profileId);
+        break;
+    }
+
+
+
 
     // sorting profiles as per role
-    this.sortProfiles();
-  }
 
+
+  }
+  //function to get all announcements
+  private studentsAssignedToTeacherCourse(profileId: number) {
+    this.announcementService.getStudentsAssignedToTeacher(profileId).subscribe(
+      response => {
+        this.instituteAdmins = response;
+        console.log(this.instituteAdmins);
+        this.sortProfiles();
+      },
+      error => {
+        // console.log("Not able to fetch record");
+      }
+    );
+  }
   ngAfterViewInit() {
     // subscribe to NavigationEnd event
     // console.log();
@@ -100,12 +133,18 @@ export class CreateAnnouncementComponent {
     for (var profile in this.data) {
       this.instituteAdmins.push(this.data[profile]);
     }
+    this.sortProfiles();
+
   }
+
+
 
   // for select value in dropdown of profile email
   onChange(id: number, event: any) {
     if (event.target.checked) {
       this.profileIDs.push(id);
+
+
     } else {
       this.profileIDs = this.profileIDs.filter(item => item !== id);
     }
@@ -114,6 +153,8 @@ export class CreateAnnouncementComponent {
   // sending announcements to users
   sendAnnouncements(announcement: Announcement) {
     // this.insertAnnouncement(announcement);
+    this.announcement.announcementSendby = this.profileId;
+    //alert(this.profileId);
     if (this.validate(announcement) && this.profileIDs.length > 0) {
       this.insertAnnouncement(announcement);
     } else {
@@ -190,7 +231,14 @@ export class CreateAnnouncementComponent {
   }
 
   private sortProfiles() {
-
+    // for separting orignal and filter list
+    this.filteredList = this.instituteAdmins;
+    this.filterRoles = this.instituteAdmins;
+    this.admins = [];
+    this.coadmins = [];
+    this.students = []; 
+    this.teachers = [];
+    this.otherRoles = [];
     this.instituteAdmins.forEach(profile => {
       // console.log(profile.userRole)
       switch (profile.userRole) {
@@ -212,6 +260,8 @@ export class CreateAnnouncementComponent {
 
       }
     });
+    console.log(this.instituteAdmins);
+
     this.users.set("Students", this.students);
     this.users.set("Teachers", this.teachers);
     this.users.set("Admins", this.admins);
@@ -256,7 +306,13 @@ export class CreateAnnouncementComponent {
     }
 
   }
-
+  isFormComplete(): boolean {
+    // Check if all required fields are filled in
+    if (this.announcement.announcementTitle && this.announcement.announcementMessage && this.profileIDs.length>0) {
+      return true;
+    }
+    return false;
+  }
   announcementPage() {
     this.location.back();
   }
