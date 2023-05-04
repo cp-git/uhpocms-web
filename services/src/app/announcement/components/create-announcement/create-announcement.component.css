@@ -21,3 +21,31 @@ input[type="checkbox"] {
 select {
     margin-bottom: 10px;
 }
+
+.dropdown-menu {
+    max-height: 300px; /* Set the maximum height of the dropdown menu */
+    overflow-y: auto; /* Add a scrollbar if the content overflows the height */
+  }
+  
+  .dropdown-menu .form-group {
+    padding: 10px; /* Add some padding to the dropdown menu content */
+  }
+  
+  .dropdown-menu .form-group input[name="selectall"] {
+    margin-right: 10px; /* Add some space between the checkbox and the label */
+  }
+  
+  .dropdown-menu .form-group input[name="profileids"] {
+    margin-right: 10px; /* Add some space between the checkbox and the label */
+  }
+  
+  .dropdown-menu .form-group label {
+    display: inline-block; /* Make the label inline with the checkbox */
+    margin-bottom: 0; /* Remove the default margin-bottom */
+  }
+  
+  .dropdown-menu .form-group input[type="text"] {
+    margin-top: 10px;
+  }
+  
+  

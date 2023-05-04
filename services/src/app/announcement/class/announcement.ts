@@ -3,7 +3,7 @@ export class Announcement {
     announcementTitle!: string
     announcementMessage!: string
     announcementTo!: string
-    announcementReadby!: string
+    announcementSendby!: number
     announcementCreatedBy!: string
     announcementCreatedOn!: Date
 }
