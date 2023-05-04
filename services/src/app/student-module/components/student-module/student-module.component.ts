@@ -92,6 +92,7 @@ export class StudentModuleComponent implements OnInit {
 
   refVar: number = 0;
   statusModuleProg: Moduleprogress = new Moduleprogress;
+  updatedModuleProgress : Moduleprogress = new Moduleprogress;
   statusModuleProgArr: number[] = [];
   unistatusModuleProgArr: number[] = [];
   updatedPercentage: number = 0;
@@ -105,8 +106,12 @@ export class StudentModuleComponent implements OnInit {
   quizIdArr1 : number[] =[];
   quizIdArr2: number[] =[];
   quizPassedProgresses: any[] = [];
- quizFailedProgresses: any[] = [];
-
+  quizFailedProgresses: any[] = [];
+  couIdArrInCouProg :number[] =[];
+  existingCourseProg: CourseProgress=  new CourseProgress();
+ 
+  moduleArray : Module[] = [];
+  moduleProgArray : Moduleprogress[] = [];
 
   constructor(private activateRoute: ActivatedRoute, private courseService: TeacherCourseService, private moduleService: ModuleService, private modulefileService: ModuleFileService, private quizProgServ: QuizProgressService,
     private fileProgService: ModulefileprogressService, private _location: Location, private elRef: ElementRef, private modFileServc: ModuleFileService, private quizService: QuizService, private cdr: ChangeDetectorRef) {
@@ -121,7 +126,7 @@ export class StudentModuleComponent implements OnInit {
   ngOnInit(): void {
     // this.videoPlayer;
 
-
+  
     
     this.studentId = this.activateRoute.snapshot.paramMap.get('id');
     this.userName = this.activateRoute.snapshot.params['userName'];
@@ -134,14 +139,14 @@ export class StudentModuleComponent implements OnInit {
     this.getAllQuizzesByProfileId(this.studentId);
     this.getAllFileProgress();
     this.getQuizPorgressesByStudentId(this.studentId);
-    this.selectedCourse = '1'
+    // this.selectedCourse = '1'
 
     // this.trackModuleProgress(this.selectedCourse)
     this.filterUniqueModuleIds();
     // this.chkCoursePogress(this.selectedCourse);
-
-    console.log("modules" + this.getFilteredModules());
-
+    // this.trackCourseProgress(this.selectedCourse)
+    // console.log("modules" + this.getFilteredModules());
+    
     
   }
   // ngOnChanges(changes: SimpleChanges): void {
@@ -166,7 +171,9 @@ export class StudentModuleComponent implements OnInit {
         try {
           this.couresFlag = false;
           this.trackModuleProgress(this.selectedCourse)
-          this.chkCoursePogress(this.selectedCourse)
+          this.trackCourseProgress(this.selectedCourse)
+
+          // this.chkCoursePogress(this.selectedCourse)
 
 
         }
@@ -545,17 +552,18 @@ export class StudentModuleComponent implements OnInit {
 
 //function to check if given module id and student id already exist in moduleprogress table
   trackModuleProgress(courseId: number) {
+    this.statusModuleProg ;
     let trackModules: Module[] = [];
     console.log("Called")
     let moduleId: number;
     //get modules from module table
     this.moduleService.getModuleByModuleId(courseId).subscribe(
       response => {
-        console.log("Inside getModuleByModuleId(courseId)")
+        console.log("Inside getModuleByModuleId(moduleId)")
         response.forEach(module => {
           trackModules.push(module);
           console.log(module);
-          console.log(courseId)
+          console.log(moduleId)
           if (courseId == module.courseId_id) {
             this.trackedModule = module;
             console.log(module.courseId_id)
@@ -568,6 +576,10 @@ export class StudentModuleComponent implements OnInit {
 
                   //ModuleProgress Entity
                   this.statusModuleProg = response;
+                  if(this.statusModuleProg.progress == 100)
+                  {
+                    this.trackCourseProgress(this.selectedCourse)
+                  }
                   console.log(this.statusModuleProg)
                   this.statusModuleProgArr.push(this.statusModuleProg.moduleId)
                   //function to get Unique entries
@@ -590,6 +602,21 @@ export class StudentModuleComponent implements OnInit {
 
   }
 
+  existingmoduleProgress(moduleId:number,courseId:number){
+
+    console.log(moduleId)
+    this.fileProgService.getModuleProgressByModIdStudId(moduleId, this.studentId).subscribe(
+      (response) => {
+
+        //ModuleProgress Entity
+        this.updatedModuleProgress = response;
+
+        if(this.updatedModuleProgress.progress == 100)
+        {
+          this.trackCourseProgress(courseId)
+        }
+      })
+  }
 
   filterUniqueModuleIds() {
     // Filter and store unique values in unistatusModuleProgArr
@@ -597,26 +624,45 @@ export class StudentModuleComponent implements OnInit {
     console.log(this.unistatusModuleProgArr);
   }
 
+ 
+
   trackCourseProgress(courseId: number) {
 
+    let moduleArray : Module[] = [];
+    let moduleProgArray : Moduleprogress[] = [];
 
+   
+   this.chkCoursePogress(courseId);
     this.moduleService.getModulesByCourseId(courseId).subscribe(
       (response) => {
 
-        this.moduleArr = response;
-
-      })
-
+        moduleArray = response;
+        
+        console.log(response)
+        this.moduleArray = moduleArray;
+    
+      
 
     this.fileProgService.getModuleProgByCourseId(courseId).subscribe(
       (response) => {
+        console.log(this.selectedCourse)
+        moduleProgArray= response;
 
-        this.moduleProgressArr = response;
+        this.moduleProgArray = moduleProgArray.filter((array)=>array.studentId == this.studentId && array.progress == 100 )
+        console.log(response)
+     
+   
+    console.log("moduleProgArray.length "+this.moduleProgArray.length+"moduleProgArray.length "+ this.moduleArray.length)
+    if ((this.moduleProgArray.length <= this.moduleArray.length) &&  this.moduleProgArray.length != 0) {
 
-      }
-    )
+      console.log(this.existingCourseProg)
+console.log("if ((this.moduleProgArray.length <= this.moduleArray.length) &&  this.moduleProgArray.length != 0)")
 
-    if (this.moduleArr.length == this.moduleProgressArr.length) {
+console.log(this.existingCourseProg)
+      if(this.existingCourseProg.courseId != courseId)
+      {
+        console.log("if(this.existingCourseProg.courseId != courseId && this.existingCourseProg.studentId != this.studentId)")
+        
       this.courseProgress.id = 0;
       this.courseProgress.courseId = this.selectedCourse;
       this.courseProgress.studentId = this.studentId;
@@ -624,27 +670,46 @@ export class StudentModuleComponent implements OnInit {
       this.courseProgress.currentModuleNo = 1;
       this.courseProgress.currentUnitNo = 1;
       this.courseProgress.grade = 100;
-      this.courseProgress.progress = 100;
+      this.courseProgress.progress = (this.moduleProgArray.length*100)/this.moduleArray.length;
       this.fileProgService.addCourseProgressStatus(this.courseProgress).subscribe(
         (response) => {
 
         }
       )
 
-      this.chkCoursePogress(this.selectedCourse);
+     }
+     
+
+      else if((this.existingCourseProg.courseId == courseId) && (this.existingCourseProg.studentId == this.studentId))
+      {
+        console.log(" else if(this.existingCourseProg.courseId === courseId && this.existingCourseProg.studentId === this.studentId)")
+        this.existingCourseProg.progress = (this.moduleProgArray.length*100)/this.moduleArray.length;
+        
+        this.fileProgService.updateCourseProgress(this.existingCourseProg).subscribe(
+          (response)=>{}
+        )
+
+      }
     }
+  }
+    ) }
+      
+    )
   }
 
 
   chkCoursePogress(courseId: number) {
 
+   
+
     console.log(this.selectedCourse)
     try {
       this.fileProgService.getCourseProgByCourseIdStudId(courseId, this.studentId).subscribe(
         (response) => {
-          this.couresFlag = true;
+    
+          this.existingCourseProg = response;
 
-          console.log("courseFlag value" + this.couresFlag)
+          
 
         }
       )
@@ -694,10 +759,10 @@ export class StudentModuleComponent implements OnInit {
 
   private moduleProgresscCeateUpdate(moduleId:number) {
     console.log("Entered in moduleProgresscCeateUpdate()")
-  
+    let updatedModuleProgress :Moduleprogress = new Moduleprogress;
     let moduleArr: ModuleFile[] = [];
     let modFileProgress: Modulefileprogress[] = [];
-
+    this.existingmoduleProgress(moduleId,this.selectedCourse);
     console.log(moduleId)
               this.getAllQuizzesByModuleId(moduleId);
               console.log(this.quizIdArr1);
@@ -709,11 +774,11 @@ export class StudentModuleComponent implements OnInit {
       (response) => {
 
         moduleArr = response;
+    
         console.log("moduleArr.length inside " + moduleArr.length);
         this.moduleArrCopy = moduleArr;
         // this.getAllFileProgress();
-      }
-    )
+    
     console.log("moduleArr.length outside " + this.moduleArrCopy.length);
 
     //get data from ModuleFileProgress table where progress is 100
@@ -737,7 +802,7 @@ export class StudentModuleComponent implements OnInit {
         // if ((this.modFileProgressCopy.length <= this.moduleArrCopy.length) && this.modFileProgressCopy.length != 0) {
           if ((arr2Len <= arr1Len) && arr2Len != 0) {
 
-          this.trackModuleProgress(this.selectedCourse);
+          
           this.modulePercentage = (arr2Len * 100) / (arr1Len);
           console.log("moduleArr.length == this.modulebasedArr.length")
 
@@ -752,32 +817,45 @@ export class StudentModuleComponent implements OnInit {
 
           //condition to check if moduleProgress entity array filtered by course includes current array
           console.log(this.unistatusModuleProgArr);
-          if (this.unistatusModuleProgArr.includes(moduleId) == true) {
+          // if ((this.statusModuleProg.moduleId == moduleId) && (this.statusModuleProg.studentId == this.studentId)) {
 
+          // this.fileProgService.getModuleProgressByModIdStudId(moduleId, this.studentId).subscribe(
+          //   (response) => {
 
+          //     //ModuleProgress Entity
+          //     updatedModuleProgress = response;
+console.log(this.updatedModuleProgress)
+          if (this.updatedModuleProgress.moduleId == moduleId) {
+
+          // if (this.unistatusModuleProgArr.includes(moduleId) == true){
+           
             console.log(" if (this.unistatusModuleProgArr.includes(this.selectedModule.moduleId) == true)");
-            this.statusModuleProg.progress = this.modulePercentage;
+            
+            this.updatedModuleProgress.progress= this.modulePercentage;
 
             console.log(" this.statusModuleProg.progress ")
             console.log(this.statusModuleProg)
 
-            this.fileProgService.updateModuleProgress(this.statusModuleProg).subscribe(
+            this.fileProgService.updateModuleProgress(this.updatedModuleProgress).subscribe(
               (response) => {
 
+                this.existingmoduleProgress(moduleId,this.selectedCourse);
+                console.log(this.updatedModuleProgress)
               }
 
             )
 
           }
 
-          else if (this.unistatusModuleProgArr.includes(moduleId) == false) {
-
+          else if (this.updatedModuleProgress.moduleId != moduleId) {
+          //   else if (this.unistatusModuleProgArr.includes(moduleId) == false){
             console.log(" else if (this.unistatusModuleProgArr.includes(this.selectedModule.moduleId) == false) ")
             console.log(this.moduleProgress)
 
             //service to save data in module progress table
             this.fileProgService.addModuleProgressStatus(this.moduleProgress).subscribe(
               (reponse) => {
+                this.existingmoduleProgress(moduleId,this.selectedCourse);
 
                 // this.trackModuleProgress(this.selectedCourse);
                 // this.filterUniqueModuleIds()
@@ -786,20 +864,143 @@ export class StudentModuleComponent implements OnInit {
             )
 
           }
+        // })
 
+
+
+
+
+
+///////////////////////////////
+
+
+
+
+///////////////
 
         }
 
       }
     )
 
-
+  }
+  )
 
     // console.log(" this.trackCourseProgress() called")
     // this.trackCourseProgress(this.selectedCourse);
 
 
   }
+// private moduleProgresscCeateUpdate(moduleId:number) {
+//   console.log("Entered in moduleProgresscCeateUpdate()")
+
+//   let moduleArr: ModuleFile[] = [];
+//   let modFileProgress: Modulefileprogress[] = [];
+
+//   console.log(moduleId)
+//             this.getAllQuizzesByModuleId(moduleId);
+//             console.log(this.quizIdArr1);
+//             this.getAllQuizProgress(moduleId);
+//             console.log(this.quizIdArr2);
+            
+//   // get data from modulefile table my module Id
+//   this.modulefileService.getModuleFilesByModuleId(moduleId).subscribe(
+//     (response) => {
+
+//       moduleArr = response;
+//       console.log("moduleArr.length inside " + moduleArr.length);
+//       this.moduleArrCopy = moduleArr;
+//       // this.getAllFileProgress();
+//   //   }
+//   // )
+//   console.log("moduleArr.length outside " + this.moduleArrCopy.length);
+
+//   //get data from ModuleFileProgress table where progress is 100
+//   this.fileProgService.getAllFileProgressByModIdStudIdProg(moduleId, this.studentId).subscribe(
+//     (response) => {
+
+//       modFileProgress = response;
+
+//       console.log("modulebasedArr.length inside " + modFileProgress);
+//       this.modFileProgressCopy = modFileProgress;
+//       console.log("two lenghts outside " + this.moduleArrCopy.length + "     " + this.modFileProgressCopy.length);
+
+//       let arr1Len = this.quizIdArr1.length + this.moduleArrCopy.length;
+//       let arr2Len = this.quizIdArr2.length + this.modFileProgressCopy.length;
+
+//       console.log("this.quizIdArr2.length " +this.quizIdArr2.length +" this.modFileProgressCopy.length"+ this.modFileProgressCopy.length)
+//       console.log(" arr2Len   "+  arr2Len)
+//       console.log("this.quizIdArr1.length " +this.quizIdArr1.length +" this.moduleArrCopy.length"+ this.moduleArrCopy.length)
+//       console.log(" arr1Len   "+  arr1Len)
+
+//       // if ((this.modFileProgressCopy.length <= this.moduleArrCopy.length) && this.modFileProgressCopy.length != 0) {
+//         if ((arr2Len <= arr1Len) && arr2Len != 0) {
+
+//         this.trackModuleProgress(this.selectedCourse);
+//         this.modulePercentage = (arr2Len * 100) / (arr1Len);
+//         console.log("moduleArr.length == this.modulebasedArr.length")
+
+//         console.log(arr2Len + "       " + arr1Len)
+//         console.log("module Percentage" + "  " + this.modulePercentage)
+
+//         this.moduleProgress.moduleId = moduleId;
+//         console.log("this.selectedModule.moduleId   " + moduleId)
+//         this.moduleProgress.courseId = this.selectedCourse;
+//         this.moduleProgress.studentId = this.studentId;
+//         this.moduleProgress.progress = this.modulePercentage;
+
+//         //condition to check if moduleProgress entity array filtered by course includes current array
+//         console.log(this.unistatusModuleProgArr);
+//         if (this.unistatusModuleProgArr.includes(moduleId) == true) {
+
+
+//           console.log(" if (this.unistatusModuleProgArr.includes(this.selectedModule.moduleId) == true)");
+//           this.statusModuleProg.progress = this.modulePercentage;
+
+//           console.log(" this.statusModuleProg.progress ")
+//           console.log(this.statusModuleProg)
+
+//           this.fileProgService.updateModuleProgress(this.statusModuleProg).subscribe(
+//             (response) => {
+
+//             }
+
+//           )
+
+//         }
+
+//         else if (this.unistatusModuleProgArr.includes(moduleId) == false) {
+
+//           console.log(" else if (this.unistatusModuleProgArr.includes(this.selectedModule.moduleId) == false) ")
+//           console.log(this.moduleProgress)
+
+//           //service to save data in module progress table
+//           this.fileProgService.addModuleProgressStatus(this.moduleProgress).subscribe(
+//             (reponse) => {
+
+//               // this.trackModuleProgress(this.selectedCourse);
+//               // this.filterUniqueModuleIds()
+
+//             }
+//           )
+
+//         }
+
+
+//       }
+
+//     }
+//   )
+//   })
+
+
+//   // console.log(" this.trackCourseProgress() called")
+//   // this.trackCourseProgress(this.selectedCourse);
+
+
+// }
+
+
 
 
 

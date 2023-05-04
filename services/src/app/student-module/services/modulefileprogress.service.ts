@@ -69,11 +69,12 @@ export class ModulefileprogressService {
   }
 
   getModuleProgByCourseId(courseId: number) {
-    return this.http.get<Moduleprogress[]>(`${this.moduleProgressUrl}/courseId/${courseId}`);
+    console.log(courseId)
+    return this.http.get<Moduleprogress[]>(`${this.moduleProgressUrl}/moduleprog/courseId/${courseId}`);
   }
 
   getCourseProgByCourseIdStudId(courseId: number, studId: number) {
-    return this.http.get<CourseProgress[]>(`${this.courseProgressUrl}/courseprog/${courseId}/${studId}`);
+    return this.http.get<CourseProgress>(`${this.courseProgressUrl}/courseprog/${courseId}/${studId}`);
   }
 
 
@@ -83,4 +84,9 @@ export class ModulefileprogressService {
       return this.http.put<Moduleprogress>(`${this.moduleProgressUrl}/moduleprog/${moduleProgress.id}`,moduleProgress);
   }
 
+
+  updateCourseProgress(courseProgress: CourseProgress): Observable<CourseProgress> 
+  {console.log(courseProgress)
+      return this.http.put<CourseProgress>(`${this.courseProgressUrl}/courseprog/${courseProgress.id}`,courseProgress);
+  }
 }
