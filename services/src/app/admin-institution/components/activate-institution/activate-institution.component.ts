@@ -12,12 +12,15 @@ import { AdmininstitutionService } from '../../service/admininstitution.service'
 
 })
 export class ActivateInstitutionComponent implements OnInit {
-
+  moduleName = 'Institute Administration';
   //variable initialization
   institutions: AdminInstitution[] = [];
   userName!: string;
   adminId: any;
 
+  // for buttons to view
+  showAddButton: boolean = false;
+  showActivateButton: boolean = false;
   //constructor
   constructor(private _institutionService: AdmininstitutionService, private _router: Router,
     private _activatedRoute: ActivatedRoute) {
