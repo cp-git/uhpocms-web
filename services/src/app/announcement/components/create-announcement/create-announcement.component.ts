@@ -39,6 +39,7 @@ export class CreateAnnouncementComponent {
   public users = new Map();
   userId: any;
   profileId: any;
+  loginId :any;
   userRole: any;
   public currentAnnouncementProfileIds: AnnouncementTo[] = [];
 
@@ -50,6 +51,7 @@ export class CreateAnnouncementComponent {
     // const teacherId = this.activatedRoute.snapshot.paramMap.get('id');
     this.userId = sessionStorage.getItem('userId');
     this.profileId = sessionStorage.getItem('profileId');
+    this.loginId = sessionStorage.getItem('profileId');
     this.userRole = sessionStorage.getItem('userRole');
   }
 
@@ -143,10 +145,13 @@ export class CreateAnnouncementComponent {
   onChange(id: number, event: any) {
     if (event.target.checked) {
       this.profileIDs.push(id);
-
-
     } else {
       this.profileIDs = this.profileIDs.filter(item => item !== id);
+    }
+    // Remove profileId from profileIDs array
+    const index = this.profileIDs.indexOf(parseInt(this.profileId));
+    if (index !== -1) {
+      this.profileIDs.splice(index, 1);
     }
   }
 
@@ -296,7 +301,6 @@ export class CreateAnnouncementComponent {
   }
 
   selectAll(event?: any) {
-
     if (event.target.checked) {
       this.filterRoles.forEach(profile => this.profileIDs.push(profile.adminId));
     } else {
@@ -304,8 +308,14 @@ export class CreateAnnouncementComponent {
         this.profileIDs = this.profileIDs.filter(item => item !== profile.adminId);
       });
     }
-
+  
+    // Remove profileId from profileIDs array
+    const index = this.profileIDs.indexOf(parseInt(this.profileId));
+    if (index !== -1) {
+      this.profileIDs.splice(index, 1);
+    }
   }
+  
   isFormComplete(): boolean {
     // Check if all required fields are filled in
     if (this.announcement.announcementTitle && this.announcement.announcementMessage && this.profileIDs.length>0) {
