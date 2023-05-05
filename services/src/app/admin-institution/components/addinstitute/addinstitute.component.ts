@@ -94,7 +94,7 @@ export class AddinstituteComponent {
           this.admininstitutions.push(this.admininstitution);
           this.backupInst.push(Object.assign({}, this.admininstitution));
           // alert('Institute Added Successfuly');
-          console.log('Institute Added Successfuly');
+          console.log('Institute Added Successfully');
           this._route.navigate(['displayinstitute', this.userName]);
 
           if (this.admininstitutions.length > 0) {

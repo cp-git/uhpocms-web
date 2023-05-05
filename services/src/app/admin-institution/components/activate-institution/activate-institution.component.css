@@ -24,6 +24,7 @@ img {
     width: 150px;
     height: 150px;
     border-radius: 25px;
+
 }
 
 img:hover {
@@ -31,10 +32,27 @@ img:hover {
     filter: grayscale(100%);
 }
 
-.container {
+/* .container {
+    margin-top: 20px;
+} */
+
+.institutebtn {
+    margin: 10px;
+}
+
+.btn {
+    border-radius: 15px;
+}
+
+/* .row {
+    padding-top: 2%;
+} */
+
+.buttons {
     margin-top: 20px;
 }
 
-button {
-    margin: 10px;
+.header {
+    margin-top: -15px;
+    margin-bottom: -5px;
 }
