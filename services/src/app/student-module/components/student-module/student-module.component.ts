@@ -112,6 +112,7 @@ export class StudentModuleComponent implements OnInit {
   quizFailedProgresses: any[] = [];
   couIdArrInCouProg :number[] =[];
   existingCourseProg: CourseProgress=  new CourseProgress();
+  courProgPercentage:number=0;
  
   moduleArray : Module[] = [];
   moduleProgArray : Moduleprogress[] = [];
@@ -142,23 +143,13 @@ export class StudentModuleComponent implements OnInit {
     this.getAllQuizzesByProfileId(this.studentId);
     this.getAllFileProgress();
     this.getQuizPorgressesByStudentId(this.studentId);
-    // this.selectedCourse = '1'
-
-    // this.trackModuleProgress(this.selectedCourse)
+  
     this.filterUniqueModuleIds();
-    // this.chkCoursePogress(this.selectedCourse);
-    // this.trackCourseProgress(this.selectedCourse)
-    // console.log("modules" + this.getFilteredModules());
+  
     
     
   }
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['selectedFile']) {
-  //     console.log("")
-  //     const video = this.elRef.nativeElement.querySelector('video');
-  //     video.load();
-  //   }
-  // }
+
   //loads the courses of the student using the getCourseByStudentId() method of StudentService
 
   loadCourseOfStudent(studentId: number) {
@@ -197,11 +188,8 @@ export class StudentModuleComponent implements OnInit {
 
   }
 
+  //triggers when video is played
   onVideoTimeUpdate() {
-
-
-
-
 
     //initialize flag to false
     this.flag = false
@@ -253,59 +241,44 @@ export class StudentModuleComponent implements OnInit {
             //array with unique values
             this.uniqueFileIdArr = this.fileIdArr.filter((value, index, self) => self.indexOf(value) === index);
 
-            // this.uniquemofileprogarr = this.updatedModuleFileProgressArr.filter((value, index, self) => self.indexOf(value) === index);
-            // console.log(this.fileIdArr)
-            // console.log(this.uniqueFileIdArr)
+          
           }
 
         }
       )
 
 
-      //   console.log("outside loop")
-
-      // console.log(this.uniqueFileIdArr)
-      // console.log("result value")
-      // console.log(this.newModuleFileProgressArr)
-      // console.log(this.uniqueFileIdArr.includes(this.selectedFile.moduleFileId))
+    
 
 
       if (this.uniqueFileIdArr.includes(this.selectedFile.moduleFileId) == true) {
         //loop through filtered module file progress array
-        // console.log("ffggfgffgf")
+       
         for (let k = 0; k < this.newModuleFileProgressArr.length; k++) {
-          // console.log(this.selectedFile.moduleFileId)
-          // console.log(this.updatedModuleFileProgressArr[k])
-
-
+        
           if (this.selectedFile.moduleFileId === this.newModuleFileProgressArr[k].fileId) {
 
-            // console.log(this.updatedModuleFileProgressArr[k])
+           
             console.log("  if(this.selectedFile.moduleFileId == this.fileIdArr[i] )")
             this.moduleFileProgress = this.newModuleFileProgressArr[k];
             this.flag = true;
             k = this.newModuleFileProgressArr.length;
-            //  console.log(this.moduleFileProgress)
+           
           }
-          // console.log("outside flag value")
-          // console.log(this.flag)'
+        
           console.log("this.moduleFileProgress outside")
           console.log(this.moduleFileProgress)
           //if flag is true
           if (this.flag == true) {
 
-            // console.log("Entered in flag loop")
+           
 
 
             if (this.moduleFileProgress.progress == 100) {
               console.log("Enered in  this.moduleFileProgress.progress == 10")
               this.moduleProgresscCeateUpdate(this.selectedModule.moduleId);
               console.log(this.selectedModule)
-              // this.getAllQuizzesByModuleId(this.selectedModule.moduleId);
-              // console.log(this.quizIdArr1);
-              // this.getAllQuizProgress(this.selectedModule.moduleId).subscribe((quizIds) => {
-              // console.log(quizIds);
-              // });
+             
             }
 
             //cond. to update moduleprogress table
@@ -332,20 +305,10 @@ export class StudentModuleComponent implements OnInit {
                   //function to generate tick mark or to loop throgh file progress again
                   this.getAllFileProgress();
                   this.moduleProgresscCeateUpdate(this.selectedModule.moduleId);
-                  // console.log(this.selectedModule.mooduleId)
-                  // this.getAllQuizzesByModuleId(this.selectedModule.moduleId);
-                  // console.log(this.quizIdArr1);
-                  // this.getAllQuizProgress(this.selectedModule.moduleId).subscribe((quizIds) => {
-                  //   console.log(quizIds);
-                  // });
+                 
                   
                   }
-                  console.log("inside updatedModuleFileProgress")
-                  ///////////////////////////////////////////////////////
-
-                  // this.moduleProgresscCeateUpdate();
-
-                  ////////////////////////////////////////////////
+                 
 
 
                 }
@@ -387,44 +350,37 @@ export class StudentModuleComponent implements OnInit {
 
             modFileProg = response;
 
-            //function to generate tick mark or to loop throgh file progress again
-            // this.getAllFileProgress();
 
             console.log("inside addFileProgressStatus")
 
-            ///////////////////////////////////////////////////////
-
-            // this.moduleProgresscCeateUpdate();
-
-
-            /////////////////////////////////////////////////
+           
 
 
           }
         )
       }
 
-      // })
+   
     }
 
 
 
   }
 
+  //triggers when video is pause
   pauseVideo() {
     this.videoPlayerRef.nativeElement.pause(); // Pause the video
   }
 
 
 
+  //function is called when video ends
   videoEnd() {
     this.flag = false;
 
-    console.log(File);
+    
     this.changeSelectedFileAndModule(this.selectedFile, this.selectedModule)
-    console.log(this.selectedFile)
-    console.log(this.selectedModule)
-    console.log(this.studentId)
+   
 
   }
 
@@ -505,13 +461,15 @@ export class StudentModuleComponent implements OnInit {
 
   //sets the selected course by the student and resets the selected module
   onCourseSelect(courseId: any) {
+    this.courProgPercentage = 0;
     this.changeSelectedCourseName(courseId);
-
+    
     this.selectedCourse = courseId;
+   
     this.selectedModule = undefined;
+    this.trackCourseProgress(courseId)
     console.log(this.selectedCourse);
     console.log(this.selectedModule);
-
 
 
   }
@@ -529,6 +487,8 @@ export class StudentModuleComponent implements OnInit {
   }
 
   changeSelectedCourseName(courseId: number) {
+    
+ 
     this.courses.forEach(course => {
       if (course.courseId == courseId) {
         this.selectedCourseName = course.courseName;
@@ -664,6 +624,7 @@ console.log("if ((this.moduleProgArray.length <= this.moduleArray.length) &&  th
 console.log(this.existingCourseProg)
       if(this.existingCourseProg.courseId != courseId)
       {
+        let addedcourseProgress:CourseProgress = new CourseProgress();
         console.log("if(this.existingCourseProg.courseId != courseId && this.existingCourseProg.studentId != this.studentId)")
         
       this.courseProgress.id = 0;
@@ -676,6 +637,9 @@ console.log(this.existingCourseProg)
       this.courseProgress.progress = (this.moduleProgArray.length*100)/this.moduleArray.length;
       this.courseProgServ.addCourseProgressStatus(this.courseProgress).subscribe(
         (response) => {
+            
+          addedcourseProgress = response;
+          this.courProgPercentage = addedcourseProgress.progress;
 
         }
       )
@@ -685,11 +649,15 @@ console.log(this.existingCourseProg)
 
       else if((this.existingCourseProg.courseId == courseId) && (this.existingCourseProg.studentId == this.studentId))
       {
+        let updatedcourseProgress:CourseProgress = new CourseProgress();
         console.log(" else if(this.existingCourseProg.courseId === courseId && this.existingCourseProg.studentId === this.studentId)")
         this.existingCourseProg.progress = (this.moduleProgArray.length*100)/this.moduleArray.length;
         
         this.courseProgServ.updateCourseProgress(this.existingCourseProg).subscribe(
-          (response)=>{}
+          (response)=>{
+            updatedcourseProgress = response;
+            this.courProgPercentage = updatedcourseProgress.progress;
+          }
         )
 
       }
