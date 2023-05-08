@@ -8,10 +8,9 @@ import { Location } from '@angular/common';
 import { Module } from 'app/module/class/module';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { ModuleFileService } from 'app/module-file/services/module-file.service';
-import { ModulefileprogressService } from 'app/student-module/services/modulefileprogress.service';
-import { Modulefileprogress } from 'app/student-module/class/modulefileprogress';
-import { Moduleprogress } from 'app/student-module/class/moduleprogress';
-import { CourseProgress } from 'app/student-module/class/courseprogress';
+
+import { Moduleprogress } from 'app/moduleProgress/class/moduleprogress';
+import { CourseProgress } from 'app/courseProgress/class/courseprogress';
 
 import { QuizService } from 'app/quiz/services/quiz.service';
 import { Quiz } from 'app/quiz/class/quiz';
@@ -20,6 +19,10 @@ import { QuizProgress } from 'app/quiz-progress/class/quiz-progress';
 import { QuizProgressService } from 'app/quiz-progress/services/quiz-progress.service';
 import { map, switchMap } from 'rxjs/operators';
 import { StudentQuizComponent } from '../student-quiz/student-quiz.component';
+import { CourseProgressService } from 'app/courseProgress/services/course-progress.service';
+import { ModuleProgressService } from 'app/moduleProgress/services/module-progress.service';
+import { Modulefileprogress } from 'app/moduleFileProgress/class/modulefileprogress';
+import { ModulefileprogressService } from 'app/moduleFileProgress/modulefileprogress.service';
 
 
 
@@ -113,8 +116,8 @@ export class StudentModuleComponent implements OnInit {
   moduleArray : Module[] = [];
   moduleProgArray : Moduleprogress[] = [];
 
-  constructor(private activateRoute: ActivatedRoute, private courseService: TeacherCourseService, private moduleService: ModuleService, private modulefileService: ModuleFileService, private quizProgServ: QuizProgressService,
-    private fileProgService: ModulefileprogressService, private _location: Location, private elRef: ElementRef, private modFileServc: ModuleFileService, private quizService: QuizService, private cdr: ChangeDetectorRef) {
+  constructor(private activateRoute: ActivatedRoute, private courseService: TeacherCourseService, private moduleService: ModuleService, private modulefileService: ModuleFileService, private quizProgServ: QuizProgressService, private moduleProgSErv :ModuleProgressService,
+    private fileProgService: ModulefileprogressService, private _location: Location, private elRef: ElementRef, private modFileServc: ModuleFileService, private quizService: QuizService, private cdr: ChangeDetectorRef, private courseProgServ:CourseProgressService) {
     }
 
     
@@ -571,7 +574,7 @@ export class StudentModuleComponent implements OnInit {
             try {
 
               //get moduleprogress entry  by module Id and student Id
-              this.fileProgService.getModuleProgressByModIdStudId(module.moduleId, this.studentId).subscribe(
+              this.moduleProgSErv.getModuleProgressByModIdStudId(module.moduleId, this.studentId).subscribe(
                 (response) => {
 
                   //ModuleProgress Entity
@@ -605,7 +608,7 @@ export class StudentModuleComponent implements OnInit {
   existingmoduleProgress(moduleId:number,courseId:number){
 
     console.log(moduleId)
-    this.fileProgService.getModuleProgressByModIdStudId(moduleId, this.studentId).subscribe(
+    this.moduleProgSErv.getModuleProgressByModIdStudId(moduleId, this.studentId).subscribe(
       (response) => {
 
         //ModuleProgress Entity
@@ -643,7 +646,7 @@ export class StudentModuleComponent implements OnInit {
     
       
 
-    this.fileProgService.getModuleProgByCourseId(courseId).subscribe(
+    this.moduleProgSErv.getModuleProgByCourseId(courseId).subscribe(
       (response) => {
         console.log(this.selectedCourse)
         moduleProgArray= response;
@@ -671,7 +674,7 @@ console.log(this.existingCourseProg)
       this.courseProgress.currentUnitNo = 1;
       this.courseProgress.grade = 100;
       this.courseProgress.progress = (this.moduleProgArray.length*100)/this.moduleArray.length;
-      this.fileProgService.addCourseProgressStatus(this.courseProgress).subscribe(
+      this.courseProgServ.addCourseProgressStatus(this.courseProgress).subscribe(
         (response) => {
 
         }
@@ -685,7 +688,7 @@ console.log(this.existingCourseProg)
         console.log(" else if(this.existingCourseProg.courseId === courseId && this.existingCourseProg.studentId === this.studentId)")
         this.existingCourseProg.progress = (this.moduleProgArray.length*100)/this.moduleArray.length;
         
-        this.fileProgService.updateCourseProgress(this.existingCourseProg).subscribe(
+        this.courseProgServ.updateCourseProgress(this.existingCourseProg).subscribe(
           (response)=>{}
         )
 
@@ -704,7 +707,7 @@ console.log(this.existingCourseProg)
 
     console.log(this.selectedCourse)
     try {
-      this.fileProgService.getCourseProgByCourseIdStudId(courseId, this.studentId).subscribe(
+      this.courseProgServ.getCourseProgByCourseIdStudId(courseId, this.studentId).subscribe(
         (response) => {
     
           this.existingCourseProg = response;
@@ -824,7 +827,7 @@ console.log(this.existingCourseProg)
 
           //     //ModuleProgress Entity
           //     updatedModuleProgress = response;
-console.log(this.updatedModuleProgress)
+          console.log(this.updatedModuleProgress)
           if (this.updatedModuleProgress.moduleId == moduleId) {
 
           // if (this.unistatusModuleProgArr.includes(moduleId) == true){
@@ -836,7 +839,7 @@ console.log(this.updatedModuleProgress)
             console.log(" this.statusModuleProg.progress ")
             console.log(this.statusModuleProg)
 
-            this.fileProgService.updateModuleProgress(this.updatedModuleProgress).subscribe(
+            this.moduleProgSErv.updateModuleProgress(this.updatedModuleProgress).subscribe(
               (response) => {
 
                 this.existingmoduleProgress(moduleId,this.selectedCourse);
@@ -853,7 +856,7 @@ console.log(this.updatedModuleProgress)
             console.log(this.moduleProgress)
 
             //service to save data in module progress table
-            this.fileProgService.addModuleProgressStatus(this.moduleProgress).subscribe(
+            this.moduleProgSErv.addModuleProgressStatus(this.moduleProgress).subscribe(
               (reponse) => {
                 this.existingmoduleProgress(moduleId,this.selectedCourse);
 
@@ -864,19 +867,6 @@ console.log(this.updatedModuleProgress)
             )
 
           }
-        // })
-
-
-
-
-
-
-///////////////////////////////
-
-
-
-
-///////////////
 
         }
 
@@ -1034,15 +1024,7 @@ private getAllQuizProgress(moduleId:number){
   let quizprogress:QuizProgress[] =[];
   let filteredQuizProgressId:number[] = [];
   let completedQuizProgressId:number[] = [];
-  // return this.quizProgServ.getAllQuizProgressdata().pipe(
-  //   // Filter quiz progress by student ID and completed status
-  //   map((quizProgress) => quizProgress.filter((prog) => prog.studentId === this.studentId && prog.completed === true)),
-  //   // Extract quiz IDs from filtered quiz progress array
-  //   map((filteredQuizProgress) => filteredQuizProgress.map((prog) => prog.quizId)),
-  //   // Merge the quiz ID array with this.quizIdArr1
-  //   // switchMap((completedQuizIds) => this.quizService.getAllQuizzesByModuleId(moduleId).pipe(
-  //   //   map((quizzes) => [...this.quizIdArr1, ...quizzes.filter((quiz) => completedQuizIds.includes(quiz.quizId)).map((quiz) => quiz.quizId)])
-  //   // ))
+ 
 
   this.quizProgServ.getAllQuizProgressdata().subscribe(
     (response)=>{
