@@ -17,7 +17,7 @@ export class ModuleProgressService {
     this.moduleProgressUrl = `${environment.moduleProgressUrl}`;
   }
 
-
+//comment
 
 //add data to moduleprogress table
 addModuleProgressStatus(moduleProgress: Moduleprogress): Observable<Moduleprogress> {
