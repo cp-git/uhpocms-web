@@ -15,8 +15,9 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "ES2022",
-    "module": "ES2022",
+    "target": "es6",
+    "module": "commonjs" ,
+    "resolveJsonModule": true,
     "useDefineForClassFields": false,
     "baseUrl": "src",
     "paths": {
@@ -24,6 +25,7 @@
     },
     "lib": ["ES2022", "dom"]
   },
+  "include": ["src/**/*.ts"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,

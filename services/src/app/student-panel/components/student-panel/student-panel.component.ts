@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as dataOne from '../../../dataOne.json';
+import * as dataThree from '../../../dataThree.json';
+import { Chart } from 'chart.js/dist';
+import { ChartdataComponent } from 'app/student-module/components/chartdata/chartdata.component';
 
 @Component({
   selector: 'app-student-panel',
@@ -7,7 +11,13 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./student-panel.component.css']
 })
 export class StudentPanelComponent {
+  arrOne: any = dataOne.data[0];
+  arrTwo: any = dataOne.data[0];
+  arrThree: any = dataThree.data[0];
 
+  @ViewChild(ChartdataComponent) dChart: any;
+
+  doughnutCharts: any = [this.arrOne, this.arrTwo, this.arrThree];
 
 
   // Declare class properties

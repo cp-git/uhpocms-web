@@ -32,4 +32,12 @@ export class CourseProgressService {
   {console.log(courseProgress)
       return this.http.put<CourseProgress>(`${this.courseProgressUrl}/courseprog/${courseProgress.id}`,courseProgress);
   }
+
+
+  getAllCourseProgress()
+  {
+    return this.http.get<CourseProgress[]>(`${this.courseProgressUrl}/courseprog?id=all`)
+  }
+
+  
 }
