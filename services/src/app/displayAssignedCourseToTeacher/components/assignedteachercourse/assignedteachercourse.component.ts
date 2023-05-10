@@ -128,10 +128,11 @@ export class AssignedteachercourseComponent {
     this.teacherCourseService.getAssignedCourseOfTeacher(teacherId).subscribe(
       response => {
         this.courses = response;
+
         console.log(response);
       },
       error => {
-        alert("failed to fetch data");
+        console.log("failed to fetch data");
       }
     );
   }
@@ -145,12 +146,12 @@ export class AssignedteachercourseComponent {
 
     this.courseSyllabusServices.addCourseSyllabus(this.courseSyllabus).subscribe(
       (data) => {
-        alert(this.courseSyllabus)
+        console.log(this.courseSyllabus)
         //console.log(data);
         this.coursesSyllabus = data;
-        alert('syllabus Added successfully');
+        console.log('syllabus Added successfully');
       },
-      (error) => alert('failed to upload ')
+      (error) => console.log('failed to upload ')
     );
   }
 }

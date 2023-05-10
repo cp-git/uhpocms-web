@@ -31,13 +31,19 @@ export const environment = {
   questionUrl: `http://localhost:8090/question/uhpocms`,
   announcementUrl: `http://localhost:8090/announcement/uhpocms`,
   moduleFileUrl: `http://localhost:8090/modulefile/uhpocms`,
-
   enrollStudentUrl: `http://localhost:8090/enrolltostudent/uhpocms`,
   assignCourseUrl: `http://localhost:8090/course/uhpocms/course`,
   syllabusUrl: `http://localhost:8090/courseSyllabus/uhpocms/courseSyllabus`,
   assignTeacherUrl: 'http://localhost:8090/assigntoteacher/uhpocms/assigntoteacher',
   accesscontrolUrl: 'http://localhost:8090/accesscontrol/uhpocms/access',
-  answerUrl: 'http://localhost:8090/answer/uhpocms'
+  answerUrl: 'http://localhost:8090/answer/uhpocms',
+
+  moduleFileProgressUrl : `http://localhost:8090/modulefileprogress/uhpocms`,
+  moduleProgressUrl : `http://localhost:8090/moduleprogress/uhpocms`,
+  courseProgressUrl : `http://localhost:8090/courseprogress/uhpocms`,
+
+
+  quizProgressUrl: 'http://localhost:8090/quizprogress/uhpocms'
 
 
 };

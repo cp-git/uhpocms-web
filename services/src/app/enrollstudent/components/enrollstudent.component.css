@@ -6,3 +6,25 @@
 .form-control {
     font-size: 1.3rem;
 }
+
+.top-right {
+    position: absolute;
+    top: 30px;
+    right: 105px;
+
+}
+
+:root {
+    --button-border-radius: 50px;
+}
+
+.rounded-button {
+    border-radius: 50px;
+}
+
+/* .container {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+} */

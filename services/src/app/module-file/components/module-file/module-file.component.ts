@@ -19,10 +19,8 @@ import { UploadFileService } from 'app/FileUpload/services/upload-file.service';
 })
 export class ModuleFileComponent {
 
-
-
   // title heading
-  moduleName: string = "Module Contents";
+  moduleName: string = "Module Content";
 
   controlEnabled: boolean = true;
   module = new Module();
@@ -31,16 +29,21 @@ export class ModuleFileComponent {
   modulesFile: ModuleFile[] = [];
   moduleFile = new ModuleFile();
 
-
   inActivationScreenStatus: boolean = false;
   activationScreenStatus: boolean = false;
   isVisible: boolean = true;
+
   //screen view
   viewUpdate: boolean = false;
   viewAdd: boolean = false;
   viewOne: boolean = false;
   viewAll: boolean = true;
   viewActivate: boolean = false;
+
+  // for buttons to view
+  showAddButton: boolean = true;
+  showActivateButton: boolean = true;
+  titleWithUserRole: boolean = true;
 
   columnNames: any;
   allColumnNames: any;
@@ -53,7 +56,7 @@ export class ModuleFileComponent {
 
   sessionData: any;
   data: any;
-
+  userRole: any;
   profileId: any;
 
   emptyModuleFile: ModuleFile;  // empty module file
@@ -72,7 +75,7 @@ export class ModuleFileComponent {
     private service: TeacherCourseService,
     private uploadfileService: UploadFileService
   ) {
-
+    this.userRole = sessionStorage.getItem('userRole');
     this.columnNames = ModuleFileColumn;
     this.allColumnNames = ModuleFileAllColumn;
     this.updateColumnNames = ModuleFileUpdateColumn;
@@ -80,8 +83,8 @@ export class ModuleFileComponent {
     this.profileId = sessionStorage.getItem('profileId');
     // creating empty object
     this.emptyModuleFile = new ModuleFile();
-    this.loadCourses();
-    this.loadModules();
+    // this.loadCourses();
+
 
     //this.profileId = sessionStorage.getItem('profileId');
   }
@@ -93,6 +96,7 @@ export class ModuleFileComponent {
     this.getAllModulesFile();
     this.getAssignedCoursesOfTeacher(this.profileId);
     this.getInactiveModuleFiles();
+
   }
 
   submitClicked(eventData: any) {
@@ -124,6 +128,9 @@ export class ModuleFileComponent {
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
+
+      this.showAddButton = true;
+      this.showActivateButton = true;
     } else {
       this.location.back();
     }
@@ -139,6 +146,8 @@ export class ModuleFileComponent {
     // hiding view of all column and displaying all module file screen 
     this.viewOne = true;
     this.viewAll = false;
+    this.showAddButton = false;
+    this.showActivateButton = false;
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
 
@@ -149,7 +158,8 @@ export class ModuleFileComponent {
     // hiding update screen and displaying all module files screen 
     this.viewAll = false;
     this.viewUpdate = true;
-
+    this.showAddButton = false;
+    this.showActivateButton = false;
     // assingning data to current data for child component
     this.currentData = objectReceived;
   }
@@ -170,12 +180,16 @@ export class ModuleFileComponent {
   onAddClick() {
     this.viewAll = false;
     this.viewAdd = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // for navigating to activate screen
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // on addComponents's submit button clicked
@@ -198,6 +212,7 @@ export class ModuleFileComponent {
 
 
   private loadModules() {
+    this.modules = [];
     try {
       this.sessionData = sessionStorage.getItem('module');
       this.data = JSON.parse(this.sessionData);
@@ -205,17 +220,31 @@ export class ModuleFileComponent {
       for (var module in this.data) {
         this.modules.push(this.data[module]);
       }
-      //alert(this.courses);
+      //console.log(this.courses);
     }
     catch (err) {
       console.log("Error", err);
     }
-  }
+    console.log(this.courses);
+    this.filteredModules = [];
+    this.courses.forEach(course => {
+      this.modules.forEach(module => {
+        if (course.courseId == module.courseId_id) {
+          this.filteredModules.push(module);
+        }
+      })
+    })
 
+    // console.log(this.filteredModules);
+
+
+
+  }
+  filteredModules: Module[] = [];
   private loadCourses() {
     try {
       this.sessionData = sessionStorage.getItem('course');
-      // alert(this.sessionData);
+      // console.log(this.sessionData);
       this.data = JSON.parse(this.sessionData);
       for (var inst in this.data) {
         this.courses.push(this.data[inst]);
@@ -224,6 +253,8 @@ export class ModuleFileComponent {
     catch (err) {
       console.log("Error", err);
     }
+    this.loadModules();
+
   }
 
   //getting courses assigned to teacher using profileId
@@ -233,6 +264,8 @@ export class ModuleFileComponent {
         //console.log(data);
 
         this.courses = data;
+        this.loadModules();
+
       },
       error => {
         console.log(error);
@@ -247,7 +280,7 @@ export class ModuleFileComponent {
   //       console.log(response);
   //     },
   //     error => {
-  //       alert("failed to fetch data");
+  //       console.log("failed to fetch data");
   //     }
   //   );
   // }
@@ -280,18 +313,18 @@ export class ModuleFileComponent {
 
     this.moduleFileService.addModuleFile(formData).subscribe(
       (data) => {
-        // alert(this.moduleFile)
-        // console.log(data);
+        //console.log(this.moduleFile)
+        //console.log(data);
         this.uploadfileService.uploadFiles(this.files).subscribe();
 
         this.moduleFile = data;
 
 
-        alert('File Added successfully');
+        console.log('File Added successfully');
         this.ngOnInit();
         this.back();
       },
-      (error) => alert('failed to upload ')
+      (error) => console.log('failed to upload ')
     );
   }
 
@@ -301,30 +334,38 @@ export class ModuleFileComponent {
     this.moduleFileService.updateModuleFileById(currentData.moduleFileId, currentData).subscribe(
       response => {
         this.uploadfileService.uploadFiles(this.files).subscribe();
-        alert(`Module File updated successfully !`);
-        this.back();
+
       },
       error => {
-        alert(`Module File updation failed !`);
+        console.log('Module File updation failed !');
       }
+
     );
+    console.log('Module File updated successfully !');
+    this.back();
   }
+
+
 
 
   // for getting all module files
   private getAllModulesFile() {
     // calling service to get all data
+    console.log(this.modules);
     this.moduleFileService.fetchModuleFileList().subscribe(
       response => {
 
         this.allData = [];
+        console.log(this.allData);
         response.forEach((moduleFile: ModuleFile) => {
-          this.modules.find((module: Module) => {
+          this.filteredModules.find((module: Module) => {
             if (moduleFile.moduleId == module.moduleId) {
               this.allData.push({
                 ...moduleFile,
                 courseId: module.courseId_id,
+
               });
+
             }
           })
         })
@@ -338,17 +379,21 @@ export class ModuleFileComponent {
   }
 
 
+
+
+
+
   // For deleting (soft delete) by Id
   private deleteModuleFileById(moduleFileId: number) {
 
     // calling service to soft delte
     this.moduleFileService.deleteModuleFileById(moduleFileId).subscribe(
       (response) => {
-        alert('Module File deleted successfully');
+        console.log('Module File deleted successfully');
         this.ngOnInit();
       },
       (error) => {
-        alert('Module File deletion failed');
+        console.log('Module File deletion failed');
       }
     );
   }
@@ -373,11 +418,11 @@ export class ModuleFileComponent {
 
     this.moduleFileService.activatemoduleFileById(moduleFileId).subscribe(
       response => {
-        alert("Activated modulefile");
+        console.log("Activated modulefile");
         this.ngOnInit();
       },
       error => {
-        alert("Failed to activate");
+        console.log("Failed to activate");
       }
     );
   }

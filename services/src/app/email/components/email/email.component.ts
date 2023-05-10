@@ -24,6 +24,10 @@ export class EmailComponent implements OnInit {
   viewOne: boolean = false;
   viewActivate: boolean = false;
 
+  // for buttons to view
+  showAddButton: boolean = true;
+  showActivateButton: boolean = false;
+
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
 
@@ -66,6 +70,9 @@ export class EmailComponent implements OnInit {
       this.viewAdd = false;
       this.viewUpdate = false;
       // this.viewActivate = false;
+
+      this.showAddButton = true;
+      this.showActivateButton = false;
     } else {
       this.location.back();
     }
@@ -75,12 +82,18 @@ export class EmailComponent implements OnInit {
   onAddClick() {
     this.viewAll = false;
     this.viewAdd = true;
+
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // for navigating to activate screen
   onActivateClick() {
     this.viewAll = true;
     // this.viewActivate = true;
+
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // For navigate to view screen with data
@@ -90,7 +103,8 @@ export class EmailComponent implements OnInit {
     // hiding view of all column and displaying all Email's screen
     this.viewOne = true;
     this.viewAll = false;
-
+    this.showAddButton = false;
+    this.showActivateButton = false;
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
 
@@ -101,7 +115,8 @@ export class EmailComponent implements OnInit {
     // hiding update screen and displaying all Email's screen
     this.viewAll = false;
     this.viewUpdate = true;
-
+    this.showAddButton = false;
+    this.showActivateButton = false;
     // assingning data to current data for child component
     this.currentData = objectReceived;
   }
@@ -125,7 +140,7 @@ export class EmailComponent implements OnInit {
 
   // on updateComponents's submit button clicked
   onUpdateEmailSubmit(objectReceived: Email) {
-    // alert(JSON.stringify(objectReceived))
+    // console.log(JSON.stringify(objectReceived))
     this.updateEmail(objectReceived);
   }
 
@@ -167,13 +182,13 @@ export class EmailComponent implements OnInit {
     currentData.emailIsActive = true;
     this.service.insertEmail(currentData).subscribe(
       response => {
-        alert('Email added successfully');
+        console.log('Email added successfully');
         this.emptyEmail = {} as Email;
         this.ngOnInit();
         this.back();
       },
       error => {
-        alert("Failed to add Email");
+        console.log("Failed to add Email");
       }
 
     );
@@ -183,11 +198,11 @@ export class EmailComponent implements OnInit {
   private updateEmail(currentData: Email) {
     this.service.updateEmail(currentData).subscribe(
       response => {
-        alert('Email updated successfully');
+        console.log('Email updated successfully');
         this.back();
       },
       error => {
-        alert("Failed to update Email");
+        console.log("Failed to update Email");
       }
     );
   }
@@ -196,11 +211,11 @@ export class EmailComponent implements OnInit {
   private deleteEmail(currentData: Email) {
     this.service.deleteEmail(currentData.title).subscribe(
       response => {
-        alert('Email deleted successfully');
+        console.log('Email deleted successfully');
         this.ngOnInit();
       },
       error => {
-        alert("Failed to delete Email");
+        console.log("Failed to delete Email");
       }
     );
   }
@@ -225,12 +240,12 @@ export class EmailComponent implements OnInit {
   //   this.service.activateEmail(Email.emailId).subscribe(
   //     response => {
 
-  //       alert('Email activated successfully');
+  //       console.log('Email activated successfully');
   //       this.ngOnInit();
 
   //     },
   //     error => {
-  //       alert("Email activation failed");
+  //       console.log("Email activation failed");
   //     }
   //   );
 

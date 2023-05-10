@@ -1,72 +1,60 @@
-<div class="container-fluid mt-5 mb-3">
+<div class="container">
 
-    <head>
+    <!-- <head>
         <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    </head>
+    </head> -->
 
-    <div class="header">
+    <div>
         <div class="row">
-            <div class="col-md-6" id="h1">
+            <div class="col-md-6 justify-content-between header">
                 <h1>Student Panel</h1>
                 <h3> Welcome {{userName | titlecase}}</h3>
             </div>
 
-            <div class="col-md-6" id="h2">
-                <button class="btn btn-info" id="demo" (click)="RedirectTOLogin()">Logout</button>
+            <div class="col-md-6 text-right buttons">
+                <button class="btn btn-primary" id="adminbtn" (click)="RedirectTOLogin()">Logout</button>
             </div>
         </div>
     </div>
 
-
-    <div class="col-md-4" id="data1">
-        <div class="card p-3 mb-2">
-            <div class="d-flex justify-content-between">
-                <div class="d-flex flex-row align-items-center">
-                    <i class="material-icons" id="icon1">computer</i>
-                    <div class="ms-2 c-details">
-                        <h2 class="mb-0" id="AuthUsername">Courses</h2>
+    <div class="container">
+        <!-- first row  -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-center" (click)="RedirectToStudentCourse()">
+                    <div class="card-header">
+                        <span class="fas fa-book-open fa-4x" style="color:rgb(21,114,213)"></span>
                     </div>
-
-                    <button id="demo" class="btn btn-info" (click)="RedirectToStudentCourse()">Courses
-                    </button>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-    <div class="col-md-4" id="data1">
-        <div class="card p-3 mb-2">
-            <div class="d-flex justify-content-between">
-                <div class="d-flex flex-row align-items-center">
-                    <i class="material-icons" id="icon1">class</i>
-                    <div class="ms-2 c-details">
-                        <h2 class="mb-0" id="AuthUsername">Lessons</h2>
+                    <div class="card-body">
+                        <!--<h3 class="card-title">Courses</h3>-->
+                        <button class="btn btn-primary">Courses</button>
                     </div>
-
-                    <button id="demo" class="btn btn-info" (click)="RedirectToStudentModule()">
-                        Lessons</button>
                 </div>
-
             </div>
-
-        </div>
-    </div>
-    <div class="col-md-4" id="data1">
-        <div class="card p-3 mb-2">
-            <div class="d-flex justify-content-between">
-                <div class="d-flex flex-row align-items-center">
-                    <i class="material-icons" id="icon1">class</i>
-                    <div class="ms-2 c-details">
-                        <h2 class="mb-0" id="notification" style="text-align: center;"> Notifications</h2>
+            <div class="col-md-4">
+                <div class="card text-center" (click)="RedirectToStudentModule()">
+                    <div class="card-header">
+                        <span class="fas fa-book fa-4x" style="color: rgb(114,208,169);"></span>
                     </div>
-
-                    <button id="demo" class="btn btn-info" (click)="redirectToNotification()">Notification</button>
+                    <div class=" card-body">
+                        <!--<h3 class="card-title">Lessons</h3>-->
+                        <button class="btn btn-primary">Lessons</button>
+                    </div>
                 </div>
-
             </div>
-
+            <div class="col-md-4">
+                <div class="card text-center" (click)="redirectToNotification()">
+                    <div class="card-header">
+                        <span class="fas fa-bell fa-4x" style="color:rgb(236,172,56)"></span>
+                    </div>
+                    <div class="card-body">
+                        <!--<h3 class="card-title">Announcements</h3>-->
+                        <button class="btn btn-primary">Announcements</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
 </div>

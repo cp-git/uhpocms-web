@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Profile } from 'app/profiles/class/profile';
-import { ProfileAllColumn, ProfileColumn } from 'app/profiles/column-names/profile-column';
+import { ProfileAllColumn, ProfileColumn, ProfileUpdateColumn } from 'app/profiles/column-names/profile-column';
 import { ProfileService } from 'app/profiles/services/profile.service';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { Department } from 'app/department/class/department';
@@ -27,12 +27,17 @@ export class ProfileComponent implements OnInit {
   viewAll: boolean = true;
   viewOne: boolean = false;
   viewActivate: boolean = false;
+
+  // for buttons to view
+  showAddButton: boolean = true;
+  showActivateButton: boolean = true;
+
   // If all data is available or not
   dataAvailable: boolean = false;
 
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
-
+  updateColumn: any;
   // To be assigned based on the module
   readonly primaryIdColumnName: string = 'adminId';
 
@@ -63,7 +68,7 @@ export class ProfileComponent implements OnInit {
     // assigng Columns
     this.columnNames = ProfileColumn;
     this.allColumnNames = ProfileAllColumn;
-
+    this.updateColumn = ProfileUpdateColumn;
     // creating empty object
     this.emptyProfile = new Profile();
 
@@ -90,6 +95,9 @@ export class ProfileComponent implements OnInit {
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
+
+      this.showAddButton = true;
+      this.showActivateButton = true;
     } else {
       this.location.back();
     }
@@ -102,6 +110,9 @@ export class ProfileComponent implements OnInit {
 
     this.viewAll = false;
     this.viewAdd = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
+
     // changing column array
     this.changePassingArray();
   }
@@ -110,6 +121,8 @@ export class ProfileComponent implements OnInit {
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // For navigate to view screen with data
@@ -125,6 +138,8 @@ export class ProfileComponent implements OnInit {
     // hiding view of all column and displaying all Profile's screen
     this.viewOne = true;
     this.viewAll = false;
+    this.showAddButton = false;
+    this.showActivateButton = false;
 
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
@@ -140,7 +155,8 @@ export class ProfileComponent implements OnInit {
     // hiding update screen and displaying all Profile's screen
     this.viewAll = false;
     this.viewUpdate = true;
-
+    this.showAddButton = false;
+    this.showActivateButton = false;
     // assingning data to current data for child component
     this.currentData = objectReceived;
   }
@@ -164,8 +180,22 @@ export class ProfileComponent implements OnInit {
 
   // on updateComponents's submit button clicked
   onUpdateProfileSubmit(objectReceived: Profile) {
-    // alert(JSON.stringify(objectReceived))
+    // console.log(JSON.stringify(objectReceived))
     this.updateProfile(objectReceived);
+  }
+
+  getSelectedOptionOfDropdown(dataReceived: Profile) {
+    this.authUserService.getAuthUserById(dataReceived.userId).subscribe(
+      (data: Authuser) => {
+        this.emptyProfile.firstName = data.authUserFirstName;
+        this.emptyProfile.lastName = data.authUserLastName;
+        this.emptyProfile.adminEmail = data.authUserEmail;
+      },
+      (error) => {
+        console.log("failed to fetch auth user");
+
+      }
+    )
   }
 
   ///////////////////////////////////////////
@@ -181,7 +211,7 @@ export class ProfileComponent implements OnInit {
       response => {
 
         this.allData = response; //assign data to local variable
-
+        this.allData.sort((a, b) => a.firstName.toLowerCase() > b.firstName.toLowerCase() ? 1 : -1) // order by alphabets for first name
         // if no data available
         if (this.allData.length > 0) {
           this.dataAvailable = true;
@@ -194,6 +224,23 @@ export class ProfileComponent implements OnInit {
   }
 
 
+
+  //   // Assuming you have a function to retrieve all profiles
+  // getAllProfilesByInstitution(institutionName) {
+  //   const profiles = this.getAllAdminProfiles(); // Replace with your function to retrieve all profiles
+  //   const activeInstitutionProfiles = profiles.filter((profile:any) => {
+  //     return profile.institution === institutionName && profile.institution.isActive;
+  //   });
+
+  //   return activeInstitutionProfiles;
+  // }
+
+  // const institutionName = "exampleInstitution";
+  // const activeInstitutionProfiles = getAllProfilesByInstitution(institutionName);
+
+  // console.log(activeInstitutionProfiles);
+
+
   // fetching institutions data from session storage
   private loadAdminInstitutions() {
 
@@ -202,6 +249,7 @@ export class ProfileComponent implements OnInit {
       this.data = JSON.parse(this.sessionData);
       for (var inst in this.data) {
         this.adminInstitutions.push(this.data[inst]);
+
       }
     }
     catch (err) {
@@ -237,7 +285,7 @@ export class ProfileComponent implements OnInit {
   // For dropdown fetching inactive authusers required for add screen
   private loadInactiveAuthUsers() {
     this.authUserService.getAllInactiveAuthUsers().subscribe(
-      response => {
+      (response: Authuser[]) => {
         this.inactiveAuthUsers = response;
       }
     );
@@ -247,7 +295,7 @@ export class ProfileComponent implements OnInit {
   // For dropdown fetching active authusers required for update view and view all, view one screen
   private loadActiveAuthUsers() {
     this.authUserService.authUserList().subscribe(
-      response => {
+      (response: Authuser[]) => {
         this.activeAuthUsers = response;
       }
     );
@@ -269,22 +317,25 @@ export class ProfileComponent implements OnInit {
         if (currentData.activeUser === true) {
           this.authUserService.activateAuthUserById(currentData.userId).subscribe(
             response => {
-              alert('Profile added successfully');
+              console.log('Profile added successfully');
               this.emptyProfile = {} as Profile;
               this.ngOnInit();
               this.back();
             },
             error => {
-              alert("Failed to add profile");
+              console.log("Failed to add profile");
             }
           );
         } else {
-          alert('Profile saved successfully. NOTE - Profile is not activated!');
+          console.log('Profile saved successfully. NOTE - Profile is not activated!');
+          this.emptyProfile = {} as Profile;
+          this.ngOnInit();
+          this.back();
         }
 
       },
       error => {
-        alert("Failed to add profile");
+        console.log("Failed to add profile");
       });
   }
 
@@ -292,11 +343,11 @@ export class ProfileComponent implements OnInit {
   private updateProfile(currentData: Profile) {
     this.service.saveOrUpdateProfile(currentData.userId, currentData).subscribe(
       response => {
-        alert('Profile updated successfully');
+        console.log('Profile updated successfully');
         this.back();
       },
       error => {
-        alert("Failed to update profile");
+        console.log("Failed to update profile");
       }
     );
   }
@@ -313,8 +364,8 @@ export class ProfileComponent implements OnInit {
         this.activeAuthUsers.find(authUser => {
           if (authUser.authUserId == currentData.userId) {
             this.authUserService.deleteAuthUser(authUser.authUserName).subscribe(
-              response => {
-                alert('Profile deleted successfully');
+              (response: any) => {
+                console.log('Profile deleted successfully');
                 this.ngOnInit();
               }
             );
@@ -322,7 +373,7 @@ export class ProfileComponent implements OnInit {
         })
       },
       error => {
-        alert("Failed to delete profile");
+        console.log("Failed to delete profile");
       }
     );
   }
@@ -334,7 +385,7 @@ export class ProfileComponent implements OnInit {
     this.service.getAllDeactivatedProfiles().subscribe(
       response => {
         this.allInActiveData = response;
-
+        this.allInActiveData.sort((a, b) => a.firstName.toLowerCase() > b.firstName.toLowerCase() ? 1 : -1) // order by alphabets for first name
       },
       error => {
         console.log('No data in table ');
@@ -351,33 +402,33 @@ export class ProfileComponent implements OnInit {
       response => {
         this.authUserService.activateAuthUserById(profile.userId).subscribe(
           response => {
-            alert('Profile activated successfully');
+            console.log('Profile activated successfully');
             this.ngOnInit();
           },
           error => {
-            alert("Failed to activate profile");
+            console.log("Failed to activate profile");
           }
         );
 
       },
       error => {
-        alert("Profile activation failed");
+        console.log("Profile activation failed");
       }
     );
     // } else {
-    //   alert("profile is incomplete to activate!");
+    //   console.log("profile is incomplete to activate!");
     // }
 
   }
 
 
   // getCurrentAuthUser(id: any) {
-  //   // alert(id)
+  //   // console.log(id)
 
   //   this.allInActiveData.forEach(profile => {
-  //     // alert("check " + profile.userId + " " + parseInt(id) + (profile.userId === parseInt(id)))
+  //     // console.log("check " + profile.userId + " " + parseInt(id) + (profile.userId === parseInt(id)))
   //     if (profile.userId === parseInt(id)) {
-  //       // alert(JSON.stringify(profile))
+  //       // console.log(JSON.stringify(profile))
   //       this.emptyProfile = Object.assign({}, profile);
   //       this.foundMatch = true;
   //       return;
@@ -426,6 +477,7 @@ export class ProfileComponent implements OnInit {
         column.arrayName = 'inactiveAuthUsers';
       }
     });
+
 
   }
 

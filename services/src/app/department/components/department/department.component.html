@@ -1,30 +1,36 @@
 <div class="container">
     <div>
         <ng-container *ngIf="viewAll">
-            <div class="row justify-content-between">
+            <!-- <div class="row justify-content-between header">
                 <div class="col-sm-6">
                     <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container>
                 </div>
-                <div class="col-sm-6 text-right">
+                <div class="col-sm-6 text-right buttons">
                     <ng-container *ngTemplateOutlet="addButton;"></ng-container>
                     <ng-container *ngTemplateOutlet="activateButton;"></ng-container>
                     <ng-container *ngTemplateOutlet="backButton;"></ng-container>
 
                 </div>
-            </div>
+            </div> -->
+            <app-module-header [moduleName]="moduleName"
+                [buttons]="{showAddButton:showAddButton,showActivateButton:showActivateButton}"
+                (addButtonClicked)="onAddClick()" (activateButtonClicked)="onActivateClick()"
+                (backButtonClicked)="back()"></app-module-header>
         </ng-container>
 
         <ng-container *ngIf="viewAdd || viewOne || viewUpdate || viewActivate">
-            <div class="row justify-content-between">
+            <!-- <div class="row justify-content-between header">
                 <div class="col-sm-6">
                     <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container>
                 </div>
-                <div class="col-sm-6 text-right">
+                <div class="col-sm-6 text-right buttons">
                     <ng-container *ngTemplateOutlet="backButton;"></ng-container>
                 </div>
-            </div>
+            </div> -->
+            <app-module-header [moduleName]="moduleName"
+                [buttons]="{showAddButton:showAddButton,showActivateButton:showActivateButton}"
+                (backButtonClicked)="back()"></app-module-header>
         </ng-container>
-
         <ng-container *ngIf="viewAll">
             <ng-container *ngTemplateOutlet="viewall;"></ng-container>
         </ng-container>
@@ -47,7 +53,7 @@
     </div>
 </div>
 
-
+<!-- 
 <ng-template #title let-headerTitle>
     <h1>{{headerTitle}}</h1>
 </ng-template>
@@ -62,7 +68,7 @@
 
 <ng-template #activateButton>
     <button class="btn btn-primary" (click)="onActivateClick()">Inactive</button>
-</ng-template>
+</ng-template> -->
 
 <ng-template #viewall>
     <app-view-all *ngIf="allData.length>0" [data]="{moduleData:this.allData , columnNames:this.columnNames}"
@@ -91,7 +97,7 @@
 
 <ng-template #viewadd>
 
-    <app-add-update [data]="{currentData:emptyDepartment , columnNames:columnNames}"
+    <app-add-update [data]="{currentData:emptyDepartment , columnNames:allColumnNames}"
         [dropdown1]="{optionsArray1:this.adminInstitutions ,dropdownColumnId1:dropdownColumnId1 , dropdownColumnName1:dropdownColumnName1}"
         (submitClicked)="onAddDepartmentSubmit($event)"></app-add-update>
 </ng-template>
@@ -101,9 +107,9 @@
     <app-view-one [data]="{currentData:currentData , columnNames:allColumnNames}"
         [dropdown1]="{optionsArray1:this.adminInstitutions ,dropdownColumnId1:dropdownColumnId1 , dropdownColumnName1:dropdownColumnName1}"></app-view-one>
 </ng-template>
- 
+
 <ng-template #viewupdate>
-    <app-add-update [data]="{currentData:currentData , columnNames:columnNames}"
+    <app-add-update [data]="{currentData:currentData , columnNames:updateColumnNames}"
         [dropdown1]="{optionsArray1:this.adminInstitutions ,dropdownColumnId1:dropdownColumnId1 , dropdownColumnName1:dropdownColumnName1}"
         (submitClicked)="onUpdateDepartmentSubmit($event)"></app-add-update>
 </ng-template>

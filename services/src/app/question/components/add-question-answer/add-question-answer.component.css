@@ -4,11 +4,6 @@
     color: white;
 }
 
-.submitbutton:hover {
-    background-color: #122b40;
-    color: white;
-}
-
 .jumbotron {
     padding-right: 20px;
     padding-left: 20px;
@@ -16,6 +11,12 @@
     padding-bottom: 10px;
 }
 
+.fa-pencil,
+.fa-eye,
+.fa-sync-alt,
+.fa-trash-alt {
+    padding: 10%;
+    cursor: pointer;}
 button {
     margin: 2px;
 }
@@ -41,4 +42,13 @@ table td {
 
 .btn {
     border-radius: 15px;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+.header {
+    margin-top: -15px;
+    /* margin-bottom: -5px; */
 }

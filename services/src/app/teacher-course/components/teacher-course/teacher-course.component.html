@@ -1,11 +1,11 @@
 <div class="container">
     <div>
         <ng-container *ngIf="viewAll">
-            <div class="row justify-content-between">
+            <!-- <div class="row justify-content-between header">
                 <div class="col-sm-6">
                     <ng-container *ngTemplateOutlet="title; context: { $implicit: moduleName }"></ng-container>
                 </div>
-                <div class="col-sm-6 text-right">
+                <div class="col-sm-6 text-right buttons">
                     <ng-container *ngIf="showAddButton">
                         <ng-container *ngTemplateOutlet="addButton"></ng-container>
                     </ng-container>
@@ -14,18 +14,26 @@
                     </ng-container>
                     <ng-container *ngTemplateOutlet="backButton"></ng-container>
                 </div>
-            </div>
+            </div> -->
+            <app-module-header [titleWithUserRole]="true" [moduleName]="moduleName"
+                [buttons]="{showAddButton:showAddButton,showActivateButton:showActivateButton}"
+                (addButtonClicked)="onAddClick()" (activateButtonClicked)="onActivateClick()"
+                (backButtonClicked)="back()"></app-module-header>
         </ng-container>
 
         <ng-container *ngIf="viewAdd || viewOne || viewUpdate || viewActivate">
-            <div class="row justify-content-between">
+            <!-- <div class="row justify-content-between header">
                 <div class="col-sm-6">
                     <ng-container *ngTemplateOutlet="title; context: { $implicit: moduleName }"></ng-container>
                 </div>
-                <div class="col-sm-6 text-right">
+                <div class="col-sm-6 text-right buttons">
                     <ng-container *ngTemplateOutlet="backButton"></ng-container>
                 </div>
-            </div>
+            </div> -->
+
+            <app-module-header [titleWithUserRole]="true" [moduleName]="moduleName"
+                [buttons]="{showAddButton:showAddButton,showActivateButton:showActivateButton}"
+                (backButtonClicked)="back()"></app-module-header>
         </ng-container>
 
         <ng-container *ngIf="viewAll">
@@ -51,7 +59,7 @@
 </div>
 
 <ng-template #title let-headerTitle>
-    <h1>{{ headerTitle }}</h1>
+    <h1>{{userRole |titlecase}}'s {{headerTitle}}</h1>
 </ng-template>
 
 <ng-template #addButton>
@@ -65,12 +73,11 @@
 <ng-template #activateButton>
     <button class="btn btn-primary" (click)="onActivateClick()">Inactive</button>
 </ng-template>
-
 <ng-template #viewall>
     <app-view-all *ngIf="allData.length > 0" [data]="{ moduleData: this.allData, columnNames: this.columnNames }"
         [dropdown]="{adminInstitutions,departments}" [idsColumnName]="{ columnName: primaryIdColumnName }"
         [isViewAllScreen]="true" (viewClicked)="onChildViewClick($event)" (updateClicked)="onChildUpdateClick($event)"
-        (deleteClicked)="onChildDeleteClick($event)">
+        (deleteClicked)="onChildDeleteClick($event)" [buttons]="{updateButton:updateButton, deleteButton:deleteButton}">
     </app-view-all>
     <div *ngIf="allData.length == 0">
         <h3>No active Courses</h3>
@@ -100,6 +107,8 @@
 </ng-template>
 
 <ng-template #viewupdate>
-    <app-add-update [data]="{ currentData: currentData, columnNames: allColumnNames }"
+
+    <app-add-update [data]="{ currentData: currentData, columnNames: updateColumnNames }"
         [dropdown]="{adminInstitutions,departments}" (submitClicked)="onUpdateCourseSubmit($event)"></app-add-update>
+
 </ng-template>

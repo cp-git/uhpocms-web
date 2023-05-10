@@ -1,20 +1,42 @@
-body {
+/* body {
     background-color: #eee
-}
+} */
 
-#adminbtn {
+/* #adminbtn {
+    text-align: center;
     color: white;
     background-color: rgba(26, 115, 232, 0.83);
     margin-left: 180px;
     width: 160px;
     height: 40px;
-
-}
+} */
 
 .card {
     height: 200px;
-    border: none;
-    border-radius: 10px
+    border: 5px solid #566787;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+button {
+    /* color: black; */
+    /* background-color: #1DCAFF */
+}
+
+button:hover {
+    /* background-color: #00ACED */
+}
+
+.card-body button {
+    margin-top: 30px;
+    font-size: 16px;
+}
+
+.card-header {
+    margin-top: 30px;
 }
 
 .c-details span {
@@ -63,21 +85,18 @@ body {
     color: #a5aec0
 }
 
+/* 
 #h2 button {
     margin-top: 20px;
-    margin-left: 600px;
+    margin-left: 560px;
     width: 90px;
     height: 40px;
-}
+} */
 
 #sub-head {
 
     margin-top: 30px;
 
-}
-
-.card {
-    border: 1px groove red;
 }
 
 #AuthUsername {
@@ -86,6 +105,7 @@ body {
 }
 
 #demo {
+
     margin-left: 180px;
     width: 160px;
     height: 40px;
@@ -103,4 +123,13 @@ body {
 
 #data1 {
     margin-top: 20px;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+.header {
+    margin-top: -15px;
+    margin-bottom: -5px;
 }

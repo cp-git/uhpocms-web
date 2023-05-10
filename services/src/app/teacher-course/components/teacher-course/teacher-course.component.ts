@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Department } from 'app/department/class/department';
 // Module specific imports
-import { CourseAllColumn, CourseColumn } from 'app/teacher-course/column-name/teacher-course-column';
+
+import { CourseAllColumn, CourseColumn, CourseUpdateColumn } from 'app/teacher-course/column-name/teacher-course-column';
+
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { Course } from 'app/teacher-course/class/course';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
@@ -18,7 +20,7 @@ export class TeacherCourseComponent implements OnInit {
 
 
   // title heading
-  moduleName: string = "Courses Administration";
+  moduleName: string = "Courses";
 
   // for scren view
   viewUpdate: boolean = false;
@@ -33,10 +35,18 @@ export class TeacherCourseComponent implements OnInit {
   // If all data is available or not
   dataAvailable: boolean = false;
 
+  updateButton: boolean = true;
+  deleteButton: boolean = true;
+
+
   courseDepartment: CourseDepartment;
   institutionId: number = 0;
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
+
+  updateColumnNames: any;
+
+
 
   // To be assigned based on the module
   readonly primaryIdColumnName: string = 'courseId';
@@ -60,10 +70,15 @@ export class TeacherCourseComponent implements OnInit {
   adminInstitutions: AdminInstitution[] = [];
   departments: Department[] = [];
 
+
+
   courseDepartments: CourseDepartment[] = [];
   constructor(private service: TeacherCourseService, private location: Location, private departmentService: DepartmentService) {
     this.columnNames = CourseColumn;
     this.allColumnNames = CourseAllColumn;
+
+    this.updateColumnNames = CourseUpdateColumn;
+
 
     // creating empty object
     this.emptyCourse = new Course();
@@ -93,6 +108,9 @@ export class TeacherCourseComponent implements OnInit {
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
+      this.showAddButton = true;
+      this.showActivateButton = true;
+
     } else {
       this.location.back();
     }
@@ -107,7 +125,8 @@ export class TeacherCourseComponent implements OnInit {
     // hiding view of all column and displaying all course screen 
     this.viewOne = true;
     this.viewAll = false;
-
+    this.showAddButton = false;
+    this.showActivateButton = false;
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
 
@@ -118,7 +137,8 @@ export class TeacherCourseComponent implements OnInit {
     // hiding update screen and displaying all course screen 
     this.viewAll = false;
     this.viewUpdate = true;
-
+    this.showAddButton = false;
+    this.showActivateButton = false;
     // assingning data to current data for child component
     this.currentData = objectReceived;
   }
@@ -139,12 +159,16 @@ export class TeacherCourseComponent implements OnInit {
   onAddClick() {
     this.viewAll = false;
     this.viewAdd = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // for navigating to activate screen
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // on addComponents's submit button clicked
@@ -166,11 +190,11 @@ export class TeacherCourseComponent implements OnInit {
     // calling service for updating data
     this.service.updateCourseById(currentData.courseId, currentData).subscribe(
       response => {
-        alert(`Course updated successfully !`);
+        console.log(`Course updated successfully !`);
         this.back();
       },
       error => {
-        alert(`Course updation failed !`);
+        console.log(`Course updation failed !`);
       }
     );
   }
@@ -179,22 +203,27 @@ export class TeacherCourseComponent implements OnInit {
   private addCourse(currentData: any) {
 
     currentData.courseIsActive = true;  // setting active true
-    console.log("currentda" + JSON.stringify(currentData));
+    // console.log("currentda" + JSON.stringify(currentData));
     // calling service for adding data
     this.service.addCourse(currentData).subscribe(
       (data) => {
 
         this.courseDepartment.courseId = data.courseId;
 
+<<<<<<< HEAD
         this.courseDepartment.department_id = currentData.departmentId;
         console.log("coursedept" + JSON.stringify(this.courseDepartment));
+=======
+        this.courseDepartment.departmentId = currentData.departmentId;
+        // console.log("coursedept" + JSON.stringify(this.courseDepartment));
+>>>>>>> development
         this.service.assignCourseToDepartment(this.courseDepartment).subscribe(
           response => {
-            alert('Course Added successfully');
+            console.log('Course Added successfully');
 
           },
           error => {
-            alert("Course added but failed to assign");
+            console.log("Course added but failed to assign");
           }
         );
         this.emptyCourse = {} as Course;
@@ -203,7 +232,7 @@ export class TeacherCourseComponent implements OnInit {
 
       },
       (error) => {
-        alert("Failed to add Course");
+        console.log("Failed to add Course");
       });
   }
 
@@ -226,6 +255,7 @@ export class TeacherCourseComponent implements OnInit {
                 departmentId: coursedepartment.department_id,
               });
             }
+            this.allData.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name
           })
         })
         console.log(this.allData);
@@ -244,11 +274,11 @@ export class TeacherCourseComponent implements OnInit {
     // calling service to soft delete
     this.service.deleteCourseByCourseId(courseId).subscribe(
       (response) => {
-        alert('Course deleted successfully');
+        console.log('Course deleted successfully');
         this.ngOnInit();
       },
       (error) => {
-        alert('course deletion failed');
+        console.log('course deletion failed');
       }
     );
   }
@@ -270,6 +300,7 @@ export class TeacherCourseComponent implements OnInit {
               });
 
             }
+            this.allInActiveData.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name
           })
         })
         console.log(this.allInActiveData);
@@ -294,7 +325,7 @@ export class TeacherCourseComponent implements OnInit {
   private loadAdminInstitutions() {
     try {
       this.sessionData = sessionStorage.getItem('admininstitution');
-      // alert(this.sessionData);
+      // console.log(this.sessionData);
       this.data = JSON.parse(this.sessionData);
       for (var inst in this.data) {
         this.adminInstitutions.push(this.data[inst]);
@@ -312,11 +343,11 @@ export class TeacherCourseComponent implements OnInit {
     // calling service to activating admin role
     this.service.activateCourseById(courseId).subscribe(
       response => {
-        alert("Activated course");
+        console.log("Activated course");
         this.ngOnInit();
       },
       error => {
-        alert("Failed to activate");
+        console.log("Failed to activate");
       }
     );
   }
@@ -341,10 +372,14 @@ export class TeacherCourseComponent implements OnInit {
         this.getAllCourse();
         break;
       case 'teacher':
+        this.updateButton = false;
+        this.deleteButton = false;
         this.getAssignedCoursesOfTeacher(this.profileId);
 
         break;
       case 'student':
+        this.updateButton = false;
+        this.deleteButton = false;
         this.getCoursesEnrolledToStudent(this.profileId);
         break;
     }
@@ -357,6 +392,8 @@ export class TeacherCourseComponent implements OnInit {
       (data) => {
         this.allData = [];
         data.forEach((course: Course) => {
+          // console.log(course);
+
           this.courseDepartments.find((coursedepartment: CourseDepartment) => {
             if (course.courseId == coursedepartment.courseId) {
               this.allData.push({
@@ -364,6 +401,7 @@ export class TeacherCourseComponent implements OnInit {
                 departmentId: coursedepartment.department_id,
               });
             }
+            this.allData.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name
           })
         })
       },
@@ -389,6 +427,7 @@ export class TeacherCourseComponent implements OnInit {
                 departmentId: coursedepartment.department_id,
               });
             }
+            this.allData.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name
           })
         })
         console.log(this.allData);

@@ -60,5 +60,9 @@ export class TeacherPanelComponent {
   RedirectToModuleFile() {
     this._route.navigate(['modulefile'])
   }
+  RedirectToEnrollStudent() {
 
+    this._route.navigate(['enrollstudent', this.userName])
+
+  }
 }

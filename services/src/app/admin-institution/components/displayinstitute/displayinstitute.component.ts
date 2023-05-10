@@ -12,7 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./displayinstitute.component.css']
 })
 export class DisplayinstituteComponent {
-
+  moduleName = 'Institute Administration';
   // Institution array
   admininstitutions: AdminInstitution[] = [];
   backupInst: AdminInstitution[] = [];
@@ -23,6 +23,10 @@ export class DisplayinstituteComponent {
   admininstitution: AdminInstitution;
   userName!: string;
   adminId: any;
+
+  // for buttons to view
+  showAddButton: boolean = true;
+  showActivateButton: boolean = true;
 
   //constructor
   constructor(private _institutionService: AdmininstitutionService, private _route: Router, private location: Location, private _activatedRoute: ActivatedRoute, private _sanitizer: DomSanitizer) {
@@ -73,9 +77,12 @@ export class DisplayinstituteComponent {
       (response) => {
         // assigning received data to institution
         this.admininstitutions = response;
+
         for (let i = 0; i < this.admininstitutions.length; i++) {
           console.log(this.admininstitutions[i].adminInstitutionPicture);
         }
+        this.admininstitutions.sort((a, b) => a.adminInstitutionName.toLowerCase() > b.adminInstitutionName.toLowerCase() ? 1 : -1) // order by alphabets for institution name
+
 
         //  cloning array from instituion to backupinst
         this.admininstitutions.forEach((inst) => {
@@ -101,16 +108,17 @@ export class DisplayinstituteComponent {
       (response) => {
         this.admininstitutions.splice(this.admininstitutions.indexOf(inst), 1);
         this.backupInst.splice(this.admininstitutions.indexOf(inst), 1);
-        alert(inst.adminInstitutionName + ' Institution deleted successfully');
+        // console.log(inst.adminInstitutionName + ' Institution deleted successfully');
+        console.log(inst.adminInstitutionName + ' Institution deleted successfully');
         this.displayEmptyRow();
       },
       (error) => {
-        alert('not able to delete \n' + JSON.stringify(error.error));
+        console.log('not able to delete \n' + JSON.stringify(error.error));
       }
     );
   }
 
-  Back() {
+  back() {
     //this.location.back();
     this._route.navigate(['adminmodule/admin', this.userName]);
   }

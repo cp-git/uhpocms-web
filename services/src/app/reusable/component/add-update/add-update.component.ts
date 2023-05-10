@@ -11,10 +11,10 @@ export class AddUpdateComponent implements OnInit {
   @Input() data: { currentData: any, columnNames: any } = { currentData: null, columnNames: null };
   @Input() dropdown1?: { optionsArray1: any, dropdownColumnId1: string, dropdownColumnName1: string };
   @Input() dropdown2?: { optionsArray2: any, dropdownColumnId2: string, dropdownColumnName2: string };
-  @Input() dropdown?: any
+  @Input() dropdown?: any;
   // event for parent component 
   @Output() submitClicked: EventEmitter<any> = new EventEmitter();
-
+  @Output() getSelectedOptionOfDropdown: EventEmitter<any> = new EventEmitter();
   columnNames: any;
   currentData: any;
 
@@ -48,7 +48,7 @@ export class AddUpdateComponent implements OnInit {
       this.optionsArray1 = this.dropdown1?.optionsArray1;
       this.dropdownColumnId1 = this.dropdown1?.dropdownColumnId1;
       this.dropdownColumnName1 = this.dropdown1?.dropdownColumnName1;
-      // alert( this.optionsArray1 )
+      // console.log( this.optionsArray1 )
       console.log(this.optionsArray1)
     }
 
@@ -56,8 +56,19 @@ export class AddUpdateComponent implements OnInit {
       this.optionsArray2 = this.dropdown2?.optionsArray2;
       this.dropdownColumnId2 = this.dropdown2?.dropdownColumnId2;
       this.dropdownColumnName2 = this.dropdown2?.dropdownColumnName2;
-      // alert( this.optionsArray2)
+      // console.log( this.optionsArray2)
       console.log(this.optionsArray2)
     }
   }
+
+  onDropdownSelected(option: any) {
+    console.log('called onDropdownSelected');
+    this.getSelectedOptionOfDropdown.emit(option);
+  }
+
+  isValidDate(dateStr: string): boolean {
+    const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
+    return isoDatePattern.test(dateStr) && !isNaN(Date.parse(dateStr));
+  }
+
 }

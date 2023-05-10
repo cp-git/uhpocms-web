@@ -1,51 +1,135 @@
-<div class="container-fluid">
-    <div class="myheader">
-        <h1>Announcement</h1>
-    </div>
-</div>
 <div class="container">
+    <!-- <h1 class="text-left">{{userRole | titlecase}}'s Notification</h1>
+
+<div class="top-right-buttons">
+    
     <div class="row" *ngIf="isAutherisedToAdd">
-        <!-- Button trigger modal -->
+        Button trigger modal 
         <div class="col-md-12 bg-light text-right">
             <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModal"
                 routerLink="add">Add Notification</button>
         </div>
     </div>
+    <button class="btn btn-primary" (click)="back()">Back</button>
+</div> -->
 
-    <div class="d-flex flex-row mb-3">
+    <div class="row justify-content-between header">
+        <div class="col-sm-6">
+            <h1 class="text-left">{{userRole | titlecase}}'s Notification</h1>
+        </div>
+        <div class="col-sm-6 text-right buttons" >
+            <button *ngIf="isAutherisedToAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                routerLink="add">Add Notification</button>
+            <button class="btn btn-primary" (click)="back()">Back</button>
+
+        </div>
+    </div>
+    <div class="container">
+
+
+
+        <div class="d-flex flex-row mb-3">
+            <h4>Received</h4>
+            <div class="table-wrapper">
+                <table class="table table-bordered table-hover">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th scope="col">Subject</th>
+                            <th scope="col">Message</th>
+                            <!-- <th scope="col">To</th> -->
+                            <th scope="col">Sent By</th>
+                            <th  scope="col">View</th>
+                            <th *ngIf="forDeleteAnnoucement" scope="col">Delete</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngFor="let data of announcements; let i=index">
+
+                            <td >
+                                {{data.announcementTitle}}
+                            </td>
+                            <td >
+                                {{data.announcementMessage}}
+                            </td>
+                            <!-- <td>{{data.announcementTo}}</td> -->
+                            <td >
+                                <div *ngFor="let profile of allData">
+                                    <div *ngIf="profile.adminId == data.announcementSendby">
+                            <td>{{profile.adminEmail}}</td>
+            </div>
+        </div>
+        </td>
+        <td>
+            <span (click)="viewAnnouncement(data)"data-toggle="modal" data-target="#exampleModal" class="fa-solid fa-eye"
+            style="font-size:24px;color: #6197f5;"></span>
+        </td>
+        <td *ngIf=" forDeleteAnnoucement" (click)="deleteAnnouncementById(data.id)"><span
+            class='fas fa-trash-alt' style='font-size:24px;color: red;'></span>
+        </td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
+</div>
+<div class="d-flex flex-row mb-3">
+    <h4 *ngIf="isAutherisedToSend">Sent</h4>
+    <div class="table-wrapper">
         <table class="table table-bordered table-hover">
+
             <thead class="table-dark">
-                <tr>
-                    <th scope="col">#</th>
+
+                <tr *ngIf="isAutherisedToSend">
+
                     <th scope="col">Subject</th>
                     <th scope="col">Message</th>
-                    <!-- <th scope="col">To</th> -->
-                    <th scope="col">Sent By</th>
-                    <th *ngIf="isAutherisedToAdd" scope="col">Delete</th>
+                    <th  scope="col">View</th>
+                    <!-- <th scope="col">Sent By</th> -->
+                    <th *ngIf="isAutherisedToDelete" scope="col">Delete</th>
+
                 </tr>
+
             </thead>
+
             <tbody>
-                <tr *ngFor="let data of announcements; let i=index">
-                    <th scope="row">{{i+1}}</th>
-                    <td (click)="viewAnnouncement(data)" data-toggle="modal" data-target="#exampleModal">
+
+                <tr *ngFor="let data of outgoingAnnoucements; let i=index">
+
+                    <td (click)="viewAnnouncement(data)" >
                         {{data.announcementTitle}}
                     </td>
-                    <td>
+                    <td  >
                         {{data.announcementMessage}}
                     </td>
                     <!-- <td>{{data.announcementTo}}</td> -->
-                    <td>{{data.announcementReadby}}</td>
-                    <td *ngIf=" isAutherisedToAdd" (click)="deleteAnnouncementById(data.id)"><span
-                            class="fa fa-trash"></span>
+                    <!-- <td (click)="viewAnnouncement(data)" data-toggle="modal" data-target="#exampleModal">
+                <ng-container *ngFor="let profile of allData">
+                    <div *ngIf="profile.adminId == data.announcementSendby">
+                      <td>{{profile.adminEmail}}</td>
+                    </div>
+                   
+                  </ng-container>
+                </td> -->
+                <td>
+                    <span (click)="viewAnnouncement(data)"data-toggle="modal" data-target="#exampleModal" class="fa-solid fa-eye"
+                    style="font-size:24px;color: #6197f5;"></span>
+                </td>
+                
+                    <td *ngIf=" isAutherisedToDelete" (click)="deleteAnnouncementById(data.id)"><span
+                        class='fas fa-trash-alt' style='font-size:24px;color: red;'></span>
                     </td>
                 </tr>
-
             </tbody>
         </table>
     </div>
-    <div class="col-md-12 bg-light text-right">
-        <button class="btn btn-primary" style="margin-right: 94%;" (click)="back()">Back</button>
-    </div>
 </div>
 
+</div>
+</div>
 <router-outlet></router-outlet>

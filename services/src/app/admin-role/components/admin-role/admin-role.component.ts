@@ -15,7 +15,7 @@ import { AdminRoleAllColumn, AdminRoleColumn } from 'app/admin-role/column-names
 export class AdminRoleComponent implements OnInit {
 
   // title heading
-  moduleName: string = "AdminRole Administration";
+  moduleName: string = "Role Administration";
 
   // for scren view
   viewUpdate: boolean = false;
@@ -23,6 +23,11 @@ export class AdminRoleComponent implements OnInit {
   viewAll: boolean = true;
   viewOne: boolean = false;
   viewActivate: boolean = false;
+
+  // for buttons to view
+  showAddButton: boolean = true;
+  showActivateButton: boolean = true;
+
   // If all data is available or not
   dataAvailable: boolean = false;
 
@@ -41,8 +46,6 @@ export class AdminRoleComponent implements OnInit {
 
   emptyAdminRole: AdminRole;  // empty admin role
   currentData!: AdminRole;  // for update and view, to show existing data
-
-
 
   constructor(private service: AdminRoleService, private location: Location) {
 
@@ -70,6 +73,10 @@ export class AdminRoleComponent implements OnInit {
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
+
+      this.showAddButton = true;
+      this.showActivateButton = true;
+
     } else {
       this.location.back();
     }
@@ -83,6 +90,8 @@ export class AdminRoleComponent implements OnInit {
     // hiding view of all column and displaying all admin roles screen 
     this.viewOne = true;
     this.viewAll = false;
+    this.showAddButton = false;
+    this.showActivateButton = false;
 
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
@@ -94,6 +103,8 @@ export class AdminRoleComponent implements OnInit {
     // hiding update screen and displaying all admin roles screen 
     this.viewAll = false;
     this.viewUpdate = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
 
     // assingning data to current data for child component
     this.currentData = objectReceived;
@@ -115,12 +126,16 @@ export class AdminRoleComponent implements OnInit {
   onAddClick() {
     this.viewAll = false;
     this.viewAdd = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // for navigating to activate screen
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // on addComponents's submit button clicked
@@ -142,11 +157,11 @@ export class AdminRoleComponent implements OnInit {
     // calling service for updating data
     this.service.updateAdminRole(currentData.roleName, currentData).subscribe(
       response => {
-        alert(`AdminRole updated successfully !`);
+        console.log(`AdminRole updated successfully !`);
         this.back();
       },
       error => {
-        alert(`AdminRole updation failed !`);
+        console.log(`AdminRole updation failed !`);
       }
     );
   }
@@ -159,13 +174,13 @@ export class AdminRoleComponent implements OnInit {
     // calling service for adding data
     this.service.addAdminRole(currentData).subscribe(
       (data) => {
-        alert('Role added Successfully');
+        console.log('Role added Successfully');
         this.emptyAdminRole = {} as AdminRole;
         this.ngOnInit();
         this.back();
       },
       (error) => {
-        alert("Failed to add role");
+        console.log("Failed to add role");
       });
   }
 
@@ -179,7 +194,7 @@ export class AdminRoleComponent implements OnInit {
       response => {
 
         this.allData = response; //assign data to local variable
-
+        this.allData.sort((a, b) => a.roleName.toLowerCase() > b.roleName.toLowerCase() ? 1 : -1) // order by alphabets for role name
         // if no data available
         if (this.allData.length > 0) {
           this.dataAvailable = true;
@@ -197,11 +212,11 @@ export class AdminRoleComponent implements OnInit {
     // calling service to soft delte
     this.service.deleteAdminRole(roleName).subscribe(
       (response) => {
-        alert('Admin Role deleted successfully');
+        console.log('Admin Role deleted successfully');
         this.ngOnInit();
       },
       (error) => {
-        alert('Admin Role deletion failed');
+        console.log('Admin Role deletion failed');
       }
     );
   }
@@ -213,6 +228,7 @@ export class AdminRoleComponent implements OnInit {
     this.service.getAllDeactivatedRoles().subscribe(
       response => {
         this.allInActiveData = response;
+        this.allInActiveData.sort((a, b) => a.roleName.toLowerCase() > b.roleName.toLowerCase() ? 1 : -1) // order by alphabets for role name
       },
       error => {
         console.log('No data in table ');
@@ -228,11 +244,11 @@ export class AdminRoleComponent implements OnInit {
     // calling service to activating admin role
     this.service.activateAdminRole(roleId).subscribe(
       response => {
-        alert("Activated admin role");
+        console.log("Activated admin role");
         this.ngOnInit();
       },
       error => {
-        alert("Failed to activate");
+        console.log("Failed to activate");
       }
     );
   }

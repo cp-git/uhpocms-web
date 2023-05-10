@@ -2,11 +2,12 @@
     <table class="table table-bordered">
         <thead id="deptHeader">
             <tr>
+                <th style="width: 40px;">#</th>
                 <th *ngFor="let column of columnNames">{{ column.label }}</th>
                 <ng-container *ngIf="isViewAllScreen">
-                    <th>Update</th>
+                    <th *ngIf="buttons.updateButton">Update</th>
                     <th>View</th>
-                    <th>Delete</th>
+                    <th *ngIf="buttons.deleteButton">Delete</th>
                 </ng-container>
                 <ng-container *ngIf="isActivateScreen">
                     <th>Activate</th>
@@ -14,7 +15,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let row of tableData">
+            <tr *ngFor="let row of tableData;let i=index">
+                <td><b>{{i+1}}</b></td>
                 <td *ngFor="let column of columnNames">
                     <ng-container [ngSwitch]="column.type">
                         <input name="{{column.key}}" class="form-control" *ngSwitchCase="'input'" type="text"
@@ -23,6 +25,9 @@
                             [(ngModel)]="row[column.key]" disabled>
                         <!-- handle email type -->
                         <input name="{{column.key}}" class="form-control" *ngSwitchCase="'date'" type="date"
+                            [(ngModel)]="row[column.key]" disabled>
+
+                        <input name="{{column.key}}" class="form-control" *ngSwitchCase="'password'" type="password"
                             [(ngModel)]="row[column.key]" disabled>
                         <!-- handle date type -->
                         <textarea name="{{column.key}}" class="form-control" *ngSwitchCase="'textarea'"
@@ -54,17 +59,23 @@
                 </td>
 
                 <ng-container *ngIf="isViewAllScreen">
-                    <td><button (click)="onUpdatClicked(row)" class="btn btn-primary">Update</button></td>
-                    <td><button (click)="onViewClicked(row)" class="btn btn-primary">View</button></td>
-                    <td><button (click)="onDeleteClicked(row)" class="btn btn-danger">Delete</button></td>
+                    <td title="Edit" *ngIf="buttons.updateButton"><span (click)="onUpdatClicked(row)"
+                            class="fa-solid fa-pencil" style='font-size:24px;color: orange;'></span>
+                    </td>
+                    <td title="View"><span (click)=" onViewClicked(row)" class="fa-solid fa-eye"
+                            style="font-size:24px;color: #6197f5;"></span>
+                    </td>
+                    <td title="Delete" *ngIf="buttons.deleteButton"><span (click)="onDeleteClicked(row)"
+                            class='fas fa-trash-alt' style='font-size:24px;color: red;'></span></td>
 
                 </ng-container>
                 <ng-container *ngIf="isActivateScreen">
-                    <td><button (click)="onActivateClicked(row)" class="btn btn-danger">Activate</button></td>
+                    <td title="Activate"><span (click)="onActivateClicked(row)" class="fas fa-sync-alt"
+                            style="font-size:24px;color: green;"></span>
+                    </td>
                 </ng-container>
             </tr>
         </tbody>
     </table>
 
 </div>
-

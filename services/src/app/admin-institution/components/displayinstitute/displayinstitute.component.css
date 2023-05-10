@@ -32,15 +32,27 @@ img:hover {
     filter: grayscale(100%);
 }
 
-.container {
+/* .container {
     margin-top: 20px;
+} */
 
+.institutebtn {
+    margin: 10px;
 }
 
-button {
-    margin: 10px;
+.btn {
+    border-radius: 15px;
 }
 
 /* .row {
     padding-top: 2%;
 } */
+
+.buttons {
+    margin-top: 20px;
+}
+
+.header {
+    margin-top: -15px;
+    margin-bottom: -5px;
+}

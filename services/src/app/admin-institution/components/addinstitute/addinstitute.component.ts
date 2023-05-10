@@ -73,7 +73,8 @@ export class AddinstituteComponent {
 
     console.log("in function...")
     if (this.backupInst.findIndex((data) => data.adminInstitutionName === inst.adminInstitutionName) >= 0) {
-      alert('Institute name already exist. please enter another.');
+      // alert('Institute name already exist. please enter another.');
+      console.log('Institute name already exist. please enter another.');
     } else {
       // assigning value
       this.admininstitution = {} as AdminInstitution;
@@ -115,7 +116,8 @@ export class AddinstituteComponent {
 
           this.admininstitutions.push(this.admininstitution);
           this.backupInst.push(Object.assign({}, this.admininstitution));
-          alert('Institute Added Successfuly');
+          // alert('Institute Added Successfuly');
+          console.log('Institute Added Successfully');
           this._route.navigate(['displayinstitute', this.userName]);
 
           if (this.admininstitutions.length > 0) {
@@ -123,8 +125,9 @@ export class AddinstituteComponent {
           }
         },
         (error) => {
-          //alert(this.admininstitution)
-          alert('not able to add data \n' + JSON.stringify(error.error));
+          // alert('not able to add data \n' + JSON.stringify(error.error));
+          console.log('not able to add data \n' + JSON.stringify(error.error));
+
         }
       );
     }

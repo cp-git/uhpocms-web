@@ -4,6 +4,7 @@ import { environment } from 'environments/environment.development';
 import { Observable } from 'rxjs';
 import { Announcement } from '../class/announcement';
 import { AnnouncementTo } from '../class/announcement-to';
+import { Profile } from 'app/profiles/class/profile';
 
 @Injectable({
   providedIn: 'root'
@@ -59,5 +60,13 @@ export class AnnouncementService {
   //function to get profile by ids based on announcement
   fetchProfileIdsByAnnouncementId(announcementId: number): Observable<AnnouncementTo[]> {
     return this._http.get<AnnouncementTo[]>(`${this.announcementUrl}/profileid/${announcementId}`);
+  }
+   getAnnouncementBySendBy(profileId : number){
+    return this._http.get<Announcement[]>(`${this.announcementUrl}/sendby?id=${profileId}`);
+  }
+
+  getStudentsAssignedToTeacher(profileId : number){
+   // alert(`http://localhost:8081/uhpocms/profile/profiles/${profileId}`);
+    return this._http.get<Profile[]>(`http://localhost:8090/instituteadmin/uhpocms/profile/profiles/${profileId}`);
   }
 }

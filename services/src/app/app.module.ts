@@ -75,7 +75,9 @@ import { AccessControlModule } from './accesscontrol/module/accesscontrol.module
 import { ModuleFileModule } from './module-file/module-names/module-file.module';
 import { HttpInterceptorService } from './shared/services/HttpInterceptor/http-interceptor.service';
 import { UploadfileReusableModule } from './uploadfile-reusable/uploadfile-reusable.module';
-import { QuestionAnswerComponent } from './question/components/question-answer/question-answer.component';
+import { StudentModuleModule } from './student-module/student-module.module';
+import { ModuleHeaderComponent } from './reusable/component/module-header/module-header.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -106,10 +108,8 @@ import { QuestionAnswerComponent } from './question/components/question-answer/q
     CourseDepartmentComponent,
     AddDepartmentsComponent,
     AssigncoursetoteacherComponent,
-    StudentPanelComponent,
-    StudentModuleComponent,
     UploadFileComponent,
-
+    StudentPanelComponent
   ],
 
   imports: [
@@ -137,8 +137,8 @@ import { QuestionAnswerComponent } from './question/components/question-answer/q
     AccessControlModule,
     UploadfileReusableModule,
     ReactiveFormsModule,
-    FormsModule
-
+    FormsModule,
+    StudentModuleModule
   ],
 
   providers: [

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Quiz } from 'app/quiz/class/quiz';
-import { TeacherQuizAllColumn, TeacherQuizColumn } from 'app/quiz/column-names/quiz-column';
+import { TeacherQuizAllColumn, TeacherQuizColumn, TeacherQuizUpdateColumn } from 'app/quiz/column-names/quiz-column';
 import { QuizService } from 'app/quiz/services/quiz.service';
 import { Location } from '@angular/common';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
@@ -17,7 +17,7 @@ import { Category } from 'app/category/class/category';
 export class QuizComponent implements OnInit {
 
   // title heading for Quiz
-  moduleName: string = "Quiz Administration";
+  moduleName: string = "Quiz";
 
   viewUpdate: boolean = false;
   viewAdd: boolean = false;
@@ -25,10 +25,17 @@ export class QuizComponent implements OnInit {
   viewOne: boolean = false;
   viewActivate: boolean = false;
 
+  // for buttons to view
+  showAddButton: boolean = true;
+  showActivateButton: boolean = true;
+
   //Display Column Names
 
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
+
+  updateColumnNames: any;
+
 
   allColumnViewNames: any; // header for all visible column data
 
@@ -47,6 +54,8 @@ export class QuizComponent implements OnInit {
   courses: Course[] = [];
   modules: Module[] = [];
   categories: Category[] = [];
+  userRole: any;
+  titleWithUserRole: boolean = true;
   constructor(
     private quizService: QuizService,
     private location: Location,
@@ -55,13 +64,17 @@ export class QuizComponent implements OnInit {
     private categotyService: CategoryService
   ) {
 
+    this.userRole = sessionStorage.getItem('userRole');
     // assigng headers
     this.columnNames = TeacherQuizColumn;
     this.allColumnNames = TeacherQuizAllColumn;
 
+    this.updateColumnNames = TeacherQuizUpdateColumn;
+
+
     // creating empty object
     this.emptyQuiz = new Quiz();
-
+    //this.loadAllCourses();
 
     //calling services for foreign key data (dropdown)
     this.loadAllCategories();
@@ -73,7 +86,6 @@ export class QuizComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getAllQuizzes();  // for getting all active Quizs
     this.getInActiveQuiz(); // for getting all inactive Quizs
     this.getAssignedCoursesOfTeacher(this.profileId)
 
@@ -91,6 +103,8 @@ export class QuizComponent implements OnInit {
     // hiding view of all column and displaying all Quizs screen 
     this.viewOne = true;
     this.viewAll = false;
+    this.showAddButton = false;
+    this.showActivateButton = false;
 
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
@@ -102,6 +116,8 @@ export class QuizComponent implements OnInit {
     // hiding update screen and displaying all Quizs screen 
     this.viewAll = false;
     this.viewUpdate = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
 
     // assingning data to current data for child component
     this.currentData = objectReceived;
@@ -122,6 +138,8 @@ export class QuizComponent implements OnInit {
   onAddClick() {
     this.viewAll = false;
     this.viewAdd = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // For navigate to activate screen with data
@@ -129,6 +147,8 @@ export class QuizComponent implements OnInit {
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
+    this.showAddButton = false;
+    this.showActivateButton = false;
   }
 
   // on updateComponents's submit button clicked
@@ -144,6 +164,9 @@ export class QuizComponent implements OnInit {
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
+
+      this.showAddButton = true;
+      this.showActivateButton = true;
     } else {
       this.location.back();
     }
@@ -155,15 +178,21 @@ export class QuizComponent implements OnInit {
   ///////////////////////////////////////////
 
   // for getting all quizzes
-  getAllQuizzes() {
+  getAllQuizzes(courses: Course[]) {
     this.quizService.getAllQuizzes().subscribe(
-      (data) => {
-        this.allQuizData = data;
-        console.log(data);
+      response => {
+
+        this.allQuizData = response;
+        this.allQuizData = this.allQuizData.filter(data =>
+          courses.map(
+            course => course.courseId).includes(data.courseId));
+
+        this.allQuizData.sort((a, b) => a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1) // order by alphabets for title
+        console.log("filtered daTA " + JSON.stringify(this.allQuizData));
 
       },
       (error) => {
-        alert('Quiz data not found');
+        console.log('Quiz data not found');
       }
     );
   }
@@ -174,11 +203,11 @@ export class QuizComponent implements OnInit {
     this.quizService.deleteQuiz(title).subscribe(
       (data) => {
 
-        alert('Data Deleted Successfully');
+        console.log('Data Deleted Successfully');
         this.ngOnInit();
       },
       (error) => {
-        alert('Failed to delete quiz data');
+        console.log('Failed to delete quiz data');
       }
     );
   }
@@ -189,7 +218,7 @@ export class QuizComponent implements OnInit {
     currentData.active = true;
     this.quizService.addQuiz(currentData).subscribe(
       data => {
-        alert("Quiz added successfuly!")
+        console.log("Quiz added successfuly!")
         this.emptyQuiz = {} as Quiz;
         this.ngOnInit();
         this.back();
@@ -197,7 +226,7 @@ export class QuizComponent implements OnInit {
       }
       ,
       error => {
-        alert("Failed to add quiz data!")
+        console.log("Failed to add quiz data!")
       }
     )
 
@@ -209,12 +238,12 @@ export class QuizComponent implements OnInit {
     // calling service for updating data
     this.quizService.updateQuiz(currentData.title, currentData).subscribe(
       response => {
-        alert(`Quiz updated successfully !`);
+        console.log(`Quiz updated successfully !`);
         this.ngOnInit();
         this.back();
       },
       error => {
-        alert(`Quiz updation failed !`);
+        console.log(`Quiz updation failed !`);
       }
     );
   }
@@ -227,6 +256,8 @@ export class QuizComponent implements OnInit {
     this.quizService.getInactiveQuizList().subscribe(
       response => {
         this.allInActiveData = response;
+        this.allInActiveData.sort((a, b) => a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1) // order by alphabets for title
+
       },
       error => {
         console.log('No data in table ');
@@ -240,11 +271,11 @@ export class QuizComponent implements OnInit {
     // calling service to activating Quiz
     this.quizService.updateActiveStatus(quiz.title, quiz).subscribe(
       response => {
-        alert("Activated Quiz");
+        console.log("Activated Quiz");
         this.ngOnInit();
       },
       error => {
-        alert("Failed to activate");
+        console.log("Failed to activate");
       }
     );
   }
@@ -292,6 +323,8 @@ export class QuizComponent implements OnInit {
         console.log(data);
 
         this.courses = data;
+        this.getAllQuizzes(this.courses);  // for getting all active Quizs
+
       },
       error => {
         console.log(error);
