@@ -210,13 +210,13 @@ export class TeacherCourseComponent implements OnInit {
 
         this.courseDepartment.courseId = data.courseId;
 
-<<<<<<< HEAD
+
         this.courseDepartment.department_id = currentData.departmentId;
         console.log("coursedept" + JSON.stringify(this.courseDepartment));
-=======
-        this.courseDepartment.departmentId = currentData.departmentId;
+
+        // this.courseDepartment.departmentId = currentData.departmentId;
         // console.log("coursedept" + JSON.stringify(this.courseDepartment));
->>>>>>> development
+
         this.service.assignCourseToDepartment(this.courseDepartment).subscribe(
           response => {
             console.log('Course Added successfully');
