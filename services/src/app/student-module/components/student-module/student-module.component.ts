@@ -388,6 +388,11 @@ export class StudentModuleComponent {
 
 
 
+    this.moduleFileName = file.moduleFileId;
+    //console.log(name);
+
+
+
 
 
 

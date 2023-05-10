@@ -71,8 +71,7 @@
                     {{selectedModule.moduleName |titlecase}} - {{(selectedFile.moduleFile)}}
                 </h3> -->
                 <video class="videoscreen" controls #videoPlayer>
-                    <source
-                        src="http://127.0.0.1:8080/institute/{{instituteName}}/{{departmentName}}/{{courseName}}/{{moduleName}}/{{this.selectedFile.moduleFile}}"
+                    <source [src]="'http://localhost:8090/modulefile/uhpocms/getFileById/'+moduleFileName"
                         type="video/mp4" />
                 </video>
 
