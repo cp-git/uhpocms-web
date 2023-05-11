@@ -110,3 +110,58 @@ body {
     margin-top: -15px;
     margin-bottom: -5px;
 }
+
+/* #chart-data{
+    max-width: 100%;
+    display: flex;
+    
+    background-color: lightgray;
+    margin: 0 0%;
+    padding: 20px 0;
+    border-radius: 6px;
+
+} */
+#app-chartdata-ui {
+    font: normal 12px sans-serif;
+    max-width: 99%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: lightgray;
+    margin: 0 0%;
+    padding: 1rem 0;
+    border-radius: 6px;
+    height: 36rem;
+    
+   
+ 
+  }
+  /* .hidden {
+    display: none;
+  } */
+  .chart {
+    width: 300px;
+    padding-bottom: 1rem;
+    padding-left: 10px;
+    padding-right: 10px;
+ 
+    .color-wrapper {
+      display: grid;
+      margin-right: 10px;
+    }
+  
+    .color-ref {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      transform: translateY(4px);
+    }
+  
+    .chart-specs {
+      display: grid;
+      grid-template-columns: 20px calc(100% - 75px) 20px;
+      line-height: 23px;
+      margin-top: 30px;
+      margin-left: 20px;
+    }
+  }

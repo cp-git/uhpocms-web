@@ -1,10 +1,6 @@
 <div class="container">
 
-    <!-- <head>
-        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    </head> -->
-
+  
     <div>
         <div class="row">
             <div class="col-md-6 justify-content-between header">
@@ -18,43 +14,31 @@
         </div>
     </div>
     
-    <!-- <!-- ------------------------------------------- -->
-    <a class="website" href="https://frontenddevelopment.tech/" target="_blank"
-  >www.frontenddevelopment.tech</a
->
-<h4>Company Financial Metrics</h4>
+   
+<div id="chart-data">
+<h3 >Progress Panel</h3>
+
 <div id="app-chartdata-ui">
-  <div class="chart" *ngFor="let dChart of doughnutCharts">
-    <p class="category">{{ dChart.category }}</p>
-    <div>
-      <div>
-        <app-chartdata
-          [chartLabels]="dChart.labels"
-          [jsonArray]="dChart.numbers"
-          [backgroundColors]="dChart.colors"
-        ></app-chartdata>
-      </div>
-    </div>
-    <div class="chart-specs">
-      <div class="color-wrapper">
-        <div *ngFor="let item of dChart.colors">
-          <div class="color-ref" [ngStyle]="{ background: item }"></div>
-        </div>
-      </div>
-      <div class="label-ref">
-        <div *ngFor="let item of dChart.labels">
-          {{ item }}
-        </div>
-      </div>
-      <div class="percent">
-        <div *ngFor="let item of dChart.numbers">{{ item }}%</div>
-      </div>
-    </div>
+  <button *ngIf="currentIndex >= 3" (click)="previous()" class='fas fa-angle-left' style='font-size:48px;color:black;background: transparent;
+    border: none;'></button>
+  <div class="chart" *ngFor="let dChart of doughCharts; let i = index" 
+   [ngClass]="{'hidden': i < currentIndex || i >= currentIndex + 3}"> 
+    <h4><p class="category">{{ dChart[2] }}</p></h4>
+    <app-chartdata [jsonArray]="[dChart[0], dChart[1]]"></app-chartdata>
   </div>
+
+  <button *ngIf="currentIndex < doughCharts.length - 3" (click)="next()" class='fas fa-angle-right' style='font-size:48px;color:black;background: transparent;
+  border: none;'></button>
 </div>
 
+
+
+
+
+
+
     <!-- ----------------------------------------------
-    --> -->
+    -->
     
     <div class="container">
         <!-- first row  -->

@@ -23,7 +23,10 @@
     "paths": {
       "tslib": ["path/to/node_modules/tslib/tslib.d.ts"]
     },
-    "lib": ["ES2022", "dom"]
+    "lib": ["ES2022", "dom"],
+    "types": [
+      "dom"
+    ]
   },
   "include": ["src/**/*.ts"],
   "angularCompilerOptions": {
