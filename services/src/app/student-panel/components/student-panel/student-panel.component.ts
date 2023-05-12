@@ -73,6 +73,7 @@ export class StudentPanelComponent {
 
   // Initialize component properties with current route parameters
   ngOnInit(): void {
+    this._route.navigate(['../'], { relativeTo: this._activatedRoute });
     this.profileId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
     console.log(this.profileId);
