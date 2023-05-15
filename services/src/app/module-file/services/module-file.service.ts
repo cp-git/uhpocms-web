@@ -74,10 +74,16 @@ export class ModuleFileService {
   getModuleFilesByModuleId(moduleId: number): Observable<ModuleFile[]> {
     return this._http.get<ModuleFile[]>(`${this.moduleFileUrl}/modulefile/moduleId/${moduleId}`);
   }
-  
+
 
   getModuleFilesByStudentId(studentId: number): Observable<ModuleFile[]> {
     return this._http.get<ModuleFile[]>(`${this.moduleFileUrl}/modulefile/student?id=${studentId}`);
+  }
+
+  getFile(fileId: string): Observable<ArrayBuffer> {
+    return this._http.get(`http://localhost:8092/uhpocms/files/${fileId}`, {
+      responseType: 'arraybuffer'
+    });
   }
 }
 

@@ -432,6 +432,55 @@ export class StudentModuleComponent implements OnInit {
 
   }
 
+
+  selectedFileData: any;
+  selectedFileType: any;
+  format: any;
+  onSelectedFileChanged() {
+    this.format = '';
+    // Update the src attribute of the video player
+    // this.videoPlayer.src = this.videoSrc;
+    // this.videoPlayer.load(); // Reload the video
+    // this.videoPlayer.play(); // Start playing the new video
+    console.log("onSelectedFileChanged() called")
+    this.updatedPercentage = 0;
+    this.completionPercentage = 0;
+    console.log(this.updatedPercentage)
+    let blob: Blob;
+    this.modulefileService.getFile(this.selectedFile.moduleFileId).subscribe(
+      (response: ArrayBuffer) => {
+        console.log(response);
+        const bytes = new Uint8Array(response);
+        // Create an ArrayBuffer
+        const arrayBuffer = new ArrayBuffer(4);
+        const dataView = new DataView(arrayBuffer);
+        dataView.setInt32(0, 42);
+        console.log(dataView);
+        // Create a Blob from the ArrayBuffer
+        const blob2 = new Blob([arrayBuffer]);
+        console.log(blob2);
+        // Check if the file is a PDF
+        if (String.fromCharCode.apply(null, Array.from(bytes.subarray(0, 4))) === '%PDF') {
+          blob = new Blob([response], { type: 'application/pdf' });
+          this.selectedFileType = 'application/pdf';
+          this.selectedFileData = URL.createObjectURL(blob);
+          this.format = 'pdf';
+        }
+        // Check if the file is a video
+        const mp4Signature = String.fromCharCode.apply(null, Array.from(bytes.subarray(4, 8)));
+        console.log(mp4Signature);
+        if (mp4Signature === 'ftypisom' || mp4Signature === 'ftypmp42' || mp4Signature.startsWith('ftyp')) {
+          blob = new Blob([response], { type: 'video/mp4' });
+          this.selectedFileType = 'video/mp4'
+          this.selectedFileData = URL.createObjectURL(blob);
+          this.format = 'video';
+          this.videoPlayer.src = this.selectedFileData;
+        }
+        console.log(this.selectedFileData);
+      }
+    );
+  }
+
   //triggers when video is pause
   pauseVideo() {
     this.videoPlayerRef.nativeElement.pause(); // Pause the video
@@ -459,17 +508,17 @@ export class StudentModuleComponent implements OnInit {
 
 
 
-  onSelectedFileChanged() {
-    // Update the src attribute of the video player
-    // this.videoPlayer.src = this.videoSrc;
-    this.videoPlayer.load(); // Reload the video
-    // this.videoPlayer.play(); // Start playing the new video
-    console.log("onSelectedFileChanged() called")
-    this.updatedPercentage = 0;
-    this.completionPercentage = 0;
-    console.log(this.updatedPercentage)
+  // onSelectedFileChanged() {
+  //   // Update the src attribute of the video player
+  //   // this.videoPlayer.src = this.videoSrc;
+  //   this.videoPlayer.load(); // Reload the video
+  //   // this.videoPlayer.play(); // Start playing the new video
+  //   console.log("onSelectedFileChanged() called")
+  //   this.updatedPercentage = 0;
+  //   this.completionPercentage = 0;
+  //   console.log(this.updatedPercentage)
 
-  }
+  // }
   //Loads the modules of the courses using the getModuleByCourseId() method of StudentService
   loadModuleOfCourse(studentCourses: Course[]) {
 

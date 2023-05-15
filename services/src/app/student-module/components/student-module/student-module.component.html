@@ -91,13 +91,15 @@
         <div class="col-xs-12 col-sm-6 col-md-9 viewpanel">
             <div *ngIf="selectedFile; else quizview">
 
-
-                <video class="videoscreen" (ended)="videoEnd()" (timeupdate)="onVideoTimeUpdate()"
-                    (pause)="pauseVideo()" controls #videoPlayer>
-                    <source [src]="'http://localhost:8090/modulefile/uhpocms/getFileById/'+moduleFileName"
-                        type="video/mp4" />
-
-                </video>
+                <ng-container *ngIf="format=='pdf'">
+                    <app-pdf-viewer [blobUrl]="selectedFileData"></app-pdf-viewer>
+                </ng-container>
+                <ng-container>
+                    <video [hidden]="format!='video'" class="videoscreen" (ended)="videoEnd()"
+                        (timeupdate)="onVideoTimeUpdate()" (pause)="pauseVideo()" controls #videoPlayer>
+                        <source [src]="selectedFileData" type="video/mp4" />
+                    </video>
+                </ng-container>
 
                 <!-- <div>{{ completionPercentage }}%</div> -->
 
