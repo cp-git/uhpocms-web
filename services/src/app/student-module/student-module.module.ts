@@ -6,6 +6,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from 'app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { ChartdataComponent } from './components/chartdata/chartdata.component';
+import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 
 
 
@@ -13,6 +14,7 @@ import { ChartdataComponent } from './components/chartdata/chartdata.component';
   declarations: [
     StudentModuleComponent,
     StudentQuizComponent
+  
  
   ],
   imports: [

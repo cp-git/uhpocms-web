@@ -16,4 +16,9 @@ export class DataServiceCache {
   setDataInCache(key: string, data: any) {
     this.cache.set(key, data);
   }
+
+
+  removeFromCache(key: string) {
+    this.cache.delete(key);
+  }
 }

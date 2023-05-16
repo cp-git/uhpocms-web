@@ -22,44 +22,12 @@ export class StudentPanelComponent {
   course:Course= new Course();
   @ViewChild(ChartdataComponent) dChart: any;
 
-  
+  //doughnut chart data array
   doughCharts:any=[];
   criteriaVar:number=0;
-  numOfChartsDisplayed:number=0;
+
   currentIndex: number = 0;
-  doughnutCharts: { category: string, numbers: number[], labels: string[], colors: string[] }[] = 
-
-  [
-    {
-        "category": "Advertising",//course id //dynamic
-        "numbers": [5,15,30,35,15],
-        "labels": ["Google", "Facebook", "Instagram", "Amazon", "YouTube"], //Complete and Incomplte //static
-        "colors": ["#E15D44", "#55B4B0", "#DFCFBE", "#9B2335", "#5B5EA6"]  //any two colours
-    },
-//  [
-//   [
-  {
-    category: "",
-    numbers: []
-    ,
-    labels: [],
-    colors: []
-  },
-  {
-    category: "",
-    numbers: []
-    ,
-    labels: [],
-    colors: []
-  },
-];   
-
-  
-  
-  
-  
-  
-
+ 
   // Declare class properties
   profileId: any;
   courseProgressArr: CourseProgress[] = [];
@@ -73,62 +41,57 @@ export class StudentPanelComponent {
 
   // Initialize component properties with current route parameters
   ngOnInit(): void {
+    //code to realod the page by navigating here to this page
     this._route.navigate(['../'], { relativeTo: this._activatedRoute });
     this.profileId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
-    console.log(this.profileId);
+
     this.getAllCourseProgress();
-    this.loadMoreCharts();
+  
     
-    console.log(this.currentIndex)
-    // this.showNextButton();
+
   }
 
-  
+  //fnction to get all data for course progress 
     async getAllCourseProgress(){
-      let filteredCouProgArr:CourseProgress[]=[];
-  this.courseProgServ.getAllCourseProgress().subscribe(
+
+    let filteredCouProgArr:CourseProgress[]=[];
+    this.courseProgServ.getAllCourseProgress().subscribe(
     async (response)=>{
       this.courseProgressArr = response;
 
       filteredCouProgArr = this.courseProgressArr.filter((element)=>element.studentId == this.profileId);
        for(let i=0; i<filteredCouProgArr.length; i++){
         const remainingPercentage:number = 100-filteredCouProgArr[i].progress;
-        // this.doughnutCharts[i].numbers= [0, 0];
-        // this.doughnutCharts[i].numbers= [this.courseProgressArr[i].progress, remainingPercentage];
-        // this.doughnutCharts[i].category = (this.courseProgressArr[i].courseId).toString();
-
+       
         await this.getCourseNameById(filteredCouProgArr[i].courseId);
 
         this.doughCharts[i] = [filteredCouProgArr[i].progress, remainingPercentage, this.course.courseName];
       }
 
-      console.log(this.doughCharts)
+    
       this.criteriaVar = this.doughCharts.length - 3;
-      console.log(Array.isArray(this.doughnutCharts))
+      
     }
   )
 }
-loadMoreCharts() {
-  this.numOfChartsDisplayed += 3;
-}
+
+//code for next button on progress panel
 next() {
-  // if (this.currentIndex < this.doughCharts.length - 4) {
+
     this.currentIndex += 3;
     this.getAllCourseProgress();
-    console.log(this.currentIndex)
-  // }
+   
 }
 
+//code for previous button on progress panel
 previous() {
 
   this.currentIndex -= 3;
   this.getAllCourseProgress();
 }
 
-showNextButton() {
-  return this.currentIndex < this.doughCharts.length - 3;
-}
+//code to display course by providing course id
 getCourseNameById(courseId:number){
   return new Promise<void>((resolve, reject) => {
     this.courseService.getCourseByCourseId(courseId).subscribe(

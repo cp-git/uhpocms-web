@@ -6,7 +6,7 @@ import { environment } from 'environments/environment.development';
 @Injectable({
   providedIn: 'root'
 })
-export class TeacherCourseService {
+export class AssignCourseToTeacherService {
 
   private syllabusUrl: string;
   private assignCourseUrl: string;

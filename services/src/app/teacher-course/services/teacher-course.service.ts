@@ -61,7 +61,17 @@ export class TeacherCourseService {
 
 
     return this.http.get<Course>(this.courseUrl + '/courseId/' + courseId).pipe(
-      tap(data => this.cache.setDataInCache(this.courseUrl + '/courseId/' + courseId, data))
+    //   tap(
+        
+    //     data => this.cache.setDataInCache(this.courseUrl + '/courseId/' + courseId, data))
+    // );
+
+
+    tap(data => {
+      // Update cache with new data
+      this.cache.removeFromCache(this.courseUrl + '/courseId/' + courseId);
+      this.cache.setDataInCache(this.courseUrl + '/courseId/' + courseId, data);
+    })
     );
   }
 

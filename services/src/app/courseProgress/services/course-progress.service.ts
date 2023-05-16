@@ -45,8 +45,15 @@ export class CourseProgressService {
     }
 
     return this.http.get<CourseProgress[]>(`${this.courseProgressUrl}/courseprog?id=all`).pipe(
-      tap(data => this.cache.setDataInCache(`${this.courseProgressUrl}/courseprog?id=all`, data))
-    );
+    //   tap(data => this.cache.setDataInCache(`${this.courseProgressUrl}/courseprog?id=all`, data))
+    // );
+
+    tap(data => {
+      // Update cache with new data
+      this.cache.removeFromCache(`${this.courseProgressUrl}/courseprog?id=all`);
+      this.cache.setDataInCache(`${this.courseProgressUrl}/courseprog?id=all`, data);
+    })
+  );
   }
 
   
