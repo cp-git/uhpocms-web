@@ -81,7 +81,7 @@ export class ModuleFileService {
   }
 
   getFile(fileId: string): Observable<ArrayBuffer> {
-    return this._http.get(`http://localhost:8092/uhpocms/files/${fileId}`, {
+    return this._http.get(`http://localhost:8090/modulefile/uhpocms/files/${fileId}`, {
       responseType: 'arraybuffer'
     });
   }
