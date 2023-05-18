@@ -77,6 +77,7 @@ import { HttpInterceptorService } from './shared/services/HttpInterceptor/http-i
 import { UploadfileReusableModule } from './uploadfile-reusable/uploadfile-reusable.module';
 import { StudentModuleModule } from './student-module/student-module.module';
 import { ModuleHeaderComponent } from './reusable/component/module-header/module-header.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -109,7 +110,8 @@ import { ModuleHeaderComponent } from './reusable/component/module-header/module
     AddDepartmentsComponent,
     AssigncoursetoteacherComponent,
     UploadFileComponent,
-    StudentPanelComponent
+    StudentPanelComponent,
+
   ],
 
   imports: [
@@ -138,7 +140,8 @@ import { ModuleHeaderComponent } from './reusable/component/module-header/module
     UploadfileReusableModule,
     ReactiveFormsModule,
     FormsModule,
-    StudentModuleModule
+    StudentModuleModule,
+    MatDialogModule
   ],
 
   providers: [
