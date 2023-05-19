@@ -38,9 +38,9 @@ export const environment = {
   accesscontrolUrl: 'http://localhost:8090/accesscontrol/uhpocms/access',
   answerUrl: 'http://localhost:8090/answer/uhpocms',
 
-  moduleFileProgressUrl : `http://localhost:8090/modulefileprogress/uhpocms`,
-  moduleProgressUrl : `http://localhost:8090/moduleprogress/uhpocms`,
-  courseProgressUrl : `http://localhost:8090/courseprogress/uhpocms`,
+  moduleFileProgressUrl: `http://localhost:8090/modulefileprogress/uhpocms`,
+  moduleProgressUrl: `http://localhost:8090/moduleprogress/uhpocms`,
+  courseProgressUrl: `http://localhost:8090/courseprogress/uhpocms`,
 
 
   quizProgressUrl: 'http://localhost:8090/quizprogress/uhpocms'

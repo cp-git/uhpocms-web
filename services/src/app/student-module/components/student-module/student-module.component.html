@@ -95,7 +95,8 @@
             <div *ngIf="selectedFile; else quizview">
 
                 <ng-container *ngIf="format=='pdf'">
-                    <app-pdf-viewer [blobUrl]="selectedFileData"></app-pdf-viewer>
+                    <app-pdf-viewer [blobUrl]="selectedFileData"
+                        (savePDFProgress)="onSavePDFProgress($event)"></app-pdf-viewer>
                 </ng-container>
                 <ng-container>
                     <video [hidden]="format!='video'" class="videoscreen" (ended)="videoEnd()"

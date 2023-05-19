@@ -1441,6 +1441,42 @@ export class StudentModuleComponent implements OnInit {
     );
 
   }
+
+  onSavePDFProgress(progressData: any) {
+    const progressedPageNumber = progressData.progressedPageNumber;
+    const totalNumPages = progressData.totalNumPages;
+    // console.log(progressData);
+
+    let pdfProgressInPercentage = (100 / totalNumPages) * progressedPageNumber;
+    pdfProgressInPercentage = Math.floor(pdfProgressInPercentage);
+    // console.log(this.selectedFile);
+    // console.log(this.studentId);
+    const moduleFileProgress: Modulefileprogress = {
+      id: 0,
+      progress: pdfProgressInPercentage,
+      currentFilePageNo: progressedPageNumber,
+      fileId: this.selectedFile.moduleFileId,
+      moduleId: this.selectedFile.moduleId,
+      studentId: this.studentId
+    };
+
+    this.fileProgService.updateModuleFileProgressByFileIdAndStudentId(this.selectedFile.moduleFileId, this.studentId, moduleFileProgress).subscribe(
+      (response) => {
+        // console.log("pdf progress saved : " + response);
+        if (pdfProgressInPercentage == 100) {
+          console.log("Completed");
+          this.filteredProgressFileIds.push(response.fileId);
+          this.sortAccessibleModules();
+
+          this.moduleProgresscCeateUpdate(this.selectedModule.moduleId);
+        }
+      }
+    )
+
+
+
+  }
+
 }
 
 function ngOnInit() {
