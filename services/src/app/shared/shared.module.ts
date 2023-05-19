@@ -5,20 +5,32 @@ import { FilterPipe } from './pipes/filter/filter.pipe';
 import { AdvFilterPipe } from './pipes/adv-filter/adv-filter.pipe';
 import { RemoveExtensionPipe } from './pipes/removeExtension/remove-extension.pipe';
 
+import { PdfViewerComponent } from './component/pdf-viewer/pdf-viewer.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { FormsModule } from '@angular/forms';
+import { DialogModule } from '@angular/cdk/dialog';
+import { DialogBoxComponent } from './dialog-box/dialog-box.component';
+
 
 
 @NgModule({
   declarations: [
     FilterPipe,
     AdvFilterPipe,
-    RemoveExtensionPipe],
+    RemoveExtensionPipe,
+    PdfViewerComponent,
+    DialogBoxComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    PdfViewerModule,
+    FormsModule,
+    DialogModule
   ],
   exports: [
     FilterPipe,
     AdvFilterPipe,
-    RemoveExtensionPipe
+    RemoveExtensionPipe,
+    PdfViewerComponent
   ]
 })
 export class SharedModule { }

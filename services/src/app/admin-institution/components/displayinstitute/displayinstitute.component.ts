@@ -4,6 +4,7 @@ import { AdmininstitutionService } from '../../service/admininstitution.service'
 
 import { Location } from '@angular/common';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-displayinstitute',
@@ -28,7 +29,7 @@ export class DisplayinstituteComponent {
   showActivateButton: boolean = true;
 
   //constructor
-  constructor(private _institutionService: AdmininstitutionService, private _route: Router, private location: Location, private _activatedRoute: ActivatedRoute) {
+  constructor(private _institutionService: AdmininstitutionService, private _route: Router, private location: Location, private _activatedRoute: ActivatedRoute, private _sanitizer: DomSanitizer) {
     this.admininstitution = new AdminInstitution();
   }
 
@@ -52,6 +53,9 @@ export class DisplayinstituteComponent {
     }
   }
 
+
+
+
   // for displaying empty when there is no data on ui
   private displayEmptyRow() {
     if (this.admininstitutions.length <= 0) {
@@ -73,7 +77,12 @@ export class DisplayinstituteComponent {
       (response) => {
         // assigning received data to institution
         this.admininstitutions = response;
+
+        for (let i = 0; i < this.admininstitutions.length; i++) {
+          console.log(this.admininstitutions[i].adminInstitutionPicture);
+        }
         this.admininstitutions.sort((a, b) => a.adminInstitutionName.toLowerCase() > b.adminInstitutionName.toLowerCase() ? 1 : -1) // order by alphabets for institution name
+
 
         //  cloning array from instituion to backupinst
         this.admininstitutions.forEach((inst) => {

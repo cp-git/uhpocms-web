@@ -12,6 +12,7 @@ import { AdmininstitutionService } from 'app/admin-institution/service/admininst
 })
 
 export class AddinstituteComponent {
+  file!: File;
 
   //variable declarations
   fileName: string;
@@ -50,10 +51,14 @@ export class AddinstituteComponent {
 
   //file selection code
   onFileSelected(event: any) {
-    this.fileName = event.target.files[0].name;
-    if (this.fileName != '') {
 
-    }
+
+    this.file = event.target.files[0];
+    this.admininstitution.adminInstitutionPicture = this.file.name;
+
+    console.log(this.file);
+
+    //console.log(this.admininstitution.adminInstitutionPicture);
   }
 
 
@@ -66,6 +71,7 @@ export class AddinstituteComponent {
   // for inserting new Institution in table
   addInstitution(inst: AdminInstitution) {
 
+    console.log("in function...")
     if (this.backupInst.findIndex((data) => data.adminInstitutionName === inst.adminInstitutionName) >= 0) {
       // alert('Institute name already exist. please enter another.');
       console.log('Institute name already exist. please enter another.');
@@ -75,13 +81,30 @@ export class AddinstituteComponent {
       this.admininstitution.adminInstitutionName = inst.adminInstitutionName;
       this.admininstitution.adminInstitutionDescription = inst.adminInstitutionDescription;
       this.admininstitution.adminInstitutionIsActive = true;
-      this.admininstitution.adminInstitutionPicture = this.fileName;
+      this.admininstitution.adminInstitutionPicture = inst.adminInstitutionPicture;
+
+      const instituteJson = JSON.stringify(this.admininstitution);
+
+      const blob = new Blob([instituteJson], {
+        type: 'application/json'
+      })
+
+      let formData = new FormData();
+      formData.append("file", this.file);
+      formData.append("admin", new Blob([JSON.stringify(this.admininstitution)], { type: 'application/json' }));
+
+
+
+
 
       // inserting Institution
-      this._institutionService.addInstitution(this.admininstitution).subscribe(
+      this._institutionService.addInstitution(formData).subscribe(
         (response) => {
+          console.log("in api");
           this.admininstitution = {} as AdminInstitution;
           this.admininstitution = response;
+          console.log(response)
+
 
           // replacing value from backup to admininstitutions
           this.admininstitutions[this.admininstitutions.indexOf(inst)] = Object.assign(
@@ -104,6 +127,7 @@ export class AddinstituteComponent {
         (error) => {
           // alert('not able to add data \n' + JSON.stringify(error.error));
           console.log('not able to add data \n' + JSON.stringify(error.error));
+
         }
       );
     }

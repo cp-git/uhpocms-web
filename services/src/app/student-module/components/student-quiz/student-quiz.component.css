@@ -13,10 +13,12 @@
     padding-right: 10px;
     padding-left: 20px;
     padding-bottom: 10px;
-    background-color: white;
+    background-color: rgb(237, 242, 244);
     border: 4px solid black;
+    /* height: 455px; */
     height: 455px;
     width: 960px;
+    /* background-image: linear-gradient(135deg, #e5d2f2, #c2a7e2, #f5b9c8); */
 }
 
 .img {
@@ -43,7 +45,83 @@
 }
 
 .ngx-pagination {
-    margin-left: 0;
-    margin-bottom: 1rem;
-    padding: 10px !important;
+    font-size: 20px;
+    border-radius: 50%;
+
+}
+
+.form-check label {
+    margin-top: 30px;
+    margin-right: 2px;
+    display: inline-block;
+    border: 4px solid rgb(113, 113, 213);
+    border-radius: 30px;
+    background: #c4cad4;
+    transition: background-color 0.3s ease;
+    padding: 10px;
+    cursor: pointer;
+    width: 340px;
+    /* Adjust the width as desired */
+    height: 50px;
+}
+
+.form-check label:hover {
+    background-color: #fefefe;
+    /* Change the background color on hover */
+}
+
+.form-check input[type="radio"]:checked+label {
+    background-color: #4CAF50;
+    /* Change the background color when the input is checked */
+    color: #fff;
+    /* Change the text color when the input is checked */
+}
+
+
+.float {
+    margin-top: 30px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: inline-block;
+    border: 7px solid rgb(113, 113, 213);
+    border-radius: 50px;
+    background: linear-gradient(to bottom, #6699ff 0%, #ccffff 100%);
+    padding: 20px;
+    width: 6000px;
+    /* Adjust the width as desired */
+    /* height: 80px;  */
+    font-size: 20px;
+}
+
+.scroll-container {
+    width: 600px;
+    /* Adjust the width as desired */
+    overflow-x: auto;
+}
+
+.form-control {
+    margin-top: 15px;
+
+    display: flex;
+    justify-content: center;
+
+
+    display: inline-block;
+    border: 7px solid rgb(195, 195, 223);
+    border-radius: 30px;
+    /* background: linear-gradient(to bottom, #6699ff 0%, #ccffff 100%); */
+    padding: 20px;
+    width: 915px;
+    /* Adjust the width as desired */
+    height: 200px;
+    font-size: 18px;
+}
+
+.text-center {
+    margin-top: 10px;
+    font-size: 18px;
+    text-align: center;
+    display: block;
 }

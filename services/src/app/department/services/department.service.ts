@@ -32,7 +32,7 @@ export class DepartmentService {
 
   //service to insert department
   insertDepartment(department: Department): Observable<Department> {
-    return this._http.post<Department>(`${this.departmentUrl}/department`, department);
+    return this._http.post<Department>("http://localhost:8090/department/uhpocms/department", department);
   }
 
   //service to delete deaprtment by deptname
