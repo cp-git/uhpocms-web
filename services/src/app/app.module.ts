@@ -77,7 +77,12 @@ import { HttpInterceptorService } from './shared/services/HttpInterceptor/http-i
 import { UploadfileReusableModule } from './uploadfile-reusable/uploadfile-reusable.module';
 import { StudentModuleModule } from './student-module/student-module.module';
 import { ModuleHeaderComponent } from './reusable/component/module-header/module-header.component';
+
+import { ChartdataComponent } from './student-module/components/chartdata/chartdata.component';
+import { BarChartComponent } from './student-module/components/bar-chart/bar-chart.component';
+
 import { MatDialogModule } from '@angular/material/dialog';
+
 
 @NgModule({
   declarations: [
@@ -111,6 +116,11 @@ import { MatDialogModule } from '@angular/material/dialog';
     AssigncoursetoteacherComponent,
     UploadFileComponent,
     StudentPanelComponent,
+
+    ChartdataComponent,
+    BarChartComponent
+
+
 
   ],
 
