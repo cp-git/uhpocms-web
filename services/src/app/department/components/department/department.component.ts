@@ -179,7 +179,7 @@ export class DepartmentComponent implements OnInit {
 
   // For adding department
   private addDepartment(currentData: Department) {
-    currentData.active = true; // setting active true
+   // currentData.active = true; // setting active true
 
     // calling service for adding data
     this.service.insertDepartment(currentData).subscribe(

@@ -65,4 +65,7 @@ export class QuestionService {
   getAllAnswers(): Observable<Answer[]> {
     return this.http.get<Answer[]>(`${this.answerUrl}/answer?id=all`);
   }
+   getShuffledQuestionsByQuizId(quizId: number) {
+    return this.http.get<Question[]>(`${this.questionUrl}/questions/quizid/${quizId}`);
+  }
 }
