@@ -108,3 +108,89 @@ body {
     margin-top: -15px;
     margin-bottom: -5px;
 }
+
+.app-chartdata-ui {
+    font: normal 15px sans-serif;
+    max-width: 99%;
+    background-color: lightgray;
+    margin: 0 0%;
+    padding: 1rem 0;
+    border-radius: 6px;
+    height: 36rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+  }
+  
+   
+
+
+
+  /* #prevButton {
+    display: flex;
+    justify-content: flex-start;
+
+  }
+  
+  #nextButton {
+    display: flex;
+    justify-content: flex-end;
+  
+  } */
+  #prevButton {
+    width: 48px; /* set a fixed width */
+    display: flex;
+    justify-content: flex-start;
+    visibility: visible; /* show the button */
+  }
+  
+  #nextButton {
+    width: 48px; /* set a fixed width */
+    display: flex;
+    justify-content: flex-end;
+    visibility: visible; /* show the button */
+  }
+  
+  /* hide the buttons when they are not needed */
+  #app-chartdata-ui:not(:hover) #prevButton:not(:hover),
+  #app-chartdata-ui:not(:hover) #nextButton:not(:hover) {
+    visibility: hidden;
+  }
+
+  /* .hidden {
+    display: none;
+  } */
+  #chart-head{
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+
+  }
+  .chart {
+    width: 300px;
+    
+    padding-left: 18px;
+    padding-right: 18px;
+   
+    .color-wrapper {
+      display: grid;
+      margin-right: 10px;
+    }
+  
+    .color-ref {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      transform: translateY(4px);
+    }
+  
+    .chart-specs {
+      display: grid;
+      grid-template-columns: 20px calc(100% - 75px) 20px;
+      line-height: 23px;
+      margin-top: 30px;
+      margin-left: 20px;
+    }
+  }

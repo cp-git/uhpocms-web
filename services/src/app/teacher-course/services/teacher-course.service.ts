@@ -6,6 +6,9 @@ import { environment } from 'environments/environment.development';
 import { Course } from '../class/course';
 import { CourseDepartment } from '../class/course-department';
 import { Coursesyllabus } from 'app/class/coursesyllabus';
+import { DataServiceCache } from 'app/cache/service/data-service.service';
+import { of } from 'rxjs/internal/observable/of';
+import { tap } from 'rxjs/internal/operators/tap';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +20,7 @@ export class TeacherCourseService {
   private syllabusUrl: string;
   private assignCourseUrl: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private cache: DataServiceCache) {
     this.courseUrl = `${environment.courseUrl}/course`;
     this.courseDepartmentUrl = `${environment.courseDepartmentUrl}/course`;
     this.assignCourseUrl = environment.assignCourseUrl;
@@ -51,7 +54,25 @@ export class TeacherCourseService {
 
   //get a course by ID
   getCourseByCourseId(courseId: number): Observable<any> {
-    return this.http.get<Course>(this.courseUrl + '/courseId/' + courseId);
+    const cachedData = this.cache.getDataFromCache(this.courseUrl + '/courseId/' + courseId);
+    if (cachedData) {
+      return of(cachedData);
+    }
+
+
+    return this.http.get<Course>(this.courseUrl + '/courseId/' + courseId).pipe(
+    //   tap(
+        
+    //     data => this.cache.setDataInCache(this.courseUrl + '/courseId/' + courseId, data))
+    // );
+
+
+    tap(data => {
+      // Update cache with new data
+      this.cache.removeFromCache(this.courseUrl + '/courseId/' + courseId);
+      this.cache.setDataInCache(this.courseUrl + '/courseId/' + courseId, data);
+    })
+    );
   }
 
   //get all inactive courses

@@ -77,6 +77,8 @@ import { HttpInterceptorService } from './shared/services/HttpInterceptor/http-i
 import { UploadfileReusableModule } from './uploadfile-reusable/uploadfile-reusable.module';
 import { StudentModuleModule } from './student-module/student-module.module';
 import { ModuleHeaderComponent } from './reusable/component/module-header/module-header.component';
+import { ChartdataComponent } from './student-module/components/chartdata/chartdata.component';
+import { BarChartComponent } from './student-module/components/bar-chart/bar-chart.component';
 
 @NgModule({
   declarations: [
@@ -109,7 +111,9 @@ import { ModuleHeaderComponent } from './reusable/component/module-header/module
     AddDepartmentsComponent,
     AssigncoursetoteacherComponent,
     UploadFileComponent,
-    StudentPanelComponent
+    StudentPanelComponent,
+    ChartdataComponent,
+    BarChartComponent
   ],
 
   imports: [

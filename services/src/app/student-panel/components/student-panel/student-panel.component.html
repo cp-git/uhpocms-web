@@ -1,10 +1,6 @@
 <div class="container">
 
-    <!-- <head>
-        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    </head> -->
-
+  
     <div>
         <div class="row">
             <div class="col-md-6 justify-content-between header">
@@ -17,7 +13,39 @@
             </div>
         </div>
     </div>
+    
+   
+<div id="chart-data">
+<h3 >Progress Panel</h3>
 
+<div class="app-chartdata-ui">
+  <div id="prevButton">
+  <button *ngIf="currentIndex >= 3" (click)="previous()" class='fas fa-angle-left' style='font-size:48px;color:black;background: transparent;
+    border: none;'></button>
+  </div>
+  <div id="chart-head">
+  <div class="chart" *ngFor="let dChart of doughCharts; let i = index" 
+   [ngClass]="{'hidden': i < currentIndex || i >= currentIndex + 3}"> 
+    <h4><p class="category">{{ dChart[2] }}</p></h4>
+    <app-chartdata [jsonArray]="[dChart[0], dChart[1]]"></app-chartdata>
+
+</div>
+</div>
+  <div id="nextButton">
+  <button *ngIf="currentIndex < doughCharts.length - 3" (click)="next()" class='fas fa-angle-right' style='font-size:48px;color:black;background: transparent;
+  border: none;'></button>
+  </div>
+</div>
+
+
+
+
+
+
+
+    <!-- ----------------------------------------------
+    -->
+    
     <div class="container">
         <!-- first row  -->
         <div class="row">
