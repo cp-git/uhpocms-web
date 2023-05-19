@@ -8,6 +8,8 @@ import { RemoveExtensionPipe } from './pipes/removeExtension/remove-extension.pi
 import { PdfViewerComponent } from './component/pdf-viewer/pdf-viewer.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { FormsModule } from '@angular/forms';
+import { DialogModule } from '@angular/cdk/dialog';
+import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 
 
 
@@ -16,11 +18,13 @@ import { FormsModule } from '@angular/forms';
     FilterPipe,
     AdvFilterPipe,
     RemoveExtensionPipe,
-    PdfViewerComponent],
+    PdfViewerComponent,
+    DialogBoxComponent],
   imports: [
     CommonModule,
     PdfViewerModule,
-    FormsModule
+    FormsModule,
+    DialogModule
   ],
   exports: [
     FilterPipe,
