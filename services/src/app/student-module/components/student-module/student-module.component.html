@@ -26,7 +26,8 @@
                 <div class="module-list-container">
                     <ng-container *ngFor="let module of modules">
 
-                        <ul class="modules" *ngIf="selectedCourse == module.courseId_id">
+                        <ul class="modules" *ngIf="selectedCourse == module.courseId_id"
+                            [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId)}">
 
 
                             <span class="fa fa-book"></span>
@@ -51,7 +52,8 @@
 
 
                                             &nbsp;&nbsp;
-                                            <a (click)="changeSelectedFileAndModule(file, module)"><b>{{
+                                            <a (click)="changeSelectedFileAndModule(file, module)"
+                                                [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId)}"><b>{{
                                                     file.moduleFile|removeExtension }}</b>
                                             </a>
                                         </li>
@@ -76,7 +78,8 @@
                                     <span class="far fa-file-alt"></span>
                                 </ng-template> &nbsp;&nbsp;
 
-                                <a (click)="onQuizClicked(quiz)">{{quiz.title}}</a>
+                                <a (click)="onQuizClicked(quiz)"
+                                    [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId)}">{{quiz.title}}</a>
                             </ng-container>
                         </ul>
                     </ng-container>

@@ -98,3 +98,8 @@ li {
 .fa-check-circle {
     color: green;
 }
+
+.disabled-container {
+    pointer-events: none;
+    background-color: rgb(241, 241, 241);
+}

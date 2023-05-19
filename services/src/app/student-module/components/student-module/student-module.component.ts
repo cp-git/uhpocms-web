@@ -110,6 +110,8 @@ export class StudentModuleComponent implements OnInit {
 
   moduledata: Module[] = [];
 
+  accessibleModuleIds = new Set();    // module ids which are accessible to student
+
   constructor(private activateRoute: ActivatedRoute,
     private courseService: TeacherCourseService,
     private moduleService: ModuleService,
@@ -241,7 +243,7 @@ export class StudentModuleComponent implements OnInit {
           console.log(e)
         }
 
-
+        this.sortAccessibleModules();
       },
       error => {
         console.log(error);
@@ -495,7 +497,7 @@ export class StudentModuleComponent implements OnInit {
 
     this.changeSelectedFileAndModule(this.selectedFile, this.selectedModule)
 
-
+    this.sortAccessibleModules();
   }
 
 
@@ -741,7 +743,7 @@ export class StudentModuleComponent implements OnInit {
 
 
 
-
+    this.sortAccessibleModules();
   }
 
 
@@ -883,6 +885,7 @@ export class StudentModuleComponent implements OnInit {
         if (this.updatedModuleProgress.progress == 100) {
           this.trackCourseProgress(courseId)
         }
+        this.sortAccessibleModules();
       })
   }
 
@@ -1380,7 +1383,7 @@ export class StudentModuleComponent implements OnInit {
     }
     console.log(this.quizPassedProgresses);
     console.log(this.quizFailedProgresses);
-
+    this.sortAccessibleModules();
   }
 
   removeElementFromStringArray(array: any[], element: any) {
@@ -1388,6 +1391,55 @@ export class StudentModuleComponent implements OnInit {
       if (value == element) array.splice(index, 1);
     });
     return array;
+  }
+
+  private sortAccessibleModules() {
+
+    let studentModules: Module[];
+    this.moduleService.getModulesByCourseId(this.selectedCourse).subscribe(
+      (data) => {
+        studentModules = data;
+        // let numberOfModules = studentModules.length;
+        // let maxModuleOrderNo = studentModules[studentModules.length - 1].moduleOrderNo;
+        let studentModuleProgress: Moduleprogress[] = [];
+        this.moduleProgSErv.getModuleProgressesByCourseIdAndStudentId(this.selectedCourse, this.studentId).subscribe(
+          (response) => {
+            response.forEach(moduleProgress => {
+              // console.log(response);
+
+              const foundedModule = studentModules.find(module => module.moduleId == moduleProgress.moduleId);
+              // console.log(foundedModule);
+              if (foundedModule) {
+                this.accessibleModuleIds.add(foundedModule.moduleId);
+                studentModuleProgress.push(moduleProgress);
+              }
+
+            })
+
+            if (studentModuleProgress.length <= 0) {
+              this.accessibleModuleIds.add(studentModules[0].moduleId);
+              console.log(this.accessibleModuleIds);
+
+            } else {
+              let lastModuleProgress = studentModuleProgress[studentModuleProgress.length - 1];
+              // this.accessibleModuleIds.push(lastModuleProgress.moduleId);
+              // let moduleOrderNo = lastModuleProgress.moduleOrderNo;
+              let indexOfLastModuleProgress = studentModuleProgress.length - 1;
+
+              if (lastModuleProgress.progress == 100) {
+                // if (maxModuleOrderNo >= moduleOrderNo + 1) {
+                this.accessibleModuleIds.add(studentModules[indexOfLastModuleProgress + 1].moduleId);
+                // }
+
+              }
+
+            }
+          }
+
+        );
+      }
+    );
+
   }
 }
 
