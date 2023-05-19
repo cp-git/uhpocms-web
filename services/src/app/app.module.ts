@@ -79,6 +79,9 @@ import { StudentModuleModule } from './student-module/student-module.module';
 import { ModuleHeaderComponent } from './reusable/component/module-header/module-header.component';
 import { ChartdataComponent } from './student-module/components/chartdata/chartdata.component';
 import { BarChartComponent } from './student-module/components/bar-chart/bar-chart.component';
+import { BarchPopupComponent } from './student-module/components/barch-popup/barch-popup.component';
+
+
 
 @NgModule({
   declarations: [
@@ -113,7 +116,8 @@ import { BarChartComponent } from './student-module/components/bar-chart/bar-cha
     UploadFileComponent,
     StudentPanelComponent,
     ChartdataComponent,
-    BarChartComponent
+    BarChartComponent,
+    BarchPopupComponent
   ],
 
   imports: [
