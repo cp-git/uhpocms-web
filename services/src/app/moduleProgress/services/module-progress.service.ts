@@ -12,34 +12,37 @@ export class ModuleProgressService {
 
   moduleProgressUrl: string;
 
-  
-  constructor(private http: HttpClient) { 
+
+  constructor(private http: HttpClient) {
     this.moduleProgressUrl = `${environment.moduleProgressUrl}`;
   }
 
-//comment
+  //comment
 
-//add data to moduleprogress table
-addModuleProgressStatus(moduleProgress: Moduleprogress): Observable<Moduleprogress> {
-  console.log(moduleProgress)
-  return this.http.post<Moduleprogress>(`${this.moduleProgressUrl}/moduleprog`, moduleProgress);
-}
+  //add data to moduleprogress table
+  addModuleProgressStatus(moduleProgress: Moduleprogress): Observable<Moduleprogress> {
+    console.log(moduleProgress)
+    return this.http.post<Moduleprogress>(`${this.moduleProgressUrl}/moduleprog`, moduleProgress);
+  }
 
-//get data to module filee progress table
-getModuleProgressByModIdStudId(modId: number, studId: number) {
-  return this.http.get<Moduleprogress>(`${this.moduleProgressUrl}/moduleprog/${modId}/${studId}`);
-}
+  //get data to module filee progress table
+  getModuleProgressByModIdStudId(modId: number, studId: number) {
+    return this.http.get<Moduleprogress>(`${this.moduleProgressUrl}/moduleprog/${modId}/${studId}`);
+  }
 
 
-getModuleProgByCourseId(courseId: number) {
-  console.log(courseId)
-  return this.http.get<Moduleprogress[]>(`${this.moduleProgressUrl}/moduleprog/courseId/${courseId}`);
-}
+  getModuleProgByCourseId(courseId: number) {
+    console.log(courseId)
+    return this.http.get<Moduleprogress[]>(`${this.moduleProgressUrl}/moduleprog/courseId/${courseId}`);
+  }
 
- //update module Progress
- updateModuleProgress(moduleProgress: Moduleprogress): Observable<Moduleprogress> 
- {
-     return this.http.put<Moduleprogress>(`${this.moduleProgressUrl}/moduleprog/${moduleProgress.id}`,moduleProgress);
- }
+  //update module Progress
+  updateModuleProgress(moduleProgress: Moduleprogress): Observable<Moduleprogress> {
+    return this.http.put<Moduleprogress>(`${this.moduleProgressUrl}/moduleprog/${moduleProgress.id}`, moduleProgress);
+  }
 
+  getModuleProgressesByCourseIdAndStudentId(courseId: number, studentId: number) {
+    console.log(courseId + " " + studentId);
+    return this.http.get<Moduleprogress[]>(`${this.moduleProgressUrl}/moduleprog/id?courseid=${courseId}&studentid=${studentId}`);
+  }
 }

@@ -1,0 +1,18 @@
+<div class="viewpanel">
+
+    <div class="text-center row toolkit">
+        <a class="zoomgroup" style="margin-right: 10px;" (click)="zoomOut()">-</a>
+        <input class="text-center zoomgroup" type="number" name="pageno" [(ngModel)]="zoomPercentage"
+            (ngModelChange)="onChangeZoomPercentage($event)" />&nbsp;%
+        <a class="zoomgroup" style="margin-left: 10px; margin-right: 30px" (click)="zoomIn()">+</a>
+        <a class="pagegroup" style="margin-right: 10px;" (click)="prevPage()">&lt;</a>
+        <input class="text-center pagegroup" [minlength]="1" [maxlength]="totalNumPages" type="number" name="pageno"
+            [(ngModel)]="pageNumber" /> /{{totalNumPages}}
+        <a class="pagegroup" style="margin-left: 10px;" (click)=" nextPage()">&gt;</a>
+        <a class="fas fa-expand-arrows-alt" style="margin-left: 10px;" (click)="fitToPage()"> </a>
+    </div>
+
+    <pdf-viewer [src]="blobUrl" [show-borders]="true" [render-text]="true" [page]="pageNumber" [show-all]="true"
+        [zoom]="zoom" [rotation]="0" style="display: block; height: 500px"></pdf-viewer>
+
+</div>

@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -77,8 +77,15 @@ import { HttpInterceptorService } from './shared/services/HttpInterceptor/http-i
 import { UploadfileReusableModule } from './uploadfile-reusable/uploadfile-reusable.module';
 import { StudentModuleModule } from './student-module/student-module.module';
 import { ModuleHeaderComponent } from './reusable/component/module-header/module-header.component';
+
 import { ChartdataComponent } from './student-module/components/chartdata/chartdata.component';
 import { BarChartComponent } from './student-module/components/bar-chart/bar-chart.component';
+import { BarchPopupComponent } from './student-module/components/barch-popup/barch-popup.component';
+
+
+
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 @NgModule({
   declarations: [
@@ -112,8 +119,17 @@ import { BarChartComponent } from './student-module/components/bar-chart/bar-cha
     AssigncoursetoteacherComponent,
     UploadFileComponent,
     StudentPanelComponent,
+
     ChartdataComponent,
-    BarChartComponent
+
+    BarChartComponent,
+    BarchPopupComponent
+
+   
+
+
+
+
   ],
 
   imports: [
@@ -140,7 +156,10 @@ import { BarChartComponent } from './student-module/components/bar-chart/bar-cha
     TeacherCourseModule,
     AccessControlModule,
     UploadfileReusableModule,
-    StudentModuleModule
+    ReactiveFormsModule,
+    FormsModule,
+    StudentModuleModule,
+    MatDialogModule
   ],
 
   providers: [

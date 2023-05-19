@@ -5,11 +5,11 @@
         </div>
         <div class="col-xs-12 col-sm-6 col-md-3 sidebar">
             <div class="header text-center">
+                <h1>{{ selectedCourseName | titlecase }}</h1>
 
-                <h1>{{ selectedCourseName | titlecase }}
 
 
-                </h1>
+
             </div>
             <div class="form-group">
                 <label for="course">Course Name</label><br>
@@ -26,7 +26,8 @@
                 <div class="module-list-container">
                     <ng-container *ngFor="let module of modules">
 
-                        <ul class="modules" *ngIf="selectedCourse == module.courseId_id">
+                        <ul class="modules" *ngIf="selectedCourse == module.courseId_id"
+                            [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId)}">
 
 
                             <span class="fa fa-book"></span>
@@ -51,7 +52,8 @@
 
 
                                             &nbsp;&nbsp;
-                                            <a (click)="changeSelectedFileAndModule(file, module)"><b>{{
+                                            <a (click)="changeSelectedFileAndModule(file, module)"
+                                                [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId)}"><b>{{
                                                     file.moduleFile|removeExtension }}</b>
                                             </a>
                                         </li>
@@ -76,7 +78,8 @@
                                     <span class="far fa-file-alt"></span>
                                 </ng-template> &nbsp;&nbsp;
 
-                                <a (click)="onQuizClicked(quiz)">{{quiz.title}}</a>
+                                <a (click)="onQuizClicked(quiz)"
+                                    [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId)}">{{quiz.title}}</a>
                             </ng-container>
                         </ul>
                     </ng-container>
@@ -87,14 +90,19 @@
             <h5 style="color:blue"> Course Progress : {{courProgPercentage}} % Completed </h5>
         </div>
 
+
         <div class="col-xs-12 col-sm-6 col-md-9 viewpanel">
             <div *ngIf="selectedFile; else quizview">
 
-
-                <video class="videoscreen" (ended)="videoEnd()" (timeupdate)="onVideoTimeUpdate()"
-                    (pause)="pauseVideo()" controls #videoPlayer>
-                    <source [src]="videoSrc" type="video/mp4" />
-                </video>
+                <ng-container *ngIf="format=='pdf'">
+                    <app-pdf-viewer [blobUrl]="selectedFileData"></app-pdf-viewer>
+                </ng-container>
+                <ng-container>
+                    <video [hidden]="format!='video'" class="videoscreen" (ended)="videoEnd()"
+                        (timeupdate)="onVideoTimeUpdate()" (pause)="pauseVideo()" controls #videoPlayer>
+                        <source [src]="selectedFileData" type="video/mp4" />
+                    </video>
+                </ng-container>
 
                 <!-- <div>{{ completionPercentage }}%</div> -->
 
@@ -102,14 +110,15 @@
             <ng-template #quizview>
                 <div *ngIf="selectedQuiz">
 
-                    <app-student-quiz [quizData]="selectedQuiz" (quizProgressAdded)="onQuizProgressAdded($event)" (onSaveQuizProgress)="onSaveQuizProgress($event)"></app-student-quiz>
+                    <app-student-quiz [quizData]="selectedQuiz" (quizProgressAdded)="onQuizProgressAdded($event)"
+                        (onSaveQuizProgress)="onSaveQuizProgress($event)"></app-student-quiz>
                     <!-- <app-student-quiz (quizProgressAdded)="onQuizProgressAdded($event)"></app-student-quiz> -->
 
 
                 </div>
 
 
-                
+
             </ng-template>
 
         </div>

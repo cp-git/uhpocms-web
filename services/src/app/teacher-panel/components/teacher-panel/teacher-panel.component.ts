@@ -3,8 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CourseProgress } from 'app/courseProgress/class/courseprogress';
 import { CourseProgressService } from 'app/courseProgress/services/course-progress.service';
 import { AssignCourseToTeacherService } from 'app/displayAssignedCourseToTeacher/services/teacher-course.service';
+import { Profile } from 'app/profiles/class/profile';
+import { ProfileService } from 'app/profiles/services/profile.service';
 import { BarChartComponent } from 'app/student-module/components/bar-chart/bar-chart.component';
 import { ChartdataComponent } from 'app/student-module/components/chartdata/chartdata.component';
+import { ModalServiceService } from 'app/student-module/modal-service.service';
 import { Course } from 'app/teacher-course/class/course';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 
@@ -22,13 +25,18 @@ export class TeacherPanelComponent {
   criteriaVar:number=0;
 
   currentIndex: number = 0;
- 
+  popupDataValue:any;
+  popupDataLabel:any;
   courses:Course[]=[];
   courseIds : number[]= [];
   courseProgressArr: CourseProgress[] = [];
   teacherId: any;
   userName!: string;
-  constructor(private _route: Router, private _activatedRoute: ActivatedRoute,private courseProgServ:CourseProgressService,private courseService:TeacherCourseService, private assignCouServ: AssignCourseToTeacherService) {
+  bodyText = 'This text can be updated in modal 1';
+  // studProgDetailArr: [string, string, number] = ['','',0];
+  studProgDetailArr: any[] = [];
+  courseProgArr: CourseProgress[]=[];
+  constructor(private _route: Router, private _activatedRoute: ActivatedRoute,private courseProgServ:CourseProgressService,private courseService:TeacherCourseService, private assignCouServ: AssignCourseToTeacherService,protected modalService: ModalServiceService,private profileServ:ProfileService) {
 
   }
 
@@ -41,64 +49,86 @@ export class TeacherPanelComponent {
 
 
   }
+//-------------------------------------------------------------------
+displayPopupStyle = "none";
+// displayChartStyle = "block";
 
-//fnction to get all data for course progress 
-// async getAllCourseProgress(){
+openPopup() {
+  this.displayPopupStyle = "block";
 
-//   this.courseProgServ.getAllCourseProgress().subscribe(
-//   async (response)=>{
-//     this.courseProgressArr = response;
+  // this.displayChartStyle = "none";
+}
 
-//     await this.getAllCourseIds();
-
-//     console.log(this.courseIds);
-//    for(let m=0; m<this.courseIds.length;m++) {
-//     let courseName:String ;
-//     let cnt1=0;
-//     let cnt2=0;
-//     let cnt3=0;
-//     let cnt4=0;
-//     let totalStudsArr:CourseProgress[]=[];
-    
-    
-//     // filteredCouProgArr = this.courseProgressArr.filter((element)=>element.courseId == this.courseIds[i]))
-//      for(let i=0; i<this.courseProgressArr.length; i++){
-      
-//      if(this.courseIds[m] == this.courseProgressArr[i].courseId) {
-//       console.log("Course Id in if loop  "+this.courseIds[m] )
-//       await this.getCourseNameById(this.courseProgressArr[i].courseId);
-
-//       totalStudsArr = this.courseProgressArr.filter((elem)=> elem.courseId == this.courseProgressArr[i].courseId)
-     
+closePopup() {
+  this.displayPopupStyle = "none";
+  // this.displayChartStyle = "block";
+}
 
 
 
+handleRightClickData(data: { value: any; label: string },courseId:number) {
+let courseProgressArr:CourseProgress[]=[];
+let filteredCourseProgressArr:CourseProgress[]=[];
+ console.log("Function called")
+  // Perform actions with the data
+  console.log('Received right-click data:', data);
 
-//       if(this.courseProgressArr[i].progress >= 0 && this.courseProgressArr[i].progress <= 25)
-//       {cnt1++;}
-//       else if(this.courseProgressArr[i].progress >= 26 && this.courseProgressArr[i].progress <= 50)
-//       {cnt2++;}
-//       else if(this.courseProgressArr[i].progress >= 51 && this.courseProgressArr[i].progress <= 75)
-//       {cnt3++;}
-//       else if(this.courseProgressArr[i].progress >= 76 && this.courseProgressArr[i].progress <= 100)
-//       {cnt4++;}
+  this.popupDataValue = data.value;
+  this.popupDataLabel = data.label;
+  console.log('Received right-click data:', this.popupDataValue,this.popupDataLabel);
+  console.log(courseId)
 
-     
+  const rangeArray = this.popupDataLabel.split("-"); // Split the string into an array of two elements
 
-      
-//     }
+  const startValue = parseInt(rangeArray[0]); // Parse the first element as an integer
+  const endValue = parseInt(rangeArray[1]); // Parse the second element as an integer
+  
+  console.log(startValue); // Output: 26
+  console.log(endValue); // Output: 75
+  // console.log( parseInt(this.popupDataLabel))
+this.courseProgServ.getAllCourseProgress().subscribe(
+  (data)=>{
+    console.log(startValue); // Output: 26
+    console.log(endValue); // Output: 75
+    courseProgressArr = data;
+    filteredCourseProgressArr = courseProgressArr.filter((elem)=>elem.courseId == courseId && ((elem.progress >=  startValue ) && (elem.progress <=  endValue)))
 
-   
-   
-    
-//   }
+    console.log(filteredCourseProgressArr)
+    this.courseProgressArr = filteredCourseProgressArr
 
-//   this.doughCharts[m] =  [Math.round((cnt1*100)/totalStudsArr.length) , Math.round((cnt2*100)/totalStudsArr.length) , Math.round((cnt3*100)/totalStudsArr.length) , Math.round((cnt4*100)/totalStudsArr.length)  , this.course.courseName]
-//   console.log( this.doughCharts[m] )
-// }
-// }
-// )
-// }
+  }
+),
+(error:any)=>{error}
+this.getStudentNamesandCourProgress();
+}
+//-------------------------------------------------------------------
+getStudentNamesandCourProgress() {
+  this.studProgDetailArr = [];
+  let profile: Profile = new Profile();
+
+  console.log(this.courseProgressArr);
+
+  for (let i = 0; i < this.courseProgressArr.length; i++) {
+    console.log("Entered in for loop");
+
+    this.profileServ.getProfileByAdminId(this.courseProgressArr[i].studentId).subscribe(
+      (data) => {
+        profile = data;
+        console.log(i)
+        console.log(profile);
+        this.studProgDetailArr.push([profile.firstName , profile.lastName, this.courseProgressArr[i].progress]);
+
+        // Check if all the data has been retrieved
+       
+         
+        
+      }
+    );
+  
+  }
+  console.log(this.studProgDetailArr);
+}
+
 
 
 
@@ -158,10 +188,11 @@ async getAllCourseProgress(){
   // }
   if(totalStudsArr.length == 0)
   {
-    this.doughCharts[m] = [0,0,0,0, this.course.courseName]
+    this.doughCharts[m] = [0,0,0,0, this.course.courseName+'  [No students]',this.course.courseId];
   }
   else{
-  this.doughCharts[m] =  [Math.round((cnt1*100)/totalStudsArr.length) , Math.round((cnt2*100)/totalStudsArr.length) , Math.round((cnt3*100)/totalStudsArr.length) , Math.round((cnt4*100)/totalStudsArr.length)  , this.course.courseName]
+  // this.doughCharts[m] =  [Math.round((cnt1*100)/totalStudsArr.length) , Math.round((cnt2*100)/totalStudsArr.length) , Math.round((cnt3*100)/totalStudsArr.length) , Math.round((cnt4*100)/totalStudsArr.length)  , this.course.courseName]
+  this.doughCharts[m] = [cnt1,cnt2,cnt3,cnt4, this.course.courseName+'  ['+totalStudsArr.length+' students]',this.course.courseId]
   console.log( this.doughCharts[m] )
   }
 }

@@ -1,0 +1,23 @@
+<div class="messagemodal">
+    <div class="modal-header">
+        <!-- Decision Dialog Box Icon -->
+        <span *ngIf="isDecision">
+            <i class="fa fa-question-circle fa-3x decision-icon"></i>
+        </span>
+        <!-- Information Dialog Box Icon -->
+        <span *ngIf="isInformation">
+            <i class="fa fa-info-circle fa-3x info-icon"></i>
+        </span>
+        <!-- Warning Dialog Box Icon -->
+        <span *ngIf="isWarning">
+            <i class="fa fa-exclamation-triangle fa-3x warning-icon"></i>
+        </span>
+    </div>
+    <div class="modal-body">
+        <p>{{ message }}</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" *ngIf="isDecision" (click)="onCancel()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="onOk()">OK</button>
+    </div>
+</div>

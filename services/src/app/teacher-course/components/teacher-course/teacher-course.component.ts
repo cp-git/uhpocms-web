@@ -210,8 +210,13 @@ export class TeacherCourseComponent implements OnInit {
 
         this.courseDepartment.courseId = data.courseId;
 
-        this.courseDepartment.departmentId = currentData.departmentId;
+
+        this.courseDepartment.department_id = currentData.departmentId;
+        console.log("coursedept" + JSON.stringify(this.courseDepartment));
+
+        // this.courseDepartment.departmentId = currentData.departmentId;
         // console.log("coursedept" + JSON.stringify(this.courseDepartment));
+
         this.service.assignCourseToDepartment(this.courseDepartment).subscribe(
           response => {
             console.log('Course Added successfully');
@@ -247,7 +252,7 @@ export class TeacherCourseComponent implements OnInit {
             if (course.courseId == coursedepartment.courseId) {
               this.allData.push({
                 ...course,
-                departmentId: coursedepartment.departmentId,
+                departmentId: coursedepartment.department_id,
               });
             }
             this.allData.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name
@@ -291,7 +296,7 @@ export class TeacherCourseComponent implements OnInit {
             if (course.courseId == coursedepartment.courseId) {
               this.allInActiveData.push({
                 ...course,
-                departmentId: coursedepartment.departmentId,
+                departmentId: coursedepartment.department_id,
               });
 
             }
@@ -393,7 +398,7 @@ export class TeacherCourseComponent implements OnInit {
             if (course.courseId == coursedepartment.courseId) {
               this.allData.push({
                 ...course,
-                departmentId: coursedepartment.departmentId,
+                departmentId: coursedepartment.department_id,
               });
             }
             this.allData.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name
@@ -419,7 +424,7 @@ export class TeacherCourseComponent implements OnInit {
             if (course.courseId == coursedepartment.courseId) {
               this.allData.push({
                 ...course,
-                departmentId: coursedepartment.departmentId,
+                departmentId: coursedepartment.department_id,
               });
             }
             this.allData.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name

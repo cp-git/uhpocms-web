@@ -9,6 +9,7 @@ import { QuizProgress } from 'app/quiz-progress/class/quiz-progress';
 import { QuizProgressService } from 'app/quiz-progress/services/quiz-progress.service';
 import { Quiz } from 'app/quiz/class/quiz';
 import { QuizService } from 'app/quiz/services/quiz.service';
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 
 @Component({
   selector: 'app-student-quiz',
@@ -20,12 +21,12 @@ export class StudentQuizComponent implements OnInit {
   // Quiz Data comming from parent
   @Input() quizData: any;
 
-//function to pass data when quiz added
+  //function to pass data when quiz added
   @Output() quizProgressAdded: EventEmitter<any> = new EventEmitter();
-// function to be called in parent component
-@Output() onSaveQuizProgress: EventEmitter<any> = new EventEmitter();
-  
-  addeedQuizProgress : QuizProgress = new QuizProgress();; //to store quizprogress data
+  // function to be called in parent component
+  @Output() onSaveQuizProgress: EventEmitter<any> = new EventEmitter();
+
+  addeedQuizProgress: QuizProgress = new QuizProgress();; //to store quizprogress data
   quizProgresses: QuizProgress[] = [];
   studentId: any;   // logged in student id
   quizProgress!: QuizProgress;  // quizProgress object used to save progress in table
@@ -51,6 +52,7 @@ export class StudentQuizComponent implements OnInit {
   constructor(
     private quizProgressService: QuizProgressService,
     private questionService: QuestionService,
+    private dialogboxService: DialogBoxService
   ) {
 
     this.studentId = sessionStorage.getItem("profileId");
@@ -212,6 +214,83 @@ export class StudentQuizComponent implements OnInit {
 
 
   // function called when form is submitted from frontend
+  // onFormSubmit() {
+  //   this.quizProgress = new QuizProgress();
+
+  //   console.log(this.questionAnswers);
+  //   console.log(this.quizData);
+
+
+  //   let notAttendedQuestions: any[] = [];
+  //   let score: number = 0;
+  //   const marksPerQuestion: number = 100 / (this.questionAnswers.length);
+
+  //   this.questionAnswers.forEach((queAns, index) => {
+
+  //     let trueAnswer: string = '';
+  //     if (queAns.correct1) {
+  //       trueAnswer = queAns.content1;
+  //     } else if (queAns.correct2) {
+  //       trueAnswer = queAns.content2;
+  //     } else if (queAns.correct3) {
+  //       trueAnswer = queAns.content3;
+  //     } else if (queAns.correct4) {
+  //       trueAnswer = queAns.content4;
+  //     }
+
+  //     if (queAns.selectedAnswer == undefined || queAns.selectedAnswer == '') {
+  //       notAttendedQuestions.push(index + 1);
+  //     }
+
+  //     if (queAns.selectedAnswer == trueAnswer) {
+  //       score = score + (marksPerQuestion);
+  //     }
+
+
+  //   })
+
+  //   if (notAttendedQuestions.length > 0) {
+  //     alert("Please answer the questions  " + (notAttendedQuestions))
+  //     return;
+  //   }
+
+  //   this.quizProgress.studentId = this.studentId;
+  //   this.quizProgress.quizId = this.selectedQuizId;
+  //   this.quizProgress.score = score;
+  //   if (score >= this.quizData.passMark) {
+  //     this.quizProgress.completed = true;
+  //   } else {
+  //     this.quizProgress.completed = false;
+  //   }
+  //   this.quizProgress.numberOfAttempts = 1;
+  //   let addedQuizProgress: QuizProgress;
+  //   this.quizProgressService.addQuizProgressOfStudent(this.quizProgress).subscribe(
+  //     (response) => {
+
+
+  //       this.addeedQuizProgress = response;
+  //       this.quizProgressAdded.emit(this.addeedQuizProgress);
+  //       alert("Quiz progress saved");
+
+
+  //       addedQuizProgress = response;
+  //       console.log("Quiz progress saved");
+  //       this.onSaveQuizProgress.emit(addedQuizProgress);
+
+  //     },
+  //     (error) => {
+  //       console.log("Failed to save Progress");
+  //     }
+  //   );
+
+  //   console.log("Total score : " + score);
+
+  // }
+
+
+  //Dialog Box -- Kaushik
+
+  // function called when form is submitted from frontend
   onFormSubmit() {
     this.quizProgress = new QuizProgress();
 
@@ -265,12 +344,12 @@ export class StudentQuizComponent implements OnInit {
     this.quizProgressService.addQuizProgressOfStudent(this.quizProgress).subscribe(
       (response) => {
 
-        
+
         this.addeedQuizProgress = response;
         this.quizProgressAdded.emit(this.addeedQuizProgress);
-        alert("Quiz progress saved");
+        // alert("Quiz progress saved");
 
-  
+
         addedQuizProgress = response;
         console.log("Quiz progress saved");
         this.onSaveQuizProgress.emit(addedQuizProgress);
@@ -281,8 +360,30 @@ export class StudentQuizComponent implements OnInit {
       }
     );
 
-    console.log("Total score : " + score);
-
+    if (score >= this.selectedQuiz.passMark) {
+      // show dialog box with green exam pass
+      var grade = '';
+      if (score >= 90) {
+        grade = 'A+';
+      } else if (score >= 80) {
+        grade = 'A';
+      } else if (score >= 75) {
+        grade = 'B+';
+      } else if (score >= 70) {
+        grade = 'B';
+      } else if (score >= 60) {
+        grade = 'C';
+      } else if (score >= 50) {
+        grade = 'D';
+      } else if (score >= 40) {
+        grade = 'E';
+      }
+      this.dialogboxService.open(this.selectedQuiz.successText + '  ' + grade, 'information');
+      //alert("Total score: " + score);
+    } else {
+      // show dialog box with red exam fail
+      this.dialogboxService.open(this.selectedQuiz.failText, 'information');
+    }
   }
 
 }

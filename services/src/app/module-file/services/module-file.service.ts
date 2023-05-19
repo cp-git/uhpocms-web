@@ -14,9 +14,16 @@ export class ModuleFileService {
     this.moduleFileUrl = environment.moduleFileUrl;
   }
 
+  // // for add module File 
+  // addModuleFile(formData: FormData): Observable<any> {
+  //   return this._http.post<any>("http://localhost:8091/uhpocms/modulefile", formData);
+  // }
+
+
+
   // for add module File 
-  addModuleFile(modulefile: ModuleFile): Observable<any> {
-    return this._http.post<any>(`${this.moduleFileUrl}/modulefile`, modulefile);
+  addModuleFile(formData: FormData): Observable<any> {
+    return this._http.post<any>("http://localhost:8090/modulefile/uhpocms/modulefile", formData);
   }
 
   // get all module file
@@ -67,10 +74,16 @@ export class ModuleFileService {
   getModuleFilesByModuleId(moduleId: number): Observable<ModuleFile[]> {
     return this._http.get<ModuleFile[]>(`${this.moduleFileUrl}/modulefile/moduleId/${moduleId}`);
   }
-  
+
 
   getModuleFilesByStudentId(studentId: number): Observable<ModuleFile[]> {
     return this._http.get<ModuleFile[]>(`${this.moduleFileUrl}/modulefile/student?id=${studentId}`);
+  }
+
+  getFile(fileId: string): Observable<ArrayBuffer> {
+    return this._http.get(`http://localhost:8090/modulefile/uhpocms/files/${fileId}`, {
+      responseType: 'arraybuffer'
+    });
   }
 }
 
