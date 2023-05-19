@@ -1,10 +1,11 @@
 
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { Chart ,ChartOptions,registerables} from 'chart.js';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Chart ,ChartOptions,registerables,TooltipItem} from 'chart.js';
 import { Coursesyllabus } from 'app/class/coursesyllabus';
 import { CourseProgressService } from 'app/courseProgress/services/course-progress.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+import 'chartjs-plugin-zoom';
 
 Chart.register(ChartDataLabels);
 Chart.register(...registerables);
@@ -39,14 +40,16 @@ plugin
   styleUrls: ['./bar-chart.component.css']
 })
 export class BarChartComponent {
- 
+  
+
  
   
     constructor(private courProgServ : CourseProgressService){
   
     }
-  
-   
+    @Output() clickData: EventEmitter<{ value: any; label: string }> = new EventEmitter();
+
+    @Output() click: EventEmitter<any> = new EventEmitter<any>();
   
     chart: any;
     labels:String[]=[];
@@ -137,44 +140,7 @@ export class BarChartComponent {
       
 
       
-    const datasets =   
-    this.chartLabels.map((label: string, index: number) => {
     
-
-
-      if (index == 0) {
-        return {  label: label,
-                  data: [this.jsonArray[index]],
-                  backgroundColor: this.backgroundColors[index],
-                  borderWidth: 0,
-         };
-      } else if (index == 1) {
-        return {
-          label: label,
-          data: [this.jsonArray[index]],
-          backgroundColor: this.backgroundColors[index],
-          borderWidth: 0,
-          };
-      } else if (index == 2) {
-        return { 
-          label: label,
-          data: [this.jsonArray[index]],
-          backgroundColor: this.backgroundColors[index],
-          borderWidth: 0,
-         };
-      } else if (index == 4) {
-        return {  label: label,
-          data: [this.jsonArray[index]],
-          backgroundColor: this.backgroundColors[index],
-          borderWidth: 0,  };
-      } else {
-        return {  label: ' ',
-          data: [],
-          backgroundColor: [],
-          borderWidth: 0, };
-      }
-    });
- 
     
     
                   
@@ -189,7 +155,7 @@ export class BarChartComponent {
           // datasets:datasets,
           datasets : [
             {
-              label:'' ,
+          
               data: this.jsonArray,
               backgroundColor: this.backgroundColors,
               borderWidth: 0,
@@ -208,39 +174,66 @@ export class BarChartComponent {
           // responsive: false,
           // maintainAspectRatio: true,
           
-                 
+          onClick: (event, elements) => {
+            if (elements.length > 0) {
+              const element = elements[0];
+              const datasetIndex = element.datasetIndex;
+              const index = element.index;
+      
+              // Call a function to display the popup
+              this.displayPopup(datasetIndex, index);
+            }
+          },
+         
           plugins: {
+
+            zoom: {
+              zoom: {
+                wheel: {
+                  enabled: true, // Enable zooming with the mouse wheel
+                },
+                
+                mode: 'xy', // Enable zooming on both axes (x and y)
+              },
+            },
             datalabels: {
-          //    anchor: 'end', // Display the labels at the end of the bars
-          // align: 'top', // Display the labels at the top of the bars
+          anchor: 'center', // Display the labels at the end of the bars
+          align: 'center', // Display the labels at the top of the bars
           font: {
             size: 12,
             weight: 'bold',
           },
               formatter: function(value, context) {
-                return Math.round(value) + '%';
+                // return Math.round(value) + '%';
+               
+        
+                return value;
               },
               color: 'black'
             },
             legend: {
-              display: true,
-              position: 'top',
-              align: 'start',
-              labels: {
-                boxWidth: 10,
-              
-               padding: 10,
-                generateLabels: (chart) => {
-                  return this.chartLabels.map((label: any,index: number) => ({
-                    text: label,
-                    fillStyle:this.backgroundColors[index], // Customize the legend text color
-                  }));
-          }
+              display: false,
+            }
+            
+        //       position: 'top',
+        //       align: 'start',
+        //       labels: {
+        //         boxWidth: 10,
+                
+        //         padding: 10,
+        //         generateLabels: (chart) => {
+        //           return this.chartLabels.map((label: any,index: number) => ({
+        //             text: label,
+        //             fillStyle:this.backgroundColors[index], // Customize the legend text color
+        //           }));
+        //   }
        
-          }
-        } 
-      }
-      
+        //   }
+        // } ,
+        
+      },
+    
+
     
     }  
     // options: {
@@ -262,45 +255,101 @@ export class BarChartComponent {
 
 
   });
-    // ----------------------------------------------------------------------------------------------
+  //   // ----------------------------------------------------------------------------------------------
+ // Add event listener to handle right-click on the chart canvas
+//  cvs.addEventListener('contextmenu', this.handleRightClick.bind(this));
+ // Add event listener to handle right-click on bars
+//  cvs.addEventListener('contextmenu', (event: { preventDefault: () => void; }) => {
+//   event.preventDefault(); // Prevent the default context menu behavior
+
+//   const activePoints = this.chart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true);
+
+//   if (activePoints.length > 0) {
+//     const firstPoint = activePoints[0];
+
+//     // Call a function to handle the right-click event on the bar
+//     this.handleRightClick(firstPoint);
+//   }
+// });
 
 
 
-    // ngAfterViewInit() {
-    //   let cvs: any;
-    //   cvs = this.dChart.nativeElement;
+console.log(this.chart)
+    }
+    // handleBarRightClick(point: { datasetIndex: number; index: number; }) {
+    //   // Get the data or other information associated with the clicked bar
+    //   const datasetIndex = point.datasetIndex;
+    //   const index = point.index;
+    //   const value = this.chart.data.datasets[datasetIndex].data[index];
+    //   const label = this.chart.data.labels[index];
     
+    //   // Use the retrieved data to perform any desired action
+    //   console.log(`Right-clicked bar: ${label} - Value: ${value}`);
+    //   // Perform your custom action here
+    // }
+    // handleRightClick(event: MouseEvent, point: { datasetIndex: number; index: number; }) {
+    //   if (event.button === 2 ) { // Check if the right mouse button was clicked
+    //     const chart = this.chart; // Assuming you have already assigned the chart instance to a property called 'chart'
+    //     this.rightClick.emit();
+    //     // Check if the zoom plugin is available
+    //     if (chart.zoom) {
+    //       chart.zoom.reset(); // Reset the zoom to its initial state
+    //     }
+    //   }
 
-    //   const datasets = this.chartLabels.map((label: string, index: number) => ({
-    //     label: label,
-    //     data: [this.jsonArray[index]],
-    //     backgroundColor: this.backgroundColors[index],
-    //     borderWidth: 0,
-    //   }));
-    
-    //   this.chart = new Chart(cvs, {
-    //     type: 'bar',
-    //     data: {
-    //       labels: this.chartLabels,
-    //       datasets: datasets,
-    //     },
-    //     plugins: [ChartDataLabels],
-    //     options: {
-    //       scales: {
-    //         r: {
-    //           ticks: {
-              
-    //             callback: function(value, index, values) {
-    //               return value + '%';
-    //             },
-    //           },
-    //         },
-    //       },
-    //     },
-        
-    //   });
+
+    //    // Get the data or other information associated with the clicked bar
+    //    const datasetIndex = point.datasetIndex;
+    //    const index = point.index;
+    //    const value = this.chart.data.datasets[datasetIndex].data[index];
+    //    const label = this.chart.data.labels[index];
+     
+    //    // Use the retrieved data to perform any desired action
+    //    console.log(`Right-clicked bar: ${label} - Value: ${value}`);
+    //    this.rightClickData.emit({ value, label });
+    //    // Perform your custom action here
     // }
 
+    // handleRightClick(event: MouseEvent, point: { datasetIndex?: number; index?: number }) {
+    //   if (event.button === 2) { // Check if the right mouse button was clicked
+    //     const chart = this.chart; // Assuming you have already assigned the chart instance to a property called 'chart'
+    //     this.rightClick.emit();
+    
+    //     // // Check if the zoom plugin is available
+    //     // if (chart.zoom) {
+    //     //   chart.zoom.reset(); // Reset the zoom to its initial state
+    //     // }
 
+    //     if (point?.datasetIndex !== undefined && point?.index !== undefined) {
+    //       // Get the data or other information associated with the clicked bar
+    //       const datasetIndex = point.datasetIndex;
+    //       const index = point.index;
+    //       const value = this.chart.data.datasets[datasetIndex].data[index];
+    //       const label = this.chart.data.labels[index];
+      
+    //       // Use the retrieved data to perform any desired action
+    //       console.log(`Right-clicked bar: ${label} - Value: ${value}`);
+    //       this.rightClickData.emit({ value, label });
+    //     }
+    //   }
+    
+
+    // }
+    
+    
+
+
+    displayPopup(datasetIndex: number, index: number) {
+      // Get the data or other information associated with the clicked bar
+      // const value = this.chart.data.datasets[datasetIndex].data[index];
+      const value = this.chart.data;
+      const label = this.chart.data.labels[index];
+      
+      // Use the retrieved data to display a popup or perform any desired action
+      console.log(`Clicked bar: ${label} - Value: ${value}`);
+      // Show your popup or perform other actions here
+      this.click.emit();
+      this.clickData.emit({ value, label });
     }
+
     }

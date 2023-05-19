@@ -18,21 +18,29 @@
         </div>
     </div>
 <!-- ---------------------------------------------------------------------------------- -->
-<div id="chart-data">
+<!-- <div id="chart-data"> -->
     <h3 >Progress Panel</h3>
     
-    <div class="app-chartdata-ui">
+    <div class="app-chartdata-ui" >
       <div id="prevButton">
       <button *ngIf="currentIndex >= 3" (click)="previous()" class='fas fa-angle-left' style='font-size:48px;color:black;background: transparent;
         border: none;'></button>
       </div>
       <div id="chart-head">
+        
+       
+    <p class="agg-count"><b>Count Of Students</b></p>
+    <div class="vertical"></div>
+    
       <div class="chart" *ngFor="let dChart of doughCharts; let i = index" 
        [ngClass]="{'hidden': i < currentIndex || i >= currentIndex + 3}"> 
         <h4><p class="category">{{ dChart[4] }}</p></h4>
-        <app-bar-chart [jsonArray]="[dChart[0], dChart[1],dChart[2],dChart[3]]"></app-bar-chart>
+        <app-bar-chart [jsonArray]="[dChart[0], dChart[1],dChart[2],dChart[3]]" (click)="openPopup(  )" (clickData)="handleRightClickData($event,dChart[5])"></app-bar-chart>
     
     </div>
+   
+    <div class="horizontal"></div>
+    <p class="course-progress"><b>Course Progress(%)</b></p>
     </div>
       <div id="nextButton">
       <button *ngIf="currentIndex < doughCharts.length - 3" (click)="next()" class='fas fa-angle-right' style='font-size:48px;color:black;background: transparent;
@@ -43,6 +51,41 @@
     
 
 <!-- ----------------------------------------------------------------------------------- -->
+<!-- -------------------------------------------pop-up code-------------------------------------- -->
+
+<!-- <div >
+
+<div
+class="modal"
+tabindex="-1"
+role="dialog"
+[ngStyle]="{'display': displayPopupStyle}">
+<div class="modal-dialog" role="document">
+	<div class="modal-content">
+	<div class="modal-header">
+		<h4 class="modal-title">Students Score</h4>
+	</div>
+	<div class="modal-body">
+		
+        <div *ngFor="let progress of courseProgressArr; let i = index">
+        <!-- <p>{{ popupDataValue}}  {{ popupDataLabel}}  </p> -->
+        <!-- <p>{{this.studProgDetailArr[i][0]}}  {{this.studProgDetailArr[i][1]}}  -  {{this.studProgDetailArr[i][2]}}</p>
+
+
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-danger"
+				(click)="closePopup()">
+		Close
+		</button>
+	</div>
+	</div>
+</div>
+</div>
+
+</div> --> 
+<!-- -------------------------------------------pop-up code close-------------------------------------- -->
+
     <div class="container">
         <!-- first row  -->
         <div class="row">
