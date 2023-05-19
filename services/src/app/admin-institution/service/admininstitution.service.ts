@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { environment } from 'environments/environment.development';
 import { AdminInstitution } from '../class/admininstitution';
@@ -24,9 +24,18 @@ export class AdmininstitutionService {
   }
 
   //service to add institution
-  addInstitution(admininstitution: AdminInstitution): Observable<any> {
+  // addInstitution(formData: FormData): Observable<any> {
 
-    return this._http.post<any>(`${this.institutionUrl}`, admininstitution);
+
+
+  //   return this._http.post<any>("http://localhost:8091/uhpocms/institution", formData);
+  // }
+
+  addInstitution(formData: FormData): Observable<any> {
+
+
+
+    return this._http.post<any>("http://localhost:8090/admininstitution/uhpocms/institution", formData);
   }
 
   //service to delete institution
