@@ -28,7 +28,7 @@ import { CourseProgressService } from 'app/courseProgress/services/course-progre
 import { ModuleProgressService } from 'app/moduleProgress/services/module-progress.service';
 import { Modulefileprogress } from 'app/moduleFileProgress/class/modulefileprogress';
 import { ModulefileprogressService } from 'app/moduleFileProgress/modulefileprogress.service';
-
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 
 
 @Component({
@@ -65,7 +65,7 @@ export class StudentModuleComponent implements OnInit {
   modules: Module[] = []; //array of Module objects that stores the modules of the courses
 
   studentModuleFiles: ModuleFile[] = []; //array of ModuleFile objects that stores the module files assigned to the student
-
+  selectedQuizProgress: QuizProgress;
   moduleFileProgress: Modulefileprogress = new Modulefileprogress;// Object of ModuleFileProgress
   moduleFileProgressArr: Modulefileprogress[] = [];// Array of Object of ModuleFileProgress
   updatedModuleFileProgressArr: Modulefileprogress[] = [];// Array of Object of ModuleFileProgress
@@ -124,8 +124,10 @@ export class StudentModuleComponent implements OnInit {
     private moduleProgSErv: ModuleProgressService,
     private modFileServc: ModuleFileService,
     private quizService: QuizService,
-    private cdr: ChangeDetectorRef,
-    private courseProgServ: CourseProgressService) { }
+    private cdr: ChangeDetectorRef, private dialogboxService: DialogBoxService,
+    private courseProgServ: CourseProgressService) {
+      this.selectedQuizProgress = new QuizProgress();
+     }
 
 
   flag: boolean = false;
@@ -147,6 +149,7 @@ export class StudentModuleComponent implements OnInit {
   moduleProgress: Moduleprogress = new Moduleprogress;
   filteredProgressFileIds: number[] = [];
 
+  score = 0;
   refVar: number = 0;
   statusModuleProg: Moduleprogress = new Moduleprogress;
   updatedModuleProgress: Moduleprogress = new Moduleprogress;
@@ -158,7 +161,7 @@ export class StudentModuleComponent implements OnInit {
   moduleArr: Module[] = [];
   couresFlag: boolean = false;
   fileFlag: boolean = false;
-
+  quizProgressOfStudent: QuizProgress[] = [];
   modulePercentage: number = 0;
   quizIdArr1: number[] = [];
   quizIdArr2: number[] = [];
@@ -1341,15 +1344,44 @@ export class StudentModuleComponent implements OnInit {
     )
   }
 
+  showalert: boolean = false;
+
+  showAlert(): void {
+    console.log(this.showalert);
+    if (this.showalert) {
+      //  alert("sorry! you cant able to attend quiz again");
+      this.dialogboxService.open('sorry! you can`t able to attend quiz again', 'warning');
+    }
+    this.showalert = false;
+  }
+
+  onScoreReceived(score: number) {
+    this.score = score;
+    console.log('Received score: ' + score);
+    console.log('Current score: ' + this.score);
+  }
+
   onQuizClicked(quiz: Quiz) {
+    this.showalert = true;
+    console.log(this.showalert);
+
     this.selectedFile = '';
     this.selectedQuiz = quiz;
+console.log(this.quizProgressOfStudent);
+    this.quizProgressOfStudent.find(qp => {
+      if (qp.quizId == quiz.quizId) {
+        this.selectedQuizProgress = qp;
+
+       //  alert(this.selectedQuizProgress.score +"hello");
+      }
+    })
   }
 
 
   getQuizPorgressesByStudentId(studentId: number) {
     this.quizProgServ.getQuizProgressesByStudentId(studentId).subscribe(
       (data) => {
+        this.quizProgressOfStudent = data;
         data.forEach(quiz => {
           if (quiz.completed == true) {
             this.quizPassedProgresses.push(quiz.quizId);
