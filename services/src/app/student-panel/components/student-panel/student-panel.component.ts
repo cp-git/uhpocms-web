@@ -1,5 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as dataOne from '../../../dataOne.json';
+import * as dataThree from '../../../dataThree.json';
+
+import { ChartdataComponent } from 'app/student-module/components/chartdata/chartdata.component';
+import { CourseProgressService } from 'app/courseProgress/services/course-progress.service';
+import { CourseProgress } from 'app/courseProgress/class/courseprogress';
+import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
+import { Course } from 'app/teacher-course/class/course';
 
 @Component({
   selector: 'app-student-panel',
@@ -7,26 +15,97 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./student-panel.component.css']
 })
 export class StudentPanelComponent {
+  arrOne: any = dataOne.data[0];
+  arrTwo: any = dataOne.data[0];
+  arrThree: any = dataThree.data[0];
 
+  course:Course= new Course();
+  @ViewChild(ChartdataComponent) dChart: any;
 
+  //doughnut chart data array
+  doughCharts:any=[];
+  criteriaVar:number=0;
 
+  currentIndex: number = 0;
+ 
   // Declare class properties
   profileId: any;
-
+  courseProgressArr: CourseProgress[] = [];
   userName!: string;
 
   // Inject Router and ActivatedRoute services into constructor
-  constructor(private _route: Router, private _activatedRoute: ActivatedRoute) {
+  constructor(private _route: Router, private _activatedRoute: ActivatedRoute,private courseProgServ:CourseProgressService,private courseService:TeacherCourseService) {
 
   }
 
 
   // Initialize component properties with current route parameters
   ngOnInit(): void {
+    //code to realod the page by navigating here to this page
+    this._route.navigate(['../'], { relativeTo: this._activatedRoute });
     this.profileId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
-    console.log(this.profileId);
+
+    this.getAllCourseProgress();
+  
+    
+
   }
+
+  //fnction to get all data for course progress 
+    async getAllCourseProgress(){
+
+    let filteredCouProgArr:CourseProgress[]=[];
+    this.courseProgServ.getAllCourseProgress().subscribe(
+    async (response)=>{
+      this.courseProgressArr = response;
+
+      filteredCouProgArr = this.courseProgressArr.filter((element)=>element.studentId == this.profileId);
+       for(let i=0; i<filteredCouProgArr.length; i++){
+        const remainingPercentage:number = 100-filteredCouProgArr[i].progress;
+       
+        await this.getCourseNameById(filteredCouProgArr[i].courseId);
+
+        this.doughCharts[i] = [filteredCouProgArr[i].progress, remainingPercentage, this.course.courseName];
+      }
+
+    
+      this.criteriaVar = this.doughCharts.length - 3;
+      
+    }
+  )
+}
+
+//code for next button on progress panel
+next() {
+
+    this.currentIndex += 3;
+    this.getAllCourseProgress();
+   
+}
+
+//code for previous button on progress panel
+previous() {
+
+  this.currentIndex -= 3;
+  this.getAllCourseProgress();
+}
+
+//code to display course by providing course id
+getCourseNameById(courseId:number){
+  return new Promise<void>((resolve, reject) => {
+    this.courseService.getCourseByCourseId(courseId).subscribe(
+      (data) => {
+        this.course = data;
+        resolve();
+      },
+      (error) => {
+        reject(error);
+      }
+    )
+  });
+}
+
 
   // Navigate to student course page with current profileId
   RedirectToStudentCourse() {

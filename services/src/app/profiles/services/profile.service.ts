@@ -43,6 +43,8 @@ export class ProfileService {
     return this.http.patch<Profile>(`${this.profileUrl}/activate/${adminId}`, {});
   }
 
+
+  
   getProfileByRoleAndInstitutionId(userRole: string, instId: number): Observable<any> {
     return this.http.get<any>(`${this.profileUrl}/${userRole}/${instId}`);
   }
@@ -50,5 +52,9 @@ export class ProfileService {
 
   getProfileByUserId( userId: number): Observable<any> {
     return this.http.get<any>(`${this.profileUrl}/userId/${userId}`);
+  }
+
+  getProfileByAdminId( adminId: number): Observable<any> {
+    return this.http.get<any>(`${this.profileUrl}/id/${adminId}`);
   }
 }

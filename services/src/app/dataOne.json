@@ -1,0 +1,10 @@
+{
+    "data": [
+        {
+            "category": "Advertising",
+            "numbers": [5,15,30,35,15],
+            "labels": ["Google", "Facebook", "Instagram", "Amazon", "YouTube"],
+            "colors": ["#E15D44", "#55B4B0", "#DFCFBE", "#9B2335", "#5B5EA6"]
+        }
+    ]
+  }
