@@ -21,7 +21,7 @@
     <!-- <div id="chart-data"> -->
     <h3>Progress Panel</h3>
 
-    <div class="app-chartdata-ui" id="app-chartdata">
+    <div  *ngIf="doughCharts.length != 0 " class="app-chartdata-ui" id="app-chartdata">
         <div id="prevButton">
             <button *ngIf="currentIndex >= 3" (click)="previous()" class='fas fa-angle-left' style='font-size:48px;color:black;background: transparent;
         border: none;'></button>
@@ -49,6 +49,14 @@
             <button *ngIf="currentIndex < doughCharts.length - 3" (click)="next()" class='fas fa-angle-right' style='font-size:48px;color:black;background: transparent;
       border: none;'></button>
         </div>
+    </div>
+
+    <div *ngIf="doughCharts.length == 0 " class="app-chartdata-ui">
+
+        <div id="nocourmsg">
+            No Courses Assigned
+        </div>
+
     </div>
 
 
