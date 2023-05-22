@@ -1,0 +1,10 @@
+{
+    "data": [
+        {
+            "category": "R & D",
+            "numbers": [3,27,6,40,24],
+            "labels": ["Basic Research", "Applied Research", "Development Research", "Tax Credits", "R&D Grants"],
+            "colors": ["#9B2335", "#DFCFBE", "#E15D44", "#55B4B0", "#5B5EA6"]
+        }
+    ]
+  }

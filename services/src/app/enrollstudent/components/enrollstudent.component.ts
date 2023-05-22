@@ -24,6 +24,8 @@ import { Location } from '@angular/common';
 import { Enrolltostudent } from '../class/enrolltostudent';
 import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
+import { CourseProgress } from 'app/courseProgress/class/courseprogress';
+import { CourseProgressService } from 'app/courseProgress/services/course-progress.service';
 
 
 
@@ -64,7 +66,7 @@ export class EnrollstudentComponent {
   offset = 0;
   selected = [];
   prevSelected = [];
-
+  courseProgress =  new CourseProgress();
   // for buttons to view
   showAddButton: boolean = false;
   showActivateButton: boolean = false;
@@ -77,7 +79,9 @@ export class EnrollstudentComponent {
     private courseService: TeacherCourseService,
     private profileService: ProfileService,
     private enrollstuService: EnrolltostudentService,
-    private location: Location) {
+    private location: Location,
+  
+    private courprogServ : CourseProgressService) {
 
     this.profileId = sessionStorage.getItem('profileId');
     this.userRole = sessionStorage.getItem('userRole');
@@ -334,6 +338,7 @@ export class EnrollstudentComponent {
   //Function for assign course to student
   inserted: boolean = false;
   saveEnrolledStudent(courseId: number, profileId: number) {
+    this.courseProgress =  new CourseProgress();
     this.inserted = false;
     this.enrolledStudent.courseId = courseId;
     this.enrolledStudent.profileId = profileId;
@@ -344,6 +349,24 @@ export class EnrollstudentComponent {
           if (i == 0) {
             console.log("Student Enrolled Successfully");
             location.reload();
+            this.courseProgress.id = 0;
+            this.courseProgress.courseId =  this.enrolledStudent.courseId ;
+            this.courseProgress.studentId = this.enrolledStudent.profileId;
+            this.courseProgress.currentAssignNo = 1;
+            this.courseProgress.currentModuleNo = 1;
+            this.courseProgress.currentUnitNo = 1;
+            this.courseProgress.grade = 100;
+            this.courseProgress.progress = 0;
+
+            
+            this.courprogServ.addCourseProgressStatus(this.courseProgress).subscribe(
+              (response) => {
+
+              alert(this.courseProgress)
+
+              }
+            )
+
           }
         }
       )
