@@ -1,5 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
+
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-dialog-box',
@@ -8,7 +10,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class DialogBoxComponent {
 
+
   @Input() title: string | undefined;
+
   @Input() message: string;
   @Input() isWarning: boolean;
   @Input() isInformation: boolean;
@@ -28,5 +32,4 @@ export class DialogBoxComponent {
   onCancel(): void {
     this.dialogRef.close(false);
   }
-
 }
