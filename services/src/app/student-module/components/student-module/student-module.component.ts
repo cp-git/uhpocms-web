@@ -128,8 +128,8 @@ export class StudentModuleComponent implements OnInit {
     private quizService: QuizService,
     private cdr: ChangeDetectorRef, private dialogboxService: DialogBoxService,
     private courseProgServ: CourseProgressService) {
-      this.selectedQuizProgress = new QuizProgress();
-     }
+    this.selectedQuizProgress = new QuizProgress();
+  }
 
 
   flag: boolean = false;
@@ -1370,12 +1370,12 @@ export class StudentModuleComponent implements OnInit {
 
     this.selectedFile = '';
     this.selectedQuiz = quiz;
-console.log(this.quizProgressOfStudent);
+    console.log(this.quizProgressOfStudent);
     this.quizProgressOfStudent.find(qp => {
       if (qp.quizId == quiz.quizId) {
         this.selectedQuizProgress = qp;
 
-       //  alert(this.selectedQuizProgress.score +"hello");
+        //  alert(this.selectedQuizProgress.score +"hello");
       }
     })
   }
@@ -1472,6 +1472,38 @@ console.log(this.quizProgressOfStudent);
       }
     );
 
+  }
+
+  onSavePDFProgress(progressData: any) {
+    const progressedPageNumber = progressData.progressedPageNumber;
+    const totalNumPages = progressData.totalNumPages;
+    // console.log(progressData);
+
+    let pdfProgressInPercentage = (100 / totalNumPages) * progressedPageNumber;
+    pdfProgressInPercentage = Math.floor(pdfProgressInPercentage);
+    // console.log(this.selectedFile);
+    // console.log(this.studentId);
+    const moduleFileProgress: Modulefileprogress = {
+      id: 0,
+      progress: pdfProgressInPercentage,
+      currentFilePageNo: progressedPageNumber,
+      fileId: this.selectedFile.moduleFileId,
+      moduleId: this.selectedFile.moduleId,
+      studentId: this.studentId
+    };
+
+    this.fileProgService.updateModuleFileProgressByFileIdAndStudentId(this.selectedFile.moduleFileId, this.studentId, moduleFileProgress).subscribe(
+      (response) => {
+        // console.log("pdf progress saved : " + response);
+        if (pdfProgressInPercentage == 100) {
+          // console.log("Completed");
+          this.filteredProgressFileIds.push(response.fileId);
+          this.sortAccessibleModules();
+
+          this.moduleProgresscCeateUpdate(this.selectedModule.moduleId);
+        }
+      }
+    )
   }
 }
 
