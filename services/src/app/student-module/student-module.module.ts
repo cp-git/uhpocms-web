@@ -7,7 +7,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { ChartdataComponent } from './components/chartdata/chartdata.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
-import { BarchPopupComponent } from './components/barch-popup/barch-popup.component';
+
 
 
 

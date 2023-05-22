@@ -80,7 +80,7 @@ import { ModuleHeaderComponent } from './reusable/component/module-header/module
 
 import { ChartdataComponent } from './student-module/components/chartdata/chartdata.component';
 import { BarChartComponent } from './student-module/components/bar-chart/bar-chart.component';
-import { BarchPopupComponent } from './student-module/components/barch-popup/barch-popup.component';
+
 
 
 
@@ -123,9 +123,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     ChartdataComponent,
 
     BarChartComponent,
-    BarchPopupComponent
 
-   
+
+
 
 
 

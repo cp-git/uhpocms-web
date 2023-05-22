@@ -15,26 +15,24 @@ import { Course } from 'app/teacher-course/class/course';
   styleUrls: ['./student-panel.component.css']
 })
 export class StudentPanelComponent {
-  arrOne: any = dataOne.data[0];
-  arrTwo: any = dataOne.data[0];
-  arrThree: any = dataThree.data[0];
 
-  course:Course= new Course();
+
+  course: Course = new Course();
   @ViewChild(ChartdataComponent) dChart: any;
 
   //doughnut chart data array
-  doughCharts:any=[];
-  criteriaVar:number=0;
+  doughCharts: any = [];
+
 
   currentIndex: number = 0;
- 
+
   // Declare class properties
   profileId: any;
   courseProgressArr: CourseProgress[] = [];
   userName!: string;
 
-  // Inject Router and ActivatedRoute services into constructor
-  constructor(private _route: Router, private _activatedRoute: ActivatedRoute,private courseProgServ:CourseProgressService,private courseService:TeacherCourseService) {
+
+  constructor(private _route: Router, private _activatedRoute: ActivatedRoute, private courseProgServ: CourseProgressService, private courseService: TeacherCourseService) {
 
   }
 
@@ -46,65 +44,63 @@ export class StudentPanelComponent {
     this.profileId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
 
+    //function to display charts on page load
     this.getAllCourseProgress();
-  
-    
 
   }
 
-  //fnction to get all data for course progress 
-    async getAllCourseProgress(){
-
-    let filteredCouProgArr:CourseProgress[]=[];
+  //function to get all data for course progress 
+  async getAllCourseProgress() {
+    let filteredCouProgArr: CourseProgress[] = [];
     this.courseProgServ.getAllCourseProgress().subscribe(
-    async (response)=>{
-      this.courseProgressArr = response;
+      async (response) => {
+        this.courseProgressArr = response;
 
-      filteredCouProgArr = this.courseProgressArr.filter((element)=>element.studentId == this.profileId);
-       for(let i=0; i<filteredCouProgArr.length; i++){
-        const remainingPercentage:number = 100-filteredCouProgArr[i].progress;
-       
-        await this.getCourseNameById(filteredCouProgArr[i].courseId);
+        filteredCouProgArr = this.courseProgressArr.filter((element) => element.studentId == this.profileId);
+        for (let i = 0; i < filteredCouProgArr.length; i++) {
+          const remainingPercentage: number = 100 - filteredCouProgArr[i].progress;
 
-        this.doughCharts[i] = [filteredCouProgArr[i].progress, remainingPercentage, this.course.courseName];
+          await this.getCourseNameById(filteredCouProgArr[i].courseId);
+
+
+          this.doughCharts[i] = [filteredCouProgArr[i].progress, remainingPercentage, this.course.courseName];
+
+        }
+
+
       }
+    )
+  }
 
-    
-      this.criteriaVar = this.doughCharts.length - 3;
-      
-    }
-  )
-}
-
-//code for next button on progress panel
-next() {
+  //code for next button on progress panel
+  next() {
 
     this.currentIndex += 3;
     this.getAllCourseProgress();
-   
-}
 
-//code for previous button on progress panel
-previous() {
+  }
 
-  this.currentIndex -= 3;
-  this.getAllCourseProgress();
-}
+  //code for previous button on progress panel
+  previous() {
 
-//code to display course by providing course id
-getCourseNameById(courseId:number){
-  return new Promise<void>((resolve, reject) => {
-    this.courseService.getCourseByCourseId(courseId).subscribe(
-      (data) => {
-        this.course = data;
-        resolve();
-      },
-      (error) => {
-        reject(error);
-      }
-    )
-  });
-}
+    this.currentIndex -= 3;
+    this.getAllCourseProgress();
+  }
+
+  //code to display course by providing course id
+  getCourseNameById(courseId: number) {
+    return new Promise<void>((resolve, reject) => {
+      this.courseService.getCourseByCourseId(courseId).subscribe(
+        (data) => {
+          this.course = data;
+          resolve();
+        },
+        (error) => {
+          reject(error);
+        }
+      )
+    });
+  }
 
 
   // Navigate to student course page with current profileId

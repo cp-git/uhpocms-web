@@ -110,17 +110,7 @@ body {
 }
 
 .app-chartdata-ui {
-    /* font: normal 15px sans-serif;
-    max-width: 99%;
-    background-color: lightgray;
-    margin: 0 0%;
-    padding: 1rem 0;
-    border-radius: 6px;
-    height: 36rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center; */
+ 
 
     font: normal 15px sans-serif;
     max-width: 99%;
@@ -135,24 +125,11 @@ body {
     align-items: center;
     border: 5px solid #566787;
     border-radius: 10px;
+    --chart-width: 300px; /* Set the default width for the horizontal line */
+
     
-  }
-  
-   
+}
 
-
-
-  /* #prevButton {
-    display: flex;
-    justify-content: flex-start;
-
-  }
-  
-  #nextButton {
-    display: flex;
-    justify-content: flex-end;
-  
-  } */
   #prevButton {
     width: 48px; /* set a fixed width */
     display: flex;
@@ -192,6 +169,9 @@ body {
     .color-wrapper {
       display: grid;
       margin-right: 10px;
+
+      width: var(--chart-width); /* set the width based on the CSS variable */
+
     }
   
     .color-ref {
@@ -219,11 +199,12 @@ body {
 
 .vertical
   {
-  position: relative;
-  height: 100px;
-  border-left: 1px solid black;
-}
-
+    position: relative;
+    height: 125px;
+    border-left: 1.6px solid black;
+  
+    top: 20px;
+  }
 .vertical::before {
   content: "";
   position: absolute;
@@ -233,28 +214,7 @@ body {
   border-right: 10px solid transparent;
   border-bottom: 10px solid black;
 }
-
-
-/*   
-.horizontal {
-    position: absolute;
-    bottom: -10px;
-    right: 0;
-    width: 200px;
-    height: 1px;
-    background-color: black;
-  }
-  
-  .horizontal::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    right: -10px;
-    border-top: 10px solid black;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-  } */
-  .horizontal {
+/* .horizontal {
     position: absolute;
     bottom: -20px;
     right: 0;
@@ -262,8 +222,20 @@ body {
     width: 860px;
     height: 1px;
     background-color: black;
-  }
   
+
+  }*/
+  
+ 
+  .horizontal {
+    position: absolute;
+    bottom: -20px;
+    right: 0;
+    transform: translateY(-50%);
+    width: 95%; /* Set the width to 100% to span the entire width of the app-chartdata component */
+    height: 1px;
+    background-color: black;
+  }
   .horizontal::before {
     content: "";
     position: absolute;
@@ -272,7 +244,7 @@ body {
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
     border-left: 10px solid black;
-  }
+  } 
   .course-progress {
     position: absolute;
     bottom: -40px;
@@ -294,3 +266,9 @@ body {
 
 
     /* modal popup css  end*/
+    #nocourmsg{ 
+      font-size: 45px;
+  
+      padding-right: 25%;
+      padding-left: 30%;
+    }

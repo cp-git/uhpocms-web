@@ -111,36 +111,12 @@ body {
     margin-bottom: -5px;
 }
 
-/* #chart-data{
-    max-width: 100%;
-    display: flex;
-    
-    background-color: lightgray;
-    margin: 0 0%;
-    padding: 20px 0;
-    border-radius: 6px;
 
-} */
-/* #app-chartdata-ui {
-    font: normal 12px sans-serif;
-    max-width: 99%;
-    /* display: flex;
-    align-items: center;
-    justify-content: center; */
-    /* background-color: lightgray;
-    margin: 0 0%;
-    padding: 1rem 0;
-    border-radius: 6px;
-    height: 36rem;
-     */
-   
- 
-  /* } */ 
 
   .app-chartdata-ui {
     font: normal 12px sans-serif;
     max-width: 99%;
-    background-color: lightgray;
+    background-color: #c5d1d8;
     margin: 0 0%;
     padding: 1rem 0;
     border-radius: 6px;
@@ -152,21 +128,7 @@ body {
     border: 5px solid #566787;
   }
   
-   
 
-
-
-  /* #prevButton {
-    display: flex;
-    justify-content: flex-start;
-
-  }
-  
-  #nextButton {
-    display: flex;
-    justify-content: flex-end;
-  
-  } */
   #prevButton {
     width: 48px; /* set a fixed width */
     display: flex;
@@ -187,9 +149,7 @@ body {
     visibility: hidden;
   }
 
-  /* .hidden {
-    display: none;
-  } */
+  
   #chart-head{
     display: flex;
     align-items: center;
@@ -221,4 +181,10 @@ body {
       margin-top: 30px;
       margin-left: 20px;
     }
+  }
+  #nocourmsg{ 
+    font-size: 45px;
+
+    padding-right: 25%;
+    padding-left: 30%;
   }
