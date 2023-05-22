@@ -595,6 +595,10 @@ export class StudentModuleComponent implements OnInit {
 
   //sets the selected course by the student and resets the selected module
   onCourseSelect(courseId: any) {
+
+    this.selectedFile = false;
+    this.selectedQuiz = {} as Quiz;
+
     this.courProgPercentage = 0;
     this.changeSelectedCourseName(courseId);
 

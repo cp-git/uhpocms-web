@@ -122,7 +122,8 @@
                 </ng-container>
                 <ng-container>
                     <video [hidden]="format!='video'" class="videoscreen" (ended)="videoEnd()"
-                        (timeupdate)="onVideoTimeUpdate()" (pause)="pauseVideo()" controls #videoPlayer>
+                        (timeupdate)="onVideoTimeUpdate()" (pause)="pauseVideo()" controls oncontextmenu="return false;"
+                        controls controlsList="nodownload" #videoPlayer>
                         <source [src]="selectedFileData" type="video/mp4" />
                     </video>
                 </ng-container>

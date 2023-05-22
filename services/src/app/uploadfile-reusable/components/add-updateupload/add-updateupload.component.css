@@ -20,6 +20,13 @@ table td {
 .btn {
     border-radius: 15px;
 }
+
 .disableddropdown {
     -webkit-appearance: none;
+}
+
+input[type=checkbox],
+input[type=radio] {
+    width: 10%;
+    margin: 0px 0 0;
 }
