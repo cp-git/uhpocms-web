@@ -451,16 +451,16 @@ export class StudentModuleComponent implements OnInit {
     let blob: Blob;
     this.modulefileService.getFile(this.selectedFile.moduleFileId).subscribe(
       (response: ArrayBuffer) => {
-        console.log(response);
+        // console.log(response);
         const bytes = new Uint8Array(response);
         // Create an ArrayBuffer
         const arrayBuffer = new ArrayBuffer(4);
         const dataView = new DataView(arrayBuffer);
         dataView.setInt32(0, 42);
-        console.log(dataView);
+        // console.log(dataView);
         // Create a Blob from the ArrayBuffer
         const blob2 = new Blob([arrayBuffer]);
-        console.log(blob2);
+        // console.log(blob2);
         // Check if the file is a PDF
         if (String.fromCharCode.apply(null, Array.from(bytes.subarray(0, 4))) === '%PDF') {
           blob = new Blob([response], { type: 'application/pdf' });
@@ -470,7 +470,7 @@ export class StudentModuleComponent implements OnInit {
         }
         // Check if the file is a video
         const mp4Signature = String.fromCharCode.apply(null, Array.from(bytes.subarray(4, 8)));
-        console.log(mp4Signature);
+        // console.log(mp4Signature);
         if (mp4Signature === 'ftypisom' || mp4Signature === 'ftypmp42' || mp4Signature.startsWith('ftyp')) {
           blob = new Blob([response], { type: 'video/mp4' });
           this.selectedFileType = 'video/mp4'
@@ -478,7 +478,7 @@ export class StudentModuleComponent implements OnInit {
           this.format = 'video';
           this.videoPlayer.src = this.selectedFileData;
         }
-        console.log(this.selectedFileData);
+        // console.log(this.selectedFileData);
       }
     );
   }
@@ -1464,7 +1464,7 @@ export class StudentModuleComponent implements OnInit {
       (response) => {
         // console.log("pdf progress saved : " + response);
         if (pdfProgressInPercentage == 100) {
-          console.log("Completed");
+          // console.log("Completed");
           this.filteredProgressFileIds.push(response.fileId);
           this.sortAccessibleModules();
 

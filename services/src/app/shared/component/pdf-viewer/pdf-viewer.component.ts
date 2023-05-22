@@ -63,7 +63,7 @@ export class PdfViewerComponent {
     // }
 
     // Your custom function to be called when the local variable changes
-    console.log('progress changed:', this.progressedPageNumber);
+    // console.log('progress changed:', this.progressedPageNumber);
   }
 
 
