@@ -43,15 +43,10 @@ export class StudentModuleComponent implements OnInit {
   @ViewChild(StudentQuizComponent)
   private studentQuizComponent!: StudentQuizComponent;
 
-
-
   studentId: any;
   userName: any;
 
-
   // moduleFileId: any;
-
-
 
   courseId: any;
   moduleId: any;
@@ -72,7 +67,6 @@ export class StudentModuleComponent implements OnInit {
 
   quizzes: Quiz[] = [];
 
-
   newModuleFileProgressArr: Modulefileprogress[] = [];// Array of Object of ModuleFileProgress
   uniquemofileprogarr: Modulefileprogress[] = [];
   selectedCourse: any; //stores the selected course by the student. 
@@ -90,25 +84,17 @@ export class StudentModuleComponent implements OnInit {
   selectedQuiz!: Quiz;
   Date: any;
 
-
-
   moduleFileName: any;
 
-
   modulesArray: Module[] = []; //array of Module objects that stores the modules of the courses
-
   courseArray: Course[] = []; //array of Module objects that stores the modules of the courses
-
   instituteArray: AdminInstitution[] = []; //array of Module objects that stores the modules of the courses
-
   departmentArray: Department[] = []; //array of Module objects that stores the modules of the courses
-
   coursedepartmentArray: CourseDepartment[] = []; //array of Module objects that stores the modules of the courses
-
   moduleArray: Module[] = [];
-
-
   moduledata: Module[] = [];
+
+  selectedQuizName: string = '';
 
   accessibleModuleIds = new Set();    // module ids which are accessible to student
 
@@ -128,9 +114,8 @@ export class StudentModuleComponent implements OnInit {
     private quizService: QuizService,
     private cdr: ChangeDetectorRef, private dialogboxService: DialogBoxService,
     private courseProgServ: CourseProgressService) {
-      this.selectedQuizProgress = new QuizProgress();
-     }
-
+    this.selectedQuizProgress = new QuizProgress();
+  }
 
   flag: boolean = false;
   secondflag!: boolean;
@@ -595,6 +580,11 @@ export class StudentModuleComponent implements OnInit {
 
   //sets the selected course by the student and resets the selected module
   onCourseSelect(courseId: any) {
+
+    this.selectedFile = false;
+    this.selectedQuiz = {} as Quiz;
+    this.showalert = false;
+
     this.courProgPercentage = 0;
     this.changeSelectedCourseName(courseId);
 
@@ -1370,12 +1360,13 @@ export class StudentModuleComponent implements OnInit {
 
     this.selectedFile = '';
     this.selectedQuiz = quiz;
-console.log(this.quizProgressOfStudent);
+    this.selectedQuizName = quiz.title;
+    console.log(this.quizProgressOfStudent);
     this.quizProgressOfStudent.find(qp => {
       if (qp.quizId == quiz.quizId) {
         this.selectedQuizProgress = qp;
 
-       //  alert(this.selectedQuizProgress.score +"hello");
+        //  alert(this.selectedQuizProgress.score +"hello");
       }
     })
   }
@@ -1472,6 +1463,38 @@ console.log(this.quizProgressOfStudent);
       }
     );
 
+  }
+
+  onSavePDFProgress(progressData: any) {
+    const progressedPageNumber = progressData.progressedPageNumber;
+    const totalNumPages = progressData.totalNumPages;
+    // console.log(progressData);
+
+    let pdfProgressInPercentage = (100 / totalNumPages) * progressedPageNumber;
+    pdfProgressInPercentage = Math.floor(pdfProgressInPercentage);
+    // console.log(this.selectedFile);
+    // console.log(this.studentId);
+    const moduleFileProgress: Modulefileprogress = {
+      id: 0,
+      progress: pdfProgressInPercentage,
+      currentFilePageNo: progressedPageNumber,
+      fileId: this.selectedFile.moduleFileId,
+      moduleId: this.selectedFile.moduleId,
+      studentId: this.studentId
+    };
+
+    this.fileProgService.updateModuleFileProgressByFileIdAndStudentId(this.selectedFile.moduleFileId, this.studentId, moduleFileProgress).subscribe(
+      (response) => {
+        // console.log("pdf progress saved : " + response);
+        if (pdfProgressInPercentage == 100) {
+          // console.log("Completed");
+          this.filteredProgressFileIds.push(response.fileId);
+          this.sortAccessibleModules();
+
+          this.moduleProgresscCeateUpdate(this.selectedModule.moduleId);
+        }
+      }
+    )
   }
 }
 

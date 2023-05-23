@@ -85,13 +85,16 @@
                     </ng-container>
 
                     <ng-template #quizview>
-                        <div *ngIf="(selectedQuiz!=null && (selectedQuiz.singleAttempt==true && !(quizPassedProgresses.includes(selectedQuiz.quizId))) || (selectedQuiz.singleAttempt==false)); else singleAttempt ">
+                        <div
+                            *ngIf="(selectedQuiz!=null && (selectedQuiz.singleAttempt==true && !(quizPassedProgresses.includes(selectedQuiz.quizId))) || (selectedQuiz.singleAttempt==false)); else singleAttempt ">
                             <!-- <div *ngIf="selectedQuiz && selectedQuiz.singleAttempt = true &&  (quizPassedProgresses.includes(quiz.quizId) ||
                             quizFailedProgresses.includes(quiz.quizId))"> -->
-                            <app-student-quiz [quizData]="selectedQuiz" (quizProgressAdded)="onQuizProgressAdded($event)" (onSaveQuizProgress)="onSaveQuizProgress($event)"></app-student-quiz>
+                            <app-student-quiz [quizData]="selectedQuiz"
+                                (quizProgressAdded)="onQuizProgressAdded($event)"
+                                (onSaveQuizProgress)="onSaveQuizProgress($event)"></app-student-quiz>
                             <!-- <app-student-quiz (quizProgressAdded)="onQuizProgressAdded($event)"></app-student-quiz> -->
                             <!-- <div>Previous Score: {{ selectedQuizProgress.score }}</div> -->
-        
+
                         </div>
                         <!-- <app-student-quiz (scoreEvent)="onScoreReceived($event)"></app-student-quiz> -->
                     </ng-template>
@@ -99,14 +102,15 @@
                         <ng-container *ngIf="showalert">
                             {{showAlert()}}
                         </ng-container>
-                       
+
                     </ng-template>
-        
+
                 </div>
             </div>
             <h5 style="color:blue"> Course Progress : {{courProgPercentage}} % Completed </h5>
-            <h5 style="color:blue">Previous Score: {{ selectedQuizProgress.score }} %</h5>
-            
+            <h5 *ngIf="selectedQuizName" style="color:blue"> {{ selectedQuizName}} : {{ selectedQuizProgress.score }}%
+            </h5>
+
         </div>
 
 
@@ -114,11 +118,13 @@
             <div *ngIf="selectedFile; else quizview">
 
                 <ng-container *ngIf="format=='pdf'">
-                    <app-pdf-viewer [blobUrl]="selectedFileData"></app-pdf-viewer>
+                    <app-pdf-viewer [blobUrl]="selectedFileData"
+                        (savePDFProgress)="onSavePDFProgress($event)"></app-pdf-viewer>
                 </ng-container>
                 <ng-container>
                     <video [hidden]="format!='video'" class="videoscreen" (ended)="videoEnd()"
-                        (timeupdate)="onVideoTimeUpdate()" (pause)="pauseVideo()" controls #videoPlayer>
+                        (timeupdate)="onVideoTimeUpdate()" (pause)="pauseVideo()" controls oncontextmenu="return false;"
+                        controls controlsList="nodownload" #videoPlayer>
                         <source [src]="selectedFileData" type="video/mp4" />
                     </video>
                 </ng-container>
@@ -126,7 +132,7 @@
                 <!-- <div>{{ completionPercentage }}%</div> -->
 
             </div>
-           
+
         </div>
     </div>
 </div>
