@@ -1,50 +1,40 @@
 .btn-secondary:hover {
     background-color: red !important;
 }
-
 .modal-body {
     font-size: 16px;
 }
-
 .btn-primary:hover {
     background-color: green !important;
     border-color: green !important;
 }
-
 .modal-content {
     border: 1px solid #ccc;
 }
-
-.messagemodal {
-    border: 6px solid rgb(20, 4, 110);
-    width: 400px;
+.messagemodal{
+border: 6px solid rgb(20, 4, 110);
+width: 400px;
 }
-
 .warning-icon {
     color: red;
 }
-
-.info-icon {
-    color: blue;
+.info-icon{
+    color:blue;
 }
-
-.decision-icon {
-    color: goldenrod;
+.decision-icon{
+    color:goldenrod;
 }
-
 .messagemodal {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-
 .modal-header {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
 .modal-footer {
     display: flex;
     justify-content: center;

@@ -100,6 +100,27 @@ export class TeacherCourseComponent implements OnInit {
     this.getInActiveCourse(); // for getting all inactive course
   }
 
+  accessControl(userRole: string) {
+    console.log(userRole);
+
+    switch (userRole) {
+      case 'admin' || 'coadmin':
+        this.showAddButton = true;
+        this.showActivateButton = true;
+      
+        break;
+      case 'teacher':
+        this.showAddButton = false;
+        this.showActivateButton = false;
+
+        break;
+      case 'student':
+        this.showAddButton = false;
+        this.showActivateButton = false;
+        break;
+    }
+  }
+
   // back button functionality
   back() {
     if (this.viewAll == false) {
@@ -108,8 +129,7 @@ export class TeacherCourseComponent implements OnInit {
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
-      this.showAddButton = true;
-      this.showActivateButton = true;
+      this.accessControl(this.userRole);
 
     } else {
       this.location.back();
@@ -202,7 +222,7 @@ export class TeacherCourseComponent implements OnInit {
   // For adding course
   private addCourse(currentData: any) {
 
-    currentData.courseIsActive = true;  // setting active true
+    //currentData.courseIsActive = true;  // setting active true
     // console.log("currentda" + JSON.stringify(currentData));
     // calling service for adding data
     this.service.addCourse(currentData).subscribe(

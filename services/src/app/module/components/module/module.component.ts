@@ -216,7 +216,7 @@ export class ModuleComponent {
     //   alert("End date must be after start date");
     //   return;
     // }
-    currentData.moduleIsActive = true;  // setting active true
+   // currentData.moduleIsActive = true;  // setting active true
     // calling service for adding data
     //console.log(JSON.stringify(currentData));
     this.service.addTeacherModule(currentData).subscribe(
