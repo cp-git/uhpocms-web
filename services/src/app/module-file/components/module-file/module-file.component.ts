@@ -324,7 +324,10 @@ export class ModuleFileComponent {
         this.ngOnInit();
         this.back();
       },
-      (error) => console.log('failed to upload ')
+      (error) => {
+        alert("File is Already Present pls Select Another file..")
+        console.log('failed to upload ')
+      }
     );
   }
 

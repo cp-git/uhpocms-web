@@ -223,6 +223,7 @@ export class TeacherCourseComponent implements OnInit {
 
           },
           error => {
+            alert("Course Name is already Failed...")
             console.log("Course added but failed to assign");
           }
         );
