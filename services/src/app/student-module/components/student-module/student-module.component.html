@@ -108,7 +108,8 @@
                 </div>
             </div>
             <h5 style="color:blue"> Course Progress : {{courProgPercentage}} % Completed </h5>
-            <h5 style="color:blue">Previous Score: {{ selectedQuizProgress.score }} %</h5>
+            <h5 *ngIf="selectedQuizName" style="color:blue"> {{ selectedQuizName}} : {{ selectedQuizProgress.score }}%
+            </h5>
 
         </div>
 
@@ -122,7 +123,8 @@
                 </ng-container>
                 <ng-container>
                     <video [hidden]="format!='video'" class="videoscreen" (ended)="videoEnd()"
-                        (timeupdate)="onVideoTimeUpdate()" (pause)="pauseVideo()" controls #videoPlayer>
+                        (timeupdate)="onVideoTimeUpdate()" (pause)="pauseVideo()" controls oncontextmenu="return false;"
+                        controls controlsList="nodownload" #videoPlayer>
                         <source [src]="selectedFileData" type="video/mp4" />
                     </video>
                 </ng-container>
