@@ -943,7 +943,7 @@ export class StudentModuleComponent implements OnInit {
                 this.courseProgress.currentAssignNo = 1;
                 this.courseProgress.currentModuleNo = 1;
                 this.courseProgress.currentUnitNo = 1;
-                this.courseProgress.grade = 100;
+                this.courseProgress.grade = 0;
                 this.courseProgress.progress = (this.moduleProgArray.length * 100) / this.moduleArray.length;
                 this.courseProgServ.addCourseProgressStatus(this.courseProgress).subscribe(
                   (response) => {
