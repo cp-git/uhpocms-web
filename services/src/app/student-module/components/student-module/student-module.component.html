@@ -28,11 +28,7 @@
 
                         <ul class="modules" *ngIf="selectedCourse == module.courseId_id"
                             [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId)}">
-
-
                             <span class="fa fa-book"></span>
-
-
                             <label for="" class="modulelist">
                                 &nbsp;&nbsp;{{ module.moduleName }}</label>
                             &nbsp;&nbsp;
@@ -49,8 +45,6 @@
                                             <ng-template #elseBlock>
                                                 <span class="fas fa-video" aria-hidden="true"></span>
                                             </ng-template>
-
-
                                             &nbsp;&nbsp;
                                             <a (click)="changeSelectedFileAndModule(file, module)"
                                                 [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId)}"><b>{{
@@ -59,8 +53,6 @@
                                         </li>
                                     </div>
                                 </ng-container>
-
-
 
                             </ng-container>
 
@@ -115,6 +107,9 @@
 
 
         <div class="col-xs-12 col-sm-6 col-md-9 viewpanel">
+            <!-- <ng-container *ngIf="!(selectedFile || selectedQuiz)">
+                            <div class="emptyscreenborder"></div>
+                        </ng-container> -->
             <div *ngIf="selectedFile; else quizview">
 
                 <ng-container *ngIf="format=='pdf'">
@@ -130,7 +125,6 @@
                 </ng-container>
 
                 <!-- <div>{{ completionPercentage }}%</div> -->
-
             </div>
 
         </div>
