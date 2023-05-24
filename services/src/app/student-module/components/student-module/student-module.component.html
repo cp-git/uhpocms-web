@@ -6,14 +6,9 @@
         <div class="col-xs-12 col-sm-6 col-md-3 sidebar">
             <div class="header text-center">
                 <h1>{{ selectedCourseName | titlecase }}</h1>
-
-
-
-
             </div>
             <div class="form-group">
                 <label for="course">Course Name</label><br>
-
                 <select (change)="onCourseSelect(selectedCourse)" [(ngModel)]="selectedCourse" class="form-select"
                     aria-label="Default select example">
                     <option *ngFor="let course of courses" [value]="course.courseId">
@@ -28,17 +23,11 @@
 
                         <ul class="modules" *ngIf="selectedCourse == module.courseId_id"
                             [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId)}">
-
-
                             <span class="fa fa-book"></span>
-
-
                             <label for="" class="modulelist">
                                 &nbsp;&nbsp;{{ module.moduleName }}</label>
                             &nbsp;&nbsp;
-
                             <ng-container *ngFor="let file of studentModuleFiles">
-
                                 <ng-container
                                     *ngIf="module.moduleId == file.moduleId && selectedCourse == module.courseId_id">
                                     <div class="dropdown-item">
@@ -49,8 +38,6 @@
                                             <ng-template #elseBlock>
                                                 <span class="fas fa-video" aria-hidden="true"></span>
                                             </ng-template>
-
-
                                             &nbsp;&nbsp;
                                             <a (click)="changeSelectedFileAndModule(file, module)"
                                                 [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId)}"><b>{{
@@ -59,9 +46,6 @@
                                         </li>
                                     </div>
                                 </ng-container>
-
-
-
                             </ng-container>
 
                             <ng-container *ngFor="let quiz of quizzes |filter:'moduleId':module.moduleId">
@@ -94,7 +78,6 @@
                                 (onSaveQuizProgress)="onSaveQuizProgress($event)"></app-student-quiz>
                             <!-- <app-student-quiz (quizProgressAdded)="onQuizProgressAdded($event)"></app-student-quiz> -->
                             <!-- <div>Previous Score: {{ selectedQuizProgress.score }}</div> -->
-
                         </div>
                         <!-- <app-student-quiz (scoreEvent)="onScoreReceived($event)"></app-student-quiz> -->
                     </ng-template>
@@ -102,21 +85,17 @@
                         <ng-container *ngIf="showalert">
                             {{showAlert()}}
                         </ng-container>
-
                     </ng-template>
-
                 </div>
             </div>
             <h5 style="color:blue"> Course Progress : {{courProgPercentage}} % Completed </h5>
             <h5 *ngIf="selectedQuizName" style="color:blue"> {{ selectedQuizName}} : {{ selectedQuizProgress.score }}%
             </h5>
-
         </div>
 
 
         <div class="col-xs-12 col-sm-6 col-md-9 viewpanel">
             <div *ngIf="selectedFile; else quizview">
-
                 <ng-container *ngIf="format=='pdf'">
                     <app-pdf-viewer [blobUrl]="selectedFileData"
                         (savePDFProgress)="onSavePDFProgress($event)"></app-pdf-viewer>
@@ -128,11 +107,8 @@
                         <source [src]="selectedFileData" type="video/mp4" />
                     </video>
                 </ng-container>
-
                 <!-- <div>{{ completionPercentage }}%</div> -->
-
             </div>
-
         </div>
     </div>
 </div>
