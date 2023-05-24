@@ -19,7 +19,7 @@ export const DepartmentAllColumn = [
 
 export const DepartmentUpdateColumn = [
     { key: 'institutionId', label: 'Institution', type: 'dropdown1', disable: 'true' },
-    { key: 'name', label: 'Department Name', type: 'input' },
+    { key: 'name', label: 'Department Name', type: 'input', disable: 'true' },
     { key: 'description', label: 'Description', type: 'input' },
 
 
