@@ -1397,6 +1397,7 @@ export class StudentModuleComponent implements OnInit {
   }
 
   onSaveQuizProgress(quizProgress: any) {
+    this.showalert = false;
     this.quizPassedProgresses = this.removeElementFromStringArray(this.quizPassedProgresses, quizProgress.quizId)
     this.quizFailedProgresses = this.removeElementFromStringArray(this.quizFailedProgresses, quizProgress.quizId)
     if (quizProgress.completed == true) {

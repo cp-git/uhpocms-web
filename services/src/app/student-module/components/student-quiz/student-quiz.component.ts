@@ -327,7 +327,8 @@ export class StudentQuizComponent implements OnInit {
     })
 
     if (notAttendedQuestions.length > 0) {
-      alert("Please answer the questions  " + (notAttendedQuestions))
+     // alert("Please answer the questions  " + (notAttendedQuestions))
+      this.dialogboxService.open('Please answer the questions '+(notAttendedQuestions), 'warning');
       return;
     }
 
