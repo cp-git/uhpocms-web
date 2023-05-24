@@ -299,7 +299,7 @@ export class ModuleFileComponent {
 
   // Add module file
   addModuleFile(objectReceived: ModuleFile) {
-    objectReceived.moduleFileIsActive = true;
+   // objectReceived.moduleFileIsActive = true;
     console.log("view " + JSON.stringify(this.files));
 
 
