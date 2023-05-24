@@ -1,4 +1,5 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { LoginauthComponent } from 'app/authlogin/components/loginauth.component';
 import * as pdfjsLib from 'pdfjs-dist';
 
 @Component({
@@ -8,6 +9,7 @@ import * as pdfjsLib from 'pdfjs-dist';
 })
 export class PdfViewerComponent {
   @Input() blobUrl: string = '';
+  @Output() savePDFProgress: EventEmitter<{ progressedPageNumber: number, totalNumPages: number }> = new EventEmitter();
 
   url: any;
   // zoom: number = 0.47;
@@ -28,11 +30,43 @@ export class PdfViewerComponent {
     // this.fetchFile();
   }
 
+  previousPageNumber: number = 1;
+  progressedPageNumber: number = 1;
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['blobUrl']) {
       this.calculateTotalPages(this.blobUrl);
     }
   }
+
+  ngDoCheck() {
+    if (this.pageNumber !== this.previousPageNumber) {
+      this.previousPageNumber = this.pageNumber;
+      this.onPageNumberChange();
+    }
+  }
+
+  onPageNumberChange() {
+    if (this.pageNumber >= this.progressedPageNumber && this.pageNumber <= this.totalNumPages) {
+      this.progressedPageNumber = this.pageNumber;
+
+      const progressData = {
+        progressedPageNumber: this.progressedPageNumber,
+        totalNumPages: this.totalNumPages
+      }
+      this.savePDFProgress.emit(progressData);
+    }
+
+    // if (this.progressedPageNumber >= this.totalNumPages) {
+    // console.log("done");
+
+
+    // }
+
+    // Your custom function to be called when the local variable changes
+    // console.log('progress changed:', this.progressedPageNumber);
+  }
+
+
 
   // fetchFile() {
   //   // fetch the PDF file and create the blob URL
