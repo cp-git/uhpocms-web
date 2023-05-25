@@ -7,6 +7,7 @@ import { DepartmentAllColumn, DepartmentColumn, DepartmentUpdateColumn } from 'a
 
 import { Location } from '@angular/common';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
@@ -48,7 +49,7 @@ export class DepartmentComponent implements OnInit {
   emptyDepartment: Department; // empty department
   currentData!: Department; // for update and view, to show existing data
 
-  constructor(private service: DepartmentService, private location: Location) {
+  constructor(private service: DepartmentService, private location: Location ,private dialogBoxServices :DialogBoxService) {
     // assigng headers
     this.columnNames = DepartmentColumn;
     this.allColumnNames = DepartmentAllColumn;
@@ -185,9 +186,10 @@ export class DepartmentComponent implements OnInit {
     this.service.insertDepartment(currentData).subscribe(
       (data) => {
         console.log('Department added Successfully');
+        this.dialogBoxServices.open("Department added Successfully", 'information');
         this.emptyDepartment = {} as Department;
         this.ngOnInit();
-        this.back();
+        this.back();  
       },
       (error) => {
         console.log('Failed to add Department');

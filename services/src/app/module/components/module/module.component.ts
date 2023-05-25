@@ -6,6 +6,7 @@ import { Course } from 'app/teacher-course/class/course';
 import { Location } from '@angular/common';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { Profile } from 'app/profiles/class/profile';
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 @Component({
   selector: 'app-module',
   templateUrl: './module.component.html',
@@ -48,7 +49,7 @@ export class ModuleComponent {
   emptyModule: Module;  // empty admin role
   currentData!: Module;  // for update and view, to show existing data
 
-  constructor(private service: ModuleService, private location: Location, private courseService: TeacherCourseService) {
+  constructor(private service: ModuleService,private dialogBoxServices : DialogBoxService, private location: Location, private courseService: TeacherCourseService) {
 
     // assigng headers
 
@@ -199,10 +200,12 @@ export class ModuleComponent {
       this.service.updateModuleById(currentData.moduleId, currentData).subscribe(
         response => {
           console.log(`Module updated successfully !`);
+          this.dialogBoxServices.open("Module updated successfully !", 'information');
           this.back();
         },
         error => {
           console.log(`Module updation failed !`);
+          this.dialogBoxServices.open("Module updation failed !", 'information');
         }
       );
     }
@@ -221,11 +224,13 @@ export class ModuleComponent {
       (data) => {
         //  console.log(this.currentData)
         console.log('Module added Successfully');
+        this.dialogBoxServices.open("Module added Successfully", 'information');
         this.emptyModule = {} as Module;
         this.ngOnInit();
         this.back();
       },
       (error) => {
+        this.dialogBoxServices.open("Failed to add Module", 'information');
         console.log("Failed to add Module");
       });
   }
