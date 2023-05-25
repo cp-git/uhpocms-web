@@ -247,9 +247,10 @@ export class TeacherCourseComponent implements OnInit {
 
           },
           error => {
-            alert("Course Name is already Failed...")
-            console.log("Course added but failed to assign");
-            this.dialogBoxServices.open("Course added but failed to assign", 'information');
+          //  alert("Course Name is already Failed...")
+            this.dialogBoxServices.open("Course Name is already available..." , 'information');
+            
+            
 
           }
         );
