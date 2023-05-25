@@ -37,20 +37,19 @@ import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box
   styleUrls: ['./student-module.component.css']
 })
 export class StudentModuleComponent implements OnInit {
+
+  // ------------------------VARIABLE DECLARATION START------------------------------
   @ViewChild('videoPlayer', { static: false })
   videoPlayerRef!: ElementRef<HTMLVideoElement>;
 
   @ViewChild(StudentQuizComponent)
   private studentQuizComponent!: StudentQuizComponent;
 
+
   studentId: any;
   userName: any;
-
-  // moduleFileId: any;
-
   courseId: any;
   moduleId: any;
-
   instituteName: any;
   moduleName: any;
   courseName: any;
@@ -58,7 +57,6 @@ export class StudentModuleComponent implements OnInit {
   courses: Course[] = []; //array of Course objects that stores the courses of the student
   courseList: Course[] = [];
   modules: Module[] = []; //array of Module objects that stores the modules of the courses
-
   studentModuleFiles: ModuleFile[] = []; //array of ModuleFile objects that stores the module files assigned to the student
   selectedQuizProgress: QuizProgress;
   moduleFileProgress: Modulefileprogress = new Modulefileprogress;// Object of ModuleFileProgress
@@ -102,27 +100,6 @@ export class StudentModuleComponent implements OnInit {
   completedFileIds: number[] = [];
   completedQuizids: number[] = [];
   accessibleModuleIds = new Set();    // module ids which are accessible to student
-
-  constructor(private activateRoute: ActivatedRoute,
-    private courseService: TeacherCourseService,
-    private moduleService: ModuleService,
-    private modulefileService: ModuleFileService,
-    private instituteadminService: AdmininstitutionService,
-    private departmentService: DepartmentService,
-    private moduleFileService: ModuleFileService,
-    private _location: Location,
-    private elRef: ElementRef,
-    private fileProgService: ModulefileprogressService,
-    private quizProgServ: QuizProgressService,
-    private moduleProgSErv: ModuleProgressService,
-    private modFileServc: ModuleFileService,
-    private quizService: QuizService,
-    private cdr: ChangeDetectorRef, private dialogboxService: DialogBoxService,
-    private courseProgServ: CourseProgressService,
-  ) {
-    this.selectedQuizProgress = new QuizProgress();
-  }
-
   flag: boolean = false;
   secondflag!: boolean;
   completionPercentage: number = 0;
@@ -164,14 +141,33 @@ export class StudentModuleComponent implements OnInit {
   existingCourseProg: CourseProgress = new CourseProgress();
   courProgPercentage: number = 0;
 
-  // moduleArray : Module[] = [];
+ 
   moduleProgArray: Moduleprogress[] = [];
-
-  // constructor(private activateRoute: ActivatedRoute, private courseService: TeacherCourseService, private moduleService: ModuleService, private modulefileService: ModuleFileService, private quizProgServ: QuizProgressService, private moduleProgSErv :ModuleProgressService,
-  //   private fileProgService: ModulefileprogressService, private _location: Location, private elRef: ElementRef, private modFileServc: ModuleFileService, private quizService: QuizService, private cdr: ChangeDetectorRef, private courseProgServ:CourseProgressService) {
-  //   }
+// ------------------------VARIABLE DECLARATION END------------------------------
 
 
+  constructor(private activateRoute: ActivatedRoute,
+    private courseService: TeacherCourseService,
+    private moduleService: ModuleService,
+    private modulefileService: ModuleFileService,
+    private instituteadminService: AdmininstitutionService,
+    private departmentService: DepartmentService,
+    private moduleFileService: ModuleFileService,
+    private _location: Location,
+    private elRef: ElementRef,
+    private fileProgService: ModulefileprogressService,
+    private quizProgServ: QuizProgressService,
+    private moduleProgSErv: ModuleProgressService,
+    private modFileServc: ModuleFileService,
+    private quizService: QuizService,
+    private cdr: ChangeDetectorRef, private dialogboxService: DialogBoxService,
+    private courseProgServ: CourseProgressService,
+  ) {
+    this.selectedQuizProgress = new QuizProgress();
+  }
+
+
+ 
 
 
 
@@ -189,17 +185,7 @@ export class StudentModuleComponent implements OnInit {
 
     this.selectedCourse = '1'
 
-    //this.getModuleFiles(this.studentId);
-
-    //  this.trackCourseProgress(157)
-    //  this.actualModFileAndQuizCompleted(this.studentId,157)
-
-
-
-
-
-    // console.log(this.courses)
-    // console.log(this.statusModuleProg.moduleId);
+  
 
 
     this.getAllQuizzesByProfileId(this.studentId);
@@ -208,12 +194,11 @@ export class StudentModuleComponent implements OnInit {
 
     this.filterUniqueModuleIds();
 
-    // this.totalFilesAndQuizzesInCourse(157)
+
 
   }
 
   //loads the courses of the student using the getCourseByStudentId() method of StudentService
-
   loadCourseOfStudent(studentId: number) {
     this.courseService.getCourseByStudentId(studentId).subscribe(
       response => {
@@ -222,14 +207,16 @@ export class StudentModuleComponent implements OnInit {
         this.selectedCourseName = this.courses[0].courseName;
         this.selectedCourse = this.courses[0].courseId;
 
-        console.log(this.selectedCourse)
+        // console.log(this.selectedCourse)
 
         try {
           this.couresFlag = false;
+          //FUNCTION TO TRACK MODULE PROGRESS
           this.trackModuleProgress(this.selectedCourse)
+          //FUNCTION TO TRACK COURSE PROGRESS
           this.trackCourseProgress(this.selectedCourse)
 
-          console.log(this.selectedCourse)
+          // console.log(this.selectedCourse)
           this.chkCoursePogress(this.selectedCourse)
 
 
@@ -329,8 +316,8 @@ export class StudentModuleComponent implements OnInit {
 
           }
 
-          console.log("this.moduleFileProgress outside")
-          console.log(this.moduleFileProgress)
+          // console.log("this.moduleFileProgress outside")
+          // console.log(this.moduleFileProgress)
           //if flag is true
           if (this.flag == true) {
 
@@ -340,8 +327,9 @@ export class StudentModuleComponent implements OnInit {
             if (this.moduleFileProgress.progress == 100) {
               console.log("Enered in  this.moduleFileProgress.progress == 10")
               this.moduleProgresscCeateUpdate(this.selectedModule.moduleId);
+                //FUNCTION TO TRACK COURSE PROGRESS
               this.trackCourseProgress(this.selectedCourse)
-              console.log(this.selectedModule)
+              // console.log(this.selectedModule)
 
             }
 
@@ -368,6 +356,7 @@ export class StudentModuleComponent implements OnInit {
                     //function to generate tick mark or to loop throgh file progress again
                     this.getAllFileProgress();
                     this.moduleProgresscCeateUpdate(this.selectedModule.moduleId);
+                      //FUNCTION TO TRACK COURSE PROGRESS
                     this.trackCourseProgress(this.selectedCourse)
 
                   }
@@ -545,7 +534,7 @@ export class StudentModuleComponent implements OnInit {
       response => {
         this.studentModuleFiles = response;
 
-        this.studentModuleFiles = this.studentModuleFiles.filter((elem)=>elem.moduleFileIsActive == true)
+        this.studentModuleFiles = this.studentModuleFiles.filter((elem) => elem.moduleFileIsActive == true)
         this.studentModuleFiles.forEach(file => {
 
           if (file.moduleId == this.selectedModule.moduleId) {
@@ -591,9 +580,10 @@ export class StudentModuleComponent implements OnInit {
     this.selectedCourse = courseId;
 
     this.selectedModule = undefined;
+      //FUNCTION TO TRACK COURSE PROGRESS
     this.trackCourseProgress(courseId)
-    console.log(this.selectedCourse);
-    console.log(this.selectedModule);
+    // console.log(this.selectedCourse);
+    // console.log(this.selectedModule);
 
 
 
@@ -890,7 +880,7 @@ export class StudentModuleComponent implements OnInit {
 
 
 
- async trackCourseProgress(courseId: number) {
+  async trackCourseProgress(courseId: number) {
 
     let moduleArray: Module[] = [];
     let moduleProgArray: Moduleprogress[] = [];
@@ -901,8 +891,8 @@ export class StudentModuleComponent implements OnInit {
     await this.chkCoursePogress(courseId);
 
     console.log("this.existingCourseProg")
-   console.log(this.existingCourseProg)
-     if (this.existingCourseProg.courseId != courseId) {
+    console.log(this.existingCourseProg)
+    if (this.existingCourseProg.courseId != courseId) {
       let addedcourseProgress: CourseProgress = new CourseProgress();
       console.log("if(this.existingCourseProg.courseId != courseId && this.existingCourseProg.studentId != this.studentId)")
 
@@ -914,7 +904,7 @@ export class StudentModuleComponent implements OnInit {
       this.courseProgress.currentUnitNo = 1;
       this.courseProgress.grade = 0;
 
-      this.courseProgress.progress = ((this.completedFileIds.length + this.completedQuizids.length) * 100) /(this.moduleFileIdsForCour.length + this.quizIdsForCour.length) ;
+      this.courseProgress.progress = ((this.completedFileIds.length + this.completedQuizids.length) * 100) / (this.moduleFileIdsForCour.length + this.quizIdsForCour.length);
       this.courseProgServ.addCourseProgressStatus(this.courseProgress).subscribe(
         (response) => {
 
@@ -930,7 +920,7 @@ export class StudentModuleComponent implements OnInit {
     else if ((this.existingCourseProg.courseId == courseId) && (this.existingCourseProg.studentId == this.studentId)) {
       let updatedcourseProgress: CourseProgress = new CourseProgress();
       console.log(" else if(this.existingCourseProg.courseId === courseId && this.existingCourseProg.studentId === this.studentId)")
-      this.existingCourseProg.progress = ((this.completedFileIds.length + this.completedQuizids.length) * 100) /(this.moduleFileIdsForCour.length + this.quizIdsForCour.length) ;
+      this.existingCourseProg.progress = ((this.completedFileIds.length + this.completedQuizids.length) * 100) / (this.moduleFileIdsForCour.length + this.quizIdsForCour.length);
 
       this.courseProgServ.updateCourseProgress(this.existingCourseProg).subscribe(
         (response) => {
@@ -1015,7 +1005,7 @@ export class StudentModuleComponent implements OnInit {
   }
 
 
- 
+
 
   chkCoursePogress(courseId: number) {
 
@@ -1263,6 +1253,7 @@ export class StudentModuleComponent implements OnInit {
         // handle the emitted value here
         if (addeedQuizProgress.completed == true) {
           this.moduleProgresscCeateUpdate(moduleIdArr[0]);
+            //FUNCTION TO TRACK COURSE PROGRESS
           this.trackCourseProgress(this.selectedCourse)
         }
       }
@@ -1397,46 +1388,47 @@ export class StudentModuleComponent implements OnInit {
 
   }
 
+  //function to get total count of module files and quiz files belonging to specific courseId
   async totalFilesAndQuizzesInCourse(courseId: number) {
+    //variable declarations
     let modulesForCourId: Module[] = [];
     let moduleIds: number[] = [];
     let moduleFilesForCourId: ModuleFile[] = [];
     let quizForCourId: Quiz[] = [];
     let filteredQuizForCourId: Quiz[] = [];
     this.moduleFileIdsForCour = [];
-  
     this.quizIdsForCour = [];
- 
+
     // Code to get module ids based on course id
     await this.moduleService.getModulesByCourseId(courseId).toPromise()
       .then((response) => {
         modulesForCourId = response;
-        modulesForCourId = modulesForCourId.filter((elem)=> elem.moduleIsActive == true)
-        moduleIds = modulesForCourId.map((elem)=>elem.moduleId)
-        // for (let i in modulesForCourId) {
-        //   moduleIds.push(modulesForCourId[i].moduleId);
-        // }
+        modulesForCourId = modulesForCourId.filter((elem) => elem.moduleIsActive == true)
+        moduleIds = modulesForCourId.map((elem) => elem.moduleId)
+
       })
       .catch((error) => {
         console.error('Error fetching modules:', error);
       });
 
-    // Code to get file id based on module id's array
-    console.log('moduleIds');
-    console.log(moduleIds);
 
+    // console.log('moduleIds');
+    // console.log(moduleIds);
+
+   // Code to get file id based on module id's array
     for (let j of moduleIds) {
       try {
         const response = await this.moduleFileService.getModuleFilesByModuleId(j).toPromise();
-        console.log('moduleIds in for loop');
-        console.log(moduleIds);
+        // console.log('moduleIds in for loop');
+        // console.log(moduleIds);
         if (response) {
           moduleFilesForCourId = response;
-          moduleFilesForCourId = moduleFilesForCourId.filter((elem)=> elem.moduleFileIsActive == true)
-          for (let i of  moduleFilesForCourId) {
+          moduleFilesForCourId = moduleFilesForCourId.filter((elem) => elem.moduleFileIsActive == true)
+          for (let i of moduleFilesForCourId) {
             if (!this.moduleFileIdsForCour.includes(i.moduleFileId)) {
-            this.moduleFileIdsForCour.push(i.moduleFileId);
-          }}
+              this.moduleFileIdsForCour.push(i.moduleFileId);
+            }
+          }
         }
       } catch (error) {
         console.error('Error fetching module files:', error);
@@ -1448,79 +1440,80 @@ export class StudentModuleComponent implements OnInit {
       (response) => {
         quizForCourId = response;
         filteredQuizForCourId = quizForCourId.filter((quiz) => (quiz.courseId == courseId) && (quiz.active == true));
-        this.quizIdsForCour = filteredQuizForCourId.map((elem)=>elem.quizId)
+        this.quizIdsForCour = filteredQuizForCourId.map((elem) => elem.quizId)
         // for (let i in quizForCourId) {
         //   this.quizIdsForCour.push(filteredQuizForCourId[i].quizId);
         // }
       }
     );
 
-    console.log('Module id and quiz ids array');
-    console.log(this.moduleFileIdsForCour);
-    console.log(this.quizIdsForCour);
+    // console.log('Module id and quiz ids array');
+    // console.log(this.moduleFileIdsForCour);
+    // console.log(this.quizIdsForCour);
 
   }
 
 
-
+//funct to get count of files and quizzes belonging to particular course id with progress 100
   async actualModFileAndQuizCompleted(studentId: number, courseId: number) {
+    //variable declaration
     let modFileProgress: Modulefileprogress[] = [];
     let filteredModFileProgress: Modulefileprogress[] = [];
-    let filteredModFileProgressIds:number[] = [];
+    let filteredModFileProgressIds: number[] = [];
     let quizProgress: QuizProgress[] = [];
     let filteredQuizProgress: QuizProgress[] = [];
     let filteredQuizProgressQuizIds: number[] = [];
     this.completedFileIds = [];
     this.completedQuizids = [];
-  
-    console.log(this.moduleFileIdsForCour);
 
-
+    // console.log(this.moduleFileIdsForCour);
     await this.totalFilesAndQuizzesInCourse(courseId);
 
+    //function to get array of moduke files completed progress 100
     await this.fileProgService.getAllFileProgressStatus().toPromise().then((response) => {
       if (response) {
         modFileProgress = response;
-        console.log(modFileProgress)
-        console.log(studentId+"    "+courseId)
+        // console.log(modFileProgress)
+        // console.log(studentId + "    " + courseId)
         filteredModFileProgress = modFileProgress.filter((element) => (element.studentId == studentId) && (element.courseId == courseId) && (element.progress == 100));
-        filteredModFileProgressIds = filteredModFileProgress.map((elem)=> elem.fileId)
-        
-        console.log(filteredModFileProgress)
-        console.log(this.moduleFileIdsForCour)
-        console.log( filteredModFileProgressIds)
+        filteredModFileProgressIds = filteredModFileProgress.map((elem) => elem.fileId)
+
+        // console.log(filteredModFileProgress)
+        // console.log(this.moduleFileIdsForCour)
+        // console.log(filteredModFileProgressIds)
         for (let fileId of this.moduleFileIdsForCour) {
 
-          console.log("  for (let j in this.moduleFileIdsForCour) {")
-          if ((filteredModFileProgressIds.includes(fileId)) && (!this.completedFileIds.includes(fileId)) ) {
-            console.log(fileId)
+          // console.log("  for (let j in this.moduleFileIdsForCour) {")
+          if ((filteredModFileProgressIds.includes(fileId)) && (!this.completedFileIds.includes(fileId))) {
+            // console.log(fileId)
             this.completedFileIds.push(fileId)
           }
 
         }
-        console.log(this.completedFileIds)
-console.log()
+        // console.log(this.completedFileIds)
+        // console.log()
       }
-   
+
 
     })
 
+    //CODE TO GET ARRAY OF QUIZZES WITH 100% PROGRESS BELONGING TO PARTICULAR COURSE
     const data = await this.quizProgServ.getQuizProgressesByStudentId(studentId).toPromise();
 
     if (data) {
       quizProgress = data;
-      filteredQuizProgress = quizProgress.filter((elem) => elem.completed == true )
-      filteredQuizProgressQuizIds = filteredQuizProgress.map((elem)=>elem.quizId)
-      console.log("filteredModFileProgressIds")
-      console.log(filteredQuizProgressQuizIds)
-      console.log(this.quizIdsForCour)
-      console.log(this.quizIdsForCour)
+      filteredQuizProgress = quizProgress.filter((elem) => elem.completed == true)
+      filteredQuizProgressQuizIds = filteredQuizProgress.map((elem) => elem.quizId)
+      // console.log("filteredModFileProgressIds")
+      // console.log(filteredQuizProgressQuizIds)
+      // console.log(this.quizIdsForCour)
+      // console.log(this.quizIdsForCour)
       for (let quizId of this.quizIdsForCour) {
 
-        console.log("Entered in for loop")
-        console.log(this.quizIdsForCour)
+        // console.log("Entered in for loop")
+        // console.log(this.quizIdsForCour)
         if ((filteredQuizProgressQuizIds.includes(quizId)) && (!this.completedQuizids.includes(quizId))) {
-          console.log("entered in if loop")
+          // console.log("entered in if loop")
           this.completedQuizids.push(quizId)
         }
       }
@@ -1531,9 +1524,9 @@ console.log()
     }
 
 
-    console.log("complted file ids and quiz ids")
-    console.log(this.completedFileIds)
-    console.log(this.completedQuizids)
+    // console.log("complted file ids and quiz ids")
+    // console.log(this.completedFileIds)
+    // console.log(this.completedQuizids)
 
 
   }
@@ -1567,9 +1560,10 @@ console.log()
           // console.log("Completed");
           this.filteredProgressFileIds.push(response.fileId);
           this.sortAccessibleModules();
-
+          //FUNCTION TO UPDATE MODULE PROGRESS ON QUIZ PROGRESS REACHED 100%
           this.moduleProgresscCeateUpdate(this.selectedModule.moduleId);
-          this.trackCourseProgress(this.courseId)
+          //FUNCTION TO UPDATE COURSE PROGRESS ON QUIZ PROGRESS REACHED 100%
+          this.trackCourseProgress(this.selectedCourse)
         }
       }
     )
