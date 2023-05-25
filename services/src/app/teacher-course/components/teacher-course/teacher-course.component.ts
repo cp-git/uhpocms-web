@@ -10,6 +10,7 @@ import { Course } from 'app/teacher-course/class/course';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { DepartmentService } from 'app/department/services/department.service';
 import { CourseDepartment } from 'app/teacher-course/class/course-department';
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 import { AppService } from 'app/app.service';
 @Component({
   selector: 'app-teacher-course',
@@ -73,7 +74,7 @@ export class TeacherCourseComponent implements OnInit {
 
 
   courseDepartments: CourseDepartment[] = [];
-  constructor(private service: TeacherCourseService, private location: Location, private departmentService: DepartmentService) {
+  constructor(private service: TeacherCourseService, private dialogBoxServices:DialogBoxService, private location: Location, private departmentService: DepartmentService) {
     this.columnNames = CourseColumn;
     this.allColumnNames = CourseAllColumn;
 
@@ -234,18 +235,22 @@ export class TeacherCourseComponent implements OnInit {
 
         this.courseDepartment.department_id = currentData.departmentId;
         console.log("coursedept" + JSON.stringify(this.courseDepartment));
-
+       
         // this.courseDepartment.departmentId = currentData.departmentId;
         // console.log("coursedept" + JSON.stringify(this.courseDepartment));
 
         this.service.assignCourseToDepartment(this.courseDepartment).subscribe(
           response => {
             console.log('Course Added successfully');
+            this.dialogBoxServices.open("Course added Successfully", 'information');
+
 
           },
           error => {
             alert("Course Name is already Failed...")
             console.log("Course added but failed to assign");
+            this.dialogBoxServices.open("Course added but failed to assign", 'information');
+
           }
         );
         this.emptyCourse = {} as Course;
@@ -255,6 +260,8 @@ export class TeacherCourseComponent implements OnInit {
       },
       (error) => {
         console.log("Failed to add Course");
+        this.dialogBoxServices.open("Failed to add Course", 'information');
+        
       });
   }
 
@@ -286,6 +293,7 @@ export class TeacherCourseComponent implements OnInit {
       },
       error => {
         console.log('No data in table ');
+
       }
     );
   }
@@ -297,9 +305,11 @@ export class TeacherCourseComponent implements OnInit {
     this.service.deleteCourseByCourseId(courseId).subscribe(
       (response) => {
         console.log('Course deleted successfully');
+        this.dialogBoxServices.open("Course deleted successfully", 'information');
         this.ngOnInit();
       },
       (error) => {
+        this.dialogBoxServices.open("course deletion failed", 'information');
         console.log('course deletion failed');
       }
     );
@@ -341,6 +351,7 @@ export class TeacherCourseComponent implements OnInit {
       },
       error => {
         console.log("failed to get departments");
+        this.dialogBoxServices.open("failed to get departments", 'information');
       }
     )
   }
