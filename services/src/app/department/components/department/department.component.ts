@@ -110,7 +110,7 @@ export class DepartmentComponent implements OnInit {
   // For navigate to update screen with data
   // function will call when child update button is clicked
   onChildDeleteClick(objectReceived: Department): void {
-    this.deleteDepartment(objectReceived.name);
+    this.deleteDepartment(objectReceived.id);
   }
 
   // For navigate to activate screen with data
@@ -180,7 +180,7 @@ export class DepartmentComponent implements OnInit {
 
   // For adding department
   private addDepartment(currentData: Department) {
-   // currentData.active = true; // setting active true
+    // currentData.active = true; // setting active true
 
     // calling service for adding data
     this.service.insertDepartment(currentData).subscribe(
@@ -219,9 +219,9 @@ export class DepartmentComponent implements OnInit {
   }
 
   // For deleting (soft delete) department
-  private deleteDepartment(name: string) {
+  private deleteDepartment(id: number) {
     // calling service to soft delte
-    this.service.deleteDepartment(name).subscribe(
+    this.service.deleteDepartmentById(id).subscribe(
       (response) => {
         console.log('Department deleted successfully');
         this.ngOnInit();
