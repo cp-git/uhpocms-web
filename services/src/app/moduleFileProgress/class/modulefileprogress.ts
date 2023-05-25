@@ -7,4 +7,5 @@ export class Modulefileprogress {
     fileId!: number;
     moduleId!: number;
     studentId!: number;
+    courseId! :number ;
 }

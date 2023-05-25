@@ -22,7 +22,7 @@ export class StudentPanelComponent {
 
   //doughnut chart data array
   doughCharts: any = [];
-
+  charts:any = [];
 
   currentIndex: number = 0;
 
@@ -61,10 +61,16 @@ export class StudentPanelComponent {
           const remainingPercentage: number = 100 - filteredCouProgArr[i].progress;
 
           await this.getCourseNameById(filteredCouProgArr[i].courseId);
+          console.log("this.course.courseName")
+          console.log(this.course.courseName)
+          if(this.course.courseIsActive == true)
 
-
-          this.doughCharts[i] = [filteredCouProgArr[i].progress, remainingPercentage, this.course.courseName];
-
+          {
+            console.log("Entered in if loop")
+          this.charts[i] = [filteredCouProgArr[i].progress, remainingPercentage, this.course.courseName];
+          this.doughCharts.push(this.charts[i])
+            console.log()
+          }
         }
 
 
