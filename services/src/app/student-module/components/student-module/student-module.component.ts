@@ -1222,6 +1222,7 @@ export class StudentModuleComponent implements OnInit {
     console.log('Current score: ' + this.score);
   }
 
+  notAttempted : any;
   onQuizClicked(quiz: Quiz) {
 
     // for store progress when user switch quiz to file to quiz
@@ -1239,12 +1240,15 @@ export class StudentModuleComponent implements OnInit {
     this.selectedFile = '';
     this.selectedQuiz = quiz;
     this.selectedQuizName = quiz.title;
+    this.notAttempted= 0;
     console.log(this.quizProgressOfStudent);
     this.quizProgressOfStudent.find(qp => {
       if (qp.quizId == quiz.quizId) {
         this.selectedQuizProgress = qp;
 
         //  alert(this.selectedQuizProgress.score +"hello");
+      }else{
+        this.selectedQuizProgress.score  = this.notAttempted;
       }
     })
   }

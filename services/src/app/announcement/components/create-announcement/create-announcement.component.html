@@ -25,7 +25,7 @@
                             style="height: 121px" class="form-control" id="announcementMessage"
                             [disabled]="!isCreateScreen" required></textarea>
                     </div>
-                    <div class="mb-3 row">
+                    <div class="mb-3 row" *ngIf="isCreateScreen">
                         <div class="col-8 col-md-6">
                             <div class="dropdown mt-2">
                                 <button class="btn btn-primary dropdown-toggle" type="button"
