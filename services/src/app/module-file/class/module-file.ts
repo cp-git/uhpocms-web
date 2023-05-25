@@ -1,4 +1,5 @@
-export class ModuleFile {
+export class ModuleFile {  
+    
     moduleFileId!: number;
     moduleFile!: string;
     moduleFileOrderNo!: number;
