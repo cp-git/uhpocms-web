@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Module } from 'app/module/class/module';
 import { ModuleService } from 'app/module/services/module.service';
-import { ModuleColumn, ModuleAllColumn } from 'app/module/column-names/module-column';
+import { ModuleColumn, ModuleAllColumn, UpdateAllColumn } from 'app/module/column-names/module-column';
 import { Course } from 'app/teacher-course/class/course';
 import { Location } from '@angular/common';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
@@ -31,6 +31,7 @@ export class ModuleComponent {
 
   columnNames: any;
   allColumnNames: any;
+  allColumnNames1: any;
 
   readonly primaryIdColumnName: string = 'id';
 
@@ -55,6 +56,7 @@ export class ModuleComponent {
 
     this.columnNames = ModuleColumn;
     this.allColumnNames = ModuleAllColumn;
+    this.allColumnNames1 = UpdateAllColumn;
 
     // creating empty object
     this.emptyModule = new Module();
@@ -230,7 +232,7 @@ export class ModuleComponent {
         this.back();
       },
       (error) => {
-        this.dialogBoxServices.open("Failed to add Module", 'information');
+        this.dialogBoxServices.open("Module Name is already exist pls select another name..", 'information');
         console.log("Failed to add Module");
       });
   }

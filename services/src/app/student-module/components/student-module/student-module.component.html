@@ -95,6 +95,9 @@
 
 
         <div class="col-xs-12 col-sm-6 col-md-9 viewpanel">
+            <!-- <ng-container *ngIf="!(selectedFile || selectedQuiz)">
+                            <div class="emptyscreenborder"></div>
+                        </ng-container> -->
             <div *ngIf="selectedFile; else quizview">
                 <ng-container *ngIf="format=='pdf'">
                     <app-pdf-viewer [blobUrl]="selectedFileData"

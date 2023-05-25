@@ -106,9 +106,10 @@ export class TeacherCourseComponent implements OnInit {
 
     switch (userRole) {
       case 'admin' || 'coadmin':
-        this.showAddButton = true;
-        this.showActivateButton = true;
-      
+        if (this.viewActivate == false) {
+          this.showAddButton = true;
+          this.showActivateButton = true;
+        }
         break;
       case 'teacher':
         this.showAddButton = false;
@@ -246,6 +247,7 @@ export class TeacherCourseComponent implements OnInit {
 
           },
           error => {
+            alert("Course Name is already Failed...")
             console.log("Course added but failed to assign");
             this.dialogBoxServices.open("Course added but failed to assign", 'information');
 
@@ -398,8 +400,10 @@ export class TeacherCourseComponent implements OnInit {
 
     switch (userRole) {
       case 'admin' || 'coadmin':
-        this.showAddButton = true;
-        this.showActivateButton = true;
+        if (this.viewActivate == false) {
+          this.showAddButton = true;
+          this.showActivateButton = true;
+        }
         this.getAllCourse();
         break;
       case 'teacher':

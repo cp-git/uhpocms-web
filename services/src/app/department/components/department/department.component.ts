@@ -193,6 +193,7 @@ export class DepartmentComponent implements OnInit {
       },
       (error) => {
         console.log('Failed to add Department');
+        alert('Department is Already Present pls Select Another Name..');
       }
     );
   }

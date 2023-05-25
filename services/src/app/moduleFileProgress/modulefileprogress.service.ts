@@ -51,4 +51,8 @@ export class ModulefileprogressService {
     return this.http.put<Modulefileprogress>(`${this.moduleFileProgressUrl}/modulefileprog/file_studid/${moduleFileId}/${studentId}`, moduleFileProgress);
   }
 
+  getFileProgressByFileIdAndStudentId(fileId: number, studentId: number) {
+    return this.http.get<Modulefileprogress>(`${this.moduleFileProgressUrl}/modulefileprog/file_studid/${fileId}/${studentId}`);
+  }
+
 }

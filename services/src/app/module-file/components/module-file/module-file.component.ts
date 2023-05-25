@@ -326,8 +326,12 @@ export class ModuleFileComponent {
         this.ngOnInit();
         this.back();
       },
-      (error) =>   this.dialogBoxServices.open("Failed to Upload", 'information')
-      
+
+      (error) => {
+        this.dialogBoxServices.open("File is Already Present pls Select Another file.." , 'information');
+        console.log('failed to upload ')
+      }
+
     );
   }
 
