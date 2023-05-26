@@ -28,7 +28,7 @@ export class AccesscontrolComponent {
   viewActivate: boolean = false;
   // If all data is available or not
   dataAvailable: boolean = false;
-
+ //comment added
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
   updateColumnNames: any; // header for updatio operation column data
