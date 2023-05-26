@@ -163,6 +163,7 @@ export class EnrollstudentComponent {
         this.courseService.getCourseByDepartmentId(deptId).subscribe(
           (response) => {
             this.courses = response;
+            this.courses =  this.courses.filter((elem)=> elem.courseIsActive == true)
             console.log("admin" + this.courses);
           }
         );
@@ -172,6 +173,8 @@ export class EnrollstudentComponent {
           (response) => {
             console.log("coursesteacher " + JSON.stringify(response));
             this.courses = response;
+            
+            this.courses =  this.courses.filter((elem)=> elem.courseIsActive == true)
           }
         );
         break;
@@ -188,6 +191,8 @@ export class EnrollstudentComponent {
       (response) => {
         // console.log("coursesteacher " + JSON.stringify(response));
         this.courses = response;
+        
+        this.courses =  this.courses.filter((elem)=> elem.courseIsActive == true)
 
       }
 
@@ -215,14 +220,22 @@ export class EnrollstudentComponent {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////
   ///disablestudent who already enroll
-  ////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
   getStudentByCourseId(courseId: any) {
+  
+    this.enrolledStudentArr = [];
     this.enrollstuService.getStudentByCourseId(courseId).subscribe(
       response => {
         // this.courses = response;
+
+
         console.log(response);
+        
+
+      
+        
         response.forEach((data: Enrolltostudent) => {
           this.enrolledStudentArr.push(data.profileId);
           console.log(this.enrolledStudentArr);
