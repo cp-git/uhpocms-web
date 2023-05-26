@@ -530,6 +530,7 @@ export class StudentModuleComponent implements OnInit {
     // to clear screen
     this.selectedFile = false;
     this.selectedQuiz = {} as Quiz;
+    this.selectedQuizName = '';
 
     this.showalert = false;
 
@@ -1222,10 +1223,8 @@ export class StudentModuleComponent implements OnInit {
     console.log('Current score: ' + this.score);
   }
 
-  notAttempted : any;
+  notAttempted: any;
   onQuizClicked(quiz: Quiz) {
-
-    // for store progress when user switch quiz to file to quiz
     if (this.currentTime > 0) {
       this.updateVideoProgress();
       this.videoPlayerRef.nativeElement.src = '';
@@ -1240,18 +1239,29 @@ export class StudentModuleComponent implements OnInit {
     this.selectedFile = '';
     this.selectedQuiz = quiz;
     this.selectedQuizName = quiz.title;
-    this.notAttempted= 0;
+    this.notAttempted = 0;
     console.log(this.quizProgressOfStudent);
-    this.quizProgressOfStudent.find(qp => {
-      if (qp.quizId == quiz.quizId) {
-        this.selectedQuizProgress = qp;
 
-        //  alert(this.selectedQuizProgress.score +"hello");
-      }else{
-        this.selectedQuizProgress.score  = this.notAttempted;
-      }
-    })
+    // Find the corresponding progress in quizProgressOfStudent array
+    const progress = this.quizProgressOfStudent.find(qp => qp.quizId === quiz.quizId);
+    if (progress) {
+      this.selectedQuizProgress = progress;
+    } else {
+
+      this.selectedQuizProgress = {
+        id: 0,
+        numberOfAttempts: 0,
+        completed: false,
+        studentId: this.studentId,
+        quizId: quiz.quizId,
+        score: 0,
+        // Include any other properties from QuizProgress
+      };
+    }
+
+    // Rest of your code...
   }
+
 
 
   getQuizPorgressesByStudentId(studentId: number) {
