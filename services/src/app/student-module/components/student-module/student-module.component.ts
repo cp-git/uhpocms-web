@@ -140,6 +140,7 @@ export class StudentModuleComponent implements OnInit {
   couIdArrInCouProg: number[] = [];
   existingCourseProg: CourseProgress = new CourseProgress();
   courProgPercentage: number = 0;
+  modFilesArray:ModuleFile[] = [];
 
 
   moduleProgArray: Moduleprogress[] = [];
@@ -502,16 +503,36 @@ export class StudentModuleComponent implements OnInit {
 
 
 
+  async getModFilesByModuleId(moduleId:number)
+  {
+    this.modFilesArray = [];
+     await this.modFileServc.getModuleFilesByModuleId(moduleId).toPromise().then(
+      (response)=>{
+        if(response){
+        this.modFilesArray = response.filter((elem)=>elem.moduleFileIsActive == true)
+      }
+      }
+    )
+    .catch((error)=>{console.log(error)})
+  }
 
 
   //Loads the modules of the courses using the getModuleByCourseId() method of StudentService
-  loadModuleOfCourse(studentCourses: Course[]) {
+ async loadModuleOfCourse(studentCourses: Course[]) {
 
+   let filteredModules:Module[] = [];
     studentCourses.forEach(course => {
 
       this.moduleService.getModuleByModuleId(course.courseId).subscribe(
         response => {
-          response.forEach(module => {
+
+          response.forEach(async module => {
+
+           await this.getModFilesByModuleId(module.moduleId);
+
+           if(this.modFilesArray.length != 0)
+           {
+
             this.modules.push(module);
             console.log(module)
             console.log(this.selectedCourseId)
@@ -521,7 +542,7 @@ export class StudentModuleComponent implements OnInit {
               console.log("inside loadModuleOfCourse")
               console.log(module)
             }
-
+          }
           })
 
           this.loadModuleFilesOfCourses(this.studentId);
