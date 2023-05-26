@@ -8,7 +8,7 @@ export class UploadFileService {
   private uploadUrl = 'http://localhost:8090/uploadfile/uhpocms/file/upload';
 
   constructor(private http: HttpClient) { }
-
+//test comment
   uploadFiles(files: FileList) {
     const formData = new FormData();
     for (let i = 0; i < files.length; i++) {

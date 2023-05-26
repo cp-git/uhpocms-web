@@ -54,7 +54,7 @@
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
                         <input name="{{column.key}}" type="file" [(ngModel)]="currentData[column.key]"
-                            class="form-control" required="" [disabled]="column.disable">
+                            class="form-control" [disabled]="column.disable">
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'dropdown1'">
@@ -87,7 +87,8 @@
                         <label class="float-label">{{ column.label }}</label>
                         <select name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
                             required="" [disabled]="column.disable"
-                            (change)="column.functionOnDropdownClick ? onDropdownSelected(currentData) : null">
+                            (change)="column.functionOnDropdownClick ? onDropdownSelected(currentData) : null"
+                            (change)="column.functionForDependentKeys ? onDropdownSelectedForDependentKeys(currentData,column.dependentKeys):null">
                             <option value="undefined" disabled>Select</option>
 
                             <ng-container *ngIf="[column.toSort] then sortDropdown else simpleDropdown"></ng-container>
