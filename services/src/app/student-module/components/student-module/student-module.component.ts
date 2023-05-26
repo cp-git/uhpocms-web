@@ -588,6 +588,8 @@ export class StudentModuleComponent implements OnInit {
     // to clear screen
     this.selectedFile = false;
     this.selectedQuiz = {} as Quiz;
+    this.selectedQuizName = '';
+
     this.showalert = false;
 
     this.courProgPercentage = 0;
@@ -1326,14 +1328,27 @@ export class StudentModuleComponent implements OnInit {
     this.selectedQuiz = quiz;
     this.selectedQuizName = quiz.title;
     console.log(this.quizProgressOfStudent);
-    this.quizProgressOfStudent.find(qp => {
-      if (qp.quizId == quiz.quizId) {
-        this.selectedQuizProgress = qp;
 
-        //  alert(this.selectedQuizProgress.score +"hello");
-      }
-    })
+    // Find the corresponding progress in quizProgressOfStudent array
+    const progress = this.quizProgressOfStudent.find(qp => qp.quizId === quiz.quizId);
+    if (progress) {
+      this.selectedQuizProgress = progress;
+    } else {
+
+      this.selectedQuizProgress = {
+        id: 0,
+        numberOfAttempts: 0,
+        completed: false,
+        studentId: this.studentId,
+        quizId: quiz.quizId,
+        score: 0,
+        // Include any other properties from QuizProgress
+      };
+    }
+
+    // Rest of your code...
   }
+
 
 
   getQuizPorgressesByStudentId(studentId: number) {
