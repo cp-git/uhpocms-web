@@ -203,6 +203,7 @@ export class AssigncoursetoteacherComponent {
   }
 
   getTeacherByCourseId(courseId: any) {
+    this.assignTeacherArr = [];
     this.assignTeacherService.getTeacherByCourseId(courseId).subscribe(
       response => {
         // this.courses = response;
