@@ -185,6 +185,28 @@ export class ProfileComponent implements OnInit {
   }
 
   getSelectedOptionOfDropdown(dataReceived: Profile) {
+    this.cleanProfileObject(this.emptyProfile);
+    this.service.getProfileByUserId(dataReceived.userId).subscribe(
+      (data: Profile) => {
+        console.log(data);
+        // this.emptyProfile = data;
+        this.emptyProfile.institutionId = data.institutionId;
+        this.emptyProfile.adminDepartment = data.adminDepartment;
+        this.emptyProfile.userRole = data.userRole;
+        this.emptyProfile.dob = data.dob;
+        this.emptyProfile.adminGender = data.adminGender;
+        this.emptyProfile.mobilePhone = data.mobilePhone;
+        this.emptyProfile.adminAddress1 = data.adminAddress1;
+        this.emptyProfile.adminAddress2 = data.adminAddress2;
+        this.emptyProfile.adminState = data.adminState;
+        this.emptyProfile.adminCity = data.adminCity;
+        this.emptyProfile.adminZip = data.adminZip;
+        this.emptyProfile.profilePics = data.profilePics;
+        this.emptyProfile.activeUser = data.activeUser;
+
+      }
+    );
+
     this.authUserService.getAuthUserById(dataReceived.userId).subscribe(
       (data: Authuser) => {
         this.emptyProfile.firstName = data.authUserFirstName;
@@ -479,6 +501,26 @@ export class ProfileComponent implements OnInit {
     });
 
 
+  }
+
+  cleanProfileObject(object: any) {
+    this.emptyProfile.institutionId = 0;
+    this.emptyProfile.adminDepartment = 0;
+    this.emptyProfile.userRole = '';
+    this.emptyProfile.dob = '';
+    this.emptyProfile.adminGender = '';
+    this.emptyProfile.mobilePhone = '';
+    this.emptyProfile.adminAddress1 = '';
+    this.emptyProfile.adminAddress2 = '';
+    this.emptyProfile.adminState = '';
+    this.emptyProfile.adminCity = '';
+    this.emptyProfile.adminZip = '';
+    this.emptyProfile.profilePics = '';
+    this.emptyProfile.activeUser = false;
+
+    this.emptyProfile.firstName = '';
+    this.emptyProfile.lastName = '';
+    this.emptyProfile.adminEmail = '';
   }
 
 
