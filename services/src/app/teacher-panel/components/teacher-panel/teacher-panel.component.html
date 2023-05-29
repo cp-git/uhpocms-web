@@ -22,10 +22,10 @@
     <h3>Progress Panel</h3>
 </div> -->
 
+<!-- <h3 >Progress Panel</h3> -->
+<div *ngIf="clickedCourse.courseName == '' ">
 <h3>Progress Panel</h3>
-<!-- <div *ngIf="clickedCourse.courseName == '' ">
-<h3>Progress Panel</h3>
-</div> -->
+</div>
 <div *ngIf="(!barClicked)  ||  (closeButtonStatus)">
     <div  *ngIf="barCharts.length != 0" class="app-chartdata-ui" id="app-chartdata">
         <div id="prevButton">
@@ -73,13 +73,18 @@
 
 
     <!-- -------------------------------------Individual Student progress Chart code start--------------------------------------------- -->
-<!-- <div *ngIf="clickedCourse.courseName != '' ">
-  <h3> Progress Panel for {{clickedCourse.courseName}} Course </h3> 
-</div> -->
+<div *ngIf="clickedCourse.courseName != '' ">
+  <h3> Progress Panel - {{clickedCourse.courseName}} </h3> 
+</div>
 <div *ngIf = "(barClicked ) && (!closeButtonStatus)">
    
     <div *ngIf="studProgDetailArr.length != 0" class="app-chartdata-ui-stud">
-  
+        <div id="container">
+            <div class="crossButton">
+              <span class="fa-sharp fa-solid fa-square-xmark fa-xl" (click)="closeButton()"></span>
+            </div>
+        
+          
         <div id="prevButton">
            
             
@@ -100,18 +105,16 @@ border: none;'></button>
         
     
         <div id="nextButton">
-            <div class="crossButton">
-           
-                <span class="fa-sharp fa-solid fa-square-xmark fa-xl"   (click)="closeButton()" ></span>
-            
-
-            </div>
-            <div>
+         
+            <div class="nextButtonchild">
             <button *ngIf="dchartcurrentIndex < studProgDetailArr.length - 3" (click)="doughnutNext()" class='fas fa-angle-right' style='font-size:48px;color:black;background: transparent;
 border: none;'></button>
 
         </div>
     </div>
+</div> 
+   
+
     <!-- Code for display message when courses  are not assigned -->
    <div *ngIf="studProgDetailArr.length == 0 " class="app-chartdata-ui">
 
@@ -121,8 +124,10 @@ border: none;'></button>
 
     </div> 
 
-   </div> 
 
+
+    
+</div>
 </div>
 
     <!-- -------------------------------------Individual Student progress Chart code end--------------------------------------------- -->

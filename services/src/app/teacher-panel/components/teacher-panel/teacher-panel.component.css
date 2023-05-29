@@ -114,7 +114,7 @@ body {
 
     font: normal 15px sans-serif;
     max-width: 99%;
-    background-color: rgb(112 123 242 / 14%);
+    /* background-color: rgb(112 123 242 / 14%); */
     margin: 0 0%;
     padding: 1rem 0;
     border-radius: 6px;
@@ -151,7 +151,22 @@ body {
 
   
 }
+#container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 104%;
 
+  padding: 10px;
+  width: 99.8%;
+}
+
+.crossButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
   #prevButton {
     width: 48px; /* set a fixed width */
     display: flex;
@@ -164,7 +179,15 @@ body {
     display: flex;
     justify-content: flex-end;
     visibility: visible; /* show the button */
+    align-items: center;
+   
+   
   }
+  
+  .nextButtonchild{
+    
+  }
+
   
   /* hide the buttons when they are not needed */
   #app-chartdata-ui:not(:hover) #prevButton:not(:hover),
@@ -295,10 +318,7 @@ body {
       padding-left: 30%;
     }
 
-    .crossButton{
-      margin-bottom: 680%;
-      margin-right: 5%;
-    }
+  
     .studProgTitle{
       display: flex;
       align-items: center;

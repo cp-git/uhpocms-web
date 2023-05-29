@@ -1,5 +1,5 @@
 import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { CourseProgress } from 'app/courseProgress/class/courseprogress';
 import { CourseProgressService } from 'app/courseProgress/services/course-progress.service';
 import { AssignCourseToTeacherService } from 'app/displayAssignedCourseToTeacher/services/teacher-course.service';
@@ -44,6 +44,7 @@ export class TeacherPanelComponent {
   barClicked :boolean = false;
   closeButtonStatus : boolean = true;
 
+
   constructor(private renderer: Renderer2,private _route: Router, private _activatedRoute: ActivatedRoute, private courseProgServ: CourseProgressService, private courseService: TeacherCourseService, private assignCouServ: AssignCourseToTeacherService, private profileServ: ProfileService) {
 
   }
@@ -58,14 +59,22 @@ export class TeacherPanelComponent {
   }
 
   ngOnInit(): void {
-  
+    this._route.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        if (event.navigationTrigger === 'popstate') {
+          location.reload();
+        }
+      }
+    });
    
     this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
     console.log(this.teacherId)
     this._route.navigate(['../'], { relativeTo: this._activatedRoute });
     this.getAllCourseProgress();
-    console.log(this.closeButtonStatus)
+    //String initialized so that at start it should be null
+    this.clickedCourse.courseName = '';
+
 
   }
 
@@ -73,23 +82,14 @@ export class TeacherPanelComponent {
 
   //-------------------------------------------------------------------
   displayPopupStyle = "none";
-  // displayChartStyle = "block";
-
-  // openPopup() {
-  //   this.displayPopupStyle = "block";
-
-  //   // this.displayChartStyle = "none";
-  // }
-
-  // closePopup() {
-  //   this.displayPopupStyle = "none";
-  //   // this.displayChartStyle = "block";
-  // }
+ 
 
 
 
-  handleRightClickData(data: { value: any; label: string }, courseId: number) {
+  async  handleRightClickData(data: { value: any; label: string }, courseId: number) {
+    this.dchartcurrentIndex = 0;
     this.barClicked = true;
+   
     console.log(this.barClicked)
     let courseProgressArr: CourseProgress[] = [];
     let filteredCourseProgressArr: CourseProgress[] = [];
@@ -107,7 +107,9 @@ export class TeacherPanelComponent {
     const startValue = parseInt(rangeArray[0]); // Parse the first element as an integer
     const endValue = parseInt(rangeArray[1]); // Parse the second element as an integer
 
-    this.getCourseNameById(courseId);
+   await this.getCourseNameById(courseId);
+
+
 
     console.log(startValue); // Output: 26
     console.log(endValue); // Output: 75
@@ -161,6 +163,8 @@ export class TeacherPanelComponent {
   {
    this.closeButtonStatus = true;
    this.clickedCourse.courseName = '';
+   this.barClicked = false;
+
   }
 
 
@@ -192,9 +196,10 @@ export class TeacherPanelComponent {
           //  if(this.courseIds[m] == this.courseProgressArr[i].courseId) {
           console.log("Course Id in if loop  " + this.courseIds[m])
           await this.getCourseNameById(this.courseIds[m]);
+          
 
           totalStudsArr = this.courseProgressArr.filter((elem) => elem.courseId == this.courseIds[m])
-
+          
           for (let i = 0; i < totalStudsArr.length; i++) {
 
 
@@ -218,7 +223,7 @@ export class TeacherPanelComponent {
           }
           else {
             // this.barCharts[m] =  [Math.round((cnt1*100)/totalStudsArr.length) , Math.round((cnt2*100)/totalStudsArr.length) , Math.round((cnt3*100)/totalStudsArr.length) , Math.round((cnt4*100)/totalStudsArr.length)  , this.course.courseName]
-            this.barCharts[m] = [cnt1, cnt2, cnt3, cnt4, this.course.courseName + '  [' + totalStudsArr.length + ' students]', this.course.courseId]
+            this.barCharts[m] = [cnt1, cnt2, cnt3, cnt4, this.course.courseName + '  [' + totalStudsArr.length + ' students]']
             console.log(this.barCharts[m])
           }
         }
@@ -265,6 +270,7 @@ export class TeacherPanelComponent {
     //code for next button on progress panel
     doughnutNext() {
 
+
       
       this.dchartcurrentIndex +=3;
     
@@ -274,7 +280,7 @@ export class TeacherPanelComponent {
     //code for previous button on progress panel
     doughnutPrevious() {
   
-
+     
       this.dchartcurrentIndex -=3;
      
     }
@@ -282,12 +288,17 @@ export class TeacherPanelComponent {
   
     
   //code to display course by providing course id
-  getCourseNameById(courseId: number) {
+ async getCourseNameById(courseId: number) {
     return new Promise<void>((resolve, reject) => {
       this.courseService.getCourseByCourseId(courseId).subscribe(
         (data) => {
           this.course = data;
+          if(this.barClicked)
+          {
           this.clickedCourse = data;
+          console.log( this.clickedCourse.courseName )
+          }
+   
           resolve();
         },
         (error) => {
