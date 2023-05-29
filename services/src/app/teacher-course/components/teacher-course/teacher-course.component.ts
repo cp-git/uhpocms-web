@@ -74,7 +74,7 @@ export class TeacherCourseComponent implements OnInit {
 
 
   courseDepartments: CourseDepartment[] = [];
-  constructor(private service: TeacherCourseService, private dialogBoxServices:DialogBoxService, private location: Location, private departmentService: DepartmentService) {
+  constructor(private service: TeacherCourseService, private dialogBoxServices: DialogBoxService, private location: Location, private departmentService: DepartmentService) {
     this.columnNames = CourseColumn;
     this.allColumnNames = CourseAllColumn;
 
@@ -85,9 +85,7 @@ export class TeacherCourseComponent implements OnInit {
     this.emptyCourse = new Course();
     this.loadAdminInstitutions();
     this.loadDepartments();
-    this.loadAllCoursesWithDepartmentId();
     this.courseDepartment = new CourseDepartment();
-
 
     this.userId = sessionStorage.getItem('userId');
     this.profileId = sessionStorage.getItem('profileId');
@@ -96,11 +94,15 @@ export class TeacherCourseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initiliazation();
+  }
+
+  private async initiliazation() {
     // this.getAllCourse();  // for getting all active course
+    await this.loadAllCoursesWithDepartmentId();
     this.loadCoursesBasedOnRole(this.userRole);
     this.getInActiveCourse(); // for getting all inactive course
   }
-
   accessControl(userRole: string) {
     console.log(userRole);
 
@@ -221,50 +223,48 @@ export class TeacherCourseComponent implements OnInit {
     );
   }
 
-  // For adding course
-  private addCourse(currentData: any) {
+  // adding course to course and linking course to department
+  private async addCourse(currentData: any) {
+    try {
+      const data = await this.service.addCourse(currentData).toPromise();
 
-    //currentData.courseIsActive = true;  // setting active true
-    // console.log("currentda" + JSON.stringify(currentData));
-    // calling service for adding data
-    this.service.addCourse(currentData).subscribe(
-      (data) => {
+      this.courseDepartment.courseId = data.courseId;
+      this.courseDepartment.department_id = currentData.departmentId;
+      console.log("coursedept" + JSON.stringify(this.courseDepartment));
 
-        this.courseDepartment.courseId = data.courseId;
+      const courseAndDepartment = await this.service.assignCourseToDepartment(this.courseDepartment).toPromise();
+      if (courseAndDepartment) {
+        await this.loadAllCoursesWithDepartmentId();
+        console.log('Course Added successfully');
 
+        if (data.courseIsActive) {
+          this.dialogBoxServices.open("Course added successfully", 'information');
+        } else {
+          this.dialogBoxServices.open("Course added successfully but NOT ACTIVE", 'information');
+        }
+      }
 
-        this.courseDepartment.department_id = currentData.departmentId;
-        console.log("coursedept" + JSON.stringify(this.courseDepartment));
-       
-        // this.courseDepartment.departmentId = currentData.departmentId;
-        // console.log("coursedept" + JSON.stringify(this.courseDepartment));
-
-        this.service.assignCourseToDepartment(this.courseDepartment).subscribe(
-          response => {
-            console.log('Course Added successfully');
-            this.dialogBoxServices.open("Course added Successfully", 'information');
-
-
-          },
-          error => {
-          //  alert("Course Name is already Failed...")
-            this.dialogBoxServices.open("Course Name is already available..." , 'information');
-            
-            
-
-          }
-        );
-        this.emptyCourse = {} as Course;
-        this.ngOnInit();
-        this.back();
-
-      },
-      (error) => {
-        console.log("Failed to add Course");
-        this.dialogBoxServices.open("Failed to add Course", 'information');
-        
-      });
+      this.emptyCourse = {} as Course;
+      this.ngOnInit();
+      this.back();
+    } catch (error) {
+      console.log("Failed to add Course");
+      this.dialogBoxServices.open("Failed to add Course", 'information');
+    }
   }
+
+  private async loadAllCoursesWithDepartmentId() {
+
+    try {
+      const data = await this.service.getCoursesDepartmentId().toPromise();
+      console.log(data);
+      this.courseDepartments = data;
+
+    } catch (error) {
+      console.log("no data fetched");
+    }
+  }
+
 
 
 
@@ -274,6 +274,7 @@ export class TeacherCourseComponent implements OnInit {
     // calling service to get all data
     this.service.getAllCourses().subscribe(
       response => {
+        console.log(response);
 
         // this.allData = response; //assign data to local variable
         this.allData = [];
@@ -322,6 +323,8 @@ export class TeacherCourseComponent implements OnInit {
     // calling service to get all inactive record
     this.service.getAllDeactivateCourses().subscribe(
       response => {
+        console.log(response);
+
         this.allInActiveData = [];
 
         response.forEach((course: Course) => {
@@ -335,6 +338,7 @@ export class TeacherCourseComponent implements OnInit {
             }
             this.allInActiveData.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name
           })
+
         })
         console.log(this.allInActiveData);
       },
@@ -342,6 +346,7 @@ export class TeacherCourseComponent implements OnInit {
         console.log('No data in table ');
       }
     );
+
   }
 
   // fetching department data
@@ -386,15 +391,22 @@ export class TeacherCourseComponent implements OnInit {
     );
   }
 
-  private loadAllCoursesWithDepartmentId() {
-    this.service.getCoursesDepartmentId().subscribe(
-      (data) => {
-        this.courseDepartments = data;
-      }, error => {
-        console.log("no data fetched");
-      }
-    );
-  }
+  // private loadAllCoursesWithDepartmentId() {
+  //   console.log("started");
+
+  //   this.service.getCoursesDepartmentId().subscribe(
+  //     (data) => {
+  //       console.log(data);
+
+  //       this.courseDepartments = data;
+  //       console.log("end");
+  //     }, error => {
+  //       console.log("no data fetched");
+  //     }
+  //   );
+
+
+  // }
 
   private loadCoursesBasedOnRole(userRole: string) {
     console.log(userRole);
@@ -419,6 +431,7 @@ export class TeacherCourseComponent implements OnInit {
         this.getCoursesEnrolledToStudent(this.profileId);
         break;
     }
+
   }
 
   // for getting courses enroll for the student using  profileId
