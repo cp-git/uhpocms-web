@@ -130,6 +130,28 @@ body {
     
 }
 
+
+.app-chartdata-ui-stud {
+ 
+
+  font: normal 15px sans-serif;
+  max-width: 99%;
+  background-color: white;
+  margin: 0 0%;
+  padding: 1rem 0;
+  border-radius: 6px;
+  height: 36rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: 5px solid #566787;
+  border-radius: 10px;
+  --chart-width: 300px; /* Set the default width for the horizontal line */
+
+  
+}
+
   #prevButton {
     width: 48px; /* set a fixed width */
     display: flex;
@@ -271,4 +293,15 @@ body {
   
       padding-right: 25%;
       padding-left: 30%;
+    }
+
+    .crossButton{
+      margin-bottom: 680%;
+      margin-right: 5%;
+    }
+    .studProgTitle{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
     }

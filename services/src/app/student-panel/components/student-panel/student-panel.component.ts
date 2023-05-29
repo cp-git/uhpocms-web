@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as dataOne from '../../../dataOne.json';
 import * as dataThree from '../../../dataThree.json';
 
-import { ChartdataComponent } from 'app/student-module/components/chartdata/chartdata.component';
+import { ChartdataComponent } from 'app/charts/components/chartdata/chartdata.component';
 import { CourseProgressService } from 'app/courseProgress/services/course-progress.service';
 import { CourseProgress } from 'app/courseProgress/class/courseprogress';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';

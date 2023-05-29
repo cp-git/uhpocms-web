@@ -50,8 +50,8 @@ export class BarChartComponent {
 
   chart: any;
   labels: String[] = [];
-  @ViewChild('dChart', { static: false })
-  dChart!: ElementRef;
+  @ViewChild('bChart', { static: false })
+  bChart!: ElementRef;
   @Input() jsonArray: any = [15, 20];
   @Input() chartLabels: any = [
     '0-25', '26-50', '51-75', '76-100'
@@ -68,7 +68,7 @@ export class BarChartComponent {
 
 
     let cvs: any;
-    cvs = this.dChart.nativeElement;
+    cvs = this.bChart.nativeElement;
 
 
 
