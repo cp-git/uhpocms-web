@@ -1,12 +1,12 @@
 import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { CourseProgress } from 'app/courseProgress/class/courseprogress';
 import { CourseProgressService } from 'app/courseProgress/services/course-progress.service';
 import { AssignCourseToTeacherService } from 'app/displayAssignedCourseToTeacher/services/teacher-course.service';
 import { Profile } from 'app/profiles/class/profile';
 import { ProfileService } from 'app/profiles/services/profile.service';
-import { BarChartComponent } from 'app/student-module/components/bar-chart/bar-chart.component';
-import { ChartdataComponent } from 'app/student-module/components/chartdata/chartdata.component';
+import { BarChartComponent } from 'app/charts/components/bar-chart/bar-chart.component';
+import { ChartdataComponent } from 'app/charts/components/chartdata/chartdata.component';
 
 import { Course } from 'app/teacher-course/class/course';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
@@ -19,15 +19,16 @@ import { TeacherCourseService } from 'app/teacher-course/services/teacher-course
 export class TeacherPanelComponent {
 
   course: Course = new Course();
-  @ViewChild(BarChartComponent) dChart: any;
-
+  @ViewChild(BarChartComponent) bChart: any;
+  @ViewChild(ChartdataComponent) dChart: any;
   @ViewChild('appChartData', { static: false })
   appChartData!: ElementRef;
   //doughnut chart data array
-  doughCharts: any = [];
+  barCharts: any = [];
   criteriaVar: number = 0;
 
   currentIndex: number = 0;
+  dchartcurrentIndex : number =0;
   popupDataValue: any;
   popupDataLabel: any;
   courses: Course[] = [];
@@ -39,6 +40,10 @@ export class TeacherPanelComponent {
   // studProgDetailArr: [string, string, number] = ['','',0];
   studProgDetailArr: any[] = [];
   courseProgArr: CourseProgress[] = [];
+  clickedCourse:Course =new Course();
+  barClicked :boolean = false;
+  closeButtonStatus : boolean = true;
+
 
   constructor(private renderer: Renderer2,private _route: Router, private _activatedRoute: ActivatedRoute, private courseProgServ: CourseProgressService, private courseService: TeacherCourseService, private assignCouServ: AssignCourseToTeacherService, private profileServ: ProfileService) {
 
@@ -48,19 +53,27 @@ export class TeacherPanelComponent {
   ngAfterViewInit(){
  
       const appChartDataWidth = this.appChartData.nativeElement.offsetWidth;
-      const horizontalElement = this.dChart.nativeElement.querySelector('.horizontal');
+      const horizontalElement = this.bChart.nativeElement.querySelector('.horizontal');
       horizontalElement.style.width = appChartDataWidth + 'px';
 
   }
 
   ngOnInit(): void {
-  
+    this._route.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        if (event.navigationTrigger === 'popstate') {
+          location.reload();
+        }
+      }
+    });
    
     this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
     console.log(this.teacherId)
     this._route.navigate(['../'], { relativeTo: this._activatedRoute });
     this.getAllCourseProgress();
+    //String initialized so that at start it should be null
+    this.clickedCourse.courseName = '';
 
 
   }
@@ -69,22 +82,15 @@ export class TeacherPanelComponent {
 
   //-------------------------------------------------------------------
   displayPopupStyle = "none";
-  // displayChartStyle = "block";
-
-  openPopup() {
-    this.displayPopupStyle = "block";
-
-    // this.displayChartStyle = "none";
-  }
-
-  closePopup() {
-    this.displayPopupStyle = "none";
-    // this.displayChartStyle = "block";
-  }
+ 
 
 
 
-  handleRightClickData(data: { value: any; label: string }, courseId: number) {
+  async  handleRightClickData(data: { value: any; label: string }, courseId: number) {
+    this.dchartcurrentIndex = 0;
+    this.barClicked = true;
+   
+    console.log(this.barClicked)
     let courseProgressArr: CourseProgress[] = [];
     let filteredCourseProgressArr: CourseProgress[] = [];
     console.log("Function called")
@@ -100,6 +106,10 @@ export class TeacherPanelComponent {
 
     const startValue = parseInt(rangeArray[0]); // Parse the first element as an integer
     const endValue = parseInt(rangeArray[1]); // Parse the second element as an integer
+
+   await this.getCourseNameById(courseId);
+
+
 
     console.log(startValue); // Output: 26
     console.log(endValue); // Output: 75
@@ -121,6 +131,7 @@ export class TeacherPanelComponent {
   }
   //-------------------------------------------------------------------
   getStudentNamesandCourProgress() {
+    this.closeButtonStatus  = false;
     this.studProgDetailArr = [];
     let profile: Profile = new Profile();
 
@@ -128,17 +139,17 @@ export class TeacherPanelComponent {
 
     for (let i = 0; i < this.courseProgressArr.length; i++) {
       console.log("Entered in for loop");
+      const remainingPercentage: number = 100 - this.courseProgressArr[i].progress;
+
 
       this.profileServ.getProfileByAdminId(this.courseProgressArr[i].studentId).subscribe(
         (data) => {
           profile = data;
           console.log(i)
           console.log(profile);
-          this.studProgDetailArr.push([profile.firstName, profile.lastName, this.courseProgressArr[i].progress]);
+          this.studProgDetailArr.push([ this.courseProgressArr[i].progress, remainingPercentage , profile.firstName + ' '+ profile.lastName]);
 
           // Check if all the data has been retrieved
-
-
 
         }
       );
@@ -148,6 +159,13 @@ export class TeacherPanelComponent {
   }
 
 
+  closeButton()
+  {
+   this.closeButtonStatus = true;
+   this.clickedCourse.courseName = '';
+   this.barClicked = false;
+
+  }
 
 
 
@@ -178,9 +196,10 @@ export class TeacherPanelComponent {
           //  if(this.courseIds[m] == this.courseProgressArr[i].courseId) {
           console.log("Course Id in if loop  " + this.courseIds[m])
           await this.getCourseNameById(this.courseIds[m]);
+          
 
           totalStudsArr = this.courseProgressArr.filter((elem) => elem.courseId == this.courseIds[m])
-
+          
           for (let i = 0; i < totalStudsArr.length; i++) {
 
 
@@ -200,12 +219,12 @@ export class TeacherPanelComponent {
 
           // }
           if (totalStudsArr.length == 0) {
-            this.doughCharts[m] = [0, 0, 0, 0, this.course.courseName + '  [No students]', this.course.courseId];
+            this.barCharts[m] = [0, 0, 0, 0, this.course.courseName + '  [No students]', this.course.courseId];
           }
           else {
-            // this.doughCharts[m] =  [Math.round((cnt1*100)/totalStudsArr.length) , Math.round((cnt2*100)/totalStudsArr.length) , Math.round((cnt3*100)/totalStudsArr.length) , Math.round((cnt4*100)/totalStudsArr.length)  , this.course.courseName]
-            this.doughCharts[m] = [cnt1, cnt2, cnt3, cnt4, this.course.courseName + '  [' + totalStudsArr.length + ' students]', this.course.courseId]
-            console.log(this.doughCharts[m])
+            // this.barCharts[m] =  [Math.round((cnt1*100)/totalStudsArr.length) , Math.round((cnt2*100)/totalStudsArr.length) , Math.round((cnt3*100)/totalStudsArr.length) , Math.round((cnt4*100)/totalStudsArr.length)  , this.course.courseName]
+            this.barCharts[m] = [cnt1, cnt2, cnt3, cnt4, this.course.courseName + '  [' + totalStudsArr.length + ' students]']
+            console.log(this.barCharts[m])
           }
         }
       }
@@ -234,26 +253,52 @@ export class TeacherPanelComponent {
 
 
   //code for next button on progress panel
-  next() {
+  barNext() {
 
     this.currentIndex += 3;
-    // this.getAllCourseProgress();
+
 
   }
 
   //code for previous button on progress panel
-  previous() {
+  barPrevious() {
 
     this.currentIndex -= 3;
-    // this.getAllCourseProgress();
+
   }
 
+    //code for next button on progress panel
+    doughnutNext() {
+
+
+      
+      this.dchartcurrentIndex +=3;
+    
+  
+    }
+  
+    //code for previous button on progress panel
+    doughnutPrevious() {
+  
+     
+      this.dchartcurrentIndex -=3;
+     
+    }
+  
+  
+    
   //code to display course by providing course id
-  getCourseNameById(courseId: number) {
+ async getCourseNameById(courseId: number) {
     return new Promise<void>((resolve, reject) => {
       this.courseService.getCourseByCourseId(courseId).subscribe(
         (data) => {
           this.course = data;
+          if(this.barClicked)
+          {
+          this.clickedCourse = data;
+          console.log( this.clickedCourse.courseName )
+          }
+   
           resolve();
         },
         (error) => {
