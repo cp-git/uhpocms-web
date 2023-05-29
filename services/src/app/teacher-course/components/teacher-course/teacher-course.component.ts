@@ -10,6 +10,7 @@ import { Course } from 'app/teacher-course/class/course';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { DepartmentService } from 'app/department/services/department.service';
 import { CourseDepartment } from 'app/teacher-course/class/course-department';
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 import { AppService } from 'app/app.service';
 @Component({
   selector: 'app-teacher-course',
@@ -73,7 +74,7 @@ export class TeacherCourseComponent implements OnInit {
 
 
   courseDepartments: CourseDepartment[] = [];
-  constructor(private service: TeacherCourseService, private location: Location, private departmentService: DepartmentService) {
+  constructor(private service: TeacherCourseService, private dialogBoxServices:DialogBoxService, private location: Location, private departmentService: DepartmentService) {
     this.columnNames = CourseColumn;
     this.allColumnNames = CourseAllColumn;
 
@@ -100,6 +101,28 @@ export class TeacherCourseComponent implements OnInit {
     this.getInActiveCourse(); // for getting all inactive course
   }
 
+  accessControl(userRole: string) {
+    console.log(userRole);
+
+    switch (userRole) {
+      case 'admin' || 'coadmin':
+        if (this.viewActivate == false) {
+          this.showAddButton = true;
+          this.showActivateButton = true;
+        }
+        break;
+      case 'teacher':
+        this.showAddButton = false;
+        this.showActivateButton = false;
+
+        break;
+      case 'student':
+        this.showAddButton = false;
+        this.showActivateButton = false;
+        break;
+    }
+  }
+
   // back button functionality
   back() {
     if (this.viewAll == false) {
@@ -108,8 +131,7 @@ export class TeacherCourseComponent implements OnInit {
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
-      this.showAddButton = true;
-      this.showActivateButton = true;
+      this.accessControl(this.userRole);
 
     } else {
       this.location.back();
@@ -202,7 +224,7 @@ export class TeacherCourseComponent implements OnInit {
   // For adding course
   private addCourse(currentData: any) {
 
-    currentData.courseIsActive = true;  // setting active true
+    //currentData.courseIsActive = true;  // setting active true
     // console.log("currentda" + JSON.stringify(currentData));
     // calling service for adding data
     this.service.addCourse(currentData).subscribe(
@@ -213,17 +235,23 @@ export class TeacherCourseComponent implements OnInit {
 
         this.courseDepartment.department_id = currentData.departmentId;
         console.log("coursedept" + JSON.stringify(this.courseDepartment));
-
+       
         // this.courseDepartment.departmentId = currentData.departmentId;
         // console.log("coursedept" + JSON.stringify(this.courseDepartment));
 
         this.service.assignCourseToDepartment(this.courseDepartment).subscribe(
           response => {
             console.log('Course Added successfully');
+            this.dialogBoxServices.open("Course added Successfully", 'information');
+
 
           },
           error => {
-            console.log("Course added but failed to assign");
+          //  alert("Course Name is already Failed...")
+            this.dialogBoxServices.open("Course Name is already available..." , 'information');
+            
+            
+
           }
         );
         this.emptyCourse = {} as Course;
@@ -233,6 +261,8 @@ export class TeacherCourseComponent implements OnInit {
       },
       (error) => {
         console.log("Failed to add Course");
+        this.dialogBoxServices.open("Failed to add Course", 'information');
+        
       });
   }
 
@@ -264,6 +294,7 @@ export class TeacherCourseComponent implements OnInit {
       },
       error => {
         console.log('No data in table ');
+
       }
     );
   }
@@ -275,9 +306,11 @@ export class TeacherCourseComponent implements OnInit {
     this.service.deleteCourseByCourseId(courseId).subscribe(
       (response) => {
         console.log('Course deleted successfully');
+        this.dialogBoxServices.open("Course deleted successfully", 'information');
         this.ngOnInit();
       },
       (error) => {
+        this.dialogBoxServices.open("course deletion failed", 'information');
         console.log('course deletion failed');
       }
     );
@@ -319,6 +352,7 @@ export class TeacherCourseComponent implements OnInit {
       },
       error => {
         console.log("failed to get departments");
+        this.dialogBoxServices.open("failed to get departments", 'information');
       }
     )
   }
@@ -367,8 +401,10 @@ export class TeacherCourseComponent implements OnInit {
 
     switch (userRole) {
       case 'admin' || 'coadmin':
-        this.showAddButton = true;
-        this.showActivateButton = true;
+        if (this.viewActivate == false) {
+          this.showAddButton = true;
+          this.showActivateButton = true;
+        }
         this.getAllCourse();
         break;
       case 'teacher':

@@ -7,7 +7,7 @@ export class Quiz {
     maxQuestions!: number;
     answersAtEnd!: boolean;
     examPaper!: boolean;
-    singleAttempt!: boolean;
+    singleAttempt: boolean =false;
     passMark!: number;
     successText!: string;
     failText!: string;

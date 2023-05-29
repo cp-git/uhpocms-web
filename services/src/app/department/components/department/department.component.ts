@@ -7,6 +7,7 @@ import { DepartmentAllColumn, DepartmentColumn, DepartmentUpdateColumn } from 'a
 
 import { Location } from '@angular/common';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
@@ -48,7 +49,7 @@ export class DepartmentComponent implements OnInit {
   emptyDepartment: Department; // empty department
   currentData!: Department; // for update and view, to show existing data
 
-  constructor(private service: DepartmentService, private location: Location) {
+  constructor(private service: DepartmentService, private location: Location ,private dialogBoxServices :DialogBoxService) {
     // assigng headers
     this.columnNames = DepartmentColumn;
     this.allColumnNames = DepartmentAllColumn;
@@ -109,7 +110,7 @@ export class DepartmentComponent implements OnInit {
   // For navigate to update screen with data
   // function will call when child update button is clicked
   onChildDeleteClick(objectReceived: Department): void {
-    this.deleteDepartment(objectReceived.name);
+    this.deleteDepartment(objectReceived.id);
   }
 
   // For navigate to activate screen with data
@@ -179,18 +180,20 @@ export class DepartmentComponent implements OnInit {
 
   // For adding department
   private addDepartment(currentData: Department) {
-    currentData.active = true; // setting active true
+    // currentData.active = true; // setting active true
 
     // calling service for adding data
     this.service.insertDepartment(currentData).subscribe(
       (data) => {
         console.log('Department added Successfully');
+        this.dialogBoxServices.open("Department added Successfully", 'information');
         this.emptyDepartment = {} as Department;
         this.ngOnInit();
-        this.back();
+        this.back();  
       },
       (error) => {
         console.log('Failed to add Department');
+        alert('Department is Already Present pls Select Another Name..');
       }
     );
   }
@@ -216,9 +219,9 @@ export class DepartmentComponent implements OnInit {
   }
 
   // For deleting (soft delete) department
-  private deleteDepartment(name: string) {
+  private deleteDepartment(id: number) {
     // calling service to soft delte
-    this.service.deleteDepartment(name).subscribe(
+    this.service.deleteDepartmentById(id).subscribe(
       (response) => {
         console.log('Department deleted successfully');
         this.ngOnInit();

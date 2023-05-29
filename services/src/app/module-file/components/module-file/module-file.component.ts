@@ -8,7 +8,7 @@ import { ModuleFileService } from 'app/module-file/services/module-file.service'
 import { ModuleFileAllColumn, ModuleFileColumn, ModuleFileUpdateColumn, ModuleFileViewColumn } from 'app/module-file/column-name/modulefile-column';
 import { Course } from 'app/teacher-course/class/course';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
-
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 import { UploadFileService } from 'app/FileUpload/services/upload-file.service';
 // import { Profile } from 'app/profiles/class/profile';
 // import { AssignedteachercourseComponent } from 'app/displayAssignedCourseToTeacher/components/assignedteachercourse/assignedteachercourse.component';
@@ -73,7 +73,8 @@ export class ModuleFileComponent {
     private location: Location,
     private moduleFileService: ModuleFileService,
     private service: TeacherCourseService,
-    private uploadfileService: UploadFileService
+    private uploadfileService: UploadFileService,
+    private dialogBoxServices :DialogBoxService
   ) {
     this.userRole = sessionStorage.getItem('userRole');
     this.columnNames = ModuleFileColumn;
@@ -299,7 +300,7 @@ export class ModuleFileComponent {
 
   // Add module file
   addModuleFile(objectReceived: ModuleFile) {
-    objectReceived.moduleFileIsActive = true;
+   // objectReceived.moduleFileIsActive = true;
     console.log("view " + JSON.stringify(this.files));
 
 
@@ -321,10 +322,16 @@ export class ModuleFileComponent {
 
 
         console.log('File Added successfully');
+        this.dialogBoxServices.open("File Added successfully", 'information');
         this.ngOnInit();
         this.back();
       },
-      (error) => console.log('failed to upload ')
+
+      (error) => {
+        this.dialogBoxServices.open("File is Already Present pls Select Another file.." , 'information');
+        console.log('failed to upload ')
+      }
+
     );
   }
 
@@ -337,11 +344,13 @@ export class ModuleFileComponent {
 
       },
       error => {
+        this.dialogBoxServices.open("Module File updation failed", 'information');
         console.log('Module File updation failed !');
       }
 
     );
     console.log('Module File updated successfully !');
+    this.dialogBoxServices.open("Module File updated successfully !", 'information');
     this.back();
   }
 
@@ -389,11 +398,13 @@ export class ModuleFileComponent {
     // calling service to soft delte
     this.moduleFileService.deleteModuleFileById(moduleFileId).subscribe(
       (response) => {
+        this.dialogBoxServices.open("Module File deleted successfully !", 'information');
         console.log('Module File deleted successfully');
         this.ngOnInit();
       },
       (error) => {
         console.log('Module File deletion failed');
+        this.dialogBoxServices.open("Module File deletion failed", 'information');
       }
     );
   }
@@ -419,9 +430,11 @@ export class ModuleFileComponent {
     this.moduleFileService.activatemoduleFileById(moduleFileId).subscribe(
       response => {
         console.log("Activated modulefile");
+        this.dialogBoxServices.open("Activated modulefile", 'information');
         this.ngOnInit();
       },
       error => {
+        this.dialogBoxServices.open("Failed to activate", 'information');
         console.log("Failed to activate");
       }
     );

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Module } from 'app/module/class/module';
 import { ModuleService } from 'app/module/services/module.service';
-import { ModuleColumn, ModuleAllColumn } from 'app/module/column-names/module-column';
+import { ModuleColumn, ModuleAllColumn, UpdateAllColumn } from 'app/module/column-names/module-column';
 import { Course } from 'app/teacher-course/class/course';
 import { Location } from '@angular/common';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { Profile } from 'app/profiles/class/profile';
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 @Component({
   selector: 'app-module',
   templateUrl: './module.component.html',
@@ -30,6 +31,7 @@ export class ModuleComponent {
 
   columnNames: any;
   allColumnNames: any;
+  allColumnNames1: any;
 
   readonly primaryIdColumnName: string = 'id';
 
@@ -48,12 +50,13 @@ export class ModuleComponent {
   emptyModule: Module;  // empty admin role
   currentData!: Module;  // for update and view, to show existing data
 
-  constructor(private service: ModuleService, private location: Location, private courseService: TeacherCourseService) {
+  constructor(private service: ModuleService,private dialogBoxServices : DialogBoxService, private location: Location, private courseService: TeacherCourseService) {
 
     // assigng headers
 
     this.columnNames = ModuleColumn;
     this.allColumnNames = ModuleAllColumn;
+    this.allColumnNames1 = UpdateAllColumn;
 
     // creating empty object
     this.emptyModule = new Module();
@@ -199,10 +202,12 @@ export class ModuleComponent {
       this.service.updateModuleById(currentData.moduleId, currentData).subscribe(
         response => {
           console.log(`Module updated successfully !`);
+          this.dialogBoxServices.open("Module updated successfully !", 'information');
           this.back();
         },
         error => {
           console.log(`Module updation failed !`);
+          this.dialogBoxServices.open("Module updation failed !", 'information');
         }
       );
     }
@@ -214,18 +219,20 @@ export class ModuleComponent {
     //   alert("End date must be after start date");
     //   return;
     // }
-    currentData.moduleIsActive = true;  // setting active true
+   // currentData.moduleIsActive = true;  // setting active true
     // calling service for adding data
     //console.log(JSON.stringify(currentData));
     this.service.addTeacherModule(currentData).subscribe(
       (data) => {
         //  console.log(this.currentData)
         console.log('Module added Successfully');
+        this.dialogBoxServices.open("Module added Successfully", 'information');
         this.emptyModule = {} as Module;
         this.ngOnInit();
         this.back();
       },
       (error) => {
+        this.dialogBoxServices.open("Module Name is already exist pls select another name..", 'information');
         console.log("Failed to add Module");
       });
   }

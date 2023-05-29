@@ -46,10 +46,11 @@
                 </div>
             </div>
 
-
+          
             <div class="first-row-child">
                 <div class="col-sm-12">
                     <div class="first-row-child">
+                        
                         <label class="badg">Student Name</label>
                         <div class="form-group">
                             <ng-select [items]="_profileArray" bindLabel="fullName" [searchable]="true"
@@ -57,7 +58,7 @@
                                 [clearable]="true" appendTo="body" [multiple]="true" [(ngModel)]="selected"
                                 groupBy="selectedAllGroup" [selectableGroup]="true" [selectableGroupAsModel]="false"
                                 [virtualScroll]="true" (change)="disablefunc()">
-                                //code to display select all checkbox
+                                <!-- //code to display select all checkbox -->
                                 <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
                                     <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" />
                                     Select
@@ -89,6 +90,7 @@
             </div>
 
         </div>
+
         <div class="card-block row justify-content-between col-sm-12">
             <div class="col-sm-3">
                 <button #submitButton class="form-control" id="loginbtn" class="btn btn-primary rounded-button"
@@ -96,7 +98,8 @@
                     [disabled]="!isFormComplete()">Submit</button>
 
             </div>
-        </div>
+        </div> 
+      
 
 
 

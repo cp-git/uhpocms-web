@@ -111,7 +111,7 @@ export class StudentQuizComponent implements OnInit {
 
   // Getting all question by quiz Id
   private getQuestionByQuizId(quizId: number) {
-    this.questionService.getAllQuestionsByQuizId(quizId).subscribe(
+    this.questionService.getShuffledQuestionsByQuizId(quizId).subscribe(
       (data: Question[]) => {
         this.questions = data;
       }
@@ -144,7 +144,7 @@ export class StudentQuizComponent implements OnInit {
         this.questionAnswers = []; // Initialize questionAnswers as an array
 
         //Fetching all Questions by quiz Id 
-        this.questionService.getAllQuestionsByQuizId(quizId).subscribe(
+        this.questionService.getShuffledQuestionsByQuizId(quizId).subscribe(
           (response: any[]) => {
             console.log(response);
 
@@ -327,7 +327,8 @@ export class StudentQuizComponent implements OnInit {
     })
 
     if (notAttendedQuestions.length > 0) {
-      alert("Please answer the questions  " + (notAttendedQuestions))
+     // alert("Please answer the questions  " + (notAttendedQuestions))
+      this.dialogboxService.open('Please answer the questions '+(notAttendedQuestions), 'warning');
       return;
     }
 
