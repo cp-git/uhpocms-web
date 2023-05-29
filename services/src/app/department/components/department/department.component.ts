@@ -187,9 +187,9 @@ export class DepartmentComponent implements OnInit {
       (data) => {
         console.log('Department added Successfully');
         if (data.active) {
-          this.dialogBoxServices.open("Department added Successfully", 'information');
+          this.dialogBoxServices.open("Department added successfully", 'information');
         } else {
-          this.dialogBoxServices.open("Department added Successfully but not active", 'information');
+          this.dialogBoxServices.open("Department added successfully but NOT ACTIVE", 'information');
         }
         this.emptyDepartment = {} as Department;
         this.ngOnInit();

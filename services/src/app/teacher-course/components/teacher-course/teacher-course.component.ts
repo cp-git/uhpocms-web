@@ -238,9 +238,9 @@ export class TeacherCourseComponent implements OnInit {
         console.log('Course Added successfully');
 
         if (data.courseIsActive) {
-          this.dialogBoxServices.open("Course added Successfully", 'information');
+          this.dialogBoxServices.open("Course added successfully", 'information');
         } else {
-          this.dialogBoxServices.open("Course added Successfully but not active", 'information');
+          this.dialogBoxServices.open("Course added successfully but NOT ACTIVE", 'information');
         }
       }
 
