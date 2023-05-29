@@ -49,7 +49,7 @@ export class DepartmentComponent implements OnInit {
   emptyDepartment: Department; // empty department
   currentData!: Department; // for update and view, to show existing data
 
-  constructor(private service: DepartmentService, private location: Location ,private dialogBoxServices :DialogBoxService) {
+  constructor(private service: DepartmentService, private location: Location, private dialogBoxServices: DialogBoxService) {
     // assigng headers
     this.columnNames = DepartmentColumn;
     this.allColumnNames = DepartmentAllColumn;
@@ -186,10 +186,14 @@ export class DepartmentComponent implements OnInit {
     this.service.insertDepartment(currentData).subscribe(
       (data) => {
         console.log('Department added Successfully');
-        this.dialogBoxServices.open("Department added Successfully", 'information');
+        if (data.active) {
+          this.dialogBoxServices.open("Department added Successfully", 'information');
+        } else {
+          this.dialogBoxServices.open("Department added Successfully but not active", 'information');
+        }
         this.emptyDepartment = {} as Department;
         this.ngOnInit();
-        this.back();  
+        this.back();
       },
       (error) => {
         console.log('Failed to add Department');
