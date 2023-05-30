@@ -27,7 +27,7 @@ import { DepartmentService } from 'app/department/services/department.service';
 import { CourseProgress } from 'app/courseProgress/class/courseprogress';
 import { CourseProgressService } from 'app/courseProgress/services/course-progress.service';
 
-
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 
 
 @Component({
@@ -80,7 +80,7 @@ export class EnrollstudentComponent {
     private profileService: ProfileService,
     private enrollstuService: EnrolltostudentService,
     private location: Location,
-  
+  private dialogBoxService : DialogBoxService,
     private courprogServ : CourseProgressService) {
 
     this.profileId = sessionStorage.getItem('profileId');
@@ -364,6 +364,7 @@ export class EnrollstudentComponent {
           // if (i == 0) {
             // console.log("Student Enrolled Successfully");
             // location.reload();
+            this.dialogBoxService.open("Course Enrolled successfully", 'information');
             responseEnrollStu = response;
             console.log(responseEnrollStu)
             console.log(response)
