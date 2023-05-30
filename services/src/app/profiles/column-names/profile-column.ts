@@ -9,11 +9,10 @@ export const ProfileColumn = [
 
 
 export const ProfileAllColumn = [
+    { key: 'userId', label: 'User Name', type: 'dropdown', arrayName: 'inactiveAuthUsers', columnId: 'authUserId', columnName: 'authUserName', functionOnDropdownClick: true },
     { key: 'institutionId', label: 'Institution', type: 'dropdown', arrayName: 'adminInstitutions', columnId: 'adminInstitutionId', columnName: 'adminInstitutionName', dependentKeys: ['adminDepartment'], functionForDependentKeys: true },
     { key: 'adminDepartment', label: 'Department', type: 'dropdown', 'toSort': true, arrayName: 'departments', columnId: 'id', columnName: 'name', sortBasedOn: 'institutionId', foreignKeyColumn: 'institutionId' },
-    { key: 'userId', label: 'User Name', type: 'dropdown', arrayName: 'inactiveAuthUsers', columnId: 'authUserId', columnName: 'authUserName', functionOnDropdownClick: true },
     // for functionOnDropdownClick, you have to have to pass function names while calling child component
-
     { key: 'userRole', label: 'User Role', type: 'dropdown', arrayName: 'adminRoles', columnId: 'roleName', columnName: 'roleName' },
     { key: 'firstName', label: 'First Name', type: 'input', subtype: 'text', disable: true },
     { key: 'lastName', label: 'Last Name', type: 'input', subtype: 'text', disable: true },
