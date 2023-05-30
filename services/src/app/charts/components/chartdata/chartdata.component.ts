@@ -38,7 +38,7 @@ export class ChartdataComponent {
   ];
   @Input() cutOut: number = 75;
   @Input() backgroundColors: any = [
-    "#E15D44", "#55B4B0"
+    "#55B4B0",  "#E15D44"
  
   ];
   
