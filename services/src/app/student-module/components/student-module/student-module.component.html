@@ -9,7 +9,7 @@
             </div>
             <div class="form-group">
                 <label for="course">Course Name</label><br>
-                <select (change)="onCourseSelect(selectedCourse)" [(ngModel)]="selectedCourse" class="form-select"
+                <select (change)="onCourseSelect(selectedCourseId)" [(ngModel)]="selectedCourseId" class="form-select"
                     aria-label="Default select example">
                     <option *ngFor="let course of courses" [value]="course.courseId">
                         {{ course.courseName }}
@@ -21,7 +21,7 @@
                 <div class="module-list-container">
                     <ng-container *ngFor="let module of modules">
 
-                        <ul class="modules" *ngIf="selectedCourse == module.courseId_id"
+                        <ul class="modules" *ngIf="selectedCourseId == module.courseId_id"
                             [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId)}">
                             <span class="fa fa-book"></span>
                             <label for="" class="modulelist">
@@ -29,7 +29,7 @@
                             &nbsp;&nbsp;
                             <ng-container *ngFor="let file of studentModuleFiles">
                                 <ng-container
-                                    *ngIf="module.moduleId == file.moduleId && selectedCourse == module.courseId_id">
+                                    *ngIf="module.moduleId == file.moduleId && selectedCourseId == module.courseId_id">
                                     <div class="dropdown-item">
                                         <li>
                                             <span

@@ -78,8 +78,8 @@ import { UploadfileReusableModule } from './uploadfile-reusable/uploadfile-reusa
 import { StudentModuleModule } from './student-module/student-module.module';
 import { ModuleHeaderComponent } from './reusable/component/module-header/module-header.component';
 
-import { ChartdataComponent } from './student-module/components/chartdata/chartdata.component';
-import { BarChartComponent } from './student-module/components/bar-chart/bar-chart.component';
+import { ChartdataComponent } from './charts/components/chartdata/chartdata.component';
+import { BarChartComponent } from './charts/components/bar-chart/bar-chart.component';
 
 
 

@@ -71,4 +71,15 @@ export class AddUpdateComponent implements OnInit {
     return isoDatePattern.test(dateStr) && !isNaN(Date.parse(dateStr));
   }
 
+  onDropdownSelectedForDependentKeys(currentData: any, dependentKeys: any[]) {
+    console.log(currentData);
+    console.log(dependentKeys);
+
+    if (currentData && dependentKeys) {
+      dependentKeys.forEach(key => {
+        currentData[key] = undefined;
+      });
+    }
+  }
+
 }

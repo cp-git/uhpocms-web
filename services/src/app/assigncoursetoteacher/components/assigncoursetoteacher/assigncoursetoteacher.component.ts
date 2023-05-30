@@ -166,7 +166,7 @@ export class AssigncoursetoteacherComponent {
     this.courseService.getCourseByDepartmentId(deptId).subscribe(
       (response: Course[]) => {
         this.courses = response;
-
+        this.courses = this.courses.filter((elem)=>elem.courseIsActive == true)
         console.log(response);
       }
     )
@@ -203,6 +203,7 @@ export class AssigncoursetoteacherComponent {
   }
 
   getTeacherByCourseId(courseId: any) {
+    this.assignTeacherArr = [];
     this.assignTeacherService.getTeacherByCourseId(courseId).subscribe(
       response => {
         // this.courses = response;

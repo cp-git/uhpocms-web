@@ -49,7 +49,7 @@ export class DepartmentComponent implements OnInit {
   emptyDepartment: Department; // empty department
   currentData!: Department; // for update and view, to show existing data
 
-  constructor(private service: DepartmentService, private location: Location ,private dialogBoxServices :DialogBoxService) {
+  constructor(private service: DepartmentService, private location: Location, private dialogBoxServices: DialogBoxService) {
     // assigng headers
     this.columnNames = DepartmentColumn;
     this.allColumnNames = DepartmentAllColumn;
@@ -110,7 +110,7 @@ export class DepartmentComponent implements OnInit {
   // For navigate to update screen with data
   // function will call when child update button is clicked
   onChildDeleteClick(objectReceived: Department): void {
-    this.deleteDepartment(objectReceived.name);
+    this.deleteDepartment(objectReceived.id);
   }
 
   // For navigate to activate screen with data
@@ -180,16 +180,20 @@ export class DepartmentComponent implements OnInit {
 
   // For adding department
   private addDepartment(currentData: Department) {
-   // currentData.active = true; // setting active true
+    // currentData.active = true; // setting active true
 
     // calling service for adding data
     this.service.insertDepartment(currentData).subscribe(
       (data) => {
         console.log('Department added Successfully');
-        this.dialogBoxServices.open("Department added Successfully", 'information');
+        if (data.active) {
+          this.dialogBoxServices.open("Department added successfully", 'information');
+        } else {
+          this.dialogBoxServices.open("Department added successfully but NOT ACTIVE", 'information');
+        }
         this.emptyDepartment = {} as Department;
         this.ngOnInit();
-        this.back();  
+        this.back();
       },
       (error) => {
         console.log('Failed to add Department');
@@ -219,9 +223,9 @@ export class DepartmentComponent implements OnInit {
   }
 
   // For deleting (soft delete) department
-  private deleteDepartment(name: string) {
+  private deleteDepartment(id: number) {
     // calling service to soft delte
-    this.service.deleteDepartment(name).subscribe(
+    this.service.deleteDepartmentById(id).subscribe(
       (response) => {
         console.log('Department deleted successfully');
         this.ngOnInit();

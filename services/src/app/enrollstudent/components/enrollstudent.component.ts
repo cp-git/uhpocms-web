@@ -163,6 +163,7 @@ export class EnrollstudentComponent {
         this.courseService.getCourseByDepartmentId(deptId).subscribe(
           (response) => {
             this.courses = response;
+            this.courses =  this.courses.filter((elem)=> elem.courseIsActive == true)
             console.log("admin" + this.courses);
           }
         );
@@ -172,6 +173,8 @@ export class EnrollstudentComponent {
           (response) => {
             console.log("coursesteacher " + JSON.stringify(response));
             this.courses = response;
+            
+            this.courses =  this.courses.filter((elem)=> elem.courseIsActive == true)
           }
         );
         break;
@@ -188,6 +191,8 @@ export class EnrollstudentComponent {
       (response) => {
         // console.log("coursesteacher " + JSON.stringify(response));
         this.courses = response;
+        
+        this.courses =  this.courses.filter((elem)=> elem.courseIsActive == true)
 
       }
 
@@ -215,14 +220,22 @@ export class EnrollstudentComponent {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////
   ///disablestudent who already enroll
-  ////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
   getStudentByCourseId(courseId: any) {
+  
+    this.enrolledStudentArr = [];
     this.enrollstuService.getStudentByCourseId(courseId).subscribe(
       response => {
         // this.courses = response;
+
+
         console.log(response);
+        
+
+      
+        
         response.forEach((data: Enrolltostudent) => {
           this.enrolledStudentArr.push(data.profileId);
           console.log(this.enrolledStudentArr);
@@ -338,36 +351,41 @@ export class EnrollstudentComponent {
   //Function for assign course to student
   inserted: boolean = false;
   saveEnrolledStudent(courseId: number, profileId: number) {
-    this.courseProgress =  new CourseProgress();
+  
     this.inserted = false;
     this.enrolledStudent.courseId = courseId;
     this.enrolledStudent.profileId = profileId;
     for (let i = 0; i < this.selected.length; i++) {
+      this.courseProgress =  new CourseProgress();
+      let responseEnrollStu = new Enrolltostudent();
       this.enrolledStudent.profileId = this.selected[i];
       this.enrollstuService.saveEnrolledStudents(this.enrolledStudent).subscribe(
         (response) => {
-          if (i == 0) {
-            console.log("Student Enrolled Successfully");
-            location.reload();
+          // if (i == 0) {
+            // console.log("Student Enrolled Successfully");
+            // location.reload();
+            responseEnrollStu = response;
+            console.log(responseEnrollStu)
+            console.log(response)
             this.courseProgress.id = 0;
-            this.courseProgress.courseId =  this.enrolledStudent.courseId ;
-            this.courseProgress.studentId = this.enrolledStudent.profileId;
+            this.courseProgress.courseId =  courseId ;
+            this.courseProgress.studentId = this.selected[i];
             this.courseProgress.currentAssignNo = 1;
             this.courseProgress.currentModuleNo = 1;
             this.courseProgress.currentUnitNo = 1;
-            this.courseProgress.grade = 100;
+            this.courseProgress.grade = 0;
             this.courseProgress.progress = 0;
 
             
             this.courprogServ.addCourseProgressStatus(this.courseProgress).subscribe(
-              (response) => {
+              (data) => {
 
-              alert(this.courseProgress)
+              
 
               }
             )
 
-          }
+          // }
         }
       )
     }
