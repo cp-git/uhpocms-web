@@ -7,8 +7,9 @@ import { AuthUserService } from 'app/auth-user/services/auth-user.service';
 import { Authuser } from 'app/auth-user/class/auth-user';
 
 import { AuthUserAllColumn, AuthUserColumn, AuthUserUpdateColumn, AuthUserViewOneColumn } from 'app/auth-user/column/auth-user-column';
-
+import { ProfileService } from 'app/profiles/services/profile.service';
 import { json } from 'body-parser';
+import { Profile } from 'app/profiles/class/profile';
 
 
 @Component({
@@ -54,7 +55,7 @@ export class AuthUserComponent implements OnInit {
 
 
 
-  constructor(private service: AuthUserService, private location: Location) {
+  constructor(private service: AuthUserService, private profileService : ProfileService , private location: Location) {
 
     // assigng headers
     // this.adminRoleHeader = AdminRoleColumn;
@@ -71,6 +72,7 @@ export class AuthUserComponent implements OnInit {
   ngOnInit(): void {
     this.getAllAuthUser();  // for getting all active auth user
     this.getInActiveAuthUser(); // for getting all inactive auth user
+    this.fetchProfileData();
   }
 
   // back button functionality
@@ -154,26 +156,68 @@ export class AuthUserComponent implements OnInit {
   onUpdateAuthUserSubmit(objectReceived: Authuser) {
     this.updateAuthuser(objectReceived);
   }
+  private profile: Profile = {} as Profile;  // Declare the profile property
+  private fetchProfileData() {
+    // Fetch the profile data and assign it to this.profile
+    this.profileService.getAllProfiles().subscribe(
+      profileResponse => {
+        this.profiles = profileResponse; // Assign the fetched profile data to this.profile
+      },
+      error => {
+        console.log('Error retrieving profile data!');
+      }
+    );
+  }
 
   ///////////////////////////////////////////
   // Funcation calls specific to this module
   ///////////////////////////////////////////
+profiles :  Profile [] = [];
 
-  // For updating auth user
   private updateAuthuser(currentData: Authuser) {
-    // calling service for updating data
-    this.service.updateAuthUser(currentData.authUserName, currentData).subscribe(
-      response => {
-        // alert(`Auth User updated successfully !`);
-        console.log(`Auth User updated successfully !`);
+  // Calling service for updating data
+  this.service.updateAuthUser(currentData.authUserName, currentData).subscribe(
+    response => {
+      console.log(`Auth User updated successfully!`);
+      // Check if Authuser ID and profile user ID are the same
+      const matchingProfile = this.profiles.find(profile => profile.userId === currentData.authUserId);
+
+      alert (JSON.stringify(matchingProfile));
+      if (matchingProfile) {
+        this.profileService.getProfileByUserId(currentData.authUserId).subscribe(
+          profileResponse => {
+            const profileData = profileResponse; // Assuming profileResponse is the existing profile object
+            // Update the necessary fields in the profile
+            profileData.firstName = currentData.authUserFirstName;
+            profileData.lastName = currentData.authUserLastName;
+            profileData.adminEmail = currentData.authUserEmail;
+
+            // Save the updated profile
+            this.profileService.saveOrUpdateProfile(currentData.authUserId, profileData).subscribe(
+              profileUpdateResponse => {
+                console.log(`Profile updated successfully!`);
+                this.back();
+              },
+              profileUpdateError => {
+                console.log(`Profile updation failed!`);
+              }
+            );
+          },
+          profileError => {
+            console.log(`Error retrieving profile data!`);
+          }
+        );
+      } else {
         this.back();
-      },
-      error => {
-        // alert(`AuthUser updation failed !`);
-        console.log(`AuthUser updation failed !`);
       }
-    );
-  }
+    },
+    error => {
+      console.log(`AuthUser updation failed!`);
+    }
+  );
+}
+
+  
 
   currentDate = new Date();
 
