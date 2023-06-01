@@ -140,7 +140,7 @@ export class StudentModuleComponent implements OnInit {
   couIdArrInCouProg: number[] = [];
   existingCourseProg: CourseProgress = new CourseProgress();
   courProgPercentage: number = 0;
-  modFilesArray:ModuleFile[] = [];
+  modFilesArray: ModuleFile[] = [];
 
 
   moduleProgArray: Moduleprogress[] = [];
@@ -165,6 +165,7 @@ export class StudentModuleComponent implements OnInit {
     private courseProgServ: CourseProgressService,
   ) {
     this.selectedQuizProgress = new QuizProgress();
+    this.selectedQuiz = new Quiz();
   }
 
 
@@ -503,35 +504,51 @@ export class StudentModuleComponent implements OnInit {
 
 
 
-  async getModFilesByModuleId(moduleId:number)
-  {
+  // async getModFilesByModuleId(moduleId: number) {
+  //   this.modFilesArray = [];
+  //   await this.modFileServc.getModuleFilesByModuleId(moduleId).toPromise().then(
+  //     (response) => {
+  //       if (response) {
+  //         this.modFilesArray = response.filter((elem) => elem.moduleFileIsActive == true)
+  //       }
+  //     }
+  //   )
+  //     .catch((error) => { console.log(error) })
+  // }
+
+  private async getModFilesByModuleId(moduleId: number) {
     this.modFilesArray = [];
-     await this.modFileServc.getModuleFilesByModuleId(moduleId).toPromise().then(
-      (response)=>{
-        if(response){
-        this.modFilesArray = response.filter((elem)=>elem.moduleFileIsActive == true)
+    try {
+      const data = await this.modFileServc.getModuleFilesByModuleId(moduleId).toPromise();
+      console.log(data);
+      if (data != undefined) {
+        this.modFilesArray = data;
       }
-      }
-    )
-    .catch((error)=>{console.log(error)})
+
+    } catch (error) {
+      console.log("no data fetched");
+    }
   }
 
 
   //Loads the modules of the courses using the getModuleByCourseId() method of StudentService
- async loadModuleOfCourse(studentCourses: Course[]) {
+  async loadModuleOfCourse(studentCourses: Course[]) {
 
-   let filteredModules:Module[] = [];
-    studentCourses.forEach(course => {
+    let filteredModules: Module[] = [];
+    studentCourses.forEach(async course => {
 
-      this.moduleService.getModuleByModuleId(course.courseId).subscribe(
-        response => {
+      const modules: any = await this.moduleService.getModuleByCourseId(course.courseId).toPromise();
+      // .subscribe(
+      // response => {
+      //   console.log(response)
+      if (modules != undefined) {
+        for (const module of await modules) {
+          // modules.forEach(async module => {
 
-          response.forEach(async module => {
+          await this.getModFilesByModuleId(module.moduleId);
 
-           await this.getModFilesByModuleId(module.moduleId);
-
-           if(this.modFilesArray.length != 0)
-           {
+          if (this.modFilesArray.length != 0) {
+            console.log(module);
 
             this.modules.push(module);
             console.log(module)
@@ -543,15 +560,20 @@ export class StudentModuleComponent implements OnInit {
               console.log(module)
             }
           }
-          })
-
           this.loadModuleFilesOfCourses(this.studentId);
-
-        },
-        error => {
-          console.log(error);
         }
-      );
+      }
+
+
+      // }
+
+
+
+      // },
+      //   error => {
+      //     console.log(error);
+      //   }
+      // );
     })
 
   }
@@ -867,9 +889,9 @@ export class StudentModuleComponent implements OnInit {
     console.log("Called")
     let moduleId: number;
     //get modules from module table
-    this.moduleService.getModuleByModuleId(courseId).subscribe(
+    this.moduleService.getModuleByCourseId(courseId).subscribe(
       response => {
-        console.log("Inside getModuleByModuleId(moduleId)")
+        console.log("Inside getModuleByCourseId(moduleId)")
         response.forEach(module => {
           trackModules.push(module);
           console.log(module);
