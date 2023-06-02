@@ -223,7 +223,7 @@ export class TeacherPanelComponent {
           }
           else {
             // this.barCharts[m] =  [Math.round((cnt1*100)/totalStudsArr.length) , Math.round((cnt2*100)/totalStudsArr.length) , Math.round((cnt3*100)/totalStudsArr.length) , Math.round((cnt4*100)/totalStudsArr.length)  , this.course.courseName]
-            this.barCharts[m] = [cnt1, cnt2, cnt3, cnt4, this.course.courseName + '  [' + totalStudsArr.length + ' students]']
+            this.barCharts[m] = [cnt1, cnt2, cnt3, cnt4, this.course.courseName + '  [' + totalStudsArr.length + ' students]', this.course.courseId]
             console.log(this.barCharts[m])
           }
         }

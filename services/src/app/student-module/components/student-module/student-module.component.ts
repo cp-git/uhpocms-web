@@ -646,7 +646,7 @@ export class StudentModuleComponent implements OnInit {
     // console.log(this.selectedCourseId);
     // console.log(this.selectedModule);
 
-
+    console.log("   this.courProgPercentage  in onCourseSelect"+  this.courProgPercentage  )
 
     //names of attributes
     let departmentname: any;
@@ -857,28 +857,6 @@ export class StudentModuleComponent implements OnInit {
     this.moduleFileName = file.moduleFileId;
     //console.log(name);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   }
 
 
@@ -987,6 +965,7 @@ export class StudentModuleComponent implements OnInit {
 
           addedcourseProgress = response;
           this.courProgPercentage = addedcourseProgress.progress;
+          console.log("   this.courProgPercentage  in add  "+  this.courProgPercentage  )
 
         }
       )
@@ -1003,6 +982,10 @@ export class StudentModuleComponent implements OnInit {
         (response) => {
           updatedcourseProgress = response;
           this.courProgPercentage = updatedcourseProgress.progress;
+
+     
+          console.log("   this.courProgPercentage  in update "+  this.courProgPercentage  )
+
         }
       )
 
@@ -1088,7 +1071,7 @@ export class StudentModuleComponent implements OnInit {
 
 
 
-    console.log(this.selectedCourseId)
+    console.log(courseId)
     try {
       this.courseProgServ.getCourseProgByCourseIdStudId(courseId, this.studentId).subscribe(
         (response) => {
