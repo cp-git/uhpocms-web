@@ -7,7 +7,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { ChartdataComponent } from '../charts/components/chartdata/chartdata.component';
 import { BarChartComponent } from '../charts/components/bar-chart/bar-chart.component';
-
+import { CountdownModule } from 'ngx-countdown';
 
 
 
@@ -15,15 +15,16 @@ import { BarChartComponent } from '../charts/components/bar-chart/bar-chart.comp
   declarations: [
     StudentModuleComponent,
     StudentQuizComponent,
-   
-  
- 
+
+
+
   ],
   imports: [
     CommonModule,
     NgxPaginationModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    CountdownModule
   ]
 })
 export class StudentModuleModule { }

@@ -49,21 +49,28 @@
                             </ng-container>
 
                             <ng-container *ngFor="let quiz of quizzes |filter:'moduleId':module.moduleId">
-                                <br>
-                                <ng-container *ngIf="quizPassedProgresses.includes(quiz.quizId); else failedIcon">
-                                    <span class="fa fa-check-circle" style="color:blue"></span>
-                                </ng-container>
-                                <ng-template #failedIcon>
-                                    <ng-container *ngIf="quizFailedProgresses.includes(quiz.quizId); else fileIcon">
-                                        <span class="fa fa-times-circle" style="color:red"></span>
+                                <div>
+                                    <br>
+                                    <ng-container *ngIf="quizPassedProgresses.includes(quiz.quizId); else failedIcon">
+                                        <span class="fa fa-check-circle" style="color:blue"></span>
                                     </ng-container>
-                                </ng-template> &nbsp;&nbsp;
-                                <ng-template #fileIcon>
-                                    <span class="far fa-file-alt"></span>
-                                </ng-template> &nbsp;&nbsp;
+                                    <ng-template #failedIcon>
+                                        <ng-container *ngIf="quizFailedProgresses.includes(quiz.quizId); else fileIcon">
+                                            <span class="fa fa-times-circle" style="color:red"></span>
+                                        </ng-container>
+                                    </ng-template> &nbsp;&nbsp;
+                                    <ng-template #fileIcon>
+                                        <span class="far fa-file-alt"></span>
+                                    </ng-template> &nbsp;&nbsp;
 
-                                <a (click)="onQuizClicked(quiz)"
-                                    [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId)}">{{quiz.title}}</a>
+                                    <a (click)="onQuizClicked(quiz)"
+                                        [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId)}">{{quiz.title}}</a>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                    <a class="retakequiz"
+                                        *ngIf="((!quiz.singleAttempt && (quizFailedProgresses.includes(quiz.quizId) || quizPassedProgresses.includes(quiz.quizId))) || quizFailedProgresses.includes(quiz.quizId))"
+                                        (click)="onRetakeQuizClicked(quiz)">Retake</a>
+                                </div>
                             </ng-container>
                         </ul>
                     </ng-container>
@@ -73,9 +80,11 @@
                             *ngIf="(selectedQuiz!=null && (selectedQuiz.singleAttempt==true && !(quizPassedProgresses.includes(selectedQuiz.quizId))) || (selectedQuiz.singleAttempt==false)); else singleAttempt ">
                             <!-- <div *ngIf="selectedQuiz && selectedQuiz.singleAttempt = true &&  (quizPassedProgresses.includes(quiz.quizId) ||
                             quizFailedProgresses.includes(quiz.quizId))"> -->
-                            <app-student-quiz [quizData]="selectedQuiz"
+                            <app-student-quiz [onQuizClick]="onQuizClick" [isRetakingQuiz]="isRetakingQuiz"
+                                [submitted]="submitted" [quizData]="selectedQuiz"
                                 (quizProgressAdded)="onQuizProgressAdded($event)"
-                                (onSaveQuizProgress)="onSaveQuizProgress($event)"></app-student-quiz>
+                                (onSaveQuizProgress)="onSaveQuizProgress($event)"
+                                (onQuizSubmit)="onQuizSubmit($event)"></app-student-quiz>
                             <!-- <app-student-quiz (quizProgressAdded)="onQuizProgressAdded($event)"></app-student-quiz> -->
                             <!-- <div>Previous Score: {{ selectedQuizProgress.score }}</div> -->
                         </div>
@@ -83,7 +92,7 @@
                     </ng-template>
                     <ng-template #singleAttempt>
                         <ng-container *ngIf="showalert">
-                            {{showAlert()}}
+                            <!-- {{showAlert()}} -->
                         </ng-container>
                     </ng-template>
                 </div>
@@ -91,6 +100,12 @@
             <h5 style="color:blue"> Course Progress : {{courProgPercentage}} % Completed </h5>
             <h5 *ngIf="selectedQuizName" style="color:blue"> {{ selectedQuizName}} : {{ selectedQuizProgress.score }}%
             </h5>
+            <div style="font-size: 20px;" [hidden]="selectedQuizName==''"
+                *ngIf="!selectedQuiz.singleAttempt || quizFailedProgresses.includes(selectedQuiz.quizId)">
+                <label>Quiz Timer : </label>&nbsp;
+                <countdown #cd [config]=" { leftTime: 30 }" (event)="handleEvent($event)">
+                </countdown>
+            </div>
         </div>
 
 

@@ -21,10 +21,21 @@ export class StudentQuizComponent implements OnInit {
   // Quiz Data comming from parent
   @Input() quizData: any;
 
+  // submitted by timer or not
+  @Input() submitted: boolean = false;
+
+  // is Retaking Quiz or not
+  @Input() isRetakingQuiz: boolean = false;
+
+  @Input() onQuizClick: any;
+
   //function to pass data when quiz added
   @Output() quizProgressAdded: EventEmitter<any> = new EventEmitter();
   // function to be called in parent component
   @Output() onSaveQuizProgress: EventEmitter<any> = new EventEmitter();
+
+  //function to pass data -questionAnswer
+  @Output() onQuizSubmit: EventEmitter<any> = new EventEmitter();
 
   addeedQuizProgress: QuizProgress = new QuizProgress();; //to store quizprogress data
   quizProgresses: QuizProgress[] = [];
@@ -48,7 +59,6 @@ export class StudentQuizComponent implements OnInit {
   answers: Answer[] = [];       // all answers with questionId
   questionAnswers: OneQuestionAnswer[] = [];    // array of question and answers
 
-
   constructor(
     private quizProgressService: QuizProgressService,
     private questionService: QuestionService,
@@ -67,8 +77,27 @@ export class StudentQuizComponent implements OnInit {
 
     // if quizDate value is changed then this condition will be true
     if (changes['quizData']) {
+
       this.loadQuizData();
     }
+
+    if (changes['onQuizClick']) {
+      console.log("chaged" + this.isRetakingQuiz);
+
+      if (this.isRetakingQuiz) {
+        // this.loadQuizData();
+        this.clearAnswers();
+      }
+    }
+
+    // if (changes['isRetakingQuiz']) {
+    //   console.log("chaged" + this.isRetakingQuiz);
+
+    //   if (this.isRetakingQuiz) {
+    //     // this.loadQuizData();
+    //     this.clearAnswers();
+    //   }
+    // }
   }
 
 
@@ -291,100 +320,127 @@ export class StudentQuizComponent implements OnInit {
   //Dialog Box -- Kaushik
 
   // function called when form is submitted from frontend
-  onFormSubmit() {
-    this.quizProgress = new QuizProgress();
+  // onFormSubmit() {
+  //   this.quizProgress = new QuizProgress();
 
-    console.log(this.questionAnswers);
-    console.log(this.quizData);
-
-
-    let notAttendedQuestions: any[] = [];
-    let score: number = 0;
-    const marksPerQuestion: number = 100 / (this.questionAnswers.length);
-
-    this.questionAnswers.forEach((queAns, index) => {
-
-      let trueAnswer: string = '';
-      if (queAns.correct1) {
-        trueAnswer = queAns.content1;
-      } else if (queAns.correct2) {
-        trueAnswer = queAns.content2;
-      } else if (queAns.correct3) {
-        trueAnswer = queAns.content3;
-      } else if (queAns.correct4) {
-        trueAnswer = queAns.content4;
-      }
-
-      if (queAns.selectedAnswer == undefined || queAns.selectedAnswer == '') {
-        notAttendedQuestions.push(index + 1);
-      }
-
-      if (queAns.selectedAnswer == trueAnswer) {
-        score = score + (marksPerQuestion);
-      }
+  //   console.log(this.questionAnswers);
+  //   console.log(this.quizData);
 
 
-    })
+  //   let notAttendedQuestions: any[] = [];
+  //   let score: number = 0;
+  //   const marksPerQuestion: number = 100 / (this.questionAnswers.length);
 
-    if (notAttendedQuestions.length > 0) {
-     // alert("Please answer the questions  " + (notAttendedQuestions))
-      this.dialogboxService.open('Please answer the questions '+(notAttendedQuestions), 'warning');
-      return;
-    }
+  //   this.questionAnswers.forEach((queAns, index) => {
 
-    this.quizProgress.studentId = this.studentId;
-    this.quizProgress.quizId = this.selectedQuizId;
-    this.quizProgress.score = score;
-    if (score >= this.quizData.passMark) {
-      this.quizProgress.completed = true;
-    } else {
-      this.quizProgress.completed = false;
-    }
-    this.quizProgress.numberOfAttempts = 1;
-    let addedQuizProgress: QuizProgress;
-    this.quizProgressService.addQuizProgressOfStudent(this.quizProgress).subscribe(
-      (response) => {
+  //     let trueAnswer: string = '';
+  //     if (queAns.correct1) {
+  //       trueAnswer = queAns.content1;
+  //     } else if (queAns.correct2) {
+  //       trueAnswer = queAns.content2;
+  //     } else if (queAns.correct3) {
+  //       trueAnswer = queAns.content3;
+  //     } else if (queAns.correct4) {
+  //       trueAnswer = queAns.content4;
+  //     }
 
+  //     if (queAns.selectedAnswer == undefined || queAns.selectedAnswer == '') {
+  //       notAttendedQuestions.push(index + 1);
+  //     }
 
-        this.addeedQuizProgress = response;
-        this.quizProgressAdded.emit(this.addeedQuizProgress);
-        // alert("Quiz progress saved");
+  //     if (queAns.selectedAnswer == trueAnswer) {
+  //       score = score + (marksPerQuestion);
+  //     }
 
 
-        addedQuizProgress = response;
-        console.log("Quiz progress saved");
-        this.onSaveQuizProgress.emit(addedQuizProgress);
+  //   })
 
-      },
-      (error) => {
-        console.log("Failed to save Progress");
-      }
-    );
+  //   if (notAttendedQuestions.length > 0) {
+  //     // alert("Please answer the questions  " + (notAttendedQuestions))
+  //     this.dialogboxService.open('Please answer the questions ' + (notAttendedQuestions), 'warning');
+  //     return;
+  //   }
 
-    if (score >= this.selectedQuiz.passMark) {
-      // show dialog box with green exam pass
-      var grade = '';
-      if (score >= 90) {
-        grade = 'A+';
-      } else if (score >= 80) {
-        grade = 'A';
-      } else if (score >= 75) {
-        grade = 'B+';
-      } else if (score >= 70) {
-        grade = 'B';
-      } else if (score >= 60) {
-        grade = 'C';
-      } else if (score >= 50) {
-        grade = 'D';
-      } else if (score >= 40) {
-        grade = 'E';
-      }
-      this.dialogboxService.open(this.selectedQuiz.successText + '  ' + grade, 'information');
-      //alert("Total score: " + score);
-    } else {
-      // show dialog box with red exam fail
-      this.dialogboxService.open(this.selectedQuiz.failText, 'information');
-    }
+  //   this.quizProgress.studentId = this.studentId;
+  //   this.quizProgress.quizId = this.selectedQuizId;
+  //   this.quizProgress.score = score;
+  //   if (score >= this.quizData.passMark) {
+  //     this.quizProgress.completed = true;
+  //   } else {
+  //     this.quizProgress.completed = false;
+  //   }
+  //   this.quizProgress.numberOfAttempts = 1;
+  //   let addedQuizProgress: QuizProgress;
+  //   this.quizProgressService.addQuizProgressOfStudent(this.quizProgress).subscribe(
+  //     (response) => {
+
+
+  //       this.addeedQuizProgress = response;
+  //       this.quizProgressAdded.emit(this.addeedQuizProgress);
+  //       // alert("Quiz progress saved");
+
+
+  //       addedQuizProgress = response;
+  //       console.log("Quiz progress saved");
+  //       this.onSaveQuizProgress.emit(addedQuizProgress);
+
+  //     },
+  //     (error) => {
+  //       console.log("Failed to save Progress");
+  //     }
+  //   );
+
+  //   if (score >= this.selectedQuiz.passMark) {
+  //     // show dialog box with green exam pass
+  //     var grade = '';
+  //     if (score >= 90) {
+  //       grade = 'A+';
+  //     } else if (score >= 80) {
+  //       grade = 'A';
+  //     } else if (score >= 75) {
+  //       grade = 'B+';
+  //     } else if (score >= 70) {
+  //       grade = 'B';
+  //     } else if (score >= 60) {
+  //       grade = 'C';
+  //     } else if (score >= 50) {
+  //       grade = 'D';
+  //     } else if (score >= 40) {
+  //       grade = 'E';
+  //     }
+  //     this.dialogboxService.open(this.selectedQuiz.successText + '  ' + grade, 'information');
+  //     //alert("Total score: " + score);
+  //   } else {
+  //     // show dialog box with red exam fail
+  //     this.dialogboxService.open(this.selectedQuiz.failText, 'information');
+  //   }
+  // }
+
+  onFormSubmit2() {
+    this.onQuizSubmit.emit(this.questionAnswers);
   }
 
+  clearAnswers() {
+    console.log("eraseing answers");
+    console.log(this.questionAnswers);
+
+    this.questionAnswers.forEach(queAns => {
+      // queAns.content1 = '';
+      // queAns.correct1 = false;
+
+      // queAns.content2 = '';
+      // queAns.correct2 = false;
+
+      // queAns.content3 = '';
+      // queAns.correct3 = false;
+
+      // queAns.content4 = '';
+      // queAns.correct4 = false;
+      queAns.selectedAnswer = ''
+      this.currentPage = 1;
+
+    })
+    console.log(this.questionAnswers);
+
+  }
 }
