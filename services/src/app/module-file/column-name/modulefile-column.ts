@@ -11,7 +11,7 @@ export const ModuleFileColumn = [
 
 export const ModuleFileAllColumn = [
 
-    { key: 'courseId', label: 'Course Name', type: 'dropdown', arrayName: 'courses', columnId: 'courseId', columnName: 'courseName' },
+    { key: 'courseId', label: 'Course Name', type: 'dropdown', arrayName: 'courses', columnId: 'courseId', columnName: 'courseName', dependentKeys: ['moduleId'], functionForDependentKeys: true },
     { key: 'moduleId', label: 'Module Name', type: 'dropdown', arrayName: 'modules', toSort: true, sortBasedOn: 'courseId', foreignKeyColumn: 'courseId_id', columnId: 'moduleId', columnName: 'moduleName' },
     { key: 'moduleFile', label: 'Module File', type: 'file' },
     { key: 'moduleFileOrderNo', label: ' Module File Order No', type: 'input', subtype: 'number' },
