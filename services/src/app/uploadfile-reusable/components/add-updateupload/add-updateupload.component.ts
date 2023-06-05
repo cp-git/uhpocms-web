@@ -67,7 +67,9 @@ export class AddUpdateuploadComponent {
       this.dropdownColumnName2 = this.dropdown2?.dropdownColumnName2;
     }
   }
-  onFileSelected(event: Event) {
+
+  file!: File;
+  onFileSelected(event: any, key: string) {
     // console.log(event);
     const input = event.target as HTMLInputElement;
     // console.log(input);
@@ -78,11 +80,26 @@ export class AddUpdateuploadComponent {
     // console.log(this.files);
     this.sentFileData.emit(this.files);
 
+    if (event.target) {
+      this.file = event.target.files[0];
+      this.currentData[key] = this.file.name;
+    }
+
   }
 
   getOptionValue(value: any, column: any): string {
     const option = this.dropdown[column.arrayName].find((o: any) => o[column.columnId] === value);
     return option ? option[column.columnName] : '';
+  }
+  onDropdownSelectedForDependentKeys(currentData: any, dependentKeys: any[]) {
+    console.log(currentData);
+    console.log(dependentKeys);
+
+    if (currentData && dependentKeys) {
+      dependentKeys.forEach(key => {
+        currentData[key] = undefined;
+      });
+    }
   }
 
 
