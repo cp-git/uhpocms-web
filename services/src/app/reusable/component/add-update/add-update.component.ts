@@ -43,6 +43,16 @@ export class AddUpdateComponent implements OnInit {
     this.initialiseDropdownData();
   }
 
+  file!: File;
+  onFileSelected(event: any) {
+    // console.log(event);
+
+
+    this.file = event.target.files[0];
+
+
+  }
+
   initialiseDropdownData() {
     if (this.dropdown1?.optionsArray1 != undefined) {
       this.optionsArray1 = this.dropdown1?.optionsArray1;

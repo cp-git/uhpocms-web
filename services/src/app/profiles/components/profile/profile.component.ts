@@ -28,6 +28,8 @@ export class ProfileComponent implements OnInit {
   viewOne: boolean = false;
   viewActivate: boolean = false;
 
+  file!: File;
+
   // for buttons to view
   showAddButton: boolean = true;
   showActivateButton: boolean = true;
@@ -220,7 +222,15 @@ export class ProfileComponent implements OnInit {
     )
   }
 
-  ///////////////////////////////////////////
+  onFileSelected(event: any) {
+    this.file = event.target.files[0];
+    this.emptyProfile.profilePics = this.file.name;
+    console.log(this.file);
+
+
+  }
+
+
   // Funcation calls specific to this module
   ///////////////////////////////////////////
 
@@ -334,31 +344,51 @@ export class ProfileComponent implements OnInit {
 
   // adding profile by usign userId(foreign key from authuser)
   private addProfile(currentData: Profile) {
-    this.service.saveOrUpdateProfile(currentData.userId, currentData).subscribe(
-      response => {
-        if (currentData.activeUser === true) {
-          this.authUserService.activateAuthUserById(currentData.userId).subscribe(
-            response => {
-              console.log('Profile added successfully');
-              this.emptyProfile = {} as Profile;
-              this.ngOnInit();
-              this.back();
-            },
-            error => {
-              console.log("Failed to add profile");
-            }
-          );
-        } else {
-          console.log('Profile saved successfully. NOTE - Profile is not activated!');
-          this.emptyProfile = {} as Profile;
-          this.ngOnInit();
-          this.back();
-        }
 
-      },
-      error => {
-        console.log("Failed to add profile");
-      });
+    const instituteJson = JSON.stringify(currentData);
+
+    const blob = new Blob([instituteJson], {
+      type: 'application/json'
+    })
+
+    let formData = new FormData();
+    formData.append("file", this.file);
+    formData.append("admin", new Blob([JSON.stringify(currentData)], { type: 'application/json' }));
+
+    this.service.addProfile(formData).subscribe(
+      (response) => {
+        console.log(response);
+
+
+      }
+    )
+
+
+    // this.service.saveOrUpdateProfile(currentData.userId, formData).subscribe(
+    //   response => {
+    //     if (currentData.activeUser === true) {
+    //       this.authUserService.activateAuthUserById(currentData.userId).subscribe(
+    //         response => {
+    //           console.log('Profile added successfully');
+    //           this.emptyProfile = {} as Profile;
+    //           this.ngOnInit();
+    //           this.back();
+    //         },
+    //         error => {
+    //           console.log("Failed to add profile");
+    //         }
+    //       );
+    //     } else {
+    //       console.log('Profile saved successfully. NOTE - Profile is not activated!');
+    //       this.emptyProfile = {} as Profile;
+    //       this.ngOnInit();
+    //       this.back();
+    //     }
+
+    //   },
+    //       error => {
+    //   console.log("Failed to add profile");
+    // });
   }
 
   // updating profile by usign userId(foreign key from authuser)

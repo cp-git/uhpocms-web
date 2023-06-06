@@ -19,8 +19,8 @@ export class ProfileService {
     return this.http.get<Profile[]>(`${this.profileUrl}?firstName=all`);
   }
 
-  addProfile(profile: Profile): Observable<Profile> {
-    return this.http.post<Profile>(`${this.profileUrl}`, profile);
+  addProfile(formData: FormData): Observable<Profile> {
+    return this.http.post<Profile>("http://localhost:8092/uhpocms/profile", formData);
   }
 
   deleteProfile(firstName: string): Observable<any> {
@@ -44,17 +44,17 @@ export class ProfileService {
   }
 
 
-  
+
   getProfileByRoleAndInstitutionId(userRole: string, instId: number): Observable<any> {
     return this.http.get<any>(`${this.profileUrl}/${userRole}/${instId}`);
   }
 
 
-  getProfileByUserId( userId: number): Observable<any> {
+  getProfileByUserId(userId: number): Observable<any> {
     return this.http.get<any>(`${this.profileUrl}/userId/${userId}`);
   }
 
-  getProfileByAdminId( adminId: number): Observable<any> {
+  getProfileByAdminId(adminId: number): Observable<any> {
     return this.http.get<any>(`${this.profileUrl}/id/${adminId}`);
   }
 }
