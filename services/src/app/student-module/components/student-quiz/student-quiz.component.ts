@@ -10,7 +10,7 @@ import { QuizProgressService } from 'app/quiz-progress/services/quiz-progress.se
 import { Quiz } from 'app/quiz/class/quiz';
 import { QuizService } from 'app/quiz/services/quiz.service';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
-
+import { StudentAnswer } from 'app/student-module/class/student-answer';
 @Component({
   selector: 'app-student-quiz',
   templateUrl: './student-quiz.component.html',
@@ -59,6 +59,10 @@ export class StudentQuizComponent implements OnInit {
   answers: Answer[] = [];       // all answers with questionId
   questionAnswers: OneQuestionAnswer[] = [];    // array of question and answers
 
+  studentAnswer: StudentAnswer = new StudentAnswer();
+  studentAnswers: StudentAnswer[] = [];
+  fetchStudentAnswers!: StudentAnswer[];
+
   constructor(
     private quizProgressService: QuizProgressService,
     private questionService: QuestionService,
@@ -73,11 +77,12 @@ export class StudentQuizComponent implements OnInit {
 
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  async ngOnChanges(changes: SimpleChanges): Promise<void> {
 
     // if quizDate value is changed then this condition will be true
     if (changes['quizData']) {
 
+      await this.loadStudentAnswers(this.studentId, this.quizData.quizId);
       this.loadQuizData();
     }
 
@@ -90,14 +95,6 @@ export class StudentQuizComponent implements OnInit {
       }
     }
 
-    // if (changes['isRetakingQuiz']) {
-    //   console.log("chaged" + this.isRetakingQuiz);
-
-    //   if (this.isRetakingQuiz) {
-    //     // this.loadQuizData();
-    //     this.clearAnswers();
-    //   }
-    // }
   }
 
 
@@ -179,6 +176,7 @@ export class StudentQuizComponent implements OnInit {
 
             response.forEach(
               question => {
+                let trueAnswer: string = '';
                 this.queAns = {} as OneQuestionAnswer;
 
                 // Filter the answers based on questionId
@@ -191,15 +189,27 @@ export class StudentQuizComponent implements OnInit {
                   // console.log(answer);
                   // console.log(index)
                   if (index === 0) {
+                    if (answer.correct) {
+                      trueAnswer = answer.content;
+                    }
                     this.queAns.correct1 = answer.correct;
                     this.queAns.content1 = answer.content;
                   } else if (index === 1) {
+                    if (answer.correct) {
+                      trueAnswer = answer.content;
+                    }
                     this.queAns.correct2 = answer.correct;
                     this.queAns.content2 = answer.content;
                   } else if (index === 2) {
+                    if (answer.correct) {
+                      trueAnswer = answer.content;
+                    }
                     this.queAns.correct3 = answer.correct;
                     this.queAns.content3 = answer.content;
                   } else if (index === 3) {
+                    if (answer.correct) {
+                      trueAnswer = answer.content;
+                    }
                     this.queAns.correct4 = answer.correct;
                     this.queAns.content4 = answer.content;
                   }
@@ -211,6 +221,20 @@ export class StudentQuizComponent implements OnInit {
                 if (question.questionId > 0) {
                   isFormSubmitted = true;
                 }
+
+                let studentSelectedAnswer: string = '';
+                console.log(this.studentAnswers);
+
+                // getting selected answer of student and question
+                this.fetchStudentAnswers.forEach(studAns => {
+                  console.log(studAns);
+
+                  if (studAns.questionId == question.questionId) {
+                    console.log(studAns.questionContent);
+
+                    studentSelectedAnswer = studAns.questionContent;
+                  }
+                })
 
                 this.questionAnswers.push({
                   ...question,
@@ -226,7 +250,8 @@ export class StudentQuizComponent implements OnInit {
                   isFormSubmitted: isFormSubmitted,
                   image: false,
                   isOptionSelected: true,
-                  selectedAnswer: ''
+                  selectedAnswer: studentSelectedAnswer,
+                  trueAnswer: trueAnswer
                 });
               });
             // console.log("questionAnswer " + JSON.stringify(this.questionAnswers));
@@ -441,6 +466,24 @@ export class StudentQuizComponent implements OnInit {
 
     })
     console.log(this.questionAnswers);
+
+  }
+
+  // to load student answer for disaplying exisitng answer given by student for quiz
+  async loadStudentAnswers(studentId: number, quizId: number) {
+    this.fetchStudentAnswers = [];
+
+    await this.quizProgressService.getAllStudentAnswersByStduentIdAndQuizId(studentId, quizId).toPromise().then(
+      (response) => {
+        console.log(response);
+
+        if (response != undefined) {
+          this.fetchStudentAnswers = response;
+        }
+      }, (error) => {
+        this.fetchStudentAnswers = [];
+      }
+    );
 
   }
 }

@@ -31,6 +31,7 @@ import { ModulefileprogressService } from 'app/moduleFileProgress/modulefileprog
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 import { CountdownComponent, CountdownEvent } from 'ngx-countdown';
 import { OneQuestionAnswer } from 'app/question/class/one-question-answer';
+import { StudentAnswer } from 'app/student-module/class/student-answer';
 
 
 @Component({
@@ -152,6 +153,10 @@ export class StudentModuleComponent implements OnInit {
   questionAnswers: OneQuestionAnswer[] = [];    // array of question and answers
   addeedQuizProgress: QuizProgress = new QuizProgress();; //to store quizprogress data
   submitted: boolean = false;
+
+  studentAnswer: StudentAnswer = new StudentAnswer();  // for storing student answers
+  studentAnswers: StudentAnswer[] = [];
+
   // ------------------------VARIABLE DECLARATION END------------------------------
 
   constructor(private activateRoute: ActivatedRoute,
@@ -1751,6 +1756,23 @@ export class StudentModuleComponent implements OnInit {
         score = score + (marksPerQuestion);
       }
 
+      this.studentAnswer.quizId = this.selectedQuiz.quizId;
+      this.studentAnswer.studentId = this.studentId;
+      this.studentAnswer.questionContent = queAns.selectedAnswer;
+      this.studentAnswer.questionId = queAns.questionId;
+      this.studentAnswer.selectedOption = (queAns.selectedAnswer == trueAnswer);
+      this.studentAnswer.answerId = 0;
+      console.log("@@@@@@@@@@@@@@@@@@@@@", this.studentAnswer);
+      this.quizProgServ.addStudentAnswers(this.studentAnswer).subscribe(
+        (response) => {
+          // this.studentAnswers.push(response);
+          // this.studentAnswers = response;
+          console.log("Student answers saved");
+        },
+        (error) => {
+          console.log("Failed to save student answers");
+        }
+      );
 
     })
 
