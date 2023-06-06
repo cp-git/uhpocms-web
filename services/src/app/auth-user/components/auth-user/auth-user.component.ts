@@ -182,7 +182,7 @@ profiles :  Profile [] = [];
       // Check if Authuser ID and profile user ID are the same
       const matchingProfile = this.profiles.find(profile => profile.userId === currentData.authUserId);
 
-      alert (JSON.stringify(matchingProfile));
+      // (JSON.stringify(matchingProfile));
       if (matchingProfile) {
         this.profileService.getProfileByUserId(currentData.authUserId).subscribe(
           profileResponse => {

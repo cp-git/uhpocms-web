@@ -7,14 +7,28 @@
 .btn-primary:hover {
     background-color: green !important;
     border-color: green !important;
+    
+    border-radius: 15px !important;
 }
+.btn-primary {
+    border-radius: 15px !important;
+}
+
+
+
+
 .modal-content {
     border: 1px solid #ccc;
+    border-radius: 60px !important;
 }
-.messagemodal{
-border: 6px solid rgb(20, 4, 110);
-width: 400px;
+.messagemodal {
+    border: 7px solid rgb(39, 3, 242);
+    width: 400px;
+    /* border-radius: 60px !important; */
+    overflow: hidden; /* Add this to hide the inner border */
+
 }
+
 .warning-icon {
     color: red;
 }
@@ -29,6 +43,7 @@ width: 400px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    /* border-radius: 60px !important; */
 }
 .modal-header {
     display: flex;
@@ -39,4 +54,5 @@ width: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
