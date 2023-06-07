@@ -254,7 +254,10 @@ const routes: Routes = [
         path: 'add', component: CreateAnnouncementComponent
       },
       {
-        path: 'view/:id', component: CreateAnnouncementComponent
+        path: 'views/:id', component: CreateAnnouncementComponent
+      },
+      {
+        path: 'viewr/:id', component: CreateAnnouncementComponent
       }
     ]
   },

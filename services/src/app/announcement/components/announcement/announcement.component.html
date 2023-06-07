@@ -78,6 +78,8 @@
         </table>
     </div>
 </div>
+
+<!-- sent panel -->
 <div class="d-flex flex-row mb-3">
     <h4 *ngIf="isAutherisedToSend">Sent</h4>
     <div class="table-wrapper">
@@ -117,11 +119,11 @@
                   </ng-container>
                 </td> -->
                 <td>
-                    <span (click)="viewAnnouncement(data)"data-toggle="modal" data-target="#exampleModal" class="fa-solid fa-eye"
+                    <span (click)="viewAnnouncement(data,'sent')"data-toggle="modal" data-target="#exampleModal" class="fa-solid fa-eye"
                     style="font-size:24px;color: #6197f5;"></span>
                 </td>
                 
-                    <td *ngIf=" isAutherisedToDelete" (click)="deleteAnnouncementById(data.id)"><span
+                    <td *ngIf="isAutherisedToDelete" (click)="deleteAnnouncementById(data.id)"><span
                         class='fas fa-trash-alt' style='font-size:24px;color: red;'></span>
                     </td>
                 </tr>

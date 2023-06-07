@@ -17,7 +17,7 @@ export const ProfileAllColumn = [
     { key: 'firstName', label: 'First Name', type: 'input', subtype: 'text', disable: true },
     { key: 'lastName', label: 'Last Name', type: 'input', subtype: 'text', disable: true },
     { key: 'adminEmail', label: 'Email', type: 'email', disable: true },
-    { key: 'dob', label: 'DOB', type: 'date' },
+    { key: 'dob', label: 'DOB', type: 'date' , maxValue: new Date().toISOString().split('T')[0] },
     { key: 'adminGender', label: 'Gender', type: 'dropdown', arrayName: 'genders', columnId: 'value', columnName: 'name' },
     { key: 'mobilePhone', label: 'Phone Number', type: 'input', subtype: 'number' },
     { key: 'adminAddress1', label: 'Address1', type: 'input', subtype: 'text' },
