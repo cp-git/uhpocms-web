@@ -10,7 +10,7 @@ import { QuizProgressService } from 'app/quiz-progress/services/quiz-progress.se
 import { Quiz } from 'app/quiz/class/quiz';
 import { QuizService } from 'app/quiz/services/quiz.service';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
-
+import { StudentAnswer } from 'app/student-module/class/student-answer';
 @Component({
   selector: 'app-student-quiz',
   templateUrl: './student-quiz.component.html',
@@ -21,10 +21,25 @@ export class StudentQuizComponent implements OnInit {
   // Quiz Data comming from parent
   @Input() quizData: any;
 
+  // submitted by timer or not
+  @Input() submitted: boolean = false;
+
+  // is Retaking Quiz or not
+  @Input() isRetakingQuiz: boolean = false;
+
+  @Input() retakingQuiz: any;
+
+  @Input() onQuizClick: any;
+
+  @Input() quizPassedProgresses: any[] = [];
+  @Input() quizFailedProgresses: any[] = [];
   //function to pass data when quiz added
   @Output() quizProgressAdded: EventEmitter<any> = new EventEmitter();
   // function to be called in parent component
   @Output() onSaveQuizProgress: EventEmitter<any> = new EventEmitter();
+
+  //function to pass data -questionAnswer
+  @Output() onQuizSubmit: EventEmitter<any> = new EventEmitter();
 
   addeedQuizProgress: QuizProgress = new QuizProgress();; //to store quizprogress data
   quizProgresses: QuizProgress[] = [];
@@ -48,6 +63,9 @@ export class StudentQuizComponent implements OnInit {
   answers: Answer[] = [];       // all answers with questionId
   questionAnswers: OneQuestionAnswer[] = [];    // array of question and answers
 
+  studentAnswer: StudentAnswer = new StudentAnswer();
+  studentAnswers: StudentAnswer[] = [];
+  fetchStudentAnswers!: StudentAnswer[];
 
   constructor(
     private quizProgressService: QuizProgressService,
@@ -63,12 +81,26 @@ export class StudentQuizComponent implements OnInit {
 
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  async ngOnChanges(changes: SimpleChanges): Promise<void> {
 
     // if quizDate value is changed then this condition will be true
-    if (changes['quizData']) {
+    if (changes['quizData'] || changes['onQuizClick']) {
+      console.log("chnages onQuizClick");
+
+      await this.loadStudentAnswers(this.studentId, this.quizData.quizId);
       this.loadQuizData();
+
     }
+
+    if (changes['retakingQuiz']) {
+      console.log("chaged" + this.isRetakingQuiz);
+
+      if (this.isRetakingQuiz) {
+        // this.loadQuizData();
+        this.clearAnswers();
+      }
+    }
+
   }
 
 
@@ -150,6 +182,7 @@ export class StudentQuizComponent implements OnInit {
 
             response.forEach(
               question => {
+                let trueAnswer: string = '';
                 this.queAns = {} as OneQuestionAnswer;
 
                 // Filter the answers based on questionId
@@ -162,15 +195,27 @@ export class StudentQuizComponent implements OnInit {
                   // console.log(answer);
                   // console.log(index)
                   if (index === 0) {
+                    if (answer.correct) {
+                      trueAnswer = answer.content;
+                    }
                     this.queAns.correct1 = answer.correct;
                     this.queAns.content1 = answer.content;
                   } else if (index === 1) {
+                    if (answer.correct) {
+                      trueAnswer = answer.content;
+                    }
                     this.queAns.correct2 = answer.correct;
                     this.queAns.content2 = answer.content;
                   } else if (index === 2) {
+                    if (answer.correct) {
+                      trueAnswer = answer.content;
+                    }
                     this.queAns.correct3 = answer.correct;
                     this.queAns.content3 = answer.content;
                   } else if (index === 3) {
+                    if (answer.correct) {
+                      trueAnswer = answer.content;
+                    }
                     this.queAns.correct4 = answer.correct;
                     this.queAns.content4 = answer.content;
                   }
@@ -182,6 +227,20 @@ export class StudentQuizComponent implements OnInit {
                 if (question.questionId > 0) {
                   isFormSubmitted = true;
                 }
+
+                let studentSelectedAnswer: string = '';
+                console.log(this.studentAnswers);
+
+                // getting selected answer of student and question
+                this.fetchStudentAnswers.forEach(studAns => {
+                  console.log(studAns);
+
+                  if (studAns.questionId == question.questionId) {
+                    console.log(studAns.questionContent);
+
+                    studentSelectedAnswer = studAns.questionContent;
+                  }
+                })
 
                 this.questionAnswers.push({
                   ...question,
@@ -197,11 +256,15 @@ export class StudentQuizComponent implements OnInit {
                   isFormSubmitted: isFormSubmitted,
                   image: false,
                   isOptionSelected: true,
-                  selectedAnswer: ''
+                  selectedAnswer: studentSelectedAnswer,
+                  trueAnswer: trueAnswer
                 });
               });
             // console.log("questionAnswer " + JSON.stringify(this.questionAnswers));
-
+            if (this.isRetakingQuiz) {
+              // this.loadQuizData();
+              this.clearAnswers();
+            }
           }
         );
       },
@@ -291,100 +354,135 @@ export class StudentQuizComponent implements OnInit {
   //Dialog Box -- Kaushik
 
   // function called when form is submitted from frontend
-  onFormSubmit() {
-    this.quizProgress = new QuizProgress();
+  // onFormSubmit() {
+  //   this.quizProgress = new QuizProgress();
 
+  //   console.log(this.questionAnswers);
+  //   console.log(this.quizData);
+
+
+  //   let notAttendedQuestions: any[] = [];
+  //   let score: number = 0;
+  //   const marksPerQuestion: number = 100 / (this.questionAnswers.length);
+
+  //   this.questionAnswers.forEach((queAns, index) => {
+
+  //     let trueAnswer: string = '';
+  //     if (queAns.correct1) {
+  //       trueAnswer = queAns.content1;
+  //     } else if (queAns.correct2) {
+  //       trueAnswer = queAns.content2;
+  //     } else if (queAns.correct3) {
+  //       trueAnswer = queAns.content3;
+  //     } else if (queAns.correct4) {
+  //       trueAnswer = queAns.content4;
+  //     }
+
+  //     if (queAns.selectedAnswer == undefined || queAns.selectedAnswer == '') {
+  //       notAttendedQuestions.push(index + 1);
+  //     }
+
+  //     if (queAns.selectedAnswer == trueAnswer) {
+  //       score = score + (marksPerQuestion);
+  //     }
+
+
+  //   })
+
+  //   if (notAttendedQuestions.length > 0) {
+  //     // alert("Please answer the questions  " + (notAttendedQuestions))
+  //     this.dialogboxService.open('Please answer the questions ' + (notAttendedQuestions), 'warning');
+  //     return;
+  //   }
+
+  //   this.quizProgress.studentId = this.studentId;
+  //   this.quizProgress.quizId = this.selectedQuizId;
+  //   this.quizProgress.score = score;
+  //   if (score >= this.quizData.passMark) {
+  //     this.quizProgress.completed = true;
+  //   } else {
+  //     this.quizProgress.completed = false;
+  //   }
+  //   this.quizProgress.numberOfAttempts = 1;
+  //   let addedQuizProgress: QuizProgress;
+  //   this.quizProgressService.addQuizProgressOfStudent(this.quizProgress).subscribe(
+  //     (response) => {
+
+
+  //       this.addeedQuizProgress = response;
+  //       this.quizProgressAdded.emit(this.addeedQuizProgress);
+  //       // alert("Quiz progress saved");
+
+
+  //       addedQuizProgress = response;
+  //       console.log("Quiz progress saved");
+  //       this.onSaveQuizProgress.emit(addedQuizProgress);
+
+  //     },
+  //     (error) => {
+  //       console.log("Failed to save Progress");
+  //     }
+  //   );
+
+  //   if (score >= this.selectedQuiz.passMark) {
+  //     // show dialog box with green exam pass
+  //     var grade = '';
+  //     if (score >= 90) {
+  //       grade = 'A+';
+  //     } else if (score >= 80) {
+  //       grade = 'A';
+  //     } else if (score >= 75) {
+  //       grade = 'B+';
+  //     } else if (score >= 70) {
+  //       grade = 'B';
+  //     } else if (score >= 60) {
+  //       grade = 'C';
+  //     } else if (score >= 50) {
+  //       grade = 'D';
+  //     } else if (score >= 40) {
+  //       grade = 'E';
+  //     }
+  //     this.dialogboxService.open(this.selectedQuiz.successText + '  ' + grade, 'information');
+  //     //alert("Total score: " + score);
+  //   } else {
+  //     // show dialog box with red exam fail
+  //     this.dialogboxService.open(this.selectedQuiz.failText, 'information');
+  //   }
+  // }
+
+  onFormSubmit2() {
+    this.onQuizSubmit.emit(this.questionAnswers);
+  }
+
+  clearAnswers() {
+    console.log("eraseing answers");
     console.log(this.questionAnswers);
-    console.log(this.quizData);
 
+    this.questionAnswers.forEach(queAns => {
 
-    let notAttendedQuestions: any[] = [];
-    let score: number = 0;
-    const marksPerQuestion: number = 100 / (this.questionAnswers.length);
-
-    this.questionAnswers.forEach((queAns, index) => {
-
-      let trueAnswer: string = '';
-      if (queAns.correct1) {
-        trueAnswer = queAns.content1;
-      } else if (queAns.correct2) {
-        trueAnswer = queAns.content2;
-      } else if (queAns.correct3) {
-        trueAnswer = queAns.content3;
-      } else if (queAns.correct4) {
-        trueAnswer = queAns.content4;
-      }
-
-      if (queAns.selectedAnswer == undefined || queAns.selectedAnswer == '') {
-        notAttendedQuestions.push(index + 1);
-      }
-
-      if (queAns.selectedAnswer == trueAnswer) {
-        score = score + (marksPerQuestion);
-      }
-
+      queAns.selectedAnswer = ''
+      this.currentPage = 1;
 
     })
+    console.log(this.questionAnswers);
 
-    if (notAttendedQuestions.length > 0) {
-     // alert("Please answer the questions  " + (notAttendedQuestions))
-      this.dialogboxService.open('Please answer the questions '+(notAttendedQuestions), 'warning');
-      return;
-    }
+  }
 
-    this.quizProgress.studentId = this.studentId;
-    this.quizProgress.quizId = this.selectedQuizId;
-    this.quizProgress.score = score;
-    if (score >= this.quizData.passMark) {
-      this.quizProgress.completed = true;
-    } else {
-      this.quizProgress.completed = false;
-    }
-    this.quizProgress.numberOfAttempts = 1;
-    let addedQuizProgress: QuizProgress;
-    this.quizProgressService.addQuizProgressOfStudent(this.quizProgress).subscribe(
+  // to load student answer for disaplying exisitng answer given by student for quiz
+  async loadStudentAnswers(studentId: number, quizId: number) {
+    this.fetchStudentAnswers = [];
+
+    await this.quizProgressService.getAllStudentAnswersByStduentIdAndQuizId(studentId, quizId).toPromise().then(
       (response) => {
+        console.log(response);
 
-
-        this.addeedQuizProgress = response;
-        this.quizProgressAdded.emit(this.addeedQuizProgress);
-        // alert("Quiz progress saved");
-
-
-        addedQuizProgress = response;
-        console.log("Quiz progress saved");
-        this.onSaveQuizProgress.emit(addedQuizProgress);
-
-      },
-      (error) => {
-        console.log("Failed to save Progress");
+        if (response != undefined) {
+          this.fetchStudentAnswers = response;
+        }
+      }, (error) => {
+        this.fetchStudentAnswers = [];
       }
     );
 
-    if (score >= this.selectedQuiz.passMark) {
-      // show dialog box with green exam pass
-      var grade = '';
-      if (score >= 90) {
-        grade = 'A+';
-      } else if (score >= 80) {
-        grade = 'A';
-      } else if (score >= 75) {
-        grade = 'B+';
-      } else if (score >= 70) {
-        grade = 'B';
-      } else if (score >= 60) {
-        grade = 'C';
-      } else if (score >= 50) {
-        grade = 'D';
-      } else if (score >= 40) {
-        grade = 'E';
-      }
-      this.dialogboxService.open(this.selectedQuiz.successText + '  ' + grade, 'information');
-      //alert("Total score: " + score);
-    } else {
-      // show dialog box with red exam fail
-      this.dialogboxService.open(this.selectedQuiz.failText, 'information');
-    }
   }
-
 }
