@@ -27,8 +27,12 @@ export class StudentQuizComponent implements OnInit {
   // is Retaking Quiz or not
   @Input() isRetakingQuiz: boolean = false;
 
+  @Input() retakingQuiz: any;
+
   @Input() onQuizClick: any;
 
+  @Input() quizPassedProgresses: any[] = [];
+  @Input() quizFailedProgresses: any[] = [];
   //function to pass data when quiz added
   @Output() quizProgressAdded: EventEmitter<any> = new EventEmitter();
   // function to be called in parent component
@@ -80,13 +84,15 @@ export class StudentQuizComponent implements OnInit {
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
 
     // if quizDate value is changed then this condition will be true
-    if (changes['quizData']) {
+    if (changes['quizData'] || changes['onQuizClick']) {
+      console.log("chnages onQuizClick");
 
       await this.loadStudentAnswers(this.studentId, this.quizData.quizId);
       this.loadQuizData();
+
     }
 
-    if (changes['onQuizClick']) {
+    if (changes['retakingQuiz']) {
       console.log("chaged" + this.isRetakingQuiz);
 
       if (this.isRetakingQuiz) {
@@ -255,7 +261,10 @@ export class StudentQuizComponent implements OnInit {
                 });
               });
             // console.log("questionAnswer " + JSON.stringify(this.questionAnswers));
-
+            if (this.isRetakingQuiz) {
+              // this.loadQuizData();
+              this.clearAnswers();
+            }
           }
         );
       },
@@ -450,17 +459,7 @@ export class StudentQuizComponent implements OnInit {
     console.log(this.questionAnswers);
 
     this.questionAnswers.forEach(queAns => {
-      // queAns.content1 = '';
-      // queAns.correct1 = false;
 
-      // queAns.content2 = '';
-      // queAns.correct2 = false;
-
-      // queAns.content3 = '';
-      // queAns.correct3 = false;
-
-      // queAns.content4 = '';
-      // queAns.correct4 = false;
       queAns.selectedAnswer = ''
       this.currentPage = 1;
 

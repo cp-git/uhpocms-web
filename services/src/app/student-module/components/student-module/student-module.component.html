@@ -81,8 +81,9 @@
                             <!-- <div *ngIf="selectedQuiz && selectedQuiz.singleAttempt = true &&  (quizPassedProgresses.includes(quiz.quizId) ||
                             quizFailedProgresses.includes(quiz.quizId))"> -->
                             <app-student-quiz [onQuizClick]="onQuizClick" [isRetakingQuiz]="isRetakingQuiz"
-                                [submitted]="submitted" [quizData]="selectedQuiz"
-                                (quizProgressAdded)="onQuizProgressAdded($event)"
+                                [retakingQuiz]="retakingQuiz" [quizPassedProgresses]="quizPassedProgresses"
+                                [quizFailedProgresses]="quizFailedProgresses" [submitted]="submitted"
+                                [quizData]="selectedQuiz" (quizProgressAdded)="onQuizProgressAdded($event)"
                                 (onSaveQuizProgress)="onSaveQuizProgress($event)"
                                 (onQuizSubmit)="onQuizSubmit($event)"></app-student-quiz>
                             <!-- <app-student-quiz (quizProgressAdded)="onQuizProgressAdded($event)"></app-student-quiz> -->
@@ -100,8 +101,8 @@
             <h5 style="color:blue"> Course Progress : {{courProgPercentage}} % Completed </h5>
             <h5 *ngIf="selectedQuizName" style="color:blue"> {{ selectedQuizName}} : {{ selectedQuizProgress.score }}%
             </h5>
-            <div style="font-size: 20px;" [hidden]="selectedQuizName==''"
-                *ngIf="!selectedQuiz.singleAttempt || quizFailedProgresses.includes(selectedQuiz.quizId)">
+            <div style="font-size: 20px;"
+                [hidden]="selectedQuizName=='' || (!isRetakingQuiz && (quizFailedProgresses.includes(selectedQuiz.quizId) || quizPassedProgresses.includes(selectedQuiz.quizId)))">
                 <label>Quiz Timer : </label>&nbsp;
                 <countdown #cd [config]=" { leftTime: 30 }" (event)="handleEvent($event)">
                 </countdown>

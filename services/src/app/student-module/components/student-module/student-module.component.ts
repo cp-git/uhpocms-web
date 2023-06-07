@@ -658,7 +658,7 @@ export class StudentModuleComponent implements OnInit {
     // console.log(this.selectedCourseId);
     // console.log(this.selectedModule);
 
-    console.log("   this.courProgPercentage  in onCourseSelect"+  this.courProgPercentage  )
+    console.log("   this.courProgPercentage  in onCourseSelect" + this.courProgPercentage)
 
     //names of attributes
     let departmentname: any;
@@ -977,7 +977,7 @@ export class StudentModuleComponent implements OnInit {
 
           addedcourseProgress = response;
           this.courProgPercentage = addedcourseProgress.progress;
-          console.log("   this.courProgPercentage  in add  "+  this.courProgPercentage  )
+          console.log("   this.courProgPercentage  in add  " + this.courProgPercentage)
 
         }
       )
@@ -995,8 +995,8 @@ export class StudentModuleComponent implements OnInit {
           updatedcourseProgress = response;
           this.courProgPercentage = updatedcourseProgress.progress;
 
-     
-          console.log("   this.courProgPercentage  in update "+  this.courProgPercentage  )
+
+          console.log("   this.courProgPercentage  in update " + this.courProgPercentage)
 
         }
       )
@@ -1352,14 +1352,19 @@ export class StudentModuleComponent implements OnInit {
   }
 
   onQuizClicked(quiz: Quiz, retake: boolean = false) {
-
+    this.cd.stop();
     // if clicked on retake quiz option
     if (retake) {
       // alert()
       this.isRetakingQuiz = true;
-      this.onQuizClick++;
+      this.retakingQuiz++;
+      this.cd.restart();
     } else {
+      this.onQuizClick++;
       this.isRetakingQuiz = false;
+      if (!(this.quizFailedProgresses.includes(quiz.quizId) || this.quizPassedProgresses.includes(quiz.quizId))) {
+        this.cd.restart();
+      }
     }
 
     // initialise values to blank
@@ -1385,6 +1390,29 @@ export class StudentModuleComponent implements OnInit {
     this.selectedQuizName = quiz.title;
     console.log(this.quizProgressOfStudent);
 
+    // // Find the corresponding progress in quizProgressOfStudent array
+    // const progress = this.quizProgressOfStudent.find(qp => qp.quizId === quiz.quizId);
+    // if (progress) {
+    //   this.selectedQuizProgress = progress;
+    // } else {
+
+    //   this.selectedQuizProgress = {
+    //     id: 0,
+    //     numberOfAttempts: 0,
+    //     completed: false,
+    //     studentId: this.studentId,
+    //     quizId: quiz.quizId,
+    //     score: 0,
+    //     // Include any other properties from QuizProgress
+    //   };
+    // }
+    this.findProgressOfSelectedQuiz(quiz);
+    this.submitted = false;
+
+  }
+
+
+  findProgressOfSelectedQuiz(quiz: Quiz) {
     // Find the corresponding progress in quizProgressOfStudent array
     const progress = this.quizProgressOfStudent.find(qp => qp.quizId === quiz.quizId);
     if (progress) {
@@ -1401,12 +1429,7 @@ export class StudentModuleComponent implements OnInit {
         // Include any other properties from QuizProgress
       };
     }
-
-    this.cd.restart();
-    this.submitted = false;
-
   }
-
 
 
   getQuizPorgressesByStudentId(studentId: number) {
@@ -1421,10 +1444,6 @@ export class StudentModuleComponent implements OnInit {
           }
 
         })
-        console.log(this.quizPassedProgresses);
-        console.log(this.quizFailedProgresses);
-
-
       },
       (error) => {
         console.log("failed to fetch progress data");
@@ -1434,16 +1453,27 @@ export class StudentModuleComponent implements OnInit {
   }
 
   onSaveQuizProgress(quizProgress: any) {
+    console.log(quizProgress);
+
     this.quizPassedProgresses = this.removeElementFromStringArray(this.quizPassedProgresses, quizProgress.quizId)
     this.quizFailedProgresses = this.removeElementFromStringArray(this.quizFailedProgresses, quizProgress.quizId)
+    console.log(this.quizProgressOfStudent);
+
+    this.quizProgressOfStudent = this.removeElementFromArray(this.quizProgressOfStudent, quizProgress.id);
+    console.log(this.quizProgressOfStudent);
+
     if (quizProgress.completed == true) {
       this.quizPassedProgresses.push(quizProgress.quizId);
     } else {
       this.quizFailedProgresses.push(quizProgress.quizId);
     }
+    this.quizProgressOfStudent.push(quizProgress);
+    console.log(this.quizProgressOfStudent);
+
     console.log(this.quizPassedProgresses);
     console.log(this.quizFailedProgresses);
     this.sortAccessibleModules();
+    this.findProgressOfSelectedQuiz(this.selectedQuiz);
   }
 
   removeElementFromStringArray(array: any[], element: any) {
@@ -1451,6 +1481,16 @@ export class StudentModuleComponent implements OnInit {
       if (value == element) array.splice(index, 1);
     });
     return array;
+  }
+
+  private removeElementFromArray(arrayToFilter: any[], idToRemove: number): QuizProgress[] {
+    const index = arrayToFilter.findIndex(obj => obj.id === idToRemove);
+
+    if (index !== -1) {
+      arrayToFilter.splice(index, 1);
+    }
+
+    return arrayToFilter;
   }
 
   private sortAccessibleModules() {
@@ -1822,6 +1862,7 @@ export class StudentModuleComponent implements OnInit {
         this.onQuizProgressAdded(this.addeedQuizProgress);
         // alert("Quiz progress saved");
         this.onSaveQuizProgress(this.addeedQuizProgress);
+
       },
       (error) => {
         console.log("Failed to save Progress");
@@ -1847,6 +1888,7 @@ export class StudentModuleComponent implements OnInit {
   }
 
   isRetakingQuiz: boolean = false;
+  retakingQuiz: number = 0;
   onQuizClick: number = 0;
   onRetakeQuizClicked(quiz: Quiz) {
 
