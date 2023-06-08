@@ -11,6 +11,6 @@ export class Course {
     courseCreatedDate!: Date;
     courseUpdatedBy!: string;
     courseUpdatedDate!: Date;
-
+    accessModuleInOrder!: boolean;
     departmentId!: any;
 }

@@ -22,7 +22,7 @@
                     <ng-container *ngFor="let module of modules">
 
                         <ul class="modules" *ngIf="selectedCourseId == module.courseId_id"
-                            [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId)}">
+                            [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId) && selectedCourse.accessModuleInOrder}">
                             <span class="fa fa-book"></span>
                             <label for="" class="modulelist">
                                 &nbsp;&nbsp;{{ module.moduleName }}</label>
@@ -40,7 +40,7 @@
                                             </ng-template>
                                             &nbsp;&nbsp;
                                             <a (click)="changeSelectedFileAndModule(file, module)"
-                                                [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId)}"><b>{{
+                                                [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId) && selectedCourse.accessModuleInOrder}"><b>{{
                                                     file.moduleFile|removeExtension }}</b>
                                             </a>
                                         </li>
@@ -64,7 +64,7 @@
                                     </ng-template> &nbsp;&nbsp;
 
                                     <a (click)="onQuizClicked(quiz)"
-                                        [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId)}">{{quiz.title}}</a>
+                                        [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId) && selectedCourse.accessModuleInOrder}">{{quiz.title}}</a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                                     <a class="retakequiz"
