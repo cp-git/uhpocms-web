@@ -27,7 +27,7 @@ export class AddUpdateComponent implements OnInit {
   optionsArray2: any;
   dropdownColumnId2: any;
   dropdownColumnName2: any;
-
+  file!: File;
   constructor(
   ) { }
 
@@ -79,6 +79,15 @@ export class AddUpdateComponent implements OnInit {
       dependentKeys.forEach(key => {
         currentData[key] = undefined;
       });
+    }
+  }
+
+   // function called when user select file
+   onFileSelected(event: any, key: string) {
+    // of event is not undefined
+    if (event.target) {
+      this.file = event.target.files[0];
+      this.currentData[key] = this.file.name;
     }
   }
 
