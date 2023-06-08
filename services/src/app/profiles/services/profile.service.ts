@@ -32,12 +32,12 @@ export class ProfileService {
   }
 
   saveProfileByActiveAuthuser(authUserId: any, formData: FormData): Observable<any> {
-    return this.http.put<any>(`http://localhost:8092/uhpocms/profile/${authUserId}`, formData);
+    return this.http.put<any>(`http://localhost:8090/instituteadmin/uhpocms/profile/${authUserId}`, formData);
   }
 
 
   updateProfileByActiveAuthuser(authUserId: any, profile: Profile): Observable<any> {
-    return this.http.put<any>(`http://localhost:8092/uhpocms/profile/updatedelete/${authUserId}`, profile);
+    return this.http.put<any>(`http://localhost:8090/instituteadmin/uhpocms/profile/updatedelete/${authUserId}`, profile);
   }
 
   getAllDeactivatedProfiles(): Observable<Profile[]> {
