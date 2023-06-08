@@ -17,6 +17,8 @@ export const CourseAllColumn = [
     { key: 'courseType', label: 'Course Type', type: 'input', subtype: 'text' },
     { key: 'passingScore', label: 'Passing Score', type: 'input', subtype: 'number' },
     { key: 'courseIsActive', label: 'Is Active', type: 'checkbox' },
+    { key: 'accessModuleInOrder', label: 'Module order', type: 'checkbox' },
+
 ]
 
 export const CourseUpdateColumn = [
@@ -28,4 +30,6 @@ export const CourseUpdateColumn = [
     { key: 'courseType', label: 'Course Type', type: 'input' },
     { key: 'passingScore', label: 'Passing Score', type: 'email' },
     { key: 'courseIsActive', label: 'Is Active', type: 'checkbox' },
+    { key: 'accessModuleInOrder', label: 'Module order', type: 'checkbox' },
+
 ]
