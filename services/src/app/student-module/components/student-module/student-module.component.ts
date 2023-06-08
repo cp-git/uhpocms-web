@@ -840,6 +840,7 @@ export class StudentModuleComponent implements OnInit {
 
 
   changeSelectedFileAndModule(file: any, module: any) {
+
     // for store progress when user change module file
     if (this.currentTime > 0) {
       this.updateVideoProgress();
@@ -851,7 +852,9 @@ export class StudentModuleComponent implements OnInit {
 
     let modulefileId: any;
 
-
+    this.cd.stop();
+    this.selectedQuizName = ''
+    this.selectedQuiz = {} as Quiz;
     this.selectedFile = [];
     this.selectedFile = file;
     this.selectedModule = module;
