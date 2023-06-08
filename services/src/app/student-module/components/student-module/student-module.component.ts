@@ -72,6 +72,7 @@ export class StudentModuleComponent implements OnInit {
 
   newModuleFileProgressArr: Modulefileprogress[] = [];// Array of Object of ModuleFileProgress
   uniquemofileprogarr: Modulefileprogress[] = [];
+  selectedCourse!: Course;
   selectedCourseId: any; //stores the selected course by the student. 
   selectedCourseName: any; //stores the selected course by the student.
   moduleFileId: number = 0;
@@ -178,6 +179,7 @@ export class StudentModuleComponent implements OnInit {
   ) {
     this.selectedQuizProgress = new QuizProgress();
     this.selectedQuiz = new Quiz();
+    this.selectedCourse = new Course();
   }
 
 
@@ -218,6 +220,7 @@ export class StudentModuleComponent implements OnInit {
       response => {
         this.courses = response;
         this.loadModuleOfCourse(this.courses);
+        this.selectedCourse = this.courses[0];
         this.selectedCourseName = this.courses[0].courseName;
         this.selectedCourseId = this.courses[0].courseId;
 
@@ -631,6 +634,10 @@ export class StudentModuleComponent implements OnInit {
 
   //sets the selected course by the student and resets the selected module
   onCourseSelect(courseId: any) {
+    this.selectedCourse = this.courses.find(course => course.courseId == courseId) ?? {} as Course;
+    console.log(JSON.stringify(this.selectedCourse));
+
+    // this.selectedCourse = this.courses.find(course => course.courseId == courseId);
     // for store progress when user switch course
     if (this.currentTime > 0) {
       this.updateVideoProgress();
@@ -1879,7 +1886,7 @@ export class StudentModuleComponent implements OnInit {
     if (ev.action === 'done') {
       // Save current value
       localStorage.setItem('time', `${ev.left / 1000}`)
-      console.log(this.studentQuizComponent.questionAnswers);
+      // console.log(this.studentQuizComponent.questionAnswers);
 
       this.onQuizSubmit(this.studentQuizComponent.questionAnswers);
 
