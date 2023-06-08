@@ -10,6 +10,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { FormsModule } from '@angular/forms';
 import { DialogModule } from '@angular/cdk/dialog';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
+import { OrderByPipe } from './pipes/orderBy/order-by.pipe';
 
 
 
@@ -19,7 +20,8 @@ import { DialogBoxComponent } from './dialog-box/dialog-box.component';
     AdvFilterPipe,
     RemoveExtensionPipe,
     PdfViewerComponent,
-    DialogBoxComponent],
+    DialogBoxComponent,
+    OrderByPipe],
   imports: [
     CommonModule,
     PdfViewerModule,
@@ -30,7 +32,8 @@ import { DialogBoxComponent } from './dialog-box/dialog-box.component';
     FilterPipe,
     AdvFilterPipe,
     RemoveExtensionPipe,
-    PdfViewerComponent
+    PdfViewerComponent,
+    OrderByPipe
   ]
 })
 export class SharedModule { }
