@@ -18,8 +18,10 @@
     <form #myForm="ngForm">
         <div class="jumbotron">
             <!-- <h4 class="text-center">Question {{ index }}</h4> -->
-            <div *ngIf="question['questionFigure']" class="img">
-                <img src="../../../../assets/img/{{question['questionFigure']}}" style="max-height: 220px">
+            <div *ngIf="question['questionId']" class="img">
+                <img src="http://localhost:8090/question/uhpocms/getFileById/{{question['questionId']}}"
+                    style="max-height: 220px">
+
             </div>
             <div class="container">
                 <div
