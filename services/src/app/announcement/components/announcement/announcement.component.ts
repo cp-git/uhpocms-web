@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Announcement } from 'app/announcement/class/announcement';
 import { AnnouncementService } from 'app/announcement/service/announcement.service';
@@ -6,6 +6,7 @@ import { AnnouncementService } from 'app/announcement/service/announcement.servi
 import { Location } from '@angular/common';
 import { AuthService } from 'app/authlogin/service/auth.service';
 import { Profile } from 'app/profiles/class/profile';
+import { CreateAnnouncementComponent } from '../create-announcement/create-announcement.component';
 // import { AuthService } from 'app/authlogin/service/auth.service';
 
 @Component({
@@ -14,6 +15,9 @@ import { Profile } from 'app/profiles/class/profile';
   styleUrls: ['./announcement.component.css']
 })
 export class AnnouncementComponent implements OnInit {
+
+  // @ViewChild (CreateAnnouncementComponent , {static : false})
+  // createAnnouncementComponent!:CreateAnnouncementComponent;
 
   //variables assignment
   announcements: Announcement[] = [];
@@ -39,6 +43,7 @@ export class AnnouncementComponent implements OnInit {
     this.userRole = sessionStorage.getItem('userRole');
     this.userId = sessionStorage.getItem('userId');
     this.profileId = sessionStorage.getItem('profileId');
+    //  this.createAnnouncementComponent.isCreateScreen ;
   }
 
   //ngoninit
@@ -133,10 +138,20 @@ export class AnnouncementComponent implements OnInit {
   }
 
   //function to view all announcements
-  viewAnnouncement(announement: Announcement) {
-    // this.currentAnnouncement = announement;
+  isViewSent: boolean = false;
+  viewAnnouncement(announement: Announcement, screen: string = '') {
+    this.isViewSent = false;
     this.announcementService.selectedAnnouncement = announement;
-    this.router.navigate([`/announcement/${this.userRole}/view`, announement.id])
+
+    if (screen === 'sent') {
+      this.isViewSent = true;
+    this.router.navigate([`/announcement/${this.userRole}/views`, announement.id])
+
+    }else{
+    this.router.navigate([`/announcement/${this.userRole}/viewr`, announement.id])
+      
+    }
+    // this.currentAnnouncement = announement;
   }
 
   //function to view all announcements

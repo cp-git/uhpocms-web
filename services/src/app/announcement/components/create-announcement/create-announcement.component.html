@@ -25,9 +25,12 @@
                             style="height: 121px" class="form-control" id="announcementMessage"
                             [disabled]="!isCreateScreen" required></textarea>
                     </div>
-                    <div class="mb-3 row" *ngIf="isCreateScreen">
+
+                    <div class="dropdown" [class.open]="isDropdownOpen">
+                    <div class="mb-3 row" *ngIf="isSent">
                         <div class="col-8 col-md-6">
-                            <div class="dropdown mt-2">
+                            
+                            <div class="dropdown mt-2 show">
                                 <button class="btn btn-primary dropdown-toggle" type="button"
                                     data-toggle="dropdown">Select emails
                                     from list
@@ -56,6 +59,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
                 <div class="modal-footer">
                     <button #closeModalBtn type="button" class="btn btn-secondary" data-dismiss="modal"
