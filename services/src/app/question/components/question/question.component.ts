@@ -57,6 +57,8 @@ export class QuestionComponent implements OnInit {
   quizzes: Quiz[] = [];
   catagories: Category[] = [];
 
+  file!: File;
+
   constructor(private service: QuestionService, private location: Location) {
 
     // assigng headers
@@ -96,6 +98,14 @@ export class QuestionComponent implements OnInit {
     } else {
       this.location.back();
     }
+
+  }
+
+
+  onFileSelected(event: any) {
+    this.file = event.target.files[0];
+    this.emptyQuestion.questionFigure = this.file.name;
+    console.log(this.file);
 
   }
 
@@ -180,10 +190,20 @@ export class QuestionComponent implements OnInit {
   // For adding question
   private addQuestion(questionAnswer: QuestionAnswer) {
 
+    const instituteJson = JSON.stringify(questionAnswer);
+
+    const blob = new Blob([instituteJson], {
+      type: 'application/json'
+    })
+
+    let formData = new FormData();
+    formData.append("file", this.file);
+    formData.append("request", new Blob([JSON.stringify(questionAnswer)], { type: 'application/json' }));
+
     questionAnswer.question['questionIsActive'] = true;  // setting active true
 
     // calling service for adding data
-    this.service.addQuestion(questionAnswer).subscribe(
+    this.service.addQuestion(formData).subscribe(
       response => {
         console.log('Question added Successfully');
         // this.emptyQuestion = {} as Question;

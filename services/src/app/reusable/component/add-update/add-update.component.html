@@ -47,8 +47,8 @@
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
                         <input name="{{column.key}}" type="file" [(ngModel)]="currentData[column.key]"
-                            (change)="onFileSelected($event,column.key)" class="form-control"
-                            [disabled]="column.disable">
+                            class="form-control" (change)="onFileSelected($event)" [disabled]="column.disable">
+
                     </ng-container>
                     <ng-container *ngSwitchCase="'dropdown1'">
                         <span class="form-bar"></span>

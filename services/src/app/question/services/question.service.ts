@@ -23,8 +23,8 @@ export class QuestionService {
     return this.http.get<Question[]>(`${this.questionUrl}/question?figure=all`);
   }
 
-  addQuestion(questionAnswer: QuestionAnswer): Observable<number> {
-    return this.http.post<number>(`${this.questionUrl}/question/add`, questionAnswer);
+  addQuestion(formData: FormData): Observable<number> {
+    return this.http.post<number>("http://localhost:8090/question/uhpocms/question/add", formData);
   }
 
 
@@ -65,7 +65,7 @@ export class QuestionService {
   getAllAnswers(): Observable<Answer[]> {
     return this.http.get<Answer[]>(`${this.answerUrl}/answer?id=all`);
   }
-   getShuffledQuestionsByQuizId(quizId: number) {
+  getShuffledQuestionsByQuizId(quizId: number) {
     return this.http.get<Question[]>(`${this.questionUrl}/questions/quizid/${quizId}`);
   }
 }
