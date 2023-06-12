@@ -43,7 +43,7 @@ export class AddUpdateComponent implements OnInit {
     this.initialiseDropdownData();
   }
 
-  file!: File;
+
   onFileSelected(event: any) {
     // console.log(event);
 
@@ -92,13 +92,6 @@ export class AddUpdateComponent implements OnInit {
     }
   }
 
-   // function called when user select file
-   onFileSelected(event: any, key: string) {
-    // of event is not undefined
-    if (event.target) {
-      this.file = event.target.files[0];
-      this.currentData[key] = this.file.name;
-    }
-  }
+  // function called when user select file
 
 }

@@ -49,9 +49,6 @@
                         <input name="{{column.key}}" type="file" [(ngModel)]="currentData[column.key]"
                             class="form-control" (change)="onFileSelected($event)" [disabled]="column.disable">
 
-                        <!-- (change)="onFileSelected($event,column.key)" class="form-control"
-                            [disabled]="column.disable"> -->
-
                     </ng-container>
                     <ng-container *ngSwitchCase="'dropdown1'">
                         <span class="form-bar"></span>
