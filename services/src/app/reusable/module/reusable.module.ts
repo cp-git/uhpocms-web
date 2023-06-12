@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ViewOneComponent } from '../component/view-one/view-one.component';
 import { AddUpdateComponent } from '../component/add-update/add-update.component';
 import { ModuleHeaderComponent } from '../component/module-header/module-header.component';
+import { SharedModule } from 'app/shared/shared.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { ModuleHeaderComponent } from '../component/module-header/module-header.
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   exports: [
     ViewAllComponent,
