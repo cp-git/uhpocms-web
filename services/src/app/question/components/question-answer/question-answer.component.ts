@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Answer } from 'app/question/class/answer';
 import { OneQuestionAnswer } from 'app/question/class/one-question-answer';
 import { QuestionAnswer } from 'app/question/class/question-answer';
+import { environment } from 'environments/environment.development';
 
 @Component({
   selector: 'app-question-answer',
@@ -35,6 +36,12 @@ export class QuestionAnswerComponent implements OnInit {
   // selectedCategory: string;
   isMcqFormVisible: boolean = false;
   isNonMcqFormVisible: boolean = false;
+
+  questionUrl!: string;
+
+  displayUrl!: any
+
+
 
 
 
@@ -73,9 +80,11 @@ export class QuestionAnswerComponent implements OnInit {
   submittedQuestionAnswer!: OneQuestionAnswer;
   isOptionSelected: boolean = false;
   constructor() {
+    this.questionUrl = `${environment.questionUrl}`;
   }
 
   ngOnInit(): void {
+    this.displayUrl = this.questionUrl + '/getFileById';
 
   }
 

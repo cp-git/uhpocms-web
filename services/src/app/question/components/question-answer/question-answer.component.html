@@ -22,8 +22,7 @@
         <div class="jumbotron">
             <h4>Question : {{ index }}</h4>
             <div class="img">
-                <img *ngIf="queAns['questionId'] ;else viewImage"
-                    src="http://localhost:8090/question/uhpocms/getFileById/{{queAns['questionId']}}"
+                <img *ngIf="queAns['questionId'] ;else viewImage" src="{{displayUrl}}/{{queAns['questionId']}}"
                     style="max-width: 350px">
                 <ng-template #viewImage>
                     <img *ngIf="queAns['image']" [src]="image" style="max-width: 350px">

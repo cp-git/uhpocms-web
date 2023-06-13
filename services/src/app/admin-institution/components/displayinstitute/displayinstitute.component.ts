@@ -5,6 +5,7 @@ import { AdmininstitutionService } from '../../service/admininstitution.service'
 import { Location } from '@angular/common';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { DomSanitizer } from '@angular/platform-browser';
+import { environment } from 'environments/environment.development';
 
 @Component({
   selector: 'app-displayinstitute',
@@ -27,10 +28,14 @@ export class DisplayinstituteComponent {
   // for buttons to view
   showAddButton: boolean = true;
   showActivateButton: boolean = true;
+  private readonly institutionUrl!: string;
+
+  displayUrl: any;
 
   //constructor
   constructor(private _institutionService: AdmininstitutionService, private _route: Router, private location: Location, private _activatedRoute: ActivatedRoute, private _sanitizer: DomSanitizer) {
     this.admininstitution = new AdminInstitution();
+    this.institutionUrl = `${environment.adminInstitutionUrl}/institution`;
   }
 
   //ngOnint function
@@ -49,6 +54,7 @@ export class DisplayinstituteComponent {
 
       //onload of page this function should be executed
       this.getAllInstitution();
+      this.displayUrl = this.institutionUrl + '/getFileById'
 
     }
   }

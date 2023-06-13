@@ -11,6 +11,7 @@ import { AdminRoleService } from 'app/admin-role/services/admin-role.service';
 import { AuthUserService } from 'app/auth-user/services/auth-user.service';
 import { Authuser } from 'app/auth-user/class/auth-user';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment.development';
 
 @Component({
   selector: 'app-profile',
@@ -65,6 +66,10 @@ export class ProfileComponent implements OnInit {
 
   instituteId!: number;
 
+  private profileUrl!: string;
+
+  displayUrl!: any;
+
   constructor(
     private location: Location,
     private service: ProfileService,
@@ -83,6 +88,8 @@ export class ProfileComponent implements OnInit {
     this.loadAdminInstitutions();
     this.loadDepartments();
 
+    this.profileUrl = `${environment.instituteAdminUrl}/profile`;
+
 
   }
 
@@ -93,6 +100,8 @@ export class ProfileComponent implements OnInit {
     this.getInActiveProfiles();
     this.loadGenders();
     this.loadAdminRoles();
+
+    this.displayUrl = this.profileUrl + '/getFileById'
 
 
 

@@ -32,10 +32,7 @@ export class AdmininstitutionService {
   // }
 
   addInstitution(formData: FormData): Observable<any> {
-
-
-
-    return this._http.post<any>("http://localhost:8090/admininstitution/uhpocms/institution", formData);
+    return this._http.post<any>(`${this.institutionUrl}`, formData);
   }
 
   //service to delete institution
