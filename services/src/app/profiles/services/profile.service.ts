@@ -3,6 +3,9 @@ import { environment } from 'environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { Profile } from '../class/profile';
+import { DataServiceCache } from 'app/cache/service/data-service.service';
+import { of } from 'rxjs/internal/observable/of';
+import { tap } from 'rxjs/internal/operators/tap';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +14,7 @@ export class ProfileService {
 
   private profileUrl: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private cache: DataServiceCache) {
     this.profileUrl = `${environment.instituteAdminUrl}/profile`;
   }
 
@@ -46,7 +49,23 @@ export class ProfileService {
 
   
   getProfileByRoleAndInstitutionId(userRole: string, instId: number): Observable<any> {
-    return this.http.get<any>(`${this.profileUrl}/${userRole}/${instId}`);
+
+    const cachedData = this.cache.getDataFromCache(`${this.profileUrl}/${userRole}/${instId}`);
+    if (cachedData) {
+      return of(cachedData);
+    }
+
+    return this.http.get<any>(`${this.profileUrl}/${userRole}/${instId}`).pipe(
+    //   tap(data => this.cache.setDataInCache(`${this.courseProgressUrl}/courseprog?id=all`, data))
+    // );
+
+    tap(data => {
+      // Update cache with new data
+      this.cache.removeFromCache(`${this.profileUrl}/${userRole}/${instId}`)
+      this.cache.setDataInCache((`${this.profileUrl}/${userRole}/${instId}`), data);
+    })
+  );
+   
   }
 
 

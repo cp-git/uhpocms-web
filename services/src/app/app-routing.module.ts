@@ -60,6 +60,7 @@ import { AccesscontrolComponent } from './accesscontrol/components/accesscontrol
 
 import { ModuleFileComponent } from './module-file/components/module-file/module-file.component';
 import { AddQuestionAnswerComponent } from './question/components/add-question-answer/add-question-answer.component';
+import { AnalyticsComponent } from './admin-analytics/analytics/analytics.component';
 
 
 const routes: Routes = [
@@ -288,6 +289,8 @@ const routes: Routes = [
 
   { path: 'uploadfile', component: UploadFileComponent },
   { path: 'access', component: AccesscontrolComponent },
+  { path: 'analytics', component: AnalyticsComponent },
+
 
 ];
 

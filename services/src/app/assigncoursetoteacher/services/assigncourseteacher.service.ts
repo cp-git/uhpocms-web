@@ -35,9 +35,14 @@ export class AssigncourseteacherService {
     return this._http.post<any>(this.assignTeacherUrl, assignTeacher);
   }
 
+  getProfileByInstIdCourId(instId:any,courseId:any){
+    return this._http.get<any>(`${this.assignTeacherUrl}/instid_courid/` + instId  +"/"+courseId)
+  }
+
   getTeacherByCourseId(courseId :number){
     return this._http.get<any>(`${this.assignTeacherUrl}/courseid/` + courseId)
   }
+  
   setParams(queryParams: { maxResults: number, offset: number }): void {
     this.queryObj = Object.assign(
       {},

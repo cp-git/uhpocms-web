@@ -85,6 +85,10 @@ import { BarChartComponent } from './charts/components/bar-chart/bar-chart.compo
 
 
 import { MatDialogModule } from '@angular/material/dialog';
+import { AnalyticsComponent } from './admin-analytics/analytics/analytics.component';
+import { PolarChartComponent } from './charts/components/polar-chart/polar-chart.component';
+
+
 
 
 @NgModule({
@@ -123,6 +127,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     ChartdataComponent,
 
     BarChartComponent,
+      AnalyticsComponent,
+      PolarChartComponent,
 
 
 

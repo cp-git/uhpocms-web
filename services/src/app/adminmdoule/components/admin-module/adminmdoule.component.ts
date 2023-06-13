@@ -78,7 +78,10 @@ export class AdminmdouleComponent {
   }
 
 
-
+  AdminAnalytics()
+  {
+    this._route.navigate(['analytics']);
+  }
 
 
 

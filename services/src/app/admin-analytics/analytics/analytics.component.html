@@ -1,0 +1,272 @@
+<html>
+<h1>ADMIN ANALYTICS PANEL</h1>
+<div class="instHeading">
+<h2>INSTITUTIONS</h2>
+</div>
+<div class="button-container instHeading">
+<div *ngFor="let inst of institutions">
+<button class="btn btn-primary" (click)="getAllDeptDetails(inst.adminInstitutionId);getCourseByNameandINstId('',inst.adminInstitutionId);getProfilesCntByRoleAndInstId('teacher',inst.adminInstitutionId);getProfilesCntByRoleAndInstId('student',inst.adminInstitutionId)">{{inst.adminInstitutionName}}</button>
+</div>
+</div>
+
+<!-- <h1>Departments</h1>
+<div *ngIf="departments != []" >
+<div *ngFor="let dept of departments">
+    <p><a (click)="getCoursesByDeptId(dept.id); getProfileByInstitutionId(dept.institutionId,dept.name)">{{dept.name}}</a></p>
+    
+    </div>
+</div>
+<h1>People in {{deptName}}</h1>
+        <div *ngIf="profileForDept  != []" >
+        <div *ngFor="let prof of profileForDept">
+            <p><a>{{prof.firstName}} {{prof.lastName}}</a></p>
+            </div>
+</div>
+
+
+<h1>Courses</h1>
+<div *ngIf="courses != []" >
+<div *ngFor="let course of courses">
+    <p><a  (click)="getProfilesInCourse(course.courseId)">{{course.courseName}}</a></p>
+    </div>
+</div>
+
+<h1>Profiles</h1>
+<div *ngIf="profiles != []" >
+<div *ngFor="let profile of profiles">
+    <p><a >{{profile.firstName}} {{profile.lastName}}</a></p>
+    </div>
+</div> -->
+<div *ngIf="instChartStat == true"  class="app-chartdata-ui ">
+    <div id="chart-head">
+        
+        <div class="chart" >
+            <h5>
+                <b> <p class="category" style="text-transform: uppercase;">tOTAL DEPARTMENTS IN {{instName}} - {{departments.length}}</p></b>
+             </h5>
+             <h5>
+                <b> <p class="category" style="text-transform: uppercase;">TOTAL COURSES COUNT IN {{instName}} - {{coursesInInst.length}}</p></b>
+             </h5>
+             <h5>
+                <b> <p class="category" style="text-transform: uppercase;">TOTAL TEACHERS COUNT IN {{instName}} - {{teachersInINst.length}}</p></b>
+             </h5>
+             <h5>
+                <b> <p class="category" style="text-transform: uppercase;">TOTAL STUDENTS COUNT IN {{instName}} - {{studentsInINst.length}}</p></b>
+             </h5>
+           
+           
+           
+            
+            <!-- <app-polar-chart [jsonArray]="dChart" [chartLabels]="deptNameArray" (clickData)="getClickedData($event,instId)"></app-polar-chart> -->
+        </div>
+        </div>
+    </div>
+    
+
+<div *ngIf="instChartStat == true"  class="app-chartdata-ui ">
+    <div id="chart-head">
+        
+        <div class="chart" >
+         
+            <h4>
+                <b> <p class="category" style="text-transform: uppercase;">COURSE COUNT FOR DEPARTMENTS IN {{instName}}</p></b>
+             </h4>
+            <div *ngFor="let dArray of deptNameCouCnt">
+       
+                <h5>
+                    <b> <a class="category" style="text-transform: uppercase; color:#4f67f1;" (click)="getClickedDataForDept(dArray,instId)" >COURSE COUNT FOR DEPARTMENT {{dArray}}</a></b>
+                 </h5>
+           
+           
+            
+            <!-- <app-polar-chart [jsonArray]="dChart" [chartLabels]="deptNameArray" (clickData)="getClickedData($event,instId)"></app-polar-chart> -->
+        </div>
+        </div>
+    </div>
+    </div>
+
+<!-- <div *ngIf="instChartStat == true"  class="app-chartdata-ui ">
+<div id="chart-head">
+    <div class="chart"  *ngFor="let dChart of deptArray">
+ 
+       
+        <h4>
+           <b> <p class="category" style="text-transform: uppercase;">COURSE COUNT FOR DEPARTMENTS IN {{instName}}</p></b>
+        </h4>
+      
+        <app-polar-chart [jsonArray]="dChart" [chartLabels]="deptNameArray" (clickData)="getClickedData($event,instId)"></app-polar-chart>
+        
+    </div>
+</div>
+</div> -->
+
+<div *ngIf="(courChartStat == true) && (profilesLenghtArray.length != 0)"  class="app-chartdata-ui " style="margin-top: 2%;margin-bottom: 2%;">
+<div id="chart-head">
+    <div class="chart"  *ngFor="let cChart of profilesLenghtArray ">
+       
+        <h4>
+            <b> <p class="category" style="text-transform: uppercase;">PEOPLE COUNT FOR COURSES IN DEPARTMENT {{deptClicked}} </p></b>
+         </h4>
+        <!-- <app-polar-chart [jsonArray]="cChart" [chartLabels]="courseNameArr" (clickData)="getClickedCourseData($event,instId);getAllCourseProgress(teacIdsArr[0])"></app-polar-chart> -->
+        <app-polar-chart [jsonArray]="cChart" [chartLabels]="courseNameArr" (clickData)="getClickedCourseData($event,instId)"></app-polar-chart>
+
+    </div>
+   
+</div>
+</div>
+<div *ngIf = "profilesLenghtArray.length == 0">
+
+</div>
+<div *ngIf="(profChartStat == true) && (barCharts.length != 0)"  class="app-chartdata-ui">
+   
+
+    <!-- <div id="prevButton">
+        <button *ngIf="currentIndex >= 3" (click)="barPrevious()" class='fas fa-angle-left' style='font-size:48px;color:black;background: transparent;
+    border: none;'></button>
+    </div> -->
+
+    <div id="chart-head">
+    
+        <!-- <div  *ngFor="let id of teacIdsArr ">
+            <button class="btn btn-primary" (click)="getAllCourseProgress(id)" >{{id}}</button>
+        </div> -->
+        <!-- <div class="chart"  *ngFor="let pChart of profCategoryArr ">
+            <h4>
+                <b> <p class="category" style="text-transform: uppercase;">PEOPLE COUNT BASED ON ROLES IN {{clickedCourse[0].courseName}}</p></b>
+             </h4>
+            <app-polar-chart [jsonArray]="pChart" [chartLabels]="profCategoryNames" ></app-polar-chart>
+    
+        </div> -->
+
+        <!-- <div id="chart-head"> -->
+
+
+            <!-- <p class="agg-count" style="text-transform: uppercase"><b>STUDENTS COUNT BASED ON ROLES IN {{clickedCourse[0].courseName}}</b></p> -->
+            <!-- <div class="vertical"></div>  -->
+            
+            <div class="chart" *ngFor="let bChart of barCharts; let i = index"
+                [ngClass]="{'hidden': i < currentIndex || i >= currentIndex + 3}">
+
+                <h4>
+                    <b> <p style="text-transform: uppercase;">COUNT ANALYSIS BASED ON ROLES FOR COURSE {{clickedCourse[0].courseName}}</p></b>
+                 </h4>
+                <h5>
+                    <b> <p class="category" style="text-transform: uppercase; color:#4f67f1;">ENROLLED TEACHERS COUNT - {{teaCntInCour}}</p></b>
+                 </h5>
+                 <h5>
+                    <b> <p class="category" style="text-transform: uppercase; color:#4f67f1;">ENROLLED STUDENTS COUNT- {{studCntInCour}}</p></b>
+                 </h5>
+                <h5>
+                    <b> <p class="category" style="text-transform: uppercase; ">STUDENTS PROGRESS ANALYSIS FOR {{clickedCourse[0].courseName}}</p></b>
+                 </h5>
+                <!-- <h1>
+                   <b> <p class="category" style="font-size: 1.5rem;">{{ bChart[4] }}</p></b>
+                </h1> -->
+                <app-bar-chart [jsonArray]="[bChart[0], bChart[1],bChart[2],bChart[3]]"  (clickData)="handleRightClickDataForBar($event,bChart[5])"
+                
+                    ></app-bar-chart>
+
+            </div>
+            <!-- <div id="nextButton">
+                <button *ngIf="currentIndex < barCharts.length - 3" (click)="barNext()" class='fas fa-angle-right' style='font-size:48px;color:black;background: transparent;
+          border: none;'></button>
+            </div> -->
+
+            <div *ngIf="barCharts.length == 0" >
+
+                <!-- <div id="nocourmsg">
+                    No Courses Assigned
+                </div> -->
+        
+            </div>
+            <!-- <div class="horizontal"></div>
+            <p class="course-progress"><b>Course Progress(%)</b></p> -->
+        </div>
+
+
+
+
+    </div>
+ <!-- </div> -->
+
+
+
+ 
+    <!-- -------------------------------------Individual Student progress Chart code start--------------------------------------------- -->
+   <!-- <div *ngIf="clickedCourseOnBar.courseName != '' ">
+      <h3> Progress Panel - {{clickedCourseOnBar.courseName}} </h3>  
+      </div>  -->
+      <!-- <div *ngIf = "(barClicked ) && (!closeButtonStatus)"> -->
+         
+          <div *ngIf="studProgDetailArr.length != 0" class="app-chartdata-ui-stud ">
+              <!-- <div id="container"> -->
+                  <!-- <div class="crossButton">
+                    <span class="fa-sharp fa-solid fa-square-xmark fa-xl" (click)="closeButton()"></span>
+                  </div> -->
+              
+                
+              <div id="prevButton">
+                 
+                  
+                  <button *ngIf="dchartcurrentIndex >= 3" (click)="doughnutPrevious()" class='fas fa-angle-left' style='font-size:48px;color:black;background: transparent;
+      border: none;'></button>
+           
+          </div>
+              <div id="chart-head">
+                
+                     <!-- <div class="chart" *ngFor="let dChart of studProgDetailArr; let i = index"
+                      [ngClass]="{'hidden': i < dchartcurrentIndex || i >= dchartcurrentIndex + 3}">
+                      <h4>
+                         <b> <p class="category">{{ dChart[2] }} {{dChart[0]}} {{dChart[1]}}</p></b>
+                      </h4>
+                      <app-chartdata [jsonArray]="[dChart[0], dChart[1]]"></app-chartdata>
+      
+                  </div> -->
+
+
+                  <div class="chart" *ngFor="let dChart of studProgDetailArr.slice(dchartcurrentIndex, dchartcurrentIndex + 3); let i = index">
+                    <h4>
+                      <b><p class="category">{{ dChart[2] }}</p></b>
+                    </h4>
+                    <app-chartdata [jsonArray]="[dChart[0], dChart[1]]"></app-chartdata>
+                  </div>
+              </div>
+             
+          
+           
+           
+
+              <div id="nextButton">
+               
+                  <div class="nextButtonchild">
+                  <button *ngIf="dchartcurrentIndex < studProgDetailArr.length - 3" (click)="doughnutNext()" class='fas fa-angle-right' style='font-size:48px;color:black;background: transparent;
+      border: none;'></button>
+      
+              </div>
+          </div>
+      <!-- </div>  -->
+         
+      
+          <!-- Code for display message when courses  are not assigned -->
+         <!-- <div *ngIf="studProgDetailArr.length == 0 " class="app-chartdata-ui">
+      
+              <div id="nocourmsg">
+                  No Courses Assigned
+              </div>
+      
+          </div> 
+       -->
+      
+      
+          
+      </div>
+      <div *ngIf="studProgDetailArr.length == 0">
+
+      </div>
+      <!-- </div> -->
+      
+          <!-- -------------------------------------Individual Student progress Chart code end--------------------------------------------- -->
+      
+
+
+</html>
