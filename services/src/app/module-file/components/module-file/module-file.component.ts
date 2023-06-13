@@ -74,7 +74,7 @@ export class ModuleFileComponent {
     private moduleFileService: ModuleFileService,
     private service: TeacherCourseService,
     private uploadfileService: UploadFileService,
-    private dialogBoxServices :DialogBoxService
+    private dialogBoxServices: DialogBoxService
   ) {
     this.userRole = sessionStorage.getItem('userRole');
     this.columnNames = ModuleFileColumn;
@@ -300,7 +300,7 @@ export class ModuleFileComponent {
 
   // Add module file
   addModuleFile(objectReceived: ModuleFile) {
-   // objectReceived.moduleFileIsActive = true;
+    // objectReceived.moduleFileIsActive = true;
     console.log("view " + JSON.stringify(this.files));
 
 
@@ -328,7 +328,7 @@ export class ModuleFileComponent {
       },
 
       (error) => {
-        this.dialogBoxServices.open("File is Already Present pls Select Another file.." , 'information');
+        this.dialogBoxServices.open("File is Already Present pls Select Another file..", 'information');
         console.log('failed to upload ')
       }
 

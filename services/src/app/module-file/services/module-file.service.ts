@@ -23,7 +23,7 @@ export class ModuleFileService {
 
   // for add module File 
   addModuleFile(formData: FormData): Observable<any> {
-    return this._http.post<any>("http://localhost:8090/modulefile/uhpocms/modulefile", formData);
+    return this._http.post<any>(`${this.moduleFileUrl}/modulefile`, formData);
   }
 
   // get all module file
@@ -81,7 +81,7 @@ export class ModuleFileService {
   }
 
   getFile(fileId: string): Observable<ArrayBuffer> {
-    return this._http.get(`http://localhost:8090/modulefile/uhpocms/files/${fileId}`, {
+    return this._http.get(`${this.moduleFileUrl}/files/${fileId}`, {
       responseType: 'arraybuffer'
     });
   }

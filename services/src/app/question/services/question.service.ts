@@ -24,7 +24,7 @@ export class QuestionService {
   }
 
   addQuestion(formData: FormData): Observable<number> {
-    return this.http.post<number>("http://localhost:8090/question/uhpocms/question/add", formData);
+    return this.http.post<number>(`${this.questionUrl}/question/add`, formData);
   }
 
 

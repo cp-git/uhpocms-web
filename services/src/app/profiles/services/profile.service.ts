@@ -20,11 +20,11 @@ export class ProfileService {
   }
 
   addProfile(formData: FormData): Observable<Profile> {
-    return this.http.post<Profile>("http://localhost:8090/instituteadmin/uhpocms/profile", formData);
+    return this.http.post<Profile>(`${this.profileUrl}`, formData);
   }
 
   deleteProfile(firstName: string): Observable<any> {
-    return this.http.delete<any>(`http://localhost:8090/instituteadmin/uhpocms/profile/${firstName}`);
+    return this.http.delete<any>(`${this.profileUrl}}/profile/${firstName}`);
   }
 
   updateProfile(roleName: string, admin: Profile): Observable<Profile> {
@@ -32,12 +32,12 @@ export class ProfileService {
   }
 
   saveProfileByActiveAuthuser(authUserId: any, formData: FormData): Observable<any> {
-    return this.http.put<any>(`http://localhost:8090/instituteadmin/uhpocms/profile/${authUserId}`, formData);
+    return this.http.put<any>(`${this.profileUrl}/${authUserId}`, formData);
   }
 
 
   updateProfileByActiveAuthuser(authUserId: any, profile: Profile): Observable<any> {
-    return this.http.put<any>(`http://localhost:8090/instituteadmin/uhpocms/profile/updatedelete/${authUserId}`, profile);
+    return this.http.put<any>(`${this.profileUrl}/updatedelete/${authUserId}`, profile);
   }
 
   getAllDeactivatedProfiles(): Observable<Profile[]> {
