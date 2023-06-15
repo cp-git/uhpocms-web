@@ -37,19 +37,13 @@
 
 
   }    
-  .button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 2%;
-    padding-bottom:2%
-  }
+ 
 
   .instHeading{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #c3baba;
+    /* background-color: #c3baba; */
   }
   .center-container {
     display: flex;
@@ -63,7 +57,10 @@
   
         font: normal 12px sans-serif;
         max-width: 73%;
-        background-color: #f1eff5;
+        /* background-color: #f1eff5; */
+        /* background-color: #9ca5e2; */
+        
+        background-color:#bfc8ff;
         margin: 0 auto; /* Center horizontally using auto margins */
         padding: 1rem 0;
         border-radius: 6px;
@@ -74,6 +71,7 @@
         border: 5px solid #566787;
         flex-wrap: nowrap;
         margin-bottom: 2%; 
+        margin-top:2%;
   }
 
 
@@ -238,18 +236,244 @@
 
   font: normal 15px sans-serif;
   max-width: 73%;
-  background-color:  #f1eff5;
+  /* background-color:  #f1eff5; */
+  /* background-color: #9ca5e2; */
+  background-color:#bfc8ff;
   margin: 0 auto;
-  padding: 1rem 0;
+  /* padding: 1rem 0; */
   border-radius: 6px;
-  height: 36rem;
-  display: flex;
+  /* height: 36rem; */
+  /* display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: center; */
   border: 5px solid #566787;
   border-radius: 10px;
   --chart-width: 300px; /* Set the default width for the horizontal line */
 
   
+}
+
+.doughnutcharts{
+  display: flex;
+   padding: 1rem 0;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  --chart-width: 300px; /* Set the default width for the horizontal line */
+
+}
+.app-chartdata-ui-stud h5 {
+  margin-top: 0; /* Remove top margin to align the text to the top */
+}
+
+
+
+
+.chart-container {
+  position: relative;
+}
+
+/* .lines-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none; 
+}
+
+.horizontal-line,
+.vertical-line {
+  position: absolute;
+  background-color: #000;
+   pointer-events: none; 
+}
+
+.horizontal-line {
+  width: 100%;
+  height: 1px;
+  bottom: 0;
+}
+
+.horizontal-line::before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #000;
+  bottom: -5px;
+  right: -5px;
+}
+
+.vertical-line {
+  width: 1px;
+  height: 100%;
+  top: 0;
+}
+
+.vertical-line::before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #000;
+  top: -5px;
+  left: -5px;
+}
+
+.label {
+  position: absolute;
+  top: -20px;
+  left: -50%;
+  font-size: 12px;
+  transform: translateX(-50%);
+}
+
+.arrow {
+  position: absolute;
+  top: -10px;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-top: 10px solid #000;
+  border-right: 10px solid transparent;
+}
+
+.arrow-horizontal {
+  position: absolute;
+  bottom: -5px;
+  right: -5px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid #000;
+  border-top: 10px solid transparent;
+} */
+.chart-container {
+  position: relative;
+}
+
+.lines-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none; 
+}
+
+.horizontal-line,
+.vertical-line {
+  position: absolute;
+  background-color: #000;
+  pointer-events: none; 
+}
+
+.horizontal-line {
+  width: 100%;
+  height: 1px;
+  bottom: 0;
+}
+
+/* .horizontal-line::before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #000;
+  bottom: -5px;
+  right: -5px;
+} */
+
+.vertical-line {
+  width: 1px;
+  height: 100%;
+  top: 0;
+}
+
+.label1 {
+  position: absolute;
+  top: 0;
+  right: 100%;
+  transform: translateY(300%);
+}
+
+/* .vertical-line::before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #000;
+  top: 50%;
+  right: -5px;
+  transform: translateY(-50%);
+} */
+
+
+.label {
+  position: absolute;
+  font-size: 12px;
+  color: black;
+}
+
+.horizontal-label {
+  top: 100%;
+  left: auto;
+  transform: translateX(-50%);
+}
+
+
+
+.horizontal-line::before,
+.vertical-line::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px;
+  border-color: transparent;
+}
+
+.horizontal-line::before {
+  top: 50%;
+  right: 0;
+  border-left-color: #000;
+  transform: translateX(100%) translateY(-50%);
+}
+
+.vertical-line::before {
+
+    top: 0;
+    right: -400%;
+    border-bottom-color: #000;
+    transform: translateX(50%);
+    transform: translateY(-50%);
+}
+.selected-image {
+  border: 5px solid #185bd9;
+  padding: 10px;
+}
+th{
+  padding:4rem;
+  text-align:center;
+}
+
+th h5{
+  font-size: 14px;
+  padding-bottom: 1.5rem;
+}
+td h5{
+  font-size:25px;
+}
+.backbtn{
+  border-radius: 15px;
+ 
+  margin-left: 45%;
+  height: 3.5rem;
+  margin-top: 2rem;
+}
+
+.fa-2xl {
+  font-size: 3em;
 }

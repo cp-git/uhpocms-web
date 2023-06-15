@@ -22,8 +22,8 @@
         <div class="jumbotron">
             <h4>Question : {{ index }}</h4>
             <div class="img">
-                <img *ngIf="queAns['questionFigure'] ;else viewImage"
-                    src="../../../../assets/img/{{queAns['questionFigure']}}" style="max-width: 350px">
+                <img *ngIf="queAns['questionId'] ;else viewImage" src="{{displayUrl}}/{{queAns['questionId']}}"
+                    style="max-width: 350px">
                 <ng-template #viewImage>
                     <img *ngIf="queAns['image']" [src]="image" style="max-width: 350px">
                 </ng-template>
@@ -93,7 +93,8 @@
             </div>
             <ng-template #otherCategory>
                 <textarea name="ansContent1{{index}}" [(ngModel)]="queAns['content1']" class="form-control" required=""
-                    [disabled]="disable" (ngModelChange)="onFormDirty(queAns)" (ngModelChange)="onAnswerEntered(queAns)"></textarea>
+                    [disabled]="disable" (ngModelChange)="onFormDirty(queAns)"
+                    (ngModelChange)="onAnswerEntered(queAns)"></textarea>
             </ng-template>
             <!-- <label class="float-label"> Correct</label>
                         <input name="ansCorrect" type="checkbox" [(ngModel)]="answer.correct"

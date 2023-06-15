@@ -38,6 +38,14 @@ ngAfterViewInit() {
     cvs = this.pChart.nativeElement;
     console.log("json array")
      console.log(this.jsonArray)
+    //  const combinedData = this.chartLabels.map((label: string, index: number) => {
+    //   return {
+    //     label: label,
+    //     value: this.jsonArray[index]
+    //   };
+
+    // });
+
 
      this.backgroundColors = this.generateRandomColors(this.jsonArray.length);
     this.chart = new Chart(cvs, {
@@ -49,6 +57,7 @@ ngAfterViewInit() {
           {
 
             data: this.jsonArray,
+          
             backgroundColor: this.backgroundColors,
             
             borderWidth: 0,
@@ -79,15 +88,18 @@ ngAfterViewInit() {
             //     return Math.round(value) + '%';
             //   }
             // },
+            formatter: (value, ctx:any) => {
+              const label = ctx.chart.data.labels[ctx.dataIndex];
+              return `${label}: ${value}`;},
           
             color: 'white',
             font: {
-              size: 18,
+              size:11,
               weight: 'bold',
             },
           },
           legend: {
-            display: true,
+            display: false,
             labels: {
               font: {
                 size: 12,
@@ -95,16 +107,64 @@ ngAfterViewInit() {
               }
             }
           }
-
+}
      
         }
-      }
     });
-    
-    
   
+    // this.chart.data.datasets[0].data = this.chartLabels.map((label: string, index: number) => {
+    //   const chartLabel = label;
+    //   const jsonValue = this.jsonArray[index];
+    //   return { chartLabel, jsonValue };
+    // }).map((data: any) => data.chartLabel + ': ' + data.jsonValue);
+    
 
 }
+// ngAfterViewInit() {
+//   let cvs: any;
+//   cvs = this.pChart.nativeElement;
+//   console.log("json array");
+//   console.log(this.jsonArray);
+
+//   const combinedData = this.chartLabels.map((label: string, index: number) => {
+//     return {
+//       label: label,
+//       value: this.jsonArray[index]
+//     };
+//   });
+
+//   this.backgroundColors = this.generateRandomColors(this.jsonArray.length);
+
+//   this.chart = new Chart(cvs, {
+//     type: 'doughnut',
+//     data: {
+//       labels: this.chartLabels,
+//       datasets: [
+//         {
+//           data: this.jsonArray,
+//           backgroundColor: this.backgroundColors,
+//           borderWidth: 0,
+//         },
+//       ],
+//     },
+//     plugins: [ChartDataLabels],
+//     options: {
+//       onClick: (event, elements) => {
+//         // ...
+//       },
+//       plugins: {
+//         // ...
+//       },
+//     },
+//   });
+
+//   this.chart.data.datasets[0].data = combinedData.map((data:any) => (data.label + ': ' + data.value));
+//   this.chart.data.labels = combinedData.map((data: { label: any; }) => data.label);
+
+//   this.chart.update();
+// }
+
+
 
   generateRandomColors(count: number): string[] {
     const colors: string[] = [];

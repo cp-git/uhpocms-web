@@ -19,7 +19,12 @@ export class CreateAnnouncementComponent {
   @ViewChild('modal', { static: true })
   modal!: ElementRef<any>;
 
+  isDropdownOpen = false;
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
 
+  
   private announcementId: number;     // announcement id to add in to_list table
   private instituteAdmins: Profile[] = [];     // data of institute admin profile for dropdown
   private sessionData: any;   // for session data
@@ -39,11 +44,14 @@ export class CreateAnnouncementComponent {
   public users = new Map();
   userId: any;
   profileId: any;
-  loginId :any;
+  loginId: any;
   userRole: any;
   public currentAnnouncementProfileIds: AnnouncementTo[] = [];
 
   public isCreateScreen: boolean = true;
+
+  isReceived: boolean = false;
+  isSent: Boolean = false;
   constructor(private location: Location, private announcementService: AnnouncementService, private router: Router, private activatedRoute: ActivatedRoute) {
     this.announcement = new Announcement();
     this.announcementId = 0;
@@ -53,6 +61,17 @@ export class CreateAnnouncementComponent {
     this.profileId = sessionStorage.getItem('profileId');
     this.loginId = sessionStorage.getItem('profileId');
     this.userRole = sessionStorage.getItem('userRole');
+
+    const currentUrl = this.router.url;
+    this.isReceived = false;
+    this.isSent = false;
+    if (currentUrl.includes('/viewr')) {
+      this.isReceived = true;
+
+    } else {
+      this.isSent = true;
+
+    }
   }
 
   ngOnInit(): void {
@@ -241,7 +260,7 @@ export class CreateAnnouncementComponent {
     this.filterRoles = this.instituteAdmins;
     this.admins = [];
     this.coadmins = [];
-    this.students = []; 
+    this.students = [];
     this.teachers = [];
     this.otherRoles = [];
     this.instituteAdmins.forEach(profile => {
@@ -308,17 +327,17 @@ export class CreateAnnouncementComponent {
         this.profileIDs = this.profileIDs.filter(item => item !== profile.adminId);
       });
     }
-  
+
     // Remove profileId from profileIDs array
     const index = this.profileIDs.indexOf(parseInt(this.profileId));
     if (index !== -1) {
       this.profileIDs.splice(index, 1);
     }
   }
-  
+
   isFormComplete(): boolean {
     // Check if all required fields are filled in
-    if (this.announcement.announcementTitle && this.announcement.announcementMessage && this.profileIDs.length>0) {
+    if (this.announcement.announcementTitle && this.announcement.announcementMessage && this.profileIDs.length > 0) {
       return true;
     }
     return false;

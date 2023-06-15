@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdmininstitutionService } from '../../service/admininstitution.service';
 
 import { Location } from '@angular/common';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { DomSanitizer } from '@angular/platform-browser';
+import { environment } from 'environments/environment.development';
 
 @Component({
   selector: 'app-displayinstitute',
@@ -13,8 +14,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class DisplayinstituteComponent {
   moduleName = 'Institute Administration';
+  @Input() admininstitutions: AdminInstitution[] = [];
   // Institution array
-  admininstitutions: AdminInstitution[] = [];
+  // admininstitutions: AdminInstitution[] = [];
   backupInst: AdminInstitution[] = [];
 
   // for extra row when there is no data
@@ -27,10 +29,14 @@ export class DisplayinstituteComponent {
   // for buttons to view
   showAddButton: boolean = true;
   showActivateButton: boolean = true;
+  private readonly institutionUrl!: string;
+
+  displayUrl: any;
 
   //constructor
   constructor(private _institutionService: AdmininstitutionService, private _route: Router, private location: Location, private _activatedRoute: ActivatedRoute, private _sanitizer: DomSanitizer) {
     this.admininstitution = new AdminInstitution();
+    this.institutionUrl = `${environment.adminInstitutionUrl}/institution`;
   }
 
   //ngOnint function
@@ -49,6 +55,7 @@ export class DisplayinstituteComponent {
 
       //onload of page this function should be executed
       this.getAllInstitution();
+      this.displayUrl = this.institutionUrl + '/getFileById'
 
     }
   }
@@ -71,13 +78,14 @@ export class DisplayinstituteComponent {
   }
 
   //function to get all institutions
-  private getAllInstitution() {
+  public getAllInstitution() {
     // fetching all institution
     this._institutionService.fetchAdminInstitutionList().subscribe(
       (response) => {
         // assigning received data to institution
         this.admininstitutions = response;
 
+       
         for (let i = 0; i < this.admininstitutions.length; i++) {
           console.log(this.admininstitutions[i].adminInstitutionPicture);
         }

@@ -94,7 +94,8 @@
 <ng-template #viewadd>
     <app-add-update [data]="{currentData:emptyQuestion , columnNames:columnNames}" [dropdown1]="{optionsArray1:this.quizzes ,dropdownColumnId1:dropdownColumnId1 ,
         dropdownColumnName1:dropdownColumnName1}" [dropdown2]="{optionsArray2:this.catagories ,dropdownColumnId2:dropdownColumnId2 ,
-        dropdownColumnName2:dropdownColumnName2}" (submitClicked)="onAddQuestionSubmit($event)"></app-add-update>
+        dropdownColumnName2:dropdownColumnName2}" (submitClicked)="onAddQuestionSubmit($event)"
+        (change)="onFileSelected($event)"></app-add-update>
 </ng-template>
 
 <ng-template #viewone>

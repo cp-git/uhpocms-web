@@ -164,7 +164,7 @@
             <app-question-answer [generatedQuestionAnswerId]="generatedQuestionAnswerId"
                 [questionAnswers]="questionAnswers" [pagination]="true" [selectedQuizId]="selectedQuizId"
                 [selectedCategoryId]="selectedCategoryId" [selectedCategoryName]="selectedCategoryName"
-                [submitOption]="true" (submitClicked)="onFormSubmit($event)">
+                [submitOption]="true" (submitClicked)="onFormSubmit($event)" (change)="onFileSelected($event)">
             </app-question-answer>
         </ng-container>
     </div>

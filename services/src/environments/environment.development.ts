@@ -40,6 +40,6 @@ export const environment = {
   moduleFileProgressUrl: `http://localhost:8090/modulefileprogress/uhpocms`,
   moduleProgressUrl: `http://localhost:8090/moduleprogress/uhpocms`,
   courseProgressUrl: `http://localhost:8090/courseprogress/uhpocms`,
-  quizProgressUrl: 'http://localhost:8090/quizprogress/uhpocms'
-
+  quizProgressUrl: 'http://localhost:8090/quizprogress/uhpocms',
+  studentAnswerUrl: 'http://localhost:8090/studentquizresult/uhpocms/quizresult',
 };

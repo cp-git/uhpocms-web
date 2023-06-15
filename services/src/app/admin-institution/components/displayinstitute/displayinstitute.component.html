@@ -20,8 +20,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-3 text-center" *ngFor="let institution of admininstitutions">
-                    <div><img
-                            [src]="'http://localhost:8090/admininstitution/uhpocms/institution/getFileById/'+institution.adminInstitutionId "
+
+              
+                    <div><img src="{{displayUrl}}/{{institution.adminInstitutionId}} "
+
                             (click)="display(institution.adminInstitutionId)" />
                     </div>
 

@@ -10,6 +10,8 @@ import { AdminRole } from 'app/admin-role/class/admin-role';
 import { AdminRoleService } from 'app/admin-role/services/admin-role.service';
 import { AuthUserService } from 'app/auth-user/services/auth-user.service';
 import { Authuser } from 'app/auth-user/class/auth-user';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment.development';
 
 @Component({
   selector: 'app-profile',
@@ -27,6 +29,10 @@ export class ProfileComponent implements OnInit {
   viewAll: boolean = true;
   viewOne: boolean = false;
   viewActivate: boolean = false;
+
+  file!: File;
+
+  imageUrl!: any;
 
   // for buttons to view
   showAddButton: boolean = true;
@@ -58,12 +64,19 @@ export class ProfileComponent implements OnInit {
 
   foundMatch: boolean = false;
 
+  instituteId!: number;
+
+  private profileUrl!: string;
+
+  displayUrl!: any;
+
   constructor(
     private location: Location,
     private service: ProfileService,
     private departmentService: DepartmentService,
     private adminRoleService: AdminRoleService,
-    private authUserService: AuthUserService
+    private authUserService: AuthUserService,
+    private http: HttpClient
   ) {
     // assigng Columns
     this.columnNames = ProfileColumn;
@@ -75,6 +88,8 @@ export class ProfileComponent implements OnInit {
     this.loadAdminInstitutions();
     this.loadDepartments();
 
+    this.profileUrl = `${environment.instituteAdminUrl}/profile`;
+
 
   }
 
@@ -85,6 +100,12 @@ export class ProfileComponent implements OnInit {
     this.getInActiveProfiles();
     this.loadGenders();
     this.loadAdminRoles();
+
+    this.displayUrl = this.profileUrl + '/getFileById'
+
+
+
+
   }
 
   // back button functionality
@@ -220,7 +241,18 @@ export class ProfileComponent implements OnInit {
     )
   }
 
-  ///////////////////////////////////////////
+  onFileSelected(event: any) {
+    this.file = event.target.files[0];
+    this.emptyProfile.profilePics = this.file.name;
+    console.log(this.file);
+
+
+  }
+
+
+
+
+
   // Funcation calls specific to this module
   ///////////////////////////////////////////
 
@@ -238,6 +270,11 @@ export class ProfileComponent implements OnInit {
         if (this.allData.length > 0) {
           this.dataAvailable = true;
         }
+
+
+
+
+
       },
       error => {
         console.log('No data in table ');
@@ -334,7 +371,30 @@ export class ProfileComponent implements OnInit {
 
   // adding profile by usign userId(foreign key from authuser)
   private addProfile(currentData: Profile) {
-    this.service.saveOrUpdateProfile(currentData.userId, currentData).subscribe(
+
+    const instituteJson = JSON.stringify(currentData);
+
+    const blob = new Blob([instituteJson], {
+      type: 'application/json'
+    })
+
+    let formData = new FormData();
+    formData.append("file", this.file);
+    formData.append("admin", new Blob([JSON.stringify(currentData)], { type: 'application/json' }));
+
+
+    // this.service.addProfile(formData).subscribe(
+    //   (response) => {
+    //     console.log(response);
+    //     this.ngOnInit();
+    //     this.back();
+
+
+    //   }
+    // )
+
+
+    this.service.saveProfileByActiveAuthuser(currentData.userId, formData).subscribe(
       response => {
         if (currentData.activeUser === true) {
           this.authUserService.activateAuthUserById(currentData.userId).subscribe(
@@ -363,7 +423,8 @@ export class ProfileComponent implements OnInit {
 
   // updating profile by usign userId(foreign key from authuser)
   private updateProfile(currentData: Profile) {
-    this.service.saveOrUpdateProfile(currentData.userId, currentData).subscribe(
+
+    this.service.updateProfileByActiveAuthuser(currentData.userId, currentData).subscribe(
       response => {
         console.log('Profile updated successfully');
         this.back();
@@ -379,8 +440,13 @@ export class ProfileComponent implements OnInit {
   //(aftering convertin gby Id please change function call and remove this comment)
 
   private deleteProfile(currentData: Profile) {
+
+
     currentData.activeUser = false;
-    this.service.saveOrUpdateProfile(currentData.userId, currentData).subscribe(
+
+
+
+    this.service.updateProfileByActiveAuthuser(currentData.userId, currentData).subscribe(
       response => {
         console.log(currentData);
         this.activeAuthUsers.find(authUser => {
@@ -521,6 +587,17 @@ export class ProfileComponent implements OnInit {
     this.emptyProfile.firstName = '';
     this.emptyProfile.lastName = '';
     this.emptyProfile.adminEmail = '';
+  }
+
+
+
+  display(adminId: number) {
+
+    this.service.getProfileByAdminId(adminId).subscribe(
+      (response) => {
+        console.log(response);
+      }
+    )
   }
 
 

@@ -29,6 +29,9 @@ import { ModuleProgressService } from 'app/moduleProgress/services/module-progre
 import { Modulefileprogress } from 'app/moduleFileProgress/class/modulefileprogress';
 import { ModulefileprogressService } from 'app/moduleFileProgress/modulefileprogress.service';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
+import { CountdownComponent, CountdownEvent } from 'ngx-countdown';
+import { OneQuestionAnswer } from 'app/question/class/one-question-answer';
+import { StudentAnswer } from 'app/student-module/class/student-answer';
 
 
 @Component({
@@ -42,9 +45,11 @@ export class StudentModuleComponent implements OnInit {
   @ViewChild('videoPlayer', { static: false })
   videoPlayerRef!: ElementRef<HTMLVideoElement>;
 
-  @ViewChild(StudentQuizComponent)
+  @ViewChild(StudentQuizComponent, { static: false })
   private studentQuizComponent!: StudentQuizComponent;
 
+  @ViewChild('cd', { static: false })
+  cd!: CountdownComponent;
 
   studentId: any;
   userName: any;
@@ -67,6 +72,7 @@ export class StudentModuleComponent implements OnInit {
 
   newModuleFileProgressArr: Modulefileprogress[] = [];// Array of Object of ModuleFileProgress
   uniquemofileprogarr: Modulefileprogress[] = [];
+  selectedCourse!: Course;
   selectedCourseId: any; //stores the selected course by the student. 
   selectedCourseName: any; //stores the selected course by the student.
   moduleFileId: number = 0;
@@ -142,10 +148,17 @@ export class StudentModuleComponent implements OnInit {
   courProgPercentage: number = 0;
   modFilesArray: ModuleFile[] = [];
 
-
   moduleProgArray: Moduleprogress[] = [];
-  // ------------------------VARIABLE DECLARATION END------------------------------
 
+  quizProgress!: QuizProgress;  // quizProgress object used to save progress in table
+  questionAnswers: OneQuestionAnswer[] = [];    // array of question and answers
+  addeedQuizProgress: QuizProgress = new QuizProgress();; //to store quizprogress data
+  submitted: boolean = false;
+
+  studentAnswer: StudentAnswer = new StudentAnswer();  // for storing student answers
+  studentAnswers: StudentAnswer[] = [];
+
+  // ------------------------VARIABLE DECLARATION END------------------------------
 
   constructor(private activateRoute: ActivatedRoute,
     private courseService: TeacherCourseService,
@@ -166,6 +179,7 @@ export class StudentModuleComponent implements OnInit {
   ) {
     this.selectedQuizProgress = new QuizProgress();
     this.selectedQuiz = new Quiz();
+    this.selectedCourse = new Course();
   }
 
 
@@ -206,6 +220,7 @@ export class StudentModuleComponent implements OnInit {
       response => {
         this.courses = response;
         this.loadModuleOfCourse(this.courses);
+        this.selectedCourse = this.courses[0];
         this.selectedCourseName = this.courses[0].courseName;
         this.selectedCourseId = this.courses[0].courseId;
 
@@ -619,6 +634,10 @@ export class StudentModuleComponent implements OnInit {
 
   //sets the selected course by the student and resets the selected module
   onCourseSelect(courseId: any) {
+    this.selectedCourse = this.courses.find(course => course.courseId == courseId) ?? {} as Course;
+    console.log(JSON.stringify(this.selectedCourse));
+
+    // this.selectedCourse = this.courses.find(course => course.courseId == courseId);
     // for store progress when user switch course
     if (this.currentTime > 0) {
       this.updateVideoProgress();
@@ -646,7 +665,7 @@ export class StudentModuleComponent implements OnInit {
     // console.log(this.selectedCourseId);
     // console.log(this.selectedModule);
 
-    console.log("   this.courProgPercentage  in onCourseSelect"+  this.courProgPercentage  )
+    console.log("   this.courProgPercentage  in onCourseSelect" + this.courProgPercentage)
 
     //names of attributes
     let departmentname: any;
@@ -821,6 +840,7 @@ export class StudentModuleComponent implements OnInit {
 
 
   changeSelectedFileAndModule(file: any, module: any) {
+
     // for store progress when user change module file
     if (this.currentTime > 0) {
       this.updateVideoProgress();
@@ -832,7 +852,9 @@ export class StudentModuleComponent implements OnInit {
 
     let modulefileId: any;
 
-
+    this.cd.stop();
+    this.selectedQuizName = ''
+    this.selectedQuiz = {} as Quiz;
     this.selectedFile = [];
     this.selectedFile = file;
     this.selectedModule = module;
@@ -965,7 +987,7 @@ export class StudentModuleComponent implements OnInit {
 
           addedcourseProgress = response;
           this.courProgPercentage = addedcourseProgress.progress;
-          console.log("   this.courProgPercentage  in add  "+  this.courProgPercentage  )
+          console.log("   this.courProgPercentage  in add  " + this.courProgPercentage)
 
         }
       )
@@ -983,8 +1005,8 @@ export class StudentModuleComponent implements OnInit {
           updatedcourseProgress = response;
           this.courProgPercentage = updatedcourseProgress.progress;
 
-     
-          console.log("   this.courProgPercentage  in update "+  this.courProgPercentage  )
+
+          console.log("   this.courProgPercentage  in update " + this.courProgPercentage)
 
         }
       )
@@ -1329,6 +1351,8 @@ export class StudentModuleComponent implements OnInit {
       this.dialogboxService.open('sorry! you can`t able to attend quiz again', 'warning');
     }
     this.showalert = false;
+    // stop timer
+    this.cd.stop();
   }
 
   onScoreReceived(score: number) {
@@ -1337,8 +1361,29 @@ export class StudentModuleComponent implements OnInit {
     console.log('Current score: ' + this.score);
   }
 
-  onQuizClicked(quiz: Quiz) {
-    // for store progress when user switch quiz to file to quiz
+  onQuizClicked(quiz: Quiz, retake: boolean = false) {
+    this.cd.stop();
+    // if clicked on retake quiz option
+    if (retake) {
+      // alert()
+      this.isRetakingQuiz = true;
+      this.retakingQuiz++;
+      this.cd.restart();
+    } else {
+      this.onQuizClick++;
+      this.isRetakingQuiz = false;
+      if (!(this.quizFailedProgresses.includes(quiz.quizId) || this.quizPassedProgresses.includes(quiz.quizId))) {
+        this.cd.restart();
+      }
+    }
+
+    // initialise values to blank
+    this.selectedFile = '';
+    this.selectedQuiz = {} as Quiz;
+    this.selectedQuizName = '';
+
+    // for store progress when user switch from file to quiz
+    // updating video progress
     if (this.currentTime > 0) {
       this.updateVideoProgress();
       this.videoPlayerRef.nativeElement.src = '';
@@ -1350,11 +1395,34 @@ export class StudentModuleComponent implements OnInit {
     this.showalert = true;
     console.log(this.showalert);
 
-    this.selectedFile = '';
+    // this.selectedFile = '';
     this.selectedQuiz = quiz;
     this.selectedQuizName = quiz.title;
     console.log(this.quizProgressOfStudent);
 
+    // // Find the corresponding progress in quizProgressOfStudent array
+    // const progress = this.quizProgressOfStudent.find(qp => qp.quizId === quiz.quizId);
+    // if (progress) {
+    //   this.selectedQuizProgress = progress;
+    // } else {
+
+    //   this.selectedQuizProgress = {
+    //     id: 0,
+    //     numberOfAttempts: 0,
+    //     completed: false,
+    //     studentId: this.studentId,
+    //     quizId: quiz.quizId,
+    //     score: 0,
+    //     // Include any other properties from QuizProgress
+    //   };
+    // }
+    this.findProgressOfSelectedQuiz(quiz);
+    this.submitted = false;
+
+  }
+
+
+  findProgressOfSelectedQuiz(quiz: Quiz) {
     // Find the corresponding progress in quizProgressOfStudent array
     const progress = this.quizProgressOfStudent.find(qp => qp.quizId === quiz.quizId);
     if (progress) {
@@ -1371,10 +1439,7 @@ export class StudentModuleComponent implements OnInit {
         // Include any other properties from QuizProgress
       };
     }
-
-    // Rest of your code...
   }
-
 
 
   getQuizPorgressesByStudentId(studentId: number) {
@@ -1389,10 +1454,6 @@ export class StudentModuleComponent implements OnInit {
           }
 
         })
-        console.log(this.quizPassedProgresses);
-        console.log(this.quizFailedProgresses);
-
-
       },
       (error) => {
         console.log("failed to fetch progress data");
@@ -1402,16 +1463,27 @@ export class StudentModuleComponent implements OnInit {
   }
 
   onSaveQuizProgress(quizProgress: any) {
+    console.log(quizProgress);
+
     this.quizPassedProgresses = this.removeElementFromStringArray(this.quizPassedProgresses, quizProgress.quizId)
     this.quizFailedProgresses = this.removeElementFromStringArray(this.quizFailedProgresses, quizProgress.quizId)
+    console.log(this.quizProgressOfStudent);
+
+    this.quizProgressOfStudent = this.removeElementFromArray(this.quizProgressOfStudent, quizProgress.id);
+    console.log(this.quizProgressOfStudent);
+
     if (quizProgress.completed == true) {
       this.quizPassedProgresses.push(quizProgress.quizId);
     } else {
       this.quizFailedProgresses.push(quizProgress.quizId);
     }
+    this.quizProgressOfStudent.push(quizProgress);
+    console.log(this.quizProgressOfStudent);
+
     console.log(this.quizPassedProgresses);
     console.log(this.quizFailedProgresses);
     this.sortAccessibleModules();
+    this.findProgressOfSelectedQuiz(this.selectedQuiz);
   }
 
   removeElementFromStringArray(array: any[], element: any) {
@@ -1419,6 +1491,16 @@ export class StudentModuleComponent implements OnInit {
       if (value == element) array.splice(index, 1);
     });
     return array;
+  }
+
+  private removeElementFromArray(arrayToFilter: any[], idToRemove: number): QuizProgress[] {
+    const index = arrayToFilter.findIndex(obj => obj.id === idToRemove);
+
+    if (index !== -1) {
+      arrayToFilter.splice(index, 1);
+    }
+
+    return arrayToFilter;
   }
 
   private sortAccessibleModules() {
@@ -1667,6 +1749,160 @@ export class StudentModuleComponent implements OnInit {
         console.log("updated progress after paused")
       }
     )
+  }
+
+  onQuizSubmit(questionAnswersArray: OneQuestionAnswer[]) {
+
+    this.questionAnswers = questionAnswersArray;
+    this.quizProgress = new QuizProgress();
+
+    console.log(this.questionAnswers);
+    console.log(this.selectedQuiz);
+
+
+    let notAttendedQuestions: any[] = [];
+    let score: number = 0;
+    const marksPerQuestion: number = 100 / (this.questionAnswers.length);
+
+    this.questionAnswers.forEach((queAns, index) => {
+
+
+      // finding correct answer for current question in loop
+      let trueAnswer: string = '';
+      if (queAns.correct1) {
+        trueAnswer = queAns.content1;
+      } else if (queAns.correct2) {
+        trueAnswer = queAns.content2;
+      } else if (queAns.correct3) {
+        trueAnswer = queAns.content3;
+      } else if (queAns.correct4) {
+        trueAnswer = queAns.content4;
+      }
+
+      // checking that user attended the question or not
+      if (queAns.selectedAnswer == undefined || queAns.selectedAnswer == '') {
+        notAttendedQuestions.push(index + 1);
+      }
+
+      // checking if answer is correct then incresing the score
+      if (queAns.selectedAnswer == trueAnswer) {
+        score = score + (marksPerQuestion);
+      }
+
+      this.studentAnswer.quizId = this.selectedQuiz.quizId;
+      this.studentAnswer.studentId = this.studentId;
+      this.studentAnswer.questionContent = queAns.selectedAnswer;
+      this.studentAnswer.questionId = queAns.questionId;
+      this.studentAnswer.selectedOption = (queAns.selectedAnswer == trueAnswer);
+      this.studentAnswer.answerId = 0;
+      console.log("@@@@@@@@@@@@@@@@@@@@@", this.studentAnswer);
+      this.quizProgServ.addStudentAnswers(this.studentAnswer).subscribe(
+        (response) => {
+          // this.studentAnswers.push(response);
+          // this.studentAnswers = response;
+          console.log("Student answers saved");
+        },
+        (error) => {
+          console.log("Failed to save student answers");
+        }
+      );
+
+    })
+
+    // if there is any not attended questions available 
+    // current always false because auto submit on timer
+    if (notAttendedQuestions.length > 0 && this.cd.left > 0) {
+      // alert("Please answer the questions  " + (notAttendedQuestions))
+      this.dialogboxService.open('Please answer the questions ' + (notAttendedQuestions), 'warning');
+      return;
+    }
+    this.addQuizProgress(score);
+
+    if (score >= this.selectedQuiz.passMark) {
+      // show dialog box with green exam pass
+      var grade = '';
+      if (score >= 90) {
+        grade = 'A+';
+      } else if (score >= 80) {
+        grade = 'A';
+      } else if (score >= 75) {
+        grade = 'B+';
+      } else if (score >= 70) {
+        grade = 'B';
+      } else if (score >= 60) {
+        grade = 'C';
+      } else if (score >= 50) {
+        grade = 'D';
+      } else if (score >= 40) {
+        grade = 'E';
+      }
+      this.dialogboxService.open(this.selectedQuiz.successText + '  ' + grade, 'information');
+      //alert("Total score: " + score);
+    } else {
+      // show dialog box with red exam fail
+      this.dialogboxService.open(this.selectedQuiz.failText, 'information');
+    }
+    this.submitted = true;
+
+    // stop timer
+    this.cd.stop();
+  }
+
+  addQuizProgress(score: number) {
+    console.log(score);
+
+    // adding all value to quizprogress object to store result
+    this.quizProgress.studentId = this.studentId;
+    this.quizProgress.quizId = this.selectedQuiz.quizId;
+    this.quizProgress.score = score;
+    if (score >= this.selectedQuiz.passMark) {
+      this.quizProgress.completed = true;
+    } else {
+      this.quizProgress.completed = false;
+    }
+    this.quizProgress.numberOfAttempts = 1;
+    console.log(this.quizProgress);
+
+    this.quizProgServ.addQuizProgressOfStudent(this.quizProgress).subscribe(
+      (response) => {
+
+        this.addeedQuizProgress = response;
+        // alert("Quiz progress saved");
+        console.log("Quiz progress saved");
+        this.onQuizProgressAdded(this.addeedQuizProgress);
+        // alert("Quiz progress saved");
+        this.onSaveQuizProgress(this.addeedQuizProgress);
+
+      },
+      (error) => {
+        console.log("Failed to save Progress");
+      }
+    );
+  }
+
+
+  handleEvent(ev: CountdownEvent) {
+    // alert(ev.action);
+    if (ev.action === 'start' || ev.action === 'notify') {
+      localStorage.setItem('time', `${ev.left / 1000}`)
+    }
+    if (ev.action === 'done') {
+      // Save current value
+      localStorage.setItem('time', `${ev.left / 1000}`)
+      // console.log(this.studentQuizComponent.questionAnswers);
+
+      this.onQuizSubmit(this.studentQuizComponent.questionAnswers);
+
+    }
+
+  }
+
+  isRetakingQuiz: boolean = false;
+  retakingQuiz: number = 0;
+  onQuizClick: number = 0;
+  onRetakeQuizClicked(quiz: Quiz) {
+
+    this.onQuizClicked(quiz, true);
   }
 }
 

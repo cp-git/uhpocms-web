@@ -83,6 +83,8 @@ export class AddQuestionAnswerComponent implements OnInit {
 
   profileId: any;
 
+  file!: File;
+
   generatedQuestionAnswerId: number = 0;;
   constructor(private location: Location,
     private service: QuestionService,
@@ -109,6 +111,13 @@ export class AddQuestionAnswerComponent implements OnInit {
   ngOnInit(): void {
     // this.getAllQuestions();  // for getting all active questions
     // this.getInActiveQuestions(); // for getting all inactive questions
+  }
+
+  onFileSelected(event: any) {
+    this.file = event.target.files[0];
+    this.oneQuestionAnswer.questionFigure = this.file.name;
+    console.log(this.file);
+
   }
 
   onFormSubmit(queAns: OneQuestionAnswer): void {
@@ -185,7 +194,18 @@ export class AddQuestionAnswerComponent implements OnInit {
 
     // console.log(this.questionAnswer);
 
-    this.service.addQuestion(this.questionAnswer).subscribe(
+
+    const instituteJson = JSON.stringify(this.questionAnswer);
+
+    const blob = new Blob([instituteJson], {
+      type: 'application/json'
+    })
+
+    let formData = new FormData();
+    formData.append("file", this.file);
+    formData.append("request", new Blob([JSON.stringify(this.questionAnswer)], { type: 'application/json' }));
+
+    this.service.addQuestion(formData).subscribe(
       (response) => {
         this.generatedQuestionAnswerId = response;
 
@@ -443,8 +463,13 @@ export class AddQuestionAnswerComponent implements OnInit {
 
     questionAnswer.question['questionIsActive'] = true;  // setting active true
 
+
+    let formData = new FormData();
+    formData.append("file", this.file);
+    formData.append("request", new Blob([JSON.stringify(this.questionAnswer)], { type: 'application/json' }));
+
     // calling service for adding data
-    this.service.addQuestion(questionAnswer).subscribe(
+    this.service.addQuestion(formData).subscribe(
       response => {
         console.log('Question added Successfully');
         // this.emptyQuestion = {} as Question;

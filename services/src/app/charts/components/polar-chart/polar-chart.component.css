@@ -5,10 +5,15 @@ canvas {
     height: 100% ; */
     max-width: 300px;
     font-color:black;
+    display: block;
+    box-sizing: border-box;
+    height: 350px!important;
+    width: 350px !important;
+    max-width: 350px !important;
   }
   
 
   #canvasContainer { 
-    width: 300px;
+    width: 350px;
     height:168px
   }

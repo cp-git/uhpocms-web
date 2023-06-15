@@ -27,7 +27,7 @@ export class AddUpdateComponent implements OnInit {
   optionsArray2: any;
   dropdownColumnId2: any;
   dropdownColumnName2: any;
-
+  file!: File;
   constructor(
   ) { }
 
@@ -41,6 +41,16 @@ export class AddUpdateComponent implements OnInit {
     this.columnNames = this.data.columnNames;
     this.currentData = this.data.currentData
     this.initialiseDropdownData();
+  }
+
+
+  onFileSelected(event: any) {
+    // console.log(event);
+
+
+    this.file = event.target.files[0];
+
+
   }
 
   initialiseDropdownData() {
@@ -81,5 +91,7 @@ export class AddUpdateComponent implements OnInit {
       });
     }
   }
+
+  // function called when user select file
 
 }

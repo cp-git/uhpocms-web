@@ -1,6 +1,6 @@
 <div class="container">
     <div class="card-block">
-        <form class="form-material">
+        <form #addUpdateForm="ngForm" class="form-material">
             <div *ngFor="let column of columnNames" class="form-group form-default col-sm-4">
                 <ng-container [ngSwitch]="column.type">
                     <ng-container *ngSwitchCase="'input'">
@@ -36,7 +36,7 @@
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
                         <input name="{{column.key}}" type="file" [(ngModel)]="currentData[column.key]"
-                            (change)="onFileSelected($event)" class="form-control" required="">
+                            (change)="onFileSelected($event,column.key)" class="form-control" required="">
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'dropdown1'">
@@ -68,7 +68,8 @@
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
                         <select name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
-                            required="" [disabled]="column.disabled">
+                            required="" [disabled]="column.disabled"
+                            (change)="column.functionForDependentKeys ? onDropdownSelectedForDependentKeys(currentData,column.dependentKeys):null">
                             <option value="undefined" disabled>Select</option>
 
                             <ng-container *ngIf="[column.toSort] then sortDropdown else simpleDropdown"></ng-container>
@@ -154,7 +155,8 @@
     </div>
     <div class="card-block row justify-content-between col-sm-12">
         <div class="col-sm-3">
-            <button class="btn btn-primary" (click)="onSubmitClicked(currentData)">Submit</button>
+            <button [disabled]="!addUpdateForm.valid" class="btn btn-primary"
+                (click)="onSubmitClicked(currentData)">Submit</button>
         </div>
     </div>
 </div>

@@ -1,6 +1,6 @@
 
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Chart, ChartOptions, registerables, TooltipItem } from 'chart.js';
+import { Chart, ChartOptions, LinearScaleOptions, registerables, TooltipItem } from 'chart.js';
 import { Coursesyllabus } from 'app/class/coursesyllabus';
 import { CourseProgressService } from 'app/courseProgress/services/course-progress.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -96,7 +96,9 @@ export class BarChartComponent {
       options: {
         // responsive: false,
         // maintainAspectRatio: true,
-
+       
+       
+    
         onClick: (event, elements) => {
           if (elements.length > 0) {
             const element = elements[0];
