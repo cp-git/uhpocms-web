@@ -85,6 +85,8 @@ import { BarChartComponent } from './charts/components/bar-chart/bar-chart.compo
 
 
 import { MatDialogModule } from '@angular/material/dialog';
+import { PermissionComponent } from './permissions/components/permission/permission.component';
+import { PermissionModule } from './permissions/permission.module';
 
 
 @NgModule({
@@ -124,12 +126,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 
     BarChartComponent,
 
-
-
-
-
-
-
   ],
 
   imports: [
@@ -159,7 +155,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     ReactiveFormsModule,
     FormsModule,
     StudentModuleModule,
-    MatDialogModule
+    MatDialogModule,
+    PermissionModule
   ],
 
   providers: [

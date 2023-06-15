@@ -75,7 +75,7 @@
         [dropdown1]="{optionsArray1:this.adminInstitutions ,dropdownColumnId1:dropdownColumnId1 , dropdownColumnName1:dropdownColumnName1}"
         [idsColumnName]="{columnName:primaryIdColumnName}" [isViewAllScreen]="true"
         (viewClicked)="onChildViewClick($event)" (updateClicked)="onChildUpdateClick($event)"
-        (deleteClicked)="onChildDeleteClick($event)">
+        (deleteClicked)="onChildDeleteClick($event)" [buttons]="{updateButton:updateButton, deleteButton:deleteButton}">
     </app-view-all>
     <div *ngIf="allData.length==0">
         <h3>No Departments</h3>

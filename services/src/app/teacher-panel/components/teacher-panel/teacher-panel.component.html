@@ -18,117 +18,123 @@
         </div>
     </div>
     <!-- -------------------------------------Teacher progress Chart code start--------------------------------------------- -->
- <!-- <div>
+    <!-- <div>
     <h3>Progress Panel</h3>
 </div> -->
 
-<!-- <h3 >Progress Panel</h3> -->
-<div *ngIf="clickedCourse.courseName == '' ">
-<h3>Progress Panel</h3>
-</div>
-<div *ngIf="(!barClicked)  ||  (closeButtonStatus)">
-    <div  *ngIf="barCharts.length != 0" class="app-chartdata-ui" id="app-chartdata">
-        <div id="prevButton">
-            <button *ngIf="currentIndex >= 3" (click)="barPrevious()" class='fas fa-angle-left' style='font-size:48px;color:black;background: transparent;
+    <!-- <h3 >Progress Panel</h3> -->
+    <div *ngIf="clickedCourse.courseName == '' ">
+        <h3>Progress Panel</h3>
+    </div>
+    <div *ngIf="(!barClicked)  ||  (closeButtonStatus)">
+        <div *ngIf="barCharts.length != 0" class="app-chartdata-ui" id="app-chartdata">
+            <div id="prevButton">
+                <button *ngIf="currentIndex >= 3" (click)="barPrevious()" class='fas fa-angle-left' style='font-size:48px;color:black;background: transparent;
         border: none;'></button>
+            </div>
+            <div id="chart-head">
+
+
+                <p class="agg-count"><b>Count Of Students</b></p>
+                <div class="vertical"></div>
+
+                <div class="chart" *ngFor="let bChart of barCharts; let i = index"
+                    [ngClass]="{'hidden': i < currentIndex || i >= currentIndex + 3}">
+                    <h4>
+                        <b>
+                            <p class="category" style="font-size: 1.5rem;">{{ bChart[4] }}</p>
+                        </b>
+                    </h4>
+                    <app-bar-chart [jsonArray]="[bChart[0], bChart[1],bChart[2],bChart[3]]"
+                        (clickData)="handleRightClickData($event,bChart[5])"></app-bar-chart>
+
+                </div>
+
+                <div class="horizontal"></div>
+                <p class="course-progress"><b>Course Progress(%)</b></p>
+            </div>
+            <div id="nextButton">
+                <button *ngIf="currentIndex < barCharts.length - 3" (click)="barNext()" class='fas fa-angle-right'
+                    style='font-size:48px;color:black;background: transparent;
+      border: none;'></button>
+            </div>
         </div>
-        <div id="chart-head">
 
+        <div *ngIf="barCharts.length == 0 " class="app-chartdata-ui">
 
-            <p class="agg-count"><b>Count Of Students</b></p>
-            <div class="vertical"></div>
-
-            <div class="chart" *ngFor="let bChart of barCharts; let i = index"
-                [ngClass]="{'hidden': i < currentIndex || i >= currentIndex + 3}">
-                <h4>
-                   <b> <p class="category" style="font-size: 1.5rem;">{{ bChart[4] }}</p></b>
-                </h4>
-                <app-bar-chart [jsonArray]="[bChart[0], bChart[1],bChart[2],bChart[3]]" 
-                
-                    (clickData)="handleRightClickData($event,bChart[5])"></app-bar-chart>
-
+            <div id="nocourmsg">
+                No Courses Assigned
             </div>
 
-            <div class="horizontal"></div>
-            <p class="course-progress"><b>Course Progress(%)</b></p>
-        </div>
-        <div id="nextButton">
-            <button *ngIf="currentIndex < barCharts.length - 3" (click)="barNext()" class='fas fa-angle-right' style='font-size:48px;color:black;background: transparent;
-      border: none;'></button>
         </div>
     </div>
 
-    <div *ngIf="barCharts.length == 0 " class="app-chartdata-ui">
-
-        <div id="nocourmsg">
-            No Courses Assigned
-        </div>
-
-    </div>
-</div>
-
-   <!-- -------------------------------------Teacher progress Chart code end--------------------------------------------- -->
+    <!-- -------------------------------------Teacher progress Chart code end--------------------------------------------- -->
 
 
 
 
     <!-- -------------------------------------Individual Student progress Chart code start--------------------------------------------- -->
-<div *ngIf="clickedCourse.courseName != '' ">
-  <h3> Progress Panel - {{clickedCourse.courseName}} </h3> 
-</div>
-<div *ngIf = "(barClicked ) && (!closeButtonStatus)">
-   
-    <div *ngIf="studProgDetailArr.length != 0" class="app-chartdata-ui-stud">
-        <div id="container">
-            <div class="crossButton">
-              <span class="fa-sharp fa-solid fa-square-xmark fa-xl" (click)="closeButton()"></span>
-            </div>
-        
-          
-        <div id="prevButton">
-           
-            
-            <button *ngIf="dchartcurrentIndex >= 3" (click)="doughnutPrevious()" class='fas fa-angle-left' style='font-size:48px;color:black;background: transparent;
-border: none;'></button>
-     
+    <div *ngIf="clickedCourse.courseName != '' ">
+        <h3> Progress Panel - {{clickedCourse.courseName}} </h3>
     </div>
-        <div id="chart-head">
-            <div class="chart" *ngFor="let dChart of studProgDetailArr; let i = index"
-                [ngClass]="{'hidden': i < dchartcurrentIndex || i >= dchartcurrentIndex + 3}">
-                <h4>
-                   <b> <p class="category">{{ dChart[2] }}</p></b>
-                </h4>
-                <app-chartdata [jsonArray]="[dChart[0], dChart[1]]"></app-chartdata>
+    <div *ngIf="(barClicked ) && (!closeButtonStatus)">
 
-            </div>
-        </div>
-        
-    
-        <div id="nextButton">
-         
-            <div class="nextButtonchild">
-            <button *ngIf="dchartcurrentIndex < studProgDetailArr.length - 3" (click)="doughnutNext()" class='fas fa-angle-right' style='font-size:48px;color:black;background: transparent;
+        <div *ngIf="studProgDetailArr.length != 0" class="app-chartdata-ui-stud">
+            <div id="container">
+                <div class="crossButton">
+                    <span class="fa-sharp fa-solid fa-square-xmark fa-xl" (click)="closeButton()"></span>
+                </div>
+
+
+                <div id="prevButton">
+
+
+                    <button *ngIf="dchartcurrentIndex >= 3" (click)="doughnutPrevious()" class='fas fa-angle-left'
+                        style='font-size:48px;color:black;background: transparent;
 border: none;'></button>
 
+                </div>
+                <div id="chart-head">
+                    <div class="chart" *ngFor="let dChart of studProgDetailArr; let i = index"
+                        [ngClass]="{'hidden': i < dchartcurrentIndex || i >= dchartcurrentIndex + 3}">
+                        <h4>
+                            <b>
+                                <p class="category">{{ dChart[2] }}</p>
+                            </b>
+                        </h4>
+                        <app-chartdata [jsonArray]="[dChart[0], dChart[1]]"></app-chartdata>
+
+                    </div>
+                </div>
+
+
+                <div id="nextButton">
+
+                    <div class="nextButtonchild">
+                        <button *ngIf="dchartcurrentIndex < studProgDetailArr.length - 3" (click)="doughnutNext()"
+                            class='fas fa-angle-right' style='font-size:48px;color:black;background: transparent;
+border: none;'></button>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Code for display message when courses  are not assigned -->
+            <div *ngIf="studProgDetailArr.length == 0 " class="app-chartdata-ui">
+
+                <div id="nocourmsg">
+                    No Courses Assigned
+                </div>
+
+            </div>
+
+
+
+
         </div>
     </div>
-</div> 
-   
-
-    <!-- Code for display message when courses  are not assigned -->
-   <div *ngIf="studProgDetailArr.length == 0 " class="app-chartdata-ui">
-
-        <div id="nocourmsg">
-            No Courses Assigned
-        </div>
-
-    </div> 
-
-
-
-    
-</div>
-</div>
 
     <!-- -------------------------------------Individual Student progress Chart code end--------------------------------------------- -->
 
@@ -136,37 +142,32 @@ border: none;'></button>
     <!-- ----------------------------------------------------------------------------------- -->
     <!-- -------------------------------------------pop-up code-------------------------------------- -->
 
-   
-
-<div
-class="modal"
-tabindex="-1"
-role="dialog"
-[ngStyle]="{'display': displayPopupStyle}">
-<div class="modal-dialog" role="document">
-	<div class="modal-content">
-	<div class="modal-header">
-		<h4 class="modal-title">Students Score for {{clickedCourse.courseName}}  Course</h4>
-	</div>
-	<div class="modal-body">
-		
-        <div *ngFor="let progress of courseProgressArr; let i = index">
-        <!-- <p>{{ popupDataValue}}  {{ popupDataLabel}}  </p> -->
-    <p>{{studProgDetailArr[i][0]}}  {{studProgDetailArr[i][1]}}  -  {{studProgDetailArr[i][2]}}</p>
 
 
-	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-danger"
-				>
-		Close
-		</button>
-	</div>
-	</div>
-</div>
-</div>
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display': displayPopupStyle}">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Students Score for {{clickedCourse.courseName}} Course</h4>
+                </div>
+                <div class="modal-body">
 
-</div>
+                    <div *ngFor="let progress of courseProgressArr; let i = index">
+                        <!-- <p>{{ popupDataValue}}  {{ popupDataLabel}}  </p> -->
+                        <p>{{studProgDetailArr[i][0]}} {{studProgDetailArr[i][1]}} - {{studProgDetailArr[i][2]}}</p>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
     <!-- -------------------------------------------pop-up code close-------------------------------------- -->
 
     <div class="container">
@@ -259,6 +260,18 @@ role="dialog"
                         <!--<h3 class="card-title">Announcements</h3>-->
                         <button class="btn btn-primary">Announcements</button>
                     </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center" (click)="RedirectToAdminDept()">
+                    <div class="card-header">
+                        <span class="fas fa-building fa-4x" style="color:rgb(236,140,0)"></span>
+                    </div>
+                    <div class="card-body">
+                        <!-- <h3 class="card-title">Departments</h3>-->
+                        <button class="btn btn-primary">Departments</button>
+                    </div>
+
                 </div>
             </div>
         </div>

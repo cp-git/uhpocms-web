@@ -8,6 +8,12 @@ import { DepartmentAllColumn, DepartmentColumn, DepartmentUpdateColumn } from 'a
 import { Location } from '@angular/common';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
+import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
+import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
+
+import { userModule } from 'app/permissions/enum/user-module.enum';
+import { userPermission } from 'app/permissions/enum/user-permission.enum';
+import { AccessControlService } from 'app/permissions/services/accessControl/access-control.service';
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
@@ -26,7 +32,13 @@ export class DepartmentComponent implements OnInit {
   // for buttons to view
   showAddButton: boolean = true;
   showActivateButton: boolean = true;
+  updateButton: boolean = true;
+  deleteButton: boolean = true;
 
+  userAndRolePermissions: AuthUserPermission[] = [];
+
+  userModule = userModule;
+  userPermission = userPermission;
   // dataAvailable: boolean = false;
 
   columnNames: any;
@@ -49,7 +61,13 @@ export class DepartmentComponent implements OnInit {
   emptyDepartment: Department; // empty department
   currentData!: Department; // for update and view, to show existing data
 
-  constructor(private service: DepartmentService, private location: Location, private dialogBoxServices: DialogBoxService) {
+  constructor(
+    private service: DepartmentService,
+    private location: Location,
+    private dialogBoxServices: DialogBoxService,
+    private userPermissionService: AuthUserPermissionService,
+    private accessControl: AccessControlService
+  ) {
     // assigng headers
     this.columnNames = DepartmentColumn;
     this.allColumnNames = DepartmentAllColumn;
@@ -64,6 +82,50 @@ export class DepartmentComponent implements OnInit {
   ngOnInit(): void {
     this.getAllDepartments();
     this.getInactiveDepartment();
+    this.userAndRolePermissions = this.userPermissionService.getAllPermissionsByRoleIdAndUserId('teacher', sessionStorage.getItem('userId'));
+    console.log(this.userAndRolePermissions);
+
+    this.showAddButton = false;
+    this.showActivateButton = false;
+    this.updateButton = false;
+    this.deleteButton = false;
+
+    this.linkPermissions(this.userAndRolePermissions);
+    console.log(this.accessControl.accessControlData);
+
+    console.log(this.userPermissionService.userAndRolePermissions);
+  }
+
+  linkPermissions(userAndRolePermissions: AuthUserPermission[]) {
+
+    userAndRolePermissions = userAndRolePermissions.filter(item =>
+      item.moduleId == userModule.DEPARMTMENT
+    );
+    console.log(userAndRolePermissions);
+
+    userAndRolePermissions.forEach(element => {
+      console.log(element);
+
+      if (element.moduleId == userModule.DEPARMTMENT && element.permissionId == userPermission.CREATE) {
+        console.log("CREATE");
+        this.showAddButton = true;
+      }
+
+      if (element.moduleId == userModule.DEPARMTMENT && element.permissionId == userPermission.DELETE) {
+        console.log("DELETE");
+        this.deleteButton = true;
+      }
+
+      if (element.moduleId == userModule.DEPARMTMENT && element.permissionId == userPermission.UPDATE) {
+        console.log("UPDATE");
+        this.updateButton = true;
+      }
+
+      if (element.moduleId == userModule.DEPARMTMENT && element.permissionId == userPermission.ACTIVATE) {
+        console.log("ACTIVATE");
+        this.showActivateButton = true;
+      }
+    })
   }
 
   // back button functionality

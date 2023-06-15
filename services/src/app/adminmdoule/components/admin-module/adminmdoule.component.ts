@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Authuser } from 'app/auth-user/class/auth-user';
 import { AuthUserService } from 'app/auth-user/services/auth-user.service';
 import { AuthenticationserviceService } from 'app/authenticationlogin/service/authenticationservice.service';
+import { AccessControl } from 'app/permissions/class/access-control';
+import { AccessControlService } from 'app/permissions/services/accessControl/access-control.service';
 
 
 
@@ -18,14 +20,32 @@ export class AdminmdouleComponent {
   role: string | undefined;
   userName!: string;
   adminId: any;
-  constructor(private _route: Router, private _auth: AuthUserService, private _authenticationService: AuthenticationserviceService, private _activatedRoute: ActivatedRoute) { }
+  userId: any;
+  accessControlData: AccessControl;
+  constructor(private _route: Router, private _auth: AuthUserService, private _authenticationService: AuthenticationserviceService, private _activatedRoute: ActivatedRoute,
+    private accessControlService: AccessControlService) {
+    this.accessControlData = new AccessControl();
+  }
 
   ngOnInit(): void {
+
     this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
-    console.log(this.userName)
+    this.userId = sessionStorage.getItem('userId')
+    console.log(this.userId)
 
+    this.loadAccessControl();
+  }
 
+  loadAccessControl() {
+    console.log(this.accessControlData);
+
+    this.accessControlData = this.accessControlService.getAccessControlByUserId(this.userId);
+
+    // if (this.accessControlData.userId != this.userId || (this.accessControlData == undefined || this.accessControlData == null)) {
+    //   this.accessControlData = this.accessControlService.accessControlData;
+    console.log(this.accessControlData);
+    // }
   }
 
   RedirectToAuth() {
