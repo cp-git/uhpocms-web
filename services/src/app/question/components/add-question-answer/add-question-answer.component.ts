@@ -85,6 +85,10 @@ export class AddQuestionAnswerComponent implements OnInit {
 
   file!: File;
 
+  files!: FileList;
+
+  myFiles: string[] = [];
+
   generatedQuestionAnswerId: number = 0;;
   constructor(private location: Location,
     private service: QuestionService,
@@ -114,9 +118,9 @@ export class AddQuestionAnswerComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    this.file = event.target.files[0];
-    this.oneQuestionAnswer.questionFigure = this.file.name;
-    console.log(this.file);
+    for (var i = 0; i < event.target.files.length; i++) {
+      this.myFiles.push(event.target.files[i]);
+    }
 
   }
 
@@ -202,7 +206,11 @@ export class AddQuestionAnswerComponent implements OnInit {
     })
 
     let formData = new FormData();
-    formData.append("file", this.file);
+
+    for (var i = 0; i < this.myFiles.length; i++) {
+      formData.append("files", this.myFiles[i]);
+    }
+
     formData.append("request", new Blob([JSON.stringify(this.questionAnswer)], { type: 'application/json' }));
 
     this.service.addQuestion(formData).subscribe(
@@ -465,7 +473,11 @@ export class AddQuestionAnswerComponent implements OnInit {
 
 
     let formData = new FormData();
-    formData.append("file", this.file);
+
+    for (var i = 0; i < this.myFiles.length; i++) {
+      formData.append("files", this.myFiles[i]);
+    }
+
     formData.append("request", new Blob([JSON.stringify(this.questionAnswer)], { type: 'application/json' }));
 
     // calling service for adding data

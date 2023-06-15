@@ -70,6 +70,8 @@ export class ProfileComponent implements OnInit {
 
   displayUrl!: any;
 
+  imagesUrl!: any;
+
   constructor(
     private location: Location,
     private service: ProfileService,
@@ -245,6 +247,15 @@ export class ProfileComponent implements OnInit {
     this.file = event.target.files[0];
     this.emptyProfile.profilePics = this.file.name;
     console.log(this.file);
+
+    const reader = new FileReader();
+    reader.onload = () => {
+
+      this.imagesUrl = reader.result;
+
+    }
+
+    reader.readAsDataURL(this.file);
 
 
   }
