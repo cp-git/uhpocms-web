@@ -88,6 +88,8 @@
         [dropdown]="{adminInstitutions,departments,adminRoles,inactiveAuthUsers,genders}"
         (submitClicked)="onAddProfileSubmit($event)" (getSelectedOptionOfDropdown)="getSelectedOptionOfDropdown($event)"
         (change)="onFileSelected($event)"></app-add-update>
+
+    <img width="100%" *ngIf="imagesUrl" src={{imagesUrl}} class="image">
 </ng-template>
 
 <ng-template #viewactivate>
@@ -116,4 +118,5 @@
     <app-add-update [data]="{currentData:currentData , columnNames:updateColumn}"
         [dropdown]="{adminInstitutions,departments,adminRoles,activeAuthUsers,genders}"
         (submitClicked)="onUpdateProfileSubmit($event)"></app-add-update>
+    <img src="{{displayUrl}}/{{currentData.adminId}}" (click)="display(currentData.adminId)">
 </ng-template>
