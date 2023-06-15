@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdmininstitutionService } from '../../service/admininstitution.service';
 
@@ -14,8 +14,9 @@ import { environment } from 'environments/environment.development';
 })
 export class DisplayinstituteComponent {
   moduleName = 'Institute Administration';
+  @Input() admininstitutions: AdminInstitution[] = [];
   // Institution array
-  admininstitutions: AdminInstitution[] = [];
+  // admininstitutions: AdminInstitution[] = [];
   backupInst: AdminInstitution[] = [];
 
   // for extra row when there is no data
@@ -77,13 +78,14 @@ export class DisplayinstituteComponent {
   }
 
   //function to get all institutions
-  private getAllInstitution() {
+  public getAllInstitution() {
     // fetching all institution
     this._institutionService.fetchAdminInstitutionList().subscribe(
       (response) => {
         // assigning received data to institution
         this.admininstitutions = response;
 
+       
         for (let i = 0; i < this.admininstitutions.length; i++) {
           console.log(this.admininstitutions[i].adminInstitutionPicture);
         }

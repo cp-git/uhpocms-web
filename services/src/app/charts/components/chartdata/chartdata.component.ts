@@ -45,7 +45,8 @@ export class ChartdataComponent {
 
   ngAfterViewInit() {
     
-    
+    console.log("json array in chhartdata")
+    console.log(this.jsonArray)
     let cvs: any;
     cvs = this.dChart.nativeElement;
     

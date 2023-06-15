@@ -52,7 +52,7 @@
                                 <div>
                                     <br>
                                     <ng-container *ngIf="quizPassedProgresses.includes(quiz.quizId); else failedIcon">
-                                        <span class="fa fa-check-circle" style="color:blue"></span>
+                                        <span class="fa fa-check-circle " style="color:blue"></span>
                                     </ng-container>
                                     <ng-template #failedIcon>
                                         <ng-container *ngIf="quizFailedProgresses.includes(quiz.quizId); else fileIcon">

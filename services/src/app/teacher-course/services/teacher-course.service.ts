@@ -84,14 +84,51 @@ export class TeacherCourseService {
   activateCourseById(courseId: number): Observable<any> {
     return this.http.patch<any>(`${this.courseUrl}/activate/` + courseId, {});
   }
+  // //get courses by department ID. 
+  // getCourseByDepartmentId(deptid: number) {
+  //   return this.http.get<any>(`${this.courseUrl}/deptId/` + deptid)
+  // }
+
   //get courses by department ID. 
   getCourseByDepartmentId(deptid: number) {
-    return this.http.get<any>(`${this.courseUrl}/deptId/` + deptid)
+    const cachedData = this.cache.getDataFromCache(`${this.courseUrl}/deptId/` + deptid)
+    if (cachedData) {
+      return of(cachedData);
+    }
+
+    return this.http.get<any>(`${this.courseUrl}/deptId/` + deptid).pipe(
+    //   tap(data => this.cache.setDataInCache(`${this.courseProgressUrl}/courseprog?id=all`, data))
+    // );
+
+    tap(data => {
+      // Update cache with new data
+      this.cache.removeFromCache(`${this.courseUrl}/deptId/` + deptid)
+      this.cache.setDataInCache((`${this.courseUrl}/deptId/` + deptid), data);
+    })
+  );
+   
   }
+
+
 
   //fetching the course by InstituteId
   getCourseByInstitutionId(id: string): Observable<any> {
-    return this.http.get<any>(this.courseUrl + '/institutionId/' + id);
+    const cachedData = this.cache.getDataFromCache(this.courseUrl + '/institutionId/' + id);
+    if (cachedData) {
+      return of(cachedData);
+    }
+
+    return this.http.get<any>(this.courseUrl + '/institutionId/' + id).pipe(
+    //   tap(data => this.cache.setDataInCache(`${this.courseProgressUrl}/courseprog?id=all`, data))
+    // );
+
+    tap(data => {
+      // Update cache with new data
+      this.cache.removeFromCache(this.courseUrl + '/institutionId/' + id);
+      this.cache.setDataInCache((this.courseUrl + '/institutionId/' + id), data);
+    })
+  );
+
   }
   //fetching the course by dept id and profile id
   getCourseByDepartmentIdAndProfileId(department_id: number, profileId: number): Observable<any> {

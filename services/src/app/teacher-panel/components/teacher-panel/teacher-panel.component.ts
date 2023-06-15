@@ -18,7 +18,7 @@ import { TeacherCourseService } from 'app/teacher-course/services/teacher-course
 })
 export class TeacherPanelComponent {
 
-  course: Course = new Course();
+
   @ViewChild(BarChartComponent) bChart: any;
   @ViewChild(ChartdataComponent) dChart: any;
   @ViewChild('appChartData', { static: false })
@@ -26,7 +26,7 @@ export class TeacherPanelComponent {
   //doughnut chart data array
   barCharts: any = [];
   criteriaVar: number = 0;
-
+  course: Course = new Course();
   currentIndex: number = 0;
   dchartcurrentIndex : number =0;
   popupDataValue: any;
