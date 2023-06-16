@@ -157,12 +157,14 @@ export class AnalyticsComponent {
   }
 
   getCoursesByDeptId(deptId: number) {
-
+    
     return new Promise((resolve, reject) => {
       this.courses = [];
       this.courseServ.getCourseByDepartmentId(deptId).subscribe(
         (response) => {
-          this.courses = response;
+          
+        this.courses = response.filter((course:Course)=>course.courseIsActive == true)
+         
           console.log("courses array in func", this.courses);
           resolve(this.courses)
         }
