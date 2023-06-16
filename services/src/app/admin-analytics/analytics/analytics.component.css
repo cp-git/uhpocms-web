@@ -483,3 +483,6 @@ img{
   height: 150px;
   vertical-align: middle;
 }
+a{
+  cursor: pointer;
+}

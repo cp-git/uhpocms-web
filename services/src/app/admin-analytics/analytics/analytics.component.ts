@@ -93,7 +93,7 @@ export class AnalyticsComponent {
   selectedImageId: number | null = null;
   lastClickTime = 0;
   displayPopupStyle = "none";
-  zeroPeopleCountInCourses:boolean = false;
+  zeroPeopleCountInCourses: boolean = false;
   ////////////variable declarations end////////
 
   constructor(private instServ: AdmininstitutionService, private deptServ: DepartmentService,
@@ -528,18 +528,18 @@ export class AnalyticsComponent {
 
           profLen.push(this.profileIdForStuTea.length);
 
-         console.log(profLen)
+          //  console.log(profLen)
           this.courseNameArr.push(cour.courseName)
 
-        
+
           //  console.log(this.courseNameArr)
         }
-      
-        if((profLen.length == 1) && (profLen[0] == 0) && (this.courseNameArr.length == 1))
-        {
-           this.zeroPeopleCountInCourses = true
+
+        //condition if only one course with zero people count present in department
+        if ((profLen.length == 1) && (profLen[0] == 0) && (this.courseNameArr.length == 1)) {
+          this.zeroPeopleCountInCourses = true
         }
-        console.log(this.profilesLenghtArray)
+        // console.log(this.profilesLenghtArray)
         this.profilesLenghtArray.push(profLen)
       }
     )

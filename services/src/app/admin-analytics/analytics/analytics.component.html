@@ -6,9 +6,9 @@ padding-left: 10%;
     <button class="btn btn-primary backbtn" (click)="back()">Back</button>
 </div>
 
- <!-- code for institute images -->
+<!-- code for institute images -->
 <div class="instHeading">
-    <h2 ><b>INSTITUTIONS</b></h2>
+    <h2><b>INSTITUTIONS</b></h2>
 </div>
 <div class=" instHeading">
 
@@ -27,12 +27,12 @@ padding-left: 10%;
 </div>
 
 
- <!-- code for institute images  end-->
+<!-- code for institute images  end-->
 
 
 
 
- <!-- ----code for Count Panel------------ -->
+<!-- ----code for Count Panel------------ -->
 <div *ngIf="instChartStat == true" class="app-chartdata-ui ">
     <div id="chart-head">
 
@@ -41,24 +41,24 @@ padding-left: 10%;
             <table>
                 <tr>
                     <th>
-                       
-                        <h5><b>  DEPARTMENTS  </b></h5>
+
+                        <h5><b> DEPARTMENTS </b></h5>
                         <span class="fa-solid fa-building fa-2xl" style="color:  black "></span>
                     </th>
                     <th>
-                    
-                       <h5><b>   COURSES </b></h5> 
-                       <span class="fas fa-book-open fa-2xl" style="color:  black" ></span>
+
+                        <h5><b> COURSES </b></h5>
+                        <span class="fas fa-book-open fa-2xl" style="color:  black"></span>
                     </th>
                     <th>
-               
-                      <h5><b>      STUDENTS  </b></h5>
-                      <span class="fas fa-book-reader fa-2xl" style="color:  black "></span>
+
+                        <h5><b> STUDENTS </b></h5>
+                        <span class="fas fa-book-reader fa-2xl" style="color:  black "></span>
                     </th>
                     <th>
-                    
-                          <h5><b>TEACHERS  </b></h5>
-                          <span class="fas fa-chalkboard-teacher fa-2xl" style="color:  black "></span>
+
+                        <h5><b>TEACHERS </b></h5>
+                        <span class="fas fa-chalkboard-teacher fa-2xl" style="color:  black "></span>
                     </th>
 
                 </tr>
@@ -87,11 +87,11 @@ padding-left: 10%;
     </div>
 </div>
 
- <!-- ----code for Count Panel end------------ -->
+<!-- ----code for Count Panel end------------ -->
 
 
 
- <!-- ------------------Code for  Courses in departments ---------------- -->
+<!-- ------------------Code for  Courses in departments ---------------- -->
 <div *ngIf="instChartStat == true" class="app-chartdata-ui ">
     <div id="chart-head">
 
@@ -103,32 +103,32 @@ padding-left: 10%;
                     </p>
                 </b>
             </h4>
-            <div  *ngIf="deptNameCouCnt.length != 0">
-            <div *ngFor="let dArray of deptNameCouCnt">
+            <div *ngIf="deptNameCouCnt.length != 0">
+                <div *ngFor="let dArray of deptNameCouCnt">
 
-                <h5>
-                    <b> <a class="category" style="text-transform: uppercase; color:#0126fa;"
-                            (click)="hadleButtonClickOnDept(dArray,instId)">COURSE COUNT FOR DEPARTMENT
-                            {{dArray}}</a></b>
-                </h5>
+                    <h5>
+                        <b> <a class="category" style="text-transform: uppercase; color:#0126fa;"
+                                (click)="hadleButtonClickOnDept(dArray,instId)">COURSE COUNT FOR DEPARTMENT
+                                {{dArray}}</a></b>
+                    </h5>
 
 
 
+                </div>
             </div>
-        </div>
-        <div *ngIf="deptNameCouCnt.length == 0">
+            <div *ngIf="deptNameCouCnt.length == 0">
                 <h5>
                     <b>NO DEPARTMENTS ALLOTED</b>
                 </h5>
-        </div>
+            </div>
         </div>
     </div>
 </div>
- <!-- ------------------Code for  Courses in departments ENd ---------------- -->
+<!-- ------------------Code for  Courses in departments ENd ---------------- -->
 
 
 
- <!-- ------------------Code for People in  Courses ---------------- -->
+<!-- ------------------Code for People in  Courses ---------------- -->
 
 <div *ngIf="(courChartStat == true) && (profilesLenghtArray.length != 0)" class="app-chartdata-ui "
     style="margin-top: 2%;margin-bottom: 2%;">
@@ -142,19 +142,20 @@ padding-left: 10%;
                 </b>
             </h4>
             <div *ngIf="zeroPeopleCountInCourses == false">
-            <!-- <app-polar-chart [jsonArray]="cChart" [chartLabels]="courseNameArr" (clickData)="getClickedCourseData($event,instId);getAllCourseProgress(teacIdsArr[0])"></app-polar-chart> -->
-            <app-polar-chart [jsonArray]="cChart" [chartLabels]="courseNameArr"
-                (clickData)="getClickedCourseData($event,instId)"></app-polar-chart>
+                <!-- <app-polar-chart [jsonArray]="cChart" [chartLabels]="courseNameArr" (clickData)="getClickedCourseData($event,instId);getAllCourseProgress(teacIdsArr[0])"></app-polar-chart> -->
+                <app-polar-chart [jsonArray]="cChart" [chartLabels]="courseNameArr"
+                    (clickData)="getClickedCourseData($event,instId)"></app-polar-chart>
             </div>
-            <div  *ngIf="zeroPeopleCountInCourses == true">
-                <h5 style="text-transform: uppercase;"><b>No people assigned to <strong style="color: #0126fa;"> {{courseNameArr[0]}} </strong> course</b></h5> 
+            <div *ngIf="zeroPeopleCountInCourses == true">
+                <h5 style="text-transform: uppercase;"><b>No people assigned to <strong style="color: #0126fa;">
+                            {{courseNameArr[0]}} </strong> course</b></h5>
             </div>
         </div>
 
     </div>
 </div>
 
- <!-- ------------------Code for People in  Courses  End---------------- -->
+<!-- ------------------Code for People in  Courses  End---------------- -->
 
 
 <!-- -----------------------Code for bar chart------------------------------ -->
@@ -185,7 +186,8 @@ padding-left: 10%;
             </h5>
             <h5>
                 <b>
-                    <p class="category" style="text-transform: uppercase; color:#0126fa;">ENROLLED STUDENTS COUNT-    {{studCntInCour}}</p>
+                    <p class="category" style="text-transform: uppercase; color:#0126fa;">ENROLLED STUDENTS COUNT-
+                        {{studCntInCour}}</p>
                 </b>
             </h5>
             <h5>
@@ -279,4 +281,5 @@ padding-left: 10%;
 
 </div>
 <!-- -----------------------Code for doughnut chart ENd------------------------------ -->
+
 </html>
