@@ -477,3 +477,9 @@ td h5{
 .fa-2xl {
   font-size: 3em;
 }
+
+img{
+  width: 150px;
+  height: 150px;
+  vertical-align: middle;
+}

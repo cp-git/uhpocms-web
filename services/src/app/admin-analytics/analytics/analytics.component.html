@@ -103,6 +103,7 @@ padding-left: 10%;
                     </p>
                 </b>
             </h4>
+            <div  *ngIf="deptNameCouCnt.length != 0">
             <div *ngFor="let dArray of deptNameCouCnt">
 
                 <h5>
@@ -114,6 +115,12 @@ padding-left: 10%;
 
 
             </div>
+        </div>
+        <div *ngIf="deptNameCouCnt.length == 0">
+                <h5>
+                    <b>NO DEPARTMENTS ALLOTED</b>
+                </h5>
+        </div>
         </div>
     </div>
 </div>
@@ -134,10 +141,14 @@ padding-left: 10%;
                         {{deptClicked}} </p>
                 </b>
             </h4>
+            <div *ngIf="zeroPeopleCountInCourses == false">
             <!-- <app-polar-chart [jsonArray]="cChart" [chartLabels]="courseNameArr" (clickData)="getClickedCourseData($event,instId);getAllCourseProgress(teacIdsArr[0])"></app-polar-chart> -->
             <app-polar-chart [jsonArray]="cChart" [chartLabels]="courseNameArr"
                 (clickData)="getClickedCourseData($event,instId)"></app-polar-chart>
-
+            </div>
+            <div  *ngIf="zeroPeopleCountInCourses == true">
+                <h5 style="text-transform: uppercase;"><b>No people assigned to <strong style="color: #0126fa;"> {{courseNameArr[0]}} </strong> course</b></h5> 
+            </div>
         </div>
 
     </div>
