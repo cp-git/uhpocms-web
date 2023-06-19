@@ -10,26 +10,26 @@ padding-left: 10%;
 <div class="instHeading">
     <h2><b>INSTITUTIONS</b></h2>
 </div>
-<div class=" instHeading">
 
-    <div class="text-center" style="margin: 1%;" *ngFor="let inst of admininstitutions">
-        <div [class.selected-image]="selectedImageId === inst.adminInstitutionId">
-            <img src="{{ displayUrl }}/{{ inst.adminInstitutionId }}"
-                (click)="handleButtonClick(inst.adminInstitutionId)" />
-
-            <div>
-                <button #btn1 id="demo" class="btn btn-primary institutebtn"
-                    (click)="handleButtonClick(inst.adminInstitutionId)">{{ inst.adminInstitutionName }}</button>
-            </div>
+ 
+  <div class="instHeading">
+    <div class="text-center" style="margin: 1%; display: flex; flex-wrap: wrap;">
+      <button class="fas fa-angle-left" *ngIf="currentPage >= 3" (click)="previousPage()" style='font-size:48px;color:black;background: transparent;
+        border: none;' ></button>
+      <div *ngFor="let inst of admininstitutions.slice(currentPage,currentPage + 3);   let i = index"
+        [class.selected-image]="selectedImageId === inst.adminInstitutionId" style="flex: 0 0 auto; margin-right: 30px;  margin-left: 30px;">
+        <img src="{{ displayUrl }}/{{ inst.adminInstitutionId }}" (click)="handleButtonClick(inst.adminInstitutionId)" />
+        <div>
+          <button #btn1 id="demo" class="btn btn-primary institutebtn"
+            (click)="handleButtonClick(inst.adminInstitutionId)">{{ inst.adminInstitutionName }}</button>
         </div>
+      </div>
+      <button class="fas fa-angle-right" *ngIf="currentPage < admininstitutions.length - 3" style='font-size:48px;color:black;background: transparent;
+      border: none;' (click)="nextPage()"></button>
     </div>
-
-</div>
-
-
+  </div>
+  
 <!-- code for institute images  end-->
-
-
 
 
 <!-- ----code for Count Panel------------ -->

@@ -94,6 +94,10 @@ export class AnalyticsComponent {
   lastClickTime = 0;
   displayPopupStyle = "none";
   zeroPeopleCountInCourses: boolean = false;
+  currentPage = 1;
+  imagesPerPage = 7;
+  totalPages = Math.ceil(this.admininstitutions.length / this.imagesPerPage);
+
   ////////////variable declarations end////////
 
   constructor(private instServ: AdmininstitutionService, private deptServ: DepartmentService,
@@ -411,8 +415,20 @@ export class AnalyticsComponent {
 
   // ----------------Code for Institutions ----------------------//
 
+  //function to display previous button if images present on ui
+  previousPage(): void {
 
+    this.currentPage -= 3;
+  }
+  
+  //function to display next button if images present on ui
+  nextPage(): void {
 
+    this.currentPage += 3
+   
+  }
+  
+  
   //function to handle button click on institutes to avoid apperance of further data on  double click
   handleButtonClick(adminInstitutionId: number) {
 
@@ -437,6 +453,7 @@ export class AnalyticsComponent {
 
   //function to get all institutions
   getAllInstitutionImages() {
+    this.currentPage = 0;
     // fetching all institution
     this.instServ.fetchAdminInstitutionList().subscribe(
       (response) => {
@@ -843,8 +860,8 @@ export class AnalyticsComponent {
   //code for next button on progress panel of student
   doughnutNext() {
 
-    this.dchartcurrentIndex += 3;
-    console.log("this.dchartcurrentIndex value     " + this.dchartcurrentIndex)
+    this. dchartcurrentIndex+= 3;
+    // console.log("this.dchartcurrentIndex value     " + this.dchartcurrentIndex)
 
   }
 
