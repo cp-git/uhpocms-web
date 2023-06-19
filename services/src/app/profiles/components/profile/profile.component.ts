@@ -435,7 +435,17 @@ export class ProfileComponent implements OnInit {
   // updating profile by usign userId(foreign key from authuser)
   private updateProfile(currentData: Profile) {
 
-    this.service.updateProfileByActiveAuthuser(currentData.userId, currentData).subscribe(
+    const instituteJson = JSON.stringify(currentData);
+
+    const blob = new Blob([instituteJson], {
+      type: 'application/json'
+    })
+
+    let formData = new FormData();
+    formData.append("file", this.file);
+    formData.append("admin", new Blob([JSON.stringify(currentData)], { type: 'application/json' }));
+
+    this.service.updateProfileByActiveAuthuser(currentData.userId, formData).subscribe(
       response => {
         console.log('Profile updated successfully');
         this.back();
@@ -457,7 +467,7 @@ export class ProfileComponent implements OnInit {
 
 
 
-    this.service.updateProfileByActiveAuthuser(currentData.userId, currentData).subscribe(
+    this.service.deleteProfileByActiveAuthuser(currentData.userId, currentData).subscribe(
       response => {
         console.log(currentData);
         this.activeAuthUsers.find(authUser => {
