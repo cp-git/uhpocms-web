@@ -39,8 +39,8 @@ export class ProfileService {
   }
 
 
-  updateProfileByActiveAuthuser(authUserId: any, profile: Profile): Observable<any> {
-    return this.http.put<any>(`${this.profileUrl}/updatedelete/${authUserId}`, profile);
+  updateProfileByActiveAuthuser(authUserId: any, formData: FormData): Observable<any> {
+    return this.http.put<any>(`http://localhost:8092/uhpocms/profile/updatedelete/${authUserId}`, formData);
   }
 
   getAllDeactivatedProfiles(): Observable<Profile[]> {
@@ -61,16 +61,16 @@ export class ProfileService {
     }
 
     return this.http.get<any>(`${this.profileUrl}/${userRole}/${instId}`).pipe(
-    //   tap(data => this.cache.setDataInCache(`${this.courseProgressUrl}/courseprog?id=all`, data))
-    // );
+      //   tap(data => this.cache.setDataInCache(`${this.courseProgressUrl}/courseprog?id=all`, data))
+      // );
 
-    tap(data => {
-      // Update cache with new data
-      this.cache.removeFromCache(`${this.profileUrl}/${userRole}/${instId}`)
-      this.cache.setDataInCache((`${this.profileUrl}/${userRole}/${instId}`), data);
-    })
-  );
-   
+      tap(data => {
+        // Update cache with new data
+        this.cache.removeFromCache(`${this.profileUrl}/${userRole}/${instId}`)
+        this.cache.setDataInCache((`${this.profileUrl}/${userRole}/${instId}`), data);
+      })
+    );
+
   }
 
 
