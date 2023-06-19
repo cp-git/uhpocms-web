@@ -486,3 +486,10 @@ img{
 a{
   cursor: pointer;
 }
+.text-center{
+  display: flex;
+  flex-wrap: wrap;
+  flex: 0 0 auto;
+  margin-right: 10px;
+}
+
