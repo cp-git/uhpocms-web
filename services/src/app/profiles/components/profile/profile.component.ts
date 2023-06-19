@@ -465,18 +465,9 @@ export class ProfileComponent implements OnInit {
 
     currentData.activeUser = false;
 
-    const instituteJson = JSON.stringify(currentData);
-
-    const blob = new Blob([instituteJson], {
-      type: 'application/json'
-    })
-
-    let formData = new FormData();
-    formData.append("file", this.file);
-    formData.append("admin", new Blob([JSON.stringify(currentData)], { type: 'application/json' }));
 
 
-    this.service.updateProfileByActiveAuthuser(currentData.userId, formData).subscribe(
+    this.service.deleteProfileByActiveAuthuser(currentData.userId, currentData).subscribe(
       response => {
         console.log(currentData);
         this.activeAuthUsers.find(authUser => {
