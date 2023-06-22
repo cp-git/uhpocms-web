@@ -10,7 +10,7 @@ import { AuthUserAllColumn, AuthUserColumn, AuthUserUpdateColumn, AuthUserViewOn
 import { ProfileService } from 'app/profiles/services/profile.service';
 import { json } from 'body-parser';
 import { Profile } from 'app/profiles/class/profile';
-
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 
 @Component({
   selector: 'app-auth-user',
@@ -55,7 +55,7 @@ export class AuthUserComponent implements OnInit {
 
 
 
-  constructor(private service: AuthUserService, private profileService: ProfileService, private location: Location) {
+  constructor(private service: AuthUserService, private profileService: ProfileService, private location: Location,private dialogBoxService:DialogBoxService) {
 
     // assigng headers
     // this.adminRoleHeader = AdminRoleColumn;
@@ -178,7 +178,7 @@ export class AuthUserComponent implements OnInit {
     // Calling service for updating data
     this.service.updateAuthUser(currentData.authUserName, currentData).subscribe(
       response => {
-        console.log(`Auth User updated successfully!`);
+        this.dialogBoxService.open("user updated successfully", 'information');
         // Check if Authuser ID and profile user ID are the same
         const matchingProfile = this.profiles.find(profile => profile.userId === currentData.authUserId);
 
@@ -212,7 +212,7 @@ export class AuthUserComponent implements OnInit {
         }
       },
       error => {
-        console.log(`AuthUser updation failed!`);
+        this.dialogBoxService.open("User Updation Failed", 'warning');
       }
     );
   }
@@ -234,14 +234,15 @@ export class AuthUserComponent implements OnInit {
     this.service.addAuthUser(currentData).subscribe(
       (data) => {
         // alert('AuthUser added Successfully');
-        console.log('User added Successfully');
+        //console.log('User added Successfully');
+        this.dialogBoxService.open("user added successfully, but their status is currently listed as inactive.", 'information');
         this.emptyAuthUser = {} as Authuser;
         this.ngOnInit();
         this.back();
       },
       (error) => {
         //alert("Failed to add User");
-        console.log("Failed to add User");
+        this.dialogBoxService.open("Failed to Add user", 'warning');
       });
   }
 
@@ -271,20 +272,27 @@ export class AuthUserComponent implements OnInit {
 
   // For deleting (soft delete) auth user using userName
   private deleteAuthuser(authUserName: string) {
-
+    this.dialogBoxService.open('Are you sure you want to delete this User ? ', 'decision').then((response) => {
+      if (response) {
+        console.log('User clicked OK');
+        // Do something if the user clicked OK
     // calling service to soft delete
     this.service.deleteAuthUser(authUserName).subscribe(
       (response) => {
         // alert('Auth user deleted successfully');
-        console.log('user deleted successfully');
+        this.dialogBoxService.open('User deleted successfully ', 'information')
         this.ngOnInit();
       },
       (error) => {
-        //alert('Auth user deletion failed');
-        console.log('user deletion failed');
+        this.dialogBoxService.open('User deletion Failed', 'warning');
       }
     );
+  } else {
+    console.log('User clicked Cancel');
+    // Do something if the user clicked Cancel
   }
+});
+}
 
   // For getting all inactive auth user
   private getInActiveAuthUser() {

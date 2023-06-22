@@ -30,9 +30,11 @@
                     <div><button #btn1 id="demo" class="btn btn-primary institutebtn"
                             (click)="display(institution.adminInstitutionId)">{{institution.adminInstitutionName}}</button>
                     </div>
-                    <div><button class="btn btn-danger institutebtn" id="deletebtn"
-                            (click)="deleteInstitution(institution)">DeActivate</button>
-                    </div>
+                    <div>
+                        <button class="btn btn-danger institutebtn" id="deletebtn"
+                          (click)="deleteInstitution(institution.adminInstitutionId)">DeActivate</button>
+                      </div>
+                      
                 </div>
 
             </div>

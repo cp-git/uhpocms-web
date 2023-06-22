@@ -9,6 +9,7 @@ import { CategoryService } from 'app/category/services/category.service';
 import { Course } from 'app/teacher-course/class/course';
 import { Module } from 'app/module/class/module';
 import { Category } from 'app/category/class/category';
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
@@ -61,7 +62,8 @@ export class QuizComponent implements OnInit {
     private location: Location,
     private courseService: TeacherCourseService,
     private moduleService: ModuleService,
-    private categotyService: CategoryService
+    private categotyService: CategoryService,
+    private dialogBoxService:DialogBoxService
   ) {
 
     this.userRole = sessionStorage.getItem('userRole');
@@ -200,17 +202,26 @@ export class QuizComponent implements OnInit {
 
   // deleting quiz using title (soft delete)
   deleteQuiz(title: string) {
+    this.dialogBoxService.open('Are you sure you want to delete this Quiz ? ', 'decision').then((response) => {
+      if (response) {
+        console.log('User clicked OK');
+        // Do something if the user clicked OK
     this.quizService.deleteQuiz(title).subscribe(
       (data) => {
 
-        console.log('Data Deleted Successfully');
+        this.dialogBoxService.open('Quiz deleted successfully', 'information');
         this.ngOnInit();
       },
       (error) => {
-        console.log('Failed to delete quiz data');
+        this.dialogBoxService.open('Quiz deletion Failed', 'warning');
       }
     );
+  } else {
+    console.log('User clicked Cancel');
+    // Do something if the user clicked Cancel
   }
+});
+}
 
   // for adding quiz
   addQuiz(currentData: Quiz) {
@@ -218,7 +229,7 @@ export class QuizComponent implements OnInit {
     currentData.active = true;
     this.quizService.addQuiz(currentData).subscribe(
       data => {
-        console.log("Quiz added successfuly!")
+        this.dialogBoxService.open('Quiz Added successfully','information')
         this.emptyQuiz = {} as Quiz;
         this.ngOnInit();
         this.back();
@@ -226,7 +237,7 @@ export class QuizComponent implements OnInit {
       }
       ,
       error => {
-        console.log("Failed to add quiz data!")
+        this.dialogBoxService.open('Failed to add Quiz','warning')
       }
     )
 
@@ -238,12 +249,12 @@ export class QuizComponent implements OnInit {
     // calling service for updating data
     this.quizService.updateQuiz(currentData.title, currentData).subscribe(
       response => {
-        console.log(`Quiz updated successfully !`);
+        this.dialogBoxService.open('Quiz Updated successfully','information')
         this.ngOnInit();
         this.back();
       },
       error => {
-        console.log(`Quiz updation failed !`);
+        this.dialogBoxService.open('Quiz updation failed','warning')
       }
     );
   }
@@ -272,10 +283,11 @@ export class QuizComponent implements OnInit {
     this.quizService.updateActiveStatus(quiz.title, quiz).subscribe(
       response => {
         console.log("Activated Quiz");
+        this.dialogBoxService.open('Quiz Activated','information')
         this.ngOnInit();
       },
       error => {
-        console.log("Failed to activate");
+        this.dialogBoxService.open('Failed to Activate','warning')
       }
     );
   }

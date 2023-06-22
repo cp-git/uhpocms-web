@@ -9,7 +9,7 @@ import { QuestionService } from 'app/question/services/question.service';
 import { Quiz } from 'app/class/quiz';
 import { Category } from 'app/class/category';
 import { QuestionAnswer } from 'app/question/class/question-answer';
-
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
@@ -59,7 +59,7 @@ export class QuestionComponent implements OnInit {
 
   file!: File;
 
-  constructor(private service: QuestionService, private location: Location) {
+  constructor(private service: QuestionService, private location: Location,private dialogBoxService:DialogBoxService) {
 
     // assigng headers
     // this.QuestionHeader = QuestionColumn;
@@ -205,13 +205,13 @@ export class QuestionComponent implements OnInit {
     // calling service for adding data
     this.service.addQuestion(formData).subscribe(
       response => {
-        console.log('Question added Successfully');
+        this.dialogBoxService.open('Question Added successfully', 'information');
         // this.emptyQuestion = {} as Question;
         this.ngOnInit();
         this.back();
       },
       error => {
-        console.log("Failed to add question");
+        this.dialogBoxService.open('Failed to add Question', 'warning');
       });
   }
 
@@ -220,29 +220,37 @@ export class QuestionComponent implements OnInit {
     // calling service for updating data
     this.service.updatedQuestion(currentData).subscribe(
       response => {
-        console.log(`Question updated successfully !`);
+        this.dialogBoxService.open('Question updated successfully', 'information');
         this.back();
       },
       error => {
-        console.log(`Question updation failed !`);
+        this.dialogBoxService.open('Failed to update Question', 'warning');
       }
     );
   }
 
   // For deleting (soft delete) question using questionFigure
   private deleteQuestion(questionFigure: string) {
-
+    this.dialogBoxService.open('Are you sure you want to delete this Question ? ', 'decision').then((response) => {
+      if (response) {
+        console.log('User clicked OK');
+        // Do something if the user clicked OK
     // calling service to soft delete
     this.service.deleteQuestion(questionFigure).subscribe(
       (response) => {
-        console.log('Question deleted successfully');
+        this.dialogBoxService.open('Question deleted successfully', 'information');
         this.ngOnInit();
       },
       (error) => {
-        console.log('Question deletion failed');
+        this.dialogBoxService.open('Question deletion Failed', 'warning');
       }
     );
+  } else {
+    console.log('User clicked Cancel');
+    // Do something if the user clicked Cancel
   }
+});
+}
 
   // For getting all inactive questions
   private getInActiveQuestions() {
@@ -266,11 +274,11 @@ export class QuestionComponent implements OnInit {
     // calling service to activating question
     this.service.activateQuestion(questionFigure).subscribe(
       response => {
-        console.log("Activated question");
+        this.dialogBoxService.open('Question Activated', 'information');
         this.ngOnInit();
       },
       error => {
-        console.log("Failed to activate");
+        this.dialogBoxService.open('Failed to Activate', 'warning');
       }
     );
   }
