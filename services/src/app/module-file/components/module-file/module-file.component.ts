@@ -328,7 +328,7 @@ export class ModuleFileComponent {
       },
 
       (error) => {
-        this.dialogBoxServices.open("File is Already Present pls Select Another file..", 'information');
+        this.dialogBoxServices.open("File is Already Present pls Select Another file..", 'warning');
         console.log('failed to upload ')
       }
 
@@ -344,7 +344,7 @@ export class ModuleFileComponent {
 
       },
       error => {
-        this.dialogBoxServices.open("Module File updation failed", 'information');
+        this.dialogBoxServices.open("Module File updation failed", 'warning');
         console.log('Module File updation failed !');
       }
 
@@ -394,7 +394,10 @@ export class ModuleFileComponent {
 
   // For deleting (soft delete) by Id
   private deleteModuleFileById(moduleFileId: number) {
-
+    this.dialogBoxServices.open('Are you sure you want to delete this ModuleFile ? ', 'decision').then((response) => {
+      if (response) {
+        console.log('User clicked OK');
+        // Do something if the user clicked OK
     // calling service to soft delte
     this.moduleFileService.deleteModuleFileById(moduleFileId).subscribe(
       (response) => {
@@ -404,9 +407,14 @@ export class ModuleFileComponent {
       },
       (error) => {
         console.log('Module File deletion failed');
-        this.dialogBoxServices.open("Module File deletion failed", 'information');
+        this.dialogBoxServices.open("Module File deletion failed", 'warning');
       }
-    );
+      );
+      } else {
+        console.log('User clicked Cancel');
+        // Do something if the user clicked Cancel
+      }
+    });
   }
 
   // For getting all inactive module files
@@ -434,7 +442,7 @@ export class ModuleFileComponent {
         this.ngOnInit();
       },
       error => {
-        this.dialogBoxServices.open("Failed to activate", 'information');
+        this.dialogBoxServices.open("Failed to activate", 'warning');
         console.log("Failed to activate");
       }
     );
