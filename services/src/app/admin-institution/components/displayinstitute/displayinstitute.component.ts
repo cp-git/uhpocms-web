@@ -85,7 +85,7 @@ export class DisplayinstituteComponent {
         // assigning received data to institution
         this.admininstitutions = response;
 
-       
+
         for (let i = 0; i < this.admininstitutions.length; i++) {
           console.log(this.admininstitutions[i].adminInstitutionPicture);
         }
@@ -112,7 +112,7 @@ export class DisplayinstituteComponent {
   // for deleting institution by name
   deleteInstitution(inst: AdminInstitution) {
     // calling service mathod to delete institution
-    this._institutionService.deleteInstitution(inst.adminInstitutionName).subscribe(
+    this._institutionService.deleteInstitutionById(inst.adminInstitutionId).subscribe(
       (response) => {
         this.admininstitutions.splice(this.admininstitutions.indexOf(inst), 1);
         this.backupInst.splice(this.admininstitutions.indexOf(inst), 1);

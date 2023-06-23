@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 
 import { AdmininstitutionService } from '../../service/admininstitution.service';
+import { environment } from 'environments/environment.development';
 
 @Component({
   selector: 'app-activate-institution',
@@ -18,12 +19,17 @@ export class ActivateInstitutionComponent implements OnInit {
   userName!: string;
   adminId: any;
 
+
+  displayUrl: any;
+
+  private readonly institutionUrl!: string;
   // for buttons to view
   showAddButton: boolean = false;
   showActivateButton: boolean = false;
   //constructor
   constructor(private _institutionService: AdmininstitutionService, private _router: Router,
     private _activatedRoute: ActivatedRoute) {
+    this.institutionUrl = `${environment.adminInstitutionUrl}/institution`;
 
   }
 
@@ -37,6 +43,7 @@ export class ActivateInstitutionComponent implements OnInit {
 
     //onload of page this function should execute
     this.getAllDeactivatedInstitutions();
+    this.displayUrl = this.institutionUrl + '/getFileById'
   }
 
   //function to get all inactive institutions

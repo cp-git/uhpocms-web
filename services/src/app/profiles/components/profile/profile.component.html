@@ -118,8 +118,13 @@
     <app-add-update [data]="{currentData:currentData , columnNames:updateColumn}"
         [dropdown]="{adminInstitutions,departments,adminRoles,activeAuthUsers,genders}"
         (submitClicked)="onUpdateProfileSubmit($event)" (change)="onFileSelected($event)"></app-add-update>
-    <img src="{{displayUrl}}/{{currentData.adminId}}" (click)="display(currentData.adminId)">
 
-    <img width="100%" *ngIf="imagesUrl" src={{imagesUrl}} class="image">
+    <!-- <img width="100%" *ngIf="imagesUrl" src={{imagesUrl}} class="image"> -->
+
+    <img *ngIf="imagesUrl;else viewImage" src="{{imagesUrl}}" style="max-width: 350px">
+    <ng-template #viewImage>
+        <img *ngIf="currentData.adminId" src="{{displayUrl}}/{{currentData.adminId}}"
+            (click)="display(currentData.adminId)" style="max-width: 350px">
+    </ng-template>
 
 </ng-template>

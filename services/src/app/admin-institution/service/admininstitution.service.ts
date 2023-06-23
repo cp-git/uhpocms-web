@@ -72,4 +72,10 @@ export class AdmininstitutionService {
   }
 
 
+  deleteInstitutionById(adminInstitutionId: number): Observable<any> {
+    return this._http.delete<any>(`${this.institutionUrl}/institutionId/` + adminInstitutionId);
+  }
+
+
+
 }
