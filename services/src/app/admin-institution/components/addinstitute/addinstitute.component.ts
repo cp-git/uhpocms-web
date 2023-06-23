@@ -28,7 +28,11 @@ export class AddinstituteComponent {
   hideId: boolean = false;
   admininstitution: AdminInstitution;
 
+  // for buttons to view
+  showAddButton: boolean = false;
+  showActivateButton: boolean = false;
 
+  moduleName: string = 'Institute Administration'
   //constructor
   constructor(private _institutionService: AdmininstitutionService, private _route: Router, private _activatedRoute: ActivatedRoute) {
     this.admininstitution = new AdminInstitution();
@@ -149,7 +153,7 @@ export class AddinstituteComponent {
 
 
   //back button routing
-  Back() {
+  back() {
     this._route.navigate(['displayinstitute', this.userName]);
   }
 
