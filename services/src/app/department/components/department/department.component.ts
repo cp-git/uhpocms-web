@@ -171,11 +171,11 @@ export class DepartmentComponent implements OnInit {
     // calling service for updating data
     this.service.updateDepartment(currentData.id, currentData).subscribe(
       (response) => {
-        console.log(`Department updated successfully !`);
+        this.dialogBoxServices.open('Department updated successfully', 'information');
         this.back();
       },
       (error) => {
-        console.log(`Department updation failed !`);
+        this.dialogBoxServices.open('Department updation Failed', 'warning');
       }
     );
   }
@@ -198,8 +198,8 @@ export class DepartmentComponent implements OnInit {
         this.back();
       },
       (error) => {
-        console.log('Failed to add Department');
-        alert('Department is Already Present pls Select Another Name..');
+        this.dialogBoxServices.open("Department is Already Present pls Select Another Name", 'warning');
+        
       }
     );
   }
@@ -226,17 +226,26 @@ export class DepartmentComponent implements OnInit {
 
   // For deleting (soft delete) department
   private deleteDepartment(id: number) {
-    // calling service to soft delte
+    this.dialogBoxServices.open('Are you sure you want to delete this Department ? ', 'decision').then((response) => {
+      if (response) {
+        console.log('User clicked OK');
+        // Do something if the user clicked OK
+        // calling service to soft delte
     this.service.deleteDepartmentById(id).subscribe(
       (response) => {
-        console.log('Department deleted successfully');
+        this.dialogBoxServices.open('Department deleted successfully', 'information');
         this.ngOnInit();
       },
       (error) => {
-        console.log('Department deletion failed');
+        this.dialogBoxServices.open('Department deletion Failed', 'warning');
       }
     );
+  } else {
+    console.log('User clicked Cancel');
+    // Do something if the user clicked Cancel
   }
+});
+}
 
   // For getting all inactive departments
   private getInactiveDepartment() {
@@ -257,11 +266,11 @@ export class DepartmentComponent implements OnInit {
     // calling service to activating department
     this.service.activateDepartment(id).subscribe(
       (response) => {
-        console.log('Activated department');
+        this.dialogBoxServices.open("Department Activated", 'information');
         this.ngOnInit();
       },
       (error) => {
-        console.log('Failed to activate');
+        this.dialogBoxServices.open("Failed to Activate", 'warning');
       }
     );
   }

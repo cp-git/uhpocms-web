@@ -6,7 +6,7 @@ import { Location } from '@angular/common';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'environments/environment.development';
-
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 @Component({
   selector: 'app-displayinstitute',
   templateUrl: './displayinstitute.component.html',
@@ -25,7 +25,7 @@ export class DisplayinstituteComponent {
   admininstitution: AdminInstitution;
   userName!: string;
   adminId: any;
-
+  institutionId:any;
   // for buttons to view
   showAddButton: boolean = true;
   showActivateButton: boolean = true;
@@ -34,7 +34,7 @@ export class DisplayinstituteComponent {
   displayUrl: any;
 
   //constructor
-  constructor(private _institutionService: AdmininstitutionService, private _route: Router, private location: Location, private _activatedRoute: ActivatedRoute, private _sanitizer: DomSanitizer) {
+  constructor(private _institutionService: AdmininstitutionService, private _route: Router, private location: Location, private _activatedRoute: ActivatedRoute, private _sanitizer: DomSanitizer,private dialogBoxService:DialogBoxService) {
     this.admininstitution = new AdminInstitution();
     this.institutionUrl = `${environment.adminInstitutionUrl}/institution`;
   }
@@ -109,23 +109,48 @@ export class DisplayinstituteComponent {
     );
   }
 
-  // for deleting institution by name
-  deleteInstitution(inst: AdminInstitution) {
-    // calling service mathod to delete institution
-    this._institutionService.deleteInstitution(inst.adminInstitutionName).subscribe(
+  // // for deleting institution by name
+  // deleteInstitution(inst: AdminInstitution) {
+  //   // calling service mathod to delete institution
+  //   this._institutionService.deleteInstitution(inst.adminInstitutionName).subscribe(
+  //     (response) => {
+  //       this.admininstitutions.splice(this.admininstitutions.indexOf(inst), 1);
+  //       this.backupInst.splice(this.admininstitutions.indexOf(inst), 1);
+  //       // console.log(inst.adminInstitutionName + ' Institution deleted successfully');
+  //       console.log(inst.adminInstitutionName + ' Institution deleted successfully');
+  //       this.displayEmptyRow();
+  //     },
+  //     (error) => {
+  //       console.log('not able to delete \n' + JSON.stringify(error.error));
+  //     }
+  //   );
+  // }
+
+ 
+
+  // For deleting (soft delete) by id
+  deleteInstitution(adminInstitutionId: number) {
+    this.dialogBoxService.open('Are you sure you want to delete this Institute ? ', 'decision').then((response) => {
+      if (response) {
+        console.log('User clicked OK');
+        // Do something if the user clicked OK
+        // calling service to soft delte
+    this._institutionService.deleteInstitutionById(adminInstitutionId).subscribe(
       (response) => {
-        this.admininstitutions.splice(this.admininstitutions.indexOf(inst), 1);
-        this.backupInst.splice(this.admininstitutions.indexOf(inst), 1);
-        // console.log(inst.adminInstitutionName + ' Institution deleted successfully');
-        console.log(inst.adminInstitutionName + ' Institution deleted successfully');
-        this.displayEmptyRow();
+        this.dialogBoxService.open('Institute deleted successfully', 'information');
+        this.ngOnInit();
       },
       (error) => {
-        console.log('not able to delete \n' + JSON.stringify(error.error));
+        this.dialogBoxService.open('Institute deletion Failed', 'warning');
       }
     );
+  } else {
+    console.log('User clicked Cancel');
+    // Do something if the user clicked Cancel
   }
-
+});
+}
+  
   back() {
     //this.location.back();
     this._route.navigate(['adminmodule/admin', this.userName]);

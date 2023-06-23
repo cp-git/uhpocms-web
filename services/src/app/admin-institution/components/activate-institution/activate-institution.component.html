@@ -2,7 +2,9 @@
     <div class="container">
         <app-module-header [moduleName]="moduleName"
             [buttons]="{showAddButton:showAddButton,showActivateButton:showActivateButton}"
-            (backButtonClicked)="home()"></app-module-header>
+            (backButtonClicked)="home()"></app-module-header> <div *ngIf="institutions.length==0">
+                <h3>No Inactive Institution</h3>
+            </div>
 
 
         <div class="container">
