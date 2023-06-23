@@ -3,12 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 
 import { AdmininstitutionService } from '../../service/admininstitution.service';
-<<<<<<< HEAD
-import { environment } from 'environments/environment.development';
 
-=======
+import { environment } from 'environments/environment.development';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
->>>>>>> development
+
+
+
 @Component({
   selector: 'app-activate-institution',
   templateUrl: './activate-institution.component.html',
@@ -32,12 +32,12 @@ export class ActivateInstitutionComponent implements OnInit {
   showActivateButton: boolean = false;
   //constructor
   constructor(private _institutionService: AdmininstitutionService, private _router: Router,
-<<<<<<< HEAD
-    private _activatedRoute: ActivatedRoute) {
+
+    private _activatedRoute: ActivatedRoute, private dialogBoxService: DialogBoxService) {
+
+
     this.institutionUrl = `${environment.adminInstitutionUrl}/institution`;
-=======
-    private _activatedRoute: ActivatedRoute,private dialogBoxService:DialogBoxService) {
->>>>>>> development
+
 
   }
 

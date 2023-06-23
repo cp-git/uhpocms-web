@@ -25,7 +25,7 @@ export class DisplayinstituteComponent {
   admininstitution: AdminInstitution;
   userName!: string;
   adminId: any;
-  institutionId:any;
+  institutionId: any;
   // for buttons to view
   showAddButton: boolean = true;
   showActivateButton: boolean = true;
@@ -34,7 +34,7 @@ export class DisplayinstituteComponent {
   displayUrl: any;
 
   //constructor
-  constructor(private _institutionService: AdmininstitutionService, private _route: Router, private location: Location, private _activatedRoute: ActivatedRoute, private _sanitizer: DomSanitizer,private dialogBoxService:DialogBoxService) {
+  constructor(private _institutionService: AdmininstitutionService, private _route: Router, private location: Location, private _activatedRoute: ActivatedRoute, private _sanitizer: DomSanitizer, private dialogBoxService: DialogBoxService) {
     this.admininstitution = new AdminInstitution();
     this.institutionUrl = `${environment.adminInstitutionUrl}/institution`;
   }
@@ -109,12 +109,8 @@ export class DisplayinstituteComponent {
     );
   }
 
-<<<<<<< HEAD
-  // for deleting institution by name
-  deleteInstitution(inst: AdminInstitution) {
-    // calling service mathod to delete institution
-    this._institutionService.deleteInstitutionById(inst.adminInstitutionId).subscribe(
-=======
+
+
   // // for deleting institution by name
   // deleteInstitution(inst: AdminInstitution) {
   //   // calling service mathod to delete institution
@@ -132,7 +128,7 @@ export class DisplayinstituteComponent {
   //   );
   // }
 
- 
+
 
   // For deleting (soft delete) by id
   deleteInstitution(adminInstitutionId: number) {
@@ -141,23 +137,23 @@ export class DisplayinstituteComponent {
         console.log('User clicked OK');
         // Do something if the user clicked OK
         // calling service to soft delte
-    this._institutionService.deleteInstitutionById(adminInstitutionId).subscribe(
->>>>>>> development
-      (response) => {
-        this.dialogBoxService.open('Institute deleted successfully', 'information');
-        this.ngOnInit();
-      },
-      (error) => {
-        this.dialogBoxService.open('Institute deletion Failed', 'warning');
+        this._institutionService.deleteInstitutionById(adminInstitutionId).subscribe(
+
+          (response) => {
+            this.dialogBoxService.open('Institute deleted successfully', 'information');
+            this.ngOnInit();
+          },
+          (error) => {
+            this.dialogBoxService.open('Institute deletion Failed', 'warning');
+          }
+        );
+      } else {
+        console.log('User clicked Cancel');
+        // Do something if the user clicked Cancel
       }
-    );
-  } else {
-    console.log('User clicked Cancel');
-    // Do something if the user clicked Cancel
+    });
   }
-});
-}
-  
+
   back() {
     //this.location.back();
     this._route.navigate(['adminmodule/admin', this.userName]);
