@@ -71,9 +71,15 @@ export class AdmininstitutionService {
     return this._http.get<AdminInstitution[]>(`${this.institutionUrl}/profile/` + id);
   }
 
-// service to delete institution By id
-  deleteInstitutionById(institutionId: number): Observable<any> {
-    return this._http.delete<any>(`${this.institutionUrl}/institutionId/`+institutionId);
+  // service to delete institution By id
+  // deleteInstitutionById(institutionId: number): Observable<any> {
+  //   return this._http.delete<any>(`${this.institutionUrl}/institutionId/`+institutionId);
+  // }
+
+  deleteInstitutionById(adminInstitutionId: number): Observable<any> {
+    return this._http.delete<any>(`${this.institutionUrl}/institutionId/` + adminInstitutionId);
   }
+
+
 
 }

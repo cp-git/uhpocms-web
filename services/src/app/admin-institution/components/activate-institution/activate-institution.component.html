@@ -10,7 +10,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-3 text-center" *ngFor="let institution of institutions">
-                    <div><img src="../../assets/img/{{institution.adminInstitutionPicture}}" />
+                    <div><img src="{{displayUrl}}/{{institution.adminInstitutionId}}" />
                     </div>
 
                     <div><button #btn1 id="demo" class="btn btn-info">{{institution.adminInstitutionName}}</button>
