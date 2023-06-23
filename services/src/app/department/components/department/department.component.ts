@@ -68,6 +68,7 @@ export class DepartmentComponent implements OnInit {
 
   // back button functionality
   back() {
+
     if (this.viewAll == false) {
       this.viewAll = true;
       this.viewOne = false;
@@ -121,6 +122,7 @@ export class DepartmentComponent implements OnInit {
 
   // for navigating to add screen
   onAddClick() {
+    this.emptyDepartment = {} as Department;
     this.viewAll = false;
     this.viewAdd = true;
     this.showAddButton = false;
