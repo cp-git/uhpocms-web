@@ -207,7 +207,7 @@ export class ModuleComponent {
         },
         error => {
           console.log(`Module updation failed !`);
-          this.dialogBoxServices.open("Module updation failed !", 'information');
+          this.dialogBoxServices.open("Module updation failed !", 'warning');
         }
       );
     }
@@ -232,7 +232,7 @@ export class ModuleComponent {
         this.back();
       },
       (error) => {
-        this.dialogBoxServices.open("Module Name is already exist pls select another name..", 'information');
+        this.dialogBoxServices.open("Module Name is already exist pls select another name..", 'warning');
         console.log("Failed to add Module");
       });
   }
@@ -302,20 +302,26 @@ export class ModuleComponent {
   // For deleting (soft delete) 
   private deleteModule(moduleId: number) {
 
-
-    // calling service to soft delte
+    this.dialogBoxServices.open('Are you sure you want to delete this Module ? ', 'decision').then((response) => {
+      if (response) {
+        console.log('User clicked OK');
+        // Do something if the user clicked OK
+    // calling service to soft delete
     this.service.deleteModuleById(moduleId).subscribe(
       (response) => {
-        console.log('Module deleted successfully');
+        this.dialogBoxServices.open('Module deleted successfully', 'information');
         this.ngOnInit();
       },
       (error) => {
-        console.log('Module deletion failed');
+        this.dialogBoxServices.open('Module deletion Failed', 'warning');
       }
     );
-
+  } else {
+    console.log('User clicked Cancel');
+    // Do something if the user clicked Cancel
   }
-
+});
+}
   // For getting all inactive admin roles
   private getInactiveModule() {
 
@@ -333,17 +339,17 @@ export class ModuleComponent {
   }
 
 
-  // For activating admin role using role id
+  // For activating Module
   private activeModule(name: string) {
 
     // calling service to activating admin role
     this.service.activateModule(name).subscribe(
       response => {
-        console.log("Activated Module");
+        this.dialogBoxServices.open('Module Activated', 'information');
         this.ngOnInit();
       },
       error => {
-        console.log("Failed to activate");
+        this.dialogBoxServices.open('Failed to Activate', 'warning');
       }
     );
   }

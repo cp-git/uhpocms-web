@@ -3,8 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 
 import { AdmininstitutionService } from '../../service/admininstitution.service';
+<<<<<<< HEAD
 import { environment } from 'environments/environment.development';
 
+=======
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
+>>>>>>> development
 @Component({
   selector: 'app-activate-institution',
   templateUrl: './activate-institution.component.html',
@@ -28,8 +32,12 @@ export class ActivateInstitutionComponent implements OnInit {
   showActivateButton: boolean = false;
   //constructor
   constructor(private _institutionService: AdmininstitutionService, private _router: Router,
+<<<<<<< HEAD
     private _activatedRoute: ActivatedRoute) {
     this.institutionUrl = `${environment.adminInstitutionUrl}/institution`;
+=======
+    private _activatedRoute: ActivatedRoute,private dialogBoxService:DialogBoxService) {
+>>>>>>> development
 
   }
 
@@ -66,12 +74,12 @@ export class ActivateInstitutionComponent implements OnInit {
     this._institutionService.activateInstitutionById(institutionId).subscribe(
       response => {
         // alert("Institution activated");
-        console.log("Institution activated");
+        this.dialogBoxService.open('Institute Activated', 'information');
         this.ngOnInit();
       },
       error => {
         // alert("Institution activation failed");
-        console.log("Institution activation failed");
+        this.dialogBoxService.open('Failed to Activate', 'warning');
       }
     );
   }

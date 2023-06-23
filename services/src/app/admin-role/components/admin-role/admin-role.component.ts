@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 import { AdminRole } from 'app/admin-role/class/admin-role';
 import { AdminRoleService } from 'app/admin-role/services/admin-role.service';
 import { AdminRoleAllColumn, AdminRoleColumn } from 'app/admin-role/column-names/admin-role-column';
-
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 
 @Component({
   selector: 'app-admin-role',
@@ -47,7 +47,7 @@ export class AdminRoleComponent implements OnInit {
   emptyAdminRole: AdminRole;  // empty admin role
   currentData!: AdminRole;  // for update and view, to show existing data
 
-  constructor(private service: AdminRoleService, private location: Location) {
+  constructor(private service: AdminRoleService, private location: Location,private dialogBoxService:DialogBoxService) {
 
     // assigng headers
     // this.adminRoleHeader = AdminRoleColumn;
@@ -157,11 +157,11 @@ export class AdminRoleComponent implements OnInit {
     // calling service for updating data
     this.service.updateAdminRole(currentData.roleName, currentData).subscribe(
       response => {
-        console.log(`AdminRole updated successfully !`);
+        this.dialogBoxService.open('Role Updated successfully', 'information');
         this.back();
       },
       error => {
-        console.log(`AdminRole updation failed !`);
+        this.dialogBoxService.open('Role Updation Failed', 'warning');
       }
     );
   }
@@ -174,13 +174,13 @@ export class AdminRoleComponent implements OnInit {
     // calling service for adding data
     this.service.addAdminRole(currentData).subscribe(
       (data) => {
-        console.log('Role added Successfully');
+        this.dialogBoxService.open('Role Added Successfully', 'information');
         this.emptyAdminRole = {} as AdminRole;
         this.ngOnInit();
         this.back();
       },
       (error) => {
-        console.log("Failed to add role");
+        this.dialogBoxService.open('Failed to Add Role', 'warning');
       });
   }
 
@@ -208,18 +208,26 @@ export class AdminRoleComponent implements OnInit {
 
   // For deleting (soft delete) admin role using role name
   private deleteAdminRole(roleName: string) {
-
-    // calling service to soft delte
+    this.dialogBoxService.open('Are you sure you want to delete this Role ? ', 'decision').then((response) => {
+      if (response) {
+        console.log('User clicked OK');
+        // Do something if the user clicked OK
+        // calling service to soft delte
     this.service.deleteAdminRole(roleName).subscribe(
       (response) => {
-        console.log('Admin Role deleted successfully');
+        this.dialogBoxService.open('Role deleted successfully', 'information');
         this.ngOnInit();
       },
       (error) => {
-        console.log('Admin Role deletion failed');
+        this.dialogBoxService.open('Role deletion Failed', 'warning');
       }
     );
+  } else {
+    console.log('User clicked Cancel');
+    // Do something if the user clicked Cancel
   }
+});
+}
 
   // For getting all inactive admin roles
   private getInActiveAdminRoles() {
@@ -244,11 +252,11 @@ export class AdminRoleComponent implements OnInit {
     // calling service to activating admin role
     this.service.activateAdminRole(roleId).subscribe(
       response => {
-        console.log("Activated admin role");
+        this.dialogBoxService.open('Role Activated successfully', 'information');
         this.ngOnInit();
       },
       error => {
-        console.log("Failed to activate");
+        this.dialogBoxService.open('Failed to Activate ', 'warning');
       }
     );
   }

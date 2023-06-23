@@ -33,7 +33,7 @@ export const TeacherQuizUpdateColumn = [
     { key: 'courseId', label: 'Course Name', type: 'dropdown', arrayName: 'courses', columnId: 'courseId', columnName: 'courseName', disable: 'true' },
     // "foreignKeyColumn" is a foeign key from module table and "sortBasedOn" is foreign key of quiz table
     { key: 'moduleId', label: 'Module Name', type: 'dropdown', arrayName: 'modules', toSort: true, sortBasedOn: 'courseId', foreignKeyColumn: 'courseId_id', columnId: 'moduleId', columnName: 'moduleName', disable: 'true' },
-    { key: 'categoryId', label: 'Category Name', type: 'dropdown', arrayName: 'categories', columnId: 'categoryId', columnName: 'categoryName' },
+    { key: 'categoryId', label: 'Category Name', type: 'dropdown', arrayName: 'categories', columnId: 'categoryId', columnName: 'categoryName', disable: 'true' },
 
     { key: 'title', label: 'Quiz Title', type: 'input', subtype: 'text' },
     { key: 'description', label: 'Quiz Description', type: 'input', subtype: 'text' },

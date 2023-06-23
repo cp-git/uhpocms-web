@@ -13,7 +13,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
-
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 @Component({
   selector: 'app-assigncoursetoteacher',
   templateUrl: './assigncoursetoteacher.component.html',
@@ -74,7 +74,8 @@ export class AssigncoursetoteacherComponent {
     private assignTeacherService: AssigncourseteacherService,
     private location: Location,
     private _activatedRoute: ActivatedRoute,
-    private _route: Router) { }
+    private _route: Router,
+    private dialogBoxService:DialogBoxService) { }
 
   isFormComplete(): boolean {
     // Check if all required fields are filled in
@@ -289,12 +290,12 @@ export class AssigncoursetoteacherComponent {
 
         }, error => {
           this.inserted = false;
-          console.log("Failed to Assign course");
+          this.dialogBoxService.open('Failed to assign', 'warning');
         }
       )
     }
     if (this.inserted = true) {
-      console.log("Teacher assigned successfully");
+      this.dialogBoxService.open('Assign Course to Teacher Successfully', 'information');
     }
     else {
       console.log("Already Course Assigned");
