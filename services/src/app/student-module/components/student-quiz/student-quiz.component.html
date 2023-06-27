@@ -92,6 +92,10 @@
             <pagination-controls (pageChange)="currentPage=$event"></pagination-controls>
         </div>
     </ng-container>
+    <button class="download-button" (click)="generatePdfUsingPdfMaker()"
+        [hidden]="isRetakingQuiz && (quizFailedProgresses.includes(quizData.quizId) || quizPassedProgresses.includes(quizData.quizId))">
+        <i class="fas fa-file-pdf"></i> Download PDF
+    </button>
 </ng-template>
 
 
