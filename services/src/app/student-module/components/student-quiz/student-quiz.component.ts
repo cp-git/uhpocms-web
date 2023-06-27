@@ -260,7 +260,7 @@ export class StudentQuizComponent implements OnInit {
                   trueAnswer: trueAnswer
                 });
               });
-            // console.log("questionAnswer " + JSON.stringify(this.questionAnswers));
+            console.log("questionAnswer " + (this.questionAnswers) + "8888888888888");
             if (this.isRetakingQuiz) {
               // this.loadQuizData();
               this.clearAnswers();

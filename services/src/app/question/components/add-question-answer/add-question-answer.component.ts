@@ -12,7 +12,7 @@ import { NgForm } from '@angular/forms';
 import { QuestionAnswer } from 'app/question/class/question-answer';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { OneQuestionAnswer } from 'app/question/class/one-question-answer';
-
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 @Component({
   selector: 'app-add-question-answer',
   templateUrl: './add-question-answer.component.html',
@@ -93,7 +93,8 @@ export class AddQuestionAnswerComponent implements OnInit {
   generatedQuestionAnswerId: number = 0;;
   constructor(private location: Location,
     private service: QuestionService,
-    private courseService: TeacherCourseService
+    private courseService: TeacherCourseService,
+    private dialogBoxService:DialogBoxService
   ) {
     // 
     this.profileId = sessionStorage.getItem('profileId');
@@ -694,30 +695,38 @@ export class AddQuestionAnswerComponent implements OnInit {
     // calling service for adding data
     this.service.addQuestion(formData).subscribe(
       response => {
-        console.log('Question added Successfully');
+        this.dialogBoxService.open('Question Added successfully ', 'information');
         // this.emptyQuestion = {} as Question;
         this.ngOnInit();
         this.back();
       },
       error => {
-        console.log("Failed to add question");
+        this.dialogBoxService.open('Failed to add Question', 'warning');
       });
   }
 
   // For deleting (soft delete) question using questionFigure
   private deleteQuestion(questionFigure: string) {
-
+    this.dialogBoxService.open('Are you sure you want to delete this Question ? ', 'decision').then((response) => {
+      if (response) {
+        console.log('User clicked OK');
+        // Do something if the user clicked OK
     // calling service to soft delete
     this.service.deleteQuestion(questionFigure).subscribe(
       (response) => {
-        console.log('Question deleted successfully');
+        this.dialogBoxService.open('Question deleted successfully ', 'information');
         this.ngOnInit();
       },
       (error) => {
-        console.log('Question deletion failed');
+        this.dialogBoxService.open('Question deletion Failed', 'warning');
       }
     );
+  } else {
+    console.log('User clicked Cancel');
+    // Do something if the user clicked Cancel
   }
+});
+}
 
 
 

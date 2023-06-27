@@ -16,19 +16,26 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es6",
-    "module": "commonjs" ,
+    "module": "commonjs",
     "resolveJsonModule": true,
     "useDefineForClassFields": false,
     "baseUrl": "src",
     "paths": {
-      "tslib": ["path/to/node_modules/tslib/tslib.d.ts"]
+      "tslib": [
+        "path/to/node_modules/tslib/tslib.d.ts"
+      ]
     },
-    "lib": ["ES2022", "dom"],
+    "lib": [
+      "ES2022",
+      "dom"
+    ],
     "types": [
       "dom"
     ]
   },
-  "include": ["src/**/*.ts"],
+  "include": [
+    "src/**/*.ts"
+  ],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,

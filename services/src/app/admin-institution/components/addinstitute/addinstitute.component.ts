@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { AdmininstitutionService } from 'app/admin-institution/service/admininstitution.service';
-
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 
 
 @Component({
@@ -28,9 +28,13 @@ export class AddinstituteComponent {
   hideId: boolean = false;
   admininstitution: AdminInstitution;
 
+  // for buttons to view
+  showAddButton: boolean = false;
+  showActivateButton: boolean = false;
 
+  moduleName: string = 'Institute Administration'
   //constructor
-  constructor(private _institutionService: AdmininstitutionService, private _route: Router, private _activatedRoute: ActivatedRoute) {
+  constructor(private _institutionService: AdmininstitutionService, private _route: Router, private _activatedRoute: ActivatedRoute,private dialogueBoxService:DialogBoxService) {
     this.admininstitution = new AdminInstitution();
     this.fileName = '';
   }
@@ -117,7 +121,7 @@ export class AddinstituteComponent {
           this.admininstitutions.push(this.admininstitution);
           this.backupInst.push(Object.assign({}, this.admininstitution));
           // alert('Institute Added Successfuly');
-          console.log('Institute Added Successfully');
+          this.dialogueBoxService.open('Institute Added successfully', 'information');
           this._route.navigate(['displayinstitute', this.userName]);
 
           if (this.admininstitutions.length > 0) {
@@ -126,7 +130,8 @@ export class AddinstituteComponent {
         },
         (error) => {
           // alert('not able to add data \n' + JSON.stringify(error.error));
-          console.log('not able to add data \n' + JSON.stringify(error.error));
+          // console.log('not able to add data \n' + JSON.stringify(error.error));
+          this.dialogueBoxService.open('Failed to Add Institute', 'warning'); 
 
         }
       );
@@ -149,7 +154,7 @@ export class AddinstituteComponent {
 
 
   //back button routing
-  Back() {
+  back() {
     this._route.navigate(['displayinstitute', this.userName]);
   }
 
