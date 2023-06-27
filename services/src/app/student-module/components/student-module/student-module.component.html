@@ -70,6 +70,12 @@
                                     <a class="retakequiz"
                                         *ngIf="((!quiz.singleAttempt && (quizFailedProgresses.includes(quiz.quizId) || quizPassedProgresses.includes(quiz.quizId))) || quizFailedProgresses.includes(quiz.quizId))"
                                         (click)="onRetakeQuizClicked(quiz)">Retake</a>
+                                    <!-- 
+                                        <a class="retakequiz"
+                                        *ngIf="!(quiz.singleAttempt && (quizFailedProgresses.includes(quiz.quizId) || quizPassedProgresses.includes(quiz.quizId)))"
+                                        (click)="onRetakeQuizClicked(quiz)">
+                                        Retake
+                                    </a> -->
                                 </div>
                             </ng-container>
                         </ul>

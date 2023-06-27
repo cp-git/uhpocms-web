@@ -203,19 +203,7 @@ export class StudentQuizComponent implements OnInit {
   // and category name 
 
   // loading all Categories from session storage
-  private loadCategories() {
-    try {
-      this.sessionData = sessionStorage.getItem('category');
 
-      this.jsonData = JSON.parse(this.sessionData);
-      for (var inst in this.jsonData) {
-        this.categories.push(this.jsonData[inst]);
-      }
-    }
-    catch (err) {
-      console.log("Error", err)
-    }
-  }
 
   private loadQuizData() {
     this.currentPage = 1;
@@ -384,6 +372,22 @@ export class StudentQuizComponent implements OnInit {
       }
     );
 
+  }
+
+
+  // loading all Categories from session storage
+  private loadCategories() {
+    try {
+      this.sessionData = sessionStorage.getItem('category');
+
+      this.jsonData = JSON.parse(this.sessionData);
+      for (var inst in this.jsonData) {
+        this.categories.push(this.jsonData[inst]);
+      }
+    }
+    catch (err) {
+      console.log("Error", err)
+    }
   }
 
 
