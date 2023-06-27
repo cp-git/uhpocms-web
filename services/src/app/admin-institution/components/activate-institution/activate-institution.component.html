@@ -2,13 +2,15 @@
     <div class="container">
         <app-module-header [moduleName]="moduleName"
             [buttons]="{showAddButton:showAddButton,showActivateButton:showActivateButton}"
-            (backButtonClicked)="home()"></app-module-header>
+            (backButtonClicked)="home()"></app-module-header> <div *ngIf="institutions.length==0">
+                <h3>No Inactive Institution</h3>
+            </div>
 
 
         <div class="container">
             <div class="row">
                 <div class="col-sm-3 text-center" *ngFor="let institution of institutions">
-                    <div><img src="../../assets/img/{{institution.adminInstitutionPicture}}" />
+                    <div><img src="{{displayUrl}}/{{institution.adminInstitutionId}}" />
                     </div>
 
                     <div><button #btn1 id="demo" class="btn btn-info">{{institution.adminInstitutionName}}</button>
