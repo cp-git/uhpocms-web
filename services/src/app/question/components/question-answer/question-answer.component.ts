@@ -345,7 +345,7 @@ export class QuestionAnswerComponent implements OnInit {
 
 
   loadQuiz(selectedQuizId: number) {
-    alert(selectedQuizId);
+    //alert(selectedQuizId);
     try {
       this.sessionData = sessionStorage.getItem('quiz');
       this.data = JSON.parse(this.sessionData);
@@ -376,7 +376,7 @@ export class QuestionAnswerComponent implements OnInit {
       for (var category of this.data) {
         if (category.categoryId == selectedQuizCategoryId) {
           this.quizCategory = category;
-          alert(JSON.stringify(this.quizCategory));
+          //alert(JSON.stringify(this.quizCategory));
 
           console.log(JSON.stringify(this.quizCategory) + "000000000000000000000000000000000000"); // Entire object of the selected category
           break; // Exit the loop after finding the matching category

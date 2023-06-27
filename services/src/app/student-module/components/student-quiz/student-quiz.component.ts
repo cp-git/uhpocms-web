@@ -600,7 +600,7 @@ export class StudentQuizComponent implements OnInit {
 
 
   loadQuiz(selectedQuizId: number) {
-    alert(selectedQuizId);
+    //alert(selectedQuizId);
     try {
       this.sessionData = sessionStorage.getItem('quiz');
       this.data = JSON.parse(this.sessionData);
