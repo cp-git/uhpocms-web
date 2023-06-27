@@ -3,15 +3,18 @@ import { FormGroup } from '@angular/forms';
 import { Answer } from 'app/question/class/answer';
 import { OneQuestionAnswer } from 'app/question/class/one-question-answer';
 import { QuestionAnswer } from 'app/question/class/question-answer';
+import { SubmitPayload } from 'app/review-answer/interface/submit-payload.any';
 import { environment } from 'environments/environment.development';
 
+
 @Component({
-  selector: 'app-question-answer',
-  templateUrl: './question-answer.component.html',
-  styleUrls: ['./question-answer.component.css']
+  selector: 'app-add-review-marks',
+  templateUrl: './add-review-marks.component.html',
+  styleUrls: ['./add-review-marks.component.css']
 })
-export class QuestionAnswerComponent implements OnInit {
+export class AddReviewMarksComponent implements OnInit {
   myForm!: FormGroup;
+
 
   @Input() questionAnswers: any[] = [];
   @Input() pagination: boolean = false;
@@ -22,10 +25,13 @@ export class QuestionAnswerComponent implements OnInit {
   @Input() selectedCategoryName: any;
   @Input() selectedQuizId: any;
   @Input() generatedQuestionAnswerId: number = 0;
-  @Input() totalQuizMarks: any; 
+  @Input() totalReviewMarks: number = 0; 
+  @Input() totalQuizMarks: any; // Define the Input property
   @Output() submitClicked: EventEmitter<any> = new EventEmitter();
+  // @Output() submitClicked: EventEmitter<SubmitPayload> = new EventEmitter();
 
-  totalMarks: number = 0;
+
+
   mcqAnswer: any;
   options = ['Option 1', 'Option 2', 'Option3', 'Option4'];
 
@@ -54,8 +60,6 @@ export class QuestionAnswerComponent implements OnInit {
     this.options.splice(index, 1);
   }
 
-  // Calculate the total marks count
-
 
   // onCategorySelected() {
   //   if (this.selectedCategory === 'mcq') {
@@ -82,17 +86,13 @@ export class QuestionAnswerComponent implements OnInit {
   submittedQuestionAnswer!: OneQuestionAnswer;
   isOptionSelected: boolean = false;
   constructor() {
-    
     this.questionUrl = `${environment.questionUrl}`;
   }
 
   ngOnInit(): void {
     this.displayUrl = this.questionUrl + '/getFileById';
 
-
-
   }
-
 
   onFileSelected(event: any, queAns: OneQuestionAnswer) {
     // console.log(JSON.stringify(queAns))
@@ -120,38 +120,33 @@ export class QuestionAnswerComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['generatedQuestionAnswerId']) {
       this.submittedQuestionAnswer.questionId = this.generatedQuestionAnswerId;
-
     }
     // console.log(this.submittedQuestionAnswer);
 
     if (changes['questionAnswers']) {
       this.questionAnswers = this.questionAnswers;
-      // console.log("inside   ngOnChanges");
-      // console.log(this.questionAnswers)
-  
-      // for(let i of this.questionAnswers){
-      //   this.totalMarks += i.maxMarks;
-      // }
     }
-
-   
   }
 
-  onFormSubmit(queAns: OneQuestionAnswer) {
+  onFormSubmit(queAns: OneQuestionAnswer,queAnsArray: OneQuestionAnswer[]) {
     this.submittedQuestionAnswer = {} as OneQuestionAnswer;
     this.submittedQuestionAnswer = queAns;
     console.log(queAns);
+    // let optionSelected :boolean = this.isOptionSelected
+
+
+  //  console.log(this.myNumber)
 
     if ((this.selectedCategoryName.toUpperCase() != 'MCQ')) {
       queAns.correct1 = true;
     }
 
     if (queAns.questionId > 0) {
-      this.submitClicked.emit(queAns);
+      this.submitClicked.emit({queAns,queAnsArray});
 
     } else {
       queAns.questionId = 0;
-      this.submitClicked.emit(queAns);
+      this.submitClicked.emit({queAns,queAnsArray});
     }
 
     queAns.isFormDirty = false;
@@ -228,7 +223,6 @@ export class QuestionAnswerComponent implements OnInit {
     if (queAns.isFormDirty == false) {
       queAns.isFormDirty = true;
       queAns.isFormSubmitted = false;
-      queAns.totalMarks =   queAns.totalMarks;
     }
   }
 
