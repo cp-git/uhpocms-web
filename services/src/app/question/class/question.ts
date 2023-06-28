@@ -1,4 +1,5 @@
 export class Question {
+    maxMarks!: number;
     questionId!: number;
     questionFigure!: string;
     questionContent!: string;
@@ -12,4 +13,5 @@ export class Question {
     questionCreatedOn!: Date;
     questionModifiedBy!: string;
     questionModifiedOn!: Date;
+    
 }

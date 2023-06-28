@@ -5,4 +5,6 @@ export class StudentAnswer {
     questionContent!: string;
     selectedOption!: boolean;
     answerId!: number;
+    teacherRemark!: string;
+    marks!: number;
 }

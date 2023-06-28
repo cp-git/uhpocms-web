@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { Quiz } from 'app/quiz/class/quiz';
 import { Category } from 'app/category/class/category';
@@ -20,7 +20,8 @@ import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box
 })
 export class AddQuestionAnswerComponent implements OnInit {
   @ViewChild('myForm') myForm: NgForm | undefined; // Access the form using ViewChild
-
+  
+  // @Output() submitClicked: EventEmitter<number> = new EventEmitter<number>();
   // for pagination 
   currentPage = 1;
 
@@ -29,7 +30,7 @@ export class AddQuestionAnswerComponent implements OnInit {
 
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
-
+ totalQuizMarks:number=0
   allData: any[] = []; // list of active question
   allInActiveData: Question[] = []; // list of inactive question
 
@@ -80,7 +81,7 @@ export class AddQuestionAnswerComponent implements OnInit {
   queAns!: OneQuestionAnswer;
   answers: Answer[] = [];
   selectedQuiz: any
-
+  totalMarks!: number;
   profileId: any;
 
   file!: File;
@@ -124,7 +125,7 @@ export class AddQuestionAnswerComponent implements OnInit {
     }
 
   }
-
+// Working code
   onFormSubmit(queAns: OneQuestionAnswer): void {
     this.questionAnswer = {} as QuestionAnswer;
     this.oneQuestionAnswer = {} as OneQuestionAnswer;
@@ -135,12 +136,26 @@ export class AddQuestionAnswerComponent implements OnInit {
     // this.oneQuestionAnswer = queAns;
     // separating question from object 
     // console.log(queAns.questionId);
+  this.service.getAllQuestionsByQuizId(queAns.questionQuizId).subscribe(
+      (response: any[]) => {
+        console.log(response);
+        response.forEach(
+          question => {
+           
+            this.totalMarks = this.totalMarks + question.maxMarks;
+            
+          })
+      });
+
     this.questionAnswer.question = {} as Question;
     this.questionAnswer.question['questionId'] = queAns.questionId;
     this.questionAnswer.question['questionFigure'] = queAns.questionFigure;
     this.questionAnswer.question['questionContent'] = queAns.questionContent;
     this.questionAnswer.question['questionExplanation'] = queAns.questionExplanation;
     this.questionAnswer.question['questionOrderNo'] = queAns.questionOrderNo;
+    this.questionAnswer.question['maxMarks'] = queAns.maxMarks;
+   
+     queAns.totalMarks = this.totalMarks;
     if (this.selectedCategoryName == 'MCQ' || this.selectedCategoryName == 'mcq') {
       this.questionAnswer.question.questionIsMCQ = true;
     } else {
@@ -214,11 +229,17 @@ export class AddQuestionAnswerComponent implements OnInit {
 
     formData.append("request", new Blob([JSON.stringify(this.questionAnswer)], { type: 'application/json' }));
 
+    console.log(formData)
     this.service.addQuestion(formData).subscribe(
       (response) => {
-        this.generatedQuestionAnswerId = response;
 
+     
+        this.generatedQuestionAnswerId = response;
+        console.log( this.generatedQuestionAnswerId)
         console.log("Question Added Successfully");
+        // this.getDataForMarks(this.selectedQuizId)
+        this.getAllQuestionAnswers(this.selectedQuizId)
+      
       },
       (error) => {
         console.log("Question added failed")
@@ -226,6 +247,142 @@ export class AddQuestionAnswerComponent implements OnInit {
     )
 
   }
+
+
+  // onFormSubmit(queAns: OneQuestionAnswer): void {
+  //   this.questionAnswer = {} as QuestionAnswer;
+  //   this.oneQuestionAnswer = {} as OneQuestionAnswer;
+  //   this.totalMarks = 0;
+  //   // console.log("this.totalMarks  bfore API " + this.totalMarks)
+  //   this.service.getAllQuestionsByQuizId(queAns.questionQuizId).subscribe(
+  //     (response: any[]) => {
+  //       console.log(response);
+       
+  //       response.forEach(question => {
+  //         // if(queAns.questionId == question.questionId){
+          
+  //         //   this.totalMarks = this.totalMarks + queAns.maxMarks;
+  //         //   // console.log("this.totalMarks in if  "+ this.totalMarks)
+  //         // }
+  //         // else{
+  //         // this.totalMarks = this.totalMarks + question.maxMarks;
+  //         // console.log("this.totalMarks in else  " + this.totalMarks)
+  //         // }
+  //         // console.log("this.totalMarks in APi  "+ this.totalMarks)
+  //       });
+       
+  //       // console.log("this.totalMarks   "+this.totalMarks)
+  //       // Rest of the code that depends on the completion of the API call can be placed here
+  //       this.processFormSubmission(queAns);
+  //     },
+  //     (error) => {
+  //       console.log("Error fetching questions:", error);
+  //     }
+  //   );
+  // }
+  
+  // processFormSubmission(queAns: OneQuestionAnswer): void {
+ 
+
+
+  //   this.questionAnswer.question = {} as Question;
+  //   this.questionAnswer.question['questionId'] = queAns.questionId;
+  //   this.questionAnswer.question['questionFigure'] = queAns.questionFigure;
+  //   this.questionAnswer.question['questionContent'] = queAns.questionContent;
+  //   this.questionAnswer.question['questionExplanation'] = queAns.questionExplanation;
+  //   this.questionAnswer.question['questionOrderNo'] = queAns.questionOrderNo;
+  //   this.questionAnswer.question['maxMarks'] = queAns.maxMarks;
+    
+   
+  //    queAns.totalMarks = this.totalMarks;
+  //    console.log("   queAns.totalMarks   "+    queAns.totalMarks)
+  //   if (this.selectedCategoryName == 'MCQ' || this.selectedCategoryName == 'mcq') {
+  //     this.questionAnswer.question.questionIsMCQ = true;
+  //   } else {
+  //     this.questionAnswer.question.questionIsMCQ = false;
+
+  //   }
+  //   this.questionAnswer.question.questionQuizId = this.selectedQuizId;
+  //   this.questionAnswer.question.questionCategoryId = this.selectedQuiz.categoryId;
+  //   this.questionAnswer.question.questionIsActive = true;
+
+  //   // separating answer from object
+  //   // this.emptyAnswer = {} as Answer;
+  //   // this.emptyAnswer.id = this.questionAnswer.answers['id'];
+  //   // this.emptyAnswer.content = this.questionAnswer.answers['content'];
+  //   // this.emptyAnswer.correct = true;
+  //   // this.emptyAnswer.questionorderno = this.questionAnswer.answers['questionorderno'];
+  //   this.questionAnswer.answers = [];
+
+
+  //   // making object of answers
+  //   if (queAns['content1'] != '' || queAns['content1'] != undefined) {
+  //     this.answer = {} as Answer;
+  //     this.answer.content = queAns['content1'];
+  //     this.answer.correct = queAns['correct1'];
+  //     this.answer.questionorderno = queAns['questionOrderNo'];
+
+  //     this.questionAnswer.answers.push(this.answer);
+  //   }
+  //   if (queAns['content2'] != '' || queAns['content2'] != undefined) {
+  //     this.answer = {} as Answer;
+  //     this.answer.content = queAns['content2'];
+  //     this.answer.correct = queAns['correct2'];
+  //     this.answer.questionorderno = queAns['questionOrderNo'];
+
+  //     this.questionAnswer.answers.push(this.answer);
+  //   }
+
+  //   if (queAns['content3'] != '' || queAns['content3'] != undefined) {
+  //     this.answer = {} as Answer;
+
+  //     this.answer.content = queAns['content3'];
+  //     this.answer.correct = queAns['correct3'];
+  //     this.answer.questionorderno = queAns['questionOrderNo'];
+
+  //     this.questionAnswer.answers.push(this.answer);
+  //   }
+
+  //   if (queAns['content4'] != '' || queAns['content4'] != undefined) {
+  //     this.answer = {} as Answer;
+
+  //     this.answer.content = queAns['content4'];
+  //     this.answer.correct = queAns['correct4'];
+  //     this.answer.questionorderno = queAns['questionOrderNo'];
+  //     this.questionAnswer.answers.push(this.answer);
+  //   }
+
+  //   const instituteJson = JSON.stringify(this.questionAnswer);
+  
+  //   const blob = new Blob([instituteJson], {
+  //     type: 'application/json'
+  //   });
+  
+  //   let formData = new FormData();
+  
+  //   for (var i = 0; i < this.myFiles.length; i++) {
+  //     formData.append("files", this.myFiles[i]);
+  //   }
+  
+  //   formData.append("request", new Blob([JSON.stringify(this.questionAnswer)], { type: 'application/json' }));
+  
+  //   console.log(formData);
+  //   this.service.addQuestion(formData).subscribe(
+  //     (response) => {
+  //       this.generatedQuestionAnswerId = response;
+  //       console.log(this.generatedQuestionAnswerId);
+  //       console.log("Question Added Successfully");
+  //       this.getDataForMarks(this.selectedQuizId)
+  //       this.submitClicked.emit(this.totalQuizMarks);
+  //     },
+  //     (error) => {
+  //       console.log("Question added failed");
+  //     }
+  //   );
+  // }
+  
+
+
 
   onChangeCourse() {
     this.selectedModuleId = undefined;
@@ -291,22 +448,75 @@ export class AddQuestionAnswerComponent implements OnInit {
 
   }
 
+// private getDataForMarks(quizId: number){
+//   this.totalMarks = 0;
+//   this.totalQuizMarks = 0
+//      this.service.getAllQuestionsByQuizId(quizId).subscribe(
+//        (response: any[]) => {
+//          console.log(response);
+//          response.forEach(
+//            question => {
+            
+//              this.totalMarks = this.totalMarks + question.maxMarks;
+             
+//            })
+//        });
+   
+//      this.service.getAllAnswers().subscribe(
+//        (data) => {
+//          this.answers = data;
+//          this.questionAnswers = []; // Initialize questionAnswers as an array
+       
+//          this.service.getAllQuestionsByQuizId(quizId).subscribe(
+//            (response: any[]) => {
+//              console.log(response);
+//              console.log("inside function getAllQuestionAnswers() ")
+//              response.forEach(
+//                question => {
+//                  this.queAns = {} as OneQuestionAnswer;
+                 
+//                   this.totalQuizMarks += question.maxMarks;
+//                  this.queAns.totalMarks = this.totalMarks;
+//                  console.log("Total Marks Down")
+//                  console.log( this.queAns.totalMarks )
 
+//                  this.submitClicked.emit(this.totalQuizMarks);
+//                })
+//               })
+//             })
+// }
   private getAllQuestionAnswers(quizId: number) {
-
-
+ this.totalMarks = 0;
+ this.totalQuizMarks = 0
+    this.service.getAllQuestionsByQuizId(quizId).subscribe(
+      (response: any[]) => {
+        console.log(response);
+        response.forEach(
+          question => {
+           
+            this.totalMarks = this.totalMarks + question.maxMarks;
+            
+          })
+      });
+  
     this.service.getAllAnswers().subscribe(
       (data) => {
         this.answers = data;
         this.questionAnswers = []; // Initialize questionAnswers as an array
+      
         this.service.getAllQuestionsByQuizId(quizId).subscribe(
           (response: any[]) => {
             console.log(response);
-
+            console.log("inside function getAllQuestionAnswers() ")
             response.forEach(
               question => {
                 this.queAns = {} as OneQuestionAnswer;
-
+                
+                 this.totalQuizMarks += question.maxMarks;
+                this.queAns.totalMarks = this.totalMarks;
+                console.log("Total Marks Down")
+                console.log( this.queAns.totalMarks )
+                
                 // Filter the answers based on questionId
                 const filteredAnswers = this.answers.filter(answer => answer.questionid == question.questionId);
                 // console.log(filteredAnswers);
@@ -352,6 +562,7 @@ export class AddQuestionAnswerComponent implements OnInit {
                   isFormSubmitted: isFormSubmitted,
                   image: false,
                   isOptionSelected: true,
+                  totalMarks : this.queAns.totalMarks,
                   selectedAnswer: ''
                 });
               });
