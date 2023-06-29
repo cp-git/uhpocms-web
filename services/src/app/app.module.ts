@@ -88,7 +88,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AnalyticsComponent } from './admin-analytics/analytics/analytics.component';
 import { PolarChartComponent } from './charts/components/polar-chart/polar-chart.component';
 import { StudentModuleModule } from './student-module/student-module.module';
-import { ReviewQueAnsComponent } from './review-answer/components/review-que-ans/review-que-ans.component';
 import { ReviewModule } from './review-answer/module/review/review.module';
 import { AddReviewMarksComponent } from './review-answer/components/add-review-marks/add-review-marks.component';
 
@@ -133,8 +132,8 @@ import { AddReviewMarksComponent } from './review-answer/components/add-review-m
 
     BarChartComponent,
     AnalyticsComponent,
-    PolarChartComponent,
-    ReviewQueAnsComponent
+    PolarChartComponent
+ 
       
     
 

@@ -28,8 +28,7 @@ export class AddReviewMarksComponent implements OnInit {
   @Input() totalReviewMarks: number = 0; 
   @Input() totalQuizMarks: any; // Define the Input property
   @Output() submitClicked: EventEmitter<any> = new EventEmitter();
-  // @Output() submitClicked: EventEmitter<SubmitPayload> = new EventEmitter();
-
+  
 
 
   mcqAnswer: any;
@@ -61,23 +60,6 @@ export class AddReviewMarksComponent implements OnInit {
   }
 
 
-  // onCategorySelected() {
-  //   if (this.selectedCategory === 'mcq') {
-  //     this.isMcqFormVisible = true;
-  //     this.isNonMcqFormVisible = false;
-  //   } else if (this.selectedCategory === 'non-mcq') {
-  //     this.isMcqFormVisible = false;
-  //     this.isNonMcqFormVisible = true;
-  //   } else {
-  //     this.isMcqFormVisible = false;
-  //     this.isNonMcqFormVisible = false;
-  //   }
-  // }
-
-  //pagination
-
-  // sessionData: any;
-  // data: any;
 
   image: string | undefined;
 
@@ -95,7 +77,7 @@ export class AddReviewMarksComponent implements OnInit {
   }
 
   onFileSelected(event: any, queAns: OneQuestionAnswer) {
-    // console.log(JSON.stringify(queAns))
+  
     const file = event.target.files[0];
     this.fileName = file.name;
 
@@ -107,8 +89,7 @@ export class AddReviewMarksComponent implements OnInit {
     reader.readAsDataURL(file);
     queAns.questionFigure = this.fileName;
 
-    // console.log(queAns.questionFigure)
-
+ 
     if (queAns.isFormDirty == false) {
       queAns.isFormDirty = true;
       queAns.isFormSubmitted = false;
@@ -121,7 +102,7 @@ export class AddReviewMarksComponent implements OnInit {
     if (changes['generatedQuestionAnswerId']) {
       this.submittedQuestionAnswer.questionId = this.generatedQuestionAnswerId;
     }
-    // console.log(this.submittedQuestionAnswer);
+
 
     if (changes['questionAnswers']) {
       this.questionAnswers = this.questionAnswers;
@@ -153,33 +134,7 @@ export class AddReviewMarksComponent implements OnInit {
     queAns.isFormSubmitted = true;
   }
 
-  // private initialisedMcqOptions() {
-  //   this.questionAnswers.forEach(queAns => {
-  //     queAns.answers.forEach((answer: Answer, index: number) => {
-  //       if (index === 0) {
-  //         queAns.answers[0] = answer;
-  //       } else if (index === 1) {
-  //         queAns.answers[1] = answer;
-  //       } else if (index === 2) {
-  //         queAns.answers[2] = answer;
-  //       } else if (index === 3) {
-  //         queAns.answers[3] = answer;
-  //       }
-  //     })
-  //     for (let i = queAns.answers.length; i < 4; i++) {
-  //       console.log(i)
-  //       if (i === 0) {
-  //         queAns.answers[0] = new Answer();
-  //       } else if (i === 1) {
-  //         queAns.answers[1] = new Answer();
-  //       } else if (i === 2) {
-  //         queAns.answers[2] = new Answer();
-  //       } else if (i === 3) {
-  //         queAns.answers[3] = new Answer();
-  //       }
-  //     }
-  //   })
-  // }
+ 
 
   onAnswerSelected(queAns: any, option: any) {
 
