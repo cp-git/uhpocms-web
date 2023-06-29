@@ -98,9 +98,31 @@
                     </ng-template>
                 </div>
             </div>
-            <h5 style="color:blue"> Course Progress : {{courProgPercentage}} % Completed </h5>
-            <h5 *ngIf="selectedQuizName" style="color:blue"> {{ selectedQuizName}} : {{ selectedQuizProgress.score }}%
+
+
+            <h5 style="color:blue">Course Progress: {{courProgPercentage}}% Completed</h5>
+            <h5 *ngIf="selectedQuizName" style="color:blue">
+                {{ selectedQuizName }}: {{ selectedQuizProgress.score }} Marks -
+                {{ selectedQuizProgress.score > selectedQuiz.passMark ? selectedQuiz.successText : selectedQuiz.failText
+                }}
+
             </h5>
+            <!-- <h5 *ngIf="selectedQuizProgress.score > selectedQuiz.passMark; else failedText" style="color:blue">
+                {{selectedQuiz.successText}}
+            </h5>
+            <ng-template #failedText>
+                <h5 style="color:red">
+                    {{selectedQuiz.failText}}
+                </h5>
+            </ng-template> -->
+
+
+            <!-- <h5 style="color:blue"> Course Progress : {{courProgPercentage}} % Completed </h5>
+            <h5 *ngIf="selectedQuizName" style="color:blue"> {{ selectedQuizName}} : {{ selectedQuizProgress.score }} /
+                {{selectedQuiz.passMark}}
+                Marks
+            </h5> -->
+
             <div style="font-size: 20px;"
                 [hidden]="selectedQuizName=='' || (!isRetakingQuiz && (quizFailedProgresses.includes(selectedQuiz.quizId) || quizPassedProgresses.includes(selectedQuiz.quizId)))">
                 <label>Quiz Timer : </label>&nbsp;
