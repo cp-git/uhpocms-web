@@ -12,7 +12,7 @@ import { AuthUserService } from 'app/auth-user/services/auth-user.service';
 import { Authuser } from 'app/auth-user/class/auth-user';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment.development';
-
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -70,13 +70,16 @@ export class ProfileComponent implements OnInit {
 
   displayUrl!: any;
 
+  imagesUrl!: any;
+
   constructor(
     private location: Location,
     private service: ProfileService,
     private departmentService: DepartmentService,
     private adminRoleService: AdminRoleService,
     private authUserService: AuthUserService,
-    private http: HttpClient
+    private http: HttpClient,
+    private dialogBoxService:DialogBoxService
   ) {
     // assigng Columns
     this.columnNames = ProfileColumn;
@@ -246,6 +249,15 @@ export class ProfileComponent implements OnInit {
     this.emptyProfile.profilePics = this.file.name;
     console.log(this.file);
 
+    const reader = new FileReader();
+    reader.onload = () => {
+
+      this.imagesUrl = reader.result;
+
+    }
+
+    reader.readAsDataURL(this.file);
+
 
   }
 
@@ -399,17 +411,18 @@ export class ProfileComponent implements OnInit {
         if (currentData.activeUser === true) {
           this.authUserService.activateAuthUserById(currentData.userId).subscribe(
             response => {
-              console.log('Profile added successfully');
+              this.dialogBoxService.open('Profile Added Successfully ', 'information')
               this.emptyProfile = {} as Profile;
               this.ngOnInit();
               this.back();
             },
             error => {
-              console.log("Failed to add profile");
+              this.dialogBoxService.open('Failed to Add Profile ', 'warning')
             }
           );
         } else {
-          console.log('Profile saved successfully. NOTE - Profile is not activated!');
+          
+          this.dialogBoxService.open('Profile saved successfully. NOTE - Profile is not activated!', 'information')
           this.emptyProfile = {} as Profile;
           this.ngOnInit();
           this.back();
@@ -417,20 +430,30 @@ export class ProfileComponent implements OnInit {
 
       },
       error => {
-        console.log("Failed to add profile");
+        this.dialogBoxService.open('Failed to Add Profile ', 'warning')
       });
   }
 
   // updating profile by usign userId(foreign key from authuser)
   private updateProfile(currentData: Profile) {
 
-    this.service.updateProfileByActiveAuthuser(currentData.userId, currentData).subscribe(
+    const instituteJson = JSON.stringify(currentData);
+
+    const blob = new Blob([instituteJson], {
+      type: 'application/json'
+    })
+
+    let formData = new FormData();
+    formData.append("file", this.file);
+    formData.append("admin", new Blob([JSON.stringify(currentData)], { type: 'application/json' }));
+
+    this.service.updateProfileByActiveAuthuser(currentData.userId, formData).subscribe(
       response => {
-        console.log('Profile updated successfully');
+        this.dialogBoxService.open('Profile Updated Successfully', 'information')
         this.back();
       },
       error => {
-        console.log("Failed to update profile");
+        this.dialogBoxService.open('Failed to Update Profile', 'warning')
       }
     );
   }
@@ -440,31 +463,36 @@ export class ProfileComponent implements OnInit {
   //(aftering convertin gby Id please change function call and remove this comment)
 
   private deleteProfile(currentData: Profile) {
-
-
+    this.dialogBoxService.open('Are you sure you want to delete this Profile? ', 'decision').then((response) => {
+      if (response) {
+        console.log('User clicked OK');
+        // Do something if the user clicked OK
+    // calling service to soft delete
     currentData.activeUser = false;
-
-
-
-    this.service.updateProfileByActiveAuthuser(currentData.userId, currentData).subscribe(
+this.service.deleteProfileByActiveAuthuser(currentData.userId, currentData).subscribe(
       response => {
         console.log(currentData);
         this.activeAuthUsers.find(authUser => {
           if (authUser.authUserId == currentData.userId) {
             this.authUserService.deleteAuthUser(authUser.authUserName).subscribe(
               (response: any) => {
-                console.log('Profile deleted successfully');
+                this.dialogBoxService.open('Profile deleted Successfully', 'information');
                 this.ngOnInit();
               }
             );
           }
         })
       },
-      error => {
-        console.log("Failed to delete profile");
+      (error) => {
+        this.dialogBoxService.open('Profile deletion Failed', 'warning');
       }
     );
+  } else {
+    console.log('User clicked Cancel');
+    // Do something if the user clicked Cancel
   }
+});
+}
 
   // For getting all inactive admin roles
   private getInActiveProfiles() {
@@ -490,17 +518,17 @@ export class ProfileComponent implements OnInit {
       response => {
         this.authUserService.activateAuthUserById(profile.userId).subscribe(
           response => {
-            console.log('Profile activated successfully');
+            this.dialogBoxService.open('Profile activated successfully', 'information');
             this.ngOnInit();
           },
           error => {
-            console.log("Failed to activate profile");
+            this.dialogBoxService.open('Failed to activate Profile', 'warning');
           }
         );
 
       },
       error => {
-        console.log("Profile activation failed");
+        this.dialogBoxService.open('Profile activation Failed', 'warning');
       }
     );
     // } else {

@@ -278,11 +278,11 @@ export class TeacherCourseComponent implements OnInit {
     // calling service for updating data
     this.service.updateCourseById(currentData.courseId, currentData).subscribe(
       response => {
-        console.log(`Course updated successfully !`);
+        this.dialogBoxServices.open('Course updated successfully', 'information');
         this.back();
       },
       error => {
-        console.log(`Course updation failed !`);
+        this.dialogBoxServices.open('Course Updation Failed', 'warning');
       }
     );
   }
@@ -299,7 +299,7 @@ export class TeacherCourseComponent implements OnInit {
       const courseAndDepartment = await this.service.assignCourseToDepartment(this.courseDepartment).toPromise();
       if (courseAndDepartment) {
         await this.loadAllCoursesWithDepartmentId();
-        console.log('Course Added successfully');
+        // console.log('Course Added successfully');
 
         if (data.courseIsActive) {
           this.dialogBoxServices.open("Course added successfully", 'information');
@@ -312,8 +312,8 @@ export class TeacherCourseComponent implements OnInit {
       this.ngOnInit();
       this.back();
     } catch (error) {
-      console.log("Failed to add Course");
-      this.dialogBoxServices.open("Failed to add Course", 'information');
+      
+      this.dialogBoxServices.open("Failed to add Course", 'warning');
     }
   }
 
@@ -366,8 +366,11 @@ export class TeacherCourseComponent implements OnInit {
 
   // For deleting (soft delete) course using courseId
   private deleteCourse(courseId: number) {
-
-    // calling service to soft delete
+    this.dialogBoxServices.open('Are you sure you want to delete this Course ? ', 'decision').then((response) => {
+      if (response) {
+        console.log('User clicked OK');
+        // Do something if the user clicked OK
+        // calling service to soft delete
     this.service.deleteCourseByCourseId(courseId).subscribe(
       (response) => {
         console.log('Course deleted successfully');
@@ -375,11 +378,15 @@ export class TeacherCourseComponent implements OnInit {
         this.ngOnInit();
       },
       (error) => {
-        this.dialogBoxServices.open("course deletion failed", 'information');
-        console.log('course deletion failed');
+        this.dialogBoxServices.open('Course deletion Failed', 'warning');
       }
     );
+  } else {
+    console.log('User clicked Cancel');
+    // Do something if the user clicked Cancel
   }
+});
+}
 
   // For getting all inactive course
   private getInActiveCourse() {
@@ -446,11 +453,11 @@ export class TeacherCourseComponent implements OnInit {
     // calling service to activating admin role
     this.service.activateCourseById(courseId).subscribe(
       response => {
-        console.log("Activated course");
+        this.dialogBoxServices.open('Course Activated', 'information');
         this.ngOnInit();
       },
       error => {
-        console.log("Failed to activate");
+        this.dialogBoxServices.open('Failed to Activate Course', 'warning');
       }
     );
   }

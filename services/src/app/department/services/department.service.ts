@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { environment } from 'environments/environment.development';
-import { Observable } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { Department } from '../class/department';
+import { DataServiceCache } from 'app/cache/service/data-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class DepartmentService {
   private readonly departmentUrl: string;
   private readonly adminInstitutionUrl: string;
   departments: Department[] = [];
-  constructor(private _http: HttpClient) {
+ 
+  constructor(private _http: HttpClient,private cache: DataServiceCache) {
     //urls from environment code
     this.departmentUrl = environment.departmentUrl;
     this.adminInstitutionUrl = environment.adminInstitutionUrl;
@@ -52,7 +54,21 @@ export class DepartmentService {
 
   //service to get dept by provided institution id
   getDepartmentsByInstitutionId(id: number): Observable<Department[]> {
-    return this._http.get<Department[]>(`${this.departmentUrl}/department/institutionId/` + id);
+    const cachedData = this.cache.getDataFromCache(`${this.departmentUrl}/department/institutionId/` + id);
+    if (cachedData) {
+      return of(cachedData);
+    }
+
+    return this._http.get<Department[]>(`${this.departmentUrl}/department/institutionId/` + id).pipe(
+    //   tap(data => this.cache.setDataInCache(`${this.courseProgressUrl}/courseprog?id=all`, data))
+    // );
+
+    tap(data => {
+      // Update cache with new data
+      this.cache.removeFromCache(`${this.departmentUrl}/department/institutionId/` + id);
+      this.cache.setDataInCache((`${this.departmentUrl}/department/institutionId/` + id),data);
+    })
+  );
   }
 
   //service to get all inactive departments

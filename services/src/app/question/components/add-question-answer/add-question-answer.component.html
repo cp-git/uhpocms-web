@@ -164,7 +164,7 @@
             <app-question-answer [generatedQuestionAnswerId]="generatedQuestionAnswerId"
                 [questionAnswers]="questionAnswers" [pagination]="true" [selectedQuizId]="selectedQuizId"
                 [selectedCategoryId]="selectedCategoryId" [selectedCategoryName]="selectedCategoryName"
-                [submitOption]="true" (submitClicked)="onFormSubmit($event)" (change)="onFileSelected($event)">
+                [submitOption]="true" (submitClicked)="onFormSubmit($event)" (change)="onFileSelected($event)" [totalQuizMarks]="totalQuizMarks " >
             </app-question-answer>
         </ng-container>
     </div>
@@ -206,6 +206,8 @@
                 </option>
             </select>
         </div>
+
+       
         <div class="col-sm-3">
             <h4>Select Category</h4>
             <select name="dropdown" (change)="onCategoryChange(selectedCategoryId )" [(ngModel)]="selectedCategoryId"

@@ -1,0 +1,290 @@
+<html>
+<div style="display:flex;">
+    <h1 style="
+padding-left: 10%;
+"><b>ADMIN ANALYTICS PANEL</b></h1>
+ <!-- <script>
+     document.addEventListener('DOMContentLoaded', function() {
+            location.reload();
+        });
+</script> -->
+    <button class="btn btn-primary backbtn" (click)="back()">Back</button>
+</div>
+
+<!-- code for institute images -->
+<div class="instHeading">
+    <h2><b>INSTITUTIONS</b></h2>
+</div>
+
+ 
+  <div class="instHeading">
+    <div class="text-center" style="margin: 1%; display: flex; flex-wrap: wrap;">
+      <button class="fas fa-angle-left" *ngIf="currentPage >= 3" (click)="previousPage()" style='font-size:48px;color:black;background: transparent;
+        border: none;' ></button>
+      <div *ngFor="let inst of admininstitutions.slice(currentPage,currentPage + 3);   let i = index"
+        [class.selected-image]="selectedImageId === inst.adminInstitutionId" style="flex: 0 0 auto; margin-right: 30px;  margin-left: 30px;">
+        <img src="{{ displayUrl }}/{{ inst.adminInstitutionId }}" (click)="handleButtonClick(inst.adminInstitutionId)" />
+        <div>
+          <button #btn1 id="demo" class="btn btn-primary institutebtn"
+            (click)="handleButtonClick(inst.adminInstitutionId)">{{ inst.adminInstitutionName }}</button>
+        </div>
+      </div>
+      <button class="fas fa-angle-right" *ngIf="currentPage < admininstitutions.length - 3" style='font-size:48px;color:black;background: transparent;
+      border: none;' (click)="nextPage()"></button>
+    </div>
+  </div>
+  
+<!-- code for institute images  end-->
+
+
+<!-- ----code for Count Panel------------ -->
+<div *ngIf="instChartStat == true" class="app-chartdata-ui ">
+    <div id="chart-head">
+
+        <div class="chart">
+
+            <table>
+                <tr>
+                    <th>
+
+                        <h5><b> DEPARTMENTS </b></h5>
+                        <span class="fa-solid fa-building fa-2xl" style="color:  black "></span>
+                    </th>
+                    <th>
+
+                        <h5><b> COURSES </b></h5>
+                        <span class="fas fa-book-open fa-2xl" style="color:  black"></span>
+                    </th>
+                    <th>
+
+                        <h5><b> STUDENTS </b></h5>
+                        <span class="fas fa-book-reader fa-2xl" style="color:  black "></span>
+                    </th>
+                    <th>
+
+                        <h5><b>TEACHERS </b></h5>
+                        <span class="fas fa-chalkboard-teacher fa-2xl" style="color:  black "></span>
+                    </th>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        <h5><b>{{departments.length}}</b></h5>
+                    </td>
+                    <td>
+                        <h5><b> {{coursesInInst.length}}</b></h5>
+                    </td>
+                    <td>
+                        <h5><b> {{studentsInINst.length}}</b></h5>
+                    </td>
+                    <td>
+                        <h5><b>{{teachersInINst.length}}</b></h5>
+                    </td>
+
+                </tr>
+
+            </table>
+
+
+        </div>
+    </div>
+</div>
+
+<!-- ----code for Count Panel end------------ -->
+
+
+
+<!-- ------------------Code for  Courses in departments ---------------- -->
+<div *ngIf="instChartStat == true" class="app-chartdata-ui ">
+    <div id="chart-head">
+
+        <div class="chart">
+
+            <h4>
+                <b>
+                    <p class="category" style="text-transform: uppercase;">COURSE COUNT FOR DEPARTMENTS IN {{instName}}
+                    </p>
+                </b>
+            </h4>
+            <div *ngIf="deptNameCouCnt.length != 0">
+                <div *ngFor="let dArray of deptNameCouCnt">
+
+                    <h5>
+                        <b> <a class="category" style="text-transform: uppercase; color:#0126fa;"
+                                (click)="hadleButtonClickOnDept(dArray,instId)">COURSE COUNT FOR DEPARTMENT
+                                {{dArray}}</a></b>
+                    </h5>
+
+
+
+                </div>
+            </div>
+            <div *ngIf="deptNameCouCnt.length == 0">
+                <h5>
+                    <b>NO DEPARTMENTS ALLOTED</b>
+                </h5>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ------------------Code for  Courses in departments ENd ---------------- -->
+
+
+
+<!-- ------------------Code for People in  Courses ---------------- -->
+
+<div *ngIf="(courChartStat == true) && (profilesLenghtArray.length != 0)" class="app-chartdata-ui "
+    style="margin-top: 2%;margin-bottom: 2%;">
+    <div id="chart-head">
+        <div class="chart" *ngFor="let cChart of profilesLenghtArray ">
+
+            <h4>
+                <b>
+                    <p class="category" style="text-transform: uppercase;">PEOPLE COUNT FOR COURSES IN DEPARTMENT
+                        {{deptClicked}} </p>
+                </b>
+            </h4>
+            <div *ngIf="zeroPeopleCountInCourses == false">
+                <!-- <app-polar-chart [jsonArray]="cChart" [chartLabels]="courseNameArr" (clickData)="getClickedCourseData($event,instId);getAllCourseProgress(teacIdsArr[0])"></app-polar-chart> -->
+                <app-polar-chart [jsonArray]="cChart" [chartLabels]="courseNameArr"
+                    (clickData)="getClickedCourseData($event,instId)"></app-polar-chart>
+            </div>
+            <div *ngIf="zeroPeopleCountInCourses == true">
+                <h5 style="text-transform: uppercase;"><b>No people assigned to <strong style="color: #0126fa;">
+                            {{courseNameArr[0]}} </strong> course</b></h5>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ------------------Code for People in  Courses  End---------------- -->
+
+
+<!-- -----------------------Code for bar chart------------------------------ -->
+<div *ngIf="profilesLenghtArray.length == 0">
+</div>
+<div *ngIf="(profChartStat == true) && (barCharts.length != 0)" class="app-chartdata-ui">
+
+
+
+    <div id="chart-head">
+
+
+
+        <div class="chart" *ngFor="let bChart of barCharts; let i = index"
+            [ngClass]="{'hidden': i < currentIndex || i >= currentIndex + 3}">
+
+            <h4>
+                <b>
+                    <p style="text-transform: uppercase;">COUNT ANALYSIS BASED ON ROLES FOR COURSE
+                        {{clickedCourse[0].courseName}}</p>
+                </b>
+            </h4>
+            <h5>
+                <b>
+                    <p class="category" style="text-transform: uppercase; color:#0126fa;">ENROLLED TEACHERS COUNT -
+                        {{teaCntInCour}}</p>
+                </b>
+            </h5>
+            <h5>
+                <b>
+                    <p class="category" style="text-transform: uppercase; color:#0126fa;">ENROLLED STUDENTS COUNT-
+                        {{studCntInCour}}</p>
+                </b>
+            </h5>
+            <h5>
+                <b>
+                    <p class="category" style="text-transform: uppercase; ">STUDENTS PROGRESS ANALYSIS FOR
+                        {{clickedCourse[0].courseName}}</p>
+                </b>
+            </h5>
+
+            <div class="chart-container">
+                <div class="lines-container">
+                    <div class="horizontal-line"></div>
+                    <div class="vertical-line"></div>
+                    <div class="label label1">Count Of Students</div>
+                    <div class="label horizontal-label">Course Progress(%)</div>
+
+                </div>
+                <app-bar-chart [jsonArray]="[bChart[0], bChart[1],bChart[2],bChart[3]]"
+                    (clickData)="handleRightClickDataForBar($event,bChart[5])"></app-bar-chart>
+            </div>
+        </div>
+
+
+        <div *ngIf="barCharts.length == 0">
+
+
+
+        </div>
+
+    </div>
+
+
+
+
+</div>
+
+<!-- -----------------------Code for bar chart End------------------------------ -->
+
+
+<!-- -----------------------Code for doughnut chart ------------------------------ -->
+
+<div *ngIf="studProgDetailArr.length != 0" class="app-chartdata-ui-stud">
+    <h4 style=" text-align: center">
+        <b>
+            <p style="text-transform: uppercase;"> INDIVIDUAL STUDENT PROGRESS BETWEEN {{popupDataLabel}} %</p>
+        </b>
+    </h4>
+
+    <div class=" doughnutcharts ">
+
+
+        <div id="prevButton">
+
+
+            <button *ngIf="dchartcurrentIndex >= 3" (click)="doughnutPrevious()" class='fas fa-angle-left' style='font-size:48px;color:black;background: transparent;
+      border: none;'></button>
+
+        </div>
+        <div id="chart-head">
+
+            <div class="chart"
+                *ngFor="let dChart of studProgDetailArr.slice(dchartcurrentIndex, dchartcurrentIndex + 3); let i = index">
+                <h4>
+                    <b>
+                        <p class="category">{{ dChart[2] }}</p>
+                    </b>
+                </h4>
+                <app-chartdata [jsonArray]="[dChart[0], dChart[1]]"></app-chartdata>
+            </div>
+        </div>
+
+
+
+
+
+        <div id="nextButton">
+
+            <div class="nextButtonchild">
+                <button *ngIf="dchartcurrentIndex < studProgDetailArr.length - 3" (click)="doughnutNext()"
+                    class='fas fa-angle-right' style='font-size:48px;color:black;background: transparent;
+      border: none;'></button>
+
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+<div *ngIf="studProgDetailArr.length == 0">
+
+</div>
+<!-- -----------------------Code for doughnut chart ENd------------------------------ -->
+
+</html>

@@ -32,6 +32,18 @@
                 <button class="btn btn-primary">Users</button>
             </div>
 
+            <div class="col-md-4">
+                <div class="card text-center"  (click)="AdminAnalytics()">
+                    <div class="card-header">
+                        <span class="fa fa-pie-chart fa-4x" style="color:rgb(219, 82, 48)"></span>
+                    </div>
+                    <div class="card-body">
+                        <!-- <h3 class="card-title">Announcements</h3>-->
+                        <button class="btn btn-primary">Analytics</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
     <div class="col-md-4" *ngIf="accessControlData.adminInstitute">

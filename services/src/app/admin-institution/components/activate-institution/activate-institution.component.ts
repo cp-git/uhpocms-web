@@ -4,6 +4,11 @@ import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 
 import { AdmininstitutionService } from '../../service/admininstitution.service';
 
+import { environment } from 'environments/environment.development';
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
+
+
+
 @Component({
   selector: 'app-activate-institution',
   templateUrl: './activate-institution.component.html',
@@ -18,12 +23,21 @@ export class ActivateInstitutionComponent implements OnInit {
   userName!: string;
   adminId: any;
 
+
+  displayUrl: any;
+
+  private readonly institutionUrl!: string;
   // for buttons to view
   showAddButton: boolean = false;
   showActivateButton: boolean = false;
   //constructor
   constructor(private _institutionService: AdmininstitutionService, private _router: Router,
-    private _activatedRoute: ActivatedRoute) {
+
+    private _activatedRoute: ActivatedRoute, private dialogBoxService: DialogBoxService) {
+
+
+    this.institutionUrl = `${environment.adminInstitutionUrl}/institution`;
+
 
   }
 
@@ -37,6 +51,7 @@ export class ActivateInstitutionComponent implements OnInit {
 
     //onload of page this function should execute
     this.getAllDeactivatedInstitutions();
+    this.displayUrl = this.institutionUrl + '/getFileById'
   }
 
   //function to get all inactive institutions
@@ -59,12 +74,12 @@ export class ActivateInstitutionComponent implements OnInit {
     this._institutionService.activateInstitutionById(institutionId).subscribe(
       response => {
         // alert("Institution activated");
-        console.log("Institution activated");
+        this.dialogBoxService.open('Institute Activated', 'information');
         this.ngOnInit();
       },
       error => {
         // alert("Institution activation failed");
-        console.log("Institution activation failed");
+        this.dialogBoxService.open('Failed to Activate', 'warning');
       }
     );
   }

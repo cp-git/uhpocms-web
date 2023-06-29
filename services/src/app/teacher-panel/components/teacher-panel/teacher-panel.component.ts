@@ -20,7 +20,7 @@ userModule
 })
 export class TeacherPanelComponent {
 
-  course: Course = new Course();
+
   @ViewChild(BarChartComponent) bChart: any;
   @ViewChild(ChartdataComponent) dChart: any;
   @ViewChild('appChartData', { static: false })
@@ -28,7 +28,7 @@ export class TeacherPanelComponent {
   //doughnut chart data array
   barCharts: any = [];
   criteriaVar: number = 0;
-
+  course: Course = new Course();
   currentIndex: number = 0;
   dchartcurrentIndex: number = 0;
   popupDataValue: any;
@@ -378,6 +378,11 @@ export class TeacherPanelComponent {
   RedirectToQuestion() {
     this._route.navigate(['Question', this.userName])
   }
+
+  RedirectToReviewAnswer(){
+    this._route.navigate(['Review', this.userName])
+  }
+
 
   RedirectToModuleFile() {
     this._route.navigate(['modulefile'])

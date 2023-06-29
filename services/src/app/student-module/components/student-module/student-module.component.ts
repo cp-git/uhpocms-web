@@ -201,8 +201,7 @@ export class StudentModuleComponent implements OnInit {
 
     this.selectedCourseId = '1'
 
-
-
+    
 
     this.getAllQuizzesByProfileId(this.studentId);
     this.getAllFileProgress();

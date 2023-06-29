@@ -105,6 +105,7 @@ export class EnrollstudentComponent {
       (response) => {
         // assigning received data to institutionfo
         this.institutions = response;
+        this.institutions.sort((a, b) => a.adminInstitutionName.toLowerCase() > b.adminInstitutionName.toLowerCase() ? 1 : -1)
         //  cloning array from instituion to backupinst
         this.institutions.forEach((inst) => {
           this.backupInst.push(Object.assign({}, inst));
@@ -139,6 +140,7 @@ export class EnrollstudentComponent {
         this._deptService.getDepartmentsByInstitutionId(instId).subscribe(
           (response) => {
             this.departments = response;
+            this.departments.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1)
           },
 
         );
@@ -167,6 +169,7 @@ export class EnrollstudentComponent {
           (response) => {
             this.courses = response;
             this.courses = this.courses.filter((elem) => elem.courseIsActive == true)
+            this.courses.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1)
             console.log("admin" + this.courses);
           }
         );
@@ -367,10 +370,11 @@ export class EnrollstudentComponent {
           // if (i == 0) {
           // console.log("Student Enrolled Successfully");
           // location.reload();
-          this.dialogBoxService.open("Student(s) enrolled to course successfully !", 'information');
+
           responseEnrollStu = response;
           console.log(responseEnrollStu)
           console.log(response)
+          // this.dialogBoxService.open("Students enrolled to course successfully !", 'information');
           this.courseProgress.id = 0;
           this.courseProgress.courseId = courseId;
           this.courseProgress.studentId = this.selected[i];
@@ -393,6 +397,7 @@ export class EnrollstudentComponent {
         }
       )
     }
+    this.dialogBoxService.open("Students enrolled to course successfully !", 'information');
   }
   // checkFields() {
   //   // Check if any fields are empty

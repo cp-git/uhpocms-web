@@ -60,6 +60,8 @@ import { AddQuestionAnswerComponent } from './question/components/add-question-a
 import { PermissionComponent } from './permissions/components/permission/permission.component';
 import { AuthModuleComponent } from './permissions/components/auth-module/auth-module.component';
 import { AccessControlComponent } from './accesscontrol/components/access-control/access-control.component';
+import { AnalyticsComponent } from './admin-analytics/analytics/analytics.component';
+import { ReviewAnswerComponent } from './review-answer/components/review-answer/review-answer.component';
 
 
 const routes: Routes = [
@@ -202,6 +204,9 @@ const routes: Routes = [
   { path: 'access', component: AccessControlComponent },
   { path: 'permission', component: PermissionComponent },
   { path: 'authmodule', component: AuthModuleComponent },
+  { path: 'analytics', component: AnalyticsComponent },
+
+  { path: 'Review/:userName', component: ReviewAnswerComponent },
 
 ];
 

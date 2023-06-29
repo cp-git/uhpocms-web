@@ -59,7 +59,7 @@ import { InactiveTeacherCourseComponent } from './displayAssignedCourseToTeacher
 import { AuthUserModule } from './auth-user/modules/auth-user.module';
 import { AuthenticationloginComponent } from './authenticationlogin/components/authenticationlogin/authenticationlogin.component';
 import { StudentPanelComponent } from './student-panel/components/student-panel/student-panel.component';
-import { StudentModuleComponent } from './student-module/components/student-module/student-module.component';
+
 import { ProfilesModule } from './profiles/module/profiles.module';
 import { ModuleModule } from './module/module/module.module';
 import { AddDepartmentsComponent } from './institute-details/components/add-departments/add-departments.component';
@@ -75,7 +75,7 @@ import { AccessControlModule } from './accesscontrol/module/accesscontrol.module
 import { ModuleFileModule } from './module-file/module-names/module-file.module';
 import { HttpInterceptorService } from './shared/services/HttpInterceptor/http-interceptor.service';
 import { UploadfileReusableModule } from './uploadfile-reusable/uploadfile-reusable.module';
-import { StudentModuleModule } from './student-module/student-module.module';
+
 import { ModuleHeaderComponent } from './reusable/component/module-header/module-header.component';
 
 import { ChartdataComponent } from './charts/components/chartdata/chartdata.component';
@@ -83,6 +83,14 @@ import { BarChartComponent } from './charts/components/bar-chart/bar-chart.compo
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { PermissionModule } from './permissions/permission.module';
+import { AnalyticsComponent } from './admin-analytics/analytics/analytics.component';
+import { PolarChartComponent } from './charts/components/polar-chart/polar-chart.component';
+import { StudentModuleModule } from './student-module/student-module.module';
+import { ReviewModule } from './review-answer/module/review/review.module';
+import { AddReviewMarksComponent } from './review-answer/components/add-review-marks/add-review-marks.component';
+
+
+
 
 
 @NgModule({
@@ -121,6 +129,11 @@ import { PermissionModule } from './permissions/permission.module';
     ChartdataComponent,
 
     BarChartComponent,
+    AnalyticsComponent,
+    PolarChartComponent
+
+
+
 
   ],
 
@@ -133,6 +146,7 @@ import { PermissionModule } from './permissions/permission.module';
     AuthUserModule,
     ProfilesModule,
     DepartmentModule,
+    ReviewModule,
     ReusableModule,
     AdminRoleModule,
     BrowserModule,

@@ -9,7 +9,6 @@ import { AdminInstitution } from '../class/admininstitution';
   providedIn: 'root'
 })
 export class AdmininstitutionService {
-
   private readonly institutionUrl: string;
 
   constructor(private _http: HttpClient) {
@@ -71,4 +70,16 @@ export class AdmininstitutionService {
   getInstitutionByProfileId(id: number): Observable<AdminInstitution[]> {
     return this._http.get<AdminInstitution[]>(`${this.institutionUrl}/profile/` + id);
   }
+
+  // service to delete institution By id
+  // deleteInstitutionById(institutionId: number): Observable<any> {
+  //   return this._http.delete<any>(`${this.institutionUrl}/institutionId/`+institutionId);
+  // }
+
+  deleteInstitutionById(adminInstitutionId: number): Observable<any> {
+    return this._http.delete<any>(`${this.institutionUrl}/institutionId/` + adminInstitutionId);
+  }
+
+
+
 }

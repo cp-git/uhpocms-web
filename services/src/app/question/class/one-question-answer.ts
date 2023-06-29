@@ -33,4 +33,6 @@ export class OneQuestionAnswer {
     isOptionSelected!: boolean;
 
     selectedAnswer!: string;
+    maxMarks!: number;
+    totalMarks: number =0;
 }

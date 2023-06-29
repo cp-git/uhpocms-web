@@ -22,10 +22,10 @@ export class QuestionAnswerComponent implements OnInit {
   @Input() selectedCategoryName: any;
   @Input() selectedQuizId: any;
   @Input() generatedQuestionAnswerId: number = 0;
-
+  @Input() totalQuizMarks: any; 
   @Output() submitClicked: EventEmitter<any> = new EventEmitter();
 
-
+  totalMarks: number = 0;
   mcqAnswer: any;
   options = ['Option 1', 'Option 2', 'Option3', 'Option4'];
 
@@ -54,6 +54,8 @@ export class QuestionAnswerComponent implements OnInit {
     this.options.splice(index, 1);
   }
 
+  // Calculate the total marks count
+
 
   // onCategorySelected() {
   //   if (this.selectedCategory === 'mcq') {
@@ -80,13 +82,17 @@ export class QuestionAnswerComponent implements OnInit {
   submittedQuestionAnswer!: OneQuestionAnswer;
   isOptionSelected: boolean = false;
   constructor() {
+    
     this.questionUrl = `${environment.questionUrl}`;
   }
 
   ngOnInit(): void {
     this.displayUrl = this.questionUrl + '/getFileById';
 
+
+
   }
+
 
   onFileSelected(event: any, queAns: OneQuestionAnswer) {
     // console.log(JSON.stringify(queAns))
@@ -114,12 +120,21 @@ export class QuestionAnswerComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['generatedQuestionAnswerId']) {
       this.submittedQuestionAnswer.questionId = this.generatedQuestionAnswerId;
+
     }
     // console.log(this.submittedQuestionAnswer);
 
     if (changes['questionAnswers']) {
       this.questionAnswers = this.questionAnswers;
+      // console.log("inside   ngOnChanges");
+      // console.log(this.questionAnswers)
+  
+      // for(let i of this.questionAnswers){
+      //   this.totalMarks += i.maxMarks;
+      // }
     }
+
+   
   }
 
   onFormSubmit(queAns: OneQuestionAnswer) {
@@ -213,6 +228,7 @@ export class QuestionAnswerComponent implements OnInit {
     if (queAns.isFormDirty == false) {
       queAns.isFormDirty = true;
       queAns.isFormSubmitted = false;
+      queAns.totalMarks =   queAns.totalMarks;
     }
   }
 
