@@ -7,6 +7,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
 
 import { CountdownModule } from 'ngx-countdown';
+import { StudentReviewComponent } from './components/student-review/student-review.component';
 
 
 
@@ -14,6 +15,7 @@ import { CountdownModule } from 'ngx-countdown';
   declarations: [
     StudentModuleComponent,
     StudentQuizComponent,
+    StudentReviewComponent,
   ],
 
   imports: [

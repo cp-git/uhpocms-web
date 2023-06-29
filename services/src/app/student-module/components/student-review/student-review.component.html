@@ -1,0 +1,148 @@
+<!-- <ng-container *ngIf="pagination">
+    <ng-container *ngFor="let queAns of questionAnswers | paginate: { itemsPerPage: 1, currentPage: currentPage }">
+        <ng-container *ngTemplateOutlet="form; context: {$implicit: queAns, index:currentPage }"></ng-container>
+    </ng-container>
+</ng-container>
+
+<ng-container *ngIf="!pagination">
+    <ng-container *ngFor="let queAns of questionAnswers;let i= index">
+        <ng-container *ngTemplateOutlet="form; context: {$implicit: queAns,index:i+1 }"></ng-container>
+    </ng-container>
+</ng-container>
+
+<ng-container *ngIf="pagination">
+    <div class="text-center"
+        *ngIf="selectedQuizId!='undefined' && selectedQuizId!='' && selectedQuizId!=null && selectedCategoryId!='undefined'  && selectedCategoryId!='' && selectedCategoryId!=null">
+        
+        <pagination-controls (pageChange)="currentPage=$event"></pagination-controls>
+        
+    </div>
+</ng-container>
+
+<ng-template #form let-queAns let-index="index">
+    <form #myForm="ngForm" (ngSubmit)="onFormSubmit(queAns,questionAnswers)">
+        <div class="jumbotron">
+            <h4>Question : {{ index }}</h4>
+            <div class="img">
+                <img *ngIf="queAns['image'] ;else viewImage" src="{{image}}" style="max-width: 350px">
+                <ng-template #viewImage>
+                    <img *ngIf="queAns['questionId']" src="{{displayUrl}}/{{queAns['questionId']}}"
+                        style="max-width: 350px">
+                </ng-template>
+
+            </div>
+         
+            <div>
+
+            <b><p style="display: flex;flex-direction: row;justify-content: flex-end;font-size: 16px;
+                font-weight: 700;">Total Marks: {{totalReviewMarks }}/{{totalQuizMarks}}</p></b>
+            </div>
+            <label class="float-label">Question</label>
+            <input name="queContent{{index}}" type="text" [(ngModel)]="queAns['questionContent']" class="form-control"
+                required="" [disabled]="disable" (ngModelChange)="onFormDirty(queAns)" [disabled] ="true">
+            <label class="float-label">Explanation</label>
+            <textarea name="queExplanation{{index}}" [(ngModel)]="queAns['questionExplanation']" class="form-control"
+                required="" [disabled]="disable" (ngModelChange)="onFormDirty(queAns)" [disabled] ="true"></textarea>
+            <label class="float-label">Answer</label>
+            <!-- changes made down $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ -->
+<!--         
+            <ng-template #otherCategory >
+                <textarea style="height: 20rem;" name="ansContent1{{index}}" [(ngModel)]="queAns['content1']" class="form-control" required=""
+                    [disabled]="disable" (ngModelChange)="onFormDirty(queAns)"
+                    (ngModelChange)="onAnswerEntered(queAns)" [disabled] ="true"></textarea>
+            </ng-template>
+            <label class="float-label">Review</label>
+            <div >
+                <textarea name="reviewcontent" [(ngModel)]="queAns['reviewcontent']" class="form-control"
+                required="" [disabled]="disable" (ngModelChange)="onFormDirty(queAns)"></textarea>
+            </div>
+           
+            <label>Marks</label>
+        
+            <div style="display: flex; align-items: center;width: 8%;">
+                <input class="form-control" required="" name="marks" [(ngModel)]="queAns['marks']" (ngModelChange)="onFormDirty(queAns)" />
+                <div> /{{ queAns['maxMarks'] }}</div>
+            </div>
+
+        </div>
+
+    </form>
+</ng-template> -->
+ -->
+
+
+<!-- -------------------- -->
+
+
+<!-- {{questionAnswers|json}} -->
+<ng-container *ngIf="pagination">
+    <ng-container *ngFor="let question of questionAnswers | paginate: { itemsPerPage: 1, currentPage: currentPage }">
+        <ng-container *ngTemplateOutlet="quizpanel; context: {$implicit: question, index:currentPage }"></ng-container>
+    </ng-container>
+</ng-container>
+
+<ng-container *ngIf="!pagination">
+    <ng-container *ngFor="let question of questionAnswers;let i= index">
+        <ng-container *ngTemplateOutlet="quizpanel; context: {$implicit: question,index:i }"></ng-container>
+    </ng-container>
+</ng-container>
+
+<ng-template #quizpanel let-queAns let-index="index">
+  
+    <form #myForm="ngForm">
+        <div class="jumbotron">
+            <div  class="img">
+                <!-- <img src="http://localhost:8090/question/uhpocms/getFileById/{{question['questionId']}}"
+                    style="max-height: 220px"> -->
+                    <img *ngIf="queAns['image'] ;else viewImage" src="{{image}}" style="max-width: 350px">
+                    <ng-template #viewImage>
+                        <img *ngIf="queAns['questionId']" src="{{displayUrl}}/{{queAns['questionId']}}"
+                            style="max-width: 350px">
+                    </ng-template>
+            </div>
+            <div class="container">
+                <div
+                    class="d-flex justify-content-center align-items-center border border-primary rounded-circle bg-gradient">
+
+                    <label class="float">Question {{ index }}: {{queAns['questionContent']}}</label>
+                </div>
+            </div>
+            <!-- <label class="float-label">Explanation : {{question['questionExplanation']}}</label><br> -->
+            <!-- <label class="text-center">Answer</label> -->
+            <!-- <ng-container *ngIf="categoryName === 'MCQ'; else other">
+                <label class="text-center">Choose the appropriate answer</label>
+            </ng-container> -->
+            <ng-template>
+                <label class="text-center">Answer in long sentence</label>
+            </ng-template>
+         
+            <ng-template #otherCategory>
+                <textarea  name="ansContent1{{index}}" [(ngModel)]="queAns['content1']" class="form-control" required=""
+                [disabled] ="true"></textarea>
+            </ng-template>
+            
+            <label class="float-label">Review</label>
+            <div >
+                <textarea name="reviewcontent" [(ngModel)]="queAns['reviewcontent']" class="form-control"
+                required="" [disabled]="true" (ngModelChange)="onFormDirty(queAns)"></textarea>
+            </div>
+           
+            <label>Marks</label>
+        
+            <div style="display: flex; align-items: center;width: 8%;">
+                <input class="form-control" required="" name="marks" [(ngModel)]="queAns['marks']" (ngModelChange)="onFormDirty(queAns)"   [disabled]="true" />
+                <div> /{{ queAns['maxMarks'] }}</div>
+            </div>
+
+        </div>
+    </form>
+   
+    <ng-container *ngIf="pagination">
+        <div class="text-center pagination-rounded">
+            <pagination-controls (pageChange)="currentPage=$event"></pagination-controls>
+        </div>
+    </ng-container>
+</ng-template>
+
+
+<!-- </ng-container> -->

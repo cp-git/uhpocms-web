@@ -71,7 +71,7 @@
                                         *ngIf="((!quiz.singleAttempt && (quizFailedProgresses.includes(quiz.quizId) || quizPassedProgresses.includes(quiz.quizId))) || quizFailedProgresses.includes(quiz.quizId))"
                                         (click)="onRetakeQuizClicked(quiz)">Retake</a>
                                         <a class="retakequiz" style="margin-left: 2%;"
-                                       >Review</a>
+                                            (click)="getReview(quiz.quizId);getAllAnswersAttempted(quiz.quizId)">Review</a>
                                 </div>
                             </ng-container>
                         </ul>
@@ -79,7 +79,7 @@
 
                     <ng-template #quizview>
                         <div
-                            *ngIf="(selectedQuiz!=null && (selectedQuiz.singleAttempt==true && !(quizPassedProgresses.includes(selectedQuiz.quizId))) || (selectedQuiz.singleAttempt==false)); else singleAttempt ">
+                            *ngIf="(selectedQuiz!=null && (selectedQuiz.singleAttempt==true && !(quizPassedProgresses.includes(selectedQuiz.quizId))) || (selectedQuiz.singleAttempt==false)) || (reviewButtonStat == false); else singleAttempt ">
                             <!-- <div *ngIf="selectedQuiz && selectedQuiz.singleAttempt = true &&  (quizPassedProgresses.includes(quiz.quizId) ||
                             quizFailedProgresses.includes(quiz.quizId))"> -->
                             <app-student-quiz [onQuizClick]="onQuizClick" [isRetakingQuiz]="isRetakingQuiz"
@@ -88,10 +88,19 @@
                                 [quizData]="selectedQuiz" (quizProgressAdded)="onQuizProgressAdded($event)"
                                 (onSaveQuizProgress)="onSaveQuizProgress($event)"
                                 (onQuizSubmit)="onQuizSubmit($event)"></app-student-quiz>
+
+
                             <!-- <app-student-quiz (quizProgressAdded)="onQuizProgressAdded($event)"></app-student-quiz> -->
                             <!-- <div>Previous Score: {{ selectedQuizProgress.score }}</div> -->
                         </div>
-                        
+                        <div *ngIf="reviewButtonStat == true">
+                            <app-student-review [generatedQuestionAnswerId]="generatedQuestionAnswerId"
+                            [questionAnswers]="correctQuestionAnswer"  [pagination]="true" [selectedQuizId]="selectedQuizId"
+                            [selectedCategoryId]="selectedCategoryId" [selectedCategoryName]="selectedCategoryName" [totalReviewMarks]="totalReviewMarks"   [totalQuizMarks]="totalQuizMarks" 
+                            (submitClicked)="onFormSubmit($event)" >
+                    
+                            </app-student-review>
+                        </div>
                         <!-- <app-student-quiz (scoreEvent)="onScoreReceived($event)"></app-student-quiz> -->
                     </ng-template>
                     <ng-template #singleAttempt>
@@ -101,6 +110,14 @@
                     </ng-template>
                 </div>
             </div>
+            <!-- <div>
+                <app-student-review [generatedQuestionAnswerId]="generatedQuestionAnswerId"
+                [questionAnswers]="correctQuestionAnswer"  [pagination]="true" [selectedQuizId]="selectedQuizId"
+                [selectedCategoryId]="selectedCategoryId" [selectedCategoryName]="selectedCategoryName" [totalReviewMarks]="totalReviewMarks"   [totalQuizMarks]="totalQuizMarks" 
+                 (submitClicked)="onFormSubmit($event)" >
+           
+                </app-student-review>
+            </div> -->
             <h5 style="color:blue"> Course Progress : {{courProgPercentage}} % Completed </h5>
             <h5 *ngIf="selectedQuizName" style="color:blue"> {{ selectedQuizName}} : {{ selectedQuizProgress.score }}%
             </h5>
