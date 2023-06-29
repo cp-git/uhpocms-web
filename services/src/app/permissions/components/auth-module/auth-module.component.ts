@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import { AuthPermission } from 'app/permissions/class/auth-permission';
-import { PermissionColumn } from 'app/permissions/columns-name/permission-column';
-import { AuthPermissionService } from 'app/permissions/services/permission/auth-permission.service';
+import { AuthModule } from 'app/permissions/class/auth-module';
+import { AuthModuleColumn } from 'app/permissions/columns-name/auth-module-column';
+import { AuthModuleService } from 'app/permissions/services/authModule/auth-module.service';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-permission',
-  templateUrl: './permission.component.html',
-  styleUrls: ['./permission.component.css']
+  selector: 'app-auth-module',
+  templateUrl: './auth-module.component.html',
+  styleUrls: ['./auth-module.component.css']
 })
-export class PermissionComponent {
+export class AuthModuleComponent {
 
   // title heading
-  moduleName: string = "Permission Administration";
+  moduleName: string = "AuthModule Administration";
 
   // for scren view
   viewUpdate: boolean = false;
@@ -33,25 +33,25 @@ export class PermissionComponent {
   // To be assigned based on the module
   readonly primaryIdColumnName: string = 'id';
 
-  // authPermissions: AuthPermission[] = []; 
-  allData: AuthPermission[] = []; // list of active Auth Permission
-  allInActiveData: AuthPermission[] = []; // list of inactive Auth Permission
+  // authModules: AuthModule[] = []; 
+  allData: AuthModule[] = []; // list of active Auth Module
+  allInActiveData: AuthModule[] = []; // list of inactive Auth Module
 
-  emptyAuthPermission: AuthPermission;  // empty AuthPermission
-  currentData!: AuthPermission;  // for update and view, to show existing data
+  emptyAuthModule: AuthModule;  // empty AuthModule
+  currentData!: AuthModule;  // for update and view, to show existing data
 
-  constructor(private service: AuthPermissionService, private location: Location) {
+  constructor(private service: AuthModuleService, private location: Location) {
 
-    this.columnNames = PermissionColumn;
-    // this.allColumnNames = PermissionColumn;
+    this.columnNames = AuthModuleColumn;
+    // this.allColumnNames = AuthModuleColumn;
 
     // creating empty object
-    this.emptyAuthPermission = new AuthPermission();
+    this.emptyAuthModule = new AuthModule();
   }
 
   ngOnInit(): void {
-    this.getAllAuthPermissions();  // for getting all active Auth Permissions
-    // this.getInActiveAuthPermissions(); // for getting all inactive Auth Permissions
+    this.getAllAuthModules();  // for getting all active Auth Modules
+    // this.getInActiveAuthModules(); // for getting all inactive Auth Modules
   }
 
   // back button functionality
@@ -76,7 +76,7 @@ export class PermissionComponent {
   // function will call when child view button is clicked 
   onChildViewClick(objectReceived: any): void {
 
-    // hiding view of all column and displaying all Auth Permissions screen 
+    // hiding view of all column and displaying all Auth Modules screen 
     this.viewOne = true;
     this.viewAll = false;
     this.showAddButton = false;
@@ -87,9 +87,9 @@ export class PermissionComponent {
 
   // For navigate to update screen with data
   // function will call when child update button is clicked 
-  onChildUpdateClick(objectReceived: AuthPermission): void {
+  onChildUpdateClick(objectReceived: AuthModule): void {
 
-    // hiding update screen and displaying all Auth Permissions screen 
+    // hiding update screen and displaying all Auth Modules screen 
     this.viewAll = false;
     this.viewUpdate = true;
     this.showAddButton = false;
@@ -101,14 +101,14 @@ export class PermissionComponent {
 
   // For navigate to update screen with data
   // function will call when child update button is clicked 
-  onChildDeleteClick(objectReceived: AuthPermission): void {
-    this.deleteAuthPermission(objectReceived.id);
+  onChildDeleteClick(objectReceived: AuthModule): void {
+    this.deleteAuthModule(objectReceived.id);
   }
 
   // // For navigate to activate screen with data
   // // function will call when child update button is clicked 
-  // onChildActivateClick(objectReceived: AuthPermission): void {
-  //   this.activateAuthPermission(objectReceived.id);
+  // onChildActivateClick(objectReceived: AuthModule): void {
+  //   this.activateAuthModule(objectReceived.id);
   // }
 
   // for navigating to add screen
@@ -128,58 +128,56 @@ export class PermissionComponent {
   }
 
   // on addComponents's submit button clicked
-  onAddAuthPermissionSubmit(objectReceived: AuthPermission): void {
-    this.addPermission(objectReceived);
+  onAddAuthModuleSubmit(objectReceived: AuthModule): void {
+    this.addAuthModule(objectReceived);
   }
 
   // on updateComponents's submit button clicked
-  onUpdateAuthPermissionSubmit(objectReceived: AuthPermission) {
-    this.updatePermission(objectReceived);
+  onUpdateAuthModuleSubmit(objectReceived: AuthModule) {
+    this.updateAuthModule(objectReceived);
   }
 
   ///////////////////////////////////////////
   // Funcation calls specific to this module
   ///////////////////////////////////////////
 
-  // For updating Auth Permission
-  private updatePermission(currentData: AuthPermission) {
+  // For updating Auth Module
+  private updateAuthModule(currentData: AuthModule) {
     // calling service for updating data
-    this.service.updateAuthPermission(currentData.id, currentData).subscribe(
+    this.service.updateAuthModule(currentData.id, currentData).subscribe(
       response => {
-        console.log(`AuthPermission updated successfully !`);
+        console.log(`AuthModule updated successfully !`);
         this.back();
       },
       error => {
-        console.log(`AuthPermission updation failed !`);
+        console.log(`AuthModule updation failed !`);
       }
     );
   }
 
-  // For adding Auth Permission
-  private addPermission(currentData: AuthPermission) {
+  // For adding Auth Module
+  private addAuthModule(currentData: AuthModule) {
 
     // calling service for adding data
-    this.service.addAuthPermission(currentData).subscribe(
+    this.service.addAuthModule(currentData).subscribe(
       (data) => {
-        console.log('Permission added Successfully');
-        this.emptyAuthPermission = {} as AuthPermission;
+        console.log('AuthModule added Successfully');
+        this.emptyAuthModule = {} as AuthModule;
         this.ngOnInit();
         this.back();
       },
       (error) => {
-        console.log("Failed to add Permission");
+        console.log("Failed to add AuthModule");
       });
   }
 
 
-  // for getting all Auth Permissions
-  private getAllAuthPermissions() {
+  // for getting all Auth Modules
+  private getAllAuthModules() {
 
     // calling service to get all data
-    this.service.getAllPermissions().subscribe(
+    this.service.getAllAuthModules().subscribe(
       response => {
-        console.log(response);
-
         this.allData = response; //assign data to local variable
       },
       error => {
@@ -188,17 +186,17 @@ export class PermissionComponent {
     );
   }
 
-  // For deleting (soft delete) Auth Permission using Permission name
-  private deleteAuthPermission(id: number) {
+  // For deleting (soft delete) Auth Module using AuthModule name
+  private deleteAuthModule(id: number) {
 
     // calling service to soft delte
-    this.service.deleteAuthPermission(id).subscribe(
+    this.service.deleteAuthModule(id).subscribe(
       (response) => {
-        console.log('Admin Permission deleted successfully');
+        console.log('Admin AuthModule deleted successfully');
         this.ngOnInit();
       },
       (error) => {
-        console.log('Admin Permission deletion failed');
+        console.log('Admin AuthModule deletion failed');
       }
     );
   }

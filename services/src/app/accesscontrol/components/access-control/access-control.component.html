@@ -1,0 +1,103 @@
+<div class="container">
+    <div>
+        <ng-container *ngIf="viewAll">
+            <app-module-header [moduleName]="moduleName"
+                [buttons]="{showAddButton:showAddButton,showActivateButton:showActivateButton}"
+                (addButtonClicked)="onAddClick()" (activateButtonClicked)="onActivateClick()"
+                (backButtonClicked)="back()"></app-module-header>
+        </ng-container>
+        <ng-container *ngIf="viewAdd || viewOne || viewUpdate || viewActivate">
+            <app-module-header [moduleName]="moduleName" (backButtonClicked)="back()"
+                [buttons]="{showAddButton:showAddButton,showActivateButton:showActivateButton}"></app-module-header>
+        </ng-container>
+        <ng-container *ngIf="viewAll">
+            <ng-container *ngTemplateOutlet="viewall;"></ng-container>
+        </ng-container>
+        <ng-container *ngIf="viewOne">
+            <ng-container *ngTemplateOutlet="viewone;"></ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="viewAdd">
+            <ng-container *ngTemplateOutlet="viewadd;"></ng-container>
+        </ng-container>
+
+        <!-- <ng-container *ngIf="viewUpdate">
+            <ng-container *ngTemplateOutlet="viewupdate;"></ng-container>
+        </ng-container> -->
+    </div>
+</div>
+<ng-template #title let-headerTitle>
+    <h1>{{headerTitle}}</h1>
+</ng-template>
+<!-- <ng-template #addButton>
+    <button class="btn btn-primary" (click)="addAccessControl()">Add</button>
+</ng-template>
+<ng-template #backButton>
+    <button class="btn btn-primary" (click)="back()">Back</button>
+</ng-template> -->
+<ng-template #viewall>
+    <!-- <app-view-all *ngIf="allAccessControls.length>0" [data]="{moduleData:this.authUsers , columnNames:this.columnNames}"
+        [idsColumnName]="{columnName:'authUserId'}" [isViewAllScreen]="true" (viewClicked)="onChildViewClick($event)"
+        (updateClicked)="onChildUpdateClick($event)" (deleteClicked)="onChildDeleteClick($event)">
+    </app-view-all> -->
+    <div class="col-sm-3">
+        <label for="institutionId">Institution</label>
+        <select id="institution" name="institutionId" class="form-control" [(ngModel)]="selectedInstitutionId"
+            (change)="onChangeInstitution()">
+            <option value="undefined">Select</option>
+            <option *ngFor="let inst of institutions" [value]="inst.adminInstitutionId">
+                {{inst.adminInstitutionName}}
+            </option>
+        </select>
+        <br>
+    </div>
+
+    <div class="col-sm-3">
+        <label for="departmentId">Department</label>
+        <select id="department" name="departmentId" class="form-control" [(ngModel)]="selectedDepartmentId"
+            (change)="onChangeDepartment()">
+            <option value="undefined" disabled>Select</option>
+            <option *ngFor="let dept of departments |advFilter:'institutionId':selectedInstitutionId" [value]="dept.id">
+                {{dept.name}}</option>
+        </select>
+        <br>
+    </div>
+    <div class="col-sm-3">
+        <label for="userName">User</label>
+        <select id="userName" name="userId" class="form-control" [(ngModel)]="selectedUserId" (click)="onChangeUser()">
+            <option value="undefined" disabled>Select</option>
+            <option
+                *ngFor="let user of profiles |filter:'institutionId':selectedInstitutionId | filter:'adminDepartment':selectedDepartmentId"
+                [value]="user.userId">{{
+                user.firstName }} {{user.lastName}} -
+                {{user.adminEmail}} - {{user.userRole}}</option>
+        </select>
+        <br>
+    </div>
+    <app-add-update [data]="{currentData:emptyAccesscontrol , columnNames:allColumnNames}"
+        [dropdown]="{filteredProfiles}" (submitClicked)="onClickAddOrUpdateAccessControl($event)"
+        (getSelectedOptionOfDropdown)="getSelectedOptionOfDropdown($event)"></app-add-update>
+    <div *ngIf="allAccessControls.length==0">
+        <h3>No active controls</h3>
+    </div>
+</ng-template>
+<ng-template #viewone>
+    <app-view-one [data]="{currentData:currentData , columnNames:allColumnNames}"
+        [dropdown]="{authUsers}"></app-view-one>
+</ng-template>
+
+<ng-template #viewadd>
+    <app-add-update-controls [profiles]="profiles" [institutions]="institutions" [departments]="departments"
+        [masterModules]="masterModules" [userPermissions]="userPermissions" [groupPermissions]="groupPermissions"
+        [roles]="roles" [allAccessControls]="allAccessControls"
+        (onClickAssignPermissions)="onClickAssignPermissions($event)"></app-add-update-controls>
+    <!-- {{masterModules|json}} -->
+
+</ng-template>
+
+<!-- 
+<ng-template #viewupdate>
+    <app-add-update-controls [profiles]="profiles" [institutions]="institutions" [departments]="departments"
+        [masterModules]="masterModules" [userPermissions]="userPermissions" [groupPermissions]="groupPermissions"
+        [roles]="roles"></app-add-update-controls>
+</ng-template> -->

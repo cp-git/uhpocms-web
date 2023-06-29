@@ -2,7 +2,7 @@ export const ProfileColumn = [
     { key: 'firstName', label: 'First Name', type: 'input', subtype: 'text' },
     { key: 'lastName', label: 'Last Name', type: 'input', subtype: 'text' },
     { key: 'adminEmail', label: 'Email', type: 'email' },
-    { key: 'userRole', label: 'User Role', type: 'dropdown', arrayName: 'adminRoles', columnId: 'roleName', columnName: 'roleName' },
+    { key: 'userRoleId', label: 'User Role', type: 'dropdown', arrayName: 'adminRoles', columnId: 'roleId', columnName: 'roleName' },
     { key: 'institutionId', label: 'Institution', type: 'dropdown', arrayName: 'adminInstitutions', columnId: 'adminInstitutionId', columnName: 'adminInstitutionName' },
     { key: 'adminDepartment', label: 'Department', type: 'dropdown', 'toSort': true, arrayName: 'departments', columnId: 'id', columnName: 'name', sortBasedOn: 'institutionId', foreignKeyColumn: 'institutionId' },
 ]
@@ -13,7 +13,7 @@ export const ProfileAllColumn = [
     { key: 'institutionId', label: 'Institution', type: 'dropdown', arrayName: 'adminInstitutions', columnId: 'adminInstitutionId', columnName: 'adminInstitutionName', dependentKeys: ['adminDepartment'], functionForDependentKeys: true },
     { key: 'adminDepartment', label: 'Department', type: 'dropdown', 'toSort': true, arrayName: 'departments', columnId: 'id', columnName: 'name', sortBasedOn: 'institutionId', foreignKeyColumn: 'institutionId' },
     // for functionOnDropdownClick, you have to have to pass function names while calling child component
-    { key: 'userRole', label: 'User Role', type: 'dropdown', arrayName: 'adminRoles', columnId: 'roleName', columnName: 'roleName' },
+    { key: 'userRoleId', label: 'User Role', type: 'dropdown', arrayName: 'adminRoles', columnId: 'roleId', columnName: 'roleName' },
     { key: 'firstName', label: 'First Name', type: 'input', subtype: 'text', disable: true },
     { key: 'lastName', label: 'Last Name', type: 'input', subtype: 'text', disable: true },
     { key: 'adminEmail', label: 'Email', type: 'email', disable: true },
@@ -36,7 +36,7 @@ export const ProfileUpdateColumn = [
     { key: 'institutionId', label: 'Institution', type: 'dropdown', arrayName: 'adminInstitutions', columnId: 'adminInstitutionId', columnName: 'adminInstitutionName', disable: 'true' },
     { key: 'adminDepartment', label: 'Department', type: 'dropdown', 'toSort': true, arrayName: 'departments', columnId: 'id', columnName: 'name', sortBasedOn: 'institutionId', foreignKeyColumn: 'institutionId', disable: 'true' },
     { key: 'userId', label: 'User Name', type: 'dropdown', arrayName: 'activeAuthUsers', columnId: 'authUserId', columnName: 'authUserName', disable: 'true' },
-    { key: 'userRole', label: 'User Role', type: 'dropdown', arrayName: 'adminRoles', columnId: 'roleName', columnName: 'roleName' },
+    { key: 'userRoleId', label: 'User Role', type: 'dropdown', arrayName: 'adminRoles', columnId: 'roleId', columnName: 'roleName' },
 
     { key: 'firstName', label: 'First Name', type: 'input', subtype: 'text', disable: 'true' },
     { key: 'lastName', label: 'Last Name', type: 'input', subtype: 'text', disable: 'true' },

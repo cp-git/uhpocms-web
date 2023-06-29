@@ -8,6 +8,10 @@ import { CourseProgressService } from 'app/courseProgress/services/course-progre
 import { CourseProgress } from 'app/courseProgress/class/courseprogress';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { Course } from 'app/teacher-course/class/course';
+import { AccesscontrolService } from 'app/accesscontrol/services/accesscontrol.service';
+import { Accesscontrol } from 'app/accesscontrol/class/accesscontrol';
+import { userModule } from 'app/permissions/enum/user-module.enum';
+import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
 
 @Component({
   selector: 'app-student-panel',
@@ -22,7 +26,7 @@ export class StudentPanelComponent {
 
   //doughnut chart data array
   doughCharts: any = [];
-  charts:any = [];
+  charts: any = [];
 
   currentIndex: number = 0;
 
@@ -30,15 +34,31 @@ export class StudentPanelComponent {
   profileId: any;
   courseProgressArr: CourseProgress[] = [];
   userName!: string;
+  userId: any;
+  accessControlData: Accesscontrol;
+
+  userPermissions: AuthUserPermission[] = [];;
+  modulePermissionIds: Set<number> = new Set<number>();
+  authModule = userModule;
 
 
-  constructor(private _route: Router, private _activatedRoute: ActivatedRoute, private courseProgServ: CourseProgressService, private courseService: TeacherCourseService) {
+  constructor(private _route: Router,
+    private _activatedRoute: ActivatedRoute,
+    private courseProgServ: CourseProgressService,
+    private courseService: TeacherCourseService,
+    private accessControlService: AccesscontrolService
+  ) {
+    this.accessControlData = new Accesscontrol();
+    this.loadAllPermissions();
 
   }
 
 
   // Initialize component properties with current route parameters
   ngOnInit(): void {
+    this.userId = sessionStorage.getItem('userId')
+    this.loadAccessControl();
+
     //code to realod the page by navigating here to this page
     this._route.navigate(['../'], { relativeTo: this._activatedRoute });
     this.profileId = this._activatedRoute.snapshot.paramMap.get('id');
@@ -46,6 +66,37 @@ export class StudentPanelComponent {
 
     //function to display charts on page load
     this.getAllCourseProgress();
+
+  }
+
+  loadAllPermissions() {
+    try {
+      let sessionData: any;
+      sessionData = sessionStorage.getItem('permissions');
+      console.log(sessionData);
+      let data = JSON.parse(sessionData);
+      this.userPermissions = data;
+      this.modulePermissionIds.add(this.userPermissions[0].moduleId)
+      this.userPermissions.forEach(permission => {
+        this.modulePermissionIds.add(permission.moduleId);
+      });
+      console.log(this.modulePermissionIds);
+
+    }
+    catch (err) {
+      console.log("Error", err);
+    }
+
+  }
+
+  loadAccessControl() {
+
+    this.accessControlService.getAccessControlByUserId(this.userId).subscribe(
+      (response) => {
+        this.accessControlData = response;
+      }
+    );
+    console.log(this.accessControlData);
 
   }
 
@@ -63,12 +114,10 @@ export class StudentPanelComponent {
           await this.getCourseNameById(filteredCouProgArr[i].courseId);
           console.log("this.course.courseName")
           console.log(this.course.courseName)
-          if(this.course.courseIsActive == true)
-
-          {
+          if (this.course.courseIsActive == true) {
             console.log("Entered in if loop")
-          this.charts[i] = [filteredCouProgArr[i].progress, remainingPercentage, this.course.courseName];
-          this.doughCharts.push(this.charts[i])
+            this.charts[i] = [filteredCouProgArr[i].progress, remainingPercentage, this.course.courseName];
+            this.doughCharts.push(this.charts[i])
             console.log()
           }
         }

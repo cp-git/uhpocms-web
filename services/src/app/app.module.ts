@@ -81,11 +81,7 @@ import { ModuleHeaderComponent } from './reusable/component/module-header/module
 import { ChartdataComponent } from './charts/components/chartdata/chartdata.component';
 import { BarChartComponent } from './charts/components/bar-chart/bar-chart.component';
 
-
-
-
 import { MatDialogModule } from '@angular/material/dialog';
-import { PermissionComponent } from './permissions/components/permission/permission.component';
 import { PermissionModule } from './permissions/permission.module';
 
 

@@ -5,13 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { ReusableModule } from 'app/reusable/module/reusable.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { UserPermissionComponent } from './components/user-permission/user-permission.component';
+import { AuthModuleComponent } from './components/auth-module/auth-module.component';
 
 
 
 @NgModule({
   declarations: [
     PermissionComponent,
-    UserPermissionComponent
+    UserPermissionComponent,
+    AuthModuleComponent
   ],
   imports: [
     CommonModule,

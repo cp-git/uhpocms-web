@@ -3,4 +3,5 @@ export class AuthUserPermission {
     userId!: number;
     moduleId!: number;
     permissionId!: number;
+    roleId!: number;
 }

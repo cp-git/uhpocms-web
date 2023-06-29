@@ -9,6 +9,7 @@ import { CategoryService } from 'app/category/services/category.service';
 import { Course } from 'app/teacher-course/class/course';
 import { Module } from 'app/module/class/module';
 import { Category } from 'app/category/class/category';
+import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
@@ -35,8 +36,6 @@ export class QuizComponent implements OnInit {
   allColumnNames: any; // header for all visible column data
 
   updateColumnNames: any;
-
-
   allColumnViewNames: any; // header for all visible column data
 
   emptyQuiz!: Quiz;  // empty Quiz
@@ -56,6 +55,11 @@ export class QuizComponent implements OnInit {
   categories: Category[] = [];
   userRole: any;
   titleWithUserRole: boolean = true;
+
+  buttonsArray: any;
+  userRoleId: any;
+  userAndRolePermissions: AuthUserPermission[] = [];
+
   constructor(
     private quizService: QuizService,
     private location: Location,
@@ -82,6 +86,12 @@ export class QuizComponent implements OnInit {
     this.loadAllModules();
     this.profileId = sessionStorage.getItem('profileId');
 
+    this.buttonsArray = {
+      showAddButton: false,
+      showActivateButton: false,
+      updateButton: false,
+      deleteButton: false
+    }
   }
 
 

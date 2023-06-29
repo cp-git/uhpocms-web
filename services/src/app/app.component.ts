@@ -7,6 +7,7 @@ import { Course } from './teacher-course/class/course';
 import { Module } from './class/module';
 import { Quiz } from './class/quiz';
 import { Profile } from './profiles/class/profile';
+import { AuthUserPermissionService } from './permissions/services/authUserPermission/auth-user-permission.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,7 +23,15 @@ export class AppComponent {
   modules: Module[] = [];
   instituteProfiles: Profile[] = [];
 
-  constructor(private _appService: AppService) { }
+
+  userId: any;
+  userRoleId: any;
+
+  constructor(private _appService: AppService,
+    private userPermissionService: AuthUserPermissionService) {
+    this.userId = sessionStorage.getItem('userId');
+    this.userRoleId = sessionStorage.getItem('userRoleId');
+  }
 
   ngOnInit(): void {
     this.loadAdminInstitution();
@@ -32,6 +41,9 @@ export class AppComponent {
     this.loadModules();
     this.loadInstituteProfile();
     //alert(sessionStorage.getItem("instituteprofile"));
+
+    // this.loadUserPermissions(this.userRoleId, this.userId)
+
   }
 
   loadAdminInstitution() {
@@ -110,4 +122,9 @@ export class AppComponent {
       }
     );
   }
+
+
+  // loadUserPermissions(userRoleId: any, userId: any) {
+  //   return this._appService.fetchUserPermissionsByUserIdAndRoleId(userRoleId, userId);
+  // }
 }

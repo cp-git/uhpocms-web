@@ -1,0 +1,54 @@
+.outer-checkbox {
+    transform: scale(1.5);
+    /* Increase the size by scaling */
+    margin-right: 8px;
+    /* Add some spacing between the checkbox and the label */
+}
+
+
+.box {
+    border: 1px solid black;
+    border-radius: 25px;
+    margin: 10px;
+    padding: 10px;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #999;
+    border-radius: 3px;
+    outline: none;
+}
+
+/* Style the custom checkbox when it's checked */
+input[type="checkbox"]:checked:disabled {
+    background-color: red;
+    /* Change this to the desired tick color */
+    border-color: red;
+    /* Change this to the desired tick color */
+}
+
+/* Style the label for the checkbox */
+label.checkbox-label {
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+/* Style the custom checkbox when it's checked */
+input[type="checkbox"]:checked {
+    background-color: lawngreen;
+    /* Change this to the desired tick color */
+    border-color: lawngreen;
+    /* Change this to the desired tick color */
+}
+
+.disabled-div {
+    pointer-events: none;
+    opacity: 0.6;
+    /* Optional: You can reduce the opacity to indicate the disabled state */
+}

@@ -12,6 +12,10 @@ import { DepartmentService } from 'app/department/services/department.service';
 import { CourseDepartment } from 'app/teacher-course/class/course-department';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 import { AppService } from 'app/app.service';
+import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
+import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
+import { userModule } from 'app/permissions/enum/user-module.enum';
+
 @Component({
   selector: 'app-teacher-course',
   templateUrl: './teacher-course.component.html',
@@ -33,11 +37,15 @@ export class TeacherCourseComponent implements OnInit {
   // buttons
   showAddButton: boolean = false;
   showActivateButton: boolean = false;
+
+  buttonsArray: any;
+  userAndRolePermissions: AuthUserPermission[] = [];
+
   // If all data is available or not
   dataAvailable: boolean = false;
 
-  updateButton: boolean = true;
-  deleteButton: boolean = true;
+  updateButton: boolean = false;
+  deleteButton: boolean = false;
 
 
   courseDepartment: CourseDepartment;
@@ -74,7 +82,13 @@ export class TeacherCourseComponent implements OnInit {
 
 
   courseDepartments: CourseDepartment[] = [];
-  constructor(private service: TeacherCourseService, private dialogBoxServices: DialogBoxService, private location: Location, private departmentService: DepartmentService) {
+  constructor(
+    private service: TeacherCourseService,
+    private dialogBoxServices: DialogBoxService,
+    private location: Location,
+    private departmentService: DepartmentService,
+    private userPermissionService: AuthUserPermissionService,
+  ) {
     this.columnNames = CourseColumn;
     this.allColumnNames = CourseAllColumn;
 
@@ -91,10 +105,60 @@ export class TeacherCourseComponent implements OnInit {
     this.profileId = sessionStorage.getItem('profileId');
     this.userRole = sessionStorage.getItem('userRole');
 
+    this.buttonsArray = {
+      showAddButton: false,
+      showActivateButton: false,
+      updateButton: false,
+      deleteButton: false
+    }
   }
 
   ngOnInit(): void {
     this.initiliazation();
+    this.loadAndLinkUserPermissions();
+
+  }
+
+  // this function for loading permission from session storage and link permission 
+  // with buttons to show and hide based on permissions 
+  private loadAndLinkUserPermissions() {
+    // console.log("hey 1");
+
+    try {
+      let sessionData: any = sessionStorage.getItem('permissions');
+      //console.log(this.sessionData);
+      let data = JSON.parse(sessionData);
+      for (var inst in data) {
+        this.userAndRolePermissions.push(data[inst]);
+      }
+    }
+    catch (err) {
+      console.log("Error", err);
+    }
+    // console.log("hey 2");
+
+    this.userPermissionService.linkPermissions(userModule.COURSE, this.userAndRolePermissions, this.buttonsArray);
+    // console.log("hey 3");
+
+    console.log(this.buttonsArray);
+    this.toggleButtonsPermissions(this.buttonsArray);
+    // console.log("hey 4");
+
+  }
+
+  private toggleButtonsPermissions(buttonsArray: any) {
+    if (buttonsArray.showActivateButton) {
+      this.showActivateButton = true;
+    }
+    if (buttonsArray.showAddButton) {
+      this.showAddButton = true;
+    }
+    if (buttonsArray.deleteButton) {
+      this.deleteButton = true;
+    }
+    if (buttonsArray.updateButton) {
+      this.updateButton = true;
+    }
   }
 
   private async initiliazation() {
@@ -108,19 +172,19 @@ export class TeacherCourseComponent implements OnInit {
 
     switch (userRole) {
       case 'admin' || 'coadmin':
-        if (this.viewActivate == false) {
-          this.showAddButton = true;
-          this.showActivateButton = true;
-        }
+        // if (this.viewActivate == false) {
+        //   this.showAddButton = true;
+        //   this.showActivateButton = true;
+        // }
         break;
       case 'teacher':
-        this.showAddButton = false;
-        this.showActivateButton = false;
+        // this.showAddButton = false;
+        // this.showActivateButton = false;
 
         break;
       case 'student':
-        this.showAddButton = false;
-        this.showActivateButton = false;
+        // this.showAddButton = false;
+        // this.showActivateButton = false;
         break;
     }
   }
@@ -134,7 +198,7 @@ export class TeacherCourseComponent implements OnInit {
       this.viewUpdate = false;
       this.viewActivate = false;
       this.accessControl(this.userRole);
-
+      this.toggleButtonsPermissions(this.buttonsArray);
     } else {
       this.location.back();
     }
@@ -414,20 +478,20 @@ export class TeacherCourseComponent implements OnInit {
     switch (userRole) {
       case 'admin' || 'coadmin':
         if (this.viewActivate == false) {
-          this.showAddButton = true;
-          this.showActivateButton = true;
+          // this.showAddButton = true;
+          // this.showActivateButton = true;
         }
         this.getAllCourse();
         break;
       case 'teacher':
-        this.updateButton = false;
-        this.deleteButton = false;
+        // this.updateButton = false;
+        // this.deleteButton = false;
         this.getAssignedCoursesOfTeacher(this.profileId);
 
         break;
       case 'student':
-        this.updateButton = false;
-        this.deleteButton = false;
+        // this.updateButton = false;
+        // this.deleteButton = false;
         this.getCoursesEnrolledToStudent(this.profileId);
         break;
     }

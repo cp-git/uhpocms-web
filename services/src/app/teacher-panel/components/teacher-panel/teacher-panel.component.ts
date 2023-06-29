@@ -10,7 +10,9 @@ import { ChartdataComponent } from 'app/charts/components/chartdata/chartdata.co
 
 import { Course } from 'app/teacher-course/class/course';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
-
+import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
+import { userModule } from 'app/permissions/enum/user-module.enum';
+userModule
 @Component({
   selector: 'app-teacher-panel',
   templateUrl: './teacher-panel.component.html',
@@ -43,9 +45,21 @@ export class TeacherPanelComponent {
   clickedCourse: Course = new Course();
   barClicked: boolean = false;
   closeButtonStatus: boolean = true;
+  userPermissions: AuthUserPermission[] = [];;
+  modulePermissionIds: Set<number> = new Set<number>();
+  userId: any;
+  authModule = userModule;
 
+  constructor(
+    private _route: Router,
+    private _activatedRoute: ActivatedRoute,
+    private courseProgServ: CourseProgressService,
+    private courseService: TeacherCourseService,
+    private assignCouServ: AssignCourseToTeacherService,
+    private profileServ: ProfileService,
 
-  constructor(private renderer: Renderer2, private _route: Router, private _activatedRoute: ActivatedRoute, private courseProgServ: CourseProgressService, private courseService: TeacherCourseService, private assignCouServ: AssignCourseToTeacherService, private profileServ: ProfileService) {
+  ) {
+    this.loadAllPermissions();
 
   }
 
@@ -59,6 +73,8 @@ export class TeacherPanelComponent {
   }
 
   ngOnInit(): void {
+    this.userId = sessionStorage.getItem('userId')
+
     this._route.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         if (event.navigationTrigger === 'popstate') {
@@ -75,9 +91,27 @@ export class TeacherPanelComponent {
     //String initialized so that at start it should be null
     this.clickedCourse.courseName = '';
 
-
   }
 
+  loadAllPermissions() {
+    try {
+      let sessionData: any;
+      sessionData = sessionStorage.getItem('permissions');
+      console.log(sessionData);
+      let data = JSON.parse(sessionData);
+      this.userPermissions = data;
+      this.modulePermissionIds.add(this.userPermissions[0].moduleId)
+      this.userPermissions.forEach(permission => {
+        this.modulePermissionIds.add(permission.moduleId);
+      });
+      console.log(this.modulePermissionIds);
+
+    }
+    catch (err) {
+      console.log("Error", err);
+    }
+
+  }
 
 
   //-------------------------------------------------------------------

@@ -5,10 +5,13 @@ import { AccessControl } from '../../class/access-control';
 import { AuthPermission } from 'app/permissions/class/auth-permission';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
+import { environment } from 'environments/environment.development';
+import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthPermissionService {
+  private authPermissionUrl: string;
 
   moduleNames: any;
   permissions: AuthPermission[] = [];
@@ -18,47 +21,26 @@ export class AuthPermissionService {
   userPermissions!: AuthUserPermission;
   userAndRolePermissions: AuthUserPermission[] = [];
 
-  constructor() { }
+  constructor(private http: HttpClient) {
+    this.authPermissionUrl = `${environment.accessPrivilegeUrl}`;
+  }
 
   getAllPermissions(): Observable<AuthPermission[]> {
-    let data: AuthPermission[] = [];
-    data[0] =
-    {
-      "id": 1,
-      "permissionName": "CREATE"
-    };
-
-    data[1] = {
-      "id": 2,
-      "permissionName": "DELETE"
-    };
-
-    data[2] = {
-      "id": 3,
-      "permissionName": "UPDATE"
-    };
-
-    data[3] = {
-      "id": 4,
-      "permissionName": "ACTIVATE"
-    }
-
-    console.log(data);
-    this.permissions = data;
-    return of(data);
+    return this.http.get<AuthPermission[]>(`${this.authPermissionUrl}/permission`);
+    // this.permissions = data;
+    // return of(data);
   }
 
 
   addAuthPermission(authPermission: AuthPermission): Observable<AuthPermission[]> {
-    this.permissions.push(authPermission);
-    return of(this.permissions);
+    return this.http.post<AuthPermission[]>(`${this.authPermissionUrl}/permissions`, authPermission);
   }
 
   updateAuthPermission(permissionId: number, authPermission: AuthPermission): Observable<AuthPermission[]> {
-    return of(this.permissions);
+    return this.http.post<AuthPermission[]>(`${this.authPermissionUrl}/permissions`, authPermission);
   }
 
   deleteAuthPermission(permissionId: number): Observable<AuthPermission[]> {
-    return of(this.permissions);
+    return this.http.delete<AuthPermission[]>(`${this.authPermissionUrl}/permissions/${permissionId}`);
   }
 }

@@ -55,12 +55,11 @@ import { AuthenticationloginComponent } from './authenticationlogin/components/a
 import { ProfileComponent } from './profiles/components/profile/profile.component';
 import { ModuleComponent } from './module/components/module/module.component';
 import { UploadFileComponent } from './FileUpload/upload-file/upload-file.component';
-
-import { AccesscontrolComponent } from './accesscontrol/components/accesscontrol/accesscontrol.component';
-
 import { ModuleFileComponent } from './module-file/components/module-file/module-file.component';
 import { AddQuestionAnswerComponent } from './question/components/add-question-answer/add-question-answer.component';
 import { PermissionComponent } from './permissions/components/permission/permission.component';
+import { AuthModuleComponent } from './permissions/components/auth-module/auth-module.component';
+import { AccessControlComponent } from './accesscontrol/components/access-control/access-control.component';
 
 
 const routes: Routes = [
@@ -200,8 +199,9 @@ const routes: Routes = [
   { path: 'Quiz/:userName', component: QuizComponent },
 
   { path: 'uploadfile', component: UploadFileComponent },
-  { path: 'access', component: AccesscontrolComponent },
+  { path: 'access', component: AccessControlComponent },
   { path: 'permission', component: PermissionComponent },
+  { path: 'authmodule', component: AuthModuleComponent },
 
 ];
 

@@ -1,8 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AccessControl } from 'app/permissions/class/access-control';
 import { AuthGroupPermission } from 'app/permissions/class/auth-group-permission';
 import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
 import { userModule } from 'app/permissions/enum/user-module.enum';
+import { userPermission } from 'app/permissions/enum/user-permission.enum';
+import { environment } from 'environments/environment.development';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,148 +18,67 @@ export class AuthUserPermissionService {
   accessControl!: AccessControl;
 
   rolePermissions!: AuthGroupPermission;
-  userPermissions!: AuthUserPermission;
+  // userPermissions!: AuthUserPermission;
   userAndRolePermissions: AuthUserPermission[] = [];
+  accessPrivilegeUrl = environment.accessPrivilegeUrl;
+  userPermissions: any;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  getAllPermissions() {
-    let data: any = [
-      {
-        "id": 1,
-        "permissionName": "CREATE"
-      },
-      {
-        "id": 2,
-        "permissionName": "DELETE"
-      },
-      {
-        "id": 3,
-        "permissionName": "UPDATE"
-      },
-      {
-        "id": 4,
-        "permissionName": "ACTIVATE"
+  getAllPermissionsByRoleIdAndUserId(userRoleId: any, userId: any): Observable<AuthUserPermission[]> {
+    return this.http.get<AuthUserPermission[]>(`${this.accessPrivilegeUrl}/permissions?userId=${userId}&roleId=${userRoleId}`)
+      .pipe(
+        tap((permissions: AuthUserPermission[]) => {
+          this.userPermissions = permissions;
+        })
+
+      );
+  }
+
+  getAllUserPermissions(): Observable<AuthUserPermission[]> {
+    return this.http.get<AuthUserPermission[]>(`${this.accessPrivilegeUrl}/userpermission?user=all`)
+
+  }
+
+
+  linkPermissions(moduleId: number, userAndRolePermissions: AuthUserPermission[], buttonArray: any) {
+    // let data: any = moduleName.toUpperCase;
+    // let module: any = userModule[data];
+    console.log(userAndRolePermissions);
+
+    userAndRolePermissions = userAndRolePermissions.filter(item =>
+      item.moduleId == moduleId
+    );
+    console.log(userAndRolePermissions);
+
+    userAndRolePermissions.forEach(element => {
+      if (element.permissionId == userPermission.CREATE) {
+        console.log("CREATE");
+        buttonArray.showAddButton = true;
       }
-    ]
-    console.log(data);
-    this.permissions = data;
-    return data;
-  }
 
-  getAllModules() {
-    let data: any = [
-      {
-        "id": 1,
-        "moduleName": "INSTITUTION"
-      },
-      {
-        "id": 2,
-        "moduleName": "DEPARTMENT"
-      },
-      {
-        "id": 3,
-        "moduleName": "COURSE"
-      },
-      {
-        "id": 4,
-        "moduleName": "ANNOUNCEMENT"
+      if (element.permissionId == userPermission.DELETE) {
+        console.log("DELETE");
+        buttonArray.deleteButton = true;
       }
-    ]
 
-    this.moduleNames = data;
-    return data;
+      if (element.permissionId == userPermission.UPDATE) {
+        console.log("UPDATE");
+        buttonArray.updateButton = true;
+      }
+
+      if (element.permissionId == userPermission.ACTIVATE) {
+        console.log("ACTIVATE");
+        buttonArray.showActivateButton = true;
+      }
+    })
   }
 
-  getAllPermissionsByRoleIdAndUserId(userRoleId: any, userId: any) {
-    console.log(userId);
-    let data: AuthUserPermission[] = [];
-
-    data[0] = {
-      "id": 1,
-      "userId": userId,
-      "moduleId": 3,
-      "permissionId": 1
-    };
-
-    data[2] = {
-      "id": 2,
-      "userId": userId,
-      "moduleId": 3,
-      "permissionId": 2
-    };
-
-    data[3] = {
-      "id": 3,
-      "userId": userId,
-      "moduleId": 3,
-      "permissionId": 3
-    };
-
-    data[4] = {
-      "id": 4,
-      "userId": userId,
-      "moduleId": 2,
-      "permissionId": 1
-    };
-
-    data[5] = {
-      "id": 5,
-      "userId": userId,
-      "moduleId": 2,
-      "permissionId": 2
-    };
-
-    data[6] = {
-      "id": 5,
-      "userId": userId,
-      "moduleId": 2,
-      "permissionId": 3
-    };
-
-    data[7] = {
-      "id": 5,
-      "userId": userId,
-      "moduleId": 2,
-      "permissionId": 4
-    }
-
-
-    this.userAndRolePermissions = data;
-    console.log(this.userAndRolePermissions);
-
-    return this.userAndRolePermissions;
+  assignPermissionsToUserId(userId: any, userRoleId: any, moduleAndPermissionsIds: any): Observable<AuthUserPermission[]> {
+    return this.http.post<AuthUserPermission[]>(`${this.accessPrivilegeUrl}/user/${userId}/role/${userRoleId}`, moduleAndPermissionsIds)
   }
 
-
-  // linkPermissions(userAndRolePermissions: AuthUserPermission[], moduleName: string, buttonArray: any[]) {
-  //   let data: any = moduleName.toUpperCase;
-  //   let module: any = userModule[data];
-  //   userAndRolePermissions = userAndRolePermissions.filter(item =>
-  //     item.moduleId == module
-  //   );
-  //   console.log(userAndRolePermissions);
-
-  //   userAndRolePermissions.forEach(element => {
-  //     if (element.moduleId == userModule.DEPARMTMENT && element.permissionId == userPermission.CREATE) {
-  //       console.log("CREATE");
-  //       buttonArray.showAddButton = true;
-  //     }
-
-  //     if (element.moduleId == userModule.DEPARMTMENT && element.permissionId == userPermission.DELETE) {
-  //       console.log("DELETE");
-  //       this.deleteButton = true;
-  //     }
-
-  //     if (element.moduleId == userModule.DEPARMTMENT && element.permissionId == userPermission.UPDATE) {
-  //       console.log("UPDATE");
-  //       this.updateButton = true;
-  //     }
-
-  //     if (element.moduleId == userModule.DEPARMTMENT && element.permissionId == userPermission.ACTIVATE) {
-  //       console.log("ACTIVATE");
-  //       this.showActivateButton = true;
-  //     }
-  //   })
-  // }
+  assignPermissionsToRoleId(userRoleId: any, moduleAndPermissionsIds: any): Observable<AuthGroupPermission[]> {
+    return this.http.post<AuthGroupPermission[]>(`${this.accessPrivilegeUrl}/role/${userRoleId}`, moduleAndPermissionsIds)
+  }
 }

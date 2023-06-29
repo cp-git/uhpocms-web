@@ -58,8 +58,8 @@
 
 
 <ng-template #viewadd>
-    <app-add-update [data]="{currentData:emptyAuthPermission , columnNames:columnNames}"
-        (submitClicked)="onAddAuthPermissionSubmit($event)"></app-add-update>
+    <app-add-update [data]="{currentData:emptyAuthModule , columnNames:columnNames}"
+        (submitClicked)="onAddAuthModuleSubmit($event)"></app-add-update>
 </ng-template>
 
 <ng-template #viewone>
@@ -68,5 +68,5 @@
 
 <ng-template #viewupdate>
     <app-add-update [data]="{currentData:currentData , columnNames:columnNames}"
-        (submitClicked)="onUpdateAuthPermissionSubmit($event)"></app-add-update>
+        (submitClicked)="onUpdateAuthModuleSubmit($event)"></app-add-update>
 </ng-template>

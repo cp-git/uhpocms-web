@@ -1,3 +1,5 @@
 export const PermissionColumn = [
-    { key: 'permissionName', label: 'Permission Name', type: 'input', subtype: 'text' },
+    { key: 'name', label: 'Permission Name', type: 'input', subtype: 'text' },
+    { key: 'description', label: 'Description', type: 'input', subtype: 'text' },
+
 ]

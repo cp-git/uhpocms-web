@@ -62,7 +62,7 @@
 
     <!-- second row -->
     <!-- <div class="row"> -->
-    <div class="col-md-4">
+    <div class="col-md-4" *ngIf="accessControlData.adminInstitute">
         <div class="card text-center" (click)="RedirectToAdminInstitution()">
             <div class="card-header">
                 <span class="fas fa-school fa-4x" style="color:rgb(187,55,42)"></span>
@@ -144,25 +144,92 @@
             </div>
             <div class="card-body">
                 <!-- <h3 class="card-title">Master Permissions</h3> -->
-                <button class="btn btn-primary">Master Permissions</button>
+                <button class="btn btn-primary">Master - Permissions</button>
             </div>
 
         </div>
     </div>
+
+    <div class="col-md-4">
+        <div class="card text-center" routerLink="/authmodule">
+            <div class="card-header">
+                <span class="fas fa-file-contract fa-3x"></span>
+            </div>
+            <div class="card-body">
+                <!-- <h3 class="card-title">Allocate Permissions to Teachers</h3> -->
+                <button class="btn btn-primary">Master - Auth Module</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card text-center" routerLink="/access">
+            <div class="card-header">
+                <span class="fas fa-user-lock fa-4x"></span>
+            </div>
+            <div class="card-body">
+                <button class="btn btn-primary">Access Control</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.MODULE)">
+        <div class="card text-center" [routerLink]="['/AuthUser',userName]">
+            <div class="card-header">
+                <span class="fas fa-book fa-4x" style="color: rgb(114,208,169);"></span>
+            </div>
+            <div class="card-body">
+                <!--<h3 class="card-title">Modules</h3>-->
+                <button class="btn btn-primary">Modules</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.MODULE_FILE)">
+        <div class="card text-center" [routerLink]="['/modulefile']">
+            <div class="card-header">
+                <span class="fas fa-clone fa-4x" style="color: rgb(24,47,81);"></span>
+            </div>
+            <div class="card-body">
+                <!--<h3 class="card-title">Module Content</h3>-->
+                <button class="btn btn-primary">Module Content</button>
+            </div>
+        </div>
+    </div>
+    <!-- </div> -->
+
+
+    <!-- second row -->
+    <!-- <div class="row"> -->
+
+    <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.QUIZ)">
+        <div class="card text-center" [routerLink]="['/Quiz',userName]">
+            <div class="card-header">
+                <span class="fas fa-lightbulb fa-4x" style="color: rgb(247,199,0);"></span>
+            </div>
+            <div class="card-body">
+                <!--<h3 class="card-title">Quizzes</h3>-->
+                <button class="btn btn-primary">Quizzes</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.QUESTION)">
+        <div class="card text-center" [routerLink]="['/Question',userName]">
+            <div class="card-header">
+                <span class="fas fa-question-circle fa-4x" style="color: rgb(108,44,153);"></span>
+            </div>
+            <div class="card-body">
+                <!--<h3 class="card-title">Questions & Answers</h3>-->
+                <button class="btn btn-primary">Questions & Answers</button>
+            </div>
+        </div>
+    </div>
+
     <!-- </div> -->
     <!-- third row -->
     <!-- <div class="row">
-                <div class="col-md-4">
-                    <div class="card text-center" routerLink="/access">
-                        <div class="card-header">
-                            <span class="fas fa-user-lock fa-4x"></span>
-                        </div>
-                        <div class="card-body">
-                            <h3 class="card-title">Access Control</h3>
-                            <button class="btn btn-primary">Access Control</button>
-                        </div>
-                    </div>
-                </div>
+              
     
                 <div class="col-md-4">
                     <div class="card text-center" routerLink="/allotPermission">

@@ -1,6 +1,6 @@
 export class AuthGroupPermission {
     id!: number;
-    roleName!: string;
+    roleId!: string;
     moduleId!: number;
     permissionId!: number;
 }

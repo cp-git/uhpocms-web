@@ -11,6 +11,7 @@ import { AccessControl } from 'app/permissions/class/access-control';
 export class AccesscontrolService {
   accesscontrolUrl: string;
   accessControls: AccessControl[] = [];
+  accessControlData: Accesscontrol[] = [];
   //contructor
   constructor(private http: HttpClient) {
     //environment variable code 
@@ -38,8 +39,12 @@ export class AccesscontrolService {
   }
 
   //service to get access control data by proving Id
-  getControlsById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.accesscontrolUrl}/${id}`);
+  getAccessControlByUserId(id: number): Observable<Accesscontrol> {
+    return this.http.get<Accesscontrol>(`${this.accesscontrolUrl}/userid/${id}`);
+  }
+
+  addOrUpdateAccessControles(userId: number, accesscontrol: Accesscontrol): Observable<Accesscontrol> {
+    return this.http.put<Accesscontrol>(`${this.accesscontrolUrl}/userId/${userId}`, accesscontrol);
   }
 
 }
