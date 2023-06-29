@@ -177,14 +177,12 @@ export class ReviewAnswerComponent implements OnInit {
       reviewObjectStuAnswer.marks = parseFloat(queAnsNew.marks);
       reviewObjectStuAnswer.questionContent = queAnsNew.content1;
       reviewObjectStuAnswer.quizId = queAnsNew.questionQuizId;
-      // reviewObjectStuAnswer.selectedOption = queAns.isAnswerCorrect;
+    
       reviewObjectStuAnswer.studentId = queAnsNew.profileId;
       reviewObjectStuAnswer.teacherRemark =queAnsNew.reviewcontent;
       reviewObjectStuAnswer.selectedOption = false;
       console.log(queAnsNew.reviewcontent)
-      // this.oneQuestionAnswer = queAns;
-      // separating question from object 
-      // console.log(queAns.questionId);
+
       this.questionAnswer.question = {} as Question;
       this.questionAnswer.question['questionId'] = queAnsNew.questionId;
 
@@ -220,10 +218,7 @@ export class ReviewAnswerComponent implements OnInit {
             console.log("Failed to save student answers");
           }
         );
-        // }
-        // else{
-        //  alert("Please enter valid marks");
-        // }
+      
       }
       else{
         if (!isFirstAlertDisplayed) {
@@ -244,126 +239,36 @@ export class ReviewAnswerComponent implements OnInit {
         }
       }
       });
-      // this.questionAnswer.question['questionFigure'] = queAns.questionFigure;
-      // this.questionAnswer.question['questionContent'] = queAns.questionContent;
-      // this.questionAnswer.question['questionExplanation'] = queAns.questionExplanation;
-      // this.questionAnswer.question['questionOrderNo'] = queAns.questionOrderNo;
-      // if (this.selectedCategoryName == 'MCQ' || this.selectedCategoryName == 'mcq') {
-      //   this.questionAnswer.question.questionIsMCQ = true;
-      // } else {
-      //   this.questionAnswer.question.questionIsMCQ = false;
-  
-      // }
-      // this.questionAnswer.question.questionQuizId = this.selectedQuizId;
-      // this.questionAnswer.question.questionCategoryId = this.selectedQuiz.categoryId;
-      // this.questionAnswer.question.questionIsActive = true;
-  
-      // // separating answer from object
-      // // this.emptyAnswer = {} as Answer;
-      // // this.emptyAnswer.id = this.questionAnswer.answers['id'];
-      // // this.emptyAnswer.content = this.questionAnswer.answers['content'];
-      // // this.emptyAnswer.correct = true;
-      // // this.emptyAnswer.questionorderno = this.questionAnswer.answers['questionorderno'];
-      // this.questionAnswer.answers = [];
-  
-      
-      // // making object of answers
-      // if (queAns['content1'] != '' || queAns['content1'] != undefined) {
-      //   this.answer = {} as Answer;
-      //   this.queAnsResult = {} as StudentAnswer;
-      //   this.queAnsResult.teacher_remark = queAns['content1'];
      
-      //   this.answer.questionorderno = queAns['questionOrderNo'];
+      
+    
   
-      //   this.questionAnswer.answers.push(this.answer);
-      // }
-      // if (queAns['content2'] != '' || queAns['content2'] != undefined) {
-      //   this.answer = {} as Answer;
-      //   this.answer.content = queAns['content2'];
-      //   this.answer.correct = queAns['correct2'];
-      //   this.answer.questionorderno = queAns['questionOrderNo'];
-  
-      //   this.questionAnswer.answers.push(this.answer);
-      // }
-  
-      // if (queAns['content3'] != '' || queAns['content3'] != undefined) {
-      //   this.answer = {} as Answer;
-  
-      //   this.answer.content = queAns['content3'];
-      //   this.answer.correct = queAns['correct3'];
-      //   this.answer.questionorderno = queAns['questionOrderNo'];
-  
-      //   this.questionAnswer.answers.push(this.answer);
-      // }
-  
-      // if (queAns['content4'] != '' || queAns['content4'] != undefined) {
-      //   this.answer = {} as Answer;
-  
-      //   this.answer.content = queAns['content4'];
-      //   this.answer.correct = queAns['correct4'];
-      //   this.answer.questionorderno = queAns['questionOrderNo'];
-      //   this.questionAnswer.answers.push(this.answer);
-      // }
-  
-      // // console.log(this.questionAnswer);
-  
-  
-      // const instituteJson = JSON.stringify(this.questionAnswer);
-  
-      // const blob = new Blob([instituteJson], {
-      //   type: 'application/json'
-      // })
-  
-      // let formData = new FormData();
-  
-      // for (var i = 0; i < this.myFiles.length; i++) {
-      //   formData.append("files", this.myFiles[i]);
-      // }
-  
-      // formData.append("request", new Blob([JSON.stringify(this.questionAnswer)], { type: 'application/json' }));
-  
-      // this.service.addQuestion(formData).subscribe(
-      //   (response) => {
-      //     this.generatedQuestionAnswerId = response;
-  
-      //     console.log("Question Added Successfully");
-      //   },
-      //   (error) => {
-      //     console.log("Question added failed")
-      //   }
-      // )
+
   
     }
   
     onChangeCourse() {
       this.studProfileArr = [];
       this.selectedModuleId = undefined;
-      // this.selectedQuiz = {} as Quiz;
-      // this.selectedQuizId = undefined;
-      // this.allData = []
+
     }
   
     onChangeModule() {
      
-      // this.selectedQuiz = {} as Quiz;
-      // this.selectedQuizId = undefined;
-      // this.allData = []
+
     }
   
     onChangeSelectedQuiz() {
       this.questionAnswers = [];
       this.selectedQuiz = this.quizzes.find(quiz => quiz.quizId == this.selectedQuizId);
-      // this.currentQuestions.length = this.selectedQuiz.maxQuestions;
-      // this.currentAnswers.length = this.selectedQuiz.maxQuestions;
-  
-      // console.log(this.selectedQuiz);
+    
   
       this.service.getAllQuestionsByQuizId(this.selectedQuizId).subscribe(
         response => {
           this.allData = response; //assign data to local variable
   
           this.getAllQuestionAnswers(this.selectedQuizId);
-          // console.log(this.questionAnswers);
+        
   
   
         },
@@ -697,61 +602,9 @@ export class ReviewAnswerComponent implements OnInit {
     }
   
 
-  //  async loadStudents(){
-  //   this.studProfileArr =[];
-  //   this.studProfileIds =[];
-  //    let  quizProgressArray:QuizProgress[] = [];
-  //     console.log(this.selectedCourseId)
-  //     console.log(this.selectedModuleId)
-  //     return new Promise<any>((resolve, reject) => {
-  //     this.quizProgServ.getStudProfileByCourIdModId(this.selectedCourseId,this.selectedModuleId).subscribe(
-  //       (response)=>{
-  //       quizProgressArray = response
-  //         console.log(quizProgressArray)
-  //         for(let i of quizProgressArray){
-  //           this.studProfileIds.push(i.studentId);
-  //         }
        
-  //         console.log(this.studProfileIds)
-  //         for(let i of (new Set(this.studProfileIds)))
-  //         {
-  //           console.log(i)
-  //           this.getProfileById(i)
-  //           console.log(this.studProfile)
-  //           this.studProfileArr.push(this.studProfile)
-  //         }
-
-  //         console.log(this.studProfileArr);
-  //         resolve(this.studProfileArr);
-  //       },
-  //       (error) => {
-  //         reject(error);
-  //       }
-  //     )
-  //   });
-
-   
+ 
     
-  // }
-    
-  // async getProfileById(profId:number){
-  //  let profile:Profile = new Profile();
-  //  this.studProfile = new Profile();
-  //   return new Promise<any>((resolve, reject) => {
-  //     this.profileServ.getProfileByAdminId(profId).subscribe(
-  //       (response)=>{
-        
-  //         this.studProfile = response;
-
-
-  //         resolve(response);
-  //       },
-  //       (error) => {
-  //         reject(error);
-  //       }
-  //     )
-  //   });
-  // }
 
 
   async loadStudents() {
@@ -821,8 +674,7 @@ export class ReviewAnswerComponent implements OnInit {
           this.selectedCategoryName = c.categoryName;
         }
       });
-      // console.log(this.selectedCategoryName);
-      // console.log(this.categories);
+
   
       this.categories.find(c => {
         if (c.categoryId === this.selectedCategoryId) {
@@ -866,13 +718,7 @@ export class ReviewAnswerComponent implements OnInit {
       this.totalReviewMarks = 0;
       console.log(quizId)
       console.log("QuizId in  getAllAnswersAttempted")
-      // this.quizReService.getAllStudentAnswersByStduentIdAndQuizId(this.selectedStudProfileId,quizId).subscribe(
-      //   (result)=>{
 
-      //     this.quizResult = result;
-      //     console.log(this.quizResult)
-      //   }
-      // )
 
       console.log(this.selectedStudProfileId)
 
@@ -900,11 +746,9 @@ export class ReviewAnswerComponent implements OnInit {
                   console.log(" this.totalQuizMarks   " + this.totalQuizMarks+"  this.totalReviewMarks  " + this.totalReviewMarks)
                   this.queAns = {} as OneQuestionAnswer;
                   this.correctQueAns = {} as CorrectQuestionAnswer
-                  // this.perQueMaxMarks = question.maxMarks;
-                  // this.queAnsResult = {} as StudentAnswer;
-                  // Filter the answers based on questionId
+
                   const filteredAnswers = this.quizResult.filter(answer => answer.questionId == question.questionId);
-                  // console.log(filteredAnswers);
+       
                   
   
   
