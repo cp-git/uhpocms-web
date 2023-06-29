@@ -61,6 +61,7 @@ import { AccesscontrolComponent } from './accesscontrol/components/accesscontrol
 import { ModuleFileComponent } from './module-file/components/module-file/module-file.component';
 import { AddQuestionAnswerComponent } from './question/components/add-question-answer/add-question-answer.component';
 import { AnalyticsComponent } from './admin-analytics/analytics/analytics.component';
+import { ReviewAnswerComponent } from './review-answer/components/review-answer/review-answer.component';
 
 
 const routes: Routes = [
@@ -294,6 +295,7 @@ const routes: Routes = [
   { path: 'access', component: AccesscontrolComponent },
   { path: 'analytics', component: AnalyticsComponent },
 
+  { path: 'Review/:userName', component: ReviewAnswerComponent},
 
 ];
 

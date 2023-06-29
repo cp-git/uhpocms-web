@@ -1,5 +1,5 @@
 
-export class OneQuestionAnswer {
+export class CorrectQuestionAnswer {
     questionId!: number;
     questionFigure!: string;
     questionContent!: string;
@@ -9,22 +9,12 @@ export class OneQuestionAnswer {
     questionQuizId!: number;
     questionCategoryId!: number;
     questionIsActive!: boolean;
-    questionCreatedBy!: string;
-    questionCreatedOn!: Date;
-    questionModifiedBy!: string;
-    questionModifiedOn!: Date;
 
-    correct1!: boolean;
+
+    answerId!: number;
     content1!: string;
 
-    correct2!: boolean;
-    content2!: string;
-
-    correct3!: boolean;
-    content3!: string;
-
-    correct4!: boolean;
-    content4!: string;
+   reviewcontent!: string;
 
 
     isFormDirty!: boolean;
@@ -32,7 +22,14 @@ export class OneQuestionAnswer {
     image!: boolean;
     isOptionSelected!: boolean;
 
-    selectedAnswer!: string;
+    marks!: any;
     maxMarks!: number;
-    totalMarks: number =0;
+
+    totalMarks!: number; //total marks per question
+    totalReviewMarks!: number;
+    isAnswerCorrect!: boolean;
+    selectedAnswer!: string;
+    profileId!: number;
+
+    questionAnswers: any[] = [];
 }
