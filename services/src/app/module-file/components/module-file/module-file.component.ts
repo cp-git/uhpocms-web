@@ -10,6 +10,7 @@ import { Course } from 'app/teacher-course/class/course';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 import { UploadFileService } from 'app/FileUpload/services/upload-file.service';
+import { environment } from 'environments/environment.development';
 // import { Profile } from 'app/profiles/class/profile';
 // import { AssignedteachercourseComponent } from 'app/displayAssignedCourseToTeacher/components/assignedteachercourse/assignedteachercourse.component';
 @Component({
@@ -59,6 +60,10 @@ export class ModuleFileComponent {
   userRole: any;
   profileId: any;
 
+  private modulefileUrl!: string;
+
+  displayUrl!: any;
+
   emptyModuleFile: ModuleFile;  // empty module file
   currentData!: ModuleFile;  // for update and view, to show existing data
 
@@ -88,6 +93,7 @@ export class ModuleFileComponent {
 
 
     //this.profileId = sessionStorage.getItem('profileId');
+    this.modulefileUrl = `${environment.moduleFileUrl}`;
   }
 
   ngOnInit(): void {
@@ -97,6 +103,9 @@ export class ModuleFileComponent {
     this.getAllModulesFile();
     this.getAssignedCoursesOfTeacher(this.profileId);
     this.getInactiveModuleFiles();
+
+    this.displayUrl = this.modulefileUrl + '/files'
+
 
   }
 
@@ -338,7 +347,14 @@ export class ModuleFileComponent {
   // For updating module files by id
   private updateModuleFileById(currentData: ModuleFile) {
     // calling service for updating data
-    this.moduleFileService.updateModuleFileById(currentData.moduleFileId, currentData).subscribe(
+
+    let formData = new FormData();
+    for (let i = 0; i <= this.files.length; i++) {
+      formData.append("files", this.files[i]);
+    }
+    formData.append("admin", new Blob([JSON.stringify(currentData)], { type: 'application/json' }));
+
+    this.moduleFileService.updateModuleFileById(currentData.moduleFileId, formData).subscribe(
       response => {
         this.uploadfileService.uploadFiles(this.files).subscribe();
 
@@ -398,18 +414,18 @@ export class ModuleFileComponent {
       if (response) {
         console.log('User clicked OK');
         // Do something if the user clicked OK
-    // calling service to soft delte
-    this.moduleFileService.deleteModuleFileById(moduleFileId).subscribe(
-      (response) => {
-        this.dialogBoxServices.open("Module File deleted successfully !", 'information');
-        console.log('Module File deleted successfully');
-        this.ngOnInit();
-      },
-      (error) => {
-        console.log('Module File deletion failed');
-        this.dialogBoxServices.open("Module File deletion failed", 'warning');
-      }
-      );
+        // calling service to soft delte
+        this.moduleFileService.deleteModuleFileById(moduleFileId).subscribe(
+          (response) => {
+            this.dialogBoxServices.open("Module File deleted successfully !", 'information');
+            console.log('Module File deleted successfully');
+            this.ngOnInit();
+          },
+          (error) => {
+            console.log('Module File deletion failed');
+            this.dialogBoxServices.open("Module File deletion failed", 'warning');
+          }
+        );
       } else {
         console.log('User clicked Cancel');
         // Do something if the user clicked Cancel
@@ -446,6 +462,15 @@ export class ModuleFileComponent {
         console.log("Failed to activate");
       }
     );
+  }
+
+  display(moduleFileId: number) {
+
+    this.moduleFileService.getFile(moduleFileId).subscribe(
+      (response) => {
+        console.log(response);
+      }
+    )
   }
 
 
