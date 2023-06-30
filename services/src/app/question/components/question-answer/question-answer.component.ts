@@ -88,8 +88,9 @@ export class QuestionAnswerComponent implements OnInit {
 
   ngOnInit(): void {
     this.displayUrl = this.questionUrl + '/getFileById';
+ console.log(this.totalQuizMarks)
 
-
+ console.log(this.questionAnswers)
 
   }
 
@@ -137,7 +138,7 @@ export class QuestionAnswerComponent implements OnInit {
    
   }
 
-  onFormSubmit(queAns: OneQuestionAnswer) {
+  onFormSubmit(queAns: OneQuestionAnswer,queAnsArray :OneQuestionAnswer[] ) {
     this.submittedQuestionAnswer = {} as OneQuestionAnswer;
     this.submittedQuestionAnswer = queAns;
     console.log(queAns);
@@ -147,11 +148,11 @@ export class QuestionAnswerComponent implements OnInit {
     }
 
     if (queAns.questionId > 0) {
-      this.submitClicked.emit(queAns);
+      this.submitClicked.emit({queAns,queAnsArray});
 
     } else {
       queAns.questionId = 0;
-      this.submitClicked.emit(queAns);
+      this.submitClicked.emit({queAns,queAnsArray});
     }
 
     queAns.isFormDirty = false;
