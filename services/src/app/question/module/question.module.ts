@@ -9,6 +9,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AdvFilterPipe } from 'app/shared/pipes/adv-filter/adv-filter.pipe';
 import { QuestionAnswerComponent } from '../components/question-answer/question-answer.component';
 import { SharedModule } from 'app/shared/shared.module';
+import { ReviewAnswerComponent } from '../../review-answer/components/review-answer/review-answer.component';
 
 
 
@@ -16,7 +17,8 @@ import { SharedModule } from 'app/shared/shared.module';
   declarations: [
     AddQuestionAnswerComponent,
     QuestionComponent,
-    QuestionAnswerComponent
+    QuestionAnswerComponent,
+   
   ],
   imports: [
     CommonModule,

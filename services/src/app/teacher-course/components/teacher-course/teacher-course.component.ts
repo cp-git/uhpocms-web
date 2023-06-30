@@ -223,35 +223,37 @@ export class TeacherCourseComponent implements OnInit {
     );
   }
 
-  // adding course to course and linking course to department
-  private async addCourse(currentData: any) {
-    try {
-      const data = await this.service.addCourse(currentData).toPromise();
+// adding course to course and linking course to department
+private async addCourse(currentData: any) {
+  try {
+    const data = await this.service.addCourse(currentData).toPromise();
 
-      this.courseDepartment.courseId = data.courseId;
-      this.courseDepartment.department_id = currentData.departmentId;
-      console.log("coursedept" + JSON.stringify(this.courseDepartment));
+    this.courseDepartment.courseId = data.courseId;
+    this.courseDepartment.department_id = currentData.departmentId;
+    console.log("coursedept" + JSON.stringify(this.courseDepartment));
 
-      const courseAndDepartment = await this.service.assignCourseToDepartment(this.courseDepartment).toPromise();
-      if (courseAndDepartment) {
-        await this.loadAllCoursesWithDepartmentId();
-        // console.log('Course Added successfully');
+    const courseAndDepartment = await this.service.assignCourseToDepartment(this.courseDepartment).toPromise();
+    if (courseAndDepartment) {
+      await this.loadAllCoursesWithDepartmentId();
+      // console.log('Course Added successfully');
 
-        if (data.courseIsActive) {
-          this.dialogBoxServices.open("Course added successfully", 'information');
-        } else {
-          this.dialogBoxServices.open("Course added successfully but NOT ACTIVE", 'information');
-        }
+      if (data.courseIsActive) {
+        this.dialogBoxServices.open("Course added successfully", 'information');
+      } else {
+        this.dialogBoxServices.open("Course added successfully but NOT ACTIVE", 'information');
       }
-
-      this.emptyCourse = {} as Course;
-      this.ngOnInit();
-      this.back();
-    } catch (error) {
-      
-      this.dialogBoxServices.open("Failed to add Course", 'warning');
     }
+
+    this.emptyCourse = {} as Course;
+    this.ngOnInit();
+    this.back();
+    setTimeout(() => {
+      location.reload(); // Refresh the page
+    }, 1000); // Delay for 1 second before reloading
+  } catch (error) {
+    this.dialogBoxServices.open("Failed to add Course", 'warning');
   }
+}
 
   private async loadAllCoursesWithDepartmentId() {
 

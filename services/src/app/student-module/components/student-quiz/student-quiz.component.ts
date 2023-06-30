@@ -180,7 +180,7 @@ export class StudentQuizComponent implements OnInit {
 
   loadCategory(selectedQuizCategoryId: number) {
 
-    alert(selectedQuizCategoryId);
+    // alert(selectedQuizCategoryId);
     try {
       this.sessionData = sessionStorage.getItem('category');
       this.data = JSON.parse(this.sessionData);
@@ -359,7 +359,7 @@ export class StudentQuizComponent implements OnInit {
                   trueAnswer: trueAnswer
                 });
               });
-            console.log("questionAnswers " + (this.questionAnswers) + "222222222222");
+            console.log("questionAnswers " + (this.questionAnswers) + "*");
             if (this.isRetakingQuiz) {
               // this.loadQuizData();
               this.clearAnswers();

@@ -13,12 +13,14 @@
 <ng-container *ngIf="pagination">
     <div class="text-center"
         *ngIf="selectedQuizId!='undefined' && selectedQuizId!='' && selectedQuizId!=null && selectedCategoryId!='undefined'  && selectedCategoryId!='' && selectedCategoryId!=null">
+        
         <pagination-controls (pageChange)="currentPage=$event"></pagination-controls>
+        
     </div>
 </ng-container>
 
 <ng-template #form let-queAns let-index="index">
-    <form #myForm="ngForm" (ngSubmit)="onFormSubmit(queAns)">
+    <form #myForm="ngForm" (ngSubmit)="onFormSubmit(queAns,questionAnswers)">
         <div class="jumbotron">
             <h4>Question : {{ index }}</h4>
             <div class="img">
@@ -29,28 +31,29 @@
                 </ng-template>
 
             </div>
-            <!-- <div class="totalMarks"> Total Marks - {{ queAns['totalMarks'] }}</div> -->
-            
-            <div class="totalMarks"> Total Marks - {{ totalQuizMarks}}</div>
-            <div class="form-group row">
-                <div class="col-sm-6">
+            <!-- <div class="form-group row">
+                 <div class="col-sm-6">
                     <label class="float-label">Figure - {{queAns['questionFigure']}}</label>
                     <input type="file" (change)="onFileSelected($event,queAns)" (ngModelChange)="onFormDirty(queAns)"
                         [(ngModel)]="queAns['questionFigure']" class="form-control" [disabled]="disable">
                 </div>
-                
                 <div class="col-sm-6">
                     <label class="float-label">Order Number</label>
                     <input name="queOrderNo{{index}}" type="number" [(ngModel)]="queAns['questionOrderNo']"
                         class="form-control" required="" [disabled]="disable" (ngModelChange)="onFormDirty(queAns)">
                 </div>
+            </div> -->
+            <div>
+
+            <b><p style="display: flex;flex-direction: row;justify-content: flex-end;font-size: 16px;
+                font-weight: 700;">Total Marks: {{totalReviewMarks }}/{{totalQuizMarks}}</p></b>
             </div>
             <label class="float-label">Question</label>
             <input name="queContent{{index}}" type="text" [(ngModel)]="queAns['questionContent']" class="form-control"
-                required="" [disabled]="disable" (ngModelChange)="onFormDirty(queAns)">
+                required="" [disabled]="disable" (ngModelChange)="onFormDirty(queAns)" [disabled] ="true">
             <label class="float-label">Explanation</label>
             <textarea name="queExplanation{{index}}" [(ngModel)]="queAns['questionExplanation']" class="form-control"
-                required="" [disabled]="disable" (ngModelChange)="onFormDirty(queAns)"></textarea>
+                required="" [disabled]="disable" (ngModelChange)="onFormDirty(queAns)" [disabled] ="true"></textarea>
             <label class="float-label">Answer</label>
             <div *ngIf="selectedCategoryName == 'MCQ' ;else otherCategory">
                 <!-- MCQ answer input area code goes here -->
@@ -95,37 +98,34 @@
                 </div>
 
             </div>
-            <ng-template #otherCategory>
-                <textarea name="ansContent1{{index}}" [(ngModel)]="queAns['content1']" class="form-control" required=""
+            <ng-template #otherCategory >
+                <textarea style="height: 20rem;" name="ansContent1{{index}}" [(ngModel)]="queAns['content1']" class="form-control" required=""
                     [disabled]="disable" (ngModelChange)="onFormDirty(queAns)"
-                    (ngModelChange)="onAnswerEntered(queAns)"></textarea>
+                    (ngModelChange)="onAnswerEntered(queAns)" [disabled] ="true"></textarea>
             </ng-template>
-            <label>Marks</label>
-            <div style="
-            width: 5%;
-            
-        ">
-                <input
-                 class="form-control" required="" name="maxMarks" [(ngModel)]="queAns['maxMarks']" (ngModelChange)="onFormDirty(queAns)"
-                  
-                 />
+            <label class="float-label">Review</label>
+            <div >
+                <textarea name="reviewcontent" [(ngModel)]="queAns['reviewcontent']" class="form-control"
+                required="" [disabled]="disable" (ngModelChange)="onFormDirty(queAns)"></textarea>
             </div>
-            <!-- <label class="float-label"> Correct</label>
-                        <input name="ansCorrect" type="checkbox" [(ngModel)]="answer.correct"
-                            class="form-control" required=""> -->
-            <div class="text-center" *ngIf="pagination && submitOption">
+           
+            <label>Marks</label>
+        
+            <div style="display: flex; align-items: center;width: 8%;">
+                <input class="form-control" required="" name="marks" [(ngModel)]="queAns['marks']" (ngModelChange)="onFormDirty(queAns)" />
+                <div> /{{ queAns['maxMarks'] }}</div>
+            </div>
+
+            <div class="text-center" > 
                 <!-- Your form HTML code -->
 
                 <!-- Add the "ngClass" directive to the submit button -->
                 <button class="btn submitbutton"
-                    [ngClass]="{'dirtySubmitButton' : myForm.dirty && queAns['isFormDirty'], 'noChangeSubmitButton' :queAns['isFormSubmitted']}"
-                    type="submit" [disabled]="!myForm.valid || !queAns['isOptionSelected']">Submit</button>
+                [ngClass]="{'dirtySubmitButton' : myForm.dirty && queAns['isFormDirty'], 'noChangeSubmitButton' :queAns['isFormSubmitted']}"
+                type="submit" [disabled]="!myForm.valid || !queAns['isOptionSelected']" >Submit</button>
             </div>
 
         </div>
 
     </form>
 </ng-template>
-<button class="download-button" (click)="generatePdfUsingPdfMaker()">
-    <i class="fas fa-file-pdf"></i> Download PDF
-</button>
