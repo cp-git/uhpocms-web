@@ -143,11 +143,12 @@
                                 [(ngModel)]="row[column.key]" disabled>
                         </ng-container>
                     </td>
-
-                    <td><button (click)="onAddUpdatClicked(row)" class="btn btn-primary">Review</button></td>
+                   
+                    <td><button (click)="onAddUpdatClicked(row)" class="btn btn-primary" [disabled]="!reviewButtonStat" >Review</button></td>
                     <!-- <td><span (click)="onViewClicked(row)" class="fa-solid fa-eye"
                             style="font-size:24px;color: #6197f5;"></span></td> -->
                     <!-- <td><button (click)="onDeleteClicked(row)" class="btn btn-danger">Delete</button></td> -->
+              
                 </tr>
             </tbody>
         </table>
