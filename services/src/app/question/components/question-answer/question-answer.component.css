@@ -1,3 +1,15 @@
+.download-button {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.download-button i {
+    margin-right: 5px;
+}
+
 .submitbutton {
     margin-top: 2rem;
     background-color: #2E6DA4;

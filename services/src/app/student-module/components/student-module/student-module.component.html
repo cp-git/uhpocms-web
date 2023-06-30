@@ -67,11 +67,16 @@
                                         [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId) && selectedCourse.accessModuleInOrder}">{{quiz.title}}</a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                                    <a class="retakequiz" 
+                                    <a class="retakequiz"
                                         *ngIf="((!quiz.singleAttempt && (quizFailedProgresses.includes(quiz.quizId) || quizPassedProgresses.includes(quiz.quizId))) || quizFailedProgresses.includes(quiz.quizId))"
                                         (click)="onRetakeQuizClicked(quiz)">Retake</a>
-                                        <a class="retakequiz" style="margin-left: 2%;"
-                                       >Review</a>
+                                    <!-- 
+                                        <a class="retakequiz"
+                                        *ngIf="!(quiz.singleAttempt && (quizFailedProgresses.includes(quiz.quizId) || quizPassedProgresses.includes(quiz.quizId)))"
+                                        (click)="onRetakeQuizClicked(quiz)">
+                                        Retake
+                                    </a> -->
+                                    <a class="retakequiz" style="margin-left: 2%;">Review</a>
                                 </div>
                             </ng-container>
                         </ul>
@@ -91,7 +96,7 @@
                             <!-- <app-student-quiz (quizProgressAdded)="onQuizProgressAdded($event)"></app-student-quiz> -->
                             <!-- <div>Previous Score: {{ selectedQuizProgress.score }}</div> -->
                         </div>
-                        
+
                         <!-- <app-student-quiz (scoreEvent)="onScoreReceived($event)"></app-student-quiz> -->
                     </ng-template>
                     <ng-template #singleAttempt>

@@ -370,6 +370,7 @@ export class EnrollstudentComponent {
           // if (i == 0) {
           // console.log("Student Enrolled Successfully");
           // location.reload();
+          // this.dialogBoxService.open("Students enrolled to course successfully !", 'information');
 
           responseEnrollStu = response;
           console.log(responseEnrollStu)

@@ -11,6 +11,15 @@ import { Quiz } from 'app/quiz/class/quiz';
 import { QuizService } from 'app/quiz/services/quiz.service';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 import { StudentAnswer } from 'app/student-module/class/student-answer';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+import { Content, TDocumentDefinitions } from 'pdfmake/interfaces';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment.development';
+
+import { AdminInstitution } from 'app/class/admin-institution';
+import { Profile } from 'app/profiles/class/profile';
 @Component({
   selector: 'app-student-quiz',
   templateUrl: './student-quiz.component.html',
@@ -67,17 +76,65 @@ export class StudentQuizComponent implements OnInit {
   studentAnswers: StudentAnswer[] = [];
   fetchStudentAnswers!: StudentAnswer[];
 
+  ///////////////pdf generate used var //////////////
+  displayLogo: any;
+  questionFigure: any;
+  questionFigureUrl: any;
+
+  data: any;
+  adminInstitutions: AdminInstitution[] = [];
+  institution: AdminInstitution;
+  instituteName: any;
+
+  quizTitle: any;
+
+  quizCategory: any;
+
+  profiles: Profile[] = []; // list of inactive Profile
+  profile: Profile;
+  profileInstituteId: any;
+  selectedQuizCategoryId: any;
+  displayInstituteLogo: any;
+
+  ////////////////quiz details used for pdf///////////////
+  quizInfo: any[] = [];
+
+  moduleName: string = '';
+  courseName: string = '';
+  departmentName: string = '';
+  institutionName: string = '';
+  passMark: number = 0;
+  courseCode: string = '';
+
+  questionUrl: any;
+  quizScore!: any;
+
+  selectedQuizCategory: any;
+
   constructor(
+    private http: HttpClient,
     private quizProgressService: QuizProgressService,
     private questionService: QuestionService,
-    private dialogboxService: DialogBoxService
+    private dialogboxService: DialogBoxService,
+    private quizProgesServ: QuizProgressService
   ) {
-
+    this.profile = new Profile();
+    this.questionUrl = `${environment.questionUrl}`;
+    this.displayInstituteLogo = `${environment.adminInstitutionUrl}/institution`;
+    this.institution = new AdminInstitution();
     this.studentId = sessionStorage.getItem("profileId");
-    this.loadCategories();
+    this.loadCategory(this.selectedQuizCategoryId);
+
   }
 
   ngOnInit(): void {
+    this.loadCategories();
+    this.loadQuizData();
+    this.getQuizScore(this.selectedQuizId, this.studentId);
+    this.loadProfiles(this.studentId);
+    this.getQuizDetailsByQuizId(this.selectedQuizId);
+    this.loadQuiz(this.selectedQuizId);
+    this.loadCategory(this.selectedQuizCategoryId);
 
   }
 
@@ -103,12 +160,51 @@ export class StudentQuizComponent implements OnInit {
 
   }
 
+  getQuizScore(selectedQuizId: any, studentId: any) {
+    // alert(JSON.stringify(this.selectedQuiz) + "5555555555");
+    this.selectedQuizCategoryId = this.selectedQuiz.categoryId;
+    //alert(this.selectedQuizCategoryId);
+    this.quizProgesServ.getQuizProgressesByQuizIdAndStudId(selectedQuizId, studentId).subscribe(
+      (response: any) => {
+        this.quizScore = response;
+        console.log(JSON.stringify(this.quizScore));
 
+      },
+      (error: any) => {
+        console.log(error); // Handle any errors
+      }
+    );
+
+  }
+
+
+  loadCategory(selectedQuizCategoryId: number) {
+
+    // alert(selectedQuizCategoryId);
+    try {
+      this.sessionData = sessionStorage.getItem('category');
+      this.data = JSON.parse(this.sessionData);
+      for (var category of this.data) {
+        if (category.categoryId === selectedQuizCategoryId) {
+          this.selectedQuizCategory = category;
+
+          console.log(JSON.stringify(this.selectedQuizCategory) + "000000000000000000000000000000000000"); // Entire object of the selected category
+          break; // Exit the loop after finding the matching category
+        }
+      }
+    } catch (err) {
+      console.log("Error", err);
+    }
+  }
   // for adding new changed data in quizData variable and settign some variables
   // currentPage for pagination
   // selectedQuiz and selectedQuizId 
   // getting questions and Answers of quiz
   // and category name 
+
+  // loading all Categories from session storage
+
+
   private loadQuizData() {
     this.currentPage = 1;
     this.selectedQuiz = this.quizData;
@@ -152,19 +248,19 @@ export class StudentQuizComponent implements OnInit {
 
 
   // loading all Categories from session storage
-  private loadCategories() {
-    try {
-      this.sessionData = sessionStorage.getItem('category');
+  // private loadCategories() {
+  //   try {
+  //     this.sessionData = sessionStorage.getItem('category');
 
-      this.jsonData = JSON.parse(this.sessionData);
-      for (var inst in this.jsonData) {
-        this.categories.push(this.jsonData[inst]);
-      }
-    }
-    catch (err) {
-      console.log("Error", err)
-    }
-  }
+  //     this.jsonData = JSON.parse(this.sessionData);
+  //     for (var inst in this.jsonData) {
+  //       this.categories.push(this.jsonData[inst]);
+  //     }
+  //   }
+  //   catch (err) {
+  //     console.log("Error", err)
+  //   }
+  // }
 
   // Getting all Question and Answer using quizId and storing all data in array
   private getAllQuestionAnswers(quizId: number) {
@@ -179,9 +275,11 @@ export class StudentQuizComponent implements OnInit {
         this.questionService.getShuffledQuestionsByQuizId(quizId).subscribe(
           (response: any[]) => {
             console.log(response);
-
+            this.questionAnswers = [];
             response.forEach(
               question => {
+                console.log(question);
+
                 let trueAnswer: string = '';
                 this.queAns = {} as OneQuestionAnswer;
 
@@ -241,6 +339,7 @@ export class StudentQuizComponent implements OnInit {
                     studentSelectedAnswer = studAns.questionContent;
                   }
                 })
+                console.log(question);
 
                 this.questionAnswers.push({
                   ...question,
@@ -260,7 +359,7 @@ export class StudentQuizComponent implements OnInit {
                   trueAnswer: trueAnswer
                 });
               });
-            console.log("questionAnswer " + (this.questionAnswers) + "8888888888888");
+            console.log("questionAnswers " + (this.questionAnswers) + "*");
             if (this.isRetakingQuiz) {
               // this.loadQuizData();
               this.clearAnswers();
@@ -273,6 +372,22 @@ export class StudentQuizComponent implements OnInit {
       }
     );
 
+  }
+
+
+  // loading all Categories from session storage
+  private loadCategories() {
+    try {
+      this.sessionData = sessionStorage.getItem('category');
+
+      this.jsonData = JSON.parse(this.sessionData);
+      for (var inst in this.jsonData) {
+        this.categories.push(this.jsonData[inst]);
+      }
+    }
+    catch (err) {
+      console.log("Error", err)
+    }
   }
 
 
@@ -485,4 +600,344 @@ export class StudentQuizComponent implements OnInit {
     );
 
   }
+
+
+
+  loadQuiz(selectedQuizId: number) {
+    //alert(selectedQuizId);
+    try {
+      this.sessionData = sessionStorage.getItem('quiz');
+      this.data = JSON.parse(this.sessionData);
+      for (var quiz of this.data) {
+        if (quiz.quizId === selectedQuizId) {
+          this.selectedQuiz = quiz;
+          this.quizTitle = quiz.title;
+
+          this.selectedQuizCategoryId = quiz.categoryId;
+          // alert(this.selectedQuizCategoryId);
+          this.loadCategory(this.quizCategory.categoryId);
+          console.log(this.quizTitle + ""); // Quiz title of the selected quiz
+          break; // Exit the loop after finding the matching quiz
+        }
+      }
+    } catch (err) {
+      console.log("Error", err);
+    }
+  }
+
+
+
+  getQuizDetailsByQuizId(selectedQuizId: any) {
+    //alert(selectedQuizId)
+    this.questionService.getQuizDetailsByQuizId(selectedQuizId).subscribe(
+      (response: any) => {
+        this.quizInfo = response;
+        this.moduleName = this.quizInfo[1];
+        this.courseName = this.quizInfo[2];
+        this.departmentName = this.quizInfo[3];
+        this.institutionName = this.quizInfo[4];
+        this.passMark = this.quizInfo[5];
+        this.courseCode = this.quizInfo[6];
+
+        console.log(this.quizInfo + "**************"); // Output the retrieved data to the console
+      },
+      (error) => {
+        console.log(error); // Handle any errors
+      }
+    );
+  }
+
+
+  //////////////////////////////
+  ///  pdf code                //
+  ///                          //
+  //////////////////////////////
+
+
+  loadProfiles(studentId: number) {
+    try {
+      this.sessionData = sessionStorage.getItem('instituteprofile');
+      //alert(JSON.stringify(this.sessionData));
+      this.data = JSON.parse(this.sessionData);
+      for (var i = 0; i < this.data.length; i++) {
+        if (this.data[i].adminId == this.studentId) {
+          this.profileInstituteId = this.data[i].institutionId;
+
+          //  alert(JSON.stringify(this.profileInstituteId));
+          break; // Assuming the profileId is unique, exit the loop after finding the matching profile
+        }
+      }
+    } catch (err) {
+      console.log("Error", err);
+    }
+  }
+
+
+  loadAdminInstitutions(profileInstituteId: number) {
+    try {
+      // alert(profileInstituteId + "id");
+      this.sessionData = sessionStorage.getItem('admininstitution');
+      // console.log(this.sessionData);
+      this.data = JSON.parse(this.sessionData);
+      for (var inst in this.data) {
+        if (this.data[inst].adminInstitutionId == profileInstituteId) {
+          this.instituteName = this.data[inst].adminInstitutionName;
+          // alert(this.instituteName + "[[[[[[[[[[[[[");
+          break; // Assuming the instituteId is unique, exit the loop after finding the matching institution
+        }
+      }
+    } catch (err) {
+      console.log("Error", err);
+    }
+  }
+
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /////////////////////////pdf make code//////////////////////////////////////////////////////////
+
+
+
+  //{{displayUrl}}/{{queAns['questionId']}}
+  //{{displayUrl}}/{{queAns['questionId']}}
+  generatePdfUsingPdfMaker() {
+    const questionSection: any[] = [];
+
+
+    this.displayLogo = this.displayInstituteLogo + '/getFileById/' + this.profileInstituteId;
+
+    this.http.get(this.displayLogo, { responseType: 'blob' }).subscribe((logoBlob: Blob) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const logoDataUrl = reader.result as string;
+
+        // Add the institute logo to the content array
+        questionSection.push({
+          image: logoDataUrl,
+          width: 100,
+          height: 100,
+          alignment: 'center',
+        });
+
+        const courseCodeAndCourseName = `Course Code: ${this.courseCode}   Course Name: ${this.courseName}`;
+        // Add the remaining content
+        questionSection.push(
+          { text: 'Institute :' + this.institutionName, style: 'header', alignment: 'center' },
+          { text: 'Department :' + this.departmentName, style: 'deptHeader', alignment: 'center' },
+          { text: courseCodeAndCourseName, alignment: 'center' },
+          { text: 'Module :' + this.moduleName, alignment: 'center' },
+          { text: 'Quiz :' + this.quizTitle, alignment: 'center' },
+          {
+            columns: [
+              { text: 'Passing Marks : ' + this.passMark + '%', alignment: 'right' },
+            ]
+          },
+          { text: ' Student Scored  : ' + this.quizScore.score + '%', alignment: 'right' }
+        );
+
+        let questionNumber = 1;
+        console.log(this.questionAnswers + " Before Loop +++");
+
+        // Use `map` to iterate over the questionAnswers array and create an array of Promises
+        const questionPromises = this.questionAnswers.map((questionAnswer, index) => {
+          console.log(questionAnswer + "222222222222222222222222");
+          const questionFigureUrl = this.questionUrl + '/getFileById/' + questionAnswer.questionId;
+          const questionContent = questionAnswer.questionContent;
+          if (questionAnswer.questionFigure != null) {
+            const questionFigureUrl = this.questionUrl + '/getFileById/' + questionAnswer.questionId;
+          } else {
+            console.log("figure is contained *****************");
+          }
+          const selectedAns = questionAnswer.selectedAnswer;
+
+          const options = [
+            { correct: questionAnswer.correct1, content: questionAnswer.content1 },
+            { correct: questionAnswer.correct2, content: questionAnswer.content2 },
+            { correct: questionAnswer.correct3, content: questionAnswer.content3 },
+            { correct: questionAnswer.correct4, content: questionAnswer.content4 }
+          ];
+
+          const answer = questionAnswer.correct1 ? questionAnswer.content1 :
+            questionAnswer.correct2 ? questionAnswer.content2 :
+              questionAnswer.correct3 ? questionAnswer.content3 :
+                questionAnswer.correct4 ? questionAnswer.content4 : '';
+
+          // Create a Promise to fetch the question image
+          return new Promise<void>((resolve) => {
+            // if (questionFigureUrl) {
+            this.http.get(questionFigureUrl, { responseType: 'blob' }).subscribe((figureBlob: Blob) => {
+              const reader = new FileReader();
+              reader.onloadend = () => {
+                const imageDataUrl = reader.result as string;
+
+                const questionText = `Question :${questionNumber}: ${questionContent}`;
+                questionSection.push({ text: questionText, style: 'questionContent' });
+
+                if (imageDataUrl) {
+                  questionSection.push({
+                    image: imageDataUrl,
+                    width: 200,
+                    height: 150,
+                    alignment: 'center',
+                  });
+                }
+
+                if (this.selectedQuizCategory.categoryName == 'MCQ') {
+
+                  questionSection.push({ ol: options.map(option => 'option :' + option.content) });
+                }
+                // questionSection.push({});
+                // questionSection.push({ ol: options.map(option => 'option :' + option.content) });
+                // questionSection.push({});
+                if (selectedAns == answer) {
+                  questionSection.push({ text: 'Selected answer: ' + selectedAns });
+                  questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
+                } else {
+                  questionSection.push({ text: 'Selected answer: ' + selectedAns, style: 'incorrect' });
+                  questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
+                }
+                questionNumber++;
+                resolve(); // Resolve the Promise when the image is added
+              };
+              reader.readAsDataURL(figureBlob);
+            }, (error) => {
+              console.error('Error fetching question image:', error);
+              const questionText = `Question :${questionNumber}: ${questionContent}`;
+              questionSection.push({ text: questionText, style: 'questionContent' });
+
+              if (this.selectedQuizCategory.categoryName == 'MCQ') {
+                questionSection.push({ ol: options.map(option => 'option :' + option.content) });
+              }
+              // questionSection.push({});
+              // questionSection.push({ ol: options.map(option => 'option :' + option.content) });
+              // questionSection.push({});
+              if (selectedAns == answer) {
+                questionSection.push({ text: 'Selected answer: ' + selectedAns });
+                questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
+              } else {
+                questionSection.push({ text: 'Selected answer: ' + selectedAns, style: 'incorrect' });
+                questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
+              }
+              questionNumber++;
+              resolve(); // Resolve the Promise even if an error occurs
+            });
+            // }
+            // else {
+            //   const questionText = `Question :${questionNumber}: ${questionContent}`;
+            //   questionSection.push({ text: questionText, style: 'questionContent' });
+
+            //   questionSection.push({});
+            //   questionSection.push({ ol: options.map(option => 'option :' + option.content) });
+            //   questionSection.push({});
+            //   if (selectedAns == answer) {
+            //     questionSection.push({ text: 'Selected answer: ' + selectedAns });
+            //     questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
+            //   } else {
+            //     questionSection.push({ text: 'Selected answer: ' + selectedAns, style: 'incorrect' });
+            //     questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
+            //   }
+            //   questionNumber++;
+            //   resolve(); // Resolve the Promise for questions without figure
+            // }
+          });
+        });
+
+        // Wait for all question image Promises to resolve
+        Promise.all(questionPromises).then(() => {
+          // Define the styles
+          const instituteStyles: any = {
+            page: {
+              border: 'url(path/to/border-image.png) center center / auto repeat', // Replace with the path to your border image
+            },
+            header: {
+              color: 'red',
+              fontSize: 20,
+              bold: true,
+              italics: true,
+            },
+            deptHeader: {
+              color: 'green'
+            },
+            questionTitle: {
+              bold: true,
+              marginTop: 10,
+              marginBottom: 5,
+            },
+            question: {
+              marginTop: 5,
+              marginBottom: 5,
+            },
+            questionContent: {
+              marginTop: 3,
+              marginBottom: 5,
+            },
+            questionExplanation: {
+              marginTop: 3,
+              marginBottom: 5,
+            },
+            answer: {
+              color: 'green',
+              marginTop: 3,
+              marginBottom: 5,
+            },
+            incorrect: {
+              color: 'red',
+              marginTop: 3,
+              marginBottom: 5,
+            },
+            pageBorders: {
+              margin: [10, 10],
+              lineWidth: 1,
+              horizontalLineStyles: {
+                lineWidth: 1,
+                color: 'black',
+                dash: { length: 5 },
+              },
+              verticalLineStyles: {
+                lineWidth: 1,
+                color: 'black',
+                dash: { length: 5 },
+              },
+            },
+            defaultStyle: {
+              pageBorders: true // Apply pageBorders style to all pages
+            }
+          };
+
+          const documentDefinition: TDocumentDefinitions = {
+            content: [questionSection],
+            styles: instituteStyles,
+            pageSize: 'A4',
+            pageMargins: [20, 20, 20, 20], // Adjust the margins to create the border effect
+            background: function (currentPage: number, pageSize: any) {
+              return {
+                canvas: [
+                  {
+                    type: 'rect',
+                    x: 10,
+                    y: 10,
+                    w: pageSize.width - 20,
+                    h: pageSize.height - 20,
+                    lineColor: '#000000', // Border color
+                    lineWidth: 2, // Border width
+                  },
+                ],
+              };
+            },
+          };
+
+          const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
+          pdfDocGenerator.open();
+        });
+      };
+
+      reader.readAsDataURL(logoBlob);
+    }, (error) => {
+      console.error('Error fetching logo image:', error);
+    });
+  }
+
+
+
+
 }
