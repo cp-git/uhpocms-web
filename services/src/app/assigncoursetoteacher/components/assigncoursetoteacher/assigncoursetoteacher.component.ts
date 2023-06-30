@@ -75,7 +75,7 @@ export class AssigncoursetoteacherComponent {
     private location: Location,
     private _activatedRoute: ActivatedRoute,
     private _route: Router,
-    private dialogBoxService:DialogBoxService) { }
+    private dialogBoxService: DialogBoxService) { }
 
   isFormComplete(): boolean {
     // Check if all required fields are filled in
@@ -124,6 +124,7 @@ export class AssigncoursetoteacherComponent {
       (response) => {
         // assigning received data to institutionfo
         this.institutions = response;
+        this.institutions.sort((a, b) => a.adminInstitutionName.toLowerCase() > b.adminInstitutionName.toLowerCase() ? 1 : -1)
 
         //  cloning array from instituion to backupinst
         this.institutions.forEach((inst) => {
@@ -149,6 +150,7 @@ export class AssigncoursetoteacherComponent {
     this._deptService.getDepartmentsByInstitutionId(instId).subscribe(
       (response: Department[]) => {
         this.departments = response;
+        this.departments.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1)
         console.log("Inside getDepartmentByInstId")
         console.log(response)
 
@@ -167,7 +169,8 @@ export class AssigncoursetoteacherComponent {
     this.courseService.getCourseByDepartmentId(deptId).subscribe(
       (response: Course[]) => {
         this.courses = response;
-        this.courses = this.courses.filter((elem)=>elem.courseIsActive == true)
+        this.courses = this.courses.filter((elem) => elem.courseIsActive == true)
+        this.courses.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1)
         console.log(response);
       }
     )

@@ -347,6 +347,11 @@ export class TeacherPanelComponent {
     this._route.navigate(['Question', this.userName])
   }
 
+  RedirectToReviewAnswer(){
+    this._route.navigate(['Review', this.userName])
+  }
+
+
   RedirectToModuleFile() {
     this._route.navigate(['modulefile'])
   }
