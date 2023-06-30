@@ -50,4 +50,9 @@ export class AssigncourseteacherService {
       queryParams,
     );
   }
+
+  deleteAssignToTeacherByCourseIdAndProfileId(courseId: number, profileId: number): Observable<any> {
+    const url = `${this.assignTeacherUrl}/courseid/${courseId}/profileid/${profileId}`;
+    return this._http.delete<any>(url);
+  }
 }
