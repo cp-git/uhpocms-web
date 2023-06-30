@@ -180,7 +180,7 @@ export class StudentQuizComponent implements OnInit {
 
   loadCategory(selectedQuizCategoryId: number) {
 
-    //alert(selectedQuizCategoryId);
+    alert(selectedQuizCategoryId);
     try {
       this.sessionData = sessionStorage.getItem('category');
       this.data = JSON.parse(this.sessionData);
@@ -781,9 +781,14 @@ export class StudentQuizComponent implements OnInit {
                     alignment: 'center',
                   });
                 }
-                questionSection.push({});
-                questionSection.push({ ol: options.map(option => 'option :' + option.content) });
-                questionSection.push({});
+
+                if (this.selectedQuizCategory.categoryName == 'MCQ') {
+
+                  questionSection.push({ ol: options.map(option => 'option :' + option.content) });
+                }
+                // questionSection.push({});
+                // questionSection.push({ ol: options.map(option => 'option :' + option.content) });
+                // questionSection.push({});
                 if (selectedAns == answer) {
                   questionSection.push({ text: 'Selected answer: ' + selectedAns });
                   questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
@@ -800,9 +805,12 @@ export class StudentQuizComponent implements OnInit {
               const questionText = `Question :${questionNumber}: ${questionContent}`;
               questionSection.push({ text: questionText, style: 'questionContent' });
 
-              questionSection.push({});
-              questionSection.push({ ol: options.map(option => 'option :' + option.content) });
-              questionSection.push({});
+              if (this.selectedQuizCategory.categoryName == 'MCQ') {
+                questionSection.push({ ol: options.map(option => 'option :' + option.content) });
+              }
+              // questionSection.push({});
+              // questionSection.push({ ol: options.map(option => 'option :' + option.content) });
+              // questionSection.push({});
               if (selectedAns == answer) {
                 questionSection.push({ text: 'Selected answer: ' + selectedAns });
                 questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
