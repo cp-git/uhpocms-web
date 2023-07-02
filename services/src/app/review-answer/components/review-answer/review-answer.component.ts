@@ -102,7 +102,7 @@ export class ReviewAnswerComponent implements OnInit {
     totalReviewMarks:any=0;
   //  perQueMaxMarks!: number;
     files!: FileList;
-  
+    reviewButtonStat = false;
     myFiles: string[] = [];
   
     generatedQuestionAnswerId: number = 0;;
@@ -251,10 +251,11 @@ export class ReviewAnswerComponent implements OnInit {
       this.studProfileArr = [];
       this.selectedModuleId = undefined;
 
+      this.reviewButtonStat = false;
     }
   
     onChangeModule() {
-     
+     this.reviewButtonStat = false
 
     }
   
@@ -659,6 +660,17 @@ export class ReviewAnswerComponent implements OnInit {
  onStudentChange(id:number)
  {
   this.selectedStudProfileId = id;
+
+  console.log("  this.selectedStudProfileId")
+  console.log(this.selectedStudProfileId)
+  if(this.selectedStudProfileId == 'undefined')
+  {
+    console.log("entered in if loop")
+    this.reviewButtonStat = false;
+  }
+  else{
+  this.reviewButtonStat = true;
+  }
  }
    
     // selectedCategory!: Category;

@@ -108,13 +108,20 @@
                 <textarea name="reviewcontent" [(ngModel)]="queAns['reviewcontent']" class="form-control"
                 required="" [disabled]="disable" (ngModelChange)="onFormDirty(queAns)"></textarea>
             </div>
-           
+<!--            
             <label>Marks</label>
         
             <div style="display: flex; align-items: center;width: 8%;">
                 <input class="form-control" required="" name="marks" [(ngModel)]="queAns['marks']" (ngModelChange)="onFormDirty(queAns)" />
                 <div> /{{ queAns['maxMarks'] }}</div>
+            </div> -->
+
+            <label>Marks</label>
+            <div style="display: flex; align-items: center;width: 8%;">
+              <input class="form-control" required="" name="marks" [(ngModel)]="queAns['marks']" (ngModelChange)="onFormDirty(queAns)" type="number" min="0" step="0.01" pattern="\d+(\.\d+)?" />
+              <div>/{{ queAns['maxMarks'] }}</div>
             </div>
+            
 
             <div class="text-center" > 
                 <!-- Your form HTML code -->
