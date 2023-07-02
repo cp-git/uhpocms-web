@@ -21,7 +21,7 @@ import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box
 export class AddQuestionAnswerComponent implements OnInit {
   @ViewChild('myForm') myForm: NgForm | undefined; // Access the form using ViewChild
   
-  // @Output() submitClicked: EventEmitter<number> = new EventEmitter<number>();
+  @Output() submitClicked: EventEmitter<number> = new EventEmitter<number>();
   // for pagination 
   currentPage = 1;
 
@@ -264,7 +264,8 @@ export class AddQuestionAnswerComponent implements OnInit {
     let isFirstAlertDisplayed = false;
     console.log("Parameter queAns Array")
     console.log(queAns)
- let flag:boolean = false;
+    let flag:boolean = false;
+    let orderArr:number[] = [];
 //New REq Code start from here 
 // queAns['queAnsArray'].forEach( (queAnsNew:any)=> {
 //   console.log("queAns in for loop")
@@ -296,9 +297,12 @@ queAns['queAnsArray'].forEach( (queAnsNew:any)=> {
 
  
   console.log(  this.questionAnswer.question['questionId'])
- console.log(queAnsNew.questionId)
-//  if(flag == false)
-// {
+  console.log(queAnsNew.questionId)
+  
+  if(( this.questionAnswer.question['questionContent'] == '' ) || (this.questionAnswer.question['questionExplanation'] == '') || (queAnsNew.questionOrderNo == '') || ( queAnsNew.maxMarks == ''))
+  {
+     orderArr.push( this.questionAnswer.question['questionOrderNo'])
+  }
 
    queAnsNew.totalMarks = this.totalMarks;
    if (this.selectedCategoryName == 'MCQ' || this.selectedCategoryName == 'mcq') {
@@ -382,10 +386,10 @@ queAns['queAnsArray'].forEach( (queAnsNew:any)=> {
     
     },
     (error) => {
-
-      console.log("Question added failed");
-      if (!isFirstAlertDisplayed) {
-     this.dialogBoxService.open("Please enter details for all questions", 'information');
+    console.log(this.questionAnswer.question['questionContent'])
+    console.log("Question added failed");
+    if (!isFirstAlertDisplayed) {
+     this.dialogBoxService.open("Please enter details for all questions ", 'information');
      isFirstAlertDisplayed = true;
       }
     }
