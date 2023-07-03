@@ -361,6 +361,16 @@ export class EnrollstudentComponent {
     this.inserted = false;
     this.enrolledStudent.courseId = courseId;
     this.enrolledStudent.profileId = profileId;
+     // Delete the unchecked assignments
+     this.unCheckedProfiles.forEach((profileId)=>{
+      console.log(profileId);
+
+      this.deleteEnrollStudent(courseId, profileId);
+      
+      this.enrolledStudentArr =  this.enrolledStudentArr.filter((element) => element !== profileId);
+        console.log(this.enrolledStudentArr);
+        
+    });
     for (let i = 0; i < this.selected.length; i++) {
       this.courseProgress = new CourseProgress();
       let responseEnrollStu = new Enrolltostudent();
@@ -444,4 +454,40 @@ export class EnrollstudentComponent {
     this.location.back();
   }
 
+  // Method to delete assignment by courseId and profileId
+  deleteEnrollStudent(courseId: number, profileId: number) {
+    console.log(courseId ,  " ++++++++++++++++++"  , profileId);
+    this.enrollstuService.deleteEnrollStudentByCourseIdAndProfileId(courseId, profileId)
+      .subscribe(
+        (response) => {
+
+          console.log('Enroll Student deleted successfully');
+
+        },
+        (error) => {
+
+          console.error('Failed to delete Enroll student', error);
+
+        }
+      );
+  }
+
+
+  unCheckedProfiles: Set<number> = new Set<number>;
+  onChangeSelectedProfiles(event: any, item: any) {
+    // alert();
+    console.log(item);
+    console.log(event);
+
+    const isChecked = event.target.checked;
+    if (!isChecked) {
+      this.unCheckedProfiles.add(item.value.adminId)
+      console.log(this.unCheckedProfiles);
+    } else {
+      this.unCheckedProfiles.delete(item.value.adminId)
+      console.log(this.unCheckedProfiles);
+    }
+
+
+  }
 }
