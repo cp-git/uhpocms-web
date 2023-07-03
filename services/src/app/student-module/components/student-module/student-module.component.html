@@ -71,8 +71,8 @@
                                         *ngIf="((!quiz.singleAttempt && (quizFailedProgresses.includes(quiz.quizId) || quizPassedProgresses.includes(quiz.quizId))) || quizFailedProgresses.includes(quiz.quizId))"
                                         (click)="onRetakeQuizClicked(quiz)">Retake</a>
 
-                                        <a class="retakequiz" style="margin-left: 2%;"
-                                            (click)="getReview(quiz.quizId);getAllAnswersAttempted(quiz.quizId)">Review</a>
+                                        <a *ngIf="shouldShowReviewButton(quiz.quizId)" class="retakequiz" style="margin-left: 2%;"
+                                            (click)="getAllAnswersAttempted(quiz.quizId)">Review</a>
 
                                 </div>
                             </ng-container>
@@ -95,7 +95,7 @@
                             <!-- <app-student-quiz (quizProgressAdded)="onQuizProgressAdded($event)"></app-student-quiz> -->
                             <!-- <div>Previous Score: {{ selectedQuizProgress.score }}</div> -->
                         </div>
-<<<<<<< HEAD
+
                         <div *ngIf="reviewButtonStat == true">
                             <app-student-review [generatedQuestionAnswerId]="generatedQuestionAnswerId"
                             [questionAnswers]="correctQuestionAnswer"  [pagination]="true" [selectedQuizId]="selectedQuizId"
@@ -104,9 +104,7 @@
                     
                             </app-student-review>
                         </div>
-=======
 
->>>>>>> analytics
                         <!-- <app-student-quiz (scoreEvent)="onScoreReceived($event)"></app-student-quiz> -->
                     </ng-template>
                     <ng-template #singleAttempt>

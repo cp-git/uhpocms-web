@@ -68,7 +68,7 @@
 
     </form>
 </ng-template> -->
- -->
+ 
 
 
 <!-- -------------------- -->
@@ -116,10 +116,11 @@
                 <label class="text-center">Answer in long sentence</label>
             </ng-template>
          
-            <ng-template #otherCategory>
-                <textarea  name="ansContent1{{index}}" [(ngModel)]="queAns['content1']" class="form-control" required=""
-                [disabled] ="true"></textarea>
-            </ng-template>
+            <label class="float-label">Answer</label>
+            <div>
+                <textarea  name="content1" [(ngModel)]="queAns['content1']" class="form-control" required=""
+                [disabled]="true" (ngModelChange)="onFormDirty(queAns)"></textarea>
+            </div>
             
             <label class="float-label">Review</label>
             <div >
@@ -130,8 +131,11 @@
             <label>Marks</label>
         
             <div style="display: flex; align-items: center;width: 8%;">
-                <input class="form-control" required="" name="marks" [(ngModel)]="queAns['marks']" (ngModelChange)="onFormDirty(queAns)"   [disabled]="true" />
-                <div> /{{ queAns['maxMarks'] }}</div>
+                <input style="
+                height: 20px;"class="form-control" required="" name="marks" [(ngModel)]="queAns['marks']" (ngModelChange)="onFormDirty(queAns)"   [disabled]="true" />
+                <span style="
+                margin-top: 20%;font-size: 18px;
+            "> /{{ queAns['maxMarks'] }}</span>
             </div>
 
         </div>
