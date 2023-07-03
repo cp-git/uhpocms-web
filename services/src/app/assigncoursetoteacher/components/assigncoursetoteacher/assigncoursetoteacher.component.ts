@@ -195,6 +195,23 @@ export class AssigncoursetoteacherComponent {
 
   }
 
+  // Method to delete assignment by courseId and profileId
+  deleteAssignment(courseId: number, profileId: number) {
+    this.assignTeacherService.deleteAssignToTeacherByCourseIdAndProfileId(courseId, profileId)
+      .subscribe(
+        (response) => {
+
+          console.log('Assignment deleted successfully');
+
+        },
+        (error) => {
+
+          console.error('Failed to delete assignment', error);
+
+        }
+      );
+  }
+
 
 
   /////////////////////////////////////////////////disable already assigned teacher/////////////////
@@ -280,6 +297,18 @@ export class AssigncoursetoteacherComponent {
     console.log(this._profileArray);
     this.assignTeacher.courseId = (courseId);
     this.assignTeacher.profileId = profileId;
+    // Delete the unchecked assignments
+    this.unCheckedProfiles.forEach((profileId)=>{
+      console.log(profileId);
+
+      this.deleteAssignment(courseId, profileId);
+      
+      this.assignTeacherArr =  this.assignTeacherArr.filter((element) => element !== profileId);
+        console.log(this.assignTeacherArr);
+        
+    });
+
+    
     for (let i = 0; i < this.selected.length; i++) {
 
       this.assignTeacher.profileId = this.selected[i];
@@ -299,10 +328,12 @@ export class AssigncoursetoteacherComponent {
     }
     if (this.inserted = true) {
       this.dialogBoxService.open('Assign Course to Teacher Successfully', 'information');
+      // location.reload();
     }
     else {
       console.log("Already Course Assigned");
     }
+    // this.ngOnInit();
   }
 
   onScrollToEnd() {
@@ -335,6 +366,24 @@ export class AssigncoursetoteacherComponent {
 
   back() {
     this._route.navigate(['adminmodule/admin', this.userName])
+
+  }
+
+  unCheckedProfiles: Set<number> = new Set<number>;
+  onChangeSelectedProfiles(event: any, item: any) {
+    // alert();
+    console.log(item);
+    console.log(event);
+
+    const isChecked = event.target.checked;
+    if (!isChecked) {
+      this.unCheckedProfiles.add(item.value.adminId)
+      console.log(this.unCheckedProfiles);
+    } else {
+      this.unCheckedProfiles.delete(item.value.adminId)
+      console.log(this.unCheckedProfiles);
+    }
+
 
   }
 }
