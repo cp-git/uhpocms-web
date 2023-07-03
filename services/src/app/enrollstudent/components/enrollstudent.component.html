@@ -78,8 +78,8 @@
                                 <!-- code to display checkbox  -->
                                 <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                                     <input id="item-{{index}}" type="checkbox"
-                                        [checked]="item$.selected || enrolledStudentArr.includes(item.adminId)"
-                                        [disabled]="enrolledStudentArr.includes(item.adminId)" />
+                                        [checked]=" enrolledStudentArr.includes(item.adminId)"
+                                        (change)="onChangeSelectedProfiles($event,item$)" />
                                     {{item.fullName}}
                                 </ng-template>
                             </ng-select>
@@ -96,7 +96,7 @@
             <div class="col-sm-3">
                 <button #submitButton class="form-control" id="loginbtn" class="btn btn-primary rounded-button"
                     (click)="saveEnrolledStudent(course.courseId,_profile.adminId);"
-                    [disabled]="!isFormComplete()">Submit</button>
+                    >Submit</button>
 
             </div>
         </div>
