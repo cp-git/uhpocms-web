@@ -46,6 +46,9 @@ export class EnrolltostudentService {
   
   }
 
-
+  deleteEnrollStudentByCourseIdAndProfileId(courseId: number, profileId: number): Observable<any> {
+    const url = `${this.enrollmentUrl}courseid/${courseId}/profileid/${profileId}`;
+    return this._http.delete<any>(url);
+  }
 
 }
