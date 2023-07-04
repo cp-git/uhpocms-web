@@ -181,12 +181,13 @@ export class ReviewAnswerComponent implements OnInit {
       reviewObjectStuAnswer.studentId = queAnsNew.profileId;
       reviewObjectStuAnswer.teacherRemark =queAnsNew.reviewcontent;
       reviewObjectStuAnswer.selectedOption = false;
+      reviewObjectStuAnswer.modifiedOn = new Date();
       console.log(queAnsNew.reviewcontent)
 
       this.questionAnswer.question = {} as Question;
       this.questionAnswer.question['questionId'] = queAnsNew.questionId;
 
-       
+       console.log("reviewObjectStuAnswer")
       console.log(reviewObjectStuAnswer)
 
       // if(queAnsNew.marks != '')
