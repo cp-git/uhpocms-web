@@ -264,22 +264,23 @@ export class AddQuestionAnswerComponent implements OnInit {
     let isFirstAlertDisplayed = false;
     console.log("Parameter queAns Array")
     console.log(queAns)
- let flag:boolean = false;
-//New REq Code start from here 
-// queAns['queAnsArray'].forEach( (queAnsNew:any)=> {
-//   console.log("queAns in for loop")
-// console.log(queAns)
+    let flag:boolean = false;
+   
 
-//   if((queAnsNew.questionId == '') || (queAnsNew.questionFigure  == '') || (queAnsNew.questionContent == '') || (queAnsNew.questionExplanation == '') || (queAnsNew.questionOrderNo == '') || (queAnsNew.maxMarks == ''))
-// {
-//   flag = true;
-//   console.log(flag + "  flag value ")
-// }
-// })
-queAns['queAnsArray'].forEach( (queAnsNew:any)=> {
+    let queArr :any[]=[];
+
+
+   console.log(queAns['queAnsArray'].length) 
+
+   let mcqFlag:boolean =false;
+   let lAnsFlag:boolean =false;
+   let mcqArr:any[] = [];
+   let lAnsArr:any[] = [];
+   queAns['queAnsArray'].forEach( (queAnsNew:OneQuestionAnswer)=> {
   
- 
-
+  
+   
+   
   this.questionAnswer.question = {} as Question;
   this.questionAnswer.question['questionId'] = queAnsNew.questionId;
   this.questionAnswer.question['questionFigure'] = queAnsNew.questionFigure;
@@ -289,14 +290,40 @@ queAns['queAnsArray'].forEach( (queAnsNew:any)=> {
   this.questionAnswer.question['maxMarks'] = queAnsNew.maxMarks;
  
   console.log(" this.questionAnswer  assigned")
- console.log(this.questionAnswer)
+  console.log(this.questionAnswer)
 
- console.log("queAnsNew ")
- console.log(queAnsNew)
+  console.log("queAnsNew ")
+  console.log(queAnsNew)
+
+  if((queAnsNew.questionContent != '') || (queAnsNew.questionExplanation != '') || (queAnsNew.questionOrderNo != null) || (queAnsNew.questionFigure != '') || (queAnsNew.maxMarks != null))
+  {
+    if( this.questionAnswer.question.questionIsMCQ == true)
+    {
+      if((queAnsNew.content1 != '' ) || (queAnsNew.content2 != '') || (queAnsNew.content3 != '') || (queAnsNew.content4 != ''))
+      {
+          mcqArr.push(queAnsNew)
+          console.log(queAnsNew.questionContent +" "+ queAnsNew.questionExplanation +" "+ queAnsNew.questionOrderNo+" " +queAnsNew.maxMarks)
+          console.log("Entered in If loop of mcq")
+      }
+    }
+
+    else if(this.questionAnswer.question.questionIsMCQ == false)
+    {
+      if(queAnsNew.content1 != '') 
+      {
+        lAnsArr.push(queAns)
+        console.log(queAnsNew.questionContent +" "+ queAnsNew.questionExplanation + " " + queAnsNew.questionOrderNo+" " +queAnsNew.maxMarks)
+        console.log("Entered in If loop of nonmcq")
+      }
+    }
+
+
+  }
+
 
  
   console.log(  this.questionAnswer.question['questionId'])
- console.log(queAnsNew.questionId)
+  console.log(queAnsNew.questionId)
 //  if(flag == false)
 // {
 
@@ -370,6 +397,10 @@ queAns['queAnsArray'].forEach( (queAnsNew:any)=> {
   formData.append("request", new Blob([JSON.stringify(this.questionAnswer)], { type: 'application/json' }));
 
   console.log(formData)
+  // if(this.questionAnswer.question.questionIsMCQ == true)
+  // {
+  // if((queAns['queAnsArray'].length) == (mcqArr.length))
+  //  {
   this.service.addQuestion(formData).subscribe(
     (response) => {
 
@@ -390,138 +421,151 @@ queAns['queAnsArray'].forEach( (queAnsNew:any)=> {
       }
     }
   )
-// }
-// else{
-//   if (!isFirstAlertDisplayed) {
-//   // alert("Please enter marks for all questions")
-//   this.dialogBoxService.open("Please enter details for all questions", 'information');
-//   queAns = [];
-//   isFirstAlertDisplayed = true;
-//   }
-// }
+  // }
+  // }
+
+
+  // if(this.questionAnswer.question.questionIsMCQ == false)
+  // {
+  // if((queAns['queAnsArray'].length) == (lAnsArr.length))
+  //  {
+  // this.service.addQuestion(formData).subscribe(
+  //   (response) => {
+
+   
+  //     this.generatedQuestionAnswerId = response;
+  //     console.log( this.generatedQuestionAnswerId)
+  //     console.log("Question Added Successfully");
+  //     // this.getDataForMarks(this.selectedQuizId)
+  //     // this.getAllQuestionAnswers(this.selectedQuizId)
+    
+  //   },
+  //   (error) => {
+
+  //     console.log("Question added failed");
+  //     if (!isFirstAlertDisplayed) {
+  //    this.dialogBoxService.open("Please enter details for all questions", 'information');
+  //    isFirstAlertDisplayed = true;
+  //     }
+  //   }
+  // )
+  // }
+  // }
+
+
 
 
   })
 
 }
-//New REq Code end from here 
 
 
 
 
-  // this.service.getAllQuestionsByQuizId(queAns.questionQuizId).subscribe(
-  //     (response: any[]) => {
-  //       console.log(response);
-  //       response.forEach(
-  //         question => {
-           
-  //           this.totalMarks = this.totalMarks + question.maxMarks;
-            
-  //         })
-  //     });
 
-  //   this.questionAnswer.question = {} as Question;
-  //   this.questionAnswer.question['questionId'] = queAns.questionId;
-  //   this.questionAnswer.question['questionFigure'] = queAns.questionFigure;
-  //   this.questionAnswer.question['questionContent'] = queAns.questionContent;
-  //   this.questionAnswer.question['questionExplanation'] = queAns.questionExplanation;
-  //   this.questionAnswer.question['questionOrderNo'] = queAns.questionOrderNo;
-  //   this.questionAnswer.question['maxMarks'] = queAns.maxMarks;
-   
-  //    queAns.totalMarks = this.totalMarks;
-  //   if (this.selectedCategoryName == 'MCQ' || this.selectedCategoryName == 'mcq') {
-  //     this.questionAnswer.question.questionIsMCQ = true;
-  //   } else {
-  //     this.questionAnswer.question.questionIsMCQ = false;
+// onFormSubmit(queAns: any): void {
+//   this.questionAnswer = {} as QuestionAnswer;
+//   this.oneQuestionAnswer = {} as OneQuestionAnswer;
+//   let isFirstAlertDisplayed = false;
+//   console.log("Parameter queAns Array")
+//   console.log(queAns)
+//   let flag: boolean = false;
 
-  //   }
-  //   this.questionAnswer.question.questionQuizId = this.selectedQuizId;
-  //   this.questionAnswer.question.questionCategoryId = this.selectedQuiz.categoryId;
-  //   this.questionAnswer.question.questionIsActive = true;
+//   queAns['queAnsArray'].forEach((queAnsNew: any) => {
+//     this.questionAnswer.question = {} as Question;
+//     this.questionAnswer.question['questionId'] = queAnsNew.questionId;
+//     this.questionAnswer.question['questionFigure'] = queAnsNew.questionFigure;
+//     this.questionAnswer.question['questionContent'] = queAnsNew.questionContent;
+//     this.questionAnswer.question['questionExplanation'] = queAnsNew.questionExplanation;
+//     this.questionAnswer.question['questionOrderNo'] = queAnsNew.questionOrderNo;
+//     this.questionAnswer.question['maxMarks'] = queAnsNew.maxMarks;
 
-  //   // separating answer from object
-  //   // this.emptyAnswer = {} as Answer;
-  //   // this.emptyAnswer.id = this.questionAnswer.answers['id'];
-  //   // this.emptyAnswer.content = this.questionAnswer.answers['content'];
-  //   // this.emptyAnswer.correct = true;
-  //   // this.emptyAnswer.questionorderno = this.questionAnswer.answers['questionorderno'];
-  //   this.questionAnswer.answers = [];
+//     console.log("this.questionAnswer  assigned")
+//     console.log(this.questionAnswer)
 
+//     console.log("queAnsNew ")
+//     console.log(queAnsNew)
 
-  //   // making object of answers
-  //   if (queAns['content1'] != '' || queAns['content1'] != undefined) {
-  //     this.answer = {} as Answer;
-  //     this.answer.content = queAns['content1'];
-  //     this.answer.correct = queAns['correct1'];
-  //     this.answer.questionorderno = queAns['questionOrderNo'];
+//     console.log(this.questionAnswer.question['questionId'])
+//     console.log(queAnsNew.questionId)
 
-  //     this.questionAnswer.answers.push(this.answer);
-  //   }
-  //   if (queAns['content2'] != '' || queAns['content2'] != undefined) {
-  //     this.answer = {} as Answer;
-  //     this.answer.content = queAns['content2'];
-  //     this.answer.correct = queAns['correct2'];
-  //     this.answer.questionorderno = queAns['questionOrderNo'];
+//     queAnsNew.totalMarks = this.totalMarks;
+//     if (this.selectedCategoryName == 'MCQ' || this.selectedCategoryName == 'mcq') {
+//       this.questionAnswer.question.questionIsMCQ = true;
+//     } else {
+//       this.questionAnswer.question.questionIsMCQ = false;
+//     }
+//     this.questionAnswer.question.questionQuizId = this.selectedQuizId;
+//     this.questionAnswer.question.questionCategoryId = this.selectedQuiz.categoryId;
+//     this.questionAnswer.question.questionIsActive = true;
+//     this.questionAnswer.answers = [];
 
-  //     this.questionAnswer.answers.push(this.answer);
-  //   }
+//     if (queAnsNew['content1'] != '' || queAnsNew['content1'] != undefined) {
+//       this.answer = {} as Answer;
+//       this.answer.content = queAnsNew['content1'];
+//       this.answer.correct = queAnsNew['correct1'];
+//       this.answer.questionorderno = queAnsNew['questionOrderNo'];
+//       this.questionAnswer.answers.push(this.answer);
+//     }
+//     if (queAnsNew['content2'] != '' || queAnsNew['content2'] != undefined) {
+//       this.answer = {} as Answer;
+//       this.answer.content = queAnsNew['content2'];
+//       this.answer.correct = queAnsNew['correct2'];
+//       this.answer.questionorderno = queAnsNew['questionOrderNo'];
+//       this.questionAnswer.answers.push(this.answer);
+//     }
+//     if (queAnsNew['content3'] != '' || queAnsNew['content3'] != undefined) {
+//       this.answer = {} as Answer;
+//       this.answer.content = queAnsNew['content3'];
+//       this.answer.correct = queAnsNew['correct3'];
+//       this.answer.questionorderno = queAnsNew['questionOrderNo'];
+//       this.questionAnswer.answers.push(this.answer);
+//     }
+//     if (queAnsNew['content4'] != '' || queAnsNew['content4'] != undefined) {
+//       this.answer = {} as Answer;
+//       this.answer.content = queAnsNew['content4'];
+//       this.answer.correct = queAnsNew['correct4'];
+//       this.answer.questionorderno = queAnsNew['questionOrderNo'];
+//       this.questionAnswer.answers.push(this.answer);
+//     }
 
-  //   if (queAns['content3'] != '' || queAns['content3'] != undefined) {
-  //     this.answer = {} as Answer;
+//     console.log("this.questionAnswer")
+//     console.log(this.questionAnswer)
+//     const instituteJson = JSON.stringify(this.questionAnswer);
+//     const blob = new Blob([instituteJson], {
+//       type: 'application/json'
+//     })
 
-  //     this.answer.content = queAns['content3'];
-  //     this.answer.correct = queAns['correct3'];
-  //     this.answer.questionorderno = queAns['questionOrderNo'];
+//     let formData = new FormData();
+//     for (var i = 0; i < this.myFiles.length; i++) {
+//       formData.append("files", this.myFiles[i]);
+//     }
 
-  //     this.questionAnswer.answers.push(this.answer);
-  //   }
+//     console.log("this.questionAnswer before form data")
+//     console.log(this.questionAnswer)
+//     formData.append("request", new Blob([JSON.stringify(this.questionAnswer)], { type: 'application/json' }));
 
-  //   if (queAns['content4'] != '' || queAns['content4'] != undefined) {
-  //     this.answer = {} as Answer;
-
-  //     this.answer.content = queAns['content4'];
-  //     this.answer.correct = queAns['correct4'];
-  //     this.answer.questionorderno = queAns['questionOrderNo'];
-  //     this.questionAnswer.answers.push(this.answer);
-  //   }
-
-  //   // console.log(this.questionAnswer);
-
-
-  //   const instituteJson = JSON.stringify(this.questionAnswer);
-
-  //   const blob = new Blob([instituteJson], {
-  //     type: 'application/json'
-  //   })
-
-  //   let formData = new FormData();
-
-  //   for (var i = 0; i < this.myFiles.length; i++) {
-  //     formData.append("files", this.myFiles[i]);
-  //   }
-
-  //   formData.append("request", new Blob([JSON.stringify(this.questionAnswer)], { type: 'application/json' }));
-
-  //   console.log(formData)
-  //   this.service.addQuestion(formData).subscribe(
-  //     (response) => {
-
-     
-  //       this.generatedQuestionAnswerId = response;
-  //       console.log( this.generatedQuestionAnswerId)
-  //       console.log("Question Added Successfully");
-  //       // this.getDataForMarks(this.selectedQuizId)
-  //       this.getAllQuestionAnswers(this.selectedQuizId)
-      
-  //     },
-  //     (error) => {
-  //       console.log("Question added failed")
-  //     }
-  //   )
-
-  
-
-
+//     console.log(formData)
+//     this.service.addQuestion(formData).subscribe(
+//       (response) => {
+//         this.generatedQuestionAnswerId = response;
+//         console.log(this.generatedQuestionAnswerId)
+//         console.log("Question Added Successfully");
+//         // this.getDataForMarks(this.selectedQuizId)
+//         // this.getAllQuestionAnswers(this.selectedQuizId)
+//       },
+//       (error) => {
+//         console.log("Question added failed");
+//         if (!isFirstAlertDisplayed) {
+//           this.dialogBoxService.open("Please enter details for all questions", 'information');
+//           isFirstAlertDisplayed = true;
+//         }
+//         // Clear queAns['queAnsArray'] to prevent any elements from being stored in the database
+//         queAns['queAnsArray'] = [];
+//       }
+//     )
+//   });
+// }
 
 
  
