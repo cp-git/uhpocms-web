@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { CourseProgress } from 'app/courseProgress/class/courseprogress';
 import { CourseProgressService } from 'app/courseProgress/services/course-progress.service';
@@ -45,6 +45,7 @@ export class TeacherPanelComponent {
   clickedCourse: Course = new Course();
   barClicked: boolean = false;
   closeButtonStatus: boolean = true;
+
   userPermissions: AuthUserPermission[] = [];;
   modulePermissionIds: Set<number> = new Set<number>();
   userId: any;
@@ -59,8 +60,9 @@ export class TeacherPanelComponent {
     private profileServ: ProfileService,
 
   ) {
-    this.loadAllPermissions();
 
+    // Calling function to get permissions from session storage
+    this.loadAllPermissions();
   }
 
 
@@ -93,18 +95,22 @@ export class TeacherPanelComponent {
 
   }
 
+  // function for loading permissions from session storage
   loadAllPermissions() {
     try {
       let sessionData: any;
       sessionData = sessionStorage.getItem('permissions');
-      console.log(sessionData);
+      // console.log(sessionData);
+
+      // converting string json into json object
       let data = JSON.parse(sessionData);
       this.userPermissions = data;
-      this.modulePermissionIds.add(this.userPermissions[0].moduleId)
+
+      // adding module ids in array ( module ids which are accessible to user)
       this.userPermissions.forEach(permission => {
         this.modulePermissionIds.add(permission.moduleId);
       });
-      console.log(this.modulePermissionIds);
+      // console.log(this.modulePermissionIds);
 
     }
     catch (err) {
@@ -116,9 +122,6 @@ export class TeacherPanelComponent {
 
   //-------------------------------------------------------------------
   displayPopupStyle = "none";
-
-
-
 
   async handleRightClickData(data: { value: any; label: string }, courseId: number) {
     this.dchartcurrentIndex = 0;
@@ -379,7 +382,7 @@ export class TeacherPanelComponent {
     this._route.navigate(['Question', this.userName])
   }
 
-  RedirectToReviewAnswer(){
+  RedirectToReviewAnswer() {
     this._route.navigate(['Review', this.userName])
   }
 

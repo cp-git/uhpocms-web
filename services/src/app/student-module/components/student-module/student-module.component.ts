@@ -201,7 +201,7 @@ export class StudentModuleComponent implements OnInit {
 
     this.selectedCourseId = '1'
 
-    
+
 
     this.getAllQuizzesByProfileId(this.studentId);
     this.getAllFileProgress();
@@ -594,7 +594,7 @@ export class StudentModuleComponent implements OnInit {
 
   //loads the module files assigned to the student using the getModuleFilesByStudentId() method of StudentService
   loadModuleFilesOfCourses(studentId: number) {
-    this.modulefileService.getModuleFilesByStudentId(studentId).subscribe(
+    this.modulefileService.getModuleFilesOfEnrolledCoursesOfModulesByProfileId(studentId).subscribe(
       response => {
         this.studentModuleFiles = response;
 
@@ -622,7 +622,7 @@ export class StudentModuleComponent implements OnInit {
 
 
   getModuleFiles(studentId: number) {
-    this.moduleFileService.getModuleFilesByStudentId(studentId).subscribe(
+    this.moduleFileService.getModuleFilesOfEnrolledCoursesOfModulesByProfileId(studentId).subscribe(
       response => {
         console.log(response);
       }

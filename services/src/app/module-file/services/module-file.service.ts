@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ModuleFile } from 'app/class/module-file';
 import { environment } from 'environments/environment.development';
+import { ModuleFile } from '../class/module-file';
 
 @Injectable({
   providedIn: 'root'
@@ -76,8 +76,12 @@ export class ModuleFileService {
   }
 
 
-  getModuleFilesByStudentId(studentId: number): Observable<ModuleFile[]> {
+  getModuleFilesOfEnrolledCoursesOfModulesByProfileId(studentId: number): Observable<ModuleFile[]> {
     return this._http.get<ModuleFile[]>(`${this.moduleFileUrl}/modulefile/student?id=${studentId}`);
+  }
+
+  getModuleFilesOfAssignedCoursesOfModulesByProfileId(teacherId: number): Observable<ModuleFile[]> {
+    return this._http.get<ModuleFile[]>(`${this.moduleFileUrl}/modulefile/teacher?id=${teacherId}`);
   }
 
   getFile(fileId: string): Observable<ArrayBuffer> {

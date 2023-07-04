@@ -25,7 +25,7 @@ export class AdminmdouleComponent {
   adminId: any;
   userId: any;
   userRoleId: any;
-  accessControlData: Accesscontrol;
+  // accessControlData: Accesscontrol;
 
   userPermissions: AuthUserPermission[] = [];;
   modulePermissionIds: Set<number> = new Set<number>();
@@ -35,7 +35,9 @@ export class AdminmdouleComponent {
     private accessControlService: AccesscontrolService,
     private userPermissionService: AuthUserPermissionService
   ) {
-    this.accessControlData = new Accesscontrol();
+    // this.accessControlData = new Accesscontrol();
+
+    // Calling function to get permissions from session storage
     this.loadAllPermissions();
   }
 
@@ -46,23 +48,27 @@ export class AdminmdouleComponent {
     this.userId = sessionStorage.getItem('userId')
     console.log(this.userId)
     this.userRoleId = sessionStorage.getItem('userRoleId');
-    this.loadAccessControl();
+    // this.loadAccessControl();
     this.userPermissionService.getAllPermissionsByRoleIdAndUserId(this.userRoleId, this.userId)
 
   }
 
+  // function for loading permissions from session storage
   loadAllPermissions() {
     try {
       let sessionData: any;
       sessionData = sessionStorage.getItem('permissions');
-      console.log(sessionData);
+      // console.log(sessionData);
+
+      // converting string json into json object
       let data = JSON.parse(sessionData);
       this.userPermissions = data;
-      this.modulePermissionIds.add(this.userPermissions[0].moduleId)
+
+      // adding module ids in array ( module ids which are accessible to user)
       this.userPermissions.forEach(permission => {
         this.modulePermissionIds.add(permission.moduleId);
       });
-      console.log(this.modulePermissionIds);
+      // console.log(this.modulePermissionIds);
 
     }
     catch (err) {
@@ -71,20 +77,20 @@ export class AdminmdouleComponent {
 
   }
 
-  loadAccessControl() {
-    console.log(this.accessControlData);
+  // loadAccessControl() {
+  //   console.log(this.accessControlData);
 
-    this.accessControlService.getAccessControlByUserId(this.userId).subscribe(
-      (response) => {
-        this.accessControlData = response;
-      }
-    );
+  //   this.accessControlService.getAccessControlByUserId(this.userId).subscribe(
+  //     (response) => {
+  //       this.accessControlData = response;
+  //     }
+  //   );
 
-    // if (this.accessControlData.userId != this.userId || (this.accessControlData == undefined || this.accessControlData == null)) {
-    //   this.accessControlData = this.accessControlService.accessControlData;
-    console.log(this.accessControlData);
-    // }
-  }
+  //   // if (this.accessControlData.userId != this.userId || (this.accessControlData == undefined || this.accessControlData == null)) {
+  //   //   this.accessControlData = this.accessControlService.accessControlData;
+  //   console.log(this.accessControlData);
+  //   // }
+  // }
 
   RedirectToAuth() {
     this._route.navigate(['AuthUser', this.userName]);
@@ -136,8 +142,7 @@ export class AdminmdouleComponent {
   }
 
 
-  AdminAnalytics()
-  {
+  AdminAnalytics() {
     this._route.navigate(['analytics']);
   }
 

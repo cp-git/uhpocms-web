@@ -95,34 +95,20 @@ export class AuthenticationloginComponent {
             //console.log(this._authList[i].authUserId);
 
             if (this._instituteAdminArray[i].userId == this.authUser.authUserId) {
-              //console.log(this._instituteAdminArray[i].userId + "authuser_id in instituteadmin profile..")
-              //console.log(this.authUser.authUserId + "authuser_id in Auth User profile..")
-              // console.log(this._instituteAdminArray[i].userRole);
+
               // getting permissions for modules for user using role and user id
-              await this.makeAsyncCall(this._instituteAdminArray[i].userRoleId.toString(), this._instituteAdminArray[i].userId);
+              await this.getAllPermissionsByRoleIdAndUserId(this._instituteAdminArray[i].userRoleId.toString(), this._instituteAdminArray[i].userId);
+
               let modules: any = JSON.stringify(this.authModuleService.getAllAuthModules());
               sessionStorage.setItem('modules', modules);
 
               if (this._instituteAdminArray[i].userRole == 'admin') {
-
-
                 this._route.navigate(['adminmodule/admin', userName]);
               }
               else if (this._instituteAdminArray[i].userRole == 'teacher') {
-
-                // this.accessControlService.getAccessControlByUserId(this._instituteAdminArray[i].userId);
-                // this.userPermissionService.getAllPermissionsByRoleIdAndUserId(6, this._instituteAdminArray[i].userId);
-                // // sessionStorage.setItem('permissions', JSON.stringify(this.permissionService.getAllPermissionsByRoleIdAndUserId()));
-                //  sessionStorage.setItem('userRoleId', this._instituteAdminArray[i].userRoleId.toString());
-
                 this._route.navigate(['teacherdisplay/teacher', userName, { id: this._instituteAdminArray[i].adminId }]);
               }
               else if (this._instituteAdminArray[i].userRole == 'student') {
-
-                // this.accessControlService.getAccessControlByUserId(this._instituteAdminArray[i].userId);
-                // this.userPermissionService.getAllPermissionsByRoleIdAndUserId(5, this._instituteAdminArray[i].userId);
-                // sessionStorage.setItem('userRoleId', this._instituteAdminArray[i].userRoleId.toString());
-
                 this._route.navigate(['studentdata/student', userName, { id: this._instituteAdminArray[i].adminId }]);
               }
 
@@ -131,16 +117,6 @@ export class AuthenticationloginComponent {
               sessionStorage.setItem('profileId', this._instituteAdminArray[i].adminId.toString());
               sessionStorage.setItem('userId', this._instituteAdminArray[i].userId.toString());
               sessionStorage.setItem('userRoleId', this._instituteAdminArray[i].userRoleId.toString());
-
-              // getting access control for user using role and user id
-              this.accessControlService.getAccessControlByUserId(this._instituteAdminArray[i].userId).subscribe(
-                (response) => {
-                  const accessControls = response;
-                  console.log(accessControls);
-
-                  sessionStorage.setItem('controls', JSON.stringify(accessControls));
-                }
-              );
 
               this.authenticationService.registerSuccessfulLogin(userName);
 
@@ -189,7 +165,7 @@ export class AuthenticationloginComponent {
     this._route.navigate(['home']);
   }
 
-  async makeAsyncCall(userRoleId: any, userId: any) {
+  async getAllPermissionsByRoleIdAndUserId(userRoleId: any, userId: any) {
     try {
       const response = await this.userPermissionService.getAllPermissionsByRoleIdAndUserId(
         userRoleId,

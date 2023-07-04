@@ -9,7 +9,6 @@ import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
 import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
 import { userModule } from 'app/permissions/enum/user-module.enum';
 import { userPermission } from 'app/permissions/enum/user-permission.enum';
-import { InstituteServicesService } from 'app/institute-details/services/institute-services.service';
 import { AdmininstitutionService } from 'app/admin-institution/service/admininstitution.service';
 @Component({
   selector: 'app-department',
@@ -27,10 +26,10 @@ export class DepartmentComponent implements OnInit {
   viewActivate: boolean = false;
 
   // for buttons to view
-  showAddButton: boolean = false;
-  showActivateButton: boolean = false;
-  updateButton: boolean = false;
-  deleteButton: boolean = false;
+  // showAddButton: boolean = false;
+  // showActivateButton: boolean = false;
+  // updateButton: boolean = false;
+  // deleteButton: boolean = false;
   buttonsArray: any;
   userAndRolePermissions: AuthUserPermission[] = [];
 
@@ -58,6 +57,11 @@ export class DepartmentComponent implements OnInit {
 
   profileId: any;
   userRole: any
+
+  institution: AdminInstitution[] = [];
+  activeDepartments: Department[] = [];
+  inactiveDepartments: Department[] = [];
+
   constructor(
     private service: DepartmentService,
     private location: Location,
@@ -80,8 +84,8 @@ export class DepartmentComponent implements OnInit {
     this.buttonsArray = {
       showAddButton: false,
       showActivateButton: false,
-      updateButton: false,
-      deleteButton: false
+      showUpdateButton: false,
+      showDeleteButton: false
     }
 
 
@@ -92,50 +96,55 @@ export class DepartmentComponent implements OnInit {
     // this.getAllDepartments();
     // this.getInactiveDepartment();
 
+    console.log(this.userAndRolePermissions);
+
     this.loadAndLinkUserPermissions();
+
     this.getDataBasedOnRole(this.userRole);
     // this.getInstitutionOfUserByUserId();
   }
 
   // this function for loading permission from session storage and link permission 
   // with buttons to show and hide based on permissions 
-  private loadAndLinkUserPermissions() {
+  private async loadAndLinkUserPermissions() {
+    this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.DEPARTMENT, this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
 
-    try {
-      let sessionData: any = sessionStorage.getItem('permissions');
-      //console.log(this.sessionData);
-      let data = JSON.parse(sessionData);
-      for (var inst in data) {
-        this.userAndRolePermissions.push(data[inst]);
-      }
-    }
-    catch (err) {
-      console.log("Error", err);
-    }
+    // try {
+    //   let sessionData: any = sessionStorage.getItem('permissions');
+    //   //console.log(this.sessionData);
+    //   let data = JSON.parse(sessionData);
+    //   for (var inst in data) {
+    //     this.userAndRolePermissions.push(data[inst]);
+    //   }
+    // }
+    // catch (err) {
+    //   console.log("Error", err);
+    // }
 
-    // for linking permissions to buttons array
-    this.userPermissionService.linkPermissions(userModule.DEPARTMENT, this.userAndRolePermissions, this.buttonsArray);
+    // // for linking permissions to buttons array
+    // // this.userPermissionService.linkPermissions(userModule.DEPARTMENT, this.userAndRolePermissions, this.buttonsArray);
 
-    // showing and hinding buttons based on permissions
-    this.toggleButtonsPermissions(this.buttonsArray);
+    // // showing and hinding buttons based on permissions
+    // // this.userPermissionService.toggleButtonsPermissions(this.buttonsArray);
 
   }
 
   // for showing and hinding buttons
-  private toggleButtonsPermissions(buttonsArray: any) {
-    if (buttonsArray.showActivateButton) {
-      this.showActivateButton = true;
-    }
-    if (buttonsArray.showAddButton) {
-      this.showAddButton = true;
-    }
-    if (buttonsArray.deleteButton) {
-      this.deleteButton = true;
-    }
-    if (buttonsArray.updateButton) {
-      this.updateButton = true;
-    }
-  }
+  // private toggleButtonsPermissions(buttonsArray: any) {
+  //   if (buttonsArray.showActivateButton) {
+  //     this.showActivateButton = true;
+  //   }
+  //   if (buttonsArray.showAddButton) {
+  //     this.showAddButton = true;
+  //   }
+  //   if (buttonsArray.deleteButton) {
+  //     this.deleteButton = true;
+  //   }
+  //   if (buttonsArray.updateButton) {
+  //     this.updateButton = true;
+  //   }
+  // }
 
 
   // back button functionality
@@ -150,7 +159,9 @@ export class DepartmentComponent implements OnInit {
 
       // this.showAddButton = true;
       // this.showActivateButton = true;
-      this.toggleButtonsPermissions(this.buttonsArray);
+      this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+
+
     } else {
       this.location.back();
     }
@@ -164,8 +175,10 @@ export class DepartmentComponent implements OnInit {
     // hiding view of all column and displaying all departments screen
     this.viewOne = true;
     this.viewAll = false;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
+    // this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+
     this.currentData = objectReceived; // assingning data to current data for child component
   }
 
@@ -175,8 +188,10 @@ export class DepartmentComponent implements OnInit {
     // hiding update screen and displaying all departments screen
     this.viewAll = false;
     this.viewUpdate = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
+    // this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+
     // assingning data to current data for child component
     this.currentData = objectReceived;
   }
@@ -198,16 +213,20 @@ export class DepartmentComponent implements OnInit {
     this.emptyDepartment = {} as Department;
     this.viewAll = false;
     this.viewAdd = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+
+    // this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
   }
 
   // for navigating to activate screen
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
+    // this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+
   }
 
   // on addComponents's submit button clicked
@@ -272,7 +291,7 @@ export class DepartmentComponent implements OnInit {
       },
       (error) => {
         this.dialogBoxServices.open("Department is Already Present pls Select Another Name", 'warning');
-        
+
       }
     );
   }
@@ -304,21 +323,21 @@ export class DepartmentComponent implements OnInit {
         console.log('User clicked OK');
         // Do something if the user clicked OK
         // calling service to soft delte
-    this.service.deleteDepartmentById(id).subscribe(
-      (response) => {
-        this.dialogBoxServices.open('Department deleted successfully', 'information');
-        this.ngOnInit();
-      },
-      (error) => {
-        this.dialogBoxServices.open('Department deletion Failed', 'warning');
+        this.service.deleteDepartmentById(id).subscribe(
+          (response) => {
+            this.dialogBoxServices.open('Department deleted successfully', 'information');
+            this.ngOnInit();
+          },
+          (error) => {
+            this.dialogBoxServices.open('Department deletion Failed', 'warning');
+          }
+        );
+      } else {
+        console.log('User clicked Cancel');
+        // Do something if the user clicked Cancel
       }
-    );
-  } else {
-    console.log('User clicked Cancel');
-    // Do something if the user clicked Cancel
+    });
   }
-});
-}
 
   // For getting all inactive departments
   private getInactiveDepartment() {
@@ -348,9 +367,6 @@ export class DepartmentComponent implements OnInit {
     );
   }
 
-  institution: AdminInstitution[] = [];
-  activeDepartments: Department[] = [];
-  inactiveDepartments: Department[] = [];
 
   private getDataBasedOnRole(userRole: any) {
     console.log(userRole);
@@ -364,24 +380,31 @@ export class DepartmentComponent implements OnInit {
 
         break;
       case 'teacher':
-        this.getInstitutionOfUserByUserId();
+
+        //for getting Institution And Departments Of User By UserId
+        this.getInstitutionAndDepartmentsOfUserByUserId(this.profileId);
         break;
       // case 'student':
       //   this.getInstitutionOfUserByUserId();
       //   break;
     }
   }
-  getInstitutionOfUserByUserId() {
-    this.institutionService.getInstitutionByProfileId(this.profileId).subscribe(
+
+  // function for getting institituions and all departments of that institution by profile id
+  getInstitutionAndDepartmentsOfUserByUserId(profileId: any) {
+    this.institutionService.getInstitutionByProfileId(profileId).subscribe(
       (response) => {
         this.adminInstitutions = response;
         console.log(response);
+
+        // for getting active and inactive departments using institution id
         this.getAllDepartmentsByInstitutionId(this.adminInstitutions[0].adminInstitutionId);
         this.getAllInactiveDeparmentsByInstitutionId(this.adminInstitutions[0].adminInstitutionId);
       }
     );
   }
 
+  // For getting all active departments by institution id
   getAllDepartmentsByInstitutionId(institutionId: any) {
     this.service.getDepartmentsByInstitutionId(institutionId).subscribe(
       (response) => {
@@ -392,6 +415,7 @@ export class DepartmentComponent implements OnInit {
     );
   }
 
+  // For getting all inactive departments by institution id
   getAllInactiveDeparmentsByInstitutionId(institutionId: any) {
     this.service.getInactiveDepartmentsByInstitutionId(institutionId).subscribe(
       (response) => {

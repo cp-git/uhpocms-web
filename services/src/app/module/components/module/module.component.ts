@@ -7,6 +7,16 @@ import { Location } from '@angular/common';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { Profile } from 'app/profiles/class/profile';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
+import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
+import { userModule } from 'app/permissions/enum/user-module.enum';
+import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
+import { AdmininstitutionService } from 'app/admin-institution/service/admininstitution.service';
+import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
+import { DepartmentService } from 'app/department/services/department.service';
+import { Department } from 'app/department/class/department';
+import { AdvFilterPipe } from 'app/shared/pipes/adv-filter/adv-filter.pipe';
+import { FilterPipe } from 'app/shared/pipes/filter/filter.pipe';
+import { CourseDepartment } from 'app/teacher-course/class/course-department';
 @Component({
   selector: 'app-module',
   templateUrl: './module.component.html',
@@ -24,8 +34,8 @@ export class ModuleComponent {
   viewActivate: boolean = false;
 
   // for buttons to view
-  showAddButton: boolean = true;
-  showActivateButton: boolean = true;
+  // showAddButton: boolean = true;
+  // showActivateButton: boolean = true;
 
   dataAvailable: boolean = false;
 
@@ -38,6 +48,7 @@ export class ModuleComponent {
   allData: Module[] = [];
   allInActiveData: Module[] = [];
   courses: Course[] = [];
+  filterCourses: Course[] = [];
 
   sessionData: any;
   data: any;
@@ -50,7 +61,31 @@ export class ModuleComponent {
   emptyModule: Module;  // empty admin role
   currentData!: Module;  // for update and view, to show existing data
 
-  constructor(private service: ModuleService,private dialogBoxServices : DialogBoxService, private location: Location, private courseService: TeacherCourseService) {
+
+  // for user Permissions
+  buttonsArray: any;
+  userAndRolePermissions: AuthUserPermission[] = [];
+  userModule = userModule;
+
+  adminInstitutions: AdminInstitution[] = []
+  departments: Department[] = [];
+
+  selectedInstitutionId!: any;
+  selectedDepartmentId!: any;
+
+  advFilterPipe!: AdvFilterPipe;
+  filterPipe!: FilterPipe;
+
+  constructor(private service: ModuleService,
+    private dialogBoxServices: DialogBoxService,
+    private location: Location,
+    private courseService: TeacherCourseService,
+    private userPermissionService: AuthUserPermissionService,
+    private institutionService: AdmininstitutionService,
+    private departmentService: DepartmentService,
+
+  ) {
+
 
     // assigng headers
 
@@ -60,20 +95,27 @@ export class ModuleComponent {
 
     // creating empty object
     this.emptyModule = new Module();
-    this.loadCourses();
+    // this.loadCourses();
     this.profileId = sessionStorage.getItem('profileId');
     this.courseId = sessionStorage.getItem('courseId');
 
     this.userRole = sessionStorage.getItem('userRole');
 
+    // Assining default values
+    this.buttonsArray = {
+      showAddButton: false,
+      showActivateButton: false,
+      showUpdateButton: false,
+      showDeleteButton: false
+    }
   }
 
 
   ngOnInit(): void {
+    this.loadAndLinkUserPermissions();
     //  this.service.get
-    this.getInactiveModule();
-    this.getAssignedCoursesOfTeacher(this.profileId);
 
+    this.loadDataBasedOnRole(this.userRole);
   }
 
   // back button functionality
@@ -85,12 +127,21 @@ export class ModuleComponent {
       this.viewUpdate = false;
       this.viewActivate = false;
 
-      this.showAddButton = true;
-      this.showActivateButton = true;
+      // this.buttonsArray.showAddButton = true;
+      // this.buttonsArray.showActivateButton = true;
+      this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+
     } else {
       this.location.back();
     }
 
+  }
+
+  // this function for loading permission from session storage and link permission 
+  // with buttons to show and hide based on permissions 
+  private async loadAndLinkUserPermissions() {
+    this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.MODULE, this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
   }
 
   // For navigate to view screen with data
@@ -100,8 +151,8 @@ export class ModuleComponent {
     // hiding view of all column and displaying all admin roles screen 
     this.viewOne = true;
     this.viewAll = false;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
 
@@ -112,8 +163,8 @@ export class ModuleComponent {
     // hiding update screen and displaying all admin roles screen 
     this.viewAll = false;
     this.viewUpdate = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
     // assingning data to current data for child component
     this.currentData = objectReceived;
   }
@@ -136,16 +187,16 @@ export class ModuleComponent {
   onAddClick() {
     this.viewAll = false;
     this.viewAdd = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
   }
 
   // for navigating to activate screen
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
   }
 
   // on addComponents's submit button clicked
@@ -158,24 +209,51 @@ export class ModuleComponent {
     this.updateModule(objectReceived);
   }
 
-  private loadCourses() {
+  // for getting all courses
+  private async loadCourses() {
+    await this.loadIdsOfAllCoursesWithDepartmentId();
+    // calling service to get all data
+    this.courseService.getAllCourses().subscribe(
+      response => {
+        console.log(response);
+        this.filterCourses = response;
+        // const courseData = response; //assign data to local variable
+        this.courses = [];
+        response.forEach((course: Course) => {
+          this.courseDepartments.find((coursedepartment: CourseDepartment) => {
+            if (course.courseId == coursedepartment.courseId) {
+              this.courses.push({
+                ...course,
+                departmentId: coursedepartment.department_id,
+              });
+            }
+            this.courses.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name
+          })
+        })
+        console.log(this.courses);
+
+
+      },
+      error => {
+        console.log('No data in table ');
+
+      }
+    );
+  }
+
+  courseDepartments: CourseDepartment[] = [];
+  private async loadIdsOfAllCoursesWithDepartmentId() {
 
     try {
-      this.sessionData = sessionStorage.getItem('course');
-      // console.log(this.sessionData);
-      this.data = JSON.parse(this.sessionData);
-      console.log(this.data);
-      for (var inst in this.data) {
-        this.courses.push(this.data[inst]);
-      }
+      const data = await this.courseService.getCoursesDepartmentId().toPromise();
+      console.log(data);
+      this.courseDepartments = data;
 
+    } catch (error) {
+      console.log("no data fetched");
     }
-    catch (err) {
-      console.log("Error", err);
-    }
-
-
   }
+
   ///////////////////////////////////////////
   // Funcation calls specific to this module
   ///////////////////////////////////////////
@@ -219,7 +297,7 @@ export class ModuleComponent {
     //   alert("End date must be after start date");
     //   return;
     // }
-   // currentData.moduleIsActive = true;  // setting active true
+    // currentData.moduleIsActive = true;  // setting active true
     // calling service for adding data
     //console.log(JSON.stringify(currentData));
     this.service.addTeacherModule(currentData).subscribe(
@@ -238,20 +316,31 @@ export class ModuleComponent {
   }
 
   //getting courses assigned to teacher using profileId
-  private getAssignedCoursesOfTeacher(teacherId: number) {
+  private getAssignedCoursesByProfileId(teacherId: number) {
     this.courseService.getAssignedCourseOfTeacher(teacherId).subscribe(
       (data) => {
         console.log("courses " + JSON.stringify(data));
-
         this.courses = data;
-        this.getAllModules();
+        this.filterCourses = data;
       },
       error => {
         console.log(error);
       }
     );
   }
-
+  //getting courses assigned to teacher using profileId
+  private getEnrolledCoursesByProfileId(studentId: number) {
+    this.courseService.getCourseByStudentId(studentId).subscribe(
+      (data) => {
+        console.log("courses " + JSON.stringify(data));
+        this.courses = data;
+        this.filterCourses = data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
 
 
 
@@ -265,9 +354,9 @@ export class ModuleComponent {
       response => {
 
         this.allData = response;
-        this.allData = this.allData.filter(data =>
-          this.courses.map(
-            course => course.courseId).includes(data.courseId_id));
+        // this.allData = this.allData.filter(data =>
+        //   this.courses.map(
+        //     course => course.courseId).includes(data.courseId_id));
 
         this.allData.sort((a, b) => a.moduleName.toLowerCase() > b.moduleName.toLowerCase() ? 1 : -1) // order by alphabets for module name
         console.log("filtered daTA " + JSON.stringify(this.allData));
@@ -306,22 +395,22 @@ export class ModuleComponent {
       if (response) {
         console.log('User clicked OK');
         // Do something if the user clicked OK
-    // calling service to soft delete
-    this.service.deleteModuleById(moduleId).subscribe(
-      (response) => {
-        this.dialogBoxServices.open('Module deleted successfully', 'information');
-        this.ngOnInit();
-      },
-      (error) => {
-        this.dialogBoxServices.open('Module deletion Failed', 'warning');
+        // calling service to soft delete
+        this.service.deleteModuleById(moduleId).subscribe(
+          (response) => {
+            this.dialogBoxServices.open('Module deleted successfully', 'information');
+            this.ngOnInit();
+          },
+          (error) => {
+            this.dialogBoxServices.open('Module deletion Failed', 'warning');
+          }
+        );
+      } else {
+        console.log('User clicked Cancel');
+        // Do something if the user clicked Cancel
       }
-    );
-  } else {
-    console.log('User clicked Cancel');
-    // Do something if the user clicked Cancel
+    });
   }
-});
-}
   // For getting all inactive admin roles
   private getInactiveModule() {
 
@@ -352,5 +441,116 @@ export class ModuleComponent {
         this.dialogBoxServices.open('Failed to Activate', 'warning');
       }
     );
+  }
+
+  private loadDataBasedOnRole(userRole: any) {
+    console.log(userRole);
+
+    switch (userRole) {
+      // case 'admin' || 'coadmin':
+      //   this.loadAdminInstitutions();
+      //   this.loadDepartments();
+      //   this.loadCourses();
+      //   this.getAllModules();
+      //   this.getInactiveModule();
+
+      //   break;
+      case 'teacher':
+        // this.getInstitutionAndDepartmentsOfUserByUserId(this.profileId);
+
+        this.getAssignedCoursesByProfileId(this.profileId);
+        this.getModulesOfAssignedCoursesByProfileId(this.profileId);
+        break;
+
+      case 'student':
+        // this.getInstitutionAndDepartmentsOfUserByUserId(this.profileId);
+
+        this.getEnrolledCoursesByProfileId(this.profileId);
+        this.getModulesOfEnrolledCoursesByProfileId(this.profileId);
+        break;
+    }
+  }
+
+  // function for getting institituions and all departments of that institution by profile id
+  getInstitutionAndDepartmentsOfUserByUserId(profileId: any) {
+    this.institutionService.getInstitutionByProfileId(profileId).subscribe(
+      (response) => {
+        this.adminInstitutions = response;
+        console.log(response);
+
+        // for getting active and inactive departments using institution id
+        this.getDepartmentByProfileId(profileId);
+      }
+    );
+  }
+
+  // For getting all active departments by institution id
+  getDepartmentByProfileId(profileId: any) {
+    this.departmentService.getDepartmentsByProfileId(profileId).subscribe(
+      (response) => {
+        console.log(response);
+        this.departments = response;
+      }
+    );
+  }
+
+  getModulesOfAssignedCoursesByProfileId(profileId: number) {
+    this.service.getModulesOfAssignedCoursesByProfileId(profileId).subscribe(
+      (response) => {
+        this.allData = response.filter((data: { moduleIsActive: boolean; }) => data.moduleIsActive == true);
+        this.allInActiveData = response.filter((data: { moduleIsActive: boolean; }) => data.moduleIsActive == false);
+        console.log(this.allInActiveData);
+        console.log(this.allData);
+
+
+      }
+    );
+  }
+
+  getModulesOfEnrolledCoursesByProfileId(profileId: number) {
+    this.service.getModulesOfEnrolledCoursesByProfileId(profileId).subscribe(
+      (response) => {
+        this.allData = response.filter((data: { moduleIsActive: boolean; }) => data.moduleIsActive == true);
+        this.allInActiveData = response.filter((data: { moduleIsActive: boolean; }) => data.moduleIsActive == false);
+      }
+    );
+  }
+  // fetching institutions data from session storage
+  private loadAdminInstitutions() {
+
+    try {
+      this.sessionData = sessionStorage.getItem('admininstitution');
+      this.data = JSON.parse(this.sessionData);
+      for (var inst in this.data) {
+        this.adminInstitutions.push(this.data[inst]);
+
+      }
+    }
+    catch (err) {
+      console.log("Error", err)
+    }
+  }
+
+  // fetching department data
+  private loadDepartments() {
+    this.departmentService.getAllDepartments().subscribe(
+      response => {
+        this.departments = response;
+      },
+      error => {
+        console.log("failed to get departments");
+      }
+    )
+  }
+
+  onChangeInstitution() {
+    this.selectedDepartmentId = undefined;
+
+  }
+  onChangeDepartment() {
+    console.log(this.courses);
+
+    this.filterCourses = this.advFilterPipe.transform(this.courses, 'departmentId', this.selectedDepartmentId)
+
   }
 }

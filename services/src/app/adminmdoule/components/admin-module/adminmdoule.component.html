@@ -1,10 +1,4 @@
 <div class="container">
-    <!-- 
-    <head>
-        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    </head> -->
-
     <div>
 
         <div class="row">
@@ -19,10 +13,7 @@
         </div>
     </div>
 
-    <!-- <div class="container"> -->
-    <!-- first row  -->
-    <!-- <div class="row"> -->
-    <div class="col-md-4" *ngIf="accessControlData.authUser">
+    <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.AUTH_USER)">
         <div class="card text-center" (click)="RedirectToAuth()">
             <div class="card-header">
                 <span class="fas fa-user-cog fa-4x" style="color: darkblue"></span>
@@ -31,22 +22,20 @@
                 <!-- <h3 class="card-title">Users</h3>-->
                 <button class="btn btn-primary">Users</button>
             </div>
-
-            <div class="col-md-4">
-                <div class="card text-center"  (click)="AdminAnalytics()">
-                    <div class="card-header">
-                        <span class="fa fa-pie-chart fa-4x" style="color:rgb(219, 82, 48)"></span>
-                    </div>
-                    <div class="card-body">
-                        <!-- <h3 class="card-title">Announcements</h3>-->
-                        <button class="btn btn-primary">Analytics</button>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
-    <div class="col-md-4" *ngIf="accessControlData.adminInstitute">
+    <div class="col-md-4">
+        <div class="card text-center" (click)="AdminAnalytics()">
+            <div class="card-header">
+                <span class="fa fa-pie-chart fa-4x" style="color:rgb(219, 82, 48)"></span>
+            </div>
+            <div class="card-body">
+                <!-- <h3 class="card-title">Announcements</h3>-->
+                <button class="btn btn-primary">Analytics</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.PROFILE)">
         <div class="card text-center" (click)="RedirectToInstituteAdminProfile()">
             <div class="card-header">
                 <span class="fas fa-users fa-4x" style="color: rgb(50,126,199);"></span>
@@ -58,7 +47,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4" *ngIf="accessControlData.role">
+    <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.ROLE)">
         <div class="card text-center" (click)="RedirectToRole()">
             <div class="card-header">
                 <span class="fas fa-user-alt fa-4x" style="color: rgb(68,189,174);"></span>
@@ -69,12 +58,8 @@
             </div>
         </div>
     </div>
-    <!-- </div> -->
 
-
-    <!-- second row -->
-    <!-- <div class="row"> -->
-    <div class="col-md-4" *ngIf="accessControlData.adminInstitute">
+    <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.INSTITUTION)">
         <div class="card text-center" (click)="RedirectToAdminInstitution()">
             <div class="card-header">
                 <span class="fas fa-school fa-4x" style="color:rgb(187,55,42)"></span>
@@ -86,7 +71,7 @@
 
         </div>
     </div>
-    <div class="col-md-4" *ngIf="accessControlData.department">
+    <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.DEPARTMENT)">
         <div class="card text-center" (click)="RedirectToAdminDept()">
             <div class="card-header">
                 <span class="fas fa-building fa-4x" style="color:rgb(236,140,0)"></span>
@@ -98,7 +83,7 @@
 
         </div>
     </div>
-    <div class="col-md-4" *ngIf="accessControlData.course">
+    <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.COURSE)">
         <div class="card text-center" (click)="RedirectToCourse()">
             <div class="card-header">
                 <span class="fas fa-book-open fa-4x" style="color:rgb(21,114,213)"></span>
@@ -109,11 +94,8 @@
             </div>
         </div>
     </div>
-    <!-- </div> -->
 
-    <!-- third row -->
-    <!-- <div class="row"> -->
-    <div class="col-md-4" *ngIf="accessControlData.assignCourse">
+    <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.ASSIGN_TEACHERS)">
         <div class="card text-center" (click)="RedirectToAssignTeacher()">
             <div class="card-header">
                 <span class="fas fa-book-reader fa-4x" style="color:rgb(97,63,28)"></span>
@@ -125,7 +107,7 @@
         </div>
     </div>
 
-    <div class="col-md-4" *ngIf="accessControlData.enrollment">
+    <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.ENROLL_STUDENTS)">
         <div class="card text-center" (click)="RedirectToEnrollStudent()">
             <div class="card-header">
                 <span class="fas fa-book-reader fa-4x" style="color: rgb(171,29,70);"></span>
@@ -137,7 +119,7 @@
         </div>
     </div>
 
-    <div class="col-md-4" *ngIf="accessControlData.announcement">
+    <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.ANNOUNCEMENT)">
         <div class="card text-center" (click)="RedirectToAnnouncement()">
             <div class="card-header">
                 <span class="fas fa-bell fa-4x" style="color:rgb(236,172,56)"></span>
@@ -185,79 +167,4 @@
             </div>
         </div>
     </div>
-
-    <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.MODULE)">
-        <div class="card text-center" [routerLink]="['/AuthUser',userName]">
-            <div class="card-header">
-                <span class="fas fa-book fa-4x" style="color: rgb(114,208,169);"></span>
-            </div>
-            <div class="card-body">
-                <!--<h3 class="card-title">Modules</h3>-->
-                <button class="btn btn-primary">Modules</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.MODULE_FILE)">
-        <div class="card text-center" [routerLink]="['/modulefile']">
-            <div class="card-header">
-                <span class="fas fa-clone fa-4x" style="color: rgb(24,47,81);"></span>
-            </div>
-            <div class="card-body">
-                <!--<h3 class="card-title">Module Content</h3>-->
-                <button class="btn btn-primary">Module Content</button>
-            </div>
-        </div>
-    </div>
-    <!-- </div> -->
-
-
-    <!-- second row -->
-    <!-- <div class="row"> -->
-
-    <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.QUIZ)">
-        <div class="card text-center" [routerLink]="['/Quiz',userName]">
-            <div class="card-header">
-                <span class="fas fa-lightbulb fa-4x" style="color: rgb(247,199,0);"></span>
-            </div>
-            <div class="card-body">
-                <!--<h3 class="card-title">Quizzes</h3>-->
-                <button class="btn btn-primary">Quizzes</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.QUESTION)">
-        <div class="card text-center" [routerLink]="['/Question',userName]">
-            <div class="card-header">
-                <span class="fas fa-question-circle fa-4x" style="color: rgb(108,44,153);"></span>
-            </div>
-            <div class="card-body">
-                <!--<h3 class="card-title">Questions & Answers</h3>-->
-                <button class="btn btn-primary">Questions & Answers</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- </div> -->
-    <!-- third row -->
-    <!-- <div class="row">
-              
-    
-                <div class="col-md-4">
-                    <div class="card text-center" routerLink="/allotPermission">
-                        <div class="card-header">
-                            <span class="fas fa-file-contract fa-3x"></span>
-                        </div>
-                        <div class="card-body">
-                            <h3 class="card-title">Allocate Permissions to Teachers</h3>
-                            <button class="btn btn-primary">Allocate
-                                Permissions</button>
-                        </div>
-    
-                    </div>
-                </div>
-    
-            </div> -->
-    <!-- </div> -->
-
 </div>

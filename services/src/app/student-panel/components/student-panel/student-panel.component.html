@@ -49,12 +49,6 @@
 
         </div>
 
-
-
-
-
-
-
         <!-- ----------------------------------------------
     -->
 
@@ -127,27 +121,25 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.AUTH_USER)">
-                <div class="card text-center" [routerLink]="['/AuthUser',userName]">
+            <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.MODULE)">
+                <div class="card text-center" [routerLink]="['/Module',userName]">
                     <div class="card-header">
-                        <span class="fas fa-user-cog fa-4x" style="color: darkblue"></span>
-                    </div>
-                    <div class=" card-body">
-                        <!-- <h3 class="card-title">Users</h3>-->
-                        <button class="btn btn-primary">Users</button>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.PROFILE)">
-                <div class="card text-center" [routerLink]="['/Profile',userName]">
-                    <div class=" card-header">
-                        <span class="fas fa-users fa-4x" style="color: rgb(50,126,199);"></span>
+                        <span class="fas fa-book fa-4x" style="color: rgb(114,208,169);"></span>
                     </div>
                     <div class="card-body">
-                        <!-- <h3 class="card-title">User Profiles</h3>-->
-                        <button class="btn btn-primary">User
-                            Profiles</button>
+                        <!--<h3 class="card-title">Modules</h3>-->
+                        <button class="btn btn-primary">Modules</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.MODULE_FILE)">
+                <div class="card text-center" [routerLink]="['/modulefile']">
+                    <div class="card-header">
+                        <span class="fas fa-clone fa-4x" style="color: rgb(24,47,81);"></span>
+                    </div>
+                    <div class="card-body">
+                        <!--<h3 class="card-title">Module Content</h3>-->
+                        <button class="btn btn-primary">Module Content</button>
                     </div>
                 </div>
             </div>

@@ -11,10 +11,10 @@ import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { DepartmentService } from 'app/department/services/department.service';
 import { CourseDepartment } from 'app/teacher-course/class/course-department';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
-import { AppService } from 'app/app.service';
 import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
 import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
 import { userModule } from 'app/permissions/enum/user-module.enum';
+import { AdmininstitutionService } from 'app/admin-institution/service/admininstitution.service';
 
 @Component({
   selector: 'app-teacher-course',
@@ -88,6 +88,7 @@ export class TeacherCourseComponent implements OnInit {
     private location: Location,
     private departmentService: DepartmentService,
     private userPermissionService: AuthUserPermissionService,
+    private institutionService: AdmininstitutionService,
   ) {
     this.columnNames = CourseColumn;
     this.allColumnNames = CourseAllColumn;
@@ -97,8 +98,7 @@ export class TeacherCourseComponent implements OnInit {
 
     // creating empty object
     this.emptyCourse = new Course();
-    this.loadAdminInstitutions();
-    this.loadDepartments();
+
     this.courseDepartment = new CourseDepartment();
 
     this.userId = sessionStorage.getItem('userId');
@@ -163,9 +163,8 @@ export class TeacherCourseComponent implements OnInit {
 
   private async initiliazation() {
     // this.getAllCourse();  // for getting all active course
-    await this.loadAllCoursesWithDepartmentId();
+    await this.loadIdsOfAllCoursesWithDepartmentId();
     this.loadCoursesBasedOnRole(this.userRole);
-    this.getInActiveCourse(); // for getting all inactive course
   }
   accessControl(userRole: string) {
     console.log(userRole);
@@ -298,7 +297,7 @@ export class TeacherCourseComponent implements OnInit {
 
       const courseAndDepartment = await this.service.assignCourseToDepartment(this.courseDepartment).toPromise();
       if (courseAndDepartment) {
-        await this.loadAllCoursesWithDepartmentId();
+        await this.loadIdsOfAllCoursesWithDepartmentId();
         // console.log('Course Added successfully');
 
         if (data.courseIsActive) {
@@ -312,12 +311,12 @@ export class TeacherCourseComponent implements OnInit {
       this.ngOnInit();
       this.back();
     } catch (error) {
-      
+
       this.dialogBoxServices.open("Failed to add Course", 'warning');
     }
   }
 
-  private async loadAllCoursesWithDepartmentId() {
+  private async loadIdsOfAllCoursesWithDepartmentId() {
 
     try {
       const data = await this.service.getCoursesDepartmentId().toPromise();
@@ -371,25 +370,25 @@ export class TeacherCourseComponent implements OnInit {
         console.log('User clicked OK');
         // Do something if the user clicked OK
         // calling service to soft delete
-    this.service.deleteCourseByCourseId(courseId).subscribe(
-      (response) => {
-        console.log('Course deleted successfully');
-        this.dialogBoxServices.open("Course deleted successfully", 'information');
-        this.ngOnInit();
-      },
-      (error) => {
-        this.dialogBoxServices.open('Course deletion Failed', 'warning');
+        this.service.deleteCourseByCourseId(courseId).subscribe(
+          (response) => {
+            console.log('Course deleted successfully');
+            this.dialogBoxServices.open("Course deleted successfully", 'information');
+            this.ngOnInit();
+          },
+          (error) => {
+            this.dialogBoxServices.open('Course deletion Failed', 'warning');
+          }
+        );
+      } else {
+        console.log('User clicked Cancel');
+        // Do something if the user clicked Cancel
       }
-    );
-  } else {
-    console.log('User clicked Cancel');
-    // Do something if the user clicked Cancel
+    });
   }
-});
-}
 
   // For getting all inactive course
-  private getInActiveCourse() {
+  private getAllInActiveCourse() {
 
     // calling service to get all inactive record
     this.service.getAllDeactivateCourses().subscribe(
@@ -425,6 +424,8 @@ export class TeacherCourseComponent implements OnInit {
     this.departmentService.getAllDepartments().subscribe(
       response => {
         this.departments = response;
+        console.log(this.departments);
+
       },
       error => {
         console.log("failed to get departments");
@@ -479,7 +480,7 @@ export class TeacherCourseComponent implements OnInit {
 
   // }
 
-  private loadCoursesBasedOnRole(userRole: string) {
+  private async loadCoursesBasedOnRole(userRole: string) {
     console.log(userRole);
 
     switch (userRole) {
@@ -488,17 +489,35 @@ export class TeacherCourseComponent implements OnInit {
           // this.showAddButton = true;
           // this.showActivateButton = true;
         }
+        this.getAllInActiveCourse(); // for getting all inactive course
+        this.loadAdminInstitutions();
+        this.loadDepartments();
         this.getAllCourse();
         break;
       case 'teacher':
         // this.updateButton = false;
         // this.deleteButton = false;
+
+        // for getting only institituion profile id belongs
+        // and departments of that institution 
+        await this.getInstitutionAndDepartmentsOfUserByUserId(this.profileId);
+
+        // For getting Inactive Course of that institutions
+        this.getInactiveCoursesByInstitutionId(this.adminInstitutions[0].adminInstitutionId);
+
         this.getAssignedCoursesOfTeacher(this.profileId);
 
         break;
       case 'student':
         // this.updateButton = false;
         // this.deleteButton = false;
+
+        // for getting only institituion profile id belongs
+        // and departments of that institution 
+        await this.getInstitutionAndDepartmentsOfUserByUserId(this.profileId);
+
+        this.getInactiveCoursesByInstitutionId(this.adminInstitutions[0].adminInstitutionId);
+
         this.getCoursesEnrolledToStudent(this.profileId);
         break;
     }
@@ -559,6 +578,56 @@ export class TeacherCourseComponent implements OnInit {
     );
   }
 
+  // function for getting institituions and all departments of that institution by profile id
+  private async getInstitutionAndDepartmentsOfUserByUserId(profileId: any) {
+
+    try {
+      const result = await this.institutionService.getInstitutionByProfileId(profileId).toPromise();
+      if (result !== undefined) {
+        this.adminInstitutions = result;
+      } else {
+        this.adminInstitutions = [];
+      }
+
+    } catch (error) {
+      console.log("no data fetched");
+    }
+    // for getting active and inactive departments using institution id
+    this.getAllDepartmentsByInstitutionId(this.adminInstitutions[0].adminInstitutionId);
+
+  }
+
+  // For getting all active departments by institution id
+  getAllDepartmentsByInstitutionId(institutionId: any) {
+    this.departmentService.getDepartmentsByInstitutionId(institutionId).subscribe(
+      (response) => {
+        console.log(response);
+
+        this.departments = response;
+      }
+    );
+  }
+
+  // // For getting all inactive departments by institution id
+  // getAllInactiveDeparmentsByInstitutionId(institutionId: any) {
+  //   this.departmentService.getInactiveDepartmentsByInstitutionId(institutionId).subscribe(
+  //     (response) => {
+  //       console.log(response);
+
+  //       this.inactiveD = response;
+  //     }
+  //   );
+  // }
+
+  private getInactiveCoursesByInstitutionId(instituteId: number) {
+    this.service.getInactiveCoursesByInstitutionId(instituteId).subscribe(
+      (response) => {
+        this.allInActiveData = response;
+        console.log(response);
+
+      }
+    )
+  }
 
 }
 

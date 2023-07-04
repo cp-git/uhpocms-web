@@ -1,7 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as dataOne from '../../../dataOne.json';
-import * as dataThree from '../../../dataThree.json';
 
 import { ChartdataComponent } from 'app/charts/components/chartdata/chartdata.component';
 import { CourseProgressService } from 'app/courseProgress/services/course-progress.service';
@@ -35,7 +33,6 @@ export class StudentPanelComponent {
   courseProgressArr: CourseProgress[] = [];
   userName!: string;
   userId: any;
-  accessControlData: Accesscontrol;
 
   userPermissions: AuthUserPermission[] = [];;
   modulePermissionIds: Set<number> = new Set<number>();
@@ -46,9 +43,9 @@ export class StudentPanelComponent {
     private _activatedRoute: ActivatedRoute,
     private courseProgServ: CourseProgressService,
     private courseService: TeacherCourseService,
-    private accessControlService: AccesscontrolService
   ) {
-    this.accessControlData = new Accesscontrol();
+
+    // Calling function to get permissions from session storage
     this.loadAllPermissions();
 
   }
@@ -57,7 +54,6 @@ export class StudentPanelComponent {
   // Initialize component properties with current route parameters
   ngOnInit(): void {
     this.userId = sessionStorage.getItem('userId')
-    this.loadAccessControl();
 
     //code to realod the page by navigating here to this page
     this._route.navigate(['../'], { relativeTo: this._activatedRoute });
@@ -69,18 +65,22 @@ export class StudentPanelComponent {
 
   }
 
+  // function for loading permissions from session storage
   loadAllPermissions() {
     try {
       let sessionData: any;
       sessionData = sessionStorage.getItem('permissions');
-      console.log(sessionData);
+      // console.log(sessionData);
+
+      // converting string json into json object
       let data = JSON.parse(sessionData);
       this.userPermissions = data;
-      this.modulePermissionIds.add(this.userPermissions[0].moduleId)
+
+      // adding module ids in array ( module ids which are accessible to user)
       this.userPermissions.forEach(permission => {
         this.modulePermissionIds.add(permission.moduleId);
       });
-      console.log(this.modulePermissionIds);
+      // console.log(this.modulePermissionIds);
 
     }
     catch (err) {
@@ -89,16 +89,6 @@ export class StudentPanelComponent {
 
   }
 
-  loadAccessControl() {
-
-    this.accessControlService.getAccessControlByUserId(this.userId).subscribe(
-      (response) => {
-        this.accessControlData = response;
-      }
-    );
-    console.log(this.accessControlData);
-
-  }
 
   //function to get all data for course progress 
   async getAllCourseProgress() {
@@ -108,6 +98,8 @@ export class StudentPanelComponent {
         this.courseProgressArr = response;
 
         filteredCouProgArr = this.courseProgressArr.filter((element) => element.studentId == this.profileId);
+        console.log(filteredCouProgArr);
+
         for (let i = 0; i < filteredCouProgArr.length; i++) {
           const remainingPercentage: number = 100 - filteredCouProgArr[i].progress;
 
