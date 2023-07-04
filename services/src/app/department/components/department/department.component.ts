@@ -237,6 +237,9 @@ export class DepartmentComponent implements OnInit {
       (response) => {
         this.dialogBoxServices.open('Department deleted successfully', 'information');
         this.ngOnInit();
+        setTimeout(() => {
+          location.reload(); // Refresh the page
+        }, 1000); // Delay for 1 second before reloading
       },
       (error) => {
         this.dialogBoxServices.open('Department deletion Failed', 'warning');
@@ -270,6 +273,9 @@ export class DepartmentComponent implements OnInit {
       (response) => {
         this.dialogBoxServices.open("Department Activated", 'information');
         this.ngOnInit();
+        setTimeout(() => {
+          location.reload(); // Refresh the page
+        }, 1000); // Delay for 1 second before reloading
       },
       (error) => {
         this.dialogBoxServices.open("Failed to Activate", 'warning');
