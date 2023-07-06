@@ -35,8 +35,8 @@ export class TeacherCourseComponent implements OnInit {
   viewActivate: boolean = false;
 
   // buttons
-  showAddButton: boolean = false;
-  showActivateButton: boolean = false;
+  // showAddButton: boolean = false;
+  // showActivateButton: boolean = false;
 
   buttonsArray: any;
   userAndRolePermissions: AuthUserPermission[] = [];
@@ -44,8 +44,8 @@ export class TeacherCourseComponent implements OnInit {
   // If all data is available or not
   dataAvailable: boolean = false;
 
-  updateButton: boolean = false;
-  deleteButton: boolean = false;
+  // updateButton: boolean = false;
+  // deleteButton: boolean = false;
 
 
   courseDepartment: CourseDepartment;
@@ -108,85 +108,94 @@ export class TeacherCourseComponent implements OnInit {
     this.buttonsArray = {
       showAddButton: false,
       showActivateButton: false,
-      updateButton: false,
-      deleteButton: false
+      showUpdateButton: false,
+      showDeleteButton: false
     }
   }
 
   ngOnInit(): void {
-    this.initiliazation();
     this.loadAndLinkUserPermissions();
+
+    this.initiliazation();
 
   }
 
   // this function for loading permission from session storage and link permission 
   // with buttons to show and hide based on permissions 
-  private loadAndLinkUserPermissions() {
-    // console.log("hey 1");
-
-    try {
-      let sessionData: any = sessionStorage.getItem('permissions');
-      //console.log(this.sessionData);
-      let data = JSON.parse(sessionData);
-      for (var inst in data) {
-        this.userAndRolePermissions.push(data[inst]);
-      }
-    }
-    catch (err) {
-      console.log("Error", err);
-    }
-    // console.log("hey 2");
-
-    this.userPermissionService.linkPermissions(userModule.COURSE, this.userAndRolePermissions, this.buttonsArray);
-    // console.log("hey 3");
-
-    console.log(this.buttonsArray);
-    this.toggleButtonsPermissions(this.buttonsArray);
-    // console.log("hey 4");
-
+  private async loadAndLinkUserPermissions() {
+    this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.QUIZ, this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
   }
 
-  private toggleButtonsPermissions(buttonsArray: any) {
-    if (buttonsArray.showActivateButton) {
-      this.showActivateButton = true;
-    }
-    if (buttonsArray.showAddButton) {
-      this.showAddButton = true;
-    }
-    if (buttonsArray.deleteButton) {
-      this.deleteButton = true;
-    }
-    if (buttonsArray.updateButton) {
-      this.updateButton = true;
-    }
-  }
+  // this function for loading permission from session storage and link permission 
+  // with buttons to show and hide based on permissions 
+  // private loadAndLinkUserPermissions() {
+  //   // console.log("hey 1");
+
+  //   try {
+  //     let sessionData: any = sessionStorage.getItem('permissions');
+  //     //console.log(this.sessionData);
+  //     let data = JSON.parse(sessionData);
+  //     for (var inst in data) {
+  //       this.userAndRolePermissions.push(data[inst]);
+  //     }
+  //   }
+  //   catch (err) {
+  //     console.log("Error", err);
+  //   }
+  //   // console.log("hey 2");
+
+  //   this.userPermissionService.linkPermissions(userModule.COURSE, this.userAndRolePermissions, this.buttonsArray);
+  //   // console.log("hey 3");
+
+  //   console.log(this.buttonsArray);
+  //   this.toggleButtonsPermissions(this.buttonsArray);
+  //   // console.log("hey 4");
+
+  // }
+
+  // private toggleButtonsPermissions(buttonsArray: any) {
+  //   if (buttonsArray.showActivateButton) {
+  //     this.showActivateButton = true;
+  //   }
+  //   if (buttonsArray.showAddButton) {
+  //     this.showAddButton = true;
+  //   }
+  //   if (buttonsArray.deleteButton) {
+  //     this.deleteButton = true;
+  //   }
+  //   if (buttonsArray.updateButton) {
+  //     this.updateButton = true;
+  //   }
+  // }
 
   private async initiliazation() {
     // this.getAllCourse();  // for getting all active course
     await this.loadIdsOfAllCoursesWithDepartmentId();
     this.loadCoursesBasedOnRole(this.userRole);
   }
-  accessControl(userRole: string) {
-    console.log(userRole);
 
-    switch (userRole) {
-      case 'admin' || 'coadmin':
-        // if (this.viewActivate == false) {
-        //   this.showAddButton = true;
-        //   this.showActivateButton = true;
-        // }
-        break;
-      case 'teacher':
-        // this.showAddButton = false;
-        // this.showActivateButton = false;
+  // accessControl(userRole: string) {
+  //   console.log(userRole);
 
-        break;
-      case 'student':
-        // this.showAddButton = false;
-        // this.showActivateButton = false;
-        break;
-    }
-  }
+  //   switch (userRole) {
+  //     case 'admin' || 'coadmin':
+  //       // if (this.viewActivate == false) {
+  //       //   this.showAddButton = true;
+  //       //   this.showActivateButton = true;
+  //       // }
+  //       break;
+  //     case 'teacher':
+  //       // this.showAddButton = false;
+  //       // this.showActivateButton = false;
+
+  //       break;
+  //     case 'student':
+  //       // this.showAddButton = false;
+  //       // this.showActivateButton = false;
+  //       break;
+  //   }
+  // }
 
   // back button functionality
   back() {
@@ -196,8 +205,11 @@ export class TeacherCourseComponent implements OnInit {
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
-      this.accessControl(this.userRole);
-      this.toggleButtonsPermissions(this.buttonsArray);
+      // this.accessControl(this.userRole);
+      // this.toggleButtonsPermissions(this.buttonsArray);
+
+      this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+
     } else {
       this.location.back();
     }
@@ -212,8 +224,8 @@ export class TeacherCourseComponent implements OnInit {
     // hiding view of all column and displaying all course screen 
     this.viewOne = true;
     this.viewAll = false;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
 
@@ -224,8 +236,8 @@ export class TeacherCourseComponent implements OnInit {
     // hiding update screen and displaying all course screen 
     this.viewAll = false;
     this.viewUpdate = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
     // assingning data to current data for child component
     this.currentData = objectReceived;
   }
@@ -246,16 +258,16 @@ export class TeacherCourseComponent implements OnInit {
   onAddClick() {
     this.viewAll = false;
     this.viewAdd = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
   }
 
   // for navigating to activate screen
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
   }
 
   // on addComponents's submit button clicked

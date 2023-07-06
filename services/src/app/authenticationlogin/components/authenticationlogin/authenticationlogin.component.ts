@@ -97,7 +97,7 @@ export class AuthenticationloginComponent {
             if (this._instituteAdminArray[i].userId == this.authUser.authUserId) {
 
               // getting permissions for modules for user using role and user id
-              await this.getAllPermissionsByRoleIdAndUserId(this._instituteAdminArray[i].userRoleId.toString(), this._instituteAdminArray[i].userId);
+              await this.getAllPermissionsByRoleIdAndUserId(this._instituteAdminArray[i].userRoleId, this._instituteAdminArray[i].userId);
 
               let modules: any = JSON.stringify(this.authModuleService.getAllAuthModules());
               sessionStorage.setItem('modules', modules);
@@ -111,7 +111,7 @@ export class AuthenticationloginComponent {
               else if (this._instituteAdminArray[i].userRole == 'student') {
                 this._route.navigate(['studentdata/student', userName, { id: this._instituteAdminArray[i].adminId }]);
               }
-
+              
               // adding ids in session storage like user role id, profile id, user id
               sessionStorage.setItem('userRole', this._instituteAdminArray[i].userRole);
               sessionStorage.setItem('profileId', this._instituteAdminArray[i].adminId.toString());
@@ -165,7 +165,7 @@ export class AuthenticationloginComponent {
     this._route.navigate(['home']);
   }
 
-  async getAllPermissionsByRoleIdAndUserId(userRoleId: any, userId: any) {
+  async getAllPermissionsByRoleIdAndUserId(userRoleId: number, userId: any) {
     try {
       const response = await this.userPermissionService.getAllPermissionsByRoleIdAndUserId(
         userRoleId,
