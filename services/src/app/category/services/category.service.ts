@@ -45,5 +45,8 @@ export class CategoryService {
     return this._http.get<any>(`${this.categoryUrl}/` + categoryName);
   }
 
+  deleteCategoryById(categoryId: number){
+    return this._http.delete<Category>(`${this.categoryUrl}/categoryId/` + categoryId );
+  }
 
 }

@@ -18,7 +18,7 @@ export const QuestionAllColumn = [
 export const TeacherQuizColumn = [
     { key: 'title', label: 'Quiz Title', type: 'input', subtype: 'text' },
     { key: 'description', label: 'Quiz Description', type: 'input', subtype: 'text' },
-    { key: 'maxQuestions', label: 'Max Questionns', type: 'input', subtype: 'number' },
+    { key: 'maxQuestions', label: 'Max Questions', type: 'input', subtype: 'number' },
     // { key: 'courseId', label: 'CourseId', type: 'dropdown', arrayName: 'courses', columnId: 'courseId', columnName: 'courseName' },
     // { key: 'moduleId', label: 'ModuleId', type: 'dropdown', arrayName: 'modules', columnId: 'moduleId', columnName: 'moduleName' },
     // { key: 'categoryId', label: 'CategoryId', type: 'dropdown', arrayName: 'categories', columnId: 'categoryId', columnName: 'categoryName' },

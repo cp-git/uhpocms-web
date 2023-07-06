@@ -18,7 +18,7 @@
 </ng-container>
 
 <ng-template #form let-queAns let-index="index">
-    <form #myForm="ngForm" (ngSubmit)="onFormSubmit(queAns)">
+    <form #myForm="ngForm" (ngSubmit)="onFormSubmit(queAns,questionAnswers)">
         <div class="jumbotron">
             <h4>Question : {{ index }}</h4>
             <div class="img">
@@ -31,7 +31,7 @@
             </div>
             <!-- <div class="totalMarks"> Total Marks - {{ queAns['totalMarks'] }}</div> -->
             
-            <div class="totalMarks"> Total Marks - {{ totalQuizMarks}}</div>
+            <div class="totalMarks"> Total Marks - {{queAns['totalMarks']}}</div>
             <div class="form-group row">
                 <div class="col-sm-6">
                     <label class="float-label">Figure - {{queAns['questionFigure']}}</label>
@@ -102,13 +102,10 @@
             </ng-template>
             <label>Marks</label>
             <div style="
-            width: 5%;
-            
-        ">
-                <input
-                 class="form-control" required="" name="maxMarks" [(ngModel)]="queAns['maxMarks']" (ngModelChange)="onFormDirty(queAns)"
-                  
-                 />
+            width: 5%;">
+                <input class="form-control" required="" name="maxMarks" [(ngModel)]="queAns['maxMarks']" (ngModelChange)="onFormDirty(queAns)"  [disabled]="disable"   type="number" min="0" step="0.01" pattern="\d+(\.\d+)?"   />
+
+  
             </div>
             <!-- <label class="float-label"> Correct</label>
                         <input name="ansCorrect" type="checkbox" [(ngModel)]="answer.correct"
@@ -126,3 +123,6 @@
 
     </form>
 </ng-template>
+<button class="download-button" (click)="generatePdfUsingPdfMaker()">
+    <i class="fas fa-file-pdf"></i> Download PDF
+</button>

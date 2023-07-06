@@ -13,6 +13,7 @@ import { UploadFileService } from 'app/FileUpload/services/upload-file.service';
 import { userModule } from 'app/permissions/enum/user-module.enum';
 import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
 import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
+import { environment } from 'environments/environment.development';
 // import { Profile } from 'app/profiles/class/profile';
 // import { AssignedteachercourseComponent } from 'app/displayAssignedCourseToTeacher/components/assignedteachercourse/assignedteachercourse.component';
 @Component({
@@ -62,6 +63,10 @@ export class ModuleFileComponent {
   userRole: any;
   profileId: any;
 
+  private modulefileUrl!: string;
+
+  displayUrl!: any;
+
   emptyModuleFile: ModuleFile;  // empty module file
   currentData!: ModuleFile;  // for update and view, to show existing data
 
@@ -107,6 +112,7 @@ export class ModuleFileComponent {
 
 
     //this.profileId = sessionStorage.getItem('profileId');
+    this.modulefileUrl = `${environment.moduleFileUrl}`;
   }
 
   ngOnInit(): void {
@@ -118,6 +124,7 @@ export class ModuleFileComponent {
     // this.getAssignedCoursesOfTeacher(this.profileId);
     // this.getInactiveModuleFiles();
 
+    this.displayUrl = this.modulefileUrl + '/files'
   }
 
   // this function for loading permission from session storage and link permission 
@@ -366,7 +373,14 @@ export class ModuleFileComponent {
   // For updating module files by id
   private updateModuleFileById(currentData: ModuleFile) {
     // calling service for updating data
-    this.moduleFileService.updateModuleFileById(currentData.moduleFileId, currentData).subscribe(
+
+    let formData = new FormData();
+    for (let i = 0; i <= this.files.length; i++) {
+      formData.append("files", this.files[i]);
+    }
+    formData.append("admin", new Blob([JSON.stringify(currentData)], { type: 'application/json' }));
+
+    this.moduleFileService.updateModuleFileById(currentData.moduleFileId, formData).subscribe(
       response => {
         this.uploadfileService.uploadFiles(this.files).subscribe();
 
@@ -474,6 +488,15 @@ export class ModuleFileComponent {
         console.log("Failed to activate");
       }
     );
+  }
+
+  display(moduleFileId: number) {
+
+    this.moduleFileService.getFile(moduleFileId).subscribe(
+      (response) => {
+        console.log(response);
+      }
+    )
   }
 
   // for calling ifferent service based on role

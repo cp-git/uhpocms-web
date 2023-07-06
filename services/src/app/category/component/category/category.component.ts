@@ -5,7 +5,7 @@ import { Category } from 'app/category/class/category';
 import { CategoryAllColumn, CategoryColumn } from 'app/category/column-name/category-column';
 
 import { CategoryService } from 'app/category/services/category.service';
-
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 
 @Component({
   selector: 'app-category',
@@ -41,7 +41,7 @@ export class CategoryComponent {
 
 
 
-  constructor(private service: CategoryService, private location: Location, private _route: Router) {
+  constructor(private service: CategoryService, private location: Location, private _route: Router,private dialogBoxService:DialogBoxService) {
 
 
     this.columnNames = CategoryColumn;
@@ -96,7 +96,7 @@ export class CategoryComponent {
   // For navigate to update screen with data
   // function will call when child update button is clicked 
   onChildDeleteClick(objectReceived: Category): void {
-    this.deleteCategory(objectReceived.categoryName);
+    this.deleteCategory(objectReceived.categoryId);
   }
 
   // For navigate to activate screen with data
@@ -138,10 +138,12 @@ export class CategoryComponent {
     this.service.updateCategory(currentData, currentData.categoryId).subscribe(
       response => {
         console.log(`Category updated successfully !`);
+        this.dialogBoxService.open('Category updated successfully','information');
         this.back();
       },
       error => {
         console.log(`Category updation failed !`);
+        this.dialogBoxService.open('Category updation failed','warning')
       }
     );
   }
@@ -157,6 +159,7 @@ export class CategoryComponent {
       response => {
 
         console.log("Category added successfully");
+        this.dialogBoxService.open('Category added successfully','information')
         this.emptyCategory = {} as Category;
         this.ngOnInit();
         this.back();
@@ -164,6 +167,7 @@ export class CategoryComponent {
       },
       error => {
         console.log("Cannot add category successfully ");
+        this.dialogBoxService.open('Failed to Add category','warning')
       }
 
     )
@@ -190,20 +194,29 @@ export class CategoryComponent {
     );
   }
 
-  //  // For deleting (soft delete) category using role name
-  private deleteCategory(roleName: string) {
-
+  //  // For deleting (soft delete) category using Id
+  private deleteCategory(categoryId: number) {
+    this.dialogBoxService.open('Are you sure you want to delete this Category ? ', 'decision').then((response) => {
+      if (response) {
+        console.log('User clicked OK');
+        // Do something if the user clicked OK
     // calling service to soft delete
-    this.service.deleteCategory(roleName).subscribe(
+    this.service.deleteCategoryById(categoryId).subscribe(
       (response) => {
         console.log('Category deleted successfully');
+        this.dialogBoxService.open('Category deleted successfully', 'information');
         this.ngOnInit();
       },
       (error) => {
-        console.log('Category deletion failed');
+        this.dialogBoxService.open('Category deletion Failed', 'warning');
       }
     );
+  } else {
+    console.log('User clicked Cancel');
+    // Do something if the user clicked Cancel
   }
+});
+}
 
 
 
@@ -229,10 +242,12 @@ export class CategoryComponent {
     this.service.updateActiveStatus(categoryName).subscribe(
       response => {
         console.log("Activated category");
+        this.dialogBoxService.open('Category Activated','information')
         this.ngOnInit();
       },
       error => {
         console.log("Failed to activate");
+        this.dialogBoxService.open('Failed to activate','warning')
       }
     );
   }

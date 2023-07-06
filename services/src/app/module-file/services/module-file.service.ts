@@ -57,8 +57,8 @@ export class ModuleFileService {
   }
 
   // update module File by id
-  updateModuleFileById(moduleFileId: number, modulefile: ModuleFile): Observable<any> {
-    return this._http.put<any>(`${this.moduleFileUrl}/modulefileById/` + moduleFileId, modulefile);
+  updateModuleFileById(moduleFileId: number, formData: FormData): Observable<any> {
+    return this._http.put<any>(`${this.moduleFileUrl}/modulefileById/` + moduleFileId, formData);
   }
 
   // delete module File by id
@@ -84,7 +84,7 @@ export class ModuleFileService {
     return this._http.get<ModuleFile[]>(`${this.moduleFileUrl}/modulefile/teacher?id=${teacherId}`);
   }
 
-  getFile(fileId: string): Observable<ArrayBuffer> {
+  getFile(fileId: number): Observable<ArrayBuffer> {
     return this._http.get(`${this.moduleFileUrl}/files/${fileId}`, {
       responseType: 'arraybuffer'
     });

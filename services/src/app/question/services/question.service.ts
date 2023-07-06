@@ -68,4 +68,8 @@ export class QuestionService {
   getShuffledQuestionsByQuizId(quizId: number) {
     return this.http.get<Question[]>(`${this.questionUrl}/questions/quizid/${quizId}`);
   }
+
+  getQuizDetailsByQuizId(quizId: number): Observable<any> {
+    return this.http.get<any>(`http://localhost:8090/quiz/uhpocms/quiz/info/${quizId}`);
+  }
 }

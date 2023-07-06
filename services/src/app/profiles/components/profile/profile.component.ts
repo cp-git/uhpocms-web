@@ -415,24 +415,26 @@ export class ProfileComponent implements OnInit {
               this.emptyProfile = {} as Profile;
               this.ngOnInit();
               this.back();
+              setTimeout(() => {
+                location.reload(); // Refresh the page
+              }, 1000); // Delay for 1 second before reloading
             },
             error => {
               this.dialogBoxService.open('Failed to Add Profile ', 'warning')
             }
           );
         } else {
-          
           this.dialogBoxService.open('Profile saved successfully. NOTE - Profile is not activated!', 'information')
           this.emptyProfile = {} as Profile;
           this.ngOnInit();
           this.back();
         }
-
       },
       error => {
         this.dialogBoxService.open('Failed to Add Profile ', 'warning')
-      });
-  }
+      }
+      );
+    }
 
   // updating profile by usign userId(foreign key from authuser)
   private updateProfile(currentData: Profile) {

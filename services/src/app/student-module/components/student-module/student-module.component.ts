@@ -1344,7 +1344,7 @@ export class StudentModuleComponent implements OnInit {
   showalert: boolean = false;
 
   showAlert(): void {
-    console.log(this.showalert);
+    //console.log(this.showalert);
     if (this.showalert) {
       //  alert("sorry! you cant able to attend quiz again");
       this.dialogboxService.open('sorry! you can`t able to attend quiz again', 'warning');

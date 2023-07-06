@@ -272,29 +272,31 @@ export class DepartmentComponent implements OnInit {
     );
   }
 
-  // For adding department
-  private addDepartment(currentData: Department) {
-    // currentData.active = true; // setting active true
+ // For adding department
+ private addDepartment(currentData: Department) {
+  // currentData.active = true; // setting active true
 
-    // calling service for adding data
-    this.service.insertDepartment(currentData).subscribe(
-      (data) => {
-        console.log('Department added Successfully');
-        if (data.active) {
-          this.dialogBoxServices.open("Department added successfully", 'information');
-        } else {
-          this.dialogBoxServices.open("Department added successfully but NOT ACTIVE", 'information');
-        }
-        this.emptyDepartment = {} as Department;
-        this.ngOnInit();
-        this.back();
-      },
-      (error) => {
-        this.dialogBoxServices.open("Department is Already Present pls Select Another Name", 'warning');
-
+  // calling service for adding data
+  this.service.insertDepartment(currentData).subscribe(
+    (data) => {
+      console.log('Department added Successfully');
+      if (data.active) {
+        this.dialogBoxServices.open("Department added successfully", 'information');
+      } else {
+        this.dialogBoxServices.open("Department added successfully but NOT ACTIVE", 'information');
       }
-    );
-  }
+      this.emptyDepartment = {} as Department;
+      this.ngOnInit();
+      this.back();
+      setTimeout(() => {
+        location.reload(); // Refresh the page
+      }, 1000); // Delay for 1 second before reloading
+    },
+    (error) => {
+      this.dialogBoxServices.open("Department is Already Present pls Select Another Name", 'warning');
+    }
+  );
+}
 
   // for getting all departments
   private getAllDepartments() {
