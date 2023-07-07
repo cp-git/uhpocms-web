@@ -102,10 +102,9 @@
             </ng-template>
             <label>Marks</label>
             <div style="
-            width: 5%;">
-                <input class="form-control" required="" name="maxMarks" [(ngModel)]="queAns['maxMarks']"
-                    (ngModelChange)="onFormDirty(queAns)" [disabled]="disable" type="number" min="0" step="0.01"
-                    pattern="\d+(\.\d+)?" />
+
+            width: 7%;">
+                <input class="form-control" required="" name="maxMarks" [(ngModel)]="queAns['maxMarks']" (ngModelChange)="onFormDirty(queAns)"  [disabled]="disable"   type="number" min="0" step="0.01" pattern="\d+(\.\d+)?"   />
 
 
             </div>
