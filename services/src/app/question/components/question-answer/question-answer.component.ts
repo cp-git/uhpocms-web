@@ -127,7 +127,8 @@ export class QuestionAnswerComponent implements OnInit {
   isOptionSelected: boolean = false;
   constructor(
     private http: HttpClient,
-    private questionService: QuestionService
+    private questionService: QuestionService,
+    private renderer: Renderer2
   ) {
     this.profileId = sessionStorage.getItem('profileId');
     this.profile = new Profile();
@@ -138,7 +139,7 @@ export class QuestionAnswerComponent implements OnInit {
   ngOnInit(): void {
     this.displayUrl = this.questionUrl + '/getFileById';
 
- console.log(this.totalQuizMarks)
+    console.log(this.totalQuizMarks)
 
     this.loadProfiles(this.profileId);
     this.getQuizDetailsByQuizId(this.selectedQuizId);
@@ -148,10 +149,16 @@ export class QuestionAnswerComponent implements OnInit {
     this.loadCategories(this.selectedQuizCategoryId);
 
 
- console.log(this.questionAnswers)
+    console.log(this.questionAnswers)
 
   }
 
+  queAns: any = {}; // Your queAns object
+
+  handleImageError(event: Event) {
+    const imgElement = event.target as HTMLImageElement;
+    this.renderer.removeChild(imgElement.parentNode, imgElement);
+  }
 
   onFileSelected(event: any, queAns: OneQuestionAnswer) {
     // console.log(JSON.stringify(queAns))
@@ -196,7 +203,7 @@ export class QuestionAnswerComponent implements OnInit {
 
   }
 
-  onFormSubmit(queAns: OneQuestionAnswer,queAnsArray :OneQuestionAnswer[] ) {
+  onFormSubmit(queAns: OneQuestionAnswer, queAnsArray: OneQuestionAnswer[]) {
     this.submittedQuestionAnswer = {} as OneQuestionAnswer;
     this.submittedQuestionAnswer = queAns;
     console.log(queAns);
@@ -206,11 +213,11 @@ export class QuestionAnswerComponent implements OnInit {
     }
 
     if (queAns.questionId > 0) {
-      this.submitClicked.emit({queAns,queAnsArray});
+      this.submitClicked.emit({ queAns, queAnsArray });
 
     } else {
       queAns.questionId = 0;
-      this.submitClicked.emit({queAns,queAnsArray});
+      this.submitClicked.emit({ queAns, queAnsArray });
     }
 
     queAns.isFormDirty = false;
