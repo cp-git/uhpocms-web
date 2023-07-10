@@ -71,6 +71,8 @@ export class ModuleFileComponent {
   _backupModule = new Map();
   files!: FileList;
 
+  imagesUrl!: any;
+
 
   constructor(
 
@@ -212,6 +214,7 @@ export class ModuleFileComponent {
   onRecievedFiles(recievedFiles: FileList) {
     this.files = recievedFiles;
     console.log(this.files);
+
 
   }
 
