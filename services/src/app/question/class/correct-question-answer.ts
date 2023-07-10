@@ -33,4 +33,6 @@ export class CorrectQuestionAnswer {
     createdOn!: Date;
     modifiedOn!: Date;
     questionAnswers: any[] = [];
+
+    reviewStatus!: boolean;
 }

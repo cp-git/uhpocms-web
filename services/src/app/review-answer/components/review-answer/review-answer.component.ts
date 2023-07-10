@@ -104,7 +104,7 @@ export class ReviewAnswerComponent implements OnInit {
     files!: FileList;
     reviewButtonStat = false;
     myFiles: string[] = [];
-  
+    reviewStatusLocal: boolean = false;
     generatedQuestionAnswerId: number = 0;;
     constructor(private location: Location,
       private service: QuestionService,private dialogBoxServices: DialogBoxService,
@@ -177,7 +177,7 @@ export class ReviewAnswerComponent implements OnInit {
       reviewObjectStuAnswer.marks = parseFloat(queAnsNew.marks);
       reviewObjectStuAnswer.questionContent = queAnsNew.content1;
       reviewObjectStuAnswer.quizId = queAnsNew.questionQuizId;
-    
+      reviewObjectStuAnswer.reviewStat = true;
       reviewObjectStuAnswer.studentId = queAnsNew.profileId;
       reviewObjectStuAnswer.teacherRemark =queAnsNew.reviewcontent;
       reviewObjectStuAnswer.selectedOption = false;
@@ -200,19 +200,29 @@ export class ReviewAnswerComponent implements OnInit {
           (response) => {
             // this.studentAnswers.push(response);
             // this.studentAnswers = response;
-            
+    
             console.log(response)
             console.log("Student answers saved");
             console.log(  typeof this.totalReviewMarks)
             console.log(  typeof reviewObjectStuAnswer.marks)
             if(queAnsNew.marks == '' )
-            {
+            { 
               reviewObjectStuAnswer.marks = 0;
             }
 
             totalMarkslocal +=  reviewObjectStuAnswer.marks;
             // this.totalReviewMarks = this.totalReviewMarks + reviewObjectStuAnswer.marks;
             this.totalReviewMarks = totalMarkslocal
+            let  qprog:QuizProgress = new QuizProgress();
+            qprog.quizId = queAnsNew.questionQuizId;
+            qprog.studentId = queAnsNew.profileId;
+            qprog.score = totalMarkslocal;
+            qprog.completed = true;
+            qprog.numberOfAttempts = 1;
+            this.quizProgSErv.addQuizProgressOfStudent(qprog).subscribe((response)=>{
+              
+           
+            })
             this.submitClicked.emit(this.totalReviewMarks);
           },
           (error) => {
@@ -775,6 +785,8 @@ export class ReviewAnswerComponent implements OnInit {
                       this.correctQueAns.questionId = answer.questionId;
                       this.correctQueAns.questionQuizId = quizId;
                      this.correctQueAns.reviewcontent = answer.teacherRemark;
+                     this.correctQueAns.reviewStatus = answer.reviewStat;
+                    
                      console.log(answer.marks)
                      console.log(question.maxMarks)
                
@@ -817,7 +829,9 @@ export class ReviewAnswerComponent implements OnInit {
                     questionQuizId : this.correctQueAns.questionQuizId ,
                     profileId : this.correctQueAns.profileId ,
                     reviewcontent: this.correctQueAns.reviewcontent ,
-                    marks :  this.correctQueAns.marks
+                    marks :  this.correctQueAns.marks,
+                    reviewStatus :this.correctQueAns.reviewStatus
+
                     // questionFigure: '',
                     // questionExplanation: '',
                     // questionOrderNo: 0,

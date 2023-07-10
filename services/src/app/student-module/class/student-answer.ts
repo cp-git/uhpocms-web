@@ -9,4 +9,6 @@ export class StudentAnswer {
     marks!: number;
     createdOn!: Date;
     modifiedOn!: Date;
+    reviewedOn!: Date;
+    reviewStat!: boolean;
 }

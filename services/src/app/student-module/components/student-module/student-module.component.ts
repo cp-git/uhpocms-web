@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, NgZone, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModuleFile } from 'app/class/module-file';
 
@@ -160,7 +160,9 @@ export class StudentModuleComponent implements OnInit {
   correctQueAns :CorrectQuestionAnswer = new CorrectQuestionAnswer();
   quizProgress!: QuizProgress;  // quizProgress object used to save progress in table
   questionAnswers: OneQuestionAnswer[] = [];    // array of question and answers
-  addeedQuizProgress: QuizProgress = new QuizProgress();; //to store quizprogress data
+  addeedQuizProgress: QuizProgress = new QuizProgress();
+  reviewStatusLocal: any[]= [];
+; //to store quizprogress data
   submitted: boolean = false;
   viewAdd: boolean = false;
   studentAnswer: StudentAnswer = new StudentAnswer();  // for storing student answers
@@ -176,6 +178,10 @@ export class StudentModuleComponent implements OnInit {
   selectedQuizId:any=0;
   selectedCategoryId:any =0;
   quizIdArrInStudRes :number[]=[];
+  private quizReviewStatusCache: { [quizId: number]: boolean[] } = {};
+  shouldShowReviewButtonStatValue!: boolean;
+  showReview: boolean = false;
+  
   // ------------------------VARIABLE DECLARATION END------------------------------
 
   constructor(private activateRoute: ActivatedRoute,
@@ -196,11 +202,13 @@ export class StudentModuleComponent implements OnInit {
     private courseProgServ: CourseProgressService,
     private quizReService: QuizresultService,
     private service: QuestionService, private dialogBoxServices: DialogBoxService,
-    private  reviewServ :QuizresultService
+    private  reviewServ :QuizresultService,private ngZone: NgZone
   ) {
     this.selectedQuizProgress = new QuizProgress();
     this.selectedQuiz = new Quiz();
     this.selectedCourse = new Course();
+    
+  
   }
 
 
@@ -213,8 +221,10 @@ export class StudentModuleComponent implements OnInit {
   ngOnInit(): void {
     // this.videoPlayer;
 
-
-
+ 
+    this.reviewButtonStat = false;
+    this.cdr.detectChanges();
+    console.log("reviewButtonStat in ngonint"+this.reviewButtonStat)
     this.studentId = this.activateRoute.snapshot.paramMap.get('id');
     this.userName = this.activateRoute.snapshot.params['userName'];
     this.loadCourseOfStudent(this.studentId);
@@ -229,10 +239,11 @@ export class StudentModuleComponent implements OnInit {
     this.getQuizPorgressesByStudentId(this.studentId);
 
     this.filterUniqueModuleIds();
-
+    console.log(this.reviewButtonStat)
 
 
   }
+
 
   //loads the courses of the student using the getCourseByStudentId() method of StudentService
   loadCourseOfStudent(studentId: number) {
@@ -568,7 +579,8 @@ export class StudentModuleComponent implements OnInit {
 
   //Loads the modules of the courses using the getModuleByCourseId() method of StudentService
   async loadModuleOfCourse(studentCourses: Course[]) {
-
+   this.reviewButtonStat = false
+   console.log("reviewButtonStat in loadModules"+this.reviewButtonStat)
     let filteredModules: Module[] = [];
     studentCourses.forEach(async course => {
 
@@ -615,6 +627,8 @@ export class StudentModuleComponent implements OnInit {
 
   //loads the module files assigned to the student using the getModuleFilesByStudentId() method of StudentService
   loadModuleFilesOfCourses(studentId: number) {
+    this.reviewButtonStat = false;
+    console.log("reviewButtonStat in loadModulesFiles"+this.reviewButtonStat)
     this.modulefileService.getModuleFilesByStudentId(studentId).subscribe(
       response => {
         this.studentModuleFiles = response;
@@ -655,6 +669,9 @@ export class StudentModuleComponent implements OnInit {
 
   //sets the selected course by the student and resets the selected module
   onCourseSelect(courseId: any) {
+
+    this.reviewButtonStat = false;
+    console.log("reviewButtonStat in loadCourses"+this.reviewButtonStat)
     this.selectedCourse = this.courses.find(course => course.courseId == courseId) ?? {} as Course;
     console.log(JSON.stringify(this.selectedCourse));
 
@@ -1351,7 +1368,13 @@ export class StudentModuleComponent implements OnInit {
   public shouldShowReviewButton(quizId: number): boolean {
     return this.quizIdArrInStudRes.includes(quizId);
   }
-  
+  public shouldShowReviewButtonStat(quizId:number): boolean {
+
+    console.log(this.reviewStatusLocal)
+    
+      return this.reviewStatusLocal.includes(quizId) && this.reviewStatusLocal.includes(true);
+  }
+
   private getAllQuizzesByProfileId(studentId: number) {
     let quizIdArr: number[] = [];
   
@@ -1366,6 +1389,12 @@ export class StudentModuleComponent implements OnInit {
             .getAllStudentAnswersByStduentIdAndQuizId(studentId, quizId)
             .subscribe(
               (response) => {
+                // const reviewStat = [...new Set(response.map((studRez) => studRez.reviewStat && studRez.quizId))];
+                const combinedArray = [...new Set(response.filter(studRez => studRez.reviewStat && studRez.quizId).flatMap(studRez => [studRez.reviewStat, studRez.quizId]))];
+
+                console.log(combinedArray); // Array containing unique values of studRez.reviewStat and studRez.quizId
+
+                this.reviewStatusLocal = this.reviewStatusLocal.concat(combinedArray)
                 const quizIdsInResponse = [...new Set(response.map((quiz) => quiz.quizId))];
                 this.quizIdArrInStudRes = this.quizIdArrInStudRes.concat(quizIdsInResponse);
               },
@@ -1376,6 +1405,38 @@ export class StudentModuleComponent implements OnInit {
     );
   }
   
+// public getQuizByStudIdAndQuizId(quizId:number)
+// { this.reviewStatusLocal =[];
+//   this.quizReService.getAllStudentAnswersByStduentIdAndQuizId(this.studentId, quizId)
+//   .subscribe(
+//     (response) => {
+//       const reviewStat = [...new Set(response.map((studRez) => studRez.reviewStat))];
+//       this.reviewStatusLocal = this.reviewStatusLocal.concat(reviewStat);
+     
+//     },
+//     (error) => {}
+//   );
+// }
+
+public getQuizByStudIdAndQuizId(quizId: number) {
+  if (this.quizReviewStatusCache[quizId]) {
+    // Use the cached result
+    this.reviewStatusLocal = this.quizReviewStatusCache[quizId];
+  } else {
+    this.reviewStatusLocal = [];
+    this.quizReService.getAllStudentAnswersByStduentIdAndQuizId(this.studentId, quizId)
+      .subscribe(
+        (response) => {
+          const reviewStat = [...new Set(response.map((studRez) => studRez.reviewStat))];
+          this.reviewStatusLocal = this.reviewStatusLocal.concat(reviewStat);
+
+          // Cache the result
+          this.quizReviewStatusCache[quizId] = this.reviewStatusLocal;
+        },
+        (error) => {}
+      );
+  }
+}
 
 
 
@@ -1388,6 +1449,9 @@ export class StudentModuleComponent implements OnInit {
 
   //data from quiz table filtered by module id
   private getAllQuizzesByModuleId(moduleId: number) {
+    this.reviewButtonStat = false;
+    this.cdr.detectChanges();
+    console.log("reviewButtonStat in loadQuizzes"+this.reviewButtonStat)
     let quizArr: Quiz[] = [];
     this.quizService.getAllQuizzesByModuleId(moduleId).subscribe(
       (data: Quiz[]) => {
@@ -1473,6 +1537,8 @@ export class StudentModuleComponent implements OnInit {
   }
 
   onQuizClicked(quiz: Quiz, retake: boolean = false) {
+    this.reviewButtonStat = false;
+    console.log("reviewButtonStat in QuizClicked"+this.reviewButtonStat)
     this.cd.stop();
     // if clicked on retake quiz option
     if (retake) {
@@ -1906,6 +1972,7 @@ export class StudentModuleComponent implements OnInit {
       this.studentAnswer.questionId = queAns.questionId;
       this.studentAnswer.selectedOption = (queAns.selectedAnswer == trueAnswer);
       this.studentAnswer.answerId = 0;
+      this.studentAnswer.reviewStat = false;
       console.log("@@@@@@@@@@@@@@@@@@@@@", this.studentAnswer);
       this.quizProgServ.addStudentAnswers(this.studentAnswer).subscribe(
         (response) => {
@@ -1947,11 +2014,17 @@ export class StudentModuleComponent implements OnInit {
       } else if (score >= 40) {
         grade = 'E';
       }
+      this.getQuizByStudIdAndQuizId(this.selectedQuiz)
+
       this.dialogboxService.open(this.selectedQuiz.successText + '  ' + grade, 'information');
       //alert("Total score: " + score);
+    
     } else {
       // show dialog box with red exam fail
+      this.getQuizByStudIdAndQuizId(this.selectedQuiz)
+
       this.dialogboxService.open(this.selectedQuiz.failText, 'information');
+
     }
     this.submitted = true;
 
@@ -2011,12 +2084,17 @@ export class StudentModuleComponent implements OnInit {
   isRetakingQuiz: boolean = false;
   retakingQuiz: number = 0;
   onQuizClick: number = 0;
+
   onRetakeQuizClicked(quiz: Quiz) {
   this.reviewButtonStat = false;
+  this.cdr.detectChanges();
+  console.log("reviewButtonStat in onretake quizClicked"+this.reviewButtonStat)
+  // alert(this.reviewButtonStat)
     this.onQuizClicked(quiz, true);
   }
 
   getAllAnswersAttempted(quizId:number){
+    
     this.correctQuestionAnswer=[];
     this.quizResult = [] ;
     this.totalQuizMarks = 0;
@@ -2024,7 +2102,10 @@ export class StudentModuleComponent implements OnInit {
     console.log(quizId)
     console.log("QuizId in  getAllAnswersAttempted")
    this.reviewButtonStat = true;
+   this.cdr.detectChanges();
 
+   console.log("reviewButtonStat in allanswersattempted"+this.reviewButtonStat)
+  // alert(this.reviewButtonStat)
     console.log(this.selectedStudProfileId)
 
     this.quizReService.getAllStudentAnswersByStduentIdAndQuizId(this.studentId,quizId).subscribe(
@@ -2067,6 +2148,7 @@ export class StudentModuleComponent implements OnInit {
                     this.correctQueAns.questionId = answer.questionId;
                     this.correctQueAns.questionQuizId = quizId;
                    this.correctQueAns.reviewcontent = answer.teacherRemark;
+                 
                    console.log("ANSWERS ")
                    console.log(this.correctQueAns.content1)
                    console.log(answer.marks)
@@ -2138,9 +2220,8 @@ export class StudentModuleComponent implements OnInit {
   }
 
 
+
   onFormSubmit(queAns: any): void {
-
-
     let totalMarkslocal:number=0
     let marksArray:any =[];
     let marksStatArr :boolean[] =[]
@@ -2174,7 +2255,6 @@ export class StudentModuleComponent implements OnInit {
     reviewObjectStuAnswer.marks = parseFloat(queAnsNew.marks);
     reviewObjectStuAnswer.questionContent = queAnsNew.content1;
     reviewObjectStuAnswer.quizId = queAnsNew.questionQuizId;
-  
     reviewObjectStuAnswer.studentId = queAnsNew.profileId;
     reviewObjectStuAnswer.teacherRemark =queAnsNew.reviewcontent;
     reviewObjectStuAnswer.selectedOption = false;
