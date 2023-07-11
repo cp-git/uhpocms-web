@@ -10,6 +10,7 @@ import { CreateAnnouncementComponent } from '../create-announcement/create-annou
 import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
 import { userModule } from 'app/permissions/enum/user-module.enum';
 import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 // import { AuthService } from 'app/authlogin/service/auth.service';
 
 @Component({
@@ -39,16 +40,12 @@ export class AnnouncementComponent implements OnInit {
   allData: Profile[] = [];
   //constructor
 
-   // for user Permissions
-   buttonsArray: any;
-   userAndRolePermissions: AuthUserPermission[] = [];
-   userModule = userModule;
-   
-  constructor(private location: Location, 
-    private announcementService: AnnouncementService, 
-    private router: Router, 
-    private userPermissionService: AuthUserPermissionService,
- 
+  // for user Permissions
+  buttonsArray: any;
+  userAndRolePermissions: AuthUserPermission[] = [];
+  userModule = userModule;
+  
+  constructor(private location: Location,private dialogBoxService:DialogBoxService, private announcementService: AnnouncementService, private router: Router, private authService: AuthService, private activatedRoute: ActivatedRoute,private userPermissionService: AuthUserPermissionService,
   ) {
 
     this.buttonsArray = {
@@ -193,16 +190,25 @@ export class AnnouncementComponent implements OnInit {
 
   //function to delete announcemnet by announcement Id
   public deleteAnnouncementById(announcementId: number) {
+    this.dialogBoxService.open('Are you sure you want to delete this Announcement ? ', 'decision').then((response) => {
+      if (response) {
+        console.log('User clicked OK');
+        // Do something if the user clicked OK
     this.announcementService.deleteAnnouncementById(announcementId).subscribe(
       response => {
-        console.log("deleted successfuly");
+        this.dialogBoxService.open('Announcement deleted successfully', 'information');
         this.ngOnInit();
       },
-      error => {
-        console.log("deleted failed");
+      (error) => {
+        this.dialogBoxService.open('Announcement deletion Failed', 'warning');
       }
     );
+  } else {
+    console.log('User clicked Cancel');
+    // Do something if the user clicked Cancel
   }
+});
+}
 
   //function to route back
   back() {

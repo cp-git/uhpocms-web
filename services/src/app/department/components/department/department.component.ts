@@ -325,18 +325,21 @@ export class DepartmentComponent implements OnInit {
         console.log('User clicked OK');
         // Do something if the user clicked OK
         // calling service to soft delte
-        this.service.deleteDepartmentById(id).subscribe(
-          (response) => {
-            this.dialogBoxServices.open('Department deleted successfully', 'information');
-            this.ngOnInit();
-          },
-          (error) => {
-            this.dialogBoxServices.open('Department deletion Failed', 'warning');
-          }
-        );
-      } else {
+    this.service.deleteDepartmentById(id).subscribe(
+      (response) => {
+        this.dialogBoxServices.open('Department deleted successfully', 'information');
+        this.ngOnInit();
+        setTimeout(() => {
+          location.reload(); // Refresh the page
+        }, 1000); // Delay for 1 second before reloading
+      },
+      (error) => {
+        this.dialogBoxServices.open('Department deletion Failed', 'warning');
+      }
+    )
+      }
+      else {
         console.log('User clicked Cancel');
-        // Do something if the user clicked Cancel
       }
     });
   }
@@ -362,6 +365,9 @@ export class DepartmentComponent implements OnInit {
       (response) => {
         this.dialogBoxServices.open("Department Activated", 'information');
         this.ngOnInit();
+        setTimeout(() => {
+          location.reload(); // Refresh the page
+        }, 1000); // Delay for 1 second before reloading
       },
       (error) => {
         this.dialogBoxServices.open("Failed to Activate", 'warning');

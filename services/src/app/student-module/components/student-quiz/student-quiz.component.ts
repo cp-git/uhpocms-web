@@ -109,6 +109,8 @@ export class StudentQuizComponent implements OnInit {
   questionUrl: any;
   quizScore!: any;
 
+  studentName: any;
+
   selectedQuizCategory: any;
 
   constructor(
@@ -655,12 +657,17 @@ export class StudentQuizComponent implements OnInit {
 
 
   loadProfiles(studentId: number) {
+    // alert(studentId);
     try {
       this.sessionData = sessionStorage.getItem('instituteprofile');
       //alert(JSON.stringify(this.sessionData));
       this.data = JSON.parse(this.sessionData);
       for (var i = 0; i < this.data.length; i++) {
         if (this.data[i].adminId == this.studentId) {
+          this.profile = this.data;
+          this.studentName = this.data[i].firstName + " " + this.data[i].lastName;
+          //  alert(this.studentName);
+          console.log(this.profile.firstName, this.profile.lastName, this.profile.fullName, "  + ++++ + + ", this.profileInstituteId);
           this.profileInstituteId = this.data[i].institutionId;
 
           //  alert(JSON.stringify(this.profileInstituteId));
@@ -727,6 +734,7 @@ export class StudentQuizComponent implements OnInit {
           { text: courseCodeAndCourseName, alignment: 'center' },
           { text: 'Module :' + this.moduleName, alignment: 'center' },
           { text: 'Quiz :' + this.quizTitle, alignment: 'center' },
+          { text: 'Student Name :' + this.studentName },
           {
             columns: [
               { text: 'Passing Marks : ' + this.passMark + '%', alignment: 'right' },
@@ -735,6 +743,7 @@ export class StudentQuizComponent implements OnInit {
           { text: ' Student Scored  : ' + this.quizScore.score + '%', alignment: 'right' }
         );
 
+        console.log(this.quizScore.score + "score");
         let questionNumber = 1;
         console.log(this.questionAnswers + " Before Loop +++");
 

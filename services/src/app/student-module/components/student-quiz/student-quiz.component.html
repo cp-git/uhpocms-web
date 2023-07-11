@@ -18,7 +18,7 @@
     <form #myForm="ngForm">
         <div class="jumbotron">
             <!-- <h4 class="text-center">Question {{ index }}</h4> -->
-            <div *ngIf="question['questionId']" class="img">
+            <div *ngIf="question['questionFigure']" class="img">
                 <img src="http://localhost:8090/question/uhpocms/getFileById/{{question['questionId']}}"
                     style="max-height: 220px">
 
@@ -72,6 +72,7 @@
             <ng-template #otherCategory>
                 <textarea name="ansContent1{{index}}" [(ngModel)]="question['selectedAnswer']" class="form-control"
                     required=""
+                   
                     [disabled]="submitted ||(!isRetakingQuiz && (quizFailedProgresses.includes(quizData.quizId) || quizPassedProgresses.includes(quizData.quizId)))"></textarea>
             </ng-template>
             <!-- <label class="float-label"> Correct</label>
@@ -93,7 +94,7 @@
         </div>
     </ng-container>
     <button class="download-button" (click)="generatePdfUsingPdfMaker()"
-        [hidden]="isRetakingQuiz && (quizFailedProgresses.includes(quizData.quizId) || quizPassedProgresses.includes(quizData.quizId))">
+        [hidden]="isRetakingQuiz || !(quizFailedProgresses.includes(quizData.quizId) || quizPassedProgresses.includes(quizData.quizId))">
         <i class="fas fa-file-pdf"></i> Download PDF
     </button>
 </ng-template>

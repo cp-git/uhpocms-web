@@ -124,4 +124,8 @@
     <app-add-updateupload [data]="{currentData:currentData , columnNames:updateColumnNames}"
         [dropdown]="{courses,modules}" (submitClicked)="onUpdateModuleSubmit($event)"
         (sentFileData)="onRecievedFiles($event);"></app-add-updateupload>
+
+    <video controls>
+        <source src="{{displayUrl}}/{{currentData.moduleFileId}}" (click)="display(currentData.moduleFileId)">
+    </video>
 </ng-template>

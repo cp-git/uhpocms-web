@@ -78,6 +78,8 @@ export class ModuleFileComponent {
   buttonsArray: any;
   userAndRolePermissions: AuthUserPermission[] = [];
   userModule = userModule;
+  imagesUrl!: any;
+
 
   constructor(
 
@@ -239,6 +241,7 @@ export class ModuleFileComponent {
   onRecievedFiles(recievedFiles: FileList) {
     this.files = recievedFiles;
     console.log(this.files);
+
 
   }
 

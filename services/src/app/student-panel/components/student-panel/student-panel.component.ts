@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { ChartdataComponent } from 'app/charts/components/chartdata/chartdata.component';
 import { CourseProgressService } from 'app/courseProgress/services/course-progress.service';
 import { CourseProgress } from 'app/courseProgress/class/courseprogress';
@@ -17,18 +16,11 @@ import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
   styleUrls: ['./student-panel.component.css']
 })
 export class StudentPanelComponent {
-
-
   course: Course = new Course();
   @ViewChild(ChartdataComponent) dChart: any;
-
-  //doughnut chart data array
   doughCharts: any = [];
   charts: any = [];
-
   currentIndex: number = 0;
-
-  // Declare class properties
   profileId: any;
   courseProgressArr: CourseProgress[] = [];
   userName!: string;
@@ -37,7 +29,6 @@ export class StudentPanelComponent {
   userPermissions: AuthUserPermission[] = [];;
   modulePermissionIds: Set<number> = new Set<number>();
   authModule = userModule;
-
 
   constructor(private _route: Router,
     private _activatedRoute: ActivatedRoute,
@@ -59,10 +50,7 @@ export class StudentPanelComponent {
     this._route.navigate(['../'], { relativeTo: this._activatedRoute });
     this.profileId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
-
-    //function to display charts on page load
     this.getAllCourseProgress();
-
   }
 
   // function for loading permissions from session storage
@@ -96,45 +84,28 @@ export class StudentPanelComponent {
     this.courseProgServ.getAllCourseProgress().subscribe(
       async (response) => {
         this.courseProgressArr = response;
-
         filteredCouProgArr = this.courseProgressArr.filter((element) => element.studentId == this.profileId);
         console.log(filteredCouProgArr);
 
         for (let i = 0; i < filteredCouProgArr.length; i++) {
           const remainingPercentage: number = 100 - filteredCouProgArr[i].progress;
-
           await this.getCourseNameById(filteredCouProgArr[i].courseId);
-          console.log("this.course.courseName")
-          console.log(this.course.courseName)
-          if (this.course.courseIsActive == true) {
-            console.log("Entered in if loop")
+          if (this.course.courseIsActive === true) {
             this.charts[i] = [filteredCouProgArr[i].progress, remainingPercentage, this.course.courseName];
-            this.doughCharts.push(this.charts[i])
-            console.log()
+            this.doughCharts.push(this.charts[i]);
           }
         }
-
-
+        this.filterDoughCharts();
       }
-    )
+    );
   }
 
-  //code for next button on progress panel
-  next() {
-
-    this.currentIndex += 3;
-    this.getAllCourseProgress();
-
+  filterDoughCharts() {
+    this.doughCharts = this.doughCharts.filter((chart: any[], index: any, self: any[]) =>
+      index === self.findIndex((c) => c[2] === chart[2])
+    );
   }
 
-  //code for previous button on progress panel
-  previous() {
-
-    this.currentIndex -= 3;
-    this.getAllCourseProgress();
-  }
-
-  //code to display course by providing course id
   getCourseNameById(courseId: number) {
     return new Promise<void>((resolve, reject) => {
       this.courseService.getCourseByCourseId(courseId).subscribe(
@@ -145,46 +116,45 @@ export class StudentPanelComponent {
         (error) => {
           reject(error);
         }
-      )
+      );
     });
   }
 
+  next() {
+    this.currentIndex += 3;
+    this.getAllCourseProgress();
+  }
 
-  // Navigate to student course page with current profileId
+  previous() {
+    this.currentIndex -= 3;
+    this.getAllCourseProgress();
+  }
+
   RedirectToStudentCourse() {
     this._route.navigate(['/Course']);
   }
 
-
-  // Navigate to quiz page with 'student' role
   RedirectToQuiz() {
     const role = 'student';
     this._route.navigate(['quiz', role]);
   }
 
-  // Navigate to course page with 'student' role
   RedirectToCourse() {
     const role = 'student';
     this._route.navigate(['course/userrole/', role]);
   }
 
-  // Navigate to login page
   RedirectTOLogin() {
     sessionStorage.removeItem('profileId');
     sessionStorage.removeItem('userId');
-    this._route.navigate(['authenticationlogin'])
+    this._route.navigate(['authenticationlogin']);
   }
 
-  //Navigate to student module page with current profileId
   RedirectToStudentModule() {
     this._route.navigate(['studentmodule', { id: this.profileId }]);
   }
 
-  //to navigate to the announcement page for the current student
   redirectToNotification() {
-    this._route.navigate(['announcement/student', { id: this.profileId }])
+    this._route.navigate(['announcement/student', { id: this.profileId }]);
   }
-
-
-
 }

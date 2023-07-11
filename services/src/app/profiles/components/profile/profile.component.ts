@@ -79,7 +79,7 @@ export class ProfileComponent implements OnInit {
     private adminRoleService: AdminRoleService,
     private authUserService: AuthUserService,
     private http: HttpClient,
-    private dialogBoxService:DialogBoxService
+    private dialogBoxService: DialogBoxService
   ) {
     // assigng Columns
     this.columnNames = ProfileColumn;
@@ -433,8 +433,8 @@ export class ProfileComponent implements OnInit {
       error => {
         this.dialogBoxService.open('Failed to Add Profile ', 'warning')
       }
-      );
-    }
+    );
+  }
 
   // updating profile by usign userId(foreign key from authuser)
   private updateProfile(currentData: Profile) {
@@ -469,32 +469,32 @@ export class ProfileComponent implements OnInit {
       if (response) {
         console.log('User clicked OK');
         // Do something if the user clicked OK
-    // calling service to soft delete
-    currentData.activeUser = false;
-this.service.deleteProfileByActiveAuthuser(currentData.userId, currentData).subscribe(
-      response => {
-        console.log(currentData);
-        this.activeAuthUsers.find(authUser => {
-          if (authUser.authUserId == currentData.userId) {
-            this.authUserService.deleteAuthUser(authUser.authUserName).subscribe(
-              (response: any) => {
-                this.dialogBoxService.open('Profile deleted Successfully', 'information');
-                this.ngOnInit();
+        // calling service to soft delete
+        currentData.activeUser = false;
+        this.service.deleteProfileByActiveAuthuser(currentData.userId, currentData).subscribe(
+          response => {
+            console.log(currentData);
+            this.activeAuthUsers.find(authUser => {
+              if (authUser.authUserId == currentData.userId) {
+                this.authUserService.deleteAuthUser(authUser.authUserName).subscribe(
+                  (response: any) => {
+                    this.dialogBoxService.open('Profile deleted Successfully', 'information');
+                    this.ngOnInit();
+                  }
+                );
               }
-            );
+            })
+          },
+          (error) => {
+            this.dialogBoxService.open('Profile deletion Failed', 'warning');
           }
-        })
-      },
-      (error) => {
-        this.dialogBoxService.open('Profile deletion Failed', 'warning');
+        );
+      } else {
+        console.log('User clicked Cancel');
+        // Do something if the user clicked Cancel
       }
-    );
-  } else {
-    console.log('User clicked Cancel');
-    // Do something if the user clicked Cancel
+    });
   }
-});
-}
 
   // For getting all inactive admin roles
   private getInActiveProfiles() {

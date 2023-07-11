@@ -384,21 +384,23 @@ private async addCourse(currentData: any) {
         console.log('User clicked OK');
         // Do something if the user clicked OK
         // calling service to soft delete
-        this.service.deleteCourseByCourseId(courseId).subscribe(
-          (response) => {
-            console.log('Course deleted successfully');
-            this.dialogBoxServices.open("Course deleted successfully", 'information');
-            this.ngOnInit();
-          },
-          (error) => {
-            this.dialogBoxServices.open('Course deletion Failed', 'warning');
-          }
-        );
+    this.service.deleteCourseByCourseId(courseId).subscribe(
+      (response) => {
+        console.log('Course deleted successfully');
+        this.dialogBoxServices.open("Course deleted successfully", 'information');
+        this.ngOnInit();
+        setTimeout(() => {
+          location.reload(); // Refresh the page
+        }, 1000); // Delay for 1 second before reloading
+      },
+      (error) => {
+        this.dialogBoxServices.open('Course deletion Failed', 'warning');
+      })
       } else {
         console.log('User clicked Cancel');
-        // Do something if the user clicked Cancel
       }
-    });
+    }
+    );
   }
 
   // For getting all inactive course
@@ -470,6 +472,9 @@ private async addCourse(currentData: any) {
       response => {
         this.dialogBoxServices.open('Course Activated', 'information');
         this.ngOnInit();
+        setTimeout(() => {
+          location.reload(); // Refresh the page
+        }, 1000); // Delay for 1 second before reloading
       },
       error => {
         this.dialogBoxServices.open('Failed to Activate Course', 'warning');

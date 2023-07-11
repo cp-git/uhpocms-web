@@ -38,7 +38,7 @@ export class QuestionAnswerComponent implements OnInit {
   totalMarks: number = 0;
   mcqAnswer: any;
   options = ['Option 1', 'Option 2', 'Option3', 'Option4'];
-
+ 
   fileName!: string;
   // for pagination 
   currentPage = 1;
@@ -53,7 +53,7 @@ export class QuestionAnswerComponent implements OnInit {
 
   profileId: any;
 
-
+  isPageValid: boolean = false;
 
   ///////////////pdf generate used var //////////////
   displayLogo: any;
@@ -86,6 +86,11 @@ export class QuestionAnswerComponent implements OnInit {
   institutionName: string = '';
   passMark: number = 0;
   courseCode: string = '';
+
+  isSubmitButtonDisabled :boolean = true;
+  isNextButtonDisabled: boolean = false;
+  isPreviousButtonDisabled: boolean = false;
+  
 
 
 
@@ -127,7 +132,8 @@ export class QuestionAnswerComponent implements OnInit {
   isOptionSelected: boolean = false;
   constructor(
     private http: HttpClient,
-    private questionService: QuestionService
+    private questionService: QuestionService,
+    private renderer: Renderer2
   ) {
     this.profileId = sessionStorage.getItem('profileId');
     this.profile = new Profile();
@@ -138,7 +144,7 @@ export class QuestionAnswerComponent implements OnInit {
   ngOnInit(): void {
     this.displayUrl = this.questionUrl + '/getFileById';
 
- console.log(this.totalQuizMarks)
+    console.log(this.totalQuizMarks)
 
     this.loadProfiles(this.profileId);
     this.getQuizDetailsByQuizId(this.selectedQuizId);
@@ -148,10 +154,16 @@ export class QuestionAnswerComponent implements OnInit {
     this.loadCategories(this.selectedQuizCategoryId);
 
 
- console.log(this.questionAnswers)
+    console.log(this.questionAnswers)
 
   }
 
+  queAns: any = {}; // Your queAns object
+
+  handleImageError(event: Event) {
+    const imgElement = event.target as HTMLImageElement;
+    this.renderer.removeChild(imgElement.parentNode, imgElement);
+  }
 
   onFileSelected(event: any, queAns: OneQuestionAnswer) {
     // console.log(JSON.stringify(queAns))
@@ -196,21 +208,26 @@ export class QuestionAnswerComponent implements OnInit {
 
   }
 
-  onFormSubmit(queAns: OneQuestionAnswer,queAnsArray :OneQuestionAnswer[] ) {
+  onFormSubmit(queAns: OneQuestionAnswer, queAnsArray: OneQuestionAnswer[]) {
     this.submittedQuestionAnswer = {} as OneQuestionAnswer;
     this.submittedQuestionAnswer = queAns;
     console.log(queAns);
+   
+  // Disable the submit button
+
 
     if ((this.selectedCategoryName.toUpperCase() != 'MCQ')) {
       queAns.correct1 = true;
     }
 
     if (queAns.questionId > 0) {
-      this.submitClicked.emit({queAns,queAnsArray});
+
+      this.submitClicked.emit({ queAns, queAnsArray });
 
     } else {
       queAns.questionId = 0;
-      this.submitClicked.emit({queAns,queAnsArray});
+      this.submitClicked.emit({ queAns, queAnsArray });
+
     }
 
     queAns.isFormDirty = false;
@@ -288,6 +305,7 @@ export class QuestionAnswerComponent implements OnInit {
       queAns.isFormDirty = true;
       queAns.isFormSubmitted = false;
       queAns.totalMarks = queAns.totalMarks;
+    
     }
   }
 

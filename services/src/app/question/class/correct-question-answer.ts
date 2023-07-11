@@ -30,6 +30,9 @@ export class CorrectQuestionAnswer {
     isAnswerCorrect!: boolean;
     selectedAnswer!: string;
     profileId!: number;
-
+    createdOn!: Date;
+    modifiedOn!: Date;
     questionAnswers: any[] = [];
+
+    reviewStatus!: boolean;
 }
