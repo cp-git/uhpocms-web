@@ -409,6 +409,9 @@ export class EnrollstudentComponent {
       )
     }
     this.dialogBoxService.open("Students enrolled to course successfully !", 'information');
+    setTimeout(() => {
+      location.reload(); // Refresh the page
+    }, 1000); // Delay for 1 second before reloading
   }
   // checkFields() {
   //   // Check if any fields are empty
