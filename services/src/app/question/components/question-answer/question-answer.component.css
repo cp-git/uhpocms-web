@@ -4,6 +4,7 @@
     border: none;
     padding: 10px 20px;
     cursor: pointer;
+    border-radius: 50px;
 }
 
 .download-button i {
