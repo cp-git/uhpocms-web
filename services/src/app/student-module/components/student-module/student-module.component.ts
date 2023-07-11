@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, NgZone, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModuleFile } from 'app/class/module-file';
 
@@ -32,6 +32,11 @@ import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box
 import { CountdownComponent, CountdownEvent } from 'ngx-countdown';
 import { OneQuestionAnswer } from 'app/question/class/one-question-answer';
 import { StudentAnswer } from 'app/student-module/class/student-answer';
+import { CorrectQuestionAnswer } from 'app/question/class/correct-question-answer';
+import { QuizresultService } from 'app/quiz/services/quizresult.service';
+import { QuestionService } from 'app/question/services/question.service';
+import { QuestionAnswer } from 'app/question/class/question-answer';
+import { Question } from 'app/question/class/question';
 
 
 @Component({
@@ -51,6 +56,8 @@ export class StudentModuleComponent implements OnInit {
   @ViewChild('cd', { static: false })
   cd!: CountdownComponent;
 
+  @Output() submitClicked: EventEmitter<number> = new EventEmitter<number>();
+
   studentId: any;
   userName: any;
   courseId: any;
@@ -59,6 +66,7 @@ export class StudentModuleComponent implements OnInit {
   moduleName: any;
   courseName: any;
   departmentName: any;
+  selectedCategoryName: any;
   courses: Course[] = []; //array of Course objects that stores the courses of the student
   courseList: Course[] = [];
   modules: Module[] = []; //array of Module objects that stores the modules of the courses
@@ -67,7 +75,7 @@ export class StudentModuleComponent implements OnInit {
   moduleFileProgress: Modulefileprogress = new Modulefileprogress;// Object of ModuleFileProgress
   moduleFileProgressArr: Modulefileprogress[] = [];// Array of Object of ModuleFileProgress
   updatedModuleFileProgressArr: Modulefileprogress[] = [];// Array of Object of ModuleFileProgress
-
+  reviewButtonStat:boolean = false;
   quizzes: Quiz[] = [];
 
   newModuleFileProgressArr: Modulefileprogress[] = [];// Array of Object of ModuleFileProgress
@@ -85,9 +93,9 @@ export class StudentModuleComponent implements OnInit {
   selectedFile: any;
   selectedModule: any; //stores the selected module by the student.
   trackedModule: any; //stores the selected module by the student.
-  selectedQuiz!: Quiz;
+ 
   Date: any;
-
+  questionAnswer!: QuestionAnswer;  // empty question
   moduleFileName: any;
 
   modulesArray: Module[] = []; //array of Module objects that stores the modules of the courses
@@ -124,7 +132,7 @@ export class StudentModuleComponent implements OnInit {
   modulebasedArr: Modulefileprogress[] = [];
   moduleProgress: Moduleprogress = new Moduleprogress;
   filteredProgressFileIds: number[] = [];
-
+  showReviewButton:boolean = false;
   score = 0;
   refVar: number = 0;
   statusModuleProg: Moduleprogress = new Moduleprogress;
@@ -147,17 +155,33 @@ export class StudentModuleComponent implements OnInit {
   existingCourseProg: CourseProgress = new CourseProgress();
   courProgPercentage: number = 0;
   modFilesArray: ModuleFile[] = [];
-
+  queAns!: OneQuestionAnswer;
   moduleProgArray: Moduleprogress[] = [];
-
+  correctQueAns :CorrectQuestionAnswer = new CorrectQuestionAnswer();
   quizProgress!: QuizProgress;  // quizProgress object used to save progress in table
   questionAnswers: OneQuestionAnswer[] = [];    // array of question and answers
-  addeedQuizProgress: QuizProgress = new QuizProgress();; //to store quizprogress data
+  addeedQuizProgress: QuizProgress = new QuizProgress();
+  reviewStatusLocal: any[]= [];
+; //to store quizprogress data
   submitted: boolean = false;
-
+  viewAdd: boolean = false;
   studentAnswer: StudentAnswer = new StudentAnswer();  // for storing student answers
   studentAnswers: StudentAnswer[] = [];
-
+  selectedQuiz: any
+  correctQuestionAnswer :CorrectQuestionAnswer[]=[]
+  quizResult:StudentAnswer []=[];
+  totalQuizMarks: any;
+  totalReviewMarks:any=0;
+  selectedStudProfileId: any;
+  oneQuestionAnswer: OneQuestionAnswer =new OneQuestionAnswer;  // empty question
+  generatedQuestionAnswerId: number = 0;;
+  selectedQuizId:any=0;
+  selectedCategoryId:any =0;
+  quizIdArrInStudRes :number[]=[];
+  private quizReviewStatusCache: { [quizId: number]: boolean[] } = {};
+  shouldShowReviewButtonStatValue!: boolean;
+  showReview: boolean = false;
+  
   // ------------------------VARIABLE DECLARATION END------------------------------
 
   constructor(private activateRoute: ActivatedRoute,
@@ -176,10 +200,15 @@ export class StudentModuleComponent implements OnInit {
     private quizService: QuizService,
     private cdr: ChangeDetectorRef, private dialogboxService: DialogBoxService,
     private courseProgServ: CourseProgressService,
+    private quizReService: QuizresultService,
+    private service: QuestionService, private dialogBoxServices: DialogBoxService,
+    private  reviewServ :QuizresultService,private ngZone: NgZone
   ) {
     this.selectedQuizProgress = new QuizProgress();
     this.selectedQuiz = new Quiz();
     this.selectedCourse = new Course();
+    
+  
   }
 
 
@@ -192,8 +221,10 @@ export class StudentModuleComponent implements OnInit {
   ngOnInit(): void {
     // this.videoPlayer;
 
-
-
+ 
+    this.reviewButtonStat = false;
+    this.cdr.detectChanges();
+    console.log("reviewButtonStat in ngonint"+this.reviewButtonStat)
     this.studentId = this.activateRoute.snapshot.paramMap.get('id');
     this.userName = this.activateRoute.snapshot.params['userName'];
     this.loadCourseOfStudent(this.studentId);
@@ -208,10 +239,11 @@ export class StudentModuleComponent implements OnInit {
     this.getQuizPorgressesByStudentId(this.studentId);
 
     this.filterUniqueModuleIds();
-
+    console.log(this.reviewButtonStat)
 
 
   }
+
 
   //loads the courses of the student using the getCourseByStudentId() method of StudentService
   loadCourseOfStudent(studentId: number) {
@@ -547,7 +579,8 @@ export class StudentModuleComponent implements OnInit {
 
   //Loads the modules of the courses using the getModuleByCourseId() method of StudentService
   async loadModuleOfCourse(studentCourses: Course[]) {
-
+   this.reviewButtonStat = false
+   console.log("reviewButtonStat in loadModules"+this.reviewButtonStat)
     let filteredModules: Module[] = [];
     studentCourses.forEach(async course => {
 
@@ -594,6 +627,8 @@ export class StudentModuleComponent implements OnInit {
 
   //loads the module files assigned to the student using the getModuleFilesByStudentId() method of StudentService
   loadModuleFilesOfCourses(studentId: number) {
+    this.reviewButtonStat = false;
+    console.log("reviewButtonStat in loadModulesFiles"+this.reviewButtonStat)
     this.modulefileService.getModuleFilesByStudentId(studentId).subscribe(
       response => {
         this.studentModuleFiles = response;
@@ -631,8 +666,12 @@ export class StudentModuleComponent implements OnInit {
 
 
 
+
   //sets the selected course by the student and resets the selected module
   onCourseSelect(courseId: any) {
+
+    this.reviewButtonStat = false;
+    console.log("reviewButtonStat in loadCourses"+this.reviewButtonStat)
     this.selectedCourse = this.courses.find(course => course.courseId == courseId) ?? {} as Course;
     console.log(JSON.stringify(this.selectedCourse));
 
@@ -1267,16 +1306,153 @@ export class StudentModuleComponent implements OnInit {
 
 
 
+  // private getAllQuizzesByProfileId(studentId: number) {
+
+  //   let quizIdArr :number[] = [];
+  //   let quizIdArrInStudRes :number[] = [];
+  //   this.quizService.getAllQuizzesByProfileId(studentId).subscribe(
+  //     (data: Quiz[]) => {
+  //       this.quizzes = data;
+
+  //       quizIdArr =  this.quizzes.map((quiz)=>quiz.quizId);
+  //       for(const quizId of quizIdArr){
+  //       this.quizReService.getAllStudentAnswersByStduentIdAndQuizId(studentId,quizId).subscribe(
+  //         (response)=>{
+  //           quizIdArrInStudRes = [...new Set(response.map((quiz) => quiz.quizId))];
+
+           
+            
+  //         },
+  //         (error)=>{}
+          
+          
+  //       )
+
+        
+  //       }
+  //     }
+  //   )
+  // }
+
+
+  // private getAllQuizzesByProfileId(studentId: number) {
+  //   let quizIdArr: number[] = [];
+  //   let quizIdArrInStudRes: number[] = [];
+  
+  //   this.quizService.getAllQuizzesByProfileId(studentId).subscribe(
+  //     (data: Quiz[]) => {
+  //       this.quizzes = data;
+  
+  //       quizIdArr = this.quizzes.map((quiz) => quiz.quizId);
+  
+  //       for (const quizId of quizIdArr) {
+  //         this.quizReService
+  //           .getAllStudentAnswersByStduentIdAndQuizId(studentId, quizId)
+  //           .subscribe(
+  //             (response) => {
+  //               quizIdArrInStudRes = [...new Set(response.map((quiz) => quiz.quizId))];
+  
+  //               // Check if any quiz ID in quizIdArrInStudRes is present in quizIdArr
+  //               if (quizIdArrInStudRes.some((id) => quizIdArr.includes(id))) {
+  //                 this.showReviewButton = true;
+  //               } else {
+  //                 this.showReviewButton = false;
+  //               }
+  //             },
+  //             (error) => {}
+  //           );
+  //       }
+  //     }
+  //   );
+  // }
+  
+  public shouldShowReviewButton(quizId: number): boolean {
+    return this.quizIdArrInStudRes.includes(quizId);
+  }
+  public shouldShowReviewButtonStat(quizId:number): boolean {
+
+    console.log(this.reviewStatusLocal)
+    
+      return this.reviewStatusLocal.includes(quizId) && this.reviewStatusLocal.includes(true);
+  }
+
   private getAllQuizzesByProfileId(studentId: number) {
+    let quizIdArr: number[] = [];
+  
     this.quizService.getAllQuizzesByProfileId(studentId).subscribe(
       (data: Quiz[]) => {
         this.quizzes = data;
+  
+        quizIdArr = this.quizzes.map((quiz) => quiz.quizId);
+  
+        for (const quizId of quizIdArr) {
+          this.quizReService
+            .getAllStudentAnswersByStduentIdAndQuizId(studentId, quizId)
+            .subscribe(
+              (response) => {
+                // const reviewStat = [...new Set(response.map((studRez) => studRez.reviewStat && studRez.quizId))];
+                const combinedArray = [...new Set(response.filter(studRez => studRez.reviewStat && studRez.quizId).flatMap(studRez => [studRez.reviewStat, studRez.quizId]))];
+
+                console.log(combinedArray); // Array containing unique values of studRez.reviewStat and studRez.quizId
+
+                this.reviewStatusLocal = this.reviewStatusLocal.concat(combinedArray)
+                const quizIdsInResponse = [...new Set(response.map((quiz) => quiz.quizId))];
+                this.quizIdArrInStudRes = this.quizIdArrInStudRes.concat(quizIdsInResponse);
+              },
+              (error) => {}
+            );
+        }
       }
-    )
+    );
   }
+  
+// public getQuizByStudIdAndQuizId(quizId:number)
+// { this.reviewStatusLocal =[];
+//   this.quizReService.getAllStudentAnswersByStduentIdAndQuizId(this.studentId, quizId)
+//   .subscribe(
+//     (response) => {
+//       const reviewStat = [...new Set(response.map((studRez) => studRez.reviewStat))];
+//       this.reviewStatusLocal = this.reviewStatusLocal.concat(reviewStat);
+     
+//     },
+//     (error) => {}
+//   );
+// }
+
+public getQuizByStudIdAndQuizId(quizId: number) {
+  if (this.quizReviewStatusCache[quizId]) {
+    // Use the cached result
+    this.reviewStatusLocal = this.quizReviewStatusCache[quizId];
+  } else {
+    this.reviewStatusLocal = [];
+    this.quizReService.getAllStudentAnswersByStduentIdAndQuizId(this.studentId, quizId)
+      .subscribe(
+        (response) => {
+          const reviewStat = [...new Set(response.map((studRez) => studRez.reviewStat))];
+          this.reviewStatusLocal = this.reviewStatusLocal.concat(reviewStat);
+
+          // Cache the result
+          this.quizReviewStatusCache[quizId] = this.reviewStatusLocal;
+        },
+        (error) => {}
+      );
+  }
+}
+
+
+
+
+ private getAllQuizResult(studentId:number)
+ {
+
+ }
+
 
   //data from quiz table filtered by module id
   private getAllQuizzesByModuleId(moduleId: number) {
+    this.reviewButtonStat = false;
+    this.cdr.detectChanges();
+    console.log("reviewButtonStat in loadQuizzes"+this.reviewButtonStat)
     let quizArr: Quiz[] = [];
     this.quizService.getAllQuizzesByModuleId(moduleId).subscribe(
       (data: Quiz[]) => {
@@ -1362,6 +1538,8 @@ export class StudentModuleComponent implements OnInit {
   }
 
   onQuizClicked(quiz: Quiz, retake: boolean = false) {
+    this.reviewButtonStat = false;
+    console.log("reviewButtonStat in QuizClicked"+this.reviewButtonStat)
     this.cd.stop();
     // if clicked on retake quiz option
     if (retake) {
@@ -1795,6 +1973,7 @@ export class StudentModuleComponent implements OnInit {
       this.studentAnswer.questionId = queAns.questionId;
       this.studentAnswer.selectedOption = (queAns.selectedAnswer == trueAnswer);
       this.studentAnswer.answerId = 0;
+      this.studentAnswer.reviewStat = false;
       console.log("@@@@@@@@@@@@@@@@@@@@@", this.studentAnswer);
       this.quizProgServ.addStudentAnswers(this.studentAnswer).subscribe(
         (response) => {
@@ -1836,11 +2015,17 @@ export class StudentModuleComponent implements OnInit {
       } else if (score >= 40) {
         grade = 'E';
       }
+      this.getQuizByStudIdAndQuizId(this.selectedQuiz)
+
       this.dialogboxService.open(this.selectedQuiz.successText + '  ' + grade, 'information');
       //alert("Total score: " + score);
+    
     } else {
       // show dialog box with red exam fail
+      this.getQuizByStudIdAndQuizId(this.selectedQuiz)
+
       this.dialogboxService.open(this.selectedQuiz.failText, 'information');
+
     }
     this.submitted = true;
 
@@ -1900,10 +2085,249 @@ export class StudentModuleComponent implements OnInit {
   isRetakingQuiz: boolean = false;
   retakingQuiz: number = 0;
   onQuizClick: number = 0;
-  onRetakeQuizClicked(quiz: Quiz) {
 
+  onRetakeQuizClicked(quiz: Quiz) {
+  this.reviewButtonStat = false;
+  this.cdr.detectChanges();
+  console.log("reviewButtonStat in onretake quizClicked"+this.reviewButtonStat)
+  // alert(this.reviewButtonStat)
     this.onQuizClicked(quiz, true);
   }
+
+  getAllAnswersAttempted(quizId:number){
+    
+    this.correctQuestionAnswer=[];
+    this.quizResult = [] ;
+    this.totalQuizMarks = 0;
+    this.totalReviewMarks = 0;
+    console.log(quizId)
+    console.log("QuizId in  getAllAnswersAttempted")
+   this.reviewButtonStat = true;
+   this.cdr.detectChanges();
+
+   console.log("reviewButtonStat in allanswersattempted"+this.reviewButtonStat)
+  // alert(this.reviewButtonStat)
+    console.log(this.selectedStudProfileId)
+
+    this.quizReService.getAllStudentAnswersByStduentIdAndQuizId(this.studentId,quizId).subscribe(
+      (result)=>{
+
+       this.quizResult = result;
+       console.log(this.quizResult)
+        this.questionAnswers = []; // Initialize questionAnswers as an array
+        this.correctQuestionAnswer = [] 
+        
+        console.log(quizId)
+        if(this.quizResult.length != 0){
+        this.service.getAllQuestionsByQuizId(quizId).subscribe(
+          (response: any[]) => {
+
+            console.log("responses for question")
+            console.log(response);
+
+            response.forEach(
+              question => {
+                console.log(question)
+                this.totalQuizMarks = this.totalQuizMarks + question.maxMarks;
+            
+                console.log(" this.totalQuizMarks   " + this.totalQuizMarks+"  this.totalReviewMarks  " + this.totalReviewMarks)
+                this.queAns = {} as OneQuestionAnswer;
+                this.correctQueAns = {} as CorrectQuestionAnswer
+
+                const filteredAnswers = this.quizResult.filter(answer => answer.questionId == question.questionId);
+     
+                
+
+
+                filteredAnswers.forEach((answer: StudentAnswer, index: number) => {
+                  this.totalReviewMarks = this.totalReviewMarks + answer.marks;
+                  // console.log(answer);
+                  // console.log(index)
+                  if (index === 0) {
+                    this.correctQueAns.content1 = answer.questionContent;
+                    this.correctQueAns.marks = 
+                    this.correctQueAns.questionId = answer.questionId;
+                    this.correctQueAns.questionQuizId = quizId;
+                   this.correctQueAns.reviewcontent = answer.teacherRemark;
+                 
+                   console.log("ANSWERS ")
+                   console.log(this.correctQueAns.content1)
+                   console.log(answer.marks)
+                   console.log(question.maxMarks)
+             
+                      console.log(answer.marks)
+                      console.log(question.maxMarks)
+                      
+                    this.correctQueAns.marks = answer.marks;
+                    this.correctQueAns.profileId = this.selectedStudProfileId;
+                    console.log(this.correctQueAns)
+                  }
+                })
+                 
+
+
+                // Push question and filtered answers into questionAnswers array
+                let isFormSubmitted = false;
+                if (question.questionId > 0) {
+                  isFormSubmitted = true;
+                }
+
+                this.correctQuestionAnswer.push({
+                  ...question,
+                  maxMarks : question.maxMarks,
+                  content1: this.correctQueAns.content1,
+                  isFormDirty: false,
+                  isFormSubmitted: isFormSubmitted,
+                  image: false,
+                  isOptionSelected: true,
+                  selectedAnswer: '',
+                  questionId : this.correctQueAns.questionId,
+                  questionQuizId : this.correctQueAns.questionQuizId ,
+                  profileId : this.correctQueAns.profileId ,
+                  reviewcontent: this.correctQueAns.reviewcontent ,
+                  marks :  this.correctQueAns.marks
+
+                 
+                });
+              });
+
+            console.log(this.correctQuestionAnswer);
+            if (this.viewAdd == true) {
+              this.initialiseQuestion(this.selectedQuiz.maxQuestions);
+            }
+          }
+
+         
+        
+        );
+        }
+      },
+      error => {
+        console.log("failed to get answers");
+      }
+    );
+
+
+  }
+
+
+  private initialiseQuestion(length: number) {
+    // this.questionAnswers = [];
+    const quesAnsLength = this.questionAnswers.length;
+
+    for (let i = 0; i < length - quesAnsLength; i++) {
+      this.questionAnswers.push(new OneQuestionAnswer);
+    }
+  }
+
+
+
+  onFormSubmit(queAns: any): void {
+    let totalMarkslocal:number=0
+    let marksArray:any =[];
+    let marksStatArr :boolean[] =[]
+    let isSecondAlertDisplayed = false;
+    let isFirstAlertDisplayed = false;
+    console.log(queAns)
+    console.log("queAns['queAnsArray']")
+    console.log(queAns['queAnsArray'])
+    this.questionAnswer = {} as QuestionAnswer;
+    this.oneQuestionAnswer = {} as OneQuestionAnswer;
+   this.correctQueAns = {} as CorrectQuestionAnswer;
+    // Form is valid, do something with the form data
+    // console.log("queAns " + JSON.stringify(queAns));
+    queAns['queAnsArray'].forEach( (queAnsForMarks:any)=> {
+      marksArray.push(queAnsForMarks.marks)
+      if(queAnsForMarks.marks > queAnsForMarks.maxMarks)
+      {
+        marksStatArr.push(false)
+      }
+      else{
+        marksStatArr.push(true)
+      }
+    });
+    queAns['queAnsArray'].forEach( (queAnsNew:any)=> {
+      
+   
+
+    let reviewObjectStuAnswer : StudentAnswer = new StudentAnswer();
+    reviewObjectStuAnswer.questionId = queAnsNew.questionId;
+    reviewObjectStuAnswer.answerId =queAnsNew.answerId;
+    reviewObjectStuAnswer.marks = parseFloat(queAnsNew.marks);
+    reviewObjectStuAnswer.questionContent = queAnsNew.content1;
+    reviewObjectStuAnswer.quizId = queAnsNew.questionQuizId;
+    reviewObjectStuAnswer.studentId = queAnsNew.profileId;
+    reviewObjectStuAnswer.teacherRemark =queAnsNew.reviewcontent;
+    reviewObjectStuAnswer.selectedOption = false;
+    console.log(queAnsNew.reviewcontent)
+
+    this.questionAnswer.question = {} as Question;
+    this.questionAnswer.question['questionId'] = queAnsNew.questionId;
+
+     
+    console.log(reviewObjectStuAnswer)
+
+    // if(queAnsNew.marks != '')
+    if(marksArray.includes('') == false)
+    {
+      if(marksStatArr.includes(false) == false){
+      // if( reviewObjectStuAnswer.marks <= queAnsNew.maxMarks){
+
+      this.quizProgServ.addStudentAnswers(reviewObjectStuAnswer).subscribe(
+        (response) => {
+          // this.studentAnswers.push(response);
+          // this.studentAnswers = response;
+          
+          console.log(response)
+          console.log("Student answers saved");
+          console.log(  typeof this.totalReviewMarks)
+          console.log(  typeof reviewObjectStuAnswer.marks)
+          if(queAnsNew.marks == '' )
+          {
+            reviewObjectStuAnswer.marks = 0;
+          }
+
+          totalMarkslocal +=  reviewObjectStuAnswer.marks;
+          // this.totalReviewMarks = this.totalReviewMarks + reviewObjectStuAnswer.marks;
+          this.totalReviewMarks = totalMarkslocal
+          this.submitClicked.emit(this.totalReviewMarks);
+        },
+        (error) => {
+          console.log("Failed to save student answers");
+        }
+      );
+    
+    }
+    else{
+      if (!isFirstAlertDisplayed) {
+      // alert("Please enter valid marks");
+      this.dialogBoxServices.open("Please enter valid marks", 'information');
+      queAns = [];
+      isFirstAlertDisplayed = true;
+      }
+    }
+  }
+ 
+    else{
+      if (!isSecondAlertDisplayed) {
+      // alert("Please enter marks for all questions")
+      this.dialogBoxServices.open("Please enter marks for all questions", 'information');
+      queAns = [];
+      isSecondAlertDisplayed = true;
+      }
+    }
+    });
+   
+    
+  
+
+
+
+  }
+
+
+
+
 }
 
 // function ngOnInit() {

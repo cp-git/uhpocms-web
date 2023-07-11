@@ -7,4 +7,8 @@ export class StudentAnswer {
     answerId!: number;
     teacherRemark!: string;
     marks!: number;
+    createdOn!: Date;
+    modifiedOn!: Date;
+    reviewedOn!: Date;
+    reviewStat!: boolean;
 }
