@@ -10,12 +10,16 @@
     </ng-container>
 </ng-container>
 
-<ng-container *ngIf="pagination">
+
+
+<ng-container *ngIf="pagination ">
     <div class="text-center"
         *ngIf="selectedQuizId!='undefined' && selectedQuizId!='' && selectedQuizId!=null && selectedCategoryId!='undefined'  && selectedCategoryId!='' && selectedCategoryId!=null">
         <pagination-controls (pageChange)="currentPage=$event"></pagination-controls>
     </div>
 </ng-container>
+
+
 
 <ng-template #form let-queAns let-index="index">
     <form #myForm="ngForm" (ngSubmit)="onFormSubmit(queAns,questionAnswers)">

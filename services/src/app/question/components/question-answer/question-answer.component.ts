@@ -38,7 +38,7 @@ export class QuestionAnswerComponent implements OnInit {
   totalMarks: number = 0;
   mcqAnswer: any;
   options = ['Option 1', 'Option 2', 'Option3', 'Option4'];
-
+ 
   fileName!: string;
   // for pagination 
   currentPage = 1;
@@ -53,7 +53,7 @@ export class QuestionAnswerComponent implements OnInit {
 
   profileId: any;
 
-
+  isPageValid: boolean = false;
 
   ///////////////pdf generate used var //////////////
   displayLogo: any;
@@ -86,6 +86,11 @@ export class QuestionAnswerComponent implements OnInit {
   institutionName: string = '';
   passMark: number = 0;
   courseCode: string = '';
+
+  isSubmitButtonDisabled :boolean = true;
+  isNextButtonDisabled: boolean = false;
+  isPreviousButtonDisabled: boolean = false;
+  
 
 
 
@@ -207,17 +212,22 @@ export class QuestionAnswerComponent implements OnInit {
     this.submittedQuestionAnswer = {} as OneQuestionAnswer;
     this.submittedQuestionAnswer = queAns;
     console.log(queAns);
+   
+  // Disable the submit button
+
 
     if ((this.selectedCategoryName.toUpperCase() != 'MCQ')) {
       queAns.correct1 = true;
     }
 
     if (queAns.questionId > 0) {
+
       this.submitClicked.emit({ queAns, queAnsArray });
 
     } else {
       queAns.questionId = 0;
       this.submitClicked.emit({ queAns, queAnsArray });
+
     }
 
     queAns.isFormDirty = false;
@@ -295,6 +305,7 @@ export class QuestionAnswerComponent implements OnInit {
       queAns.isFormDirty = true;
       queAns.isFormSubmitted = false;
       queAns.totalMarks = queAns.totalMarks;
+    
     }
   }
 

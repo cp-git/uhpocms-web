@@ -72,6 +72,7 @@
             <ng-template #otherCategory>
                 <textarea name="ansContent1{{index}}" [(ngModel)]="question['selectedAnswer']" class="form-control"
                     required=""
+                   
                     [disabled]="submitted ||(!isRetakingQuiz && (quizFailedProgresses.includes(quizData.quizId) || quizPassedProgresses.includes(quizData.quizId)))"></textarea>
             </ng-template>
             <!-- <label class="float-label"> Correct</label>
