@@ -6,7 +6,7 @@ export const ModuleColumn = [
     { key: 'courseId_id', label: 'Course Name', type: 'dropdown1' },
     { key: 'moduleStartDate', label: 'Start Date', type: 'date' },
     { key: 'moduleEndDate', label: 'End Date', type: 'date' },
-    { key: 'moduleOrderNo', label: 'Module Order No', type: 'input' },
+    { key: 'moduleOrderNo', label: 'Module Order No', type: 'input',subtype:'number' },
     // { key: 'moduleCourse', label: 'Module Course', type: 'input' }
 
 ]
@@ -18,7 +18,7 @@ export const ModuleAllColumn = [
     { key: 'moduleStartDate', label: 'Start Date', type: 'date',minValue: new Date().toISOString().split('T')[0] },
     { key: 'moduleEndDate', label: 'End Date', type: 'date', minValue: 'moduleStartDate' },
     // { key: 'moduleCourse', label: 'Module course', type: 'input' },
-    { key: 'moduleOrderNo', label: 'Module Order No', type: 'input' },
+    { key: 'moduleOrderNo', label: 'Module Order No', type: 'input',subtype:'number' },
     { key: 'moduleIsActive', label: 'Is Active', type: 'checkbox' }
 ]
 
@@ -30,6 +30,6 @@ export const UpdateAllColumn = [
     { key: 'moduleStartDate', label: 'Start Date', type: 'date', },
     { key: 'moduleEndDate', label: 'End Date', type: 'date', minValue: 'moduleStartDate' },
     // { key: 'moduleCourse', label: 'Module course', type: 'input' },
-    { key: 'moduleOrderNo', label: 'Module Order No', type: 'input' },
+    { key: 'moduleOrderNo', label: 'Module Order No', type: 'input',subtype:'number' },
     { key: 'moduleIsActive', label: 'Is Active', type: 'checkbox' }
 ]
