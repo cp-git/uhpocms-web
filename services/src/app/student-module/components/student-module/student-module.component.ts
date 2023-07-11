@@ -691,8 +691,9 @@ export class StudentModuleComponent implements OnInit {
     this.selectedQuizName = '';
 
     this.showalert = false;
+    this.chkCoursePogress(courseId);
+   // this.courProgPercentage = 0;
 
-    this.courProgPercentage = 0;
     this.changeSelectedCourseName(courseId);
 
     this.selectedCourseId = courseId;

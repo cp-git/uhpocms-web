@@ -28,7 +28,7 @@ export const CourseUpdateColumn = [
     { key: 'courseDescription', label: 'Description', type: 'input' },
     { key: 'courseCode', label: 'Course code', type: 'input' },
     { key: 'courseType', label: 'Course Type', type: 'input' },
-    { key: 'passingScore', label: 'Passing Score', type: 'email' },
+    { key: 'passingScore', label: 'Passing Score', type: 'input', subtype: 'number'},
     { key: 'courseIsActive', label: 'Is Active', type: 'checkbox' },
     { key: 'accessModuleInOrder', label: 'Module order', type: 'checkbox' },
 

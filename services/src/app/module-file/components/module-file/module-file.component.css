@@ -29,3 +29,10 @@ table td {
     margin-top: -15px;
     margin-bottom: -5px;
 }
+
+
+video {
+    display: inline-block;
+    vertical-align: baseline;
+    width: -webkit-fill-available;
+}
