@@ -418,7 +418,7 @@ export class QuizComponent implements OnInit {
       }
     );
   }
-  //getting courses assigned to teacher using profileId
+  //getting courses enrolled to student using profileId
   private getEnrolledCoursesByProfileId(studentId: number) {
     this.courseService.getCourseByStudentId(studentId).subscribe(
       (data) => {

@@ -14,6 +14,8 @@ import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
+import { Enrolltostudent } from 'app/enrollstudent/class/enrolltostudent';
+import { EnrolltostudentService } from 'app/enrollstudent/service/enrolltostudent.service';
 @Component({
   selector: 'app-assigncoursetoteacher',
   templateUrl: './assigncoursetoteacher.component.html',
@@ -41,7 +43,7 @@ export class AssigncoursetoteacherComponent {
 
   assignTeacher = new Assignteacher();
   assignTeacherArr: any[] = [];
-
+  enrolledUsers: any[] = [];
   userName!: string;
   adminId: any;
 
@@ -75,7 +77,8 @@ export class AssigncoursetoteacherComponent {
     private location: Location,
     private _activatedRoute: ActivatedRoute,
     private _route: Router,
-    private dialogBoxService: DialogBoxService) { }
+    private dialogBoxService: DialogBoxService,
+    private enrollStudentService:EnrolltostudentService) { }
 
   isFormComplete(): boolean {
     // Check if all required fields are filled in
@@ -179,7 +182,7 @@ export class AssigncoursetoteacherComponent {
 
   ///Function for get profile by role and institution id 
   getProfileByRoleAndInstId(instId: number) {
-    const userRole = "teacher";
+    let userRole = "teacher";
     instId = this._profile.institutionId;
     // console.log(instId);
     this.profileService.getProfileByRoleAndInstitutionId(userRole, instId).subscribe(
@@ -189,7 +192,20 @@ export class AssigncoursetoteacherComponent {
         console.log(response)
         // instId = this._profile.institutionId;
         console.log(instId);
-        this.selectAllForDropdownItems(this._profileArray);
+        // this.selectAllForDropdownItems(this._profileArray);
+
+        // Fetch student profiles and adding array of profile.
+        userRole = "student";
+        this.profileService.getProfileByRoleAndInstitutionId(userRole, instId).subscribe(
+          (response: Profile[]) => {
+            this._profileArray = this._profileArray.concat(response);
+            this._profileArray.map((i) => { i.fullName = i.firstName + ' ' + i.lastName + ' - ' + i.adminEmail; return i; });
+            console.log(response);
+            // instId = this._profile.institutionId;
+            console.log(instId);
+            this.selectAllForDropdownItems(this._profileArray);
+          }
+        );
       }
     )
 
@@ -220,7 +236,7 @@ export class AssigncoursetoteacherComponent {
     // console.log(courseId);
 
     this.getTeacherByCourseId(courseId);
-
+    this.getStudentByCourseId(courseId);
   }
 
   getTeacherByCourseId(courseId: any) {
@@ -240,6 +256,25 @@ export class AssigncoursetoteacherComponent {
       }
     );
   }
+
+  getStudentByCourseId(courseId: any) {
+
+    this.enrolledUsers = [];
+    this.enrollStudentService.getStudentByCourseId(courseId).subscribe(
+      response => {
+        // this.courses = response;
+
+        response.forEach((data: Enrolltostudent) => {
+          this.enrolledUsers.push(data.profileId);
+          console.log(this.enrolledUsers);
+        })
+      },
+      error => {
+        console.log("failed to fetch data");
+      }
+    );
+  }
+  
 
   onOptionSelected(item: any) {
     console.log(JSON.stringify(item))

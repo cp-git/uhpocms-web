@@ -60,7 +60,7 @@ export class AdminRoleComponent implements OnInit {
     private userPermissionService: AuthUserPermissionService,
     ) {
 
-      // Assining default values
+    // Assining default values
     this.buttonsArray = {
       showAddButton: false,
       showActivateButton: false,

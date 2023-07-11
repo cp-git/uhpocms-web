@@ -8,7 +8,7 @@ import { Location } from '@angular/common';
 export class ModuleHeaderComponent {
 
   @Input() moduleName: string = 'Space For Module Name';
-  @Input() buttons: { showAddButton: boolean, showActivateButton: boolean } = { showAddButton: true, showActivateButton: true }
+  @Input() buttons: { showAddButton: boolean, showActivateButton: boolean } = { showAddButton: false, showActivateButton: false }
   @Input() titleWithUserRole: boolean = false;
 
   @Output() backButtonClicked = new EventEmitter();
