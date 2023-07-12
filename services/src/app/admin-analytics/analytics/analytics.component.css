@@ -1,3 +1,10 @@
+.column {
+  margin-top: 8px;
+  font-weight: bold;
+  /* Adjust the margin as per your preference */
+}
+
+
 #chart-head{
     display: flex;
     align-items: center;

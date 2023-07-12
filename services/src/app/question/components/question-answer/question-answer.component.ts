@@ -509,7 +509,7 @@ export class QuestionAnswerComponent implements OnInit {
 
                 const imageDataUrl = reader.result as string;
 
-                const questionText = `Question :${questionNumber}: ${questionContent}`;
+                const questionText = `${questionNumber}: ${questionContent}`;
                 questionSection.push({ text: questionText, style: 'questionContent' });
                 console.log(imageDataUrl);
 
@@ -523,7 +523,8 @@ export class QuestionAnswerComponent implements OnInit {
                 }
 
                 if (this.quizCategory.categoryName == 'MCQ') {
-                  questionSection.push({ ol: options.map(option => 'option :' + option.content) });
+                  questionSection.push({ text: 'Options' });
+                  questionSection.push({ ol: options.map(option => option.content) });
                 }
 
                 questionSection.push({ text: 'Correct answer : ' + answer, style: 'answer' });
@@ -534,11 +535,12 @@ export class QuestionAnswerComponent implements OnInit {
               reader.readAsDataURL(figureBlob);
             }, (error) => {
               console.error('Error fetching question image:', error);
-              const questionText = `Question :${questionNumber}: ${questionContent}`;
+              const questionText = `${questionNumber}: ${questionContent}`;
               questionSection.push({ text: questionText, style: 'questionContent' });
 
               if (this.quizCategory.categoryName == 'MCQ') {
-                questionSection.push({ ol: options.map(option => 'option :' + option.content) });
+                questionSection.push({ text: 'Options' });
+                questionSection.push({ ol: options.map(option => option.content) });
               }
 
               questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });

@@ -97,6 +97,11 @@ export class AnalyticsComponent {
   currentPage = 1;
   imagesPerPage = 7;
   totalPages = Math.ceil(this.admininstitutions.length / this.imagesPerPage);
+  couseNotEnrolledByAnyStudent: any
+  countOfStudent: any;
+
+  courseResults: { label: string; value: any }[] = [];
+
 
   ////////////variable declarations end////////
 
@@ -108,6 +113,18 @@ export class AnalyticsComponent {
     this.institutionUrl = `${environment.adminInstitutionUrl}/institution`;
   }
 
+
+  
+
+  zeroEnrolledCourses(zeroCourses: { value: any; label: string }) {
+    console.log(zeroCourses);
+
+    this.couseNotEnrolledByAnyStudent = zeroCourses.label;
+    this.countOfStudent = zeroCourses.value;
+    this.courseResults.push({ label: zeroCourses.label, value: zeroCourses.value });
+    
+   
+  }
 
   ngOnInit() {
 

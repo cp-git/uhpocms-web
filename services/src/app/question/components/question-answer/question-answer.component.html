@@ -128,6 +128,8 @@
 
     </form>
 </ng-template>
-<button class="download-button" (click)="generatePdfUsingPdfMaker()">
-    <i class="fas fa-file-pdf"></i> Download PDF
-</button>
+<ng-container *ngIf="!(pagination && submitOption)">
+    <button class="download-button" (click)="generatePdfUsingPdfMaker()">
+        <i class="fas fa-file-pdf"></i> Download PDF
+    </button>
+</ng-container>
