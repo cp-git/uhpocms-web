@@ -91,7 +91,7 @@
   
     <form #myForm="ngForm">
         <div class="jumbotron">
-            <div  class="img">
+            <div  class="img" *ngIf="queAns.questionFigure">
                 <!-- <img src="http://localhost:8090/question/uhpocms/getFileById/{{question['questionId']}}"
                     style="max-height: 220px"> -->
                     <img *ngIf="queAns['image'] ;else viewImage" src="{{image}}" style="max-width: 350px">

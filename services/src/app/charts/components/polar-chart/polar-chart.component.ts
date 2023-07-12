@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { Chart ,registerables} from 'chart.js';
+import { Chart, registerables } from 'chart.js';
+
 
 
 Chart.register(ChartDataLabels);
@@ -16,28 +17,30 @@ export class PolarChartComponent {
 
   /******************Variable Declarations*******************/
   @Output() clickData: EventEmitter<{ value: any; label: string }> = new EventEmitter();
+  @Output() zeroCourses: EventEmitter<{ value: any; label: string }> = new EventEmitter();
   @Output() click: EventEmitter<any> = new EventEmitter<any>();
-  
+
   chart: any;
   @ViewChild('pChart', { static: false })
   pChart!: ElementRef;
-  @Input() jsonArray: any[]  = [];
+  @Input() jsonArray: any[] = [];
   @Input() chartLabels: any = [
-// "a","b","c"
+    // "a","b","c"
   ];
   @Input() cutOut: number = 75;
   @Input() backgroundColors: any = [
     // "#55B4B0",  "#E15D44"
- 
+
   ];
-   /******************Variable Declarations End*******************/
-ngAfterViewInit() {
-    
-    
+  /******************Variable Declarations End*******************/
+  ngAfterViewInit() {
+
+
     let cvs: any;
     cvs = this.pChart.nativeElement;
     console.log("json array")
-     console.log(this.jsonArray)
+    console.log(this.jsonArray)
+
     //  const combinedData = this.chartLabels.map((label: string, index: number) => {
     //   return {
     //     label: label,
@@ -47,24 +50,24 @@ ngAfterViewInit() {
     // });
 
 
-     this.backgroundColors = this.generateRandomColors(this.jsonArray.length);
+    this.backgroundColors = this.generateRandomColors(this.jsonArray.length);
     this.chart = new Chart(cvs, {
-      type:'doughnut',
+      type: 'doughnut',
       data: {
         labels: this.chartLabels,
-        
+
         datasets: [
           {
 
             data: this.jsonArray,
-          
+
             backgroundColor: this.backgroundColors,
-            
+
             borderWidth: 0,
           },
-          
+
         ],
-    
+
       },
       plugins: [ChartDataLabels],
       options: {
@@ -78,7 +81,9 @@ ngAfterViewInit() {
             this.displayNextChart(datasetIndex, index);
           }
         },
-               
+
+
+
         plugins: {
           datalabels: {
             // formatter: function (value, context) {
@@ -88,13 +93,39 @@ ngAfterViewInit() {
             //     return Math.round(value) + '%';
             //   }
             // },
-            formatter: (value, ctx:any) => {
+            // formatter: (value, ctx: any) => {
+            //   const label = ctx.chart.data.labels[ctx.dataIndex];
+            //   return `${label}: ${value}`;
+            // },
+
+            formatter: (value, ctx: any) => {
               const label = ctx.chart.data.labels[ctx.dataIndex];
-              return `${label}: ${value}`;},
-          
+              if (label && value > 0) {
+                // Add custom logic for text wrapping if the label is too long
+                const maxLength = 10; // Set the maximum length for the label before wrapping
+                if (label.length > maxLength) {
+                  const wrappedLabel = label.match(new RegExp('.{1,' + maxLength + '}', 'g')).join('\n');
+                  return `${wrappedLabel}: ${value}`;
+                } else {
+
+                  // this.zeroCourses.emit({ label, value });
+                  return `${label}: ${value}`;
+                }
+              } else {
+                this.zeroCourses.emit({ label, value });
+                console.log(label, value + "//////////////////////////");
+                return '';
+
+
+              }
+
+            },
+
+
+
             color: 'white',
             font: {
-              size:11,
+              size: 11,
               weight: 'bold',
             },
           },
@@ -107,62 +138,62 @@ ngAfterViewInit() {
               }
             }
           }
-}
-     
         }
+
+      }
     });
-  
+
     // this.chart.data.datasets[0].data = this.chartLabels.map((label: string, index: number) => {
     //   const chartLabel = label;
     //   const jsonValue = this.jsonArray[index];
     //   return { chartLabel, jsonValue };
     // }).map((data: any) => data.chartLabel + ': ' + data.jsonValue);
-    
 
-}
-// ngAfterViewInit() {
-//   let cvs: any;
-//   cvs = this.pChart.nativeElement;
-//   console.log("json array");
-//   console.log(this.jsonArray);
 
-//   const combinedData = this.chartLabels.map((label: string, index: number) => {
-//     return {
-//       label: label,
-//       value: this.jsonArray[index]
-//     };
-//   });
+  }
+  // ngAfterViewInit() {
+  //   let cvs: any;
+  //   cvs = this.pChart.nativeElement;
+  //   console.log("json array");
+  //   console.log(this.jsonArray);
 
-//   this.backgroundColors = this.generateRandomColors(this.jsonArray.length);
+  //   const combinedData = this.chartLabels.map((label: string, index: number) => {
+  //     return {
+  //       label: label,
+  //       value: this.jsonArray[index]
+  //     };
+  //   });
 
-//   this.chart = new Chart(cvs, {
-//     type: 'doughnut',
-//     data: {
-//       labels: this.chartLabels,
-//       datasets: [
-//         {
-//           data: this.jsonArray,
-//           backgroundColor: this.backgroundColors,
-//           borderWidth: 0,
-//         },
-//       ],
-//     },
-//     plugins: [ChartDataLabels],
-//     options: {
-//       onClick: (event, elements) => {
-//         // ...
-//       },
-//       plugins: {
-//         // ...
-//       },
-//     },
-//   });
+  //   this.backgroundColors = this.generateRandomColors(this.jsonArray.length);
 
-//   this.chart.data.datasets[0].data = combinedData.map((data:any) => (data.label + ': ' + data.value));
-//   this.chart.data.labels = combinedData.map((data: { label: any; }) => data.label);
+  //   this.chart = new Chart(cvs, {
+  //     type: 'doughnut',
+  //     data: {
+  //       labels: this.chartLabels,
+  //       datasets: [
+  //         {
+  //           data: this.jsonArray,
+  //           backgroundColor: this.backgroundColors,
+  //           borderWidth: 0,
+  //         },
+  //       ],
+  //     },
+  //     plugins: [ChartDataLabels],
+  //     options: {
+  //       onClick: (event, elements) => {
+  //         // ...
+  //       },
+  //       plugins: {
+  //         // ...
+  //       },
+  //     },
+  //   });
 
-//   this.chart.update();
-// }
+  //   this.chart.data.datasets[0].data = combinedData.map((data:any) => (data.label + ': ' + data.value));
+  //   this.chart.data.labels = combinedData.map((data: { label: any; }) => data.label);
+
+  //   this.chart.update();
+  // }
 
 
 
@@ -175,21 +206,21 @@ ngAfterViewInit() {
     return colors;
   }
 
- //function to display popup on click of bar
- displayNextChart(datasetIndex: number, index: number) {
-  // Get the data or other information associated with the clicked bar
-  // const value = this.chart.data.datasets[datasetIndex].data[index];
-  const value = this.chart.data;
-  const label = this.chart.data.labels[index];
+  //function to display popup on click of bar
+  displayNextChart(datasetIndex: number, index: number) {
+    // Get the data or other information associated with the clicked bar
+    // const value = this.chart.data.datasets[datasetIndex].data[index];
+    const value = this.chart.data;
+    const label = this.chart.data.labels[index];
 
-  // Use the retrieved data to display a popup or perform any desired action
-  console.log(`Clicked section: ${label} - Value: ${value}`);
-  console.log(value)
-  console.log(label)
-  // Show your popup or perform other actions here
-  this.click.emit();
-  this.clickData.emit({ value, label });
-}
+    // Use the retrieved data to display a popup or perform any desired action
+    console.log(`Clicked section: ${label} - Value: ${value}`);
+    console.log(value)
+    console.log(label)
+    // Show your popup or perform other actions here
+    this.click.emit();
+    this.clickData.emit({ value, label });
+  }
 
 
 
