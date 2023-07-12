@@ -459,18 +459,25 @@ export class EnrollstudentComponent {
 
   // Method to delete assignment by courseId and profileId
   deleteEnrollStudent(courseId: number, profileId: number) {
-    console.log(courseId ,  " ++++++++++++++++++"  , profileId);
+    // Delete the enrolled student
     this.enrollstuService.deleteEnrollStudentByCourseIdAndProfileId(courseId, profileId)
       .subscribe(
         (response) => {
-
           console.log('Enroll Student deleted successfully');
-
+  
+          // Delete the corresponding CourseProgress entry
+          this.courprogServ.deleteCourseProgressByCourseIdAndStudentId(courseId, profileId)
+            .subscribe(
+              (response) => {
+                console.log('CourseProgress entry deleted successfully');
+              },
+              (error) => {
+                console.error('Failed to delete CourseProgress entry', error);
+              }
+            );
         },
         (error) => {
-
           console.error('Failed to delete Enroll student', error);
-
         }
       );
   }
