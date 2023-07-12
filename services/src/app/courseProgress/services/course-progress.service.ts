@@ -56,5 +56,9 @@ export class CourseProgressService {
   );
   }
 
+  deleteCourseProgressByCourseIdAndStudentId(courseId: number, profileId: number): Observable<any> {
+    const url = `${this.courseProgressUrl}/courseprog/courseid/${courseId}/studentid/${profileId}`;
+    return this.http.delete<any>(url);
+  }
   
 }
