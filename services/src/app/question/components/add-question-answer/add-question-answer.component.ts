@@ -93,6 +93,7 @@ export class AddQuestionAnswerComponent implements OnInit {
   myFiles: string[] = [];
   generatedQuestionAnswerIdArr: number[] = [];
   generatedQuestionAnswerId: number = 0;;
+
   constructor(private location: Location,
     private service: QuestionService,
     private courseService: TeacherCourseService,
@@ -280,6 +281,7 @@ async getMCQCategory(){
     let questionIdArr :number[] = [];
     let orderArr:number[] = [];
     this.generatedQuestionAnswerIdArr = [];
+
 //New REq Code start from here 
 // queAns['queAnsArray'].forEach( (queAnsNew:any)=> {
 //   console.log("queAns in for loop")
@@ -298,10 +300,13 @@ async getMCQCategory(){
    let lAnsFlag:boolean =false;
    let mcqArr:any[] = [];
    let lAnsArr:any[] = [];
+   this.questionAnswers =[];
+  console.log("queAns after  this.question-Answers =[];")
+   console.log(queAns)
    queAns['queAnsArray'].forEach( async (queAnsNew:OneQuestionAnswer)=> {
-  
-  
-   
+    // for (const queAnsNew of queAns['queAnsArray']) {
+   console.log("questionAnswers Array at atart of forEach")
+   console.log(this.questionAnswers)
    
   this.questionAnswer.question = {} as Question;
   this.questionAnswer.question['questionId'] = queAnsNew.questionId;
@@ -469,11 +474,46 @@ async getMCQCategory(){
    {
    console.log("if((queAns['queAnsArray'].length) == (mcqArr.length))")
   this.service.addQuestion(formData).subscribe(
-    (response) => {
+    // const response = await this.service.addQuestion(formData).toPromise(
+    (response: number) => {
 
-     
+  
       this.generatedQuestionAnswerId = response;
-      this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
+      // this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
+      console.log(response)
+      this.questionAnswers.push({
+        questionId: this.generatedQuestionAnswerId,
+        questionFigure: this.questionAnswer.question['questionFigure'],
+        questionContent: this.questionAnswer.question['questionContent'],
+        questionExplanation: this.questionAnswer.question['questionExplanation'],
+        questionOrderNo: this.questionAnswer.question['questionOrderNo'],
+        questionIsMCQ: this.questionAnswer.question['questionQuizId'],
+        questionQuizId: this.questionAnswer.question['questionQuizId'],
+        questionCategoryId: this.questionAnswer.question['questionCategoryId'],
+        questionIsActive: this.questionAnswer.question['questionIsActive'],
+        questionCreatedBy: this.questionAnswer.question['questionCreatedBy'],
+        questionCreatedOn: this.questionAnswer.question['questionCreatedOn'],
+        questionModifiedBy: this.questionAnswer.question['questionModifiedBy'],
+        questionModifiedOn: this.questionAnswer.question['questionModifiedOn'],
+        correct1: this.questionAnswer.answers[0].correct,
+        content1:  this.questionAnswer.answers[0].content,
+        correct2: this.questionAnswer.answers[1].correct,
+        content2: this.questionAnswer.answers[1].content,
+        correct3: this.questionAnswer.answers[2].correct,
+        content3: this.questionAnswer.answers[2].content,
+        correct4:  this.questionAnswer.answers[3].correct,
+        content4: this.questionAnswer.answers[3].content,
+        isFormDirty: false,
+        isFormSubmitted: true,
+        image: true,
+        isOptionSelected: true,
+        selectedAnswer: '',
+        maxMarks: this.questionAnswer.question['maxMarks'],
+        totalMarks: this.totalMarks
+      })
+
+      console.log("questionanswersarray");
+      console.log(this.questionAnswers)
       console.log( this.generatedQuestionAnswerId)
       console.log("Question Added Successfully");
       // this.getDataForMarks(this.selectedQuizId)
@@ -507,9 +547,43 @@ async getMCQCategory(){
 
    
       this.generatedQuestionAnswerId = response;
-      this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
+      // this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
+      this.questionAnswers.push({
+        questionId: this.generatedQuestionAnswerId,
+        questionFigure: this.questionAnswer.question['questionFigure'],
+        questionContent: this.questionAnswer.question['questionContent'],
+        questionExplanation: this.questionAnswer.question['questionExplanation'],
+        questionOrderNo: this.questionAnswer.question['questionOrderNo'],
+        questionIsMCQ: this.questionAnswer.question['questionQuizId'],
+        questionQuizId: this.questionAnswer.question['questionQuizId'],
+        questionCategoryId: this.questionAnswer.question['questionCategoryId'],
+        questionIsActive: this.questionAnswer.question['questionIsActive'],
+        questionCreatedBy: this.questionAnswer.question['questionCreatedBy'],
+        questionCreatedOn: this.questionAnswer.question['questionCreatedOn'],
+        questionModifiedBy: this.questionAnswer.question['questionModifiedBy'],
+        questionModifiedOn: this.questionAnswer.question['questionModifiedOn'],
+        correct1: this.questionAnswer.answers[0].correct,
+        content1:  this.questionAnswer.answers[0].content,
+        correct2: this.questionAnswer.answers[1].correct,
+        content2: this.questionAnswer.answers[1].content,
+        correct3: this.questionAnswer.answers[2].correct,
+        content3: this.questionAnswer.answers[2].content,
+        correct4:  this.questionAnswer.answers[3].correct,
+        content4: this.questionAnswer.answers[3].content,
+        isFormDirty: false,
+        isFormSubmitted: true,
+        image: true,
+        isOptionSelected: true,
+        selectedAnswer: '',
+        maxMarks: this.questionAnswer.question['maxMarks'],
+        totalMarks: this.totalMarks
+      })
+     
+      console.log(response)
       console.log( this.generatedQuestionAnswerId)
       console.log("Question Added Successfully");
+      console.log("questionanswersarray");
+      console.log(this.questionAnswers)
       // this.getDataForMarks(this.selectedQuizId)
       // this.getAllQuestionAnswers(this.selectedQuizId)
     
@@ -548,9 +622,42 @@ async getMCQCategory(){
 
      
       this.generatedQuestionAnswerId = response;
-      this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
+      // this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
+      console.log(response)
+      // this.questionAnswers.push({
+      //   questionId: this.generatedQuestionAnswerId,
+      //   questionFigure: this.questionAnswer.question['questionFigure'],
+      //   questionContent: this.questionAnswer.question['questionContent'],
+      //   questionExplanation: this.questionAnswer.question['questionExplanation'],
+      //   questionOrderNo: this.questionAnswer.question['questionOrderNo'],
+      //   questionIsMCQ: this.questionAnswer.question['questionIsMCQ'],
+      //   questionQuizId: this.questionAnswer.question['questionQuizId'],
+      //   questionCategoryId: this.questionAnswer.question['questionCategoryId'],
+      //   questionIsActive: this.questionAnswer.question['questionIsActive'],
+      //   questionCreatedBy: this.questionAnswer.question['questionCreatedBy'],
+      //   questionCreatedOn: this.questionAnswer.question['questionCreatedOn'],
+      //   questionModifiedBy: this.questionAnswer.question['questionModifiedBy'],
+      //   questionModifiedOn: this.questionAnswer.question['questionModifiedOn'],
+      //   correct1: this.questionAnswer.answers[0].correct,
+      //   content1:  this.questionAnswer.answers[0].content,
+      //   correct2: this.questionAnswer.answers[1].correct,
+      //   content2: this.questionAnswer.answers[1].content,
+      //   correct3: this.questionAnswer.answers[2].correct,
+      //   content3: this.questionAnswer.answers[2].content,
+      //   correct4:  this.questionAnswer.answers[3].correct,
+      //   content4: this.questionAnswer.answers[3].content,
+      //   isFormDirty: false,
+      //   isFormSubmitted: true,
+      //   image: true,
+      //   isOptionSelected: true,
+      //   selectedAnswer: '',
+      //   maxMarks: this.questionAnswer.question['maxMarks'],
+      //   totalMarks: this.totalMarks
+      // })
       console.log( this.generatedQuestionAnswerId)
       console.log("Question Added Successfully");
+      // console.log("questionanswersarray");
+      // console.log(this.questionAnswers)
       // this.getDataForMarks(this.selectedQuizId)
       // this.getAllQuestionAnswers(this.selectedQuizId)
     
@@ -581,9 +688,42 @@ async getMCQCategory(){
 
    
       this.generatedQuestionAnswerId = response;
-      this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
+      // this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
+      console.log(response)
+      // this.questionAnswers.push({
+      //   questionId: this.generatedQuestionAnswerId,
+      //   questionFigure: this.questionAnswer.question['questionFigure'],
+      //   questionContent: this.questionAnswer.question['questionContent'],
+      //   questionExplanation: this.questionAnswer.question['questionExplanation'],
+      //   questionOrderNo: this.questionAnswer.question['questionOrderNo'],
+      //   questionIsMCQ: this.questionAnswer.question['questionIsMCQ'],
+      //   questionQuizId: this.questionAnswer.question['questionQuizId'],
+      //   questionCategoryId: this.questionAnswer.question['questionCategoryId'],
+      //   questionIsActive: this.questionAnswer.question['questionIsActive'],
+      //   questionCreatedBy: this.questionAnswer.question['questionCreatedBy'],
+      //   questionCreatedOn: this.questionAnswer.question['questionCreatedOn'],
+      //   questionModifiedBy: this.questionAnswer.question['questionModifiedBy'],
+      //   questionModifiedOn: this.questionAnswer.question['questionModifiedOn'],
+      //   correct1: this.questionAnswer.answers[0].correct,
+      //   content1:  this.questionAnswer.answers[0].content,
+      //   correct2: this.questionAnswer.answers[1].correct,
+      //   content2: this.questionAnswer.answers[1].content,
+      //   correct3: this.questionAnswer.answers[2].correct,
+      //   content3: this.questionAnswer.answers[2].content,
+      //   correct4:  this.questionAnswer.answers[3].correct,
+      //   content4: this.questionAnswer.answers[3].content,
+      //   isFormDirty: false,
+      //   isFormSubmitted: true,
+      //   image: true,
+      //   isOptionSelected: true,
+      //   selectedAnswer: '',
+      //   maxMarks: this.questionAnswer.question['maxMarks'],
+      //   totalMarks: this.totalMarks
+      // })
       console.log( this.generatedQuestionAnswerId)
       console.log("Question Added Successfully");
+      // console.log("questionanswersarray");
+      // console.log(this.questionAnswers)
       // this.getDataForMarks(this.selectedQuizId)
       // this.getAllQuestionAnswers(this.selectedQuizId)
     
@@ -602,6 +742,7 @@ async getMCQCategory(){
   }
 
   }
+    // }
 
   })
 
