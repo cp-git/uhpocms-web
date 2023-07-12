@@ -408,10 +408,13 @@ export class EnrollstudentComponent {
         }
       )
     }
-    this.dialogBoxService.open("Students enrolled to course successfully !", 'information');
-    setTimeout(() => {
-      location.reload(); // Refresh the page
-    }, 1000); // Delay for 1 second before reloading
+    this.dialogBoxService.open("Students enrolled to course successfully !", 'information').then((response) => {
+      if (response) {
+        location.reload(); // Refresh the page
+      }
+
+    });
+   
   }
   // checkFields() {
   //   // Check if any fields are empty
