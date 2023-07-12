@@ -32,21 +32,22 @@
                                     *ngIf="module.moduleId == file.moduleId && selectedCourseId == module.courseId_id">
                                     <div class="dropdown-item">
                                         <li>
-                                            <span
-                                                *ngIf="filteredProgressFileIds && file.moduleFileId && filteredProgressFileIds.includes(file.moduleFileId); else elseBlock"
-                                                class="fa fa-check-circle" aria-hidden="true"></span>
-                                            <ng-template #elseBlock>
-                                                <span class="fas fa-video" aria-hidden="true"></span>
+                                            <!-- Determine file format and set iconType -->
+                                            <ng-container *ngIf="file.moduleFile.endsWith('.pdf'); else videoIcon">
+                                              <span class="far fa-file-pdf"></span> <!-- PDF icon -->
+                                            </ng-container>
+                                            <ng-template #videoIcon>
+                                              <span class="fas fa-video"></span> <!-- Video icon -->
                                             </ng-template>
                                             &nbsp;&nbsp;
                                             <a (click)="changeSelectedFileAndModule(file, module)"
-                                                [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId) && selectedCourse.accessModuleInOrder}"><b>{{
-                                                    file.moduleFile|removeExtension }}</b>
+                                              [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId) && selectedCourse.accessModuleInOrder}">
+                                              <b>{{ file.moduleFile | removeExtension }}</b>
                                             </a>
-                                        </li>
-                                    </div>
-                                </ng-container>
-                            </ng-container>
+                                          </li>
+                                        </div>
+                                      </ng-container>
+                                    </ng-container>
 
                             <ng-container *ngFor="let quiz of quizzes |filter:'moduleId':module.moduleId">
                                 <div>

@@ -57,7 +57,7 @@ export class StudentModuleComponent implements OnInit {
   cd!: CountdownComponent;
 
   @Output() submitClicked: EventEmitter<number> = new EventEmitter<number>();
-
+  iconType: string | undefined;
   studentId: any;
   userName: any;
   courseId: any;
