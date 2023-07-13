@@ -484,7 +484,7 @@ async getMCQCategory(){
       if (index === queAns['queAnsArray'].length - 1) {
         // Call location.back() on the last iteration
         // location.back();
-        location.reload();
+        // location.reload();
 
         
       }
@@ -525,7 +525,7 @@ async getMCQCategory(){
       if (index === queAns['queAnsArray'].length - 1) {
         // Call location.back() on the last iteration
       // location.back();
-        location.reload();
+        // location.reload();
       }
       // this.getDataForMarks(this.selectedQuizId)
       // this.getAllQuestionAnswers(this.selectedQuizId)
@@ -982,9 +982,9 @@ console.log("######################################################3")
       for (var inst in this.data) {
         // this.getQuesByQuizId(inst.)
         let  boolFlag: Promise<boolean> = Promise.resolve(false);
-        // console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$444")
-        // console.log(this.data[inst].quizId)
-        // boolFlag =  this.getQuesByQuizId(this.data[inst].quizId)
+        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$444")
+        console.log(this.data[inst].quizId)
+        boolFlag =  this.getQuesByQuizId(this.data[inst].quizId)
         
         this.allData.push(this.data[inst]);
         console.log("%%%%%%%%%%%%%%%%%%%%%5")
