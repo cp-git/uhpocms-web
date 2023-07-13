@@ -159,7 +159,7 @@
             <div style="font-size: 20px;"
                 [hidden]="selectedQuizName=='' || (!isRetakingQuiz && (quizFailedProgresses.includes(selectedQuiz.quizId) || quizPassedProgresses.includes(selectedQuiz.quizId)))">
                 <label>Quiz Timer : </label>&nbsp;
-                <countdown #cd [config]=" { leftTime: 30 }" (event)="handleEvent($event)">
+                <countdown #cd [config]=" { leftTime: setTimer }" (event)="handleEvent($event)">
                 </countdown>
             </div>
         </div>

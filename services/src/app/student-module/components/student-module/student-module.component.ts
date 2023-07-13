@@ -61,6 +61,7 @@ export class StudentModuleComponent implements OnInit {
   studentId: any;
   userName: any;
   courseId: any;
+  setTimer: number = 0;
   moduleId: any;
   instituteName: any;
   moduleName: any;
@@ -1574,6 +1575,7 @@ export class StudentModuleComponent implements OnInit {
 
     // this.selectedFile = '';
     this.selectedQuiz = quiz;
+    this.setTimer = this.selectedQuiz.setTimer;
     this.selectedQuizName = quiz.title;
     console.log(this.quizProgressOfStudent);
 

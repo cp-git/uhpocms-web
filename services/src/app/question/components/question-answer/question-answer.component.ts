@@ -626,8 +626,8 @@ export class QuestionAnswerComponent implements OnInit {
           }
 
           questionSection.push({ text: 'Correct answer : ' + answer, style: 'answer' });
-          questionSection.push({});
-          questionSection.push({});
+          // Add two line spaces after each question
+        questionSection.push({ text: '\n\n' });
           this.questionNumber++;
 
           resolve(); // Resolve the Promise when the image is added
@@ -644,8 +644,8 @@ export class QuestionAnswerComponent implements OnInit {
         }
 
         questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
-        questionSection.push({});
-        questionSection.push({});
+     // Add two line spaces after each question
+     questionSection.push({ text: '\n\n' });
         this.questionNumber++;
         resolve(); // Resolve the Promise even if an error occurs
       });
