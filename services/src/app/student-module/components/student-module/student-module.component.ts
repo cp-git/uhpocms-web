@@ -2325,6 +2325,16 @@ public getQuizByStudIdAndQuizId(quizId: number) {
 
   }
 
+  getFileIconClass(moduleFile: string): string {
+    const fileExtension = moduleFile.substr(moduleFile.lastIndexOf('.') + 1).toLowerCase();
+    if (fileExtension === 'pdf') {
+        return 'fas fa-file-pdf';
+    } else if (fileExtension === 'mp4' || fileExtension === 'avi' || fileExtension === 'mkv') {
+        return 'fas fa-video';
+    } else {
+        return 'fa fa-file'; // Default icon class if the file type is unknown
+    }
+}
 
 
 

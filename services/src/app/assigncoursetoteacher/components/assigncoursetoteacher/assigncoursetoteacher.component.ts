@@ -318,7 +318,7 @@ export class AssigncoursetoteacherComponent {
       this.assignTeacherService.assignTeacherToCourse(this.assignTeacher).subscribe(
         (response) => {
           this.inserted = true;
-          location.reload();
+          //location.reload();
 
         }, error => {
           this.inserted = false;
@@ -327,7 +327,12 @@ export class AssigncoursetoteacherComponent {
       )
     }
     if (this.inserted = true) {
-      this.dialogBoxService.open('Assign Course to Teacher Successfully', 'information');
+      this.dialogBoxService.open("Assign Course To Teacher successfully !", 'information').then((response) => {
+        if (response) {
+          location.reload(); // Refresh the page
+        }
+  
+      });
       // location.reload();
     }
     else {

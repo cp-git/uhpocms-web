@@ -779,7 +779,7 @@ export class StudentQuizComponent implements OnInit {
               reader.onloadend = () => {
                 const imageDataUrl = reader.result as string;
 
-                const questionText = `Question :${questionNumber}: ${questionContent}`;
+                const questionText = `${questionNumber}: ${questionContent}`;
                 questionSection.push({ text: questionText, style: 'questionContent' });
 
                 if (imageDataUrl) {
@@ -792,8 +792,8 @@ export class StudentQuizComponent implements OnInit {
                 }
 
                 if (this.selectedQuizCategory.categoryName == 'MCQ') {
-
-                  questionSection.push({ ol: options.map(option => 'option :' + option.content) });
+                  questionSection.push({ text: 'Options' });
+                  questionSection.push({ ol: options.map(option =>  option.content) });
                 }
                 // questionSection.push({});
                 // questionSection.push({ ol: options.map(option => 'option :' + option.content) });
@@ -801,21 +801,28 @@ export class StudentQuizComponent implements OnInit {
                 if (selectedAns == answer) {
                   questionSection.push({ text: 'Selected answer: ' + selectedAns });
                   questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
+                  questionSection.push({ });
+                questionSection.push({ });
                 } else {
                   questionSection.push({ text: 'Selected answer: ' + selectedAns, style: 'incorrect' });
                   questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
+                  questionSection.push({ });
+                questionSection.push({ });
                 }
+                questionSection.push({ });
+                questionSection.push({ });
                 questionNumber++;
                 resolve(); // Resolve the Promise when the image is added
               };
               reader.readAsDataURL(figureBlob);
             }, (error) => {
               console.error('Error fetching question image:', error);
-              const questionText = `Question :${questionNumber}: ${questionContent}`;
+              const questionText = `${questionNumber}: ${questionContent}`;
               questionSection.push({ text: questionText, style: 'questionContent' });
 
               if (this.selectedQuizCategory.categoryName == 'MCQ') {
-                questionSection.push({ ol: options.map(option => 'option :' + option.content) });
+                questionSection.push({ text: 'Options' });
+                questionSection.push({ ol: options.map(option =>option.content) });
               }
               // questionSection.push({});
               // questionSection.push({ ol: options.map(option => 'option :' + option.content) });
