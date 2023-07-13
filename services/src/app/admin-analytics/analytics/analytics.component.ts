@@ -114,16 +114,17 @@ export class AnalyticsComponent {
   }
 
 
-  
+
 
   zeroEnrolledCourses(zeroCourses: { value: any; label: string }) {
     console.log(zeroCourses);
 
-    this.couseNotEnrolledByAnyStudent = zeroCourses.label;
-    this.countOfStudent = zeroCourses.value;
+    //this.courseResults = [];
+    // this.couseNotEnrolledByAnyStudent = zeroCourses.label;
+    // this.countOfStudent = zeroCourses.value;
     this.courseResults.push({ label: zeroCourses.label, value: zeroCourses.value });
-    
-   
+
+
   }
 
   ngOnInit() {
@@ -178,14 +179,14 @@ export class AnalyticsComponent {
   }
 
   getCoursesByDeptId(deptId: number) {
-    
+
     return new Promise((resolve, reject) => {
       this.courses = [];
       this.courseServ.getCourseByDepartmentId(deptId).subscribe(
         (response) => {
-          
-        this.courses = response.filter((course:Course)=>course.courseIsActive == true)
-         
+
+          this.courses = response.filter((course: Course) => course.courseIsActive == true)
+
           console.log("courses array in func", this.courses);
           resolve(this.courses)
         }
@@ -437,15 +438,15 @@ export class AnalyticsComponent {
 
     this.currentPage -= 3;
   }
-  
+
   //function to display next button if images present on ui
   nextPage(): void {
 
     this.currentPage += 3
-   
+
   }
-  
-  
+
+
   //function to handle button click on institutes to avoid apperance of further data on  double click
   handleButtonClick(adminInstitutionId: number) {
 
@@ -519,11 +520,13 @@ export class AnalyticsComponent {
   hadleButtonClickOnDept(darray: any, adminInstitutionId: number) {
     const currentTime = Date.now();
     const debounceTime = 500; // Adjust this value as per your needs (in milliseconds)
-
+    this.courseResults = [];
     if (currentTime - this.lastClickTime > debounceTime) {
       this.lastClickTime = currentTime;
       this.getClickedDataForDept(darray, adminInstitutionId)
     }
+
+
   }
 
 
@@ -877,7 +880,7 @@ export class AnalyticsComponent {
   //code for next button on progress panel of student
   doughnutNext() {
 
-    this. dchartcurrentIndex+= 3;
+    this.dchartcurrentIndex += 3;
     // console.log("this.dchartcurrentIndex value     " + this.dchartcurrentIndex)
 
   }
