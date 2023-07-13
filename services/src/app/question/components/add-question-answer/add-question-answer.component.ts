@@ -87,7 +87,7 @@ export class AddQuestionAnswerComponent implements OnInit {
   profileId: any;
   mcqCategory : Category []= [];
   file!: File;
-
+  isButtonDisabled: boolean = false;
   files!: FileList;
 
   myFiles: string[] = [];
@@ -298,9 +298,10 @@ async getMCQCategory(){
    let lAnsFlag:boolean =false;
    let mcqArr:any[] = [];
    let lAnsArr:any[] = [];
-   queAns['queAnsArray'].forEach( async (queAnsNew:OneQuestionAnswer)=> {
+  //  queAns['queAnsArray'].forEach( async (queAnsNew:OneQuestionAnswer)=> {
   
-  
+  await Promise.all(queAns['queAnsArray'].map(async (queAnsNew: OneQuestionAnswer, index: number) => {
+
    
    
   this.questionAnswer.question = {} as Question;
@@ -476,6 +477,13 @@ async getMCQCategory(){
       this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
       console.log( this.generatedQuestionAnswerId)
       console.log("Question Added Successfully");
+      if (index === queAns['queAnsArray'].length - 1) {
+        // Call location.back() on the last iteration
+        // location.back();
+        location.reload();
+
+        
+      }
       // this.getDataForMarks(this.selectedQuizId)
       // this.getAllQuestionAnswers(this.selectedQuizId)
     
@@ -510,6 +518,11 @@ async getMCQCategory(){
       this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
       console.log( this.generatedQuestionAnswerId)
       console.log("Question Added Successfully");
+      if (index === queAns['queAnsArray'].length - 1) {
+        // Call location.back() on the last iteration
+      // location.back();
+        location.reload();
+      }
       // this.getDataForMarks(this.selectedQuizId)
       // this.getAllQuestionAnswers(this.selectedQuizId)
     
@@ -604,7 +617,7 @@ async getMCQCategory(){
   }
 
   })
-
+  );
 }
 
 
@@ -637,116 +650,14 @@ console.log(quiz[0].maxQuestions)
    if((quesArr.length) < (quiz[0].maxQuestions)){
     returnVal =  true;
     console.log("Entered in  if(quesArr.length < quiz.maxQuestions)")
+    this.isButtonDisabled = returnVal;
      return returnVal;
    }
 
+   this.isButtonDisabled = returnVal;
   return returnVal;
 }
 
-
-// onFormSubmit(queAns: any): void {
-//   this.questionAnswer = {} as QuestionAnswer;
-//   this.oneQuestionAnswer = {} as OneQuestionAnswer;
-//   let isFirstAlertDisplayed = false;
-//   console.log("Parameter queAns Array")
-//   console.log(queAns)
-//   let flag: boolean = false;
-
-//   queAns['queAnsArray'].forEach((queAnsNew: any) => {
-//     this.questionAnswer.question = {} as Question;
-//     this.questionAnswer.question['questionId'] = queAnsNew.questionId;
-//     this.questionAnswer.question['questionFigure'] = queAnsNew.questionFigure;
-//     this.questionAnswer.question['questionContent'] = queAnsNew.questionContent;
-//     this.questionAnswer.question['questionExplanation'] = queAnsNew.questionExplanation;
-//     this.questionAnswer.question['questionOrderNo'] = queAnsNew.questionOrderNo;
-//     this.questionAnswer.question['maxMarks'] = queAnsNew.maxMarks;
-
-//     console.log("this.questionAnswer  assigned")
-//     console.log(this.questionAnswer)
-
-//     console.log("queAnsNew ")
-//     console.log(queAnsNew)
-
-//     console.log(this.questionAnswer.question['questionId'])
-//     console.log(queAnsNew.questionId)
-
-//     queAnsNew.totalMarks = this.totalMarks;
-//     if (this.selectedCategoryName == 'MCQ' || this.selectedCategoryName == 'mcq') {
-//       this.questionAnswer.question.questionIsMCQ = true;
-//     } else {
-//       this.questionAnswer.question.questionIsMCQ = false;
-//     }
-//     this.questionAnswer.question.questionQuizId = this.selectedQuizId;
-//     this.questionAnswer.question.questionCategoryId = this.selectedQuiz.categoryId;
-//     this.questionAnswer.question.questionIsActive = true;
-//     this.questionAnswer.answers = [];
-
-//     if (queAnsNew['content1'] != '' || queAnsNew['content1'] != undefined) {
-//       this.answer = {} as Answer;
-//       this.answer.content = queAnsNew['content1'];
-//       this.answer.correct = queAnsNew['correct1'];
-//       this.answer.questionorderno = queAnsNew['questionOrderNo'];
-//       this.questionAnswer.answers.push(this.answer);
-//     }
-//     if (queAnsNew['content2'] != '' || queAnsNew['content2'] != undefined) {
-//       this.answer = {} as Answer;
-//       this.answer.content = queAnsNew['content2'];
-//       this.answer.correct = queAnsNew['correct2'];
-//       this.answer.questionorderno = queAnsNew['questionOrderNo'];
-//       this.questionAnswer.answers.push(this.answer);
-//     }
-//     if (queAnsNew['content3'] != '' || queAnsNew['content3'] != undefined) {
-//       this.answer = {} as Answer;
-//       this.answer.content = queAnsNew['content3'];
-//       this.answer.correct = queAnsNew['correct3'];
-//       this.answer.questionorderno = queAnsNew['questionOrderNo'];
-//       this.questionAnswer.answers.push(this.answer);
-//     }
-//     if (queAnsNew['content4'] != '' || queAnsNew['content4'] != undefined) {
-//       this.answer = {} as Answer;
-//       this.answer.content = queAnsNew['content4'];
-//       this.answer.correct = queAnsNew['correct4'];
-//       this.answer.questionorderno = queAnsNew['questionOrderNo'];
-//       this.questionAnswer.answers.push(this.answer);
-//     }
-
-//     console.log("this.questionAnswer")
-//     console.log(this.questionAnswer)
-//     const instituteJson = JSON.stringify(this.questionAnswer);
-//     const blob = new Blob([instituteJson], {
-//       type: 'application/json'
-//     })
-
-//     let formData = new FormData();
-//     for (var i = 0; i < this.myFiles.length; i++) {
-//       formData.append("files", this.myFiles[i]);
-//     }
-
-//     console.log("this.questionAnswer before form data")
-//     console.log(this.questionAnswer)
-//     formData.append("request", new Blob([JSON.stringify(this.questionAnswer)], { type: 'application/json' }));
-
-//     console.log(formData)
-//     this.service.addQuestion(formData).subscribe(
-//       (response) => {
-//         this.generatedQuestionAnswerId = response;
-//         console.log(this.generatedQuestionAnswerId)
-//         console.log("Question Added Successfully");
-//         // this.getDataForMarks(this.selectedQuizId)
-//         // this.getAllQuestionAnswers(this.selectedQuizId)
-//       },
-//       (error) => {
-//         console.log("Question added failed");
-//         if (!isFirstAlertDisplayed) {
-//           this.dialogBoxService.open("Please enter details for all questions", 'information');
-//           isFirstAlertDisplayed = true;
-//         }
-//         // Clear queAns['queAnsArray'] to prevent any elements from being stored in the database
-//         queAns['queAnsArray'] = [];
-//       }
-//     )
-//   });
-// }
 
 
  
@@ -754,39 +665,31 @@ console.log(quiz[0].maxQuestions)
 
   onChangeCourse() {
     this.selectedModuleId = undefined;
-    // this.selectedQuiz = {} as Quiz;
-    // this.selectedQuizId = undefined;
-    // this.allData = []
+
   }
 
   onChangeModule() {
-    // this.selectedQuiz = {} as Quiz;
-    // this.selectedQuizId = undefined;
-    // this.allData = []
+
   }
 
-  onChangeSelectedQuiz() {
-    this.questionAnswers = [];
-    this.selectedQuiz = this.quizzes.find(quiz => quiz.quizId == this.selectedQuizId);
-    // this.currentQuestions.length = this.selectedQuiz.maxQuestions;
-    // this.currentAnswers.length = this.selectedQuiz.maxQuestions;
+  // onChangeSelectedQuiz() {
+  //   this.questionAnswers = [];
+  //   this.selectedQuiz = this.quizzes.find(quiz => quiz.quizId == this.selectedQuizId);
 
-    // console.log(this.selectedQuiz);
+  //   this.service.getAllQuestionsByQuizId(this.selectedQuizId).subscribe(
+  //     response => {
+  //       this.allData = response; //assign data to local variable
 
-    this.service.getAllQuestionsByQuizId(this.selectedQuizId).subscribe(
-      response => {
-        this.allData = response; //assign data to local variable
-
-        this.getAllQuestionAnswers(this.selectedQuizId);
-        // console.log(this.questionAnswers);
+  //       this.getAllQuestionAnswers(this.selectedQuizId);
+  //       // console.log(this.questionAnswers);
 
 
-      },
-      error => {
-        console.log('No data in table ');
-      }
-    );
-  }
+  //     },
+  //     error => {
+  //       console.log('No data in table ');
+  //     }
+  //   );
+  // }
 
   private initialiseQuestion(length: number) {
     // this.questionAnswers = [];
@@ -807,52 +710,7 @@ console.log(quiz[0].maxQuestions)
 
   }
 
-  // for navigating to view question paper screen all question of quiz
-  viewQuestionPaper() {
-    this.viewAll = false;
-    this.viewQuePaper = true;
-    this.questionAnswers = [];
-    this.getAllQuestionAnswers(this.selectedQuizId);
 
-  }
-
-// private getDataForMarks(quizId: number){
-//   this.totalMarks = 0;
-//   this.totalQuizMarks = 0
-//      this.service.getAllQuestionsByQuizId(quizId).subscribe(
-//        (response: any[]) => {
-//          console.log(response);
-//          response.forEach(
-//            question => {
-            
-//              this.totalMarks = this.totalMarks + question.maxMarks;
-             
-//            })
-//        });
-   
-//      this.service.getAllAnswers().subscribe(
-//        (data) => {
-//          this.answers = data;
-//          this.questionAnswers = []; // Initialize questionAnswers as an array
-       
-//          this.service.getAllQuestionsByQuizId(quizId).subscribe(
-//            (response: any[]) => {
-//              console.log(response);
-//              console.log("inside function getAllQuestionAnswers() ")
-//              response.forEach(
-//                question => {
-//                  this.queAns = {} as OneQuestionAnswer;
-                 
-//                   this.totalQuizMarks += question.maxMarks;
-//                  this.queAns.totalMarks = this.totalMarks;
-//                  console.log("Total Marks Down")
-//                  console.log( this.queAns.totalMarks )
-
-//                  this.submitClicked.emit(this.totalQuizMarks);
-//                })
-//               })
-//             })
-// }
   private getAllQuestionAnswers(quizId: number) {
  this.totalMarks = 0;
  this.totalQuizMarks = 0
@@ -1115,8 +973,18 @@ console.log(quiz[0].maxQuestions)
       this.sessionData = sessionStorage.getItem('quiz');
 
       this.data = JSON.parse(this.sessionData);
+console.log("######################################################3")
+ console.log(this.data)
       for (var inst in this.data) {
+        // this.getQuesByQuizId(inst.)
+        let  boolFlag: Promise<boolean> = Promise.resolve(false);
+        // console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$444")
+        // console.log(this.data[inst].quizId)
+        // boolFlag =  this.getQuesByQuizId(this.data[inst].quizId)
+        
         this.allData.push(this.data[inst]);
+        console.log("%%%%%%%%%%%%%%%%%%%%%5")
+        console.log(this.allData)
       }
     }
     catch (err) {
