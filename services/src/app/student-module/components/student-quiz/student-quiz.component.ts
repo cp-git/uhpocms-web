@@ -112,6 +112,7 @@ export class StudentQuizComponent implements OnInit {
   studentName: any;
 
   selectedQuizCategory: any;
+  questionNumber: number = 0;
 
   constructor(
     private http: HttpClient,
@@ -190,7 +191,7 @@ export class StudentQuizComponent implements OnInit {
         if (category.categoryId === selectedQuizCategoryId) {
           this.selectedQuizCategory = category;
 
-          console.log(JSON.stringify(this.selectedQuizCategory) + "000000000000000000000000000000000000"); // Entire object of the selected category
+          console.log(JSON.stringify(this.selectedQuizCategory)); // Entire object of the selected category
           break; // Exit the loop after finding the matching category
         }
       }
@@ -705,9 +706,7 @@ export class StudentQuizComponent implements OnInit {
 
 
 
-  //{{displayUrl}}/{{queAns['questionId']}}
-  //{{displayUrl}}/{{queAns['questionId']}}
-  generatePdfUsingPdfMaker() {
+  async generatePdfUsingPdfMaker() {
     const questionSection: any[] = [];
 
 
@@ -715,7 +714,7 @@ export class StudentQuizComponent implements OnInit {
 
     this.http.get(this.displayLogo, { responseType: 'blob' }).subscribe((logoBlob: Blob) => {
       const reader = new FileReader();
-      reader.onloadend = () => {
+      reader.onloadend = async () => {
         const logoDataUrl = reader.result as string;
 
         // Add the institute logo to the content array
@@ -744,11 +743,13 @@ export class StudentQuizComponent implements OnInit {
         );
 
         console.log(this.quizScore.score + "score");
-        let questionNumber = 1;
+
         console.log(this.questionAnswers + " Before Loop +++");
 
+        const questionPromises: any = [];
+        this.questionNumber = 1;
         // Use `map` to iterate over the questionAnswers array and create an array of Promises
-        const questionPromises = this.questionAnswers.map((questionAnswer, index) => {
+        for (const questionAnswer of this.questionAnswers) {
           console.log(questionAnswer + "222222222222222222222222");
           const questionFigureUrl = this.questionUrl + '/getFileById/' + questionAnswer.questionId;
           const questionContent = questionAnswer.questionContent;
@@ -771,92 +772,13 @@ export class StudentQuizComponent implements OnInit {
               questionAnswer.correct3 ? questionAnswer.content3 :
                 questionAnswer.correct4 ? questionAnswer.content4 : '';
 
-          // Create a Promise to fetch the question image
-          return new Promise<void>((resolve) => {
-            // if (questionFigureUrl) {
-            this.http.get(questionFigureUrl, { responseType: 'blob' }).subscribe((figureBlob: Blob) => {
-              const reader = new FileReader();
-              reader.onloadend = () => {
-                const imageDataUrl = reader.result as string;
 
-                const questionText = `${questionNumber}: ${questionContent}`;
-                questionSection.push({ text: questionText, style: 'questionContent' });
 
-                if (imageDataUrl) {
-                  questionSection.push({
-                    image: imageDataUrl,
-                    width: 200,
-                    height: 150,
-                    alignment: 'center',
-                  });
-                }
+          console.log("Question with figure ");
+          await this.fetchFile(questionFigureUrl, questionSection, questionContent, options, answer, selectedAns);
 
-                if (this.selectedQuizCategory.categoryName == 'MCQ') {
-                  questionSection.push({ text: 'Options' });
-                  questionSection.push({ ol: options.map(option =>  option.content) });
-                }
-                // questionSection.push({});
-                // questionSection.push({ ol: options.map(option => 'option :' + option.content) });
-                // questionSection.push({});
-                if (selectedAns == answer) {
-                  questionSection.push({ text: 'Selected answer: ' + selectedAns });
-                  questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
-                  questionSection.push({ });
-                questionSection.push({ });
-                } else {
-                  questionSection.push({ text: 'Selected answer: ' + selectedAns, style: 'incorrect' });
-                  questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
-                  questionSection.push({ });
-                questionSection.push({ });
-                }
-                questionSection.push({ });
-                questionSection.push({ });
-                questionNumber++;
-                resolve(); // Resolve the Promise when the image is added
-              };
-              reader.readAsDataURL(figureBlob);
-            }, (error) => {
-              console.error('Error fetching question image:', error);
-              const questionText = `${questionNumber}: ${questionContent}`;
-              questionSection.push({ text: questionText, style: 'questionContent' });
+        };
 
-              if (this.selectedQuizCategory.categoryName == 'MCQ') {
-                questionSection.push({ text: 'Options' });
-                questionSection.push({ ol: options.map(option =>option.content) });
-              }
-              // questionSection.push({});
-              // questionSection.push({ ol: options.map(option => 'option :' + option.content) });
-              // questionSection.push({});
-              if (selectedAns == answer) {
-                questionSection.push({ text: 'Selected answer: ' + selectedAns });
-                questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
-              } else {
-                questionSection.push({ text: 'Selected answer: ' + selectedAns, style: 'incorrect' });
-                questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
-              }
-              questionNumber++;
-              resolve(); // Resolve the Promise even if an error occurs
-            });
-            // }
-            // else {
-            //   const questionText = `Question :${questionNumber}: ${questionContent}`;
-            //   questionSection.push({ text: questionText, style: 'questionContent' });
-
-            //   questionSection.push({});
-            //   questionSection.push({ ol: options.map(option => 'option :' + option.content) });
-            //   questionSection.push({});
-            //   if (selectedAns == answer) {
-            //     questionSection.push({ text: 'Selected answer: ' + selectedAns });
-            //     questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
-            //   } else {
-            //     questionSection.push({ text: 'Selected answer: ' + selectedAns, style: 'incorrect' });
-            //     questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
-            //   }
-            //   questionNumber++;
-            //   resolve(); // Resolve the Promise for questions without figure
-            // }
-          });
-        });
 
         // Wait for all question image Promises to resolve
         Promise.all(questionPromises).then(() => {
@@ -884,6 +806,8 @@ export class StudentQuizComponent implements OnInit {
               marginBottom: 5,
             },
             questionContent: {
+              bold: true,
+              fontSize: 14,
               marginTop: 3,
               marginBottom: 5,
             },
@@ -952,6 +876,72 @@ export class StudentQuizComponent implements OnInit {
       console.error('Error fetching logo image:', error);
     });
   }
+
+  async fetchFile(questionFigureUrl: any, questionSection: any, questionContent: any, options: any, answer: any, selectedAns: any) {
+    return new Promise<void>((resolve) => {
+      this.http.get(questionFigureUrl, { responseType: 'blob' }).subscribe((figureBlob: Blob) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const imageDataUrl = reader.result as string;
+
+          const questionText = `${this.questionNumber}. ${questionContent}`;
+          questionSection.push({ text: questionText, style: 'questionContent' });
+          console.log(imageDataUrl);
+
+          if (imageDataUrl) {
+            questionSection.push({
+              image: imageDataUrl,
+              width: 200,
+              height: 150,
+              alignment: 'center',
+            });
+          }
+
+          if (this.selectedQuizCategory.categoryName == 'MCQ') {
+            questionSection.push({ text: 'Options:' })
+            questionSection.push({ ol: options.map((option: { content: any; }) => option.content) });
+          }
+
+          if (selectedAns == answer) {
+            questionSection.push({ text: 'Selected answer: ' + selectedAns });
+            questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
+          } else {
+            questionSection.push({ text: 'Selected answer: ' + selectedAns, style: 'incorrect' });
+            questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
+          }
+          // Add two line spaces after each question
+          questionSection.push({ text: '\n\n' });
+
+          this.questionNumber++;
+          resolve(); // Resolve the Promise for questions without figure
+        };
+        reader.readAsDataURL(figureBlob);
+      }, (error) => {
+        console.error('Error fetching question image:', error);
+        const questionText = `${this.questionNumber}. ${questionContent}`;
+        questionSection.push({ text: questionText, style: 'questionContent' });
+
+        if (this.selectedQuizCategory.categoryName == 'MCQ') {
+          questionSection.push({ text: 'Options:' })
+          questionSection.push({ ol: options.map((option: { content: any; }) => option.content) });
+        }
+
+        if (selectedAns == answer) {
+          questionSection.push({ text: 'Selected answer: ' + selectedAns });
+          questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
+        } else {
+          questionSection.push({ text: 'Selected answer: ' + selectedAns, style: 'incorrect' });
+          questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
+        }
+        // Add two line spaces after each question
+        questionSection.push({ text: '\n\n' });
+
+        this.questionNumber++;
+        resolve(); // Resolve the Promise for questions without figure
+      });
+    });
+  }
+
 
 
 

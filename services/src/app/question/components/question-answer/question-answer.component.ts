@@ -38,7 +38,7 @@ export class QuestionAnswerComponent implements OnInit {
   totalMarks: number = 0;
   mcqAnswer: any;
   options = ['Option 1', 'Option 2', 'Option3', 'Option4'];
- 
+
   fileName!: string;
   // for pagination 
   currentPage = 1;
@@ -87,10 +87,10 @@ export class QuestionAnswerComponent implements OnInit {
   passMark: number = 0;
   courseCode: string = '';
 
-  isSubmitButtonDisabled :boolean = true;
+  isSubmitButtonDisabled: boolean = true;
   isNextButtonDisabled: boolean = false;
   isPreviousButtonDisabled: boolean = false;
-  
+  questionNumber: number = 0;
 
 
 
@@ -212,8 +212,8 @@ export class QuestionAnswerComponent implements OnInit {
     this.submittedQuestionAnswer = {} as OneQuestionAnswer;
     this.submittedQuestionAnswer = queAns;
     console.log(queAns);
-   
-  // Disable the submit button
+
+    // Disable the submit button
 
 
     if ((this.selectedCategoryName.toUpperCase() != 'MCQ')) {
@@ -305,7 +305,7 @@ export class QuestionAnswerComponent implements OnInit {
       queAns.isFormDirty = true;
       queAns.isFormSubmitted = false;
       queAns.totalMarks = queAns.totalMarks;
-    
+
     }
   }
 
@@ -394,7 +394,7 @@ export class QuestionAnswerComponent implements OnInit {
           this.selectedQuizCategoryId = quiz.categoryId;
           // alert(this.selectedQuizCategoryId);
           this.loadCategories(this.quizCategory.categoryId);
-          console.log(this.quizTitle + "}}}}}}}}}}}}}}}}}}}}}]"); // Quiz title of the selected quiz
+          console.log(this.quizTitle) // Quiz title of the selected quiz
           break; // Exit the loop after finding the matching quiz
         }
       }
@@ -415,7 +415,7 @@ export class QuestionAnswerComponent implements OnInit {
           this.quizCategory = category;
           //alert(JSON.stringify(this.quizCategory));
 
-          console.log(JSON.stringify(this.quizCategory) + "000000000000000000000000000000000000"); // Entire object of the selected category
+          console.log(JSON.stringify(this.quizCategory) + ""); // Entire object of the selected category
           break; // Exit the loop after finding the matching category
         }
       }
@@ -425,16 +425,14 @@ export class QuestionAnswerComponent implements OnInit {
   }
 
 
-
-
-  generatePdfUsingPdfMaker() {
+  async generatePdfUsingPdfMaker() {
     const questionSection: any[] = [];
 
     this.displayLogo = this.displayInstituteLogo + '/getFileById/' + this.profileInstituteId;
 
     this.http.get(this.displayLogo, { responseType: 'blob' }).subscribe((logoBlob: Blob) => {
       const reader = new FileReader();
-      reader.onloadend = () => {
+      reader.onloadend = async () => {
         const logoDataUrl = reader.result as string;
 
 
@@ -464,13 +462,12 @@ export class QuestionAnswerComponent implements OnInit {
           },
         );
 
-        let questionNumber = 1;
+        this.questionNumber = 1;
         let questionFigureUrl: any;
         // Use `map` to iterate over the questionAnswers array and create an array of Promises
-        const questionPromises = this.questionAnswers.map((questionAnswer, i) => {
-          // const questionNo = `Question ${++questionCounter}`;;
-          // console.log(questionNo);
-          // alert(questionNo);
+        const questionPromises: any = [];
+        for (const questionAnswer of this.questionAnswers) {
+
           console.log(questionAnswer);
           questionFigureUrl = null;
           const questionContent = questionAnswer.questionContent;
@@ -497,77 +494,10 @@ export class QuestionAnswerComponent implements OnInit {
                 questionAnswer.correct4 ? questionAnswer.content4 : '';
 
 
-          // Create a Promise to fetch the question image
-          // Create a Promise to fetch the question image
-          return new Promise<void>((resolve) => {
-            // if (questionFigureUrl) {
-            console.log("Question with figure 0000000000000000000000000000000");
-            this.http.get(questionFigureUrl, { responseType: 'blob' }).subscribe(async (figureBlob: Blob) => {
-              const reader = new FileReader();
-              reader.onloadend = () => {
-                console.log(questionNumber);
 
-                const imageDataUrl = reader.result as string;
-
-                const questionText = `${questionNumber}: ${questionContent}`;
-                questionSection.push({ text: questionText, style: 'questionContent' });
-                console.log(imageDataUrl);
-
-                if (imageDataUrl) {
-                  questionSection.push({
-                    image: imageDataUrl,
-                    width: 200,
-                    height: 150,
-                    alignment: 'center',
-                  });
-                }
-
-                if (this.quizCategory.categoryName == 'MCQ') {
-                  questionSection.push({ text: 'Options' });
-                  questionSection.push({ ol: options.map(option => option.content) });
-                }
-
-                questionSection.push({ text: 'Correct answer : ' + answer, style: 'answer' });
-                questionNumber++;
-
-                resolve(); // Resolve the Promise when the image is added
-              };
-              reader.readAsDataURL(figureBlob);
-            }, (error) => {
-              console.error('Error fetching question image:', error);
-              const questionText = `${questionNumber}: ${questionContent}`;
-              questionSection.push({ text: questionText, style: 'questionContent' });
-
-              if (this.quizCategory.categoryName == 'MCQ') {
-                questionSection.push({ text: 'Options' });
-                questionSection.push({ ol: options.map(option => option.content) });
-              }
-
-              questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
-              questionNumber++;
-              resolve(); // Resolve the Promise even if an error occurs
-            });
-            // } else {
-            //   console.log("Question without figure 0000000000000000000000000000000");
-
-            //   // const questionSection = []; // Create a new questionSection array for each question
-
-            //   const questionText = `Question :${questionNumber}: ${questionContent}`;
-            //   questionSection.push({ text: questionText, style: 'questionContent' });
-
-            //   if (this.quizCategory.categoryName == 'MCQ') {
-            //     questionSection.push({ ol: options.map(option => 'option :' + option.content) });
-            //   }
-
-            //   questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
-            //   questionNumber++;
-
-            //   resolve() // Resolve the Promise for questions without a figure
-            // }
-
-
-          });
-
+          console.log("Question with figure 0000000000000000000000000000000");
+          await this.fetchFile(questionFigureUrl, questionSection, questionContent, options, answer);
+          console.log("hhhhhhhhhhhhhhhhhh");
 
 
 
@@ -575,7 +505,7 @@ export class QuestionAnswerComponent implements OnInit {
 
 
 
-        });
+        };
 
         // Wait for all question image Promises to resolve
         Promise.all(questionPromises).then(() => {
@@ -605,6 +535,8 @@ export class QuestionAnswerComponent implements OnInit {
               marginBottom: 5,
             },
             questionContent: {
+              bold: true,
+              fontSize: 14,
               marginTop: 3,
               marginBottom: 5,
             },
@@ -667,4 +599,59 @@ export class QuestionAnswerComponent implements OnInit {
     });
   }
 
+
+  async fetchFile(questionFigureUrl: any, questionSection: any, questionContent: any, options: any, answer: any) {
+    return new Promise<void>((resolve) => {
+      this.http.get(questionFigureUrl, { responseType: 'blob' }).subscribe((figureBlob: Blob) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const imageDataUrl = reader.result as string;
+
+          const questionText = `${this.questionNumber}. ${questionContent}`;
+          questionSection.push({ text: questionText, style: 'questionContent' });
+          console.log(imageDataUrl);
+
+          if (imageDataUrl) {
+            questionSection.push({
+              image: imageDataUrl,
+              width: 200,
+              height: 150,
+              alignment: 'center',
+            });
+          }
+
+          if (this.quizCategory.categoryName == 'MCQ') {
+            questionSection.push({ text: 'Options:' })
+            questionSection.push({ ol: options.map((option: { content: any; }) => option.content) });
+          }
+
+          questionSection.push({ text: 'Correct answer : ' + answer, style: 'answer' });
+          questionSection.push({});
+          questionSection.push({});
+          this.questionNumber++;
+
+          resolve(); // Resolve the Promise when the image is added
+        };
+        reader.readAsDataURL(figureBlob);
+      }, (error) => {
+        console.error('Error fetching question image:', error);
+        const questionText = `${this.questionNumber}. ${questionContent}`;
+        questionSection.push({ text: questionText, style: 'questionContent' });
+
+        if (this.quizCategory.categoryName == 'MCQ') {
+          questionSection.push({ text: 'Options:' })
+          questionSection.push({ ol: options.map((option: { content: any; }) => option.content) });
+        }
+
+        questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
+        questionSection.push({});
+        questionSection.push({});
+        this.questionNumber++;
+        resolve(); // Resolve the Promise even if an error occurs
+      });
+    });
+  }
+
+
 }
+
