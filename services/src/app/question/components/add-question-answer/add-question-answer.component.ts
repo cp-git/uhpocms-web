@@ -326,7 +326,7 @@ async getMCQCategory(){
   console.log( this.selectedQuiz.categoryId)
   console.log("this.mcqCategory.categoryId")
   console.log(this.mcqCategory[0].categoryId)
-  if((queAnsNew.questionContent != '') && (queAnsNew.questionContent != undefined) && (queAnsNew.questionExplanation != '')  && (queAnsNew.questionExplanation != undefined) && (queAnsNew.questionOrderNo != null) && (queAnsNew.questionOrderNo != 0) && (queAnsNew.questionFigure != '') && (queAnsNew.questionFigure != undefined) && (queAnsNew.maxMarks != null)  && (queAnsNew.maxMarks != 0) )
+  if((queAnsNew.questionContent != '') && (queAnsNew.questionContent != undefined) && (queAnsNew.questionExplanation != '')  && (queAnsNew.questionExplanation != undefined) && (queAnsNew.questionOrderNo != null) && (queAnsNew.questionOrderNo != 0) && (queAnsNew.maxMarks != null)  && (queAnsNew.maxMarks != 0) )
   { 
     console.log("Entered in First If")
     console.log(this.questionAnswer.question['questionIsMCQ'])
@@ -453,9 +453,13 @@ async getMCQCategory(){
   console.log(queAns['queAnsArray'].length)
   console.log(lAnsArr.length)
 
-
-
-
+  if(((queAns['queAnsArray'].length) != (mcqArr.length)) && ((queAns['queAnsArray'].length) != (lAnsArr.length)))
+   {
+    if (!isFirstAlertDisplayed) {
+      this.dialogBoxService.open("Please enter details for all questions ", 'information');
+      isFirstAlertDisplayed = true;
+       }
+   }
   //started from here
   if(  this.questionAnswer.question['questionId'] == 0)
   {
@@ -491,10 +495,10 @@ async getMCQCategory(){
     (error) => {
     console.log(this.questionAnswer.question['questionContent'])
     console.log("Question added failed");
-    if (!isFirstAlertDisplayed) {
-     this.dialogBoxService.open("Please enter details for all questions ", 'information');
-     isFirstAlertDisplayed = true;
-      }
+    // if (!isFirstAlertDisplayed) {
+    //  this.dialogBoxService.open("Please enter details for all questions ", 'information');
+    //  isFirstAlertDisplayed = true;
+    //   }
     }
   )
   }
@@ -530,10 +534,10 @@ async getMCQCategory(){
     (error) => {
 
       console.log("Question added failed");
-      if (!isFirstAlertDisplayed) {
-     this.dialogBoxService.open("Please enter details for all questions", 'information');
-     isFirstAlertDisplayed = true;
-      }
+    //   if (!isFirstAlertDisplayed) {
+    //  this.dialogBoxService.open("Please enter details for all questions", 'information');
+    //  isFirstAlertDisplayed = true;
+    //   }
     }
   )
   }
@@ -571,10 +575,10 @@ async getMCQCategory(){
     (error) => {
     console.log(this.questionAnswer.question['questionContent'])
     console.log("Question added failed");
-    if (!isFirstAlertDisplayed) {
-     this.dialogBoxService.open("Please enter details for all questions ", 'information');
-     isFirstAlertDisplayed = true;
-      }
+    // if (!isFirstAlertDisplayed) {
+    //  this.dialogBoxService.open("Please enter details for all questions ", 'information');
+    //  isFirstAlertDisplayed = true;
+    //   }
     }
   )
   }
@@ -604,10 +608,10 @@ async getMCQCategory(){
     (error) => {
 
       console.log("Question added failed");
-      if (!isFirstAlertDisplayed) {
-     this.dialogBoxService.open("Please enter details for all questions", 'information');
-     isFirstAlertDisplayed = true;
-      }
+    //   if (!isFirstAlertDisplayed) {
+    //  this.dialogBoxService.open("Please enter details for all questions", 'information');
+    //  isFirstAlertDisplayed = true;
+    //   }
     }
   )
   }
