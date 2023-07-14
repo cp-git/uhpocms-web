@@ -89,7 +89,7 @@ import { AnalyticsComponent } from './admin-analytics/analytics/analytics.compon
 import { PolarChartComponent } from './charts/components/polar-chart/polar-chart.component';
 import { StudentModuleModule } from './student-module/student-module.module';
 import { ReviewModule } from './review-answer/module/review/review.module';
-import { AddReviewMarksComponent } from './review-answer/components/add-review-marks/add-review-marks.component';
+
 
 
 
@@ -132,8 +132,7 @@ import { AddReviewMarksComponent } from './review-answer/components/add-review-m
 
     BarChartComponent,
     AnalyticsComponent,
-    PolarChartComponent
- 
+    PolarChartComponent,
       
     
 
