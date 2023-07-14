@@ -119,7 +119,9 @@
             <tbody>
                 <tr
                     *ngFor="let row of allData | filter:'courseId':selectedCourseId| filter:'moduleId':selectedModuleId | filter:'categoryId':selectedCategoryId">
+                 
                     <td *ngFor="let column of columnNames">
+                
                         <ng-container [ngSwitch]="column.type">
                             <input name="{{column.key}}" class="form-control" *ngSwitchCase="'input'" type="text"
                                 [(ngModel)]="row[column.key]" disabled>
@@ -144,11 +146,16 @@
                         </ng-container>
                     </td>
 
-                    <td *ngIf="buttonsArray.showAddButton || buttonsArray.showUpdateButton"><button (click)="onAddUpdatClicked(row)" class="btn btn-primary">Add/ Update</button></td>
+                    <!-- <td><button (click)="onAddUpdatClicked(row)" class="btn btn-primary">Add</button></td> -->
+               
+                      
+                    <!-- <td><button (click)="onDeleteClicked(row)" class="btn btn-danger">Delete</button></td> -->
+                    <td *ngIf="buttonsArray.showAddButton || buttonsArray.showUpdateButton"><button (click)="onAddUpdatClicked(row)"
+                            class="btn btn-primary">Add/ Update</button></td>
+
                     <td><span (click)="onViewClicked(row)" class="fa-solid fa-eye"
                             style="font-size:24px;color: #6197f5;"></span></td>
-                    <!-- <td><button (click)="onDeleteClicked(row)" class="btn btn-danger">Delete</button></td> -->
-                </tr>
+                        </tr>
             </tbody>
         </table>
 

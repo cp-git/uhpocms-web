@@ -411,13 +411,16 @@ export class ProfileComponent implements OnInit {
         if (currentData.activeUser === true) {
           this.authUserService.activateAuthUserById(currentData.userId).subscribe(
             response => {
-              this.dialogBoxService.open('Profile Added Successfully ', 'information')
+              this.dialogBoxService.open("Profile Added Successfully", 'information').then((response) => {
+                if (response) {
+                  location.reload(); // Refresh the page
+                }
+          
+              });
               this.emptyProfile = {} as Profile;
               this.ngOnInit();
               this.back();
-              setTimeout(() => {
-                location.reload(); // Refresh the page
-              }, 1000); // Delay for 1 second before reloading
+             
             },
             error => {
               this.dialogBoxService.open('Failed to Add Profile ', 'warning')

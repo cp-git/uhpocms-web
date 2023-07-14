@@ -313,7 +313,12 @@ private async addCourse(currentData: any) {
         // console.log('Course Added successfully');
 
       if (data.courseIsActive) {
-        this.dialogBoxServices.open("Course added successfully", 'information');
+        this.dialogBoxServices.open("Course Added successfully", 'information').then((response) => {
+          if (response) {
+            location.reload(); // Refresh the page
+          }
+
+        });
       } else {
         this.dialogBoxServices.open("Course added successfully but NOT ACTIVE", 'information');
       }
@@ -322,9 +327,7 @@ private async addCourse(currentData: any) {
     this.emptyCourse = {} as Course;
     this.ngOnInit();
     this.back();
-    setTimeout(() => {
-      location.reload(); // Refresh the page
-    }, 1000); // Delay for 1 second before reloading
+   
   } catch (error) {
     this.dialogBoxServices.open("Failed to add Course", 'warning');
   }
@@ -387,11 +390,14 @@ private async addCourse(currentData: any) {
     this.service.deleteCourseByCourseId(courseId).subscribe(
       (response) => {
         console.log('Course deleted successfully');
-        this.dialogBoxServices.open("Course deleted successfully", 'information');
+        this.dialogBoxServices.open("Course deleted successfully", 'information').then((response) => {
+          if (response) {
+            location.reload(); // Refresh the page
+          }
+
+        });
         this.ngOnInit();
-        setTimeout(() => {
-          location.reload(); // Refresh the page
-        }, 1000); // Delay for 1 second before reloading
+        
       },
       (error) => {
         this.dialogBoxServices.open('Course deletion Failed', 'warning');
@@ -470,11 +476,14 @@ private async addCourse(currentData: any) {
     // calling service to activating admin role
     this.service.activateCourseById(courseId).subscribe(
       response => {
-        this.dialogBoxServices.open('Course Activated', 'information');
+        this.dialogBoxServices.open("Course Activated", 'information').then((response) => {
+          if (response) {
+            location.reload(); // Refresh the page
+          }
+
+        });
         this.ngOnInit();
-        setTimeout(() => {
-          location.reload(); // Refresh the page
-        }, 1000); // Delay for 1 second before reloading
+        
       },
       error => {
         this.dialogBoxServices.open('Failed to Activate Course', 'warning');
