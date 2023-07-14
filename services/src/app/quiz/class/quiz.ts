@@ -21,4 +21,5 @@ export class Quiz {
     createdBy!: string;
     createdOn!: Date;
     modifiedOn!: Date;
+     setTimer!:number
 }

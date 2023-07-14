@@ -55,7 +55,7 @@ export class AuthUserComponent implements OnInit {
 
 
 
-  constructor(private service: AuthUserService, private profileService: ProfileService, private location: Location,private dialogBoxService:DialogBoxService) {
+  constructor(private service: AuthUserService, private profileService: ProfileService, private location: Location, private dialogBoxService: DialogBoxService) {
 
     // assigng headers
     // this.adminRoleHeader = AdminRoleColumn;
@@ -193,7 +193,7 @@ export class AuthUserComponent implements OnInit {
               profileData.adminEmail = currentData.authUserEmail;
 
               // Save the updated profile
-              this.profileService.updateProfileByActiveAuthuser(currentData.authUserId, profileData).subscribe(
+              this.profileService.updateProfileByAuthuser(currentData.authUserId, profileData).subscribe(
                 profileUpdateResponse => {
                   console.log(`Profile updated successfully!`);
                   this.back();
@@ -276,23 +276,23 @@ export class AuthUserComponent implements OnInit {
       if (response) {
         console.log('User clicked OK');
         // Do something if the user clicked OK
-    // calling service to soft delete
-    this.service.deleteAuthUser(authUserName).subscribe(
-      (response) => {
-        // alert('Auth user deleted successfully');
-        this.dialogBoxService.open('User deleted successfully ', 'information')
-        this.ngOnInit();
-      },
-      (error) => {
-        this.dialogBoxService.open('User deletion Failed', 'warning');
+        // calling service to soft delete
+        this.service.deleteAuthUser(authUserName).subscribe(
+          (response) => {
+            // alert('Auth user deleted successfully');
+            this.dialogBoxService.open('User deleted successfully ', 'information')
+            this.ngOnInit();
+          },
+          (error) => {
+            this.dialogBoxService.open('User deletion Failed', 'warning');
+          }
+        );
+      } else {
+        console.log('User clicked Cancel');
+        // Do something if the user clicked Cancel
       }
-    );
-  } else {
-    console.log('User clicked Cancel');
-    // Do something if the user clicked Cancel
+    });
   }
-});
-}
 
   // For getting all inactive auth user
   private getInActiveAuthUser() {

@@ -43,6 +43,11 @@ export class ProfileService {
     return this.http.put<any>(`${this.profileUrl}/updatedelete/${authUserId}`, formData);
   }
 
+  updateProfileByAuthuser(authUserId: any, profileData: Profile): Observable<any> {
+    return this.http.put<any>(`${this.profileUrl}/updateprofile/${authUserId}`, profileData);
+  }
+
+
 
   deleteProfileByActiveAuthuser(authUserId: any, profile: Profile): Observable<any> {
     return this.http.put<any>(`${this.profileUrl}/delete/${authUserId}`, profile);

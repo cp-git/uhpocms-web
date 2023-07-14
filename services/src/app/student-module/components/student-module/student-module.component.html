@@ -32,16 +32,15 @@
                                     *ngIf="module.moduleId == file.moduleId && selectedCourseId == module.courseId_id">
                                     <div class="dropdown-item">
                                         <li>
-                                            <span
-                                                *ngIf="filteredProgressFileIds && file.moduleFileId && filteredProgressFileIds.includes(file.moduleFileId); else elseBlock"
+                                            <span *ngIf="filteredProgressFileIds && file.moduleFileId && filteredProgressFileIds.includes(file.moduleFileId); else elseBlock"
                                                 class="fa fa-check-circle" aria-hidden="true"></span>
                                             <ng-template #elseBlock>
-                                                <span class="fas fa-video" aria-hidden="true"></span>
+                                                <span [ngClass]="getFileIconClass(file.moduleFile)" aria-hidden="true"></span>
                                             </ng-template>
                                             &nbsp;&nbsp;
                                             <a (click)="changeSelectedFileAndModule(file, module)"
-                                                [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId) && selectedCourse.accessModuleInOrder}"><b>{{
-                                                    file.moduleFile|removeExtension }}</b>
+                                                [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId) && selectedCourse.accessModuleInOrder}">
+                                                <b>{{ file.moduleFile | removeExtension }}</b>
                                             </a>
                                         </li>
                                     </div>
@@ -160,7 +159,7 @@
             <div style="font-size: 20px;"
                 [hidden]="selectedQuizName=='' || (!isRetakingQuiz && (quizFailedProgresses.includes(selectedQuiz.quizId) || quizPassedProgresses.includes(selectedQuiz.quizId)))">
                 <label>Quiz Timer : </label>&nbsp;
-                <countdown #cd [config]=" { leftTime: 30 }" (event)="handleEvent($event)">
+                <countdown #cd [config]=" { leftTime: setTimer }" (event)="handleEvent($event)">
                 </countdown>
             </div>
         </div>
