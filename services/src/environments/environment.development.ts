@@ -32,7 +32,7 @@ export const environment = {
   //
   departmentUrl: `http://localhost:8090/department/uhpocms`,
   adminInstitutionUrl: `http://localhost:8090/admininstitution/uhpocms`,
-  instituteAdminUrl: `http://localhost:8080/uhpocms`,
+  instituteAdminUrl: `http://localhost:8090/instituteadmin/uhpocms`,
   authUserUrl: `http://localhost:8090/authuser/uhpocms`,
   categoryUrl: `http://localhost:8090/category/uhpocms`,
   courseUrl: `http://localhost:8090/course/uhpocms`,

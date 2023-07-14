@@ -143,6 +143,17 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.REVIEW_ANSWERS)">
+                <div class="card text-center" [routerLink]="['/Review',userName]">
+                    <div class="card-header">
+                        <span class="fas fa-question-circle fa-4x" style="color: rgb(108,44,153);"></span>
+                    </div>
+                    <div class="card-body">
+                        <!--<h3 class="card-title">Questions & Answers</h3>-->
+                        <button class="btn btn-primary">Review Answers</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

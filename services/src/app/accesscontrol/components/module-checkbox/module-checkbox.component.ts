@@ -12,14 +12,15 @@ export class ModuleCheckboxComponent implements OnInit {
   @Input() module: any;
   @Input() userPermissions: any;
   @Input() groupPermissions: any;
-
+  @Input() assignPermissionTo: any;
+  
   @Output() onChangePermissions: EventEmitter<any> = new EventEmitter();
   @Input() accessControl!: any;
   // accessControl: AccessControl;
   showInnerCheckboxes = false;
   userPermissionsIds: Set<number> = new Set<number>();
   groupPermissionsIds: Set<number> = new Set<number>();
-
+  
   // permissions
   CREATE: any = userPermission.CREATE;
   DELETE: any = userPermission.DELETE;

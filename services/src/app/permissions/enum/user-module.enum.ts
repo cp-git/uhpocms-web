@@ -13,4 +13,6 @@ export enum userModule {
     ENROLL_STUDENTS = 12,
     ANNOUNCEMENT = 13,
     LESSONS = 14,
+    REVIEW_ANSWERS = 15,
+    CATEGORY = 16,
 }

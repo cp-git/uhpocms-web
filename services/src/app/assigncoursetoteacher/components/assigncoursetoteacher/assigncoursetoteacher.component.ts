@@ -203,6 +203,7 @@ export class AssigncoursetoteacherComponent {
             console.log(response);
             // instId = this._profile.institutionId;
             console.log(instId);
+            this._profileArrCopy = this._profileArray;
             this.selectAllForDropdownItems(this._profileArray);
           }
         );
@@ -268,6 +269,12 @@ export class AssigncoursetoteacherComponent {
           this.enrolledUsers.push(data.profileId);
           console.log(this.enrolledUsers);
         })
+        // Filtering out profiles where adminId matches an enrolledUser
+        // console.log(this._profileArray);
+        // this._profileArray = this._profileArrCopy;
+        // this._profileArray = this._profileArray.filter(profile => !this.enrolledUsers.includes(profile.adminId));
+        // console.log(this._profileArray);
+         
       },
       error => {
         console.log("failed to fetch data");

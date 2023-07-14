@@ -397,10 +397,15 @@ export class QuizComponent implements OnInit {
       case 'student':
         // this.getInstitutionAndDepartmentsOfUserByUserId(this.profileId);
 
-        this.getEnrolledCoursesByProfileId(this.profileId);
-        this.getModulesOfEnrolledCoursesByProfileId(this.profileId);
-        this.getActiveQuizzesOfModulesOfEnrolledCoursesByProfileId(this.profileId);
-        this.getInactiveQuizzesOfModulesOfEnrolledCoursesByProfileId(this.profileId);
+        // this.getEnrolledCoursesByProfileId(this.profileId);
+        // this.getModulesOfEnrolledCoursesByProfileId(this.profileId);
+        // this.getActiveQuizzesOfModulesOfEnrolledCoursesByProfileId(this.profileId);
+        // this.getInactiveQuizzesOfModulesOfEnrolledCoursesByProfileId(this.profileId);
+
+        this.getAssignedCoursesByProfileId(this.profileId);
+        this.getModulesOfAssignedCoursesByProfileId(this.profileId);
+        this.getActiveQuizzesOfModulesOfAssignedCoursesByProfileId(this.profileId);
+        this.getInactiveQuizzesOfModulesOfAssignedCoursesByProfileId(this.profileId);
 
         break;
     }

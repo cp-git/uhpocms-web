@@ -519,13 +519,13 @@ export class ModuleFileComponent {
       case 'student':
         // this.getInstitutionAndDepartmentsOfUserByUserId(this.profileId);
 
-        this.getEnrolledCoursesByProfileId(this.profileId);
-        console.log("hey1");
+        // this.getEnrolledCoursesByProfileId(this.profileId);
+        // await this.getModulesOfEnrolledCoursesByProfileId(this.profileId);
+        // this.getModuleFilesOfEnrolledCoursesOfModulesByProfileId(this.profileId)
 
-        await this.getModulesOfEnrolledCoursesByProfileId(this.profileId);
-        console.log("hey1");
-
-        this.getModuleFilesOfEnrolledCoursesOfModulesByProfileId(this.profileId)
+        this.getAssignedCoursesByProfileId(this.profileId);
+        await this.getModulesOfAssignedCoursesByProfileId(this.profileId);
+        this.getModuleFilesOfAssignedCoursesOfModulesByProfileId(this.profileId)
 
         break;
     }

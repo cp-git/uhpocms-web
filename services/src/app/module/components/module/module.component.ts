@@ -465,8 +465,11 @@ export class ModuleComponent {
       case 'student':
         // this.getInstitutionAndDepartmentsOfUserByUserId(this.profileId);
 
-        this.getEnrolledCoursesByProfileId(this.profileId);
-        this.getModulesOfEnrolledCoursesByProfileId(this.profileId);
+        // this.getEnrolledCoursesByProfileId(this.profileId);
+        // this.getModulesOfEnrolledCoursesByProfileId(this.profileId);
+
+        this.getAssignedCoursesByProfileId(this.profileId);
+        this.getModulesOfAssignedCoursesByProfileId(this.profileId);
         break;
     }
   }

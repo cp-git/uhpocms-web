@@ -68,13 +68,23 @@
             <br>
         </div>
     </div>
+    
 </div>
+<div class="container">
+    <input type="checkbox" disabled="true" style="background-color: lawngreen;">
+    <label for="activate">&nbsp; Individual Permissions</label>&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="checkbox" disabled="true" style="background-color: red;">
+    <label for="activate">&nbsp; Role Permissions</label>
+   
+</div>
+
+
 <div class="container" *ngIf="userId>0 && selectedOptionForAccess==controlBasedOn[0]">
     <ng-container *ngFor="let module of masterModules">
         <app-module-checkbox [module]="module"
             [userPermissions]="userPermissions | filter:'userId':userId | filter:'moduleId':module.id"
             [groupPermissions]="groupPermissions | filter:'roleId':roleId | filter:'moduleId':module.id"
-            (onChangePermissions)="onChangePermissions($event)"></app-module-checkbox>
+            (onChangePermissions)="onChangePermissions($event)" [assignPermissionTo]="'USERS'"></app-module-checkbox>
 
     </ng-container>
 </div>
@@ -82,7 +92,7 @@
 <div class="container" *ngIf="roleId>0 && selectedOptionForAccess==controlBasedOn[1]">
     <ng-container *ngFor="let module of masterModules">
         <app-module-checkbox [module]="module" [userPermissions]="groupPermissions | filter:'roleId':roleId"
-            (onChangePermissions)="onChangePermissions($event)"></app-module-checkbox>
+            (onChangePermissions)="onChangePermissions($event)" [assignPermissionTo]="'ROLE'"></app-module-checkbox>
     </ng-container>
 </div>
 <!-- <ng-template #noData>
@@ -95,3 +105,5 @@
 
 <!-- {{groupPermissions | filter:'roleId':roleId|json}} -->
 <!-- {{roleId|json}} -->
+
+<!-- {{userPermissions|json}} -->

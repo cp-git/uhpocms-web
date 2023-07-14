@@ -32,6 +32,11 @@ input[type="checkbox"]:checked:disabled {
     /* Change this to the desired tick color */
 }
 
+.groupPerm{
+    border-color: red !important;
+    background-color: red !important;
+}
+
 /* Style the label for the checkbox */
 label.checkbox-label {
     display: inline-block;
