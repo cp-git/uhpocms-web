@@ -107,8 +107,13 @@ export class QuizComponent implements OnInit {
     this.viewAll = false;
     this.showAddButton = false;
     this.showActivateButton = false;
-
-    this.currentData = objectReceived;    // assingning data to current data for child component
+// assingning data to current data for child component
+    this.currentData = objectReceived;
+    let time = objectReceived.setTimer;
+    let hours = Math.floor(time / 3600);
+    let minutes = Math.floor((time % 3600) / 60);
+    this.currentData.setTimerInHours= hours;
+    this.currentData.setTimerInMinutes= minutes;   
   }
 
   // For navigate to update screen with data
@@ -123,6 +128,12 @@ export class QuizComponent implements OnInit {
 
     // assingning data to current data for child component
     this.currentData = objectReceived;
+    let time = objectReceived.setTimer;
+    let hours = Math.floor(time / 3600);
+    let minutes = Math.floor((time % 3600) / 60);
+    this.currentData.setTimerInHours= hours;
+    this.currentData.setTimerInMinutes= minutes;
+
   }
 
   // For navigate to update screen with data
@@ -155,7 +166,7 @@ export class QuizComponent implements OnInit {
 
   // on updateComponents's submit button clicked
   onUpdateQuizSubmit(objectReceived: Quiz) {
-    this.updateRole(objectReceived);
+    this.updateQuiz(objectReceived);
   }
 
 
@@ -225,7 +236,14 @@ export class QuizComponent implements OnInit {
 
   // for adding quiz
   addQuiz(currentData: Quiz) {
-
+    // Calculate the total timer duration in seconds
+    console.log(JSON.stringify(currentData))
+    const timerInSeconds = (currentData.setTimerInHours * 3600) + (currentData.setTimerInMinutes * 60);
+    console.log(timerInSeconds);
+    currentData.setTimer = timerInSeconds;
+    
+  
+    // Set other properties and make the API call to add the quiz
     currentData.active = true;
     this.quizService.addQuiz(currentData).subscribe(
       data => {
@@ -233,19 +251,20 @@ export class QuizComponent implements OnInit {
         this.emptyQuiz = {} as Quiz;
         this.ngOnInit();
         this.back();
-
-      }
-      ,
+      },
       error => {
         this.dialogBoxService.open('Failed to add Quiz','warning')
       }
-    )
-
+    );
   }
-
+  
 
   // for updating quiz using title
-  private updateRole(currentData: Quiz) {
+  private updateQuiz(currentData: Quiz) {
+    // Calculate the total timer duration in seconds
+    const timerInSeconds = (currentData.setTimerInHours * 3600) + (currentData.setTimerInMinutes * 60);
+    currentData.setTimer = timerInSeconds;
+  
     // calling service for updating data
     this.quizService.updateQuiz(currentData.title, currentData).subscribe(
       response => {

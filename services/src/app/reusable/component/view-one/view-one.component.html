@@ -33,6 +33,14 @@
                             class="form-control" required="" disabled>
                     </ng-container>
 
+                    <!-- <ng-container *ngSwitchCase="'time'">
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ column.label }}</label>
+                        <time   type="time" [(ngModel)]="currentData[column.key]"
+                            class="form-control" required="" disabled>{{currentData[column.key] | timerFormat}}</time>
+                          
+                    </ng-container> -->
+
                     <ng-container *ngSwitchCase="'textarea'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
