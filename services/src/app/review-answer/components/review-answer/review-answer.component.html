@@ -100,12 +100,6 @@
 
 <!-- this is usable viewAll page -->
 <ng-template #viewall>
-    <!-- <app-view-all *ngIf="allData.length>0"
-        [data]="{moduleData:this.allData | filter:'courseId':selectedCourseId| filter:'moduleId':selectedModuleId | filter:'categoryId':selectedCategoryId, columnNames:this.columnNames}"
-        [dropdown]="{courses,modules,categories}" [idsColumnName]="{columnName:primaryIdColumnName}"
-        [isViewAllScreen]="true" (viewClicked)="onChildViewClick($event)" (deleteClicked)="onChildDeleteClick($event)"
-        (updateClicked)="onChildUpdateClick($event)">
-    </app-view-all> -->
 
     <div class="innercontainer">
         <table class="table table-bordered">
@@ -145,9 +139,7 @@
                     </td>
                    
                     <td><button (click)="onAddUpdatClicked(row)" class="btn btn-primary" [disabled]="!reviewButtonStat" >Review</button></td>
-                    <!-- <td><span (click)="onViewClicked(row)" class="fa-solid fa-eye"
-                            style="font-size:24px;color: #6197f5;"></span></td> -->
-                    <!-- <td><button (click)="onDeleteClicked(row)" class="btn btn-danger">Delete</button></td> -->
+                 
               
                 </tr>
             </tbody>
@@ -231,41 +223,19 @@
                 </option>
             </select>
         </div>
-        <!-- <div class="col-sm-3">
-            <h4>Select Quiz</h4>
-            <select (change)="onChangeSelectedQuiz()" name="dropdown" [(ngModel)]="selectedQuizId" class="form-control"
-                required="" [disabled]="selectedModuleId==undefined || selectedModuleId=='undefined'">
-                <option value="undefined">Select Quiz</option>
-                <option
-                    *ngFor="let option of quizzes  | advFilter:'moduleId':selectedModuleId | filter:'categoryId':selectedCategoryId"
-                    [ngValue]="option.quizId">
-                    {{ option['title'] }}
-                </option>
-            </select>
-        </div> -->
+      
     </div>
 </ng-template>
 
-<!-- {{viewQuePaper}} -->
 <ng-template #queans let-questionAnswers>
     <div class="container">
         <h3 class="text-center">Add/ Update Review</h3>
         <ng-container
             *ngIf="selectedQuizId!='undefined' && selectedQuizId!='' && selectedQuizId!=null && selectedCategoryId!='undefined'  && selectedCategoryId!='' && selectedCategoryId!=null">
-            <!-- <app-question-answer [questionAnswers]="questionAnswers" [pagination]="true"
-                [selectedQuizId]="selectedQuizId" [selectedCategoryId]="selectedCategoryId" [submitOption]="true"
-                [selectedCategoryName]="selectedCategoryName" (submitClicked)="onFormSubmit($event)">
-            </app-question-answer> -->
+        
          
         </ng-container>
-        <!-- <div class="text-center"
-            *ngIf="selectedQuizId!='undefined' && selectedQuizId!='' && selectedQuizId!=null && selectedCategoryId!='undefined'  && selectedCategoryId!='' && selectedCategoryId!=null">
-            <pagination-controls (pageChange)="currentPage=$event"></pagination-controls>
-        </div> -->
+      
     </div>
 
 </ng-template>
-<!-- 
-{{selectedQuizId|json}}
-{{selectedCategoryId|json}} -->
-<!-- {{selectedCategoryName|json}} -->

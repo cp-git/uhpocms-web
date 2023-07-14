@@ -89,10 +89,11 @@ export class AddQuestionAnswerComponent implements OnInit {
   file!: File;
   isButtonDisabled: boolean = false;
   files!: FileList;
-
+  passMarks:number=0
   myFiles: string[] = [];
   generatedQuestionAnswerIdArr: number[] = [];
   generatedQuestionAnswerId: number = 0;;
+  totMarksToDisplay:number=0
   constructor(private location: Location,
     private service: QuestionService,
     private courseService: TeacherCourseService,
@@ -280,11 +281,11 @@ async getMCQCategory(){
     let questionIdArr :number[] = [];
     let orderArr:number[] = [];
     this.generatedQuestionAnswerIdArr = [];
-//New REq Code start from here 
-// queAns['queAnsArray'].forEach( (queAnsNew:any)=> {
-//   console.log("queAns in for loop")
-// console.log(queAns)
+    let newQuestionAnsArr:any=[];
+    this.totMarksToDisplay = 0;
+    maxQuesInQuizFlag = await this.getQuesByQuizId(this.selectedQuizId)
 
+    
    await this.getMCQCategory();
      
     let queArr :any[]=[];
@@ -298,11 +299,22 @@ async getMCQCategory(){
    let lAnsFlag:boolean =false;
    let mcqArr:any[] = [];
    let lAnsArr:any[] = [];
-  //  queAns['queAnsArray'].forEach( async (queAnsNew:OneQuestionAnswer)=> {
-  
-  await Promise.all(queAns['queAnsArray'].map(async (queAnsNew: OneQuestionAnswer, index: number) => {
 
-   
+  //  this.questionAnswers =[];
+  console.log("queAns after  this.question-Answers =[];")
+   console.log(queAns)
+
+
+  //  queAns['queAnsArray'].forEach(  (queAnsNew:OneQuestionAnswer)=> {
+    for (let queAnsNew of queAns['queAnsArray']) {
+    // queAns['queAnsArray'].map(async (queAnsNew: OneQuestionAnswer) => {
+  console.log("**********************************")
+    console.log(newQuestionAnsArr)
+
+   this.questionAnswer = new QuestionAnswer();
+   console.log("questionAnswers Array at atart of forEach")
+   console.log(this.questionAnswers)
+
    
   this.questionAnswer.question = {} as Question;
   this.questionAnswer.question['questionId'] = queAnsNew.questionId;
@@ -313,6 +325,7 @@ async getMCQCategory(){
   this.questionAnswer.question['maxMarks'] = queAnsNew.maxMarks;
   this.questionAnswer.question['questionIsMCQ'] = queAnsNew.questionIsMCQ;
  
+
   if((queAnsNew.questionId != 0) && (queAnsNew.questionId != null) && (queAnsNew.questionId != undefined)){
   questionIdArr.push(queAnsNew.questionId);
   }
@@ -424,27 +437,28 @@ async getMCQCategory(){
   }
 
 
-  console.log("this.questionAnswer")
-  console.log(this.questionAnswer)
-  const instituteJson = JSON.stringify(this.questionAnswer);
 
-  const blob = new Blob([instituteJson], {
-    type: 'application/json'
-  })
+//   console.log("this.questionAnswer")
+//   console.log(this.questionAnswer)
+//   const instituteJson = JSON.stringify(this.questionAnswer);
 
-  let formData = new FormData();
+//   const blob = new Blob([instituteJson], {
+//     type: 'application/json'
+//   })
 
-  for (var i = 0; i < this.myFiles.length; i++) {
-    formData.append("files", this.myFiles[i]);
-  }
+//   let formData = new FormData();
+
+//   for (var i = 0; i < this.myFiles.length; i++) {
+//     formData.append("files", this.myFiles[i]);
+//   }
     
- console.log("this.questionAnswer  before form  data")
-  console.log(this.questionAnswer)
-  formData.append("request", new Blob([JSON.stringify(this.questionAnswer)], { type: 'application/json' }));
+//  console.log("this.questionAnswer  before form  data")
+//   console.log(this.questionAnswer)
+//   formData.append("request", new Blob([JSON.stringify(this.questionAnswer)], { type: 'application/json' }));
 
-  console.log(formData)
+//   console.log(formData)
 
-  maxQuesInQuizFlag = await this.getQuesByQuizId(this.selectedQuizId)
+
 
   console.log(maxQuesInQuizFlag)
 
@@ -453,19 +467,61 @@ async getMCQCategory(){
   console.log(queAns['queAnsArray'].length)
   console.log(lAnsArr.length)
 
-  if(((queAns['queAnsArray'].length) != (mcqArr.length)) && ((queAns['queAnsArray'].length) != (lAnsArr.length)))
-   {
-    if (!isFirstAlertDisplayed) {
-      this.dialogBoxService.open("Please enter details for all questions ", 'information');
-      isFirstAlertDisplayed = true;
-       }
-   }
+
+
+  newQuestionAnsArr.push(this.questionAnswer)
+  console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+  console.log(this.questionAnswer)
+  console.log(newQuestionAnsArr)
+  // newQuestionAnsArr = newQuestionAnsArr.reverse();
+
+  //  });
+  this.totMarksToDisplay += this.questionAnswer.question['maxMarks'] ;
+}
+
+
+
   //started from here
-  if(  this.questionAnswer.question['questionId'] == 0)
+console.log(newQuestionAnsArr)
+console.log("Pass Marks $$$$$$$$$$$$$$$$$$$$$4 Total Marks")
+console.log(this.passMarks)
+console.log(this.totalMarks)
+   let quesAnswersArrCopy : any[]=[];
+   if(this.passMarks < this.totMarksToDisplay )
+  
+   {   this.questionAnswers =[];
+          for(let newArr of newQuestionAnsArr){
+
+            console.log("++++++++++++++++++++++++++++++")
+            console.log(newArr)
+            console.log(quesAnswersArrCopy)
+            const instituteJson = JSON.stringify(newArr);
+
+          const blob = new Blob([instituteJson], {
+            type: 'application/json'
+          })
+
+          let formData = new FormData();
+
+          for (var i = 0; i < this.myFiles.length; i++) {
+            formData.append("files", this.myFiles[i]);
+          }
+    
+
+          console.log("newArr  before form  data")
+            console.log(newArr)
+            formData.append("request", new Blob([JSON.stringify(newArr)], { type: 'application/json' }));
+
+            console.log(formData)
+            console.log(maxQuesInQuizFlag)
+      
+         
+
+  if( ( newArr.question['questionId'] == 0) || ( newArr.question['questionId'] == undefined))
   {
-    console.log(" if(  this.questionAnswer.question['questionId'] == 0)")
-  if(this.questionAnswer.question.questionIsMCQ == true)
-  { console.log("  if(this.questionAnswer.question.questionIsMCQ == true)")
+    console.log(" if(  newArr.question['questionId'] == 0)")
+  if(newArr.question.questionIsMCQ == true)
+  { console.log("  if(newArr.question.questionIsMCQ == true)")
   
   if( maxQuesInQuizFlag )
   {
@@ -474,26 +530,58 @@ async getMCQCategory(){
    {
    console.log("if((queAns['queAnsArray'].length) == (mcqArr.length))")
   this.service.addQuestion(formData).subscribe(
-    (response) => {
+    // const response = await this.service.addQuestion(formData).toPromise(
+    (response: number) => {
 
-     
+  
       this.generatedQuestionAnswerId = response;
-      this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
+      // this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
+      console.log(response)
+      quesAnswersArrCopy.push({
+        questionId: this.generatedQuestionAnswerId,
+        questionFigure: newArr.question['questionFigure'],
+        questionContent: newArr.question['questionContent'],
+        questionExplanation: newArr.question['questionExplanation'],
+        questionOrderNo: newArr.question['questionOrderNo'],
+        questionIsMCQ: newArr.question['questionIsMCQ'],
+        questionQuizId: newArr.question['questionQuizId'],
+        questionCategoryId: newArr.question['questionCategoryId'],
+        questionIsActive: newArr.question['questionIsActive'],
+        questionCreatedBy: newArr.question['questionCreatedBy'],
+        questionCreatedOn: newArr.question['questionCreatedOn'],
+        questionModifiedBy: newArr.question['questionModifiedBy'],
+        questionModifiedOn: newArr.question['questionModifiedOn'],
+        correct1: newArr.answers[0].correct,
+        content1:  newArr.answers[0].content,
+        correct2: newArr.answers[1].correct,
+        content2: newArr.answers[1].content,
+        correct3: newArr.answers[2].correct,
+        content3: newArr.answers[2].content,
+        correct4:  newArr.answers[3].correct,
+        content4: newArr.answers[3].content,
+        isFormDirty: false,
+        isFormSubmitted: true,
+        image: true,
+        isOptionSelected: true,
+        selectedAnswer: '',
+        maxMarks: newArr.question['maxMarks'],
+        totalMarks: this.totalMarks
+      })
+      
+
+      console.log("questionanswersarray");
+      console.log(newArr)
       console.log( this.generatedQuestionAnswerId)
       console.log("Question Added Successfully");
-      if (index === queAns['queAnsArray'].length - 1) {
-        // Call location.back() on the last iteration
-        // location.back();
-        // location.reload();
+         quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
 
-        
-      }
       // this.getDataForMarks(this.selectedQuizId)
       // this.getAllQuestionAnswers(this.selectedQuizId)
+
     
     },
     (error) => {
-    console.log(this.questionAnswer.question['questionContent'])
+    console.log(newArr.question['questionContent'])
     console.log("Question added failed");
     // if (!isFirstAlertDisplayed) {
     //  this.dialogBoxService.open("Please enter details for all questions ", 'information');
@@ -506,8 +594,8 @@ async getMCQCategory(){
   }
   
 
-  if(this.questionAnswer.question.questionIsMCQ == false)
-  { console.log("Entered in  if(this.questionAnswer.question.questionIsMCQ == false)")
+  if(newArr.question.questionIsMCQ == false)
+  { console.log("Entered in  if(newArr.question.questionIsMCQ == false)")
     if( maxQuesInQuizFlag)
     {
       console.log(" entered in if( await this.getQuesByQuizId )")
@@ -519,14 +607,46 @@ async getMCQCategory(){
 
    
       this.generatedQuestionAnswerId = response;
-      this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
+      // this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
+      quesAnswersArrCopy.push({
+        questionId: this.generatedQuestionAnswerId,
+        questionFigure: newArr.question['questionFigure'],
+        questionContent: newArr.question['questionContent'],
+        questionExplanation: newArr.question['questionExplanation'],
+        questionOrderNo: newArr.question['questionOrderNo'],
+        questionIsMCQ: newArr.question['questionIsMCQ'],
+        questionQuizId: newArr.question['questionQuizId'],
+        questionCategoryId: newArr.question['questionCategoryId'],
+        questionIsActive: newArr.question['questionIsActive'],
+        questionCreatedBy: newArr.question['questionCreatedBy'],
+        questionCreatedOn: newArr.question['questionCreatedOn'],
+        questionModifiedBy: newArr.question['questionModifiedBy'],
+        questionModifiedOn: newArr.question['questionModifiedOn'],
+        correct1: newArr.answers[0].correct,
+        content1:  newArr.answers[0].content,
+        correct2: newArr.answers[1].correct,
+        content2: newArr.answers[1].content,
+        correct3: newArr.answers[2].correct,
+        content3: newArr.answers[2].content,
+        correct4:  newArr.answers[3].correct,
+        content4: newArr.answers[3].content,
+        isFormDirty: false,
+        isFormSubmitted: true,
+        image: true,
+        isOptionSelected: true,
+        selectedAnswer: '',
+        maxMarks: newArr.question['maxMarks'],
+        totalMarks: this.totalMarks
+      })
+
+      console.log(response)
       console.log( this.generatedQuestionAnswerId)
       console.log("Question Added Successfully");
-      if (index === queAns['queAnsArray'].length - 1) {
-        // Call location.back() on the last iteration
-      // location.back();
-        // location.reload();
-      }
+      quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+
+      console.log("questionanswersarray");
+      console.log(quesAnswersArrCopy)
+
       // this.getDataForMarks(this.selectedQuizId)
       // this.getAllQuestionAnswers(this.selectedQuizId)
     
@@ -548,14 +668,12 @@ async getMCQCategory(){
 
 
 
-  
-
-  if(  this.questionAnswer.question['questionId'] > 0)
+  if(  newArr.question['questionId'] > 0)
   {
-    console.log(" if(  this.questionAnswer.question['questionId'] > 0)")
-  if(this.questionAnswer.question.questionIsMCQ == true)
+    console.log(" if(  newArr.question['questionId'] > 0)")
+  if(newArr.question.questionIsMCQ == true)
   {
-  console.log("  if(this.questionAnswer.question.questionIsMCQ == true)")
+  console.log("  if(newArr.question.questionIsMCQ == true)")
  
   if(((queAns['queAnsArray'].length) == (mcqArr.length)) && ((queAns['queAnsArray'].length) == (questionIdArr.length)))
    {
@@ -566,14 +684,51 @@ async getMCQCategory(){
      
       this.generatedQuestionAnswerId = response;
       this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
+      console.log(response)
+      quesAnswersArrCopy.push({
+        questionId: this.generatedQuestionAnswerId,
+        questionFigure: newArr.question['questionFigure'],
+        questionContent: newArr.question['questionContent'],
+        questionExplanation: newArr.question['questionExplanation'],
+        questionOrderNo: newArr.question['questionOrderNo'],
+        questionIsMCQ: newArr.question['questionIsMCQ'],
+        questionQuizId: newArr.question['questionQuizId'],
+        questionCategoryId: newArr.question['questionCategoryId'],
+        questionIsActive: newArr.question['questionIsActive'],
+        questionCreatedBy: newArr.question['questionCreatedBy'],
+        questionCreatedOn: newArr.question['questionCreatedOn'],
+        questionModifiedBy: newArr.question['questionModifiedBy'],
+        questionModifiedOn: newArr.question['questionModifiedOn'],
+        correct1: newArr.answers[0].correct,
+        content1:  newArr.answers[0].content,
+        correct2: newArr.answers[1].correct,
+        content2: newArr.answers[1].content,
+        correct3: newArr.answers[2].correct,
+        content3: newArr.answers[2].content,
+        correct4:  newArr.answers[3].correct,
+        content4: newArr.answers[3].content,
+        isFormDirty: false,
+        isFormSubmitted: true,
+        image: true,
+        isOptionSelected: true,
+        selectedAnswer: '',
+        maxMarks: newArr.question['maxMarks'],
+        totalMarks: this.totalMarks
+      })
+      console.log("((((((((((((((((((((((((((((((((((")
+      console.log(quesAnswersArrCopy)
       console.log( this.generatedQuestionAnswerId)
       console.log("Question Added Successfully");
+      quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+
+      // console.log("questionanswersarray");
+      // console.log(newArrs)
       // this.getDataForMarks(this.selectedQuizId)
       // this.getAllQuestionAnswers(this.selectedQuizId)
     
     },
     (error) => {
-    console.log(this.questionAnswer.question['questionContent'])
+    console.log(newArr.question['questionContent'])
     console.log("Question added failed");
     // if (!isFirstAlertDisplayed) {
     //  this.dialogBoxService.open("Please enter details for all questions ", 'information');
@@ -586,8 +741,8 @@ async getMCQCategory(){
   }
   
 
-  if(this.questionAnswer.question.questionIsMCQ == false)
-  { console.log("Entered in  if(this.questionAnswer.question.questionIsMCQ == false)")
+  if(newArr.question.questionIsMCQ == false)
+  { console.log("Entered in  if(newArr.question.questionIsMCQ == false)")
   
       console.log(" entered in if( await this.getQuesByQuizId )")
   if((queAns['queAnsArray'].length) == (lAnsArr.length) && ((queAns['queAnsArray'].length) == (questionIdArr.length)))
@@ -599,8 +754,44 @@ async getMCQCategory(){
    
       this.generatedQuestionAnswerId = response;
       this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
+      console.log(response)
+      quesAnswersArrCopy.push({
+        questionId: this.generatedQuestionAnswerId,
+        questionFigure: this.questionAnswer.question['questionFigure'],
+        questionContent: this.questionAnswer.question['questionContent'],
+        questionExplanation: this.questionAnswer.question['questionExplanation'],
+        questionOrderNo: this.questionAnswer.question['questionOrderNo'],
+        questionIsMCQ: this.questionAnswer.question['questionIsMCQ'],
+        questionQuizId: this.questionAnswer.question['questionQuizId'],
+        questionCategoryId: this.questionAnswer.question['questionCategoryId'],
+        questionIsActive: this.questionAnswer.question['questionIsActive'],
+        questionCreatedBy: this.questionAnswer.question['questionCreatedBy'],
+        questionCreatedOn: this.questionAnswer.question['questionCreatedOn'],
+        questionModifiedBy: this.questionAnswer.question['questionModifiedBy'],
+        questionModifiedOn: this.questionAnswer.question['questionModifiedOn'],
+        correct1: this.questionAnswer.answers[0].correct,
+        content1: this.questionAnswer.answers[0].content,
+        correct2: this.questionAnswer.answers[1].correct,
+        content2: this.questionAnswer.answers[1].content,
+        correct3: this.questionAnswer.answers[2].correct,
+        content3: this.questionAnswer.answers[2].content,
+        correct4: this.questionAnswer.answers[3].correct,
+        content4: this.questionAnswer.answers[3].content,
+        isFormDirty: false,
+        isFormSubmitted: true,
+        image: true,
+        isOptionSelected: true,
+        selectedAnswer: '',
+        maxMarks: this.questionAnswer.question['maxMarks'],
+        totalMarks: this.totalMarks
+        
+      })
       console.log( this.generatedQuestionAnswerId)
       console.log("Question Added Successfully");
+      quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+
+      // console.log("questionanswersarray");
+      // console.log(this.questionAnswers)
       // this.getDataForMarks(this.selectedQuizId)
       // this.getAllQuestionAnswers(this.selectedQuizId)
     
@@ -619,9 +810,32 @@ async getMCQCategory(){
   }
 
   }
+}
+    // quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+    // quesAnswersArrCopy.sort((a, b) => a.questionOrderNo.toString().localeCompare(b.questionOrderNo.toString()));
 
-  })
-  );
+    console.log(quesAnswersArrCopy)
+    // console.log( quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo))
+    // quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+    this.questionAnswers =  quesAnswersArrCopy
+    // quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+    console.log("---------------------------------------------------------")
+    console.log(quesAnswersArrCopy)
+    console.log(this.questionAnswers)
+
+    }
+    else { 
+      console.log("Pass Marks $$$$$$$$$$$$$$$$$$$$$4 Total Marks")
+console.log(this.passMarks)
+console.log(this.totalMarks)
+      this.dialogBoxService.open("Please enter total marks based on pass marks of quiz", 'information');
+    
+    }
+
+
+  // })
+
+
 }
 
 
@@ -631,7 +845,7 @@ async getQuesByQuizId(quizId:number): Promise<boolean>
   let quesArr:Question[]=[];
   let quiz:Quiz[]= []
   let returnVal :boolean = false;
-
+  this.passMarks =0;
   console.log(quizId)
 
   await this.service.getAllQuestionsByQuizId(quizId).toPromise().then(
@@ -644,7 +858,9 @@ async getQuesByQuizId(quizId:number): Promise<boolean>
   await this.quizServ.getAllQuizzes().toPromise().then(
     (response)=>{
       quiz = response.filter((quiz:Quiz)=>quiz.quizId == quizId)
+      this.passMarks = quiz[0].passMark;
       console.log(quiz)
+
     }
    ) 
 console.log(quesArr)
