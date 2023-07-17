@@ -5,6 +5,9 @@ import { Category } from 'app/category/class/category';
 import { CategoryAllColumn, CategoryColumn } from 'app/category/column-name/category-column';
 
 import { CategoryService } from 'app/category/services/category.service';
+import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
+import { userModule } from 'app/permissions/enum/user-module.enum';
+import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 
 @Component({
@@ -39,10 +42,28 @@ export class CategoryComponent {
   emptyCategory: Category;  // empty category
   currentData!: Category;  // for update and view, to show existing data
 
+  // for user Permissions
+  buttonsArray: any;
+  userRoleId: any;
+  userAndRolePermissions: AuthUserPermission[] = [];
+  userModule = userModule;
 
-
-  constructor(private service: CategoryService, private location: Location, private _route: Router,private dialogBoxService:DialogBoxService) {
-
+  constructor(
+    private service: CategoryService, 
+    private location: Location, 
+    private _route: Router, 
+    private dialogBoxService: DialogBoxService,
+    private userPermissionService: AuthUserPermissionService,
+    
+    ) {
+   
+    // Assining default values
+    this.buttonsArray = {
+      showAddButton: false,
+      showActivateButton: false,
+      showUpdateButton: false,
+      showDeleteButton: false
+    }
 
     this.columnNames = CategoryColumn;
     this.allColumnNames = CategoryAllColumn;
@@ -52,8 +73,18 @@ export class CategoryComponent {
   }
 
   ngOnInit(): void {
+
+    this.loadAndLinkUserPermissions();
+
     this.getAllCategories();  // for getting all active category
     this.getInActiveCategories(); // for getting all inactive category
+  }
+
+  // this function for loading permission from session storage and link permission 
+  // with buttons to show and hide based on permissions 
+  private async loadAndLinkUserPermissions() {
+    this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.CATEGORY, this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
   }
 
   // back button functionality
@@ -64,6 +95,9 @@ export class CategoryComponent {
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
+      
+      this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+
     } else {
       this.location.back();
     }
@@ -77,7 +111,8 @@ export class CategoryComponent {
     // hiding view of all column and displaying allcategory  screen 
     this.viewOne = true;
     this.viewAll = false;
-
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
 
@@ -88,7 +123,8 @@ export class CategoryComponent {
     // hiding update screen and displaying all category screen 
     this.viewAll = false;
     this.viewUpdate = true;
-
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
     // assingning data to current data for child component
     this.currentData = objectReceived;
   }
@@ -109,12 +145,17 @@ export class CategoryComponent {
   onAddClick() {
     this.viewAll = false;
     this.viewAdd = true;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
   }
 
   // for navigating to activate screen
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
+
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
   }
 
   // on addComponents's submit button clicked
@@ -138,12 +179,12 @@ export class CategoryComponent {
     this.service.updateCategory(currentData, currentData.categoryId).subscribe(
       response => {
         console.log(`Category updated successfully !`);
-        this.dialogBoxService.open('Category updated successfully','information');
+        this.dialogBoxService.open('Category updated successfully', 'information');
         this.back();
       },
       error => {
         console.log(`Category updation failed !`);
-        this.dialogBoxService.open('Category updation failed','warning')
+        this.dialogBoxService.open('Category updation failed', 'warning')
       }
     );
   }
@@ -159,7 +200,7 @@ export class CategoryComponent {
       response => {
 
         console.log("Category added successfully");
-        this.dialogBoxService.open('Category added successfully','information')
+        this.dialogBoxService.open('Category added successfully', 'information')
         this.emptyCategory = {} as Category;
         this.ngOnInit();
         this.back();
@@ -167,7 +208,7 @@ export class CategoryComponent {
       },
       error => {
         console.log("Cannot add category successfully ");
-        this.dialogBoxService.open('Failed to Add category','warning')
+        this.dialogBoxService.open('Failed to Add category', 'warning')
       }
 
     )
@@ -200,23 +241,23 @@ export class CategoryComponent {
       if (response) {
         console.log('User clicked OK');
         // Do something if the user clicked OK
-    // calling service to soft delete
-    this.service.deleteCategoryById(categoryId).subscribe(
-      (response) => {
-        console.log('Category deleted successfully');
-        this.dialogBoxService.open('Category deleted successfully', 'information');
-        this.ngOnInit();
-      },
-      (error) => {
-        this.dialogBoxService.open('Category deletion Failed', 'warning');
+        // calling service to soft delete
+        this.service.deleteCategoryById(categoryId).subscribe(
+          (response) => {
+            console.log('Category deleted successfully');
+            this.dialogBoxService.open('Category deleted successfully', 'information');
+            this.ngOnInit();
+          },
+          (error) => {
+            this.dialogBoxService.open('Category deletion Failed', 'warning');
+          }
+        );
+      } else {
+        console.log('User clicked Cancel');
+        // Do something if the user clicked Cancel
       }
-    );
-  } else {
-    console.log('User clicked Cancel');
-    // Do something if the user clicked Cancel
+    });
   }
-});
-}
 
 
 
@@ -242,12 +283,12 @@ export class CategoryComponent {
     this.service.updateActiveStatus(categoryName).subscribe(
       response => {
         console.log("Activated category");
-        this.dialogBoxService.open('Category Activated','information')
+        this.dialogBoxService.open('Category Activated', 'information')
         this.ngOnInit();
       },
       error => {
         console.log("Failed to activate");
-        this.dialogBoxService.open('Failed to activate','warning')
+        this.dialogBoxService.open('Failed to activate', 'warning')
       }
     );
   }

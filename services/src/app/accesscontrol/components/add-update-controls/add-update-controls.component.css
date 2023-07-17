@@ -1,0 +1,14 @@
+.btn {
+    border-radius: 15px;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #999;
+    border-radius: 3px;
+    outline: none;
+}

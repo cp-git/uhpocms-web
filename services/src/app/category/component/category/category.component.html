@@ -1,7 +1,7 @@
 <div class="container">
     <div>
         <ng-container *ngIf="viewAll">
-            <div class="row justify-content-between header">
+            <!-- <div class="row justify-content-between header">
                 <div class="col-sm-6">
                     <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container>
                 </div>
@@ -11,18 +11,26 @@
                     <ng-container *ngTemplateOutlet="backButton;"></ng-container>
 
                 </div>
-            </div>
+            </div> -->
+
+            <app-module-header [moduleName]="moduleName"
+            [buttons]="{showAddButton:buttonsArray.showAddButton,showActivateButton:buttonsArray.showActivateButton}"
+            (addButtonClicked)="onAddClick()" (activateButtonClicked)="onActivateClick()"
+            (backButtonClicked)="back()"></app-module-header>
         </ng-container>
 
         <ng-container *ngIf="viewAdd || viewOne || viewUpdate || viewActivate">
-            <div class="row justify-content-between header">
+            <!-- <div class="row justify-content-between header">
                 <div class="col-sm-6">
                     <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container>
                 </div>
                 <div class="col-sm-6 text-right buttons">
                     <ng-container *ngTemplateOutlet="backButton;"></ng-container>
                 </div>
-            </div>
+            </div> -->
+
+            <app-module-header [moduleName]="moduleName" (backButtonClicked)="back()"
+            [buttons]="{showAddButton:buttonsArray.showAddButton,showActivateButton:buttonsArray.showActivateButton}"></app-module-header>
         </ng-container>
 
         <ng-container *ngIf="viewAll">
@@ -68,7 +76,8 @@
     <app-view-all *ngIf="allData.length>0" [data]="{moduleData:this.allData , columnNames:this.columnNames}"
         [idsColumnName]="{columnName:primaryIdColumnName}" [isViewAllScreen]="true"
         (viewClicked)="onChildViewClick($event)" (updateClicked)="onChildUpdateClick($event)"
-        (deleteClicked)="onChildDeleteClick($event)">
+        (deleteClicked)="onChildDeleteClick($event)"
+        [buttons]="{updateButton:buttonsArray.showUpdateButton, deleteButton:buttonsArray.showDeleteButton}">
     </app-view-all>
     <div *ngIf="allData.length==0">
         <h3>No categories</h3>

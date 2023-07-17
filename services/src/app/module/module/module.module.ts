@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModuleComponent } from '../components/module/module.component';
 import { ReusableModule } from 'app/reusable/module/reusable.module';
+import { SharedModule } from 'app/shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -11,7 +13,9 @@ import { ReusableModule } from 'app/reusable/module/reusable.module';
   ],
   imports: [
     CommonModule,
-    ReusableModule
+    ReusableModule,
+    SharedModule,
+    FormsModule
   ]
 })
 export class ModuleModule { }

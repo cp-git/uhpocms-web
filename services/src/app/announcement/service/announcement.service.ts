@@ -12,11 +12,15 @@ import { Profile } from 'app/profiles/class/profile';
 export class AnnouncementService {
   public selectedAnnouncement: Announcement;
 
-  announcementUrl = "http://localhost:8090/announcement/uhpocms/announcement"
-  //announcementUrl = `${environment.announcementUrl}/announcement`;
+  // announcementUrl = "http://localhost:8090/announcement/uhpocms/announcement"
+  announcementUrl = `${environment.announcementUrl}/announcement`;
+
+  private profileUrl: string;
 
   constructor(private _http: HttpClient) {
     this.selectedAnnouncement = new Announcement;
+    this.profileUrl = `${environment.instituteAdminUrl}/profile`;
+
   }
 
   //function to get all announcements
@@ -67,6 +71,11 @@ export class AnnouncementService {
 
   getStudentsAssignedToTeacher(profileId : number){
    // alert(`http://localhost:8081/uhpocms/profile/profiles/${profileId}`);
-    return this._http.get<Profile[]>(`http://localhost:8090/instituteadmin/uhpocms/profile/profiles/${profileId}`);
+    return this._http.get<Profile[]>(`${this.profileUrl}/profiles/${profileId}`);
   }
+
+  getEnrolledProfilesOfCourseByOneStudentId(profileId : number): Observable<Profile[]>{
+    return this._http.get<Profile[]>(`${this.profileUrl}/profiles/studentid/${profileId}`);
+
+    }
 }

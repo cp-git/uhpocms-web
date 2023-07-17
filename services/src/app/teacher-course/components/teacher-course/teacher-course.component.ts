@@ -11,7 +11,11 @@ import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { DepartmentService } from 'app/department/services/department.service';
 import { CourseDepartment } from 'app/teacher-course/class/course-department';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
-import { AppService } from 'app/app.service';
+import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
+import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
+import { userModule } from 'app/permissions/enum/user-module.enum';
+import { AdmininstitutionService } from 'app/admin-institution/service/admininstitution.service';
+
 @Component({
   selector: 'app-teacher-course',
   templateUrl: './teacher-course.component.html',
@@ -31,13 +35,17 @@ export class TeacherCourseComponent implements OnInit {
   viewActivate: boolean = false;
 
   // buttons
-  showAddButton: boolean = false;
-  showActivateButton: boolean = false;
+  // showAddButton: boolean = false;
+  // showActivateButton: boolean = false;
+
+  buttonsArray: any;
+  userAndRolePermissions: AuthUserPermission[] = [];
+
   // If all data is available or not
   dataAvailable: boolean = false;
 
-  updateButton: boolean = true;
-  deleteButton: boolean = true;
+  // updateButton: boolean = false;
+  // deleteButton: boolean = false;
 
 
   courseDepartment: CourseDepartment;
@@ -74,7 +82,14 @@ export class TeacherCourseComponent implements OnInit {
 
 
   courseDepartments: CourseDepartment[] = [];
-  constructor(private service: TeacherCourseService, private dialogBoxServices: DialogBoxService, private location: Location, private departmentService: DepartmentService) {
+  constructor(
+    private service: TeacherCourseService,
+    private dialogBoxServices: DialogBoxService,
+    private location: Location,
+    private departmentService: DepartmentService,
+    private userPermissionService: AuthUserPermissionService,
+    private institutionService: AdmininstitutionService,
+  ) {
     this.columnNames = CourseColumn;
     this.allColumnNames = CourseAllColumn;
 
@@ -83,47 +98,104 @@ export class TeacherCourseComponent implements OnInit {
 
     // creating empty object
     this.emptyCourse = new Course();
-    this.loadAdminInstitutions();
-    this.loadDepartments();
+
     this.courseDepartment = new CourseDepartment();
 
     this.userId = sessionStorage.getItem('userId');
     this.profileId = sessionStorage.getItem('profileId');
     this.userRole = sessionStorage.getItem('userRole');
 
+    this.buttonsArray = {
+      showAddButton: false,
+      showActivateButton: false,
+      showUpdateButton: false,
+      showDeleteButton: false
+    }
   }
 
   ngOnInit(): void {
+    this.loadAndLinkUserPermissions();
+
     this.initiliazation();
+
   }
+
+  // this function for loading permission from session storage and link permission 
+  // with buttons to show and hide based on permissions 
+  private async loadAndLinkUserPermissions() {
+    this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.COURSE, this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+  }
+
+  // this function for loading permission from session storage and link permission 
+  // with buttons to show and hide based on permissions 
+  // private loadAndLinkUserPermissions() {
+  //   // console.log("hey 1");
+
+  //   try {
+  //     let sessionData: any = sessionStorage.getItem('permissions');
+  //     //console.log(this.sessionData);
+  //     let data = JSON.parse(sessionData);
+  //     for (var inst in data) {
+  //       this.userAndRolePermissions.push(data[inst]);
+  //     }
+  //   }
+  //   catch (err) {
+  //     console.log("Error", err);
+  //   }
+  //   // console.log("hey 2");
+
+  //   this.userPermissionService.linkPermissions(userModule.COURSE, this.userAndRolePermissions, this.buttonsArray);
+  //   // console.log("hey 3");
+
+  //   console.log(this.buttonsArray);
+  //   this.toggleButtonsPermissions(this.buttonsArray);
+  //   // console.log("hey 4");
+
+  // }
+
+  // private toggleButtonsPermissions(buttonsArray: any) {
+  //   if (buttonsArray.showActivateButton) {
+  //     this.showActivateButton = true;
+  //   }
+  //   if (buttonsArray.showAddButton) {
+  //     this.showAddButton = true;
+  //   }
+  //   if (buttonsArray.deleteButton) {
+  //     this.deleteButton = true;
+  //   }
+  //   if (buttonsArray.updateButton) {
+  //     this.updateButton = true;
+  //   }
+  // }
 
   private async initiliazation() {
     // this.getAllCourse();  // for getting all active course
-    await this.loadAllCoursesWithDepartmentId();
+    await this.loadIdsOfAllCoursesWithDepartmentId();
     this.loadCoursesBasedOnRole(this.userRole);
-    this.getInActiveCourse(); // for getting all inactive course
   }
-  accessControl(userRole: string) {
-    console.log(userRole);
 
-    switch (userRole) {
-      case 'admin' || 'coadmin':
-        if (this.viewActivate == false) {
-          this.showAddButton = true;
-          this.showActivateButton = true;
-        }
-        break;
-      case 'teacher':
-        this.showAddButton = false;
-        this.showActivateButton = false;
+  // accessControl(userRole: string) {
+  //   console.log(userRole);
 
-        break;
-      case 'student':
-        this.showAddButton = false;
-        this.showActivateButton = false;
-        break;
-    }
-  }
+  //   switch (userRole) {
+  //     case 'admin' || 'coadmin':
+  //       // if (this.viewActivate == false) {
+  //       //   this.showAddButton = true;
+  //       //   this.showActivateButton = true;
+  //       // }
+  //       break;
+  //     case 'teacher':
+  //       // this.showAddButton = false;
+  //       // this.showActivateButton = false;
+
+  //       break;
+  //     case 'student':
+  //       // this.showAddButton = false;
+  //       // this.showActivateButton = false;
+  //       break;
+  //   }
+  // }
 
   // back button functionality
   back() {
@@ -133,7 +205,10 @@ export class TeacherCourseComponent implements OnInit {
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
-      this.accessControl(this.userRole);
+      // this.accessControl(this.userRole);
+      // this.toggleButtonsPermissions(this.buttonsArray);
+
+      this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
 
     } else {
       this.location.back();
@@ -149,8 +224,8 @@ export class TeacherCourseComponent implements OnInit {
     // hiding view of all column and displaying all course screen 
     this.viewOne = true;
     this.viewAll = false;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
 
@@ -161,8 +236,8 @@ export class TeacherCourseComponent implements OnInit {
     // hiding update screen and displaying all course screen 
     this.viewAll = false;
     this.viewUpdate = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
     // assingning data to current data for child component
     this.currentData = objectReceived;
   }
@@ -183,16 +258,16 @@ export class TeacherCourseComponent implements OnInit {
   onAddClick() {
     this.viewAll = false;
     this.viewAdd = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
   }
 
   // for navigating to activate screen
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
   }
 
   // on addComponents's submit button clicked
@@ -232,10 +307,10 @@ private async addCourse(currentData: any) {
     this.courseDepartment.department_id = currentData.departmentId;
     console.log("coursedept" + JSON.stringify(this.courseDepartment));
 
-    const courseAndDepartment = await this.service.assignCourseToDepartment(this.courseDepartment).toPromise();
-    if (courseAndDepartment) {
-      await this.loadAllCoursesWithDepartmentId();
-      // console.log('Course Added successfully');
+      const courseAndDepartment = await this.service.assignCourseToDepartment(this.courseDepartment).toPromise();
+      if (courseAndDepartment) {
+        await this.loadIdsOfAllCoursesWithDepartmentId();
+        // console.log('Course Added successfully');
 
       if (data.courseIsActive) {
         this.dialogBoxServices.open("Course Added successfully", 'information').then((response) => {
@@ -258,7 +333,7 @@ private async addCourse(currentData: any) {
   }
 }
 
-  private async loadAllCoursesWithDepartmentId() {
+  private async loadIdsOfAllCoursesWithDepartmentId() {
 
     try {
       const data = await this.service.getCoursesDepartmentId().toPromise();
@@ -326,17 +401,16 @@ private async addCourse(currentData: any) {
       },
       (error) => {
         this.dialogBoxServices.open('Course deletion Failed', 'warning');
+      })
+      } else {
+        console.log('User clicked Cancel');
       }
+    }
     );
-  } else {
-    console.log('User clicked Cancel');
-    // Do something if the user clicked Cancel
   }
-});
-}
 
   // For getting all inactive course
-  private getInActiveCourse() {
+  private getAllInActiveCourse() {
 
     // calling service to get all inactive record
     this.service.getAllDeactivateCourses().subscribe(
@@ -372,6 +446,8 @@ private async addCourse(currentData: any) {
     this.departmentService.getAllDepartments().subscribe(
       response => {
         this.departments = response;
+        console.log(this.departments);
+
       },
       error => {
         console.log("failed to get departments");
@@ -432,26 +508,44 @@ private async addCourse(currentData: any) {
 
   // }
 
-  private loadCoursesBasedOnRole(userRole: string) {
+  private async loadCoursesBasedOnRole(userRole: string) {
     console.log(userRole);
 
     switch (userRole) {
       case 'admin' || 'coadmin':
         if (this.viewActivate == false) {
-          this.showAddButton = true;
-          this.showActivateButton = true;
+          // this.showAddButton = true;
+          // this.showActivateButton = true;
         }
+        this.getAllInActiveCourse(); // for getting all inactive course
+        this.loadAdminInstitutions();
+        this.loadDepartments();
         this.getAllCourse();
         break;
       case 'teacher':
-        this.updateButton = false;
-        this.deleteButton = false;
+        // this.updateButton = false;
+        // this.deleteButton = false;
+
+        // for getting only institituion profile id belongs
+        // and departments of that institution 
+        await this.getInstitutionAndDepartmentsOfUserByUserId(this.profileId);
+
+        // For getting Inactive Course of that institutions
+        this.getInactiveCoursesByInstitutionId(this.adminInstitutions[0].adminInstitutionId);
+
         this.getAssignedCoursesOfTeacher(this.profileId);
 
         break;
       case 'student':
-        this.updateButton = false;
-        this.deleteButton = false;
+        // this.updateButton = false;
+        // this.deleteButton = false;
+
+        // for getting only institituion profile id belongs
+        // and departments of that institution 
+        await this.getInstitutionAndDepartmentsOfUserByUserId(this.profileId);
+
+        this.getInactiveCoursesByInstitutionId(this.adminInstitutions[0].adminInstitutionId);
+
         this.getCoursesEnrolledToStudent(this.profileId);
         break;
     }
@@ -512,6 +606,56 @@ private async addCourse(currentData: any) {
     );
   }
 
+  // function for getting institituions and all departments of that institution by profile id
+  private async getInstitutionAndDepartmentsOfUserByUserId(profileId: any) {
+
+    try {
+      const result = await this.institutionService.getInstitutionByProfileId(profileId).toPromise();
+      if (result !== undefined) {
+        this.adminInstitutions = result;
+      } else {
+        this.adminInstitutions = [];
+      }
+
+    } catch (error) {
+      console.log("no data fetched");
+    }
+    // for getting active and inactive departments using institution id
+    this.getAllDepartmentsByInstitutionId(this.adminInstitutions[0].adminInstitutionId);
+
+  }
+
+  // For getting all active departments by institution id
+  getAllDepartmentsByInstitutionId(institutionId: any) {
+    this.departmentService.getDepartmentsByInstitutionId(institutionId).subscribe(
+      (response) => {
+        console.log(response);
+
+        this.departments = response;
+      }
+    );
+  }
+
+  // // For getting all inactive departments by institution id
+  // getAllInactiveDeparmentsByInstitutionId(institutionId: any) {
+  //   this.departmentService.getInactiveDepartmentsByInstitutionId(institutionId).subscribe(
+  //     (response) => {
+  //       console.log(response);
+
+  //       this.inactiveD = response;
+  //     }
+  //   );
+  // }
+
+  private getInactiveCoursesByInstitutionId(instituteId: number) {
+    this.service.getInactiveCoursesByInstitutionId(instituteId).subscribe(
+      (response) => {
+        this.allInActiveData = response;
+        console.log(response);
+
+      }
+    )
+  }
 
 }
 

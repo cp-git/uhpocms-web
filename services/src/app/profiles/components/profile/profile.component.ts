@@ -216,7 +216,7 @@ export class ProfileComponent implements OnInit {
         // this.emptyProfile = data;
         this.emptyProfile.institutionId = data.institutionId;
         this.emptyProfile.adminDepartment = data.adminDepartment;
-        this.emptyProfile.userRole = data.userRole;
+        this.emptyProfile.userRoleId = data.userRoleId;
         this.emptyProfile.dob = data.dob;
         this.emptyProfile.adminGender = data.adminGender;
         this.emptyProfile.mobilePhone = data.mobilePhone;

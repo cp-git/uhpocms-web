@@ -55,11 +55,11 @@ import { AuthenticationloginComponent } from './authenticationlogin/components/a
 import { ProfileComponent } from './profiles/components/profile/profile.component';
 import { ModuleComponent } from './module/components/module/module.component';
 import { UploadFileComponent } from './FileUpload/upload-file/upload-file.component';
-
-import { AccesscontrolComponent } from './accesscontrol/components/accesscontrol/accesscontrol.component';
-
 import { ModuleFileComponent } from './module-file/components/module-file/module-file.component';
 import { AddQuestionAnswerComponent } from './question/components/add-question-answer/add-question-answer.component';
+import { PermissionComponent } from './permissions/components/permission/permission.component';
+import { AuthModuleComponent } from './permissions/components/auth-module/auth-module.component';
+import { AccessControlComponent } from './accesscontrol/components/access-control/access-control.component';
 import { AnalyticsComponent } from './admin-analytics/analytics/analytics.component';
 import { ReviewAnswerComponent } from './review-answer/components/review-answer/review-answer.component';
 
@@ -67,8 +67,6 @@ import { ReviewAnswerComponent } from './review-answer/components/review-answer/
 const routes: Routes = [
   //Teacher-question
   //{ path: 'question', component: TeacherQuestionComponent },
-
-
 
   //InstituteAdminProfile Routes
   // { path: 'displayInstituteAdmin/display/:userName', component: DisplayInstituteAdminComponent },
@@ -84,171 +82,82 @@ const routes: Routes = [
   //view instituteadminprofile
   // { path: 'viewadminprofile/:firstName/:userName', component: ViewinstiteadminprofileComponent },
 
-
   //course Module
-
-
-
-
   //teacherCourse
-
-
 
   { path: 'assignteacher', component: AssigncoursetoteacherComponent },
   { path: 'assignteacher/:userName', component: AssigncoursetoteacherComponent },
-
-
-
   { path: 'inactivecourse', component: InactiveTeacherCourseComponent },
-
-
   { path: 'modulefile', component: ModuleFileComponent },
-
-
   { path: 'inactivecourse/:id/:userName', component: InactiveTeacherCourseComponent },
-
   { path: 'Course', component: TeacherCourseComponent },
-
-  {
-    path: 'teachercourse', component: TeacherCourseComponent
-  },
+  { path: 'teachercourse', component: TeacherCourseComponent },
   { path: 'teacher/:id', component: AssigncoursetoteacherComponent },
-
-
-
   // { path: 'teacher/:id/:userName', component: TeacherCourseComponent },
 
-
-
-
   //category routing
-
-
   { path: 'addCategory', component: AddCategoryComponent },
   { path: 'addModule', component: AddModuleComponent },
-
   { path: 'addModule/:userName', component: AddModuleComponent },
-
   { path: 'main', component: MainComponent },
   { path: 'category', component: CategoryComponent },
   { path: 'updateModule', component: UpdatemoduleComponent },
-
-
-
-
   { path: 'updateModule/:userName', component: UpdatemoduleComponent },
-
-
-
   { path: 'authenticationlogin', component: AuthenticationloginComponent },
-
   { path: 'adminmodule/admin/:userName', component: AdminmdouleComponent },
-
   { path: 'teacherdisplay/teacher/:userName', component: TeacherPanelComponent },
-
-
-
   { path: 'studentdata/student/:userName', component: StudentPanelComponent },
   // { path: 'studentdata', component: StudentdataComponent },
-
   { path: 'enrollstudent', component: EnrollstudentComponent },
-
   { path: 'enrollstudent/:userName', component: EnrollstudentComponent },
-
   { path: '', component: HomeComponent },
   //admin role routes
   { path: 'adminrole', component: AdminroleComponent },
-
   { path: 'adminrole/:userName', component: AdminroleComponent },
-
   //activate role routes
   { path: 'adminrole/activate/:userName', component: ActivateRoleComponent },
-
   //auth user routes
   // { path: 'authuser', component: AuthuserComponent },
-
-
   //login route
   { path: 'demo', component: LoginComponentComponent },
   { path: 'login', component: LoginauthComponent },
-
   //instituteadmin routes
-
-
   //admindepartment routes
   { path: 'department', component: DepartmentComponent },
-
   { path: 'department/:userName', component: DepartmentComponent },
-
   { path: 'department/:id', component: ViewDepartmentComponent },
-
   { path: 'addinstitute', component: AddinstituteComponent },
-
   { path: 'addinstitute/:userName', component: AddinstituteComponent },
-
   { path: 'displayinstitute', component: DisplayinstituteComponent },
   { path: 'displayinstitute/:userName', component: DisplayinstituteComponent },
-
   { path: 'displayinstitute/:adminInstitutionId', component: DisplayinstituteComponent },
   { path: 'displayinstitute/activate/:userName', component: ActivateInstitutionComponent },
-
   //display school urls
-
   { path: 'display', component: DisplaySchoolComponent },
-
-
   // { path: 'display/:id', component: DisplaySchoolComponent },
-
   { path: 'display/:id/:userName', component: DisplaySchoolComponent },
-
-
-
-
   //url for deprtment course
-
   { path: 'departmentCourse', component: CourseDepartmentComponent },
   { path: 'departmentCourse/:id/:userName', component: CourseDepartmentComponent },
-
-
   //add department for institute
   { path: 'departments', component: AddDepartmentsComponent },
-
   { path: 'departments/:userName', component: AddDepartmentsComponent },
-
-
-
-
   // **** commented because of reusable module
   //inserting  the quiz
-
   // { path: 'createQuiz/:userName', component: CreateQuizComponent },
   // { path: 'course/:id', component: ViewCoursesComponent },
-
-
   // //update Quiz
   // { path: 'updateQuiz/:title', component: UpdatequizComponent },
-
   // { path: 'updateQuiz/:title/:userName', component: UpdatequizComponent },
-
-
   // { path: 'updateQuiz', component: UpdatequizComponent },
-
   // ***commented because of reusable module
   //teacherModule routes
   // { path: 'teachermodule', component: TeachermoduleComponent },
-
   // { path: 'teachermodule/:userName', component: TeachermoduleComponent },
-
-
   { path: 'studentmodule', component: StudentModuleComponent },
-
   { path: 'email', component: EmailComponent },
-
   //home route
   { path: 'home', component: HomeComponent },
-
-
-
   //announcement router
   {
     path: 'announcement/:role', component: AnnouncementComponent, children: [
@@ -292,10 +201,12 @@ const routes: Routes = [
   { path: 'Quiz/:userName', component: QuizComponent },
 
   { path: 'uploadfile', component: UploadFileComponent },
-  { path: 'access', component: AccesscontrolComponent },
+  { path: 'access', component: AccessControlComponent },
+  { path: 'permission', component: PermissionComponent },
+  { path: 'authmodule', component: AuthModuleComponent },
   { path: 'analytics', component: AnalyticsComponent },
 
-  { path: 'Review/:userName', component: ReviewAnswerComponent},
+  { path: 'Review/:userName', component: ReviewAnswerComponent },
 
 ];
 

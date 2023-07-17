@@ -48,14 +48,32 @@ export class QuizService {
 
   getAllQuizzesByProfileId(studentId: number): Observable<Quiz[]> {
     // return this.http.get<any>("http://localhost:8090/quiz/uhpocms/quiz?title=all");
-    return this.http.get<Quiz[]>(`http://localhost:8090/quiz/uhpocms/quiz/studentId?id=${studentId}`);
+    return this.http.get<Quiz[]>(`${this.quizUrl}/studentId?id=${studentId}`);
   }
 
 
-  
+
   getAllQuizzesByModuleId(moduleId: number): Observable<Quiz[]> {
     // return this.http.get<any>("http://localhost:8090/quiz/uhpocms/quiz?title=all");
     return this.http.get<Quiz[]>(`${this.quizUrl}/moduleId/${moduleId}`);
   }
 
+  getInactiveQuizzesOfModulesOfAssignedCoursesByProfileId(profileId: number): Observable<Quiz[]> {
+    return this.http.get<any>(`${this.quizUrl}/assign/inactive/profileid?id=${profileId}`);
+
+  }
+  getActiveQuizzesOfModulesOfAssignedCoursesByProfileId(profileId: number): Observable<Quiz[]> {
+    return this.http.get<Quiz[]>(`${this.quizUrl}/assign/active/profileid?id=${profileId}`);
+
+  }
+
+  getActiveQuizzesOfModulesOfEnrolledCoursesByProfileId(profileId: number): Observable<Quiz[]> {
+    return this.http.get<Quiz[]>(`${this.quizUrl}/studentId?id=${profileId}`);
+
+  }
+
+  getInactiveQuizzesOfModulesOfEnrolledCoursesByProfileId(profileId: number): Observable<Quiz[]> {
+    return this.http.get<Quiz[]>(`${this.quizUrl}/enroll/inactive/profileid?id=${profileId}`);
+
+  }
 }

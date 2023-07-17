@@ -10,6 +10,8 @@ import { Profile } from './profiles/class/profile';
 
 import { environment } from 'environments/environment.development';
 import { AdminInstitution } from './admin-institution/class/admininstitution';
+import { AuthUserPermissionService } from './permissions/services/authUserPermission/auth-user-permission.service';
+import { AuthUserPermission } from './permissions/class/auth-user-permission';
 @Injectable({
   providedIn: 'root',
 })
@@ -21,8 +23,10 @@ export class AppService {
   private readonly moduleURL: string;
   private readonly instituteProfileURL: string;
 
+  userPermissions: AuthUserPermission[] = [];
 
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient,
+    private userPermissionService: AuthUserPermissionService) {
 
     this.adminInstitutionURL = `${environment.adminInstitutionUrl}/institution?name=all`;
     this.quizURL = `${environment.quizUrl}/quiz?title=all`;
@@ -61,4 +65,14 @@ export class AppService {
     //alert(this.baseUrl + this.instituteProfileWar + this.instituteProfileURL)
     return this._http.get<Profile[]>(this.instituteProfileURL);
   }
+
+  // fetchUserPermissionsByUserIdAndRoleId(userRoleId: any, userId: any) {
+  //   this.userPermissionService.getAllPermissionsByRoleIdAndUserId(userRoleId, userId).subscribe(
+  //     (response) => {
+  //       console.log(response);
+
+  //       this.userPermissions = response;
+  //     }
+  //   );
+  // }
 }

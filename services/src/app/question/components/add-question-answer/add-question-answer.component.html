@@ -112,8 +112,7 @@
             <thead id="deptHeader">
                 <tr>
                     <th *ngFor="let column of columnNames">{{ column.label }}</th>
-                    <th>Add/Update</th>
-                     <!-- <th> Update</th> -->
+                    <th *ngIf="buttonsArray.showAddButton || buttonsArray.showUpdateButton">Add/ Update</th>
                     <th>View</th>
                 </tr>
             </thead>
@@ -150,8 +149,10 @@
                     <!-- <td><button (click)="onAddUpdatClicked(row)" class="btn btn-primary">Add</button></td> -->
                
                       
-                            <!-- <td><button (click)="onDeleteClicked(row)" class="btn btn-danger">Delete</button></td> -->
-                    <td><button (click)="onAddUpdatClicked(row)" class="btn btn-primary">Add/Update</button></td>
+                    <!-- <td><button (click)="onDeleteClicked(row)" class="btn btn-danger">Delete</button></td> -->
+                    <td *ngIf="buttonsArray.showAddButton || buttonsArray.showUpdateButton"><button (click)="onAddUpdatClicked(row)"
+                            class="btn btn-primary">Add/ Update</button></td>
+
                     <td><span (click)="onViewClicked(row)" class="fa-solid fa-eye"
                             style="font-size:24px;color: #6197f5;"></span></td>
                         </tr>
