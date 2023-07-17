@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { DialogModule } from '@angular/cdk/dialog';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { OrderByPipe } from './pipes/orderBy/order-by.pipe';
+import { TimerFormatPipe } from './pipes/timerFormat/timer-format.pipe';
 
 
 
@@ -21,7 +22,8 @@ import { OrderByPipe } from './pipes/orderBy/order-by.pipe';
     RemoveExtensionPipe,
     PdfViewerComponent,
     DialogBoxComponent,
-    OrderByPipe],
+    OrderByPipe,
+    TimerFormatPipe],
   imports: [
     CommonModule,
     PdfViewerModule,
@@ -33,7 +35,8 @@ import { OrderByPipe } from './pipes/orderBy/order-by.pipe';
     AdvFilterPipe,
     RemoveExtensionPipe,
     PdfViewerComponent,
-    OrderByPipe
+    OrderByPipe,
+    TimerFormatPipe
   ]
 })
 export class SharedModule { }

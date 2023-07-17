@@ -27,6 +27,8 @@
                         <input name="{{column.key}}" class="form-control" *ngSwitchCase="'date'" type="date"
                             [(ngModel)]="row[column.key]" disabled>
 
+                        <time class="form-control" *ngSwitchCase="'time'" disabled>{{row[column.key] | timerFormat}}</time>
+
                         <input name="{{column.key}}" class="form-control" *ngSwitchCase="'password'" type="password"
                             [(ngModel)]="row[column.key]" disabled>
                         <!-- handle date type -->

@@ -519,7 +519,7 @@ console.log("Pass Marks $$$$$$$$$$$$$$$$$$$$$4 Total Marks")
 console.log(this.passMarks)
 console.log(this.totalMarks)
    let quesAnswersArrCopy : any[]=[];
-   if(this.passMarks < this.totMarksToDisplay )
+   if(this.passMarks <= this.totMarksToDisplay )
   
    {   this.questionAnswers =[];
           for(let newArr of newQuestionAnsArr){
