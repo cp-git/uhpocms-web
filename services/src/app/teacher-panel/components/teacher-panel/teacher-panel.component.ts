@@ -7,7 +7,7 @@ import { Profile } from 'app/profiles/class/profile';
 import { ProfileService } from 'app/profiles/services/profile.service';
 import { BarChartComponent } from 'app/charts/components/bar-chart/bar-chart.component';
 import { ChartdataComponent } from 'app/charts/components/chartdata/chartdata.component';
-
+import { environment } from 'environments/environment.development';
 import { Course } from 'app/teacher-course/class/course';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 
@@ -43,10 +43,20 @@ export class TeacherPanelComponent {
   clickedCourse:Course =new Course();
   barClicked :boolean = false;
   closeButtonStatus : boolean = true;
+  displayInstituteLogo : any;
+instituteId : any;
+sessionData : any;
+data:any;
+profileId : any
+profiles: Profile[] = []; // list of inactive Profile
+profile: Profile;
 
 
   constructor(private renderer: Renderer2,private _route: Router, private _activatedRoute: ActivatedRoute, private courseProgServ: CourseProgressService, private courseService: TeacherCourseService, private assignCouServ: AssignCourseToTeacherService, private profileServ: ProfileService) {
-
+    this.profile = new Profile();
+    this.displayInstituteLogo = `${environment.adminInstitutionUrl}/institution/getFileById`;
+   
+    this.profileId = sessionStorage.getItem("profileId");
   }
 
 
@@ -58,6 +68,31 @@ export class TeacherPanelComponent {
 
   }
 
+  loadProfiles(profileId: number) {
+    // alert(studentId);
+    try {
+      this.sessionData = sessionStorage.getItem('instituteprofile');
+      //alert(JSON.stringify(this.sessionData));
+      this.data = JSON.parse(this.sessionData);
+      for (var i = 0; i < this.data.length; i++) {
+        if (this.data[i].adminId == this.profileId) {
+          this.profile = this.data;
+          this.instituteId = this.data[i].institutionId;
+          //  alert(this.studentName);
+          console.log(this.profile.firstName, this.profile.lastName, this.profile.fullName, "  + ++++ + + ", this.instituteId);
+          this.instituteId = this.data[i].institutionId;
+          
+
+          //  alert(JSON.stringify(this.profileInstituteId));
+          break; // Assuming the profileId is unique, exit the loop after finding the matching profile
+        }
+      }
+    } catch (err) {
+      console.log("Error", err);
+    }
+  }
+
+
   ngOnInit(): void {
     this._route.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
@@ -66,7 +101,7 @@ export class TeacherPanelComponent {
         }
       }
     });
-   
+   this.loadProfiles(this.profileId);
     this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
     console.log(this.teacherId)
