@@ -123,7 +123,7 @@ export class TeacherCourseComponent implements OnInit {
   // this function for loading permission from session storage and link permission 
   // with buttons to show and hide based on permissions 
   private async loadAndLinkUserPermissions() {
-    this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.QUIZ, this.userAndRolePermissions, this.buttonsArray);
+    this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.COURSE, this.userAndRolePermissions, this.buttonsArray);
     await this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
   }
 

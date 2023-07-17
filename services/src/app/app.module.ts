@@ -45,7 +45,6 @@ import { DepartmentModule } from './department/module/department.module';
 
 import { QuestionModule } from './question/module/question.module';
 
-import { CategoryComponent } from './category/component/category/category.component';
 import { MainComponent } from './category/component/main/main.component';
 import { AddModuleComponent } from './category/component/add-module/add-module.component';
 import { AddCategoryComponent } from './category/component/add-category/add-category.component';
@@ -88,7 +87,7 @@ import { PolarChartComponent } from './charts/components/polar-chart/polar-chart
 import { StudentModuleModule } from './student-module/student-module.module';
 import { ReviewModule } from './review-answer/module/review/review.module';
 import { AddReviewMarksComponent } from './review-answer/components/add-review-marks/add-review-marks.component';
-
+import { CategoryModule } from './category/module-name/category.module';
 
 
 
@@ -101,7 +100,6 @@ import { AddReviewMarksComponent } from './review-answer/components/add-review-m
     AdminroleComponent,
     LoginauthComponent,
     HomeComponent,
-    CategoryComponent,
     MainComponent,
     AddModuleComponent,
     AddCategoryComponent,
@@ -134,10 +132,10 @@ import { AddReviewMarksComponent } from './review-answer/components/add-review-m
 
 
 
-
   ],
 
   imports: [
+    CategoryModule,
     ModuleFileModule,
     QuizModule,
     EmailModule,

@@ -16,6 +16,7 @@ import { TeacherCourseService } from 'app/teacher-course/services/teacher-course
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 import { Enrolltostudent } from 'app/enrollstudent/class/enrolltostudent';
 import { EnrolltostudentService } from 'app/enrollstudent/service/enrolltostudent.service';
+import { InstituteServicesService } from 'app/institute-details/services/institute-services.service';
 @Component({
   selector: 'app-assigncoursetoteacher',
   templateUrl: './assigncoursetoteacher.component.html',
@@ -63,6 +64,8 @@ export class AssigncoursetoteacherComponent {
   showAddButton: boolean = false;
   showActivateButton: boolean = false;
 
+  profileId: any;
+  userRole: any;
   getSelectedValue() {
     console.log("getSelectedValue")
     console.log(this.selected);
@@ -78,7 +81,11 @@ export class AssigncoursetoteacherComponent {
     private _activatedRoute: ActivatedRoute,
     private _route: Router,
     private dialogBoxService: DialogBoxService,
-    private enrollStudentService:EnrolltostudentService) { }
+    private enrollStudentService: EnrolltostudentService) {
+
+    this.profileId = sessionStorage.getItem('profileId');
+    this.userRole = sessionStorage.getItem('userRole');
+  }
 
   isFormComplete(): boolean {
     // Check if all required fields are filled in
@@ -92,7 +99,8 @@ export class AssigncoursetoteacherComponent {
     this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
     console.log(this.userName)
-    this.getAllInstitution();
+    // this.getAllInstitution();
+    this.getDataBasedOnRole(this.userRole);
     console.log(this._profile.institutionId);
   }
 
@@ -274,14 +282,14 @@ export class AssigncoursetoteacherComponent {
         // this._profileArray = this._profileArrCopy;
         // this._profileArray = this._profileArray.filter(profile => !this.enrolledUsers.includes(profile.adminId));
         // console.log(this._profileArray);
-         
+
       },
       error => {
         console.log("failed to fetch data");
       }
     );
   }
-  
+
 
   onOptionSelected(item: any) {
     console.log(JSON.stringify(item))
@@ -340,17 +348,17 @@ export class AssigncoursetoteacherComponent {
     this.assignTeacher.courseId = (courseId);
     this.assignTeacher.profileId = profileId;
     // Delete the unchecked assignments
-    this.unCheckedProfiles.forEach((profileId)=>{
+    this.unCheckedProfiles.forEach((profileId) => {
       console.log(profileId);
 
       this.deleteAssignment(courseId, profileId);
-      
-      this.assignTeacherArr =  this.assignTeacherArr.filter((element) => element !== profileId);
-        console.log(this.assignTeacherArr);
-        
+
+      this.assignTeacherArr = this.assignTeacherArr.filter((element) => element !== profileId);
+      console.log(this.assignTeacherArr);
+
     });
 
-    
+
     for (let i = 0; i < this.selected.length; i++) {
 
       this.assignTeacher.profileId = this.selected[i];
@@ -373,7 +381,7 @@ export class AssigncoursetoteacherComponent {
         if (response) {
           location.reload(); // Refresh the page
         }
-  
+
       });
       // location.reload();
     }
@@ -412,7 +420,8 @@ export class AssigncoursetoteacherComponent {
 
 
   back() {
-    this._route.navigate(['adminmodule/admin', this.userName])
+    // this._route.navigate(['adminmodule/admin', this.userName])
+    this.location.back();
 
   }
 
@@ -432,5 +441,26 @@ export class AssigncoursetoteacherComponent {
     }
 
 
+  }
+
+  // Function to get data based on role
+  getDataBasedOnRole(userRole: any) {
+
+    switch (userRole) {
+      case 'admin' || 'coadmin':
+        this.getAllInstitution();
+        break;
+
+      default:
+        this.getInsitutionByProfileId(this.profileId);
+    }
+  }
+
+  getInsitutionByProfileId(profileId: any) {
+    this._institutionService.getInstitutionByProfileId(profileId).subscribe(
+      (data) => {
+        this.institutions = data;
+      }
+    );
   }
 }

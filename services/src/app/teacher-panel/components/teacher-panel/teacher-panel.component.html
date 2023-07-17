@@ -166,6 +166,18 @@ border: none;'></button>
     <!-- -------------------------------------------pop-up code close-------------------------------------- -->
 
     <div class="container">
+
+        <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.CATEGORY)">
+            <div class="card text-center" [routerLink]="['/category']">
+                <div class="card-header">
+                    <span class="   fa fa-list fa-4x" style="color:rgb(236,172,56)"></span>
+                </div>
+                <div class="card-body">
+                    <!-- <h3 class="card-title">Announcements</h3>-->
+                    <button class="btn btn-primary">Category</button>
+                </div>
+            </div>
+        </div>
         <!-- first row  -->
         <!-- <div class="row"> -->
         <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.COURSE)">
@@ -220,7 +232,7 @@ border: none;'></button>
 
             </div>
         </div>
-        <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.QUESTION)">
+        <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.QUESTION_ANSWER)">
             <div class="card text-center" (click)="RedirectToQuestion()">
                 <div class="card-header">
                     <span class="fas fa-question-circle fa-4x" style="color: rgb(108,44,153);"></span>
@@ -232,7 +244,7 @@ border: none;'></button>
             </div>
         </div>
 
-        <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.QUESTION)">
+        <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.REVIEW_ANSWERS)">
             <div class="card text-center" (click)="RedirectToReviewAnswer()">
                 <div class="card-header">
                     <span class="fas fa-question-circle fa-4x" style="color: rgb(108,44,153);"></span>
@@ -278,13 +290,12 @@ border: none;'></button>
 
             </div>
         </div>
-        <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.AUTH_USER)">
+        <!-- <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.AUTH_USER)">
             <div class="card text-center" [routerLink]="['/AuthUser',userName]">
                 <div class="card-header">
                     <span class="fas fa-user-cog fa-4x" style="color: darkblue"></span>
                 </div>
                 <div class=" card-body">
-                    <!-- <h3 class="card-title">Users</h3>-->
                     <button class="btn btn-primary">Users</button>
                 </div>
 
@@ -296,12 +307,11 @@ border: none;'></button>
                     <span class="fas fa-users fa-4x" style="color: rgb(50,126,199);"></span>
                 </div>
                 <div class="card-body">
-                    <!-- <h3 class="card-title">User Profiles</h3>-->
                     <button class="btn btn-primary">User
                         Profiles</button>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.ASSIGN_TEACHERS)">
             <div class="card text-center" [routerLink]="['/assignteacher',userName]">
                 <div class="card-header">

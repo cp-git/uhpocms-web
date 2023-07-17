@@ -99,7 +99,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.QUESTION)">
+            <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.QUESTION_ANSWER)">
                 <div class="card text-center" [routerLink]="['/Question',userName]">
                     <div class="card-header">
                         <span class="fas fa-question-circle fa-4x" style="color: rgb(108,44,153);"></span>
@@ -110,17 +110,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.ENROLL_STUDENTS)">
+            <!-- <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.ENROLL_STUDENTS)">
                 <div class="card text-center" [routerLink]="['/enrollstudent',userName]">
                     <div class="card-header">
                         <span class="fas fa-book-reader fa-4x" style="color: rgb(171,29,70);"></span>
                     </div>
                     <div class="card-body">
-                        <!--<h3 class="card-title">Enroll Students To Course</h3>-->
                         <button class="btn btn-primary">Enroll Students To Course</button>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.MODULE)">
                 <div class="card text-center" [routerLink]="['/Module',userName]">
                     <div class="card-header">
