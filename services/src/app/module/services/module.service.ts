@@ -74,4 +74,13 @@ export class ModuleService {
     return this._http.get<any>(`${this.moduleUrl}/courseId/${courseId}`);
 
   }
+
+  getModulesOfAssignedCoursesByProfileId(profileId: number): Observable<Module[]> {
+    return this._http.get<Module[]>(`${this.moduleUrl}/assign/profileid/${profileId}`);
+
+  }
+  getModulesOfEnrolledCoursesByProfileId(profileId: number): Observable<any> {
+    return this._http.get<any>(`${this.moduleUrl}/enroll/profileid/${profileId}`);
+
+  }
 }

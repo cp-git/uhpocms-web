@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
-
 import { DepartmentAllColumn, DepartmentColumn, DepartmentUpdateColumn } from 'app/department/column/department-column';
-
-
 import { Location } from '@angular/common';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
+import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
+import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
+import { userModule } from 'app/permissions/enum/user-module.enum';
+import { userPermission } from 'app/permissions/enum/user-permission.enum';
+import { AdmininstitutionService } from 'app/admin-institution/service/admininstitution.service';
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
@@ -24,16 +26,20 @@ export class DepartmentComponent implements OnInit {
   viewActivate: boolean = false;
 
   // for buttons to view
-  showAddButton: boolean = true;
-  showActivateButton: boolean = true;
+  // showAddButton: boolean = false;
+  // showActivateButton: boolean = false;
+  // updateButton: boolean = false;
+  // deleteButton: boolean = false;
+  buttonsArray: any;
+  userAndRolePermissions: AuthUserPermission[] = [];
 
+  userModule = userModule;
+  userPermission = userPermission;
   // dataAvailable: boolean = false;
 
   columnNames: any;
   allColumnNames: any;
-
   updateColumnNames: any;
-
 
   // For dropdown
   readonly primaryIdColumnName: string = 'id';
@@ -49,7 +55,22 @@ export class DepartmentComponent implements OnInit {
   emptyDepartment: Department; // empty department
   currentData!: Department; // for update and view, to show existing data
 
-  constructor(private service: DepartmentService, private location: Location, private dialogBoxServices: DialogBoxService) {
+  profileId: any;
+  userRole: any
+
+  institution: AdminInstitution[] = [];
+  activeDepartments: Department[] = [];
+  inactiveDepartments: Department[] = [];
+
+  constructor(
+    private service: DepartmentService,
+    private location: Location,
+    private dialogBoxServices: DialogBoxService,
+    private userPermissionService: AuthUserPermissionService,
+    private institutionService: AdmininstitutionService,
+  ) {
+    this.profileId = sessionStorage.getItem("profileId");
+    this.userRole = sessionStorage.getItem('userRole');
     // assigng headers
     this.columnNames = DepartmentColumn;
     this.allColumnNames = DepartmentAllColumn;
@@ -58,13 +79,73 @@ export class DepartmentComponent implements OnInit {
     // creating empty object
     this.emptyDepartment = new Department();
 
-    this.loadAdminInstitutions();
+    // this.loadAdminInstitutions();
+
+    this.buttonsArray = {
+      showAddButton: false,
+      showActivateButton: false,
+      showUpdateButton: false,
+      showDeleteButton: false
+    }
+
+
   }
 
   ngOnInit(): void {
-    this.getAllDepartments();
-    this.getInactiveDepartment();
+
+    // this.getAllDepartments();
+    // this.getInactiveDepartment();
+
+    console.log(this.userAndRolePermissions);
+
+    this.loadAndLinkUserPermissions();
+
+    this.getDataBasedOnRole(this.userRole);
+    // this.getInstitutionOfUserByUserId();
   }
+
+  // this function for loading permission from session storage and link permission 
+  // with buttons to show and hide based on permissions 
+  private async loadAndLinkUserPermissions() {
+    this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.DEPARTMENT, this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+
+    // try {
+    //   let sessionData: any = sessionStorage.getItem('permissions');
+    //   //console.log(this.sessionData);
+    //   let data = JSON.parse(sessionData);
+    //   for (var inst in data) {
+    //     this.userAndRolePermissions.push(data[inst]);
+    //   }
+    // }
+    // catch (err) {
+    //   console.log("Error", err);
+    // }
+
+    // // for linking permissions to buttons array
+    // // this.userPermissionService.linkPermissions(userModule.DEPARTMENT, this.userAndRolePermissions, this.buttonsArray);
+
+    // // showing and hinding buttons based on permissions
+    // // this.userPermissionService.toggleButtonsPermissions(this.buttonsArray);
+
+  }
+
+  // for showing and hinding buttons
+  // private toggleButtonsPermissions(buttonsArray: any) {
+  //   if (buttonsArray.showActivateButton) {
+  //     this.showActivateButton = true;
+  //   }
+  //   if (buttonsArray.showAddButton) {
+  //     this.showAddButton = true;
+  //   }
+  //   if (buttonsArray.deleteButton) {
+  //     this.deleteButton = true;
+  //   }
+  //   if (buttonsArray.updateButton) {
+  //     this.updateButton = true;
+  //   }
+  // }
+
 
   // back button functionality
   back() {
@@ -76,8 +157,11 @@ export class DepartmentComponent implements OnInit {
       this.viewUpdate = false;
       this.viewActivate = false;
 
-      this.showAddButton = true;
-      this.showActivateButton = true;
+      // this.showAddButton = true;
+      // this.showActivateButton = true;
+      this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+
+
     } else {
       this.location.back();
     }
@@ -91,8 +175,10 @@ export class DepartmentComponent implements OnInit {
     // hiding view of all column and displaying all departments screen
     this.viewOne = true;
     this.viewAll = false;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
+    // this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+
     this.currentData = objectReceived; // assingning data to current data for child component
   }
 
@@ -102,8 +188,10 @@ export class DepartmentComponent implements OnInit {
     // hiding update screen and displaying all departments screen
     this.viewAll = false;
     this.viewUpdate = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
+    // this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+
     // assingning data to current data for child component
     this.currentData = objectReceived;
   }
@@ -125,16 +213,20 @@ export class DepartmentComponent implements OnInit {
     this.emptyDepartment = {} as Department;
     this.viewAll = false;
     this.viewAdd = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+
+    // this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
   }
 
   // for navigating to activate screen
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
+    // this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+
   }
 
   // on addComponents's submit button clicked
@@ -250,13 +342,13 @@ export class DepartmentComponent implements OnInit {
       (error) => {
         this.dialogBoxServices.open('Department deletion Failed', 'warning');
       }
-    );
-  } else {
-    console.log('User clicked Cancel');
-    // Do something if the user clicked Cancel
+    )
+      }
+      else {
+        console.log('User clicked Cancel');
+      }
+    });
   }
-});
-}
 
   // For getting all inactive departments
   private getInactiveDepartment() {
@@ -288,6 +380,65 @@ export class DepartmentComponent implements OnInit {
       },
       (error) => {
         this.dialogBoxServices.open("Failed to Activate", 'warning');
+      }
+    );
+  }
+
+
+  private getDataBasedOnRole(userRole: any) {
+    console.log(userRole);
+
+    switch (userRole) {
+      case 'admin' || 'coadmin':
+        this.loadAdminInstitutions();
+        this.getAllDepartments();
+        this.getInactiveDepartment();
+        console.log("done");
+
+        break;
+      case 'teacher':
+
+        //for getting Institution And Departments Of User By UserId
+        this.getInstitutionAndDepartmentsOfUserByUserId(this.profileId);
+        break;
+      // case 'student':
+      //   this.getInstitutionOfUserByUserId();
+      //   break;
+    }
+  }
+
+  // function for getting institituions and all departments of that institution by profile id
+  getInstitutionAndDepartmentsOfUserByUserId(profileId: any) {
+    this.institutionService.getInstitutionByProfileId(profileId).subscribe(
+      (response) => {
+        this.adminInstitutions = response;
+        console.log(response);
+
+        // for getting active and inactive departments using institution id
+        this.getAllDepartmentsByInstitutionId(this.adminInstitutions[0].adminInstitutionId);
+        this.getAllInactiveDeparmentsByInstitutionId(this.adminInstitutions[0].adminInstitutionId);
+      }
+    );
+  }
+
+  // For getting all active departments by institution id
+  getAllDepartmentsByInstitutionId(institutionId: any) {
+    this.service.getDepartmentsByInstitutionId(institutionId).subscribe(
+      (response) => {
+        console.log(response);
+
+        this.allData = response;
+      }
+    );
+  }
+
+  // For getting all inactive departments by institution id
+  getAllInactiveDeparmentsByInstitutionId(institutionId: any) {
+    this.service.getInactiveDepartmentsByInstitutionId(institutionId).subscribe(
+      (response) => {
+        console.log(response);
+
+        this.allInActiveData = response;
       }
     );
   }

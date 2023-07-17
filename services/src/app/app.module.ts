@@ -45,7 +45,6 @@ import { DepartmentModule } from './department/module/department.module';
 
 import { QuestionModule } from './question/module/question.module';
 
-import { CategoryComponent } from './category/component/category/category.component';
 import { MainComponent } from './category/component/main/main.component';
 import { AddModuleComponent } from './category/component/add-module/add-module.component';
 import { AddCategoryComponent } from './category/component/add-category/add-category.component';
@@ -81,18 +80,13 @@ import { ModuleHeaderComponent } from './reusable/component/module-header/module
 import { ChartdataComponent } from './charts/components/chartdata/chartdata.component';
 import { BarChartComponent } from './charts/components/bar-chart/bar-chart.component';
 
-
-
-
 import { MatDialogModule } from '@angular/material/dialog';
+import { PermissionModule } from './permissions/permission.module';
 import { AnalyticsComponent } from './admin-analytics/analytics/analytics.component';
 import { PolarChartComponent } from './charts/components/polar-chart/polar-chart.component';
 import { StudentModuleModule } from './student-module/student-module.module';
 import { ReviewModule } from './review-answer/module/review/review.module';
-
-
-
-
+import { CategoryModule } from './category/module-name/category.module';
 
 
 @NgModule({
@@ -103,7 +97,6 @@ import { ReviewModule } from './review-answer/module/review/review.module';
     AdminroleComponent,
     LoginauthComponent,
     HomeComponent,
-    CategoryComponent,
     MainComponent,
     AddModuleComponent,
     AddCategoryComponent,
@@ -127,24 +120,15 @@ import { ReviewModule } from './review-answer/module/review/review.module';
     AssigncoursetoteacherComponent,
     UploadFileComponent,
     StudentPanelComponent,
-
     ChartdataComponent,
-
     BarChartComponent,
     AnalyticsComponent,
     PolarChartComponent,
       
-    
-
-
-
-
-
-
-
   ],
 
   imports: [
+    CategoryModule,
     ModuleFileModule,
     QuizModule,
     EmailModule,
@@ -172,7 +156,8 @@ import { ReviewModule } from './review-answer/module/review/review.module';
     ReactiveFormsModule,
     FormsModule,
     StudentModuleModule,
-    MatDialogModule
+    MatDialogModule,
+    PermissionModule
   ],
 
   providers: [

@@ -13,6 +13,10 @@ import { QuestionAnswer } from 'app/question/class/question-answer';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { OneQuestionAnswer } from 'app/question/class/one-question-answer';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
+import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
+import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
+import { userModule } from 'app/permissions/enum/user-module.enum';
+
 import { QuizService } from 'app/quiz/services/quiz.service';
 import { CategoryService } from 'app/category/services/category.service';
 @Component({
@@ -91,14 +95,22 @@ export class AddQuestionAnswerComponent implements OnInit {
   files!: FileList;
   passMarks:number=0
   myFiles: string[] = [];
+
+  userId: any;
+  buttonsArray: any;
+  userAndRolePermissions: AuthUserPermission[] = [];
+
   generatedQuestionAnswerIdArr: number[] = [];
   generatedQuestionAnswerId: number = 0;;
   totMarksToDisplay:number=0
   constructor(private location: Location,
     private service: QuestionService,
     private courseService: TeacherCourseService,
+    private userPermissionService: AuthUserPermissionService,
+
     private dialogBoxService:DialogBoxService,private quizServ:QuizService, private categoryServ : CategoryService
   ) {
+
     // 
     this.profileId = sessionStorage.getItem('profileId');
     this.columnNames = TeacherQuizColumn;
@@ -115,12 +127,31 @@ export class AddQuestionAnswerComponent implements OnInit {
     this.loadCourses();
     this.loadModules();
 
+    this.userId = sessionStorage.getItem('userId');
+
+    this.buttonsArray = {
+      showAddButton: false,
+      showActivateButton: false,
+      showUpdateButton: false,
+      showDeleteButton: false
+    }
+
   }
 
   ngOnInit(): void {
+    this.loadAndLinkUserPermissions();
+
     // this.getAllQuestions();  // for getting all active questions
     // this.getInActiveQuestions(); // for getting all inactive questions
   }
+
+  // this function for loading permission from session storage and link permission 
+  // with buttons to show and hide based on permissions 
+  private async loadAndLinkUserPermissions() {
+    this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.QUESTION_ANSWER, this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+  }
+
 
   onFileSelected(event: any) {
     for (var i = 0; i < event.target.files.length; i++) {
@@ -128,6 +159,7 @@ export class AddQuestionAnswerComponent implements OnInit {
     }
 
   }
+  
 // // Working code
 //   onFormSubmit(queAns: OneQuestionAnswer): void {
 //     this.questionAnswer = {} as QuestionAnswer;
@@ -895,6 +927,15 @@ console.log(quiz[0].maxQuestions)
   // onChangeSelectedQuiz() {
   //   this.questionAnswers = [];
   //   this.selectedQuiz = this.quizzes.find(quiz => quiz.quizId == this.selectedQuizId);
+  //   // this.currentQuestions.length = this.selectedQuiz.maxQuestions;
+  //   // this.currentAnswers.length = this.selectedQuiz.maxQuestions;
+
+  //   // console.log(this.selectedQuiz);
+
+  //   this.service.getAllQuestionsByQuizId(this.selectedQuizId).subscribe(
+  //     response => {
+  //       this.allData = response; //assign data to local variable
+
 
   //   this.service.getAllQuestionsByQuizId(this.selectedQuizId).subscribe(
   //     response => {

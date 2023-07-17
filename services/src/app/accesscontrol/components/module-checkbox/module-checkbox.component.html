@@ -1,0 +1,58 @@
+<div class="col-sm-3 box">
+    <div class="underline-container">
+        <input type="checkbox" id="outerCheckbox" [value]="VIEW"
+            [checked]="userPermissionsIds.has(VIEW) || isAnyInnerCheckBoxChecked()"
+            [disabled]="groupPermissionsIds.has(VIEW)" (change)="updatePermissions($event, VIEW)" class="outer-checkbox"
+            [ngClass]="{'groupPerm': (assignPermissionTo === 'ROLE' && userPermissionsIds.has(VIEW))}">
+        <label for="outerCheckbox" (click)="toggleInnerCheckboxes($event)">{{module['moduleName']}} <span
+                class="underline"></span></label>
+    </div>
+    <div>
+        <!-- <div>
+            <input type="checkbox" id="view" value="5" [checked]="userPermissionsIds.has(VIEW)"
+                [disabled]="groupPermissionsIds.has(VIEW)" (change)="updatePermissions($event, VIEW)">
+            <label for="view">&nbsp; VIEW-CARD</label>
+        </div> -->
+        <div>
+            <input type="checkbox" id="create" [value]="CREATE"
+                [checked]="(userPermissionsIds.has(CREATE) || groupPermissionsIds.has(CREATE))&& (userPermissionsIds.has(VIEW)) "
+                [disabled]="groupPermissionsIds.has(CREATE)" (change)="updatePermissions($event, CREATE)"
+                [ngClass]="{'groupPerm': (assignPermissionTo == 'ROLE' && userPermissionsIds.has(CREATE))}">
+            <label for="create">&nbsp; CREATE</label>
+        </div>
+        <div>
+            <input type="checkbox" id="delete" [value]="DELETE"
+                [checked]="(userPermissionsIds.has(DELETE) || groupPermissionsIds.has(DELETE) )&& (userPermissionsIds.has(VIEW))"
+                [disabled]="groupPermissionsIds.has(DELETE)" (change)="updatePermissions($event, DELETE)"
+                [ngClass]="{'groupPerm': (assignPermissionTo == 'ROLE' && userPermissionsIds.has(DELETE))}">
+            <label for="delete">&nbsp; DELETE</label>
+        </div>
+        <div>
+            <input type="checkbox" id="update" [value]="UPDATE"
+                [checked]="(userPermissionsIds.has(UPDATE) || groupPermissionsIds.has(UPDATE))&& (userPermissionsIds.has(VIEW))"
+                [disabled]=" groupPermissionsIds.has(UPDATE)" (change)="updatePermissions($event, UPDATE)"
+                [ngClass]="{'groupPerm': (assignPermissionTo == 'ROLE' && userPermissionsIds.has(UPDATE))}">
+            <label for="update">&nbsp; UPDATE</label>
+        </div>
+        <div>
+            <input type="checkbox" id="activate" [value]="ACTIVATE"
+                [checked]="(userPermissionsIds.has(ACTIVATE) || groupPermissionsIds.has(ACTIVATE))&& (userPermissionsIds.has(VIEW))"
+                [disabled]=" groupPermissionsIds.has(ACTIVATE)" (change)="updatePermissions($event, ACTIVATE)"
+                [ngClass]="{'groupPerm': (assignPermissionTo == 'ROLE' && userPermissionsIds.has(ACTIVATE))}">
+            <label for="activate">&nbsp; ACTIVATE</label>
+        </div>
+        <div>
+            <input type="checkbox" id="activate" [value]="VIEW"
+                [checked]="userPermissionsIds.has(VIEW) || isAnyInnerCheckBoxChecked()"
+                [disabled]=" groupPermissionsIds.has(VIEW)" (change)="updatePermissions($event, VIEW)"
+                [ngClass]="{'groupPerm': (assignPermissionTo == 'ROLE' && userPermissionsIds.has(VIEW))}">
+            <label for="activate">&nbsp; VIEW</label>
+        </div>
+    </div>
+    <!-- {{userPermissions|json}} -->
+    <!-- {{moduleAndPermissionIds|json}} -->
+</div>
+
+<!-- *******{{module|json}} -->
+
+<!-- {{assignPermissionTo|json}} -->

@@ -1,0 +1,109 @@
+<div class="container">
+    <div class="col-sm-3">
+        <label for="access">Assign Permission To : </label>
+        <select id="accessTo" name="accessto" class="form-control" [(ngModel)]="selectedOptionForAccess"
+            (click)="onChangeControl()">
+            <option value="undefined">Select</option>
+            <option *ngFor="let controlFor of controlBasedOn" [value]="controlFor">{{controlFor}}
+            </option>
+        </select>
+        <br>
+    </div>
+
+
+    <div *ngIf="selectedOptionForAccess==controlBasedOn[0]">
+        <div class="col-sm-3">
+            <label for="institutionId">Institution</label>
+            <select id="institution" name="institutionId" class="form-control" [(ngModel)]="institutionId"
+                (click)="onChangeInstitution()">
+                <option value="undefined">Select</option>
+                <option *ngFor="let inst of institutions" [value]="inst.adminInstitutionId">
+                    {{inst.adminInstitutionName}}
+                </option>
+            </select>
+            <br>
+        </div>
+
+        <div class="col-sm-3">
+            <label for="departmentId">Department</label>
+            <select id="department" name="departmentId" class="form-control" [(ngModel)]="departmentId"
+                (click)="onChangeDepartment()">
+                <option value="undefined" disabled>Select</option>
+                <option *ngFor="let dept of departments |advFilter:'institutionId':institutionId" [value]="dept.id">
+                    {{dept.name}}</option>
+            </select>
+            <br>
+        </div>
+
+        <div class="col-sm-3">
+            <label for="userRole">User Roles</label>
+            <select id="userrole" name="userRole" class="form-control" [(ngModel)]="userRoleId">
+                <option value="undefined" disabled>Select</option>
+                <option *ngFor=" let role of roles" [value]="role.roleId">{{role.roleName}}</option>
+            </select>
+            <br>
+        </div>
+
+        <div class="col-sm-3">
+            <label for="userName">User</label>
+            <select id="userName" name="userId" class="form-control" [(ngModel)]="userId" (click)="onChangeUser()">
+                <option value="0" disabled>Select</option>
+                <option
+                    *ngFor="let user of profiles |filter:'institutionId':institutionId | filter:'adminDepartment':departmentId | filter:'userRoleId':userRoleId"
+                    [value]="user.userId">{{
+                    user.firstName }} {{user.lastName}} -
+                    {{user.adminEmail}} - {{user.userRole}}</option>
+            </select>
+            <br>
+        </div>
+    </div>
+
+    <div *ngIf="selectedOptionForAccess==controlBasedOn[1]">
+        <div class="col-sm-3">
+            <label for="roles">Roles</label>
+            <select id="roleid" name="roleId" class="form-control" [(ngModel)]="roleId" (click)="onChangeRole()">
+                <option value="0">Select</option>
+                <option *ngFor="let role of roles" [value]="role.roleId">{{role.roleName}}</option>
+            </select>
+            <br>
+        </div>
+    </div>
+    
+</div>
+<div class="container">
+    <input type="checkbox" disabled="true" style="background-color: lawngreen;">
+    <label for="activate">&nbsp; Individual Permissions</label>&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="checkbox" disabled="true" style="background-color: red;">
+    <label for="activate">&nbsp; Role Permissions</label>
+   
+</div>
+
+
+<div class="container" *ngIf="userId>0 && selectedOptionForAccess==controlBasedOn[0]">
+    <ng-container *ngFor="let module of masterModules">
+        <app-module-checkbox [module]="module"
+            [userPermissions]="userPermissions | filter:'userId':userId | filter:'moduleId':module.id"
+            [groupPermissions]="groupPermissions | filter:'roleId':roleId | filter:'moduleId':module.id"
+            (onChangePermissions)="onChangePermissions($event)" [assignPermissionTo]="'USERS'"></app-module-checkbox>
+
+    </ng-container>
+</div>
+
+<div class="container" *ngIf="roleId>0 && selectedOptionForAccess==controlBasedOn[1]">
+    <ng-container *ngFor="let module of masterModules">
+        <app-module-checkbox [module]="module" [userPermissions]="groupPermissions | filter:'roleId':roleId"
+            (onChangePermissions)="onChangePermissions($event)" [assignPermissionTo]="'ROLE'"></app-module-checkbox>
+    </ng-container>
+</div>
+<!-- <ng-template #noData>
+    <h3>No User/Role Selected.</h3>
+</ng-template> -->
+
+<ng-container *ngIf="userId>0 || roleId>0">
+    <button class="btn btn-primary" (click)="onClickSubmit()" type="submit">Assign Permissions</button>
+</ng-container>
+
+<!-- {{groupPermissions | filter:'roleId':roleId|json}} -->
+<!-- {{roleId|json}} -->
+
+<!-- {{userPermissions|json}} -->

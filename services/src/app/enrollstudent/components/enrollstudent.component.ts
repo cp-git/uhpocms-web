@@ -102,12 +102,12 @@ export class EnrollstudentComponent {
   ngOnInit() {
     // function to be loaded on page load
     this.loadProfiles(this.profileId);
-    this.getAllInstitution();
+    // this.getAllInstitution();
     this.EnrollCoursesToStudentBasedOnRole(this.userRole);
-    this.getDepartmentByProfileId(this.profileId);
-    this.getInstitutionByProfileId(this.profileId);
-    this.getAssignedCoursesOfTeacher(this.profileId);
-    this.getDepartmentsByInstId(this.instId);
+    // this.getDepartmentByProfileId(this.profileId);
+    // this.getInstitutionByProfileId(this.profileId);
+    // this.getAssignedCoursesOfTeacher(this.profileId);
+    // this.getDepartmentsByInstId(this.instId);
 
   }
   // function to get all institutions

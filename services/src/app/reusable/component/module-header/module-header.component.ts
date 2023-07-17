@@ -11,7 +11,7 @@ import { environment } from 'environments/environment.development';
 export class ModuleHeaderComponent {
 
   @Input() moduleName: string = 'Space For Module Name';
-  @Input() buttons: { showAddButton: boolean, showActivateButton: boolean } = { showAddButton: true, showActivateButton: true }
+  @Input() buttons: { showAddButton: boolean, showActivateButton: boolean } = { showAddButton: false, showActivateButton: false }
   @Input() titleWithUserRole: boolean = false;
 
   @Output() backButtonClicked = new EventEmitter();

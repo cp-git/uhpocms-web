@@ -9,6 +9,9 @@ import { Location } from '@angular/common';
 import { AuthService } from 'app/authlogin/service/auth.service';
 
 import { CreateAnnouncementComponent } from '../create-announcement/create-announcement.component';
+import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
+import { userModule } from 'app/permissions/enum/user-module.enum';
+import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 // import { AuthService } from 'app/authlogin/service/auth.service';
 
@@ -27,11 +30,11 @@ export class AnnouncementComponent implements OnInit {
   outgoingAnnoucements: Announcement[] = [];
   announcement: Announcement;
   currentAnnouncement: Announcement;
-  isAutherisedToAdd: boolean = false;
-  isAutherisedToDelete: boolean = false;
-  forDeleteAnnoucement: boolean = true;
-  isAutherisedToSend: boolean = true;
-  deleteTableHead: boolean = true;
+  // isAutherisedToAdd: boolean = false;
+  // isAutherisedToDelete: boolean = false;
+  // forDeleteAnnoucement: boolean = true;
+  // isAutherisedToSend: boolean = true;
+  // deleteTableHead: boolean = true;
   profileId: any;
   userId: any;
   userRole: any;
@@ -44,12 +47,26 @@ export class AnnouncementComponent implements OnInit {
 
   allData: Profile[] = [];
   //constructor
-  constructor(private location: Location,private dialogBoxService:DialogBoxService, private announcementService: AnnouncementService, private router: Router, private authService: AuthService, private activatedRoute: ActivatedRoute,
+
+  // for user Permissions
+  buttonsArray: any;
+  userAndRolePermissions: AuthUserPermission[] = [];
+  userModule = userModule;
+  
+  constructor(private location: Location,private dialogBoxService:DialogBoxService, private announcementService: AnnouncementService, private router: Router, private authService: AuthService, private activatedRoute: ActivatedRoute,private userPermissionService: AuthUserPermissionService,
     private profileServ: ProfileService) {
-    this.profile = new Profile();
-    this.displayInstituteLogo = `${environment.adminInstitutionUrl}/institution/getFileById`;
-   
-    this.profileId = sessionStorage.getItem("profileId");
+      this.profile = new Profile();
+      this.displayInstituteLogo = `${environment.adminInstitutionUrl}/institution/getFileById`;
+     
+      this.profileId = sessionStorage.getItem("profileId");
+
+    this.buttonsArray = {
+      showAddButton: false,
+      showActivateButton: false,
+      showUpdateButton: false,
+      showDeleteButton: false
+    }
+
     this.loadAdminInstitutions();
     this.announcement = new Announcement();
     this.currentAnnouncement = new Announcement();
@@ -63,8 +80,17 @@ export class AnnouncementComponent implements OnInit {
   ngOnInit(): void {
     window.scrollTo(0, 0);
     this.loadProfiles(this.profileId);
+    this.loadAndLinkUserPermissions();
+
     //function to be executed load on page
     this.changeRole(this.profileId, this.userRole);
+  }
+
+   // this function for loading permission from session storage and link permission 
+  // with buttons to show and hide based on permissions 
+  private async loadAndLinkUserPermissions() {
+    this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.ANNOUNCEMENT, this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
   }
 
   //function to get announcements by profile id
@@ -83,32 +109,33 @@ export class AnnouncementComponent implements OnInit {
   private changeRole(profileId: number, userRole: string) {
     switch (userRole) {
       case "student":
-        this.isAutherisedToAdd = false;
-        this.forDeleteAnnoucement = false;
+        // this.buttonsArray.showAddButton = false;
+        // this.forDeleteAnnoucement = false;
         this.getAnnouncements(profileId);
-        this.isAutherisedToSend = false;
+        this.getOutgoingAnnoucement(profileId);
+        // this.isAutherisedToSend = false;
         break;
       case "teacher":
         // alert(profileId)
-        this.isAutherisedToAdd = true;
-        this.isAutherisedToDelete = true;
-        this.forDeleteAnnoucement = false;
-        this.deleteTableHead = false;
+        // this.isAutherisedToAdd = true;
+        // this.isAutherisedToDelete = true;
+        // this.forDeleteAnnoucement = false;
+        // this.deleteTableHead = false;
         this.getAnnouncements(profileId);
         this.getOutgoingAnnoucement(profileId);
         break;
       case "coadmin":
-        this.isAutherisedToAdd = true;
-        this.isAutherisedToDelete = true;
-        this.forDeleteAnnoucement = true;
-        this.getAllAnnouncements();
+        // this.isAutherisedToAdd = true;
+        // this.isAutherisedToDelete = true;
+        // this.forDeleteAnnoucement = true;
+        this.getAnnouncements(profileId);
         this.getOutgoingAnnoucement(profileId);
         break;
       case "admin":
-        this.isAutherisedToAdd = true;
-        this.forDeleteAnnoucement = true;
-        this.isAutherisedToDelete = true;
-        this.forDeleteAnnoucement = true;
+        // this.isAutherisedToAdd = true;
+        // this.forDeleteAnnoucement = true;
+        // this.isAutherisedToDelete = true;
+        // this.forDeleteAnnoucement = true;
         this.getAnnouncements(profileId);
         this.getOutgoingAnnoucement(profileId);
         break;

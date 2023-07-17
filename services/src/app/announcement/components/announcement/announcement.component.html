@@ -18,7 +18,7 @@
             <h1 class="text-left"> <ng-container *ngIf="userRole !== 'admin'"><img src="{{displayInstituteLogo}}/{{instituteId}}" style="width: 50px; height: 50px;border: 1px solid black;"></ng-container> {{userRole | titlecase}}'s Notification</h1>
         </div>
         <div class="col-sm-6 text-right buttons" >
-            <button *ngIf="isAutherisedToAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+            <button *ngIf="buttonsArray.showAddButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
                 routerLink="add">Add Notification</button>
             <button class="btn btn-primary" (click)="back()">Back</button>
 
@@ -42,7 +42,7 @@
                             <!-- <th scope="col">To</th> -->
                             <th scope="col">Sent By</th>
                             <th  scope="col">View</th>
-                            <th *ngIf="forDeleteAnnoucement" scope="col">Delete</th>
+                            <th *ngIf="buttonsArray.showDeleteButton" scope="col">Delete</th>
 
                         </tr>
 
@@ -70,7 +70,7 @@
             <span (click)="viewAnnouncement(data)"data-toggle="modal" data-target="#exampleModal" class="fa-solid fa-eye"
             style="font-size:24px;color: #6197f5;"></span>
         </td>
-        <td *ngIf=" forDeleteAnnoucement" (click)="deleteAnnouncementById(data.id)"><span
+        <td *ngIf="buttonsArray.showDeleteButton" (click)="deleteAnnouncementById(data.id)"><span
             class='fas fa-trash-alt' style='font-size:24px;color: red;'></span>
         </td>
         </tr>
@@ -81,19 +81,19 @@
 
 <!-- sent panel -->
 <div class="d-flex flex-row mb-3">
-    <h4 *ngIf="isAutherisedToSend">Sent</h4>
+    <h4 *ngIf="outgoingAnnoucements.length>0">Sent</h4>
     <div class="table-wrapper">
         <table class="table table-bordered table-hover">
 
             <thead class="table-dark">
 
-                <tr *ngIf="isAutherisedToSend">
+                <tr *ngIf="outgoingAnnoucements.length>0">
 
                     <th scope="col">Subject</th>
                     <th scope="col">Message</th>
                     <th  scope="col">View</th>
                     <!-- <th scope="col">Sent By</th> -->
-                    <th *ngIf="isAutherisedToDelete" scope="col">Delete</th>
+                    <th scope="col">Delete</th>
 
                 </tr>
 
@@ -123,7 +123,7 @@
                     style="font-size:24px;color: #6197f5;"></span>
                 </td>
                 
-                    <td *ngIf="isAutherisedToDelete" (click)="deleteAnnouncementById(data.id)"><span
+                    <td (click)="deleteAnnouncementById(data.id)"><span
                         class='fas fa-trash-alt' style='font-size:24px;color: red;'></span>
                     </td>
                 </tr>
@@ -135,3 +135,5 @@
 </div>
 </div>
 <router-outlet></router-outlet>
+
+{{buttonsArray|json}}
