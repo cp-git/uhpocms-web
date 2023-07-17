@@ -283,6 +283,8 @@ async getMCQCategory(){
     this.generatedQuestionAnswerIdArr = [];
     let newQuestionAnsArr:any=[];
     this.totMarksToDisplay = 0;
+    let answerEqualityChk:boolean = false;
+    let answerEqualityChkStatic:boolean = false;
     maxQuesInQuizFlag = await this.getQuesByQuizId(this.selectedQuizId)
 
     
@@ -306,7 +308,8 @@ async getMCQCategory(){
 
 
   //  queAns['queAnsArray'].forEach(  (queAnsNew:OneQuestionAnswer)=> {
-    for (let queAnsNew of queAns['queAnsArray']) {
+    // for (let queAnsNew of queAns['queAnsArray']) {
+      for (let queAnsNew of queAns['queAnsArray']) {
     // queAns['queAnsArray'].map(async (queAnsNew: OneQuestionAnswer) => {
   console.log("**********************************")
     console.log(newQuestionAnsArr)
@@ -436,7 +439,27 @@ async getMCQCategory(){
     this.questionAnswer.answers.push(this.answer);
   }
 
+if(mcqArr.length > 0){
+console.log("ANSWERSSSSssssssssssssssssssssssssssssss")
+console.log(queAnsNew['content1'].toLowerCase())
+console.log(queAnsNew['content2'].toLowerCase())
+console.log(queAnsNew['content3'].toLowerCase())
+console.log(queAnsNew['content4'].toLowerCase())
 
+ if((queAnsNew['content1'].toLowerCase() == queAnsNew['content2'].toLowerCase()) || 
+ (queAnsNew['content1'].toLowerCase() == queAnsNew['content3'].toLowerCase()) || 
+ (queAnsNew['content1'].toLowerCase() == queAnsNew['content4'].toLowerCase()) ||
+ (queAnsNew['content2'].toLowerCase() == queAnsNew['content3'].toLowerCase()) || 
+ (queAnsNew['content2'].toLowerCase() == queAnsNew['content4'].toLowerCase()) || 
+ (queAnsNew['content3'].toLowerCase() == queAnsNew['content4'].toLowerCase())  )
+ {
+   answerEqualityChk = true;
+   if( answerEqualityChk == true )
+   {
+    answerEqualityChkStatic = true
+   }
+
+ }}
 
 //   console.log("this.questionAnswer")
 //   console.log(this.questionAnswer)
@@ -470,6 +493,7 @@ async getMCQCategory(){
 
 
   newQuestionAnsArr.push(this.questionAnswer)
+
   console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
   console.log(this.questionAnswer)
   console.log(newQuestionAnsArr)
@@ -486,12 +510,17 @@ console.log(newQuestionAnsArr)
 console.log("Pass Marks $$$$$$$$$$$$$$$$$$$$$4 Total Marks")
 console.log(this.passMarks)
 console.log(this.totalMarks)
+console.log(mcqArr.length)
+console.log(lAnsArr.length)
+console.log(answerEqualityChk)
    let quesAnswersArrCopy : any[]=[];
-   if(this.passMarks < this.totMarksToDisplay )
-  
-   {   this.questionAnswers =[];
+   if(this.passMarks <= this.totMarksToDisplay )
+  {   
+     if(((mcqArr.length>0)  &&  (!answerEqualityChkStatic)) && ((lAnsArr.length<=0) )|| ((mcqArr.length<=0)  &&  (!answerEqualityChkStatic)) && ((lAnsArr.length>0) )){
+    {  
+    this.questionAnswers =[];
           for(let newArr of newQuestionAnsArr){
-
+        
             console.log("++++++++++++++++++++++++++++++")
             console.log(newArr)
             console.log(quesAnswersArrCopy)
@@ -811,29 +840,39 @@ console.log(this.totalMarks)
 
   }
 }
-    // quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+  // quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
     // quesAnswersArrCopy.sort((a, b) => a.questionOrderNo.toString().localeCompare(b.questionOrderNo.toString()));
 
     console.log(quesAnswersArrCopy)
     // console.log( quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo))
     // quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
-    this.questionAnswers =  quesAnswersArrCopy
+    
     // quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
     console.log("---------------------------------------------------------")
+    this.questionAnswers =  quesAnswersArrCopy
     console.log(quesAnswersArrCopy)
     console.log(this.questionAnswers)
 
+
+}
+
+
+  
+     }
+     else{
+      this.dialogBoxService.open("Please enter unique answers", 'information');
     }
-    else { 
+   
+
+  // })
+
+    }else { 
       console.log("Pass Marks $$$$$$$$$$$$$$$$$$$$$4 Total Marks")
 console.log(this.passMarks)
 console.log(this.totalMarks)
       this.dialogBoxService.open("Please enter total marks based on pass marks of quiz", 'information');
     
     }
-
-
-  // })
 
 
 }
