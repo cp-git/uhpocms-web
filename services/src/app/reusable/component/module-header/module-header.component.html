@@ -1,8 +1,8 @@
 <div class="row justify-content-between header">
-    <div class="col-sm-6">
+    <div class="col-sm-9">
         <ng-container *ngTemplateOutlet="title; context: {$implicit: moduleName }"></ng-container>
     </div>
-    <div class="col-sm-6 text-right buttons">
+    <div class="col-sm-3 text-right buttons">
         <ng-container *ngIf="buttons.showAddButton">
             <ng-container *ngTemplateOutlet="addButton;"></ng-container>
         </ng-container>
@@ -20,6 +20,9 @@
             <ng-container *ngIf="userRole !== 'admin'">
                 <img src="{{displayInstituteLogo}}/{{instituteId}}" style="width: 50px; height: 50px;border: 1px solid black;">
             </ng-container>
+            <ng-container *ngIf="userRole === 'admin'">
+                <img src="assets/img/cloudpoint.png" style="width: 150px; height: 60px;">
+            </ng-container>
             {{userRole | titlecase}}'s {{headerTitle}}
         </h1>
     </ng-container>
@@ -28,6 +31,9 @@
         <h1>
             <ng-container *ngIf="userRole !== 'admin'">
                 <img src="{{displayInstituteLogo}}/{{instituteId}}" style="width: 50px; height: 50px;border: 1px solid black;">
+            </ng-container>
+            <ng-container *ngIf="userRole === 'admin'">
+                <img src="assets/img/cloudpoint.png" style="width: 150px; height: 60px;">
             </ng-container>
             {{headerTitle}}
         </h1>
