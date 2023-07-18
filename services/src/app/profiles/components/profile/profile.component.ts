@@ -104,7 +104,7 @@ export class ProfileComponent implements OnInit {
     this.loadGenders();
     this.loadAdminRoles();
 
-    this.displayUrl = this.profileUrl + '/getFileById'
+    this.displayUrl = this.profileUrl + '/getFileById';
 
 
 
@@ -415,12 +415,12 @@ export class ProfileComponent implements OnInit {
                 if (response) {
                   location.reload(); // Refresh the page
                 }
-          
+
               });
               this.emptyProfile = {} as Profile;
               this.ngOnInit();
               this.back();
-             
+
             },
             error => {
               this.dialogBoxService.open('Failed to Add Profile ', 'warning')
