@@ -16,7 +16,7 @@
                 </div>
             </div> -->
             <app-module-header [titleWithUserRole]="true" [moduleName]="moduleName"
-                [buttons]="{showAddButton:showAddButton,showActivateButton:showActivateButton}"
+                [buttons]="{showAddButton:buttonsArray.showAddButton,showActivateButton:buttonsArray.showActivateButton}"
                 (addButtonClicked)="onAddClick()" (activateButtonClicked)="onActivateClick()"
                 (backButtonClicked)="back()"></app-module-header>
         </ng-container>
@@ -32,7 +32,7 @@
             </div> -->
 
             <app-module-header [titleWithUserRole]="true" [moduleName]="moduleName"
-                [buttons]="{showAddButton:showAddButton,showActivateButton:showActivateButton}"
+                [buttons]="{showAddButton:buttonsArray.showAddButton,showActivateButton:buttonsArray.showActivateButton}"
                 (backButtonClicked)="back()"></app-module-header>
         </ng-container>
 
@@ -77,7 +77,7 @@
     <app-view-all *ngIf="allData.length > 0" [data]="{ moduleData: this.allData, columnNames: this.columnNames }"
         [dropdown]="{adminInstitutions,departments}" [idsColumnName]="{ columnName: primaryIdColumnName }"
         [isViewAllScreen]="true" (viewClicked)="onChildViewClick($event)" (updateClicked)="onChildUpdateClick($event)"
-        (deleteClicked)="onChildDeleteClick($event)" [buttons]="{updateButton:updateButton, deleteButton:deleteButton}">
+        (deleteClicked)="onChildDeleteClick($event)" [buttons]="{updateButton:buttonsArray.showUpdateButton, deleteButton:buttonsArray.showDeleteButton}">
     </app-view-all>
     <div *ngIf="allData.length == 0">
         <h3>No active Courses</h3>

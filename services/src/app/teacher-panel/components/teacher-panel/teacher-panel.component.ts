@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { CourseProgress } from 'app/courseProgress/class/courseprogress';
 import { CourseProgressService } from 'app/courseProgress/services/course-progress.service';
@@ -7,10 +7,12 @@ import { Profile } from 'app/profiles/class/profile';
 import { ProfileService } from 'app/profiles/services/profile.service';
 import { BarChartComponent } from 'app/charts/components/bar-chart/bar-chart.component';
 import { ChartdataComponent } from 'app/charts/components/chartdata/chartdata.component';
-
+import { environment } from 'environments/environment.development';
 import { Course } from 'app/teacher-course/class/course';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
-
+import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
+import { userModule } from 'app/permissions/enum/user-module.enum';
+userModule
 @Component({
   selector: 'app-teacher-panel',
   templateUrl: './teacher-panel.component.html',
@@ -28,7 +30,7 @@ export class TeacherPanelComponent {
   criteriaVar: number = 0;
   course: Course = new Course();
   currentIndex: number = 0;
-  dchartcurrentIndex : number =0;
+  dchartcurrentIndex: number = 0;
   popupDataValue: any;
   popupDataLabel: any;
   courses: Course[] = [];
@@ -43,22 +45,65 @@ export class TeacherPanelComponent {
   clickedCourse:Course =new Course();
   barClicked :boolean = false;
   closeButtonStatus : boolean = true;
+  displayInstituteLogo : any;
+instituteId : any;
+sessionData : any;
+data:any;
+profileId : any
+profiles: Profile[] = []; // list of inactive Profile
+profile: Profile;
 
+  userPermissions: AuthUserPermission[] = [];;
+  modulePermissionIds: Set<number> = new Set<number>();
+  userId: any;
+  authModule = userModule;
 
-  constructor(private renderer: Renderer2,private _route: Router, private _activatedRoute: ActivatedRoute, private courseProgServ: CourseProgressService, private courseService: TeacherCourseService, private assignCouServ: AssignCourseToTeacherService, private profileServ: ProfileService) {
-
+  constructor(private _route: Router, private _activatedRoute: ActivatedRoute, private courseProgServ: CourseProgressService, private courseService: TeacherCourseService, private assignCouServ: AssignCourseToTeacherService, private profileServ: ProfileService) {
+    this.profile = new Profile();
+    this.displayInstituteLogo = `${environment.adminInstitutionUrl}/institution/getFileById`;
+   
+    this.profileId = sessionStorage.getItem("profileId");
+       // Calling function to get permissions from session storage
+       this.loadAllPermissions();
   }
 
 
-  ngAfterViewInit(){
- 
-      const appChartDataWidth = this.appChartData.nativeElement.offsetWidth;
-      const horizontalElement = this.bChart.nativeElement.querySelector('.horizontal');
-      horizontalElement.style.width = appChartDataWidth + 'px';
+  ngAfterViewInit() {
+
+    const appChartDataWidth = this.appChartData.nativeElement.offsetWidth;
+    const horizontalElement = this.bChart.nativeElement.querySelector('.horizontal');
+    horizontalElement.style.width = appChartDataWidth + 'px';
 
   }
+
+  loadProfiles(profileId: number) {
+    // alert(studentId);
+    try {
+      this.sessionData = sessionStorage.getItem('instituteprofile');
+      //alert(JSON.stringify(this.sessionData));
+      this.data = JSON.parse(this.sessionData);
+      for (var i = 0; i < this.data.length; i++) {
+        if (this.data[i].adminId == this.profileId) {
+          this.profile = this.data;
+          this.instituteId = this.data[i].institutionId;
+          //  alert(this.studentName);
+          console.log(this.profile.firstName, this.profile.lastName, this.profile.fullName, "  + ++++ + + ", this.instituteId);
+          this.instituteId = this.data[i].institutionId;
+          
+
+          //  alert(JSON.stringify(this.profileInstituteId));
+          break; // Assuming the profileId is unique, exit the loop after finding the matching profile
+        }
+      }
+    } catch (err) {
+      console.log("Error", err);
+    }
+  }
+
 
   ngOnInit(): void {
+    this.userId = sessionStorage.getItem('userId')
+
     this._route.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         if (event.navigationTrigger === 'popstate') {
@@ -66,7 +111,8 @@ export class TeacherPanelComponent {
         }
       }
     });
-   
+   this.loadProfiles(this.profileId);
+
     this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
     console.log(this.teacherId)
@@ -75,21 +121,40 @@ export class TeacherPanelComponent {
     //String initialized so that at start it should be null
     this.clickedCourse.courseName = '';
 
+  }
+
+  // function for loading permissions from session storage
+  loadAllPermissions() {
+    try {
+      let sessionData: any;
+      sessionData = sessionStorage.getItem('permissions');
+      // console.log(sessionData);
+
+      // converting string json into json object
+      let data = JSON.parse(sessionData);
+      this.userPermissions = data;
+
+      // adding module ids in array ( module ids which are accessible to user)
+      this.userPermissions.forEach(permission => {
+        this.modulePermissionIds.add(permission.moduleId);
+      });
+      // console.log(this.modulePermissionIds);
+
+    }
+    catch (err) {
+      console.log("Error", err);
+    }
 
   }
 
 
-
   //-------------------------------------------------------------------
   displayPopupStyle = "none";
- 
 
-
-
-  async  handleRightClickData(data: { value: any; label: string }, courseId: number) {
+  async handleRightClickData(data: { value: any; label: string }, courseId: number) {
     this.dchartcurrentIndex = 0;
     this.barClicked = true;
-   
+
     console.log(this.barClicked)
     let courseProgressArr: CourseProgress[] = [];
     let filteredCourseProgressArr: CourseProgress[] = [];
@@ -107,7 +172,7 @@ export class TeacherPanelComponent {
     const startValue = parseInt(rangeArray[0]); // Parse the first element as an integer
     const endValue = parseInt(rangeArray[1]); // Parse the second element as an integer
 
-   await this.getCourseNameById(courseId);
+    await this.getCourseNameById(courseId);
 
 
 
@@ -131,7 +196,7 @@ export class TeacherPanelComponent {
   }
   //-------------------------------------------------------------------
   getStudentNamesandCourProgress() {
-    this.closeButtonStatus  = false;
+    this.closeButtonStatus = false;
     this.studProgDetailArr = [];
     let profile: Profile = new Profile();
 
@@ -147,7 +212,7 @@ export class TeacherPanelComponent {
           profile = data;
           console.log(i)
           console.log(profile);
-          this.studProgDetailArr.push([ this.courseProgressArr[i].progress, remainingPercentage , profile.firstName + ' '+ profile.lastName]);
+          this.studProgDetailArr.push([this.courseProgressArr[i].progress, remainingPercentage, profile.firstName + ' ' + profile.lastName]);
 
           // Check if all the data has been retrieved
 
@@ -159,11 +224,10 @@ export class TeacherPanelComponent {
   }
 
 
-  closeButton()
-  {
-   this.closeButtonStatus = true;
-   this.clickedCourse.courseName = '';
-   this.barClicked = false;
+  closeButton() {
+    this.closeButtonStatus = true;
+    this.clickedCourse.courseName = '';
+    this.barClicked = false;
 
   }
 
@@ -196,10 +260,10 @@ export class TeacherPanelComponent {
           //  if(this.courseIds[m] == this.courseProgressArr[i].courseId) {
           console.log("Course Id in if loop  " + this.courseIds[m])
           await this.getCourseNameById(this.courseIds[m]);
-          
+
 
           totalStudsArr = this.courseProgressArr.filter((elem) => elem.courseId == this.courseIds[m])
-          
+
           for (let i = 0; i < totalStudsArr.length; i++) {
 
 
@@ -267,38 +331,37 @@ export class TeacherPanelComponent {
 
   }
 
-    //code for next button on progress panel
-    doughnutNext() {
+  //code for next button on progress panel
+  doughnutNext() {
 
 
-      
-      this.dchartcurrentIndex +=3;
-    
-  
-    }
-  
-    //code for previous button on progress panel
-    doughnutPrevious() {
-  
-     
-      this.dchartcurrentIndex -=3;
-     
-    }
-  
-  
-    
+
+    this.dchartcurrentIndex += 3;
+
+
+  }
+
+  //code for previous button on progress panel
+  doughnutPrevious() {
+
+
+    this.dchartcurrentIndex -= 3;
+
+  }
+
+
+
   //code to display course by providing course id
- async getCourseNameById(courseId: number) {
+  async getCourseNameById(courseId: number) {
     return new Promise<void>((resolve, reject) => {
       this.courseService.getCourseByCourseId(courseId).subscribe(
         (data) => {
           this.course = data;
-          if(this.barClicked)
-          {
-          this.clickedCourse = data;
-          console.log( this.clickedCourse.courseName )
+          if (this.barClicked) {
+            this.clickedCourse = data;
+            console.log(this.clickedCourse.courseName)
           }
-   
+
           resolve();
         },
         (error) => {
@@ -347,7 +410,7 @@ export class TeacherPanelComponent {
     this._route.navigate(['Question', this.userName])
   }
 
-  RedirectToReviewAnswer(){
+  RedirectToReviewAnswer() {
     this._route.navigate(['Review', this.userName])
   }
 
@@ -359,5 +422,9 @@ export class TeacherPanelComponent {
 
     this._route.navigate(['enrollstudent', this.userName])
 
+  }
+
+  RedirectToAdminDept() {
+    this._route.navigate(['Department', this.userName]);
   }
 }

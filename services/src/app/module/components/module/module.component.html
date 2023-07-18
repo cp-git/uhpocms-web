@@ -13,7 +13,7 @@
                 </div>
             </div> -->
             <app-module-header [titleWithUserRole]="titleWithUserRole" [moduleName]="moduleName"
-                [buttons]="{showAddButton:showAddButton,showActivateButton:showActivateButton}"
+                [buttons]="{showAddButton:buttonsArray.showAddButton,showActivateButton:buttonsArray.showActivateButton}"
                 (addButtonClicked)="onAddClick()" (activateButtonClicked)="onActivateClick()"
                 (backButtonClicked)="back()"></app-module-header>
         </ng-container>
@@ -28,7 +28,7 @@
                 </div>
             </div> -->
             <app-module-header [titleWithUserRole]="titleWithUserRole" [moduleName]="moduleName"
-                [buttons]="{showAddButton:showAddButton,showActivateButton:showActivateButton}"
+                [buttons]="{showAddButton:buttonsArray.showAddButton,showActivateButton:buttonsArray.showActivateButton}"
                 (backButtonClicked)="back()"></app-module-header>
         </ng-container>
 
@@ -73,10 +73,10 @@
 
 <ng-template #viewall>
     <app-view-all *ngIf="allData.length>0" [data]="{moduleData:this.allData , columnNames:this.columnNames}"
-        [dropdown1]="{optionsArray1:this.courses ,dropdownColumnId1:'courseId' , dropdownColumnName1:'courseName'}"
-        [idsColumnName]="{columnName:primaryIdColumnName}" [isViewAllScreen]="true"
+        [dropdown]="{filterCourses}" [idsColumnName]="{columnName:primaryIdColumnName}" [isViewAllScreen]="true"
         (viewClicked)="onChildViewClick($event)" (updateClicked)="onChildUpdateClick($event)"
-        (deleteClicked)="onChildDeleteClick($event)">
+        (deleteClicked)="onChildDeleteClick($event)"
+        [buttons]="{updateButton:buttonsArray.showUpdateButton, deleteButton:buttonsArray.showDeleteButton}">
     </app-view-all>
     <div *ngIf="allData.length==0">
         <h3>No Modules</h3>
@@ -84,8 +84,7 @@
 </ng-template>
 
 <ng-template #viewactivate>
-    <app-view-all *ngIf="allInActiveData.length>0"
-        [dropdown1]="{optionsArray1:this.courses ,dropdownColumnId1:'courseId' , dropdownColumnName1:'courseName'}"
+    <app-view-all *ngIf="allInActiveData.length>0" [dropdown]="{filterCourses}"
         [data]="{moduleData:this.allInActiveData , columnNames:this.columnNames}"
         [idsColumnName]="{columnName:primaryIdColumnName}" [isActivateScreen]="true"
         (activateClicked)="onChildActivateClick($event)">
@@ -98,19 +97,17 @@
 
 <ng-template #viewadd>
 
-    <app-add-update [data]="{currentData:emptyModule , columnNames:allColumnNames}"
-        [dropdown1]="{optionsArray1:this.courses ,dropdownColumnId1:'courseId' , dropdownColumnName1:'courseName'}"
+    <app-add-update [data]="{currentData:emptyModule , columnNames:allColumnNames}" [dropdown]="{filterCourses}"
         (submitClicked)="onAddModuleSubmit($event)"></app-add-update>
 </ng-template>
 
 <ng-template #viewone>
 
     <app-view-one [data]="{currentData:currentData , columnNames:allColumnNames}"
-        [dropdown1]="{optionsArray1:this.courses ,dropdownColumnId1:'courseId' , dropdownColumnName1:'courseName'}"></app-view-one>
+        [dropdown]="{filterCourses}"></app-view-one>
 </ng-template>
 
 <ng-template #viewupdate>
-    <app-add-update [data]="{currentData:currentData , columnNames:allColumnNames1}"
-        [dropdown1]="{optionsArray1:this.courses ,dropdownColumnId1:'courseId' , dropdownColumnName1:'courseName'}"
+    <app-add-update [data]="{currentData:currentData , columnNames:allColumnNames1}" [dropdown]="{filterCourses}"
         (submitClicked)="onUpdateModuleSubmit($event)"></app-add-update>
 </ng-template>

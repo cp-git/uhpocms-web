@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
 import { Location } from '@angular/common';
 
 @Component({
@@ -35,6 +35,16 @@ export class AddUpdateComponent implements OnInit {
     this.submitClicked.emit(objectToAdd);
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data']) {
+      this.currentData = this.data.currentData;
+    }
+    if (changes['dropdown']) {
+      console.log(this.dropdown);
+
+      this.dropdown = this.dropdown;
+    }
+  }
   ngOnInit(): void {
 
     // assigning variable coming from parent to local variables
@@ -73,6 +83,8 @@ export class AddUpdateComponent implements OnInit {
 
   onDropdownSelected(option: any) {
     console.log('called onDropdownSelected');
+    console.log(option);
+
     this.getSelectedOptionOfDropdown.emit(option);
   }
 

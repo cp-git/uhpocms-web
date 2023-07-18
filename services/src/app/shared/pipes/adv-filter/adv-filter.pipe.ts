@@ -7,11 +7,11 @@ export class AdvFilterPipe implements PipeTransform {
 
   transform(items: any[], field: string, value: any): any[] {
 
-    if (!items || value == 'undefined') return [];
-    if (value === null || value === 'undefined') return items;
+    if (!items || value == 'undefined' || value == undefined) return [];
+    if (value == null) return items;
 
     return items.filter(item =>
-      item[field] === value
+      item[field] == value
     );
   }
 }

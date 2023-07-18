@@ -3,13 +3,15 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment.development';
 import { Observable } from 'rxjs/internal/Observable';
 import { Accesscontrol } from '../class/accesscontrol';
+import { AccessControl } from 'app/permissions/class/access-control';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccesscontrolService {
   accesscontrolUrl: string;
-
+  accessControls: AccessControl[] = [];
+  accessControlData: Accesscontrol[] = [];
   //contructor
   constructor(private http: HttpClient) {
     //environment variable code 
@@ -37,8 +39,12 @@ export class AccesscontrolService {
   }
 
   //service to get access control data by proving Id
-  getControlsById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.accesscontrolUrl}/${id}`);
+  getAccessControlByUserId(id: number): Observable<Accesscontrol> {
+    return this.http.get<Accesscontrol>(`${this.accesscontrolUrl}/userid/${id}`);
+  }
+
+  addOrUpdateAccessControles(userId: number, accesscontrol: Accesscontrol): Observable<Accesscontrol> {
+    return this.http.put<Accesscontrol>(`${this.accesscontrolUrl}/userId/${userId}`, accesscontrol);
   }
 
 }

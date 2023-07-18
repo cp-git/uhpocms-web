@@ -7,7 +7,10 @@ import { Profile } from 'app/profiles/class/profile';
 import { Authuser } from 'app/auth-user/class/auth-user';
 import { AuthUserService } from 'app/auth-user/services/auth-user.service';
 import { AuthenticationserviceService } from 'app/authenticationlogin/service/authenticationservice.service';
-
+import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
+import { AuthPermissionService } from 'app/permissions/services/permission/auth-permission.service';
+import { AccesscontrolService } from 'app/accesscontrol/services/accesscontrol.service';
+import { AuthModuleService } from 'app/permissions/services/authModule/auth-module.service';
 @Component({
   selector: 'app-authenticationlogin',
   templateUrl: './authenticationlogin.component.html',
@@ -22,8 +25,10 @@ export class AuthenticationloginComponent {
     private _auth: AuthUserService,
     private _route: Router,
     private _instituteadminprofile: ProfileService,
-    private authenticationService: AuthenticationserviceService
-
+    private authenticationService: AuthenticationserviceService,
+    private userPermissionService: AuthUserPermissionService,
+    private accessControlService: AccesscontrolService,
+    private authModuleService: AuthModuleService
   ) {
     this._getAllList();
   }
@@ -81,18 +86,21 @@ export class AuthenticationloginComponent {
         console.log(data);
 
         const userName = data.authUserFirstName + " " + data.authUserLastName;
-        this._instituteadminprofile.getAllProfiles().subscribe((data) => {
+        this._instituteadminprofile.getAllProfiles().subscribe(async (data) => {
           this._instituteAdminArray = data;
           console.log(data);
 
-          for (let i = 0; i <= this._instituteAdminArray.length; i++) {
+          for (let i = 0; i < this._instituteAdminArray.length; i++) {
 
             //console.log(this._authList[i].authUserId);
 
             if (this._instituteAdminArray[i].userId == this.authUser.authUserId) {
-              //console.log(this._instituteAdminArray[i].userId + "authuser_id in instituteadmin profile..")
-              //console.log(this.authUser.authUserId + "authuser_id in Auth User profile..")
-              // console.log(this._instituteAdminArray[i].userRole);
+
+              // getting permissions for modules for user using role and user id
+              await this.getAllPermissionsByRoleIdAndUserId(this._instituteAdminArray[i].userRoleId, this._instituteAdminArray[i].userId);
+
+              let modules: any = JSON.stringify(this.authModuleService.getAllAuthModules());
+              sessionStorage.setItem('modules', modules);
 
               if (this._instituteAdminArray[i].userRole == 'admin') {
                 this._route.navigate(['adminmodule/admin', userName]);
@@ -103,11 +111,15 @@ export class AuthenticationloginComponent {
               else if (this._instituteAdminArray[i].userRole == 'student') {
                 this._route.navigate(['studentdata/student', userName, { id: this._instituteAdminArray[i].adminId }]);
               }
-
+              
+              // adding ids in session storage like user role id, profile id, user id
               sessionStorage.setItem('userRole', this._instituteAdminArray[i].userRole);
               sessionStorage.setItem('profileId', this._instituteAdminArray[i].adminId.toString());
               sessionStorage.setItem('userId', this._instituteAdminArray[i].userId.toString());
+              sessionStorage.setItem('userRoleId', this._instituteAdminArray[i].userRoleId.toString());
+
               this.authenticationService.registerSuccessfulLogin(userName);
+
             }
           }
 
@@ -151,6 +163,22 @@ export class AuthenticationloginComponent {
 
   back() {
     this._route.navigate(['home']);
+  }
+
+  async getAllPermissionsByRoleIdAndUserId(userRoleId: number, userId: any) {
+    try {
+      const response = await this.userPermissionService.getAllPermissionsByRoleIdAndUserId(
+        userRoleId,
+        userId
+      ).toPromise();
+
+      const userPermissions = response;
+      console.log(userPermissions);
+      sessionStorage.setItem('permissions', JSON.stringify(userPermissions));
+    } catch (error) {
+      // Handle any errors that occurred during the asynchronous call
+      console.error('Error:', error);
+    }
   }
 
 }

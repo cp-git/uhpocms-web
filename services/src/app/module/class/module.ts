@@ -1,6 +1,6 @@
 export class Module {
 
-  moduleId!: number ;
+  moduleId!: number;
 
   moduleName!: string;
   moduleDescription!: string;

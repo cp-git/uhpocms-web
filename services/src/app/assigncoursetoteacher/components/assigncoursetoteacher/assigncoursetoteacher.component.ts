@@ -14,6 +14,9 @@ import { Department } from 'app/department/class/department';
 import { DepartmentService } from 'app/department/services/department.service';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
+import { Enrolltostudent } from 'app/enrollstudent/class/enrolltostudent';
+import { EnrolltostudentService } from 'app/enrollstudent/service/enrolltostudent.service';
+import { InstituteServicesService } from 'app/institute-details/services/institute-services.service';
 @Component({
   selector: 'app-assigncoursetoteacher',
   templateUrl: './assigncoursetoteacher.component.html',
@@ -41,7 +44,7 @@ export class AssigncoursetoteacherComponent {
 
   assignTeacher = new Assignteacher();
   assignTeacherArr: any[] = [];
-
+  enrolledUsers: any[] = [];
   userName!: string;
   adminId: any;
 
@@ -61,6 +64,8 @@ export class AssigncoursetoteacherComponent {
   showAddButton: boolean = false;
   showActivateButton: boolean = false;
 
+  profileId: any;
+  userRole: any;
   getSelectedValue() {
     console.log("getSelectedValue")
     console.log(this.selected);
@@ -75,7 +80,12 @@ export class AssigncoursetoteacherComponent {
     private location: Location,
     private _activatedRoute: ActivatedRoute,
     private _route: Router,
-    private dialogBoxService: DialogBoxService) { }
+    private dialogBoxService: DialogBoxService,
+    private enrollStudentService: EnrolltostudentService) {
+
+    this.profileId = sessionStorage.getItem('profileId');
+    this.userRole = sessionStorage.getItem('userRole');
+  }
 
   isFormComplete(): boolean {
     // Check if all required fields are filled in
@@ -89,7 +99,8 @@ export class AssigncoursetoteacherComponent {
     this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
     console.log(this.userName)
-    this.getAllInstitution();
+    // this.getAllInstitution();
+    this.getDataBasedOnRole(this.userRole);
     console.log(this._profile.institutionId);
   }
 
@@ -179,7 +190,7 @@ export class AssigncoursetoteacherComponent {
 
   ///Function for get profile by role and institution id 
   getProfileByRoleAndInstId(instId: number) {
-    const userRole = "teacher";
+    let userRole = "teacher";
     instId = this._profile.institutionId;
     // console.log(instId);
     this.profileService.getProfileByRoleAndInstitutionId(userRole, instId).subscribe(
@@ -189,7 +200,21 @@ export class AssigncoursetoteacherComponent {
         console.log(response)
         // instId = this._profile.institutionId;
         console.log(instId);
-        this.selectAllForDropdownItems(this._profileArray);
+        // this.selectAllForDropdownItems(this._profileArray);
+
+        // Fetch student profiles and adding array of profile.
+        userRole = "student";
+        this.profileService.getProfileByRoleAndInstitutionId(userRole, instId).subscribe(
+          (response: Profile[]) => {
+            this._profileArray = this._profileArray.concat(response);
+            this._profileArray.map((i) => { i.fullName = i.firstName + ' ' + i.lastName + ' - ' + i.adminEmail; return i; });
+            console.log(response);
+            // instId = this._profile.institutionId;
+            console.log(instId);
+            this._profileArrCopy = this._profileArray;
+            this.selectAllForDropdownItems(this._profileArray);
+          }
+        );
       }
     )
 
@@ -220,7 +245,7 @@ export class AssigncoursetoteacherComponent {
     // console.log(courseId);
 
     this.getTeacherByCourseId(courseId);
-
+    this.getStudentByCourseId(courseId);
   }
 
   getTeacherByCourseId(courseId: any) {
@@ -240,6 +265,31 @@ export class AssigncoursetoteacherComponent {
       }
     );
   }
+
+  getStudentByCourseId(courseId: any) {
+
+    this.enrolledUsers = [];
+    this.enrollStudentService.getStudentByCourseId(courseId).subscribe(
+      response => {
+        // this.courses = response;
+
+        response.forEach((data: Enrolltostudent) => {
+          this.enrolledUsers.push(data.profileId);
+          console.log(this.enrolledUsers);
+        })
+        // Filtering out profiles where adminId matches an enrolledUser
+        // console.log(this._profileArray);
+        // this._profileArray = this._profileArrCopy;
+        // this._profileArray = this._profileArray.filter(profile => !this.enrolledUsers.includes(profile.adminId));
+        // console.log(this._profileArray);
+
+      },
+      error => {
+        console.log("failed to fetch data");
+      }
+    );
+  }
+
 
   onOptionSelected(item: any) {
     console.log(JSON.stringify(item))
@@ -298,17 +348,17 @@ export class AssigncoursetoteacherComponent {
     this.assignTeacher.courseId = (courseId);
     this.assignTeacher.profileId = profileId;
     // Delete the unchecked assignments
-    this.unCheckedProfiles.forEach((profileId)=>{
+    this.unCheckedProfiles.forEach((profileId) => {
       console.log(profileId);
 
       this.deleteAssignment(courseId, profileId);
-      
-      this.assignTeacherArr =  this.assignTeacherArr.filter((element) => element !== profileId);
-        console.log(this.assignTeacherArr);
-        
+
+      this.assignTeacherArr = this.assignTeacherArr.filter((element) => element !== profileId);
+      console.log(this.assignTeacherArr);
+
     });
 
-    
+
     for (let i = 0; i < this.selected.length; i++) {
 
       this.assignTeacher.profileId = this.selected[i];
@@ -331,7 +381,7 @@ export class AssigncoursetoteacherComponent {
         if (response) {
           location.reload(); // Refresh the page
         }
-  
+
       });
       // location.reload();
     }
@@ -370,7 +420,8 @@ export class AssigncoursetoteacherComponent {
 
 
   back() {
-    this._route.navigate(['adminmodule/admin', this.userName])
+    // this._route.navigate(['adminmodule/admin', this.userName])
+    this.location.back();
 
   }
 
@@ -390,5 +441,26 @@ export class AssigncoursetoteacherComponent {
     }
 
 
+  }
+
+  // Function to get data based on role
+  getDataBasedOnRole(userRole: any) {
+
+    switch (userRole) {
+      case 'admin' || 'coadmin':
+        this.getAllInstitution();
+        break;
+
+      default:
+        this.getInsitutionByProfileId(this.profileId);
+    }
+  }
+
+  getInsitutionByProfileId(profileId: any) {
+    this._institutionService.getInstitutionByProfileId(profileId).subscribe(
+      (data) => {
+        this.institutions = data;
+      }
+    );
   }
 }
