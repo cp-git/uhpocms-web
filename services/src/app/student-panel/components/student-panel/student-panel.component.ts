@@ -5,6 +5,11 @@ import { CourseProgressService } from 'app/courseProgress/services/course-progre
 import { CourseProgress } from 'app/courseProgress/class/courseprogress';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { Course } from 'app/teacher-course/class/course';
+import { Profile } from 'app/profiles/class/profile';
+import { ProfileService } from 'app/profiles/services/profile.service';
+import { environment } from 'environments/environment.development';
+import { userModule } from 'app/permissions/enum/user-module.enum';
+import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
 
 @Component({
   selector: 'app-student-panel',
@@ -20,27 +25,81 @@ export class StudentPanelComponent {
   profileId: any;
   courseProgressArr: CourseProgress[] = [];
   userName!: string;
+  displayInstituteLogo : any;
+  instituteId : any;
+  sessionData : any;
+  data:any;
+  
+  profiles: Profile[] = []; // list of inactive Profile
+  profile: Profile;
+  userId: any;
 
-  constructor(
-    private _route: Router,
+  userPermissions: AuthUserPermission[] = [];;
+  modulePermissionIds: Set<number> = new Set<number>();
+  authModule = userModule;
+
+  constructor(private _route: Router,
     private _activatedRoute: ActivatedRoute,
     private courseProgServ: CourseProgressService,
-    private courseService: TeacherCourseService
-  ) {}
+    private courseService: TeacherCourseService,
+    private profileServ: ProfileService
+  ) {this.profile = new Profile();
+    this.displayInstituteLogo = `${environment.adminInstitutionUrl}/institution/getFileById`;
+   
+    this.profileId = sessionStorage.getItem("profileId");
 
+    // Calling function to get permissions from session storage
+    this.loadAllPermissions();
+
+  }
+
+
+  // Initialize component properties with current route parameters
   ngOnInit(): void {
+    this.loadProfiles(this.profileId);
+    this.userId = sessionStorage.getItem('userId')
+
+    //code to realod the page by navigating here to this page
     this._route.navigate(['../'], { relativeTo: this._activatedRoute });
     this.profileId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
     this.getAllCourseProgress();
   }
 
+  // function for loading permissions from session storage
+  loadAllPermissions() {
+    try {
+      let sessionData: any;
+      sessionData = sessionStorage.getItem('permissions');
+      // console.log(sessionData);
+
+      // converting string json into json object
+      let data = JSON.parse(sessionData);
+      this.userPermissions = data;
+
+      // adding module ids in array ( module ids which are accessible to user)
+      this.userPermissions.forEach(permission => {
+        this.modulePermissionIds.add(permission.moduleId);
+      });
+      // console.log(this.modulePermissionIds);
+
+    }
+    catch (err) {
+      console.log("Error", err);
+    }
+
+  }
+
+
+  //function to get all data for course progress 
   async getAllCourseProgress() {
     let filteredCouProgArr: CourseProgress[] = [];
     this.courseProgServ.getAllCourseProgress().subscribe(
       async (response) => {
         this.courseProgressArr = response;
         filteredCouProgArr = this.courseProgressArr.filter((element) => element.studentId == this.profileId);
+        console.log(filteredCouProgArr);
+
         for (let i = 0; i < filteredCouProgArr.length; i++) {
           const remainingPercentage: number = 100 - filteredCouProgArr[i].progress;
           await this.getCourseNameById(filteredCouProgArr[i].courseId);
@@ -53,6 +112,31 @@ export class StudentPanelComponent {
       }
     );
   }
+
+  loadProfiles(profileId: number) {
+    // alert(studentId);
+    try {
+      this.sessionData = sessionStorage.getItem('instituteprofile');
+      //alert(JSON.stringify(this.sessionData));
+      this.data = JSON.parse(this.sessionData);
+      for (var i = 0; i < this.data.length; i++) {
+        if (this.data[i].adminId == this.profileId) {
+          this.profile = this.data;
+          this.instituteId = this.data[i].institutionId;
+          //  alert(this.studentName);
+          console.log(this.profile.firstName, this.profile.lastName, this.profile.fullName, "  + ++++ + + ", this.instituteId);
+          this.instituteId = this.data[i].institutionId;
+          
+
+          //  alert(JSON.stringify(this.profileInstituteId));
+          break; // Assuming the profileId is unique, exit the loop after finding the matching profile
+        }
+      }
+    } catch (err) {
+      console.log("Error", err);
+    }
+  }
+
 
   filterDoughCharts() {
     this.doughCharts = this.doughCharts.filter((chart: any[], index: any, self: any[]) =>

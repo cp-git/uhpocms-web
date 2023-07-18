@@ -112,8 +112,7 @@
             <thead id="deptHeader">
                 <tr>
                     <th *ngFor="let column of columnNames">{{ column.label }}</th>
-                    <th>Add/Update</th>
-                     <!-- <th> Update</th> -->
+                    <th *ngIf="buttonsArray.showAddButton || buttonsArray.showUpdateButton">Add/ Update</th>
                     <th>View</th>
                 </tr>
             </thead>
@@ -150,8 +149,10 @@
                     <!-- <td><button (click)="onAddUpdatClicked(row)" class="btn btn-primary">Add</button></td> -->
                
                       
-                            <!-- <td><button (click)="onDeleteClicked(row)" class="btn btn-danger">Delete</button></td> -->
-                    <td><button (click)="onAddUpdatClicked(row)" class="btn btn-primary">Add/Update</button></td>
+                    <!-- <td><button (click)="onDeleteClicked(row)" class="btn btn-danger">Delete</button></td> -->
+                    <td *ngIf="buttonsArray.showAddButton || buttonsArray.showUpdateButton"><button (click)="onAddUpdatClicked(row)"
+                            class="btn btn-primary">Add/ Update</button></td>
+
                     <td><span (click)="onViewClicked(row)" class="fa-solid fa-eye"
                             style="font-size:24px;color: #6197f5;"></span></td>
                         </tr>
@@ -181,9 +182,13 @@
     <div class="container">
         <h3 class="text-center">Question Paper</h3>
         <app-question-answer [questionAnswers]="questionAnswers" [selectedQuizId]="selectedQuizId"
-            [selectedCategoryId]="selectedCategoryId" [selectedCategoryName]="selectedCategoryName" [disable]="true">
+            [selectedCategoryId]="selectedCategoryId" [selectedCategoryName]="selectedCategoryName"  [totalQuizMarks]="totalQuizMarks" [disable]="true">
         </app-question-answer>
-
+        <!-- <app-question-answer [generatedQuestionAnswerId]="generatedQuestionAnswerId"
+                [questionAnswers]="questionAnswers" [pagination]="true" [selectedQuizId]="selectedQuizId"
+                [selectedCategoryId]="selectedCategoryId" [selectedCategoryName]="selectedCategoryName"
+                [submitOption]="true" (submitClicked)="onFormSubmit($event)" (change)="onFileSelected($event)" [totalQuizMarks]="totalQuizMarks " >
+            </app-question-answer> -->
     </div>
 </ng-template>
 
@@ -245,9 +250,14 @@
         <h3 class="text-center">Add/ Update Questions</h3>
         <ng-container
             *ngIf="selectedQuizId!='undefined' && selectedQuizId!='' && selectedQuizId!=null && selectedCategoryId!='undefined'  && selectedCategoryId!='' && selectedCategoryId!=null">
-            <app-question-answer [questionAnswers]="questionAnswers" [pagination]="true"
+            <!-- <app-question-answer [questionAnswers]="questionAnswers" [pagination]="true"
                 [selectedQuizId]="selectedQuizId" [selectedCategoryId]="selectedCategoryId" [submitOption]="true"
                 [selectedCategoryName]="selectedCategoryName" (submitClicked)="onFormSubmit($event)">
+            </app-question-answer> -->
+            <app-question-answer [generatedQuestionAnswerId]="generatedQuestionAnswerId"
+                [questionAnswers]="questionAnswers" [pagination]="true" [selectedQuizId]="selectedQuizId"
+                [selectedCategoryId]="selectedCategoryId" [selectedCategoryName]="selectedCategoryName"
+                [submitOption]="true" (submitClicked)="onFormSubmit($event)" (change)="onFileSelected($event)" [totalQuizMarks]="totalQuizMarks " >
             </app-question-answer>
         </ng-container>
         <!-- <div class="text-center"

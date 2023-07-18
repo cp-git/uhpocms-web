@@ -5,9 +5,9 @@
                 <th style="width: 40px;">#</th>
                 <th *ngFor="let column of columnNames">{{ column.label }}</th>
                 <ng-container *ngIf="isViewAllScreen">
-                    <th>Update</th>
+                    <th *ngIf="buttons.updateButton">Update</th>
                     <th>View</th>
-                    <th>Delete</th>
+                    <th *ngIf="buttons.deleteButton">Delete</th>
                 </ng-container>
                 <ng-container *ngIf="isActivateScreen">
                     <th>Activate</th>

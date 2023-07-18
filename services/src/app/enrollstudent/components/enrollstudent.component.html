@@ -1,10 +1,12 @@
 <div class="container">
     <!-- <h1 class="text-left">Enroll Course To Student</h1>
     <button class="btn btn-primary top-right rounded-button" (click)="back()">Back</button> -->
+   
+    <app-module-header   [moduleName]="moduleName"
+    [buttons]="{showAddButton: showAddButton, showActivateButton: showActivateButton}"
+    (backButtonClicked)="back()">
+</app-module-header>
 
-    <app-module-header [moduleName]="moduleName"
-        [buttons]="{showAddButton:showAddButton,showActivateButton:showActivateButton}"
-        (backButtonClicked)="back()"></app-module-header>
     <div class="container">
         <div class="form-group row">
             <div class="col-sm-4">

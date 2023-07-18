@@ -9,7 +9,10 @@ import { CategoryService } from 'app/category/services/category.service';
 import { Course } from 'app/teacher-course/class/course';
 import { Module } from 'app/module/class/module';
 import { Category } from 'app/category/class/category';
+import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
+import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
+import { userModule } from 'app/permissions/enum/user-module.enum';
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
@@ -27,8 +30,8 @@ export class QuizComponent implements OnInit {
   viewActivate: boolean = false;
 
   // for buttons to view
-  showAddButton: boolean = true;
-  showActivateButton: boolean = true;
+  // showAddButton: boolean = true;
+  // showActivateButton: boolean = true;
 
   //Display Column Names
 
@@ -36,8 +39,6 @@ export class QuizComponent implements OnInit {
   allColumnNames: any; // header for all visible column data
 
   updateColumnNames: any;
-
-
   allColumnViewNames: any; // header for all visible column data
 
   emptyQuiz!: Quiz;  // empty Quiz
@@ -57,13 +58,21 @@ export class QuizComponent implements OnInit {
   categories: Category[] = [];
   userRole: any;
   titleWithUserRole: boolean = true;
+
+  // for user Permissions
+  buttonsArray: any;
+  userRoleId: any;
+  userAndRolePermissions: AuthUserPermission[] = [];
+  userModule = userModule;
+
   constructor(
     private quizService: QuizService,
     private location: Location,
     private courseService: TeacherCourseService,
     private moduleService: ModuleService,
     private categotyService: CategoryService,
-    private dialogBoxService:DialogBoxService
+    private dialogBoxService: DialogBoxService,
+    private userPermissionService: AuthUserPermissionService,
   ) {
 
     this.userRole = sessionStorage.getItem('userRole');
@@ -84,13 +93,30 @@ export class QuizComponent implements OnInit {
     this.loadAllModules();
     this.profileId = sessionStorage.getItem('profileId');
 
+    // Assining default values
+    this.buttonsArray = {
+      showAddButton: false,
+      showActivateButton: false,
+      showUpdateButton: false,
+      showDeleteButton: false
+    }
   }
 
 
   ngOnInit(): void {
-    this.getInActiveQuiz(); // for getting all inactive Quizs
-    this.getAssignedCoursesOfTeacher(this.profileId)
+    this.loadAndLinkUserPermissions();
 
+    // this.getInActiveQuiz(); // for getting all inactive Quizs
+    // this.getAssignedCoursesOfTeacher(this.profileId)
+    this.loadDataBasedOnRole(this.userRole);
+  }
+
+
+  // this function for loading permission from session storage and link permission 
+  // with buttons to show and hide based on permissions 
+  private async loadAndLinkUserPermissions() {
+    this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.QUIZ, this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
   }
 
   // function will call when child update button is clicked 
@@ -105,8 +131,10 @@ export class QuizComponent implements OnInit {
     // hiding view of all column and displaying all Quizs screen 
     this.viewOne = true;
     this.viewAll = false;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
+    
 // assingning data to current data for child component
     this.currentData = objectReceived;
     let time = objectReceived.setTimer;
@@ -123,8 +151,8 @@ export class QuizComponent implements OnInit {
     // hiding update screen and displaying all Quizs screen 
     this.viewAll = false;
     this.viewUpdate = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
 
     // assingning data to current data for child component
     this.currentData = objectReceived;
@@ -151,8 +179,8 @@ export class QuizComponent implements OnInit {
   onAddClick() {
     this.viewAll = false;
     this.viewAdd = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
   }
 
   // For navigate to activate screen with data
@@ -160,8 +188,8 @@ export class QuizComponent implements OnInit {
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
   }
 
   // on updateComponents's submit button clicked
@@ -178,8 +206,10 @@ export class QuizComponent implements OnInit {
       this.viewUpdate = false;
       this.viewActivate = false;
 
-      this.showAddButton = true;
-      this.showActivateButton = true;
+      // this.buttonsArray.showAddButton = true;
+      // this.buttonsArray.showActivateButton = true;
+      this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+
     } else {
       this.location.back();
     }
@@ -217,25 +247,36 @@ export class QuizComponent implements OnInit {
       if (response) {
         console.log('User clicked OK');
         // Do something if the user clicked OK
-    this.quizService.deleteQuiz(title).subscribe(
-      (data) => {
+        this.quizService.deleteQuiz(title).subscribe(
+          (data) => {
 
-        this.dialogBoxService.open('Quiz deleted successfully', 'information');
-        this.ngOnInit();
-      },
-      (error) => {
-        this.dialogBoxService.open('Quiz deletion Failed', 'warning');
+            this.dialogBoxService.open('Quiz deleted successfully', 'information');
+            this.ngOnInit();
+          },
+          (error) => {
+            this.dialogBoxService.open('Quiz deletion Failed', 'warning');
+          }
+        );
+      } else {
+        console.log('User clicked Cancel');
+        // Do something if the user clicked Cancel
       }
-    );
-  } else {
-    console.log('User clicked Cancel');
-    // Do something if the user clicked Cancel
+    });
   }
-});
-}
 
   // for adding quiz
   addQuiz(currentData: Quiz) {
+
+    console.log(currentData)
+    console.log( typeof currentData.passMark)
+    console.log( typeof currentData.maxMarks)
+    let passMark:any = currentData.passMark
+     passMark = parseInt(passMark)
+    
+     let maxMarks:any = currentData.maxMarks;
+     maxMarks = parseInt(maxMarks)
+
+
     // Calculate the total timer duration in seconds
     console.log(JSON.stringify(currentData))
     const timerInSeconds = (currentData.setTimerInHours * 3600) + (currentData.setTimerInMinutes * 60);
@@ -244,39 +285,65 @@ export class QuizComponent implements OnInit {
     
   
     // Set other properties and make the API call to add the quiz
+
     currentData.active = true;
+    if(passMark <= maxMarks )
+    {
     this.quizService.addQuiz(currentData).subscribe(
       data => {
-        this.dialogBoxService.open('Quiz Added successfully','information')
+        this.dialogBoxService.open('Quiz Added successfully', 'information')
         this.emptyQuiz = {} as Quiz;
         this.ngOnInit();
         this.back();
-      },
+
+
+      }
+      ,
       error => {
         this.dialogBoxService.open('Failed to add Quiz','warning')
       }
-    );
+    )
+    }
+    else{
+      this.dialogBoxService.open('Quiz max marks should be greater than passing marks', 'warning');
+    }
   }
-  
+
 
   // for updating quiz using title
   private updateQuiz(currentData: Quiz) {
-    // Calculate the total timer duration in seconds
-    const timerInSeconds = (currentData.setTimerInHours * 3600) + (currentData.setTimerInMinutes * 60);
-    currentData.setTimer = timerInSeconds;
-  
     // calling service for updating data
-    this.quizService.updateQuiz(currentData.title, currentData).subscribe(
-      response => {
-        this.dialogBoxService.open('Quiz Updated successfully','information')
-        this.ngOnInit();
-        this.back();
-      },
-      error => {
-        this.dialogBoxService.open('Quiz updation failed','warning')
-      }
-    );
+    console.log(currentData)
+    console.log(currentData)
+    console.log( typeof currentData.passMark)
+    console.log( typeof currentData.maxMarks)
+    let passMark:any = currentData.passMark
+     passMark = parseInt(passMark)
+     const timerInSeconds = (currentData.setTimerInHours * 3600) + (currentData.setTimerInMinutes * 60);
+     currentData.setTimer = timerInSeconds;
+     let maxMarks:any = currentData.maxMarks;
+     maxMarks = parseInt(maxMarks)
+
+    if(passMark <= maxMarks )
+    {
+      this.quizService.updateQuiz(currentData.title, currentData).subscribe(
+        response => {
+          this.dialogBoxService.open('Quiz Updated successfully', 'information')
+          this.ngOnInit();
+          this.back();
+        },
+        error => {
+          this.dialogBoxService.open('Quiz updation failed', 'warning')
+        }
+      );
   }
+  else{
+    this.dialogBoxService.open('Quiz max marks should be greater than passing marks', 'warning');
+  }
+}
+  
+
+  
 
 
   // for getting all inactive quiz
@@ -302,11 +369,11 @@ export class QuizComponent implements OnInit {
     this.quizService.updateActiveStatus(quiz.title, quiz).subscribe(
       response => {
         console.log("Activated Quiz");
-        this.dialogBoxService.open('Quiz Activated','information')
+        this.dialogBoxService.open('Quiz Activated', 'information')
         this.ngOnInit();
       },
       error => {
-        this.dialogBoxService.open('Failed to Activate','warning')
+        this.dialogBoxService.open('Failed to Activate', 'warning')
       }
     );
   }
@@ -361,5 +428,127 @@ export class QuizComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  private loadDataBasedOnRole(userRole: any) {
+    console.log(userRole);
+
+    switch (userRole) {
+      // case 'admin' || 'coadmin':
+      //   this.loadAdminInstitutions();
+      //   this.loadDepartments();
+      //   this.loadCourses();
+      //   this.getAllModules();
+      //   this.getInactiveModule();
+
+      //   break;
+      case 'teacher':
+        // this.getInstitutionAndDepartmentsOfUserByUserId(this.profileId);
+
+        this.getAssignedCoursesByProfileId(this.profileId);
+        this.getModulesOfAssignedCoursesByProfileId(this.profileId);
+        this.getActiveQuizzesOfModulesOfAssignedCoursesByProfileId(this.profileId);
+        this.getInactiveQuizzesOfModulesOfAssignedCoursesByProfileId(this.profileId);
+
+        break;
+
+      case 'student':
+        // this.getInstitutionAndDepartmentsOfUserByUserId(this.profileId);
+
+        // this.getEnrolledCoursesByProfileId(this.profileId);
+        // this.getModulesOfEnrolledCoursesByProfileId(this.profileId);
+        // this.getActiveQuizzesOfModulesOfEnrolledCoursesByProfileId(this.profileId);
+        // this.getInactiveQuizzesOfModulesOfEnrolledCoursesByProfileId(this.profileId);
+
+        this.getAssignedCoursesByProfileId(this.profileId);
+        this.getModulesOfAssignedCoursesByProfileId(this.profileId);
+        this.getActiveQuizzesOfModulesOfAssignedCoursesByProfileId(this.profileId);
+        this.getInactiveQuizzesOfModulesOfAssignedCoursesByProfileId(this.profileId);
+
+        break;
+    }
+  }
+
+  //getting courses assigned to teacher using profileId
+  private getAssignedCoursesByProfileId(teacherId: number) {
+    this.courseService.getAssignedCourseOfTeacher(teacherId).subscribe(
+      (data) => {
+        console.log("courses " + JSON.stringify(data));
+        this.courses = data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+  //getting courses enrolled to student using profileId
+  private getEnrolledCoursesByProfileId(studentId: number) {
+    this.courseService.getCourseByStudentId(studentId).subscribe(
+      (data) => {
+        console.log("courses " + JSON.stringify(data));
+        this.courses = data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  getModulesOfAssignedCoursesByProfileId(profileId: number) {
+    this.moduleService.getModulesOfAssignedCoursesByProfileId(profileId).subscribe(
+      (response) => {
+        this.modules = response.filter((data: { moduleIsActive: boolean; }) => data.moduleIsActive == true);
+        // this.allInActiveData = response.filter((data: { moduleIsActive: boolean; }) => data.moduleIsActive == false);
+        // console.log(this.allInActiveData);
+        // console.log(this.allData);
+
+
+      }
+    );
+  }
+
+  getModulesOfEnrolledCoursesByProfileId(profileId: number) {
+    this.moduleService.getModulesOfEnrolledCoursesByProfileId(profileId).subscribe(
+      (response) => {
+        this.modules = response.filter((data: { moduleIsActive: boolean; }) => data.moduleIsActive == true);
+        // this.allInActiveData = response.filter((data: { moduleIsActive: boolean; }) => data.moduleIsActive == false);
+      }
+    );
+  }
+
+  getActiveQuizzesOfModulesOfAssignedCoursesByProfileId(profileId: number) {
+    this.quizService.getActiveQuizzesOfModulesOfAssignedCoursesByProfileId(profileId).subscribe(
+      (data) => {
+        this.allQuizData = data;
+      }
+
+    )
+  }
+
+  getInactiveQuizzesOfModulesOfAssignedCoursesByProfileId(profileId: number) {
+    this.quizService.getInactiveQuizzesOfModulesOfAssignedCoursesByProfileId(profileId).subscribe(
+      (data) => {
+        this.allInActiveData = data;
+      }
+
+    )
+  }
+
+  getActiveQuizzesOfModulesOfEnrolledCoursesByProfileId(profileId: number) {
+    this.quizService.getActiveQuizzesOfModulesOfEnrolledCoursesByProfileId(profileId).subscribe(
+      (data) => {
+        this.allQuizData = data;
+      }
+
+    )
+  }
+
+  getInactiveQuizzesOfModulesOfEnrolledCoursesByProfileId(profileId: number) {
+    this.quizService.getInactiveQuizzesOfModulesOfEnrolledCoursesByProfileId(profileId).subscribe(
+      (data) => {
+        this.allInActiveData = data;
+      }
+
+    )
   }
 }

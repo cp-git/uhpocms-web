@@ -10,6 +10,9 @@ import { Course } from 'app/teacher-course/class/course';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 import { UploadFileService } from 'app/FileUpload/services/upload-file.service';
+import { userModule } from 'app/permissions/enum/user-module.enum';
+import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
+import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
 import { environment } from 'environments/environment.development';
 // import { Profile } from 'app/profiles/class/profile';
 // import { AssignedteachercourseComponent } from 'app/displayAssignedCourseToTeacher/components/assignedteachercourse/assignedteachercourse.component';
@@ -41,9 +44,9 @@ export class ModuleFileComponent {
   viewAll: boolean = true;
   viewActivate: boolean = false;
 
-  // for buttons to view
-  showAddButton: boolean = true;
-  showActivateButton: boolean = true;
+  // // for buttons to view
+  // showAddButton: boolean = true;
+  // showActivateButton: boolean = true;
   titleWithUserRole: boolean = true;
 
   columnNames: any;
@@ -71,6 +74,10 @@ export class ModuleFileComponent {
   _backupModule = new Map();
   files!: FileList;
 
+  // for user Permissions
+  buttonsArray: any;
+  userAndRolePermissions: AuthUserPermission[] = [];
+  userModule = userModule;
   imagesUrl!: any;
 
 
@@ -81,8 +88,20 @@ export class ModuleFileComponent {
     private moduleFileService: ModuleFileService,
     private service: TeacherCourseService,
     private uploadfileService: UploadFileService,
-    private dialogBoxServices: DialogBoxService
+    private dialogBoxServices: DialogBoxService,
+    private userPermissionService: AuthUserPermissionService,
+    private courseService: TeacherCourseService,
+    private moduleService: ModuleService
   ) {
+
+    // Assining default values
+    this.buttonsArray = {
+      showAddButton: false,
+      showActivateButton: false,
+      showUpdateButton: false,
+      showDeleteButton: false
+    }
+
     this.userRole = sessionStorage.getItem('userRole');
     this.columnNames = ModuleFileColumn;
     this.allColumnNames = ModuleFileAllColumn;
@@ -99,16 +118,22 @@ export class ModuleFileComponent {
   }
 
   ngOnInit(): void {
+    this.loadAndLinkUserPermissions();
 
     this.activationScreenStatus = false;
-
-    this.getAllModulesFile();
-    this.getAssignedCoursesOfTeacher(this.profileId);
-    this.getInactiveModuleFiles();
+    this.loadDataBasedOnRole(this.userRole)
+    // this.getAllModulesFile();
+    // this.getAssignedCoursesOfTeacher(this.profileId);
+    // this.getInactiveModuleFiles();
 
     this.displayUrl = this.modulefileUrl + '/files'
+  }
 
-
+  // this function for loading permission from session storage and link permission 
+  // with buttons to show and hide based on permissions 
+  private async loadAndLinkUserPermissions() {
+    this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.MODULE_FILE, this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
   }
 
   submitClicked(eventData: any) {
@@ -134,6 +159,7 @@ export class ModuleFileComponent {
 
   // back button functionality
   back() {
+    //this.emptyModuleFile = new ModuleFile();
     if (this.viewAll == false) {
       this.viewAll = true;
       this.viewOne = false;
@@ -141,8 +167,10 @@ export class ModuleFileComponent {
       this.viewUpdate = false;
       this.viewActivate = false;
 
-      this.showAddButton = true;
-      this.showActivateButton = true;
+      // this.buttonsArray.showAddButton = true;
+      // this.buttonsArray.showActivateButton = true;
+      this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+
     } else {
       this.location.back();
     }
@@ -158,8 +186,8 @@ export class ModuleFileComponent {
     // hiding view of all column and displaying all module file screen 
     this.viewOne = true;
     this.viewAll = false;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
 
@@ -170,8 +198,8 @@ export class ModuleFileComponent {
     // hiding update screen and displaying all module files screen 
     this.viewAll = false;
     this.viewUpdate = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
     // assingning data to current data for child component
     this.currentData = objectReceived;
   }
@@ -192,16 +220,16 @@ export class ModuleFileComponent {
   onAddClick() {
     this.viewAll = false;
     this.viewAdd = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
   }
 
   // for navigating to activate screen
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
   }
 
   // on addComponents's submit button clicked
@@ -332,9 +360,9 @@ export class ModuleFileComponent {
 
         this.moduleFile = data;
 
-
         console.log('File Added successfully');
         this.dialogBoxServices.open("File Added successfully", 'information');
+        this.emptyModuleFile = new ModuleFile();
         this.ngOnInit();
         this.back();
       },
@@ -476,7 +504,150 @@ export class ModuleFileComponent {
     )
   }
 
+  // for calling ifferent service based on role
+  private async loadDataBasedOnRole(userRole: any) {
+    console.log(userRole);
 
+    switch (userRole) {
+
+      case 'teacher':
+        // this.getInstitutionAndDepartmentsOfUserByUserId(this.profileId);
+
+        this.getAssignedCoursesByProfileId(this.profileId);
+        await this.getModulesOfAssignedCoursesByProfileId(this.profileId);
+        this.getModuleFilesOfAssignedCoursesOfModulesByProfileId(this.profileId)
+        break;
+
+      case 'student':
+        // this.getInstitutionAndDepartmentsOfUserByUserId(this.profileId);
+
+        // this.getEnrolledCoursesByProfileId(this.profileId);
+        // await this.getModulesOfEnrolledCoursesByProfileId(this.profileId);
+        // this.getModuleFilesOfEnrolledCoursesOfModulesByProfileId(this.profileId)
+
+        this.getAssignedCoursesByProfileId(this.profileId);
+        await this.getModulesOfAssignedCoursesByProfileId(this.profileId);
+        this.getModuleFilesOfAssignedCoursesOfModulesByProfileId(this.profileId)
+
+        break;
+    }
+  }
+
+
+  //getting courses assigned to teacher using profileId
+  private getAssignedCoursesByProfileId(teacherId: number) {
+    this.courseService.getAssignedCourseOfTeacher(teacherId).subscribe(
+      (data) => {
+        console.log("courses " + JSON.stringify(data));
+        this.courses = data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+  //getting courses assigned to teacher using profileId
+  private getEnrolledCoursesByProfileId(studentId: number) {
+    this.courseService.getCourseByStudentId(studentId).subscribe(
+      (data) => {
+        console.log("courses " + JSON.stringify(data));
+        this.courses = data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  async getModulesOfAssignedCoursesByProfileId(profileId: number) {
+    const modules = await this.moduleService.getModulesOfAssignedCoursesByProfileId(profileId).toPromise();
+    if (modules !== undefined) {
+      this.modules = modules;
+    }
+  }
+
+  async getModulesOfEnrolledCoursesByProfileId(profileId: number) {
+    const modules = await this.moduleService.getModulesOfEnrolledCoursesByProfileId(profileId).toPromise();
+    if (modules !== undefined) {
+      this.modules = modules;
+    }
+  }
+
+  getModuleFilesOfAssignedCoursesOfModulesByProfileId(profileId: number) {
+    this.moduleFileService.getModuleFilesOfAssignedCoursesOfModulesByProfileId(profileId).subscribe(
+      (response) => {
+        this.allData = [];
+        this.allInActiveData = [];
+        console.log(this.allData);
+        response.forEach((moduleFile: ModuleFile) => {
+          this.modules.find((module: Module) => {
+            if (moduleFile.moduleId == module.moduleId) {
+              if (moduleFile.moduleFileIsActive) {
+                this.allData.push({
+                  ...moduleFile,
+                  courseId: module.courseId_id,
+
+                });
+                console.log(this.allData);
+
+              } else {
+                this.allInActiveData.push({
+                  ...moduleFile,
+                  courseId: module.courseId_id,
+
+                });
+                console.log(this.allInActiveData);
+
+              }
+
+
+            }
+          })
+        })
+      }
+    );
+
+  }
+
+  getModuleFilesOfEnrolledCoursesOfModulesByProfileId(profileId: number) {
+    this.moduleFileService.getModuleFilesOfEnrolledCoursesOfModulesByProfileId(profileId).subscribe(
+      (response) => {
+
+        this.allData = [];
+        this.allInActiveData = [];
+        console.log(this.allData);
+        response.forEach((moduleFile: ModuleFile) => {
+          this.modules.find((module: Module) => {
+            if (moduleFile.moduleId == module.moduleId) {
+              if (moduleFile.moduleFileIsActive) {
+                this.allData.push({
+                  ...moduleFile,
+                  courseId: module.courseId_id,
+
+                });
+                console.log(this.allData);
+
+              } else {
+                this.allInActiveData.push({
+                  ...moduleFile,
+                  courseId: module.courseId_id,
+
+                });
+                console.log(this.allInActiveData);
+
+              }
+
+
+            }
+          })
+        })
+        // this.allData = response.filter((data: { moduleFileIsActive: boolean; }) => data.moduleFileIsActive == true);
+        // this.allInActiveData = response.filter((data: { moduleFileIsActive: boolean; }) => data.moduleFileIsActive == false);
+
+      }
+    );
+
+  }
 }
 
 

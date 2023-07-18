@@ -1,5 +1,21 @@
 export class Accesscontrol {
 
+	// id!: number;
+	// userId!: number;
+	// authUser!: boolean;
+	// adminInstitute!: boolean;
+	// role!: boolean;
+	// department!: boolean;
+	// announcement!: boolean;
+	// assignCourse!: boolean;
+	// category!: boolean;
+	// course!: boolean;
+	// email!: boolean;
+	// enrollment!: boolean;
+	// module!: boolean;
+	// question!: boolean;
+	// quiz!: boolean;
+
 	id!: number;
 	userId!: number;
 	authUser!: boolean;
@@ -15,5 +31,7 @@ export class Accesscontrol {
 	module!: boolean;
 	question!: boolean;
 	quiz!: boolean;
+	moduleFile!: boolean;
+	lessons!: boolean;
 
 }

@@ -23,4 +23,5 @@ export class Profile {
     profilePics!: string;
     userId!: number;
     userRole!: string;
+    userRoleId!: number
 }

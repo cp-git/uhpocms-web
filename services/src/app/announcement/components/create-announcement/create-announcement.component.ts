@@ -24,7 +24,7 @@ export class CreateAnnouncementComponent {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
-  
+
   private announcementId: number;     // announcement id to add in to_list table
   private instituteAdmins: Profile[] = [];     // data of institute admin profile for dropdown
   private sessionData: any;   // for session data
@@ -112,6 +112,10 @@ export class CreateAnnouncementComponent {
         // loading all user profiles
         this.studentsAssignedToTeacherCourse(this.profileId);
         break;
+
+      case 'student':
+        this.getEnrolledProfilesOfCourseByOneStudentId(this.profileId);
+        break;
     }
 
 
@@ -134,6 +138,20 @@ export class CreateAnnouncementComponent {
       }
     );
   }
+
+  private getEnrolledProfilesOfCourseByOneStudentId(profileId: number) {
+    this.announcementService.getEnrolledProfilesOfCourseByOneStudentId(profileId).subscribe(
+      response => {
+        this.instituteAdmins = response;
+        console.log(this.instituteAdmins);
+        this.sortProfiles();
+      },
+      error => {
+        // console.log("Not able to fetch record");
+      }
+    );
+  }
+
   ngAfterViewInit() {
     // subscribe to NavigationEnd event
     // console.log();

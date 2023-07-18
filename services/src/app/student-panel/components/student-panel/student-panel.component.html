@@ -4,7 +4,7 @@
     <div>
         <div class="row">
             <div class="col-md-6 justify-content-between header">
-                <h1>Student Panel</h1>
+                <h1><img src="{{displayInstituteLogo}}/{{instituteId}}" style="width: 50px; height: 50px;border: 1px solid black;"> Student Panel</h1>
                 <h3> Welcome {{userName | titlecase}}</h3>
             </div>
 
@@ -27,7 +27,9 @@
                 <div class="chart" *ngFor="let dChart of doughCharts; let i = index"
                     [ngClass]="{'hidden': i < currentIndex || i >= currentIndex + 3}">
                     <h4>
-                       <b> <p class="category">{{ dChart[2] }}</p></b>
+                        <b>
+                            <p class="category">{{ dChart[2] }}</p>
+                        </b>
                     </h4>
                     <app-chartdata [jsonArray]="[dChart[0], dChart[1]]"></app-chartdata>
 
@@ -47,52 +49,111 @@
 
         </div>
 
-
-
-
-
-
-
         <!-- ----------------------------------------------
     -->
 
         <div class="container">
             <!-- first row  -->
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card text-center" (click)="RedirectToStudentCourse()">
-                        <div class="card-header">
-                            <span class="fas fa-book-open fa-4x" style="color:rgb(21,114,213)"></span>
-                        </div>
-                        <div class="card-body">
-                            <!--<h3 class="card-title">Courses</h3>-->
-                            <button class="btn btn-primary">Courses</button>
-                        </div>
+            <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.COURSE)">
+                <div class="card text-center" (click)="RedirectToStudentCourse()">
+                    <div class="card-header">
+                        <span class="fas fa-book-open fa-4x" style="color:rgb(21,114,213)"></span>
+                    </div>
+                    <div class="card-body">
+                        <!--<h3 class="card-title">Courses</h3>-->
+                        <button class="btn btn-primary">Courses</button>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card text-center" (click)="RedirectToStudentModule()">
-                        <div class="card-header">
-                            <span class="fas fa-book fa-4x" style="color: rgb(114,208,169);"></span>
-                        </div>
-                        <div class=" card-body">
-                            <!--<h3 class="card-title">Lessons</h3>-->
-                            <button class="btn btn-primary">Lessons</button>
-                        </div>
+            </div>
+            <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.LESSONS)">
+                <div class="card text-center" (click)="RedirectToStudentModule()">
+                    <div class="card-header">
+                        <span class="fas fa-book fa-4x" style="color: rgb(114,208,169);"></span>
+                    </div>
+                    <div class=" card-body">
+                        <!--<h3 class="card-title">Lessons</h3>-->
+                        <button class="btn btn-primary">Lessons</button>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card text-center" (click)="redirectToNotification()">
-                        <div class="card-header">
-                            <span class="fas fa-bell fa-4x" style="color:rgb(236,172,56)"></span>
-                        </div>
-                        <div class="card-body">
-                            <!--<h3 class="card-title">Announcements</h3>-->
-                            <button class="btn btn-primary">Announcements</button>
-                        </div>
+            </div>
+            <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.ANNOUNCEMENT)">
+                <div class="card text-center" (click)="redirectToNotification()">
+                    <div class="card-header">
+                        <span class="fas fa-bell fa-4x" style="color:rgb(236,172,56)"></span>
+                    </div>
+                    <div class="card-body">
+                        <!--<h3 class="card-title">Announcements</h3>-->
+                        <button class="btn btn-primary">Announcements</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.QUIZ)">
+                <div class="card text-center" [routerLink]="['/Quiz',userName]">
+                    <div class="card-header">
+                        <span class="fas fa-lightbulb fa-4x" style="color: rgb(247,199,0);"></span>
+                    </div>
+                    <div class="card-body">
+                        <!--<h3 class="card-title">Quizzes</h3>-->
+                        <button class="btn btn-primary">Quizzes</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.QUESTION_ANSWER)">
+                <div class="card text-center" [routerLink]="['/Question',userName]">
+                    <div class="card-header">
+                        <span class="fas fa-question-circle fa-4x" style="color: rgb(108,44,153);"></span>
+                    </div>
+                    <div class="card-body">
+                        <!--<h3 class="card-title">Questions & Answers</h3>-->
+                        <button class="btn btn-primary">Questions & Answers</button>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.ENROLL_STUDENTS)">
+                <div class="card text-center" [routerLink]="['/enrollstudent',userName]">
+                    <div class="card-header">
+                        <span class="fas fa-book-reader fa-4x" style="color: rgb(171,29,70);"></span>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-primary">Enroll Students To Course</button>
+                    </div>
+                </div>
+            </div> -->
+            <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.MODULE)">
+                <div class="card text-center" [routerLink]="['/Module',userName]">
+                    <div class="card-header">
+                        <span class="fas fa-book fa-4x" style="color: rgb(114,208,169);"></span>
+                    </div>
+                    <div class="card-body">
+                        <!--<h3 class="card-title">Modules</h3>-->
+                        <button class="btn btn-primary">Modules</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.MODULE_FILE)">
+                <div class="card text-center" [routerLink]="['/modulefile']">
+                    <div class="card-header">
+                        <span class="fas fa-clone fa-4x" style="color: rgb(24,47,81);"></span>
+                    </div>
+                    <div class="card-body">
+                        <!--<h3 class="card-title">Module Content</h3>-->
+                        <button class="btn btn-primary">Module Content</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.REVIEW_ANSWERS)">
+                <div class="card text-center" [routerLink]="['/Review',userName]">
+                    <div class="card-header">
+                        <span class="fas fa-question-circle fa-4x" style="color: rgb(108,44,153);"></span>
+                    </div>
+                    <div class="card-body">
+                        <!--<h3 class="card-title">Questions & Answers</h3>-->
+                        <button class="btn btn-primary">Review Answers</button>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
+
+</div>
