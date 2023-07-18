@@ -199,13 +199,27 @@ export class ProfileComponent implements OnInit {
 
   // on addComponents's submit button clicked
   onAddProfileSubmit(objectReceived: Profile): void {
-    this.addProfile(objectReceived);
+    const selectedRole = this.adminRoles.find(role => role.roleId == objectReceived.userRoleId);
+
+    if (selectedRole) {
+      objectReceived.userRole = selectedRole.roleName
+      console.log(objectReceived);
+
+      this.addProfile(objectReceived);
+    }
   }
 
   // on updateComponents's submit button clicked
   onUpdateProfileSubmit(objectReceived: Profile) {
     // console.log(JSON.stringify(objectReceived))
-    this.updateProfile(objectReceived);
+    const selectedRole = this.adminRoles.find(role => role.roleId == objectReceived.userRoleId);
+
+    if (selectedRole) {
+      objectReceived.userRole = selectedRole.roleName
+      console.log(objectReceived);
+
+      this.updateProfile(objectReceived);
+    }
   }
 
   getSelectedOptionOfDropdown(dataReceived: Profile) {
