@@ -28,7 +28,7 @@ import { CourseProgress } from 'app/courseProgress/class/courseprogress';
 import { CourseProgressService } from 'app/courseProgress/services/course-progress.service';
 
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
-
+import { environment } from 'environments/environment.development';
 
 @Component({
   selector: 'app-enrollstudent',
@@ -71,6 +71,15 @@ export class EnrollstudentComponent {
   showAddButton: boolean = false;
   showActivateButton: boolean = false;
 
+  
+  displayInstituteLogo : any;
+  instituteId : any;
+  sessionData : any;
+  data:any;
+ 
+  profiles: Profile[] = []; // list of inactive Profile
+  profile: Profile;
+
   userRole: any;
   //constructor
   constructor(
@@ -82,13 +91,17 @@ export class EnrollstudentComponent {
     private location: Location,
     private dialogBoxService: DialogBoxService,
     private courprogServ: CourseProgressService) {
-
-    this.profileId = sessionStorage.getItem('profileId');
+      this.profile = new Profile();
+      this.displayInstituteLogo = `${environment.adminInstitutionUrl}/institution/getFileById`;
+     
+      this.profileId = sessionStorage.getItem("profileId");
+    
     this.userRole = sessionStorage.getItem('userRole');
   }
   //ngoninit
   ngOnInit() {
     // function to be loaded on page load
+    this.loadProfiles(this.profileId);
     // this.getAllInstitution();
     this.EnrollCoursesToStudentBasedOnRole(this.userRole);
     // this.getDepartmentByProfileId(this.profileId);
@@ -119,6 +132,31 @@ export class EnrollstudentComponent {
       }
     );
   }
+
+  loadProfiles(profileId: number) {
+    // alert(studentId);
+    try {
+      this.sessionData = sessionStorage.getItem('instituteprofile');
+      //alert(JSON.stringify(this.sessionData));
+      this.data = JSON.parse(this.sessionData);
+      for (var i = 0; i < this.data.length; i++) {
+        if (this.data[i].adminId == this.profileId) {
+          this.profile = this.data;
+          this.instituteId = this.data[i].institutionId;
+          //  alert(this.studentName);
+          console.log(this.profile.firstName, this.profile.lastName, this.profile.fullName, "  + ++++ + + ", this.instituteId);
+          this.instituteId = this.data[i].institutionId;
+          
+
+          //  alert(JSON.stringify(this.profileInstituteId));
+          break; // Assuming the profileId is unique, exit the loop after finding the matching profile
+        }
+      }
+    } catch (err) {
+      console.log("Error", err);
+    }
+  }
+
   selectAllForDropdownItems(items: any[]) {
     let allSelect = (items: any[]) => {
       items.forEach(element => {
