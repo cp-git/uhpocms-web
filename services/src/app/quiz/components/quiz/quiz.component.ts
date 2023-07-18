@@ -266,6 +266,17 @@ export class QuizComponent implements OnInit {
 
   // for adding quiz
   addQuiz(currentData: Quiz) {
+
+    console.log(currentData)
+    console.log( typeof currentData.passMark)
+    console.log( typeof currentData.maxMarks)
+    let passMark:any = currentData.passMark
+     passMark = parseInt(passMark)
+    
+     let maxMarks:any = currentData.maxMarks;
+     maxMarks = parseInt(maxMarks)
+
+
     // Calculate the total timer duration in seconds
     console.log(JSON.stringify(currentData))
     const timerInSeconds = (currentData.setTimerInHours * 3600) + (currentData.setTimerInMinutes * 60);
@@ -274,39 +285,65 @@ export class QuizComponent implements OnInit {
     
   
     // Set other properties and make the API call to add the quiz
+
     currentData.active = true;
+    if(passMark <= maxMarks )
+    {
     this.quizService.addQuiz(currentData).subscribe(
       data => {
         this.dialogBoxService.open('Quiz Added successfully', 'information')
         this.emptyQuiz = {} as Quiz;
         this.ngOnInit();
         this.back();
-      },
-      error => {
-        this.dialogBoxService.open('Failed to add Quiz', 'warning')
+
+
       }
-    );
+      ,
+      error => {
+        this.dialogBoxService.open('Failed to add Quiz','warning')
+      }
+    )
+    }
+    else{
+      this.dialogBoxService.open('Quiz max marks should be greater than passing marks', 'warning');
+    }
   }
-  
+
 
   // for updating quiz using title
   private updateQuiz(currentData: Quiz) {
-    // Calculate the total timer duration in seconds
-    const timerInSeconds = (currentData.setTimerInHours * 3600) + (currentData.setTimerInMinutes * 60);
-    currentData.setTimer = timerInSeconds;
-  
     // calling service for updating data
-    this.quizService.updateQuiz(currentData.title, currentData).subscribe(
-      response => {
-        this.dialogBoxService.open('Quiz Updated successfully', 'information')
-        this.ngOnInit();
-        this.back();
-      },
-      error => {
-        this.dialogBoxService.open('Quiz updation failed', 'warning')
-      }
-    );
+    console.log(currentData)
+    console.log(currentData)
+    console.log( typeof currentData.passMark)
+    console.log( typeof currentData.maxMarks)
+    let passMark:any = currentData.passMark
+     passMark = parseInt(passMark)
+     const timerInSeconds = (currentData.setTimerInHours * 3600) + (currentData.setTimerInMinutes * 60);
+     currentData.setTimer = timerInSeconds;
+     let maxMarks:any = currentData.maxMarks;
+     maxMarks = parseInt(maxMarks)
+
+    if(passMark <= maxMarks )
+    {
+      this.quizService.updateQuiz(currentData.title, currentData).subscribe(
+        response => {
+          this.dialogBoxService.open('Quiz Updated successfully', 'information')
+          this.ngOnInit();
+          this.back();
+        },
+        error => {
+          this.dialogBoxService.open('Quiz updation failed', 'warning')
+        }
+      );
   }
+  else{
+    this.dialogBoxService.open('Quiz max marks should be greater than passing marks', 'warning');
+  }
+}
+  
+
+  
 
 
   // for getting all inactive quiz
