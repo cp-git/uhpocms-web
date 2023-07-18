@@ -9,6 +9,7 @@ export class Quiz {
     examPaper!: boolean;
     singleAttempt: boolean = false;
     passMark!: number;
+    maxMarks!: number;
     successText!: string;
     failText!: string;
     draft!: boolean;

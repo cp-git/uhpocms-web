@@ -225,8 +225,18 @@ export class QuizComponent implements OnInit {
 
   // for adding quiz
   addQuiz(currentData: Quiz) {
+    console.log(currentData)
+    console.log( typeof currentData.passMark)
+    console.log( typeof currentData.maxMarks)
+    let passMark:any = currentData.passMark
+     passMark = parseInt(passMark)
+    
+     let maxMarks:any = currentData.maxMarks;
+     maxMarks = parseInt(maxMarks)
 
     currentData.active = true;
+    if(passMark <= maxMarks )
+    {
     this.quizService.addQuiz(currentData).subscribe(
       data => {
         this.dialogBoxService.open('Quiz Added successfully','information')
@@ -240,13 +250,28 @@ export class QuizComponent implements OnInit {
         this.dialogBoxService.open('Failed to add Quiz','warning')
       }
     )
-
+    }
+    else{
+      this.dialogBoxService.open('Quiz max marks should be greater than passing marks', 'warning');
+    }
   }
 
 
   // for updating quiz using title
   private updateRole(currentData: Quiz) {
     // calling service for updating data
+    console.log(currentData)
+    console.log(currentData)
+    console.log( typeof currentData.passMark)
+    console.log( typeof currentData.maxMarks)
+    let passMark:any = currentData.passMark
+     passMark = parseInt(passMark)
+    
+     let maxMarks:any = currentData.maxMarks;
+     maxMarks = parseInt(maxMarks)
+
+    if(passMark <= maxMarks )
+    {
     this.quizService.updateQuiz(currentData.title, currentData).subscribe(
       response => {
         this.dialogBoxService.open('Quiz Updated successfully','information')
@@ -257,6 +282,10 @@ export class QuizComponent implements OnInit {
         this.dialogBoxService.open('Quiz updation failed','warning')
       }
     );
+  }
+  else{
+    this.dialogBoxService.open('Quiz max marks should be greater than passing marks', 'warning');
+  }
   }
 
 
