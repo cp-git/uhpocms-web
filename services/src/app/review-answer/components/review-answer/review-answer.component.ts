@@ -562,8 +562,15 @@ export class ReviewAnswerComponent implements OnInit {
         this.sessionData = sessionStorage.getItem('category');
   
         this.data = JSON.parse(this.sessionData);
+
+        // console.log("Inside load Categories")
+        // console.log(this.data)
         for (var inst in this.data) {
+          // console.log(this.data[inst])
+          if(this.data[inst].categoryName.toLowerCase() == "written"){
+         
           this.categories.push(this.data[inst]);
+          }
         }
       }
       catch (err) {
