@@ -22,10 +22,10 @@ export class AuthModuleComponent {
   viewActivate: boolean = false;
 
   // for buttons to view
-  showAddButton: boolean = true;
+  showAddButton: boolean = false;
   showActivateButton: boolean = false;
   updateButton: boolean = false;
-  deleteButton: boolean = true;
+  deleteButton: boolean = false;
 
   columnNames: any; // header for column data
   // allColumnNames: any
@@ -63,7 +63,7 @@ export class AuthModuleComponent {
       this.viewUpdate = false;
       this.viewActivate = false;
 
-      this.showAddButton = true;
+      this.showAddButton = false;
       this.showActivateButton = false;
 
     } else {
