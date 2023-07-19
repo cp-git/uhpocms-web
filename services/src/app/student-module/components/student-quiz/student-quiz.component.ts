@@ -708,7 +708,7 @@ export class StudentQuizComponent implements OnInit {
 
   async generatePdfUsingPdfMaker() {
     const questionSection: any[] = [];
-
+    this.getQuizScore(this.selectedQuizId, this.studentId);
 
     this.displayLogo = this.displayInstituteLogo + '/getFileById/' + this.profileInstituteId;
 
