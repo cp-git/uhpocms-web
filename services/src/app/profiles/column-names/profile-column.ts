@@ -14,6 +14,8 @@ export const ProfileAllColumn = [
     { key: 'adminDepartment', label: 'Department', type: 'dropdown', 'toSort': true, arrayName: 'departments', columnId: 'id', columnName: 'name', sortBasedOn: 'institutionId', foreignKeyColumn: 'institutionId' },
     // for functionOnDropdownClick, you have to have to pass function names while calling child component
     { key: 'userRoleId', label: 'User Role', type: 'dropdown', arrayName: 'adminRoles', columnId: 'roleId', columnName: 'roleName' },
+    { key: 'userRole', label: 'Role Same As', type: 'dropdown', arrayName: 'userRoles', columnId: 'roleName', columnName: 'roleName' },
+
     { key: 'firstName', label: 'First Name', type: 'input', subtype: 'text', disable: true },
     { key: 'lastName', label: 'Last Name', type: 'input', subtype: 'text', disable: true },
     { key: 'adminEmail', label: 'Email', type: 'email', disable: true },
@@ -37,6 +39,7 @@ export const ProfileUpdateColumn = [
     { key: 'adminDepartment', label: 'Department', type: 'dropdown', 'toSort': true, arrayName: 'departments', columnId: 'id', columnName: 'name', sortBasedOn: 'institutionId', foreignKeyColumn: 'institutionId', disable: 'true' },
     { key: 'userId', label: 'User Name', type: 'dropdown', arrayName: 'activeAuthUsers', columnId: 'authUserId', columnName: 'authUserName', disable: 'true' },
     { key: 'userRoleId', label: 'User Role', type: 'dropdown', arrayName: 'adminRoles', columnId: 'roleId', columnName: 'roleName' },
+    { key: 'userRole', label: 'Role Same As', type: 'dropdown', arrayName: 'userRoles', columnId: 'roleName', columnName: 'roleName' },
 
     { key: 'firstName', label: 'First Name', type: 'input', subtype: 'text', disable: 'true' },
     { key: 'lastName', label: 'Last Name', type: 'input', subtype: 'text', disable: 'true' },

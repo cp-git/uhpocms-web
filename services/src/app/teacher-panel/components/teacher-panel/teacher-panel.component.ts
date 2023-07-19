@@ -57,11 +57,11 @@ profile: Profile;
   modulePermissionIds: Set<number> = new Set<number>();
   userId: any;
   authModule = userModule;
-
+  userRole : any;
   constructor(private _route: Router, private _activatedRoute: ActivatedRoute, private courseProgServ: CourseProgressService, private courseService: TeacherCourseService, private assignCouServ: AssignCourseToTeacherService, private profileServ: ProfileService) {
     this.profile = new Profile();
     this.displayInstituteLogo = `${environment.adminInstitutionUrl}/institution/getFileById`;
-   
+    this.userRole = sessionStorage.getItem("userRole");
     this.profileId = sessionStorage.getItem("profileId");
        // Calling function to get permissions from session storage
        this.loadAllPermissions();
