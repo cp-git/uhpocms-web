@@ -100,6 +100,7 @@ export class ReviewAnswerComponent implements OnInit {
     quizResult:StudentAnswer []=[];
     file!: File;
     totalReviewMarks:any=0;
+    writtenCategoryId:number = 0;
   //  perQueMaxMarks!: number;
     files!: FileList;
     reviewButtonStat = false;
@@ -548,8 +549,13 @@ export class ReviewAnswerComponent implements OnInit {
         this.sessionData = sessionStorage.getItem('quiz');
   
         this.data = JSON.parse(this.sessionData);
+        console.log("Inside load Quizzes")
+        console.log(this.data)
         for (var inst in this.data) {
+          if(this.data[inst].categoryId == this.writtenCategoryId){
+          console.log(this.data[inst])
           this.allData.push(this.data[inst]);
+          }
         }
       }
       catch (err) {
@@ -567,9 +573,11 @@ export class ReviewAnswerComponent implements OnInit {
         // console.log(this.data)
         for (var inst in this.data) {
           // console.log(this.data[inst])
+     
           if(this.data[inst].categoryName.toLowerCase() == "written"){
          
           this.categories.push(this.data[inst]);
+          this.writtenCategoryId = this.data[inst].categoryId;
           }
         }
       }

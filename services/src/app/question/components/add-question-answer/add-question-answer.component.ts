@@ -656,6 +656,8 @@ console.log(answerEqualityChk)
     
     },
     (error) => {
+      quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+
     console.log(newArr.question['questionContent'])
     console.log("Question added failed");
     // if (!isFirstAlertDisplayed) {
@@ -719,6 +721,8 @@ console.log(answerEqualityChk)
       
       },
       (error) => {
+        quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+
       console.log(newArr.question['questionContent'])
       console.log("Question added failed");
       // if (!isFirstAlertDisplayed) {
@@ -842,6 +846,8 @@ console.log("Question Added Successfully");
 
 },
 (error) => {
+  quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+
 console.log(newArr.question['questionContent'])
 console.log("Question added failed");
 // if (!isFirstAlertDisplayed) {
@@ -907,6 +913,8 @@ quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.que
 
 },
 (error) => {
+  quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+
 console.log(newArr.question['questionContent'])
 console.log("Question added failed");
 // if (!isFirstAlertDisplayed) {
