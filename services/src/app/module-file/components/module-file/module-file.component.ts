@@ -362,7 +362,8 @@ export class ModuleFileComponent {
 
         console.log('File Added successfully');
         this.dialogBoxServices.open("File Added successfully", 'information');
-        this.emptyModuleFile = new ModuleFile();
+
+        this.emptyModuleFile = {} as ModuleFile;
         this.ngOnInit();
         this.back();
       },
