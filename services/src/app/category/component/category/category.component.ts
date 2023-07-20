@@ -17,7 +17,7 @@ import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box
 })
 export class CategoryComponent {
   // title heading
-  moduleName: string = "Category Administration";
+  moduleName: string = "Quiz Category Administration";
 
   // for scren view
   viewUpdate: boolean = false;

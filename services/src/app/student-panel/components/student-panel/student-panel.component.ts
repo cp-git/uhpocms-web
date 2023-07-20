@@ -37,7 +37,7 @@ export class StudentPanelComponent {
   userPermissions: AuthUserPermission[] = [];;
   modulePermissionIds: Set<number> = new Set<number>();
   authModule = userModule;
-
+  actualUserRole: any;
   constructor(private _route: Router,
     private _activatedRoute: ActivatedRoute,
     private courseProgServ: CourseProgressService,
@@ -47,6 +47,7 @@ export class StudentPanelComponent {
     this.displayInstituteLogo = `${environment.adminInstitutionUrl}/institution/getFileById`;
    
     this.profileId = sessionStorage.getItem("profileId");
+    this.actualUserRole = sessionStorage.getItem("actualUserRole");
 
     // Calling function to get permissions from session storage
     this.loadAllPermissions();

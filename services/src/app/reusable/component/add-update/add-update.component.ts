@@ -81,11 +81,12 @@ export class AddUpdateComponent implements OnInit {
     }
   }
 
-  onDropdownSelected(option: any) {
+  onDropdownSelected(currentData: any, key: any) {
     console.log('called onDropdownSelected');
-    console.log(option);
+    console.log(currentData);
 
-    this.getSelectedOptionOfDropdown.emit(option);
+    const data = {currentData: currentData, key: key}
+    this.getSelectedOptionOfDropdown.emit(data);
   }
 
   isValidDate(dateStr: string): boolean {

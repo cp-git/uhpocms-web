@@ -39,7 +39,7 @@ import { environment } from 'environments/environment.development';
 })
 export class EnrollstudentComponent {
 
-  moduleName = 'Enroll Course To Student'
+  moduleName = 'Enroll Students To Course'
 
   //variable initialization
   _disablevar: boolean = false;

@@ -11,6 +11,8 @@ import { AuthUserPermissionService } from 'app/permissions/services/authUserPerm
 import { AuthPermissionService } from 'app/permissions/services/permission/auth-permission.service';
 import { AccesscontrolService } from 'app/accesscontrol/services/accesscontrol.service';
 import { AuthModuleService } from 'app/permissions/services/authModule/auth-module.service';
+import { AdminRoleService } from 'app/admin-role/services/admin-role.service';
+import { AdminRole } from 'app/admin-role/class/admin-role';
 @Component({
   selector: 'app-authenticationlogin',
   templateUrl: './authenticationlogin.component.html',
@@ -19,7 +21,7 @@ import { AuthModuleService } from 'app/permissions/services/authModule/auth-modu
 export class AuthenticationloginComponent {
 
   authUser = new Authuser();
-
+  adminRoles: AdminRole[] = []
   _instituteAdminArray: Profile[] = [];
   constructor(
     private _auth: AuthUserService,
@@ -28,8 +30,10 @@ export class AuthenticationloginComponent {
     private authenticationService: AuthenticationserviceService,
     private userPermissionService: AuthUserPermissionService,
     private accessControlService: AccesscontrolService,
-    private authModuleService: AuthModuleService
+    private authModuleService: AuthModuleService,
+    private adminRoleService: AdminRoleService
   ) {
+    this.loadAdminRoles();
     this._getAllList();
   }
 
@@ -111,12 +115,9 @@ export class AuthenticationloginComponent {
               else if (this._instituteAdminArray[i].userRole == 'student') {
                 this._route.navigate(['studentdata/student', userName, { id: this._instituteAdminArray[i].adminId }]);
               }
-              
+
+              this.setValuesInSessionStorage(this._instituteAdminArray[i]);
               // adding ids in session storage like user role id, profile id, user id
-              sessionStorage.setItem('userRole', this._instituteAdminArray[i].userRole);
-              sessionStorage.setItem('profileId', this._instituteAdminArray[i].adminId.toString());
-              sessionStorage.setItem('userId', this._instituteAdminArray[i].userId.toString());
-              sessionStorage.setItem('userRoleId', this._instituteAdminArray[i].userRoleId.toString());
 
               this.authenticationService.registerSuccessfulLogin(userName);
 
@@ -181,4 +182,28 @@ export class AuthenticationloginComponent {
     }
   }
 
+
+  private setValuesInSessionStorage(profile: Profile) {
+    sessionStorage.setItem('userRole', profile.userRole);
+    sessionStorage.setItem('profileId', profile.adminId.toString());
+    sessionStorage.setItem('userId', profile.userId.toString());
+    sessionStorage.setItem('userRoleId', profile.userRoleId.toString());
+    console.log(profile);
+
+    const actualUserRole = this.adminRoles.find(role => role.roleId == profile.userRoleId);
+    if (actualUserRole != undefined)
+      sessionStorage.setItem('actualUserRole', actualUserRole.roleName);
+  }
+
+  // loading admin roles for dropdown
+  private loadAdminRoles() {
+    this.adminRoleService.getAdminRoles().subscribe(
+      response => {
+        this.adminRoles = response;
+      },
+      error => {
+        console.log("Failed to get adminRoles");
+      }
+    );
+  }
 }

@@ -21,7 +21,7 @@ import { userModule } from 'app/permissions/enum/user-module.enum';
 export class QuizComponent implements OnInit {
 
   // title heading for Quiz
-  moduleName: string = "Quiz";
+  moduleName: string = "Quiz Administration";
 
   viewUpdate: boolean = false;
   viewAdd: boolean = false;

@@ -58,10 +58,14 @@ profile: Profile;
   userId: any;
   authModule = userModule;
   userRole : any;
+  actualUserRole: any;
+
   constructor(private _route: Router, private _activatedRoute: ActivatedRoute, private courseProgServ: CourseProgressService, private courseService: TeacherCourseService, private assignCouServ: AssignCourseToTeacherService, private profileServ: ProfileService) {
     this.profile = new Profile();
     this.displayInstituteLogo = `${environment.adminInstitutionUrl}/institution/getFileById`;
     this.userRole = sessionStorage.getItem("userRole");
+    this.actualUserRole = sessionStorage.getItem("actualUserRole");
+
     this.profileId = sessionStorage.getItem("profileId");
        // Calling function to get permissions from session storage
        this.loadAllPermissions();

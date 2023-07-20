@@ -22,11 +22,12 @@
                 <ng-container *ngIf="userRole === 'admin'">
                     <img src="assets/img/cloudpoint.png" style="width: 150px; height: 60px;">
                 </ng-container>
-               {{userRole | titlecase}}'s Notification</h1>
+
+                Announcements</h1>
         </div>
         <div class="col-sm-6 text-right buttons" >
             <button *ngIf="buttonsArray.showAddButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-                routerLink="add">Add Notification</button>
+                routerLink="add">Add announcement</button>
             <button class="btn btn-primary" (click)="back()">Back</button>
 
         </div>

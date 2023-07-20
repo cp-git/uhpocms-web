@@ -20,7 +20,7 @@ import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box
 export class AuthUserComponent implements OnInit {
 
   // title heading
-  moduleName: string = "AuthUser Administration";
+  moduleName: string = "User Administration";
 
   // for scren view
   viewUpdate: boolean = false;

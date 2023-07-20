@@ -108,7 +108,7 @@
 
 
 <ng-template #viewone>
-    <app-view-one [data]="{currentData:currentData , columnNames:allColumnNames}"
+    <app-view-one [data]="{currentData:currentData , columnNames:viewOneColumnNames}"
         [dropdown]="{adminInstitutions,departments,adminRoles,activeAuthUsers,genders,userRoles}">
     </app-view-one>
     <img src="{{displayUrl}}/{{currentData.adminId}}" (click)="display(currentData.adminId)">
@@ -117,7 +117,8 @@
 <ng-template #viewupdate>
     <app-add-update [data]="{currentData:currentData , columnNames:updateColumn}"
         [dropdown]="{adminInstitutions,departments,adminRoles,activeAuthUsers,genders,userRoles}"
-        (submitClicked)="onUpdateProfileSubmit($event)" (change)="onFileSelected($event)"></app-add-update>
+        (submitClicked)="onUpdateProfileSubmit($event)" (change)="onFileSelected($event)"
+        (getSelectedOptionOfDropdown)="getSelectedOptionOfDropdown($event)"></app-add-update>
 
     <!-- <img width="100%" *ngIf="imagesUrl" src={{imagesUrl}} class="image"> -->
 
