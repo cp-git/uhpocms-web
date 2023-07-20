@@ -58,7 +58,7 @@ export class ModuleFileService {
 
   // update module File by id
   updateModuleFileById(moduleFileId: number, formData: FormData): Observable<any> {
-    return this._http.put<any>(`${this.moduleFileUrl}/modulefileById/` + moduleFileId, formData);
+    return this._http.put<any>(`http://localhost:8092/uhpocms/modulefileById/` + moduleFileId, formData);
   }
 
   // delete module File by id
