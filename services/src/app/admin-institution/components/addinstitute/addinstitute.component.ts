@@ -46,41 +46,22 @@ export class AddinstituteComponent {
     this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
 
-
-
   }
-
-
-
 
   //file selection code
   onFileSelected(event: any) {
-
-
     this.file = event.target.files[0];
     this.admininstitution.adminInstitutionPicture = this.file.name;
-
     console.log(this.file);
-
     //console.log(this.admininstitution.adminInstitutionPicture);
   }
 
-
-
-
-
-
-
-
   // for inserting new Institution in table
   addInstitution(inst: AdminInstitution) {
-
     console.log("in function...")
     if (this.backupInst.findIndex((data) => data.adminInstitutionName === inst.adminInstitutionName) >= 0) {
-      // alert('Institute name already exist. please enter another.');
-      console.log('Institute name already exist. please enter another.');
+      console.log('Institute name already exists. Please enter another.');
     } else {
-      // assigning value
       this.admininstitution = {} as AdminInstitution;
       this.admininstitution.adminInstitutionName = inst.adminInstitutionName;
       this.admininstitution.adminInstitutionDescription = inst.adminInstitutionDescription;
@@ -88,20 +69,11 @@ export class AddinstituteComponent {
       this.admininstitution.adminInstitutionPicture = inst.adminInstitutionPicture;
 
       const instituteJson = JSON.stringify(this.admininstitution);
-
-      const blob = new Blob([instituteJson], {
-        type: 'application/json'
-      })
-
+      const blob = new Blob([instituteJson], { type: 'application/json' });
       let formData = new FormData();
       formData.append("file", this.file);
       formData.append("admin", new Blob([JSON.stringify(this.admininstitution)], { type: 'application/json' }));
 
-
-
-
-
-      // inserting Institution
       this._institutionService.addInstitution(formData).subscribe(
         (response) => {
           console.log("in api");
@@ -109,19 +81,28 @@ export class AddinstituteComponent {
           this.admininstitution = response;
           console.log(response)
 
-
-          // replacing value from backup to admininstitutions
           this.admininstitutions[this.admininstitutions.indexOf(inst)] = Object.assign(
             {},
-            this.backupInst[
-            this.backupInst.findIndex((data) => data.adminInstitutionId == inst.adminInstitutionId)
-            ]
+            this.backupInst[this.backupInst.findIndex((data) => data.adminInstitutionId == inst.adminInstitutionId)]
           );
 
           this.admininstitutions.push(this.admininstitution);
           this.backupInst.push(Object.assign({}, this.admininstitution));
-          // alert('Institute Added Successfuly');
-          this.dialogueBoxService.open('Institute Added successfully', 'information');
+
+          this.dialogueBoxService.open("Institute Added successfully", "information").then((response) => {
+            if (response) {
+              location.reload(); // Refresh the page
+            }
+          });
+
+          if (inst.adminInstitutionIsActive) {
+            this.dialogueBoxService.open("Department added successfully", "information").then((response) => {
+              if (response) {
+                location.reload(); // Refresh the page
+              }
+            });
+          }
+
           this._route.navigate(['displayinstitute', this.userName]);
 
           if (this.admininstitutions.length > 0) {
@@ -129,15 +110,11 @@ export class AddinstituteComponent {
           }
         },
         (error) => {
-          // alert('not able to add data \n' + JSON.stringify(error.error));
-          // console.log('not able to add data \n' + JSON.stringify(error.error));
-          this.dialogueBoxService.open('Failed to Add Institute', 'warning'); 
-
+          this.dialogueBoxService.open('Failed to Add Institute', 'warning');
         }
       );
     }
   }
-
 
   checkFields() {
     // Check if any fields are empty
@@ -149,9 +126,6 @@ export class AddinstituteComponent {
       this.buttonDisabled = false;
     }
   }
-
-
-
 
   //back button routing
   back() {

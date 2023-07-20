@@ -4,7 +4,7 @@ export const AdminRoleColumn = [
 ]
 
 export const AdminRoleAllColumn = [
-    { key: 'roleName', label: 'Role Name', type: 'input' },
+    { key: 'roleName', label: 'Role Name', type: 'input' ,disable: 'true'},
     { key: 'roleDescription', label: 'Description', type: 'input' },
     // { key: 'createdBy', label: 'Created By', type: 'input' },
     // { key: 'modifiedBy', label: 'Modified By', type: 'input' },
