@@ -476,6 +476,8 @@ export class ProfileComponent implements OnInit {
       // formData.append("file", varData);
       this.service.updateProfileByAuthuser(currentData.userId, currentData).subscribe(
         response => {
+          console.log("in services");
+
           this.dialogBoxService.open('Profile Updated Successfully', 'information')
           this.back();
         },

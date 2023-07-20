@@ -81,6 +81,9 @@ export class ModuleFileComponent {
   imagesUrl!: any;
 
 
+  myFiles: string[] = [];
+
+
   constructor(
 
     private _route: Router,
@@ -239,9 +242,10 @@ export class ModuleFileComponent {
     this.addModuleFile(receivedArray);
   }
 
-  onRecievedFiles(recievedFiles: FileList) {
-    this.files = recievedFiles;
-    console.log(this.files);
+  onRecievedFiles(event: any) {
+    for (var i = 0; i < event.target.files.length; i++) {
+      this.myFiles.push(event.target.files[i]);
+    }
 
 
   }
@@ -381,8 +385,8 @@ export class ModuleFileComponent {
     // calling service for updating data
 
     let formData = new FormData();
-    for (let i = 0; i <= this.files.length; i++) {
-      formData.append("files", this.files[i]);
+    for (let i = 0; i < this.myFiles.length; i++) {
+      formData.append("files", this.myFiles[i]);
     }
     formData.append("admin", new Blob([JSON.stringify(currentData)], { type: 'application/json' }));
 
