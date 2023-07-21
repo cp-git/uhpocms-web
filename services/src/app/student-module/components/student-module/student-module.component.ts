@@ -629,7 +629,7 @@ export class StudentModuleComponent implements OnInit {
   //loads the module files assigned to the student using the getModuleFilesByStudentId() method of StudentService
   loadModuleFilesOfCourses(studentId: number) {
     this.reviewButtonStat = false;
-    console.log("reviewButtonStat in loadModulesFiles"+this.reviewButtonStat)
+    console.log("reviewButtonStat in loadModulesFiles" + this.reviewButtonStat)
     this.modulefileService.getModuleFilesOfEnrolledCoursesOfModulesByProfileId(studentId).subscribe(
       response => {
         this.studentModuleFiles = response;
@@ -1929,9 +1929,10 @@ export class StudentModuleComponent implements OnInit {
       }
     )
   }
-
+  allQueMarks: any;
   onQuizSubmit(questionAnswersArray: OneQuestionAnswer[]) {
 
+    alert(this.selectedCategoryName);
     this.questionAnswers = questionAnswersArray;
     this.quizProgress = new QuizProgress();
 
@@ -1941,11 +1942,13 @@ export class StudentModuleComponent implements OnInit {
 
     let notAttendedQuestions: any[] = [];
     let score: number = 0;
+
     const marksPerQuestion: number = 100 / (this.questionAnswers.length);
 
     this.questionAnswers.forEach((queAns, index) => {
 
-
+      this.allQueMarks = queAns.maxMarks;
+      alert(this.allQueMarks);
       // finding correct answer for current question in loop
       let trueAnswer: string = '';
       if (queAns.correct1) {
@@ -1965,7 +1968,7 @@ export class StudentModuleComponent implements OnInit {
 
       // checking if answer is correct then incresing the score
       if (queAns.selectedAnswer == trueAnswer) {
-        score = score + (marksPerQuestion);
+        score += this.allQueMarks;
       }
 
       this.studentAnswer.quizId = this.selectedQuiz.quizId;
@@ -1998,22 +2001,22 @@ export class StudentModuleComponent implements OnInit {
     }
     this.addQuizProgress(score);
 
-    if (score >= this.selectedQuiz.passMark) {
+    if (this.allQueMarks >= this.selectedQuiz.passMark) {
       // show dialog box with green exam pass
       var grade = '';
-      if (score >= 90) {
+      if (this.allQueMarks >= 90) {
         grade = 'A+';
-      } else if (score >= 80) {
+      } else if (this.allQueMarks >= 80) {
         grade = 'A';
-      } else if (score >= 75) {
+      } else if (this.allQueMarks >= 75) {
         grade = 'B+';
-      } else if (score >= 70) {
+      } else if (this.allQueMarks >= 70) {
         grade = 'B';
-      } else if (score >= 60) {
+      } else if (this.allQueMarks >= 60) {
         grade = 'C';
-      } else if (score >= 50) {
+      } else if (this.allQueMarks >= 50) {
         grade = 'D';
-      } else if (score >= 40) {
+      } else if (this.allQueMarks >= 40) {
         grade = 'E';
       }
       this.getQuizByStudIdAndQuizId(this.selectedQuiz)
@@ -2036,6 +2039,7 @@ export class StudentModuleComponent implements OnInit {
 
   addQuizProgress(score: number) {
     console.log(score);
+    alert(score);
 
     // adding all value to quizprogress object to store result
     this.quizProgress.studentId = this.studentId;
