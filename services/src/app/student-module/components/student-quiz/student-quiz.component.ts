@@ -922,7 +922,7 @@ export class StudentQuizComponent implements OnInit {
             questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
           }
           // Add two line spaces after each question
-          questionSection.push({ text: '\n\n' });
+          //questionSection.push({ text: '\n\n' });
 
           this.questionNumber++;
           resolve(); // Resolve the Promise for questions without figure
@@ -951,7 +951,7 @@ export class StudentQuizComponent implements OnInit {
           questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
         }
         // Add two line spaces after each question
-        questionSection.push({ text: '\n\n' });
+        // questionSection.push({ text: '\n\n' });
 
         this.questionNumber++;
         resolve(); // Resolve the Promise for questions without figure
