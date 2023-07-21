@@ -21,7 +21,7 @@ import { AuthGroupPermissionService } from 'app/permissions/services/authGroupPe
 import { AuthGroupPermission } from 'app/permissions/class/auth-group-permission';
 import { AdvFilterPipe } from 'app/shared/pipes/adv-filter/adv-filter.pipe';
 import { FilterPipe } from 'app/shared/pipes/filter/filter.pipe';
-
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 @Component({
   selector: 'app-access-control',
   templateUrl: './access-control.component.html',
@@ -86,7 +86,8 @@ export class AccessControlComponent {
     private userPermissionService: AuthUserPermissionService,
     private departmentService: DepartmentService,
     private adminRoleService: AdminRoleService,
-    private groupPermissionService: AuthGroupPermissionService
+    private groupPermissionService: AuthGroupPermissionService,
+    private dialogboxService:DialogBoxService
   ) {
 
     this.advFilterPipe = new AdvFilterPipe();
@@ -506,7 +507,8 @@ export class AccessControlComponent {
     if (accessControlFor == 'USERS') {
       this.userPermissionService.assignPermissionsToUserId(userId, userRoleId, moduleAndPermissionsIds).subscribe(
         (response) => {
-          alert("Permissions Updated...");
+          //alert("Permissions Updated...");
+          this.dialogboxService.open('Permissions updated','information');
           this.ngOnInit();
         }
       )
@@ -515,7 +517,7 @@ export class AccessControlComponent {
 
       this.userPermissionService.assignPermissionsToRoleId(userRoleId, moduleAndPermissionsIds).subscribe(
         (response) => {
-          alert("Permissions Updated...");
+          this.dialogboxService.open('Permissions updated','information');
           this.ngOnInit();
         }
       )
