@@ -117,9 +117,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr
-                    *ngFor="let row of allData | filter:'courseId':selectedCourseId| filter:'moduleId':selectedModuleId | filter:'categoryId':selectedCategoryId">
-                 
+                <!-- <tr
+                    *ngFor="let row of allData | filter:'courseId':selectedCourseId| filter:'moduleId':selectedModuleId | filter:'categoryId':selectedCategoryId"> -->
+                    <tr *ngFor="let row of allData | filter:'courseId':selectedCourseId | filter:'moduleId':selectedModuleId | filter:'categoryId':selectedCategoryId"
+                    [ngClass]="{'active-row': row.active=== false}">
                     <td *ngFor="let column of columnNames">
                 
                         <ng-container [ngSwitch]="column.type">
