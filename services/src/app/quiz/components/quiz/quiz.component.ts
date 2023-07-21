@@ -13,6 +13,8 @@ import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
 import { userModule } from 'app/permissions/enum/user-module.enum';
+import { QuestionService } from 'app/question/services/question.service';
+import { Question } from 'app/question/class/question';
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
@@ -58,7 +60,7 @@ export class QuizComponent implements OnInit {
   categories: Category[] = [];
   userRole: any;
   titleWithUserRole: boolean = true;
-
+  quesInQuiz : Question[] = [];
   // for user Permissions
   buttonsArray: any;
   userRoleId: any;
@@ -73,6 +75,7 @@ export class QuizComponent implements OnInit {
     private categotyService: CategoryService,
     private dialogBoxService: DialogBoxService,
     private userPermissionService: AuthUserPermissionService,
+    private quesService: QuestionService
   ) {
 
     this.userRole = sessionStorage.getItem('userRole');
@@ -286,7 +289,7 @@ export class QuizComponent implements OnInit {
   
     // Set other properties and make the API call to add the quiz
 
-    currentData.active = true;
+    currentData.active = false;
     if(passMark <= maxMarks )
     {
     this.quizService.addQuiz(currentData).subscribe(
@@ -361,12 +364,25 @@ export class QuizComponent implements OnInit {
       }
     );
   }
+ async getQuesByQuizId(quizId : number){
+   await  this.quesService.getAllQuestionsByQuizId(quizId).toPromise().then(
+      (response) => {
+        this.quesInQuiz = response;
+        console.log(response);
 
+      });
+  }
   // for activating quiz using title
-  private activateQuiz(quiz: Quiz) {
-
+  private async activateQuiz(quiz: Quiz) {
+    
     // calling service to activating Quiz
-    this.quizService.updateActiveStatus(quiz.title, quiz).subscribe(
+    console.log("Inside activateQuiz(quiz: Quiz)  ")
+  await  this.getQuesByQuizId(quiz.quizId);
+   console.log(this.quesInQuiz)
+   console.log(quiz.maxQuestions)
+    if(this.quesInQuiz.length == quiz.maxQuestions)
+    {
+    this.quizService.updateActiveStatus(quiz.quizId, quiz).subscribe(
       response => {
         console.log("Activated Quiz");
         this.dialogBoxService.open('Quiz Activated', 'information')
@@ -376,6 +392,8 @@ export class QuizComponent implements OnInit {
         this.dialogBoxService.open('Failed to Activate', 'warning')
       }
     );
+    }
+    else{this.dialogBoxService.open('Please add questions to the quiz', 'warning')}
   }
 
   // loading courses 
