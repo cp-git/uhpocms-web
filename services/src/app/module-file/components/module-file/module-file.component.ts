@@ -242,10 +242,9 @@ export class ModuleFileComponent {
     this.addModuleFile(receivedArray);
   }
 
-  onRecievedFiles(event: any) {
-    for (var i = 0; i < event.target.files.length; i++) {
-      this.myFiles.push(event.target.files[i]);
-    }
+  onRecievedFiles(recievedFiles: FileList) {
+    this.files = recievedFiles;
+    console.log(this.files);
 
 
   }
