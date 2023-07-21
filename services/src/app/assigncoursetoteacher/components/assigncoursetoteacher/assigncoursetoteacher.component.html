@@ -67,10 +67,13 @@
                             </ng-template>
                             <!-- code to display checkbox  -->
                             <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                <input id="item-{{index}}" type="checkbox" value="item$"
-                                    [checked]="assignTeacherArr.includes(item.adminId)" [disabled]="enrolledUsers.includes(item.adminId) || (item.adminId == profileId)" (change)="onChangeSelectedProfiles($event,item$)"/>
-                                {{item.fullName}}
+                                <span [ngClass]="{'disabled-option': enrolledUsers.includes(item.adminId) || (item.adminId == profileId)}">
+                                    <input id="item-{{index}}" type="checkbox" value="item$"
+                                        [checked]="assignTeacherArr.includes(item.adminId)" [disabled]="enrolledUsers.includes(item.adminId) || (item.adminId == profileId)" (change)="onChangeSelectedProfiles($event,item$)"/>
+                                    {{item.fullName}}
+                                </span>
                             </ng-template>
+                            
                         </ng-select>
                     </div>
                 </div>
