@@ -18,6 +18,7 @@ import { AuthUserPermission } from './permissions/class/auth-user-permission';
 export class AppService {
   private readonly adminInstitutionURL: string;
   private readonly quizURL: string;
+  private readonly actInactQuizURL: string;
   private readonly courseURL: string;
   private readonly categoryURL: string;
   private readonly moduleURL: string;
@@ -30,6 +31,7 @@ export class AppService {
 
     this.adminInstitutionURL = `${environment.adminInstitutionUrl}/institution?name=all`;
     this.quizURL = `${environment.quizUrl}/quiz?title=all`;
+    this.actInactQuizURL = `${environment.quizUrl}/quiz/actInactQuizzes?actInac=all`;
     this.courseURL = `${environment.courseUrl}/course?name=all`;
     this.categoryURL = `${environment.categoryUrl}/category?category=all`;
     this.moduleURL = `${environment.moduleUrl}/module?name=all`;
@@ -44,6 +46,12 @@ export class AppService {
   fetchAllQuizs(): Observable<Quiz[]> {
     // alert(this.baseUrl + this.quizWar + this.quizURL)
     return this._http.get<Quiz[]>(this.quizURL);
+  }
+
+  fetchAllActInactQuizs(): Observable<Quiz[]> {
+    // alert(this.baseUrl + this.quizWar + this.quizURL)
+    console.log("Inside  fetchAllActInactQuizs() ")
+    return this._http.get<Quiz[]>(this.actInactQuizURL);
   }
 
   fetchAllCourses(): Observable<Course[]> {

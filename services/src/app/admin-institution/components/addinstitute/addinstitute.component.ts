@@ -95,13 +95,6 @@ export class AddinstituteComponent {
             }
           });
 
-          if (inst.adminInstitutionIsActive) {
-            this.dialogueBoxService.open("Department added successfully", "information").then((response) => {
-              if (response) {
-                location.reload(); // Refresh the page
-              }
-            });
-          }
 
           this._route.navigate(['displayinstitute', this.userName]);
 

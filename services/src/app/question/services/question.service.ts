@@ -59,7 +59,7 @@ export class QuestionService {
   }
 
   getAllQuestionsByQuizId(quizId: number) {
-    return this.http.get<Question[]>(`${this.questionUrl}/questions?quizId=${quizId}`);
+    return this.http.get<any>(`${this.questionUrl}/questions?quizId=${quizId}`);
   }
 
   getAllAnswers(): Observable<Answer[]> {

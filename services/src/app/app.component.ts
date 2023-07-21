@@ -19,6 +19,7 @@ export class AppComponent {
   adminInstitutions: AdminInstitution[] = [];
   categories: Category[] = [];
   quizs: Quiz[] = [];
+  actInactquizs: Quiz[] = [];
   courses: Course[] = [];
   modules: Module[] = [];
   instituteProfiles: Profile[] = [];
@@ -40,6 +41,7 @@ export class AppComponent {
     this.loadCategories();
     this.loadModules();
     this.loadInstituteProfile();
+    this.loadActInacQuizs();
     //alert(sessionStorage.getItem("instituteprofile"));
 
     // this.loadUserPermissions(this.userRoleId, this.userId)
@@ -70,6 +72,19 @@ export class AppComponent {
       },
       (error) => {
         sessionStorage.setItem('quiz', '');
+      }
+    );
+  }
+
+  loadActInacQuizs() {
+    this._appService.fetchAllActInactQuizs().subscribe(
+      (response) => {
+        this.actInactquizs = response;
+        console.log("inside  loadActInacQuizs() ")
+        sessionStorage.setItem('actinacquiz', JSON.stringify(this.actInactquizs));
+      },
+      (error) => {
+        sessionStorage.setItem('actinacquiz', '');
       }
     );
   }
