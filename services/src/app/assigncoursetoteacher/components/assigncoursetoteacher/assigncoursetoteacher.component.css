@@ -23,3 +23,8 @@
     margin-left: auto;
     margin-right: auto;
 } */
+.disabled-option {
+    color: #aaa; /* Adjust the color to your preference for disabled options */
+    pointer-events: none;
+  }
+  

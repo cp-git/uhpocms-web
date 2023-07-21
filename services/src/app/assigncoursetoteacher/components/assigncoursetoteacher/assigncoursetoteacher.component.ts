@@ -347,49 +347,39 @@ export class AssigncoursetoteacherComponent {
     console.log(this._profileArray);
     this.assignTeacher.courseId = (courseId);
     this.assignTeacher.profileId = profileId;
-    // Delete the unchecked assignments
-    this.unCheckedProfiles.forEach((profileId) => {
-      console.log(profileId);
-
-      this.deleteAssignment(courseId, profileId);
-
-      this.assignTeacherArr = this.assignTeacherArr.filter((element) => element !== profileId);
-      console.log(this.assignTeacherArr);
-
-    });
-
-
-    for (let i = 0; i < this.selected.length; i++) {
-
-      this.assignTeacher.profileId = this.selected[i];
-
-      this.assignTeacher.courseId = +(this.course.courseId);
-      // console.log(JSON.stringify(this.assignTeacher));
-      this.assignTeacherService.assignTeacherToCourse(this.assignTeacher).subscribe(
-        (response) => {
-          this.inserted = true;
-          //location.reload();
-
-        }, error => {
-          this.inserted = false;
-          this.dialogBoxService.open('Failed to assign', 'warning');
-        }
-      )
-    }
-    if (this.inserted = true) {
-      this.dialogBoxService.open("Assign Course To Teacher successfully !", 'information').then((response) => {
-        if (response) {
-          location.reload(); // Refresh the page
-        }
-
-      });
-      // location.reload();
-    }
-    else {
-      console.log("Already Course Assigned");
-    }
-    // this.ngOnInit();
+    // Subtract enrolledUsers from selected array
+  this.selected = this.selected.filter((profileId) => !this.enrolledUsers.includes(profileId));
+  // Delete the unchecked assignments
+  this.unCheckedProfiles.forEach((profileId) => {
+    this.deleteAssignment(courseId, profileId);
+    this.assignTeacherArr = this.assignTeacherArr.filter((element) => element !== profileId);
+  });
+    
+  
+      for (let i = 0; i < this.selected.length; i++) {
+    this.assignTeacher.profileId = this.selected[i];
+    this.assignTeacher.courseId = +(this.course.courseId);
+    this.assignTeacherService.assignTeacherToCourse(this.assignTeacher).subscribe(
+      (response) => {
+        this.inserted = true;
+      },
+      (error) => {
+        this.inserted = false;
+        this.dialogBoxService.open('Failed to assign', 'warning');
+      }
+    );
   }
+  if (this.inserted=true) {
+    this.dialogBoxService.open("Assign Course To Teacher successfully !", 'information').then((response) => {
+      if (response) {
+        location.reload(); // Refresh the page
+      }
+    });
+  } else {
+    console.log("Already Course Assigned");
+  }
+  // this.ngOnInit();
+}
 
   onScrollToEnd() {
     console.log('onscrollEend');
@@ -427,20 +417,15 @@ export class AssigncoursetoteacherComponent {
 
   unCheckedProfiles: Set<number> = new Set<number>;
   onChangeSelectedProfiles(event: any, item: any) {
-    // alert();
-    console.log(item);
-    console.log(event);
-
     const isChecked = event.target.checked;
     if (!isChecked) {
-      this.unCheckedProfiles.add(item.value.adminId)
-      console.log(this.unCheckedProfiles);
+      this.unCheckedProfiles.add(item.value.adminId);
     } else {
-      this.unCheckedProfiles.delete(item.value.adminId)
-      console.log(this.unCheckedProfiles);
+      this.unCheckedProfiles.delete(item.value.adminId);
     }
-
-
+  
+    // Update selected array to exclude unchecked profiles that are in enrolledUsers
+    this.selected = this.selected.filter((profileId) => !this.unCheckedProfiles.has(profileId));
   }
 
   // Function to get data based on role

@@ -163,7 +163,5 @@ export class DisplayinstituteComponent {
     this._route.navigate(['displayinstitute/activate', this.userName]);
   }
 
-  display(adminInstitutionId: number) {
-    this._route.navigate(['display', adminInstitutionId, this.userName])
-  }
+
 }
