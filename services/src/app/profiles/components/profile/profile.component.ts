@@ -505,15 +505,42 @@ export class ProfileComponent implements OnInit {
     formData.append("file", this.file);
     formData.append("admin", new Blob([JSON.stringify(currentData)], { type: 'application/json' }));
 
-    this.service.updateProfileByActiveAuthuser(currentData.userId, formData).subscribe(
-      response => {
-        this.dialogBoxService.open('Profile Updated Successfully', 'information')
-        this.back();
-      },
-      error => {
-        this.dialogBoxService.open('Failed to Update Profile', 'warning')
-      }
-    );
+
+    let varData = currentData.profilePics;
+    console.log("var Data" + varData);
+
+
+    if (varData === currentData.profilePics) {
+      console.log("Data.." + varData);
+      // formData.append("file", varData);
+      this.service.updateProfileByAuthuser(currentData.userId, currentData).subscribe(
+        response => {
+          console.log("in services");
+
+          this.dialogBoxService.open('Profile Updated Successfully', 'information')
+          this.back();
+        },
+        error => {
+          this.dialogBoxService.open('Failed to Update Profile', 'warning')
+        }
+      );
+
+    }
+
+    else {
+      formData.append("file", this.file);
+      this.service.updateProfileByActiveAuthuser(currentData.userId, formData).subscribe(
+        response => {
+          this.dialogBoxService.open('Profile Updated Successfully', 'information')
+          this.back();
+        },
+        error => {
+          this.dialogBoxService.open('Failed to Update Profile', 'warning')
+        }
+      );
+
+    }
+
   }
 
   // For deleting profile (soft delete)
