@@ -84,6 +84,9 @@ export class ModuleFileComponent {
   myFiles: string[] = [];
 
 
+  varDataname!: string;
+
+
   constructor(
 
     private _route: Router,
@@ -128,6 +131,8 @@ export class ModuleFileComponent {
     // this.getAllModulesFile();
     // this.getAssignedCoursesOfTeacher(this.profileId);
     // this.getInactiveModuleFiles();
+
+    // this.displayUrl = this.modulefileUrl + '/files'
 
     this.displayUrl = this.modulefileUrl + '/files'
   }
@@ -242,10 +247,9 @@ export class ModuleFileComponent {
     this.addModuleFile(receivedArray);
   }
 
-  onRecievedFiles(event: any) {
-    for (var i = 0; i < event.target.files.length; i++) {
-      this.myFiles.push(event.target.files[i]);
-    }
+  onRecievedFiles(recievedFiles: FileList) {
+    this.files = recievedFiles;
+    console.log(this.files);
 
 
   }
@@ -384,26 +388,57 @@ export class ModuleFileComponent {
   private updateModuleFileById(currentData: ModuleFile) {
     // calling service for updating data
 
-    let formData = new FormData();
-    for (let i = 0; i < this.myFiles.length; i++) {
-      formData.append("files", this.myFiles[i]);
+
+    if (this.files == null) {
+
+
+      this.moduleFileService.updateModuleFileJsonById(currentData.moduleFileId, currentData).subscribe(
+        response => {
+          // this.uploadfileService.uploadFiles(this.files).subscribe();
+          console.log('Module File updated successfully !' + response);
+          this.dialogBoxServices.open("Module File updated successfully !", 'information');
+          this.back();
+
+        },
+        error => {
+          this.dialogBoxServices.open("Module File updation failed", 'warning');
+          console.log('Module File updation failed !');
+        }
+
+      );
+
     }
-    formData.append("admin", new Blob([JSON.stringify(currentData)], { type: 'application/json' }));
+    else {
 
-    this.moduleFileService.updateModuleFileById(currentData.moduleFileId, formData).subscribe(
-      response => {
-        this.uploadfileService.uploadFiles(this.files).subscribe();
 
-      },
-      error => {
-        this.dialogBoxServices.open("Module File updation failed", 'warning');
-        console.log('Module File updation failed !');
+      let formData = new FormData();
+      for (let i = 0; i < this.files.length; i++) {
+        formData.append("files", this.files[i]);
+
+
+
+        currentData.moduleFile = this.files[i].name;
       }
 
-    );
-    console.log('Module File updated successfully !');
-    this.dialogBoxServices.open("Module File updated successfully !", 'information');
-    this.back();
+
+
+      formData.append("admin", new Blob([JSON.stringify(currentData)], { type: 'application/json' }));
+
+      this.moduleFileService.updateModuleFileById(currentData.moduleFileId, formData).subscribe(
+        response => {
+          //this.uploadfileService.uploadFiles(this.files).subscribe();
+
+        },
+        error => {
+          this.dialogBoxServices.open("Module File updation failed", 'warning');
+          console.log('Module File updation failed !');
+        }
+
+      );
+      console.log('Module File updated successfully !');
+      this.dialogBoxServices.open("Module File updated successfully !", 'information');
+      this.back();
+    }
   }
 
 

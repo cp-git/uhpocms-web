@@ -61,6 +61,12 @@ export class ModuleFileService {
     return this._http.put<any>(`${this.moduleFileUrl}/modulefileById/` + moduleFileId, formData);
   }
 
+
+  // update module File by id
+  updateModuleFileJsonById(moduleFileId: number, moduleFile: ModuleFile): Observable<any> {
+    return this._http.put<any>(`${this.moduleFileUrl}/moduleupdatejson/` + moduleFileId, moduleFile);
+  }
+
   // delete module File by id
   deleteModuleFileById(moduleFileId: number): Observable<any> {
     return this._http.delete<any>(`${this.moduleFileUrl}/modulefileById/` + moduleFileId);
