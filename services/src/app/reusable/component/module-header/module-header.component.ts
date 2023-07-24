@@ -58,6 +58,7 @@ export class ModuleHeaderComponent {
       this.sessionData = sessionStorage.getItem('instituteprofile');
       //alert(JSON.stringify(this.sessionData));
       this.data = JSON.parse(this.sessionData);
+      
       for (var i = 0; i < this.data.length; i++) {
         if (this.data[i].adminId == this.profileId) {
           this.profile = this.data;
