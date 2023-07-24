@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdminInstitution } from './admin-institution/class/admininstitution';
 import { AppService } from './app.service';
 
@@ -8,12 +8,15 @@ import { Module } from './class/module';
 import { Quiz } from './class/quiz';
 import { Profile } from './profiles/class/profile';
 import { AuthUserPermissionService } from './permissions/services/authUserPermission/auth-user-permission.service';
+import { Subject } from 'rxjs/internal/Subject';
+import { SharedDataServiceService } from './question/services/shared-data-service.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent  implements OnInit{
   title = 'roleAdmin';
 
   adminInstitutions: AdminInstitution[] = [];
@@ -27,9 +30,10 @@ export class AppComponent {
 
   userId: any;
   userRoleId: any;
+  private refreshDataSubject: Subject<void> = new Subject<void>();
 
-  constructor(private _appService: AppService,
-    private userPermissionService: AuthUserPermissionService) {
+  constructor(private _appService: AppService,private sharedDataService: SharedDataServiceService,
+    private userPermissionService: AuthUserPermissionService,private activatedRoute: ActivatedRoute,) {
     this.userId = sessionStorage.getItem('userId');
     this.userRoleId = sessionStorage.getItem('userRoleId');
   }
@@ -44,9 +48,22 @@ export class AppComponent {
     this.loadActInacQuizs();
     //alert(sessionStorage.getItem("instituteprofile"));
 
-    // this.loadUserPermissions(this.userRoleId, this.userId)
+  //   this.sharedDataService.onDataRefresh().subscribe(() => {
+  // // Clear the session storage and reload the updated data
+  // sessionStorage.removeItem('actinacquiz');
+  //       this.loadActInacQuizs();
+  //     });
+  
 
+  //   // Initial load of quizzes
+  //   this.loadActInacQuizs();
+  
   }
+  onAppQuestionAnswerBackButtonClicked() {
+    // Emit a value to notify the app-question-answer component to refresh data
+    this.refreshDataSubject.next();
+  }
+
 
   loadAdminInstitution() {
     this._appService.fetchAllInstitution().subscribe(
