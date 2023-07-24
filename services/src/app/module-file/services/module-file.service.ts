@@ -23,7 +23,7 @@ export class ModuleFileService {
 
   // for add module File 
   addModuleFile(formData: FormData): Observable<any> {
-    return this._http.post<any>(`${this.moduleFileUrl}/modulefile`, formData);
+    return this._http.post<any>(`http://localhost:8090/modulefile/uhpocms/modulefile`, formData);
   }
 
   // get all module file
@@ -58,7 +58,7 @@ export class ModuleFileService {
 
   // update module File by id
   updateModuleFileById(moduleFileId: number, formData: FormData): Observable<any> {
-    return this._http.put<any>(`${this.moduleFileUrl}/modulefileById/` + moduleFileId, formData);
+    return this._http.put<any>(`http://localhost:8090/modulefile/uhpocms/modulefileById/` + moduleFileId, formData);
   }
 
 

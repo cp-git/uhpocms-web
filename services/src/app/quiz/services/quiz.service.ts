@@ -22,6 +22,12 @@ export class QuizService {
     return this.http.get<any>(`${this.quizUrl}/` + "?title=all");
   }
 
+  fetchAllActInactQuizs(): Observable<any> {
+    // alert(this.baseUrl + this.quizWar + this.quizURL)
+    console.log("Inside  fetchAllActInactQuizs() ")
+    return this.http.get<any>(`${this.quizUrl}/` + "actInactQuizzes?actInac=all");
+  }
+
   getQuizByTitle(title: string): Observable<any> {
     return this.http.get<any>(`${this.quizUrl}/` + title);
   }
@@ -42,8 +48,8 @@ export class QuizService {
     return this.http.get<any>(`${this.quizUrl}/inactive?inactivequizzes=all`);
   }
 
-  updateActiveStatus(title: string, quiz: Quiz): Observable<any> {
-    return this.http.patch<any>(`${this.quizUrl}/` + title, quiz);
+  updateActiveStatus(id : number, quiz: Quiz): Observable<any> {
+    return this.http.patch<any>(`${this.quizUrl}/` + id, quiz);
   }
 
   getAllQuizzesByProfileId(studentId: number): Observable<Quiz[]> {

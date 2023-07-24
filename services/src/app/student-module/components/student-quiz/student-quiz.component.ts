@@ -725,21 +725,22 @@ export class StudentQuizComponent implements OnInit {
           alignment: 'center',
         });
 
-        const courseCodeAndCourseName = `Course Code: ${this.courseCode}   Course Name: ${this.courseName}`;
+        const courseCodeAndCourseName = `Course Code : ${this.courseCode}   Course Name : ${this.courseName}`;
         // Add the remaining content
         questionSection.push(
-          { text: 'Institute :' + this.institutionName, style: 'header', alignment: 'center' },
-          { text: 'Department :' + this.departmentName, style: 'deptHeader', alignment: 'center' },
+          { text: 'Institute : ' + this.institutionName, style: 'header', alignment: 'center' },
+          { text: 'Department : ' + this.departmentName, style: 'deptHeader', alignment: 'center' },
           { text: courseCodeAndCourseName, alignment: 'center' },
-          { text: 'Module :' + this.moduleName, alignment: 'center' },
-          { text: 'Quiz :' + this.quizTitle, alignment: 'center' },
-          { text: 'Student Name :' + this.studentName },
+          { text: 'Module : ' + this.moduleName, alignment: 'center' },
+          { text: 'Quiz : ' + this.quizTitle, alignment: 'center' },
+          { text: 'Student name : ' + this.studentName },
           {
             columns: [
-              { text: 'Passing Marks : ' + this.passMark + '%', alignment: 'right' },
+              { text: 'Pass mark : ' + this.passMark, alignment: 'right' },
             ]
           },
-          { text: ' Student Scored  : ' + this.quizScore.score + '%', alignment: 'right' }
+          { text: ' Student mark : ' + this.quizScore.score, alignment: 'right' },
+          { text: 'Max mark  : ' + this.selectedQuiz.maxMarks, alignment: 'right' },
         );
 
         console.log(this.quizScore.score + "score");
@@ -753,6 +754,7 @@ export class StudentQuizComponent implements OnInit {
           console.log(questionAnswer + "222222222222222222222222");
           const questionFigureUrl = this.questionUrl + '/getFileById/' + questionAnswer.questionId;
           const questionContent = questionAnswer.questionContent;
+          const questionMark = questionAnswer.maxMarks;
           if (questionAnswer.questionFigure != null) {
             const questionFigureUrl = this.questionUrl + '/getFileById/' + questionAnswer.questionId;
           } else {
@@ -775,7 +777,7 @@ export class StudentQuizComponent implements OnInit {
 
 
           console.log("Question with figure ");
-          await this.fetchFile(questionFigureUrl, questionSection, questionContent, options, answer, selectedAns);
+          await this.fetchFile(questionFigureUrl, questionSection, questionContent, options, answer, selectedAns, questionMark);
 
         };
 
@@ -822,8 +824,11 @@ export class StudentQuizComponent implements OnInit {
             },
             incorrect: {
               color: 'red',
-              marginTop: 3,
-              marginBottom: 5,
+              // marginTop: 5,
+              // marginBottom: 5,
+            },
+            queMark: {
+              alignment: 'left' // Aligns the queMark to the left
             },
             pageBorders: {
               margin: [10, 10],
@@ -877,15 +882,22 @@ export class StudentQuizComponent implements OnInit {
     });
   }
 
-  async fetchFile(questionFigureUrl: any, questionSection: any, questionContent: any, options: any, answer: any, selectedAns: any) {
+  async fetchFile(questionFigureUrl: any, questionSection: any, questionContent: any, options: any, answer: any, selectedAns: any, questionMark: any) {
     return new Promise<void>((resolve) => {
       this.http.get(questionFigureUrl, { responseType: 'blob' }).subscribe((figureBlob: Blob) => {
         const reader = new FileReader();
         reader.onloadend = () => {
           const imageDataUrl = reader.result as string;
+          questionSection.push({ text: '\n\n' });
+          const questionText = `${this.questionNumber}. ${questionContent} `;
+          const queMark = ` ${questionMark}`;
+          questionSection.push({
+            columns: [
+              { text: questionText, style: 'questionContent' },
+              { text: queMark + " : Mark", alignment: 'right' }
+            ]
+          });
 
-          const questionText = `${this.questionNumber}. ${questionContent}`;
-          questionSection.push({ text: questionText, style: 'questionContent' });
           console.log(imageDataUrl);
 
           if (imageDataUrl) {
@@ -910,7 +922,7 @@ export class StudentQuizComponent implements OnInit {
             questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
           }
           // Add two line spaces after each question
-          questionSection.push({ text: '\n\n' });
+          //questionSection.push({ text: '\n\n' });
 
           this.questionNumber++;
           resolve(); // Resolve the Promise for questions without figure
@@ -919,8 +931,13 @@ export class StudentQuizComponent implements OnInit {
       }, (error) => {
         console.error('Error fetching question image:', error);
         const questionText = `${this.questionNumber}. ${questionContent}`;
-        questionSection.push({ text: questionText, style: 'questionContent' });
-
+        const queMark = ` ${questionMark}`;
+        questionSection.push({
+          columns: [
+            { text: questionText, style: 'questionContent' },
+            { text: queMark + " : Mark", alignment: 'right' }
+          ]
+        });
         if (this.selectedQuizCategory.categoryName == 'MCQ') {
           questionSection.push({ text: 'Options:' })
           questionSection.push({ ol: options.map((option: { content: any; }) => option.content) });
@@ -934,7 +951,7 @@ export class StudentQuizComponent implements OnInit {
           questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
         }
         // Add two line spaces after each question
-        questionSection.push({ text: '\n\n' });
+        // questionSection.push({ text: '\n\n' });
 
         this.questionNumber++;
         resolve(); // Resolve the Promise for questions without figure

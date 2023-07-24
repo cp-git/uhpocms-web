@@ -40,7 +40,7 @@ export class ProfileService {
 
 
   updateProfileByActiveAuthuser(authUserId: any, formData: FormData): Observable<any> {
-    return this.http.put<any>(`${this.profileUrl}/updatedelete/${authUserId}`, formData);
+    return this.http.put<any>(`http://localhost:8092/uhpocms/profile/updatedelete/${authUserId}`, formData);
   }
 
   updateProfileByAuthuser(authUserId: any, profileData: Profile): Observable<any> {
