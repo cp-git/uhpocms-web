@@ -566,7 +566,7 @@ export class AddQuestionAnswerComponent implements OnInit {
         // if(((queAns['queAnsArray'].length) == (mcqArr.length)) && ((queAns['queAnsArray'].length) == (questionIdArr.length)))
         {
 
-
+          let successTextFlag:boolean = true;
           console.log("if((queAns['queAnsArray'].length) == (mcqArr.length))")
           this.questionAnswers = [];
 
@@ -576,6 +576,7 @@ export class AddQuestionAnswerComponent implements OnInit {
             console.log("newArr")
             console.log(newArr)
             console.log(quesAnswersArrCopy)
+           
             const instituteJson = JSON.stringify(newArr);
 
             const blob = new Blob([instituteJson], {
@@ -654,7 +655,12 @@ export class AddQuestionAnswerComponent implements OnInit {
                                     console.log("Question Added Successfully");
 
                                     quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+                                    if(successTextFlag )
+                                    {
+                                         successTextFlag = false;
+                                       this.dialogBoxService.open("Questionnaire added/updated successfully", 'information');
 
+                                    }
                                     // this.getDataForMarks(this.selectedQuizId)
                                     // this.getAllQuestionAnswers(this.selectedQuizId)
 
@@ -675,8 +681,10 @@ export class AddQuestionAnswerComponent implements OnInit {
                 catch(error){}
               }
             }
-            if (newArr.question['questionId'] > 0) {
-              if ((queAns['queAnsArray'].length) == (questionIdArr.length) && (newArr.question.questionIsMCQ == true)) {
+            else if (newArr.question['questionId'] > 0) {
+              console.log(  "if (newArr.question['questionId'] > 0)")
+              if ((queAns['queAnsArray'].length) >= (questionIdArr.length) && (newArr.question.questionIsMCQ == true)) {
+                console.log("if ((queAns['queAnsArray'].length) == (questionIdArr.length) && (newArr.question.questionIsMCQ == true))")
                 {
                   try{
                   this.service.addQuestion(formData).subscribe(
@@ -716,15 +724,19 @@ export class AddQuestionAnswerComponent implements OnInit {
                         maxMarks: newArr.question['maxMarks'],
                         totalMarks: this.totalMarks
                       })
-                      // this.updateActiveStatusOfQuiz(this.selectedQuiz.title,this.selectedQuiz)
-
+                      this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId,this.selectedQuiz)
                       console.log("((((((((((((((((((((((((((((((((((")
                       console.log(quesAnswersArrCopy)
                       console.log(this.generatedQuestionAnswerId)
                       console.log("Question Added Successfully");
 
                       quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+                      if(successTextFlag )
+                      {
+                           successTextFlag = false;
+                         this.dialogBoxService.open("Questionnaire added/updated successfully", 'information');
 
+                      }
                       // console.log("questionanswersarray");
                       // console.log(newArrs)
                       // this.getDataForMarks(this.selectedQuizId)
@@ -768,11 +780,11 @@ export class AddQuestionAnswerComponent implements OnInit {
           }
         }
         else if (((queAns['queAnsArray'].length) != (mcqArr.length)) && (mcqArr.length > 0)) {
-          this.dialogBoxService.open("Please enter all details of question and answers", 'information');
+          this.dialogBoxService.open("Please enter all details of all question and answers", 'warning');
         }
 
         if ((queAns['queAnsArray'].length) == (lAnsArr.length)) {
-
+          let successTextFlag:boolean = true;
           this.questionAnswers = [];
           for (let newArr of newQuestionAnsArr) {
 
@@ -848,15 +860,19 @@ export class AddQuestionAnswerComponent implements OnInit {
                       totalMarks: this.totalMarks
                     })
 
-                    // this.updateActiveStatusOfQuiz(this.selectedQuiz.title,this.selectedQuiz)
-
+                    this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId,this.selectedQuiz)
                     console.log("questionanswersarray");
                     console.log(newArr)
                     console.log(this.generatedQuestionAnswerId)
                     console.log("Question Added Successfully");
 
                     quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+                    if(successTextFlag )
+                    {
+                         successTextFlag = false;
+                       this.dialogBoxService.open("Questionnaire added/updated successfully", 'information');
 
+                    }
                     // this.getDataForMarks(this.selectedQuizId)
                     // this.getAllQuestionAnswers(this.selectedQuizId)
 
@@ -877,9 +893,9 @@ export class AddQuestionAnswerComponent implements OnInit {
                 catch(error){}
               }
             }
-            if (newArr.question['questionId'] > 0) {
+            else if (newArr.question['questionId'] > 0) {
 
-              if (((queAns['queAnsArray'].length) == (questionIdArr.length)) && (newArr.question.questionIsMCQ == false)) {
+              if (((queAns['queAnsArray'].length) >= (questionIdArr.length)) && (newArr.question.questionIsMCQ == false)) {
                 try{
                 this.service.addQuestion(formData).subscribe(
                   (response) => {
@@ -918,15 +934,19 @@ export class AddQuestionAnswerComponent implements OnInit {
                       maxMarks: newArr.question['maxMarks'],
                       totalMarks: this.totalMarks
                     })
-                    // this.updateActiveStatusOfQuiz(this.selectedQuiz.title,this.selectedQuiz)
-
+                    this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId,this.selectedQuiz)
                     console.log("((((((((((((((((((((((((((((((((((")
                     console.log(quesAnswersArrCopy)
                     console.log(this.generatedQuestionAnswerId)
                     console.log("Question Added Successfully");
 
                     quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+                    if(successTextFlag )
+                    {
+                         successTextFlag = false;
+                       this.dialogBoxService.open("Questionnaire added/updated successfully", 'information');
 
+                    }
                     // console.log("questionanswersarray");
                     // console.log(newArrs)
                     // this.getDataForMarks(this.selectedQuizId)
@@ -972,7 +992,7 @@ export class AddQuestionAnswerComponent implements OnInit {
            
           }
         } else if (((queAns['queAnsArray'].length) != (lAnsArr.length)) && (lAnsArr.length > 0)) {
-          this.dialogBoxService.open("Please enter all details of question and answers", 'information');
+          this.dialogBoxService.open("Please enter all details of all question and answers", 'warning');
         }
 
 
@@ -999,7 +1019,7 @@ export class AddQuestionAnswerComponent implements OnInit {
     }
   }
   else{
-    this.dialogBoxService.open("Please enter all details of question and answers", 'information');
+    this.dialogBoxService.open("Please enter all details of all question and answers", 'warning');
   }
   
 
