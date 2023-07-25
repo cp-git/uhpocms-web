@@ -665,7 +665,7 @@ export class AddQuestionAnswerComponent implements OnInit {
                                     if(successTextFlag )
                                     {
                                          successTextFlag = false;
-                                       this.dialogBoxService.open("Questionnaire added/updated successfully", 'information');
+                                       this.dialogBoxService.open("Questions added/updated successfully", 'information');
 
                                     }
                                     // this.getDataForMarks(this.selectedQuizId)
@@ -741,7 +741,7 @@ export class AddQuestionAnswerComponent implements OnInit {
                       if(successTextFlag )
                       {
                            successTextFlag = false;
-                         this.dialogBoxService.open("Questionnaire added/updated successfully", 'information');
+                         this.dialogBoxService.open("Questions added/updated successfully", 'information');
 
                       }
                       // console.log("questionanswersarray");
@@ -777,7 +777,7 @@ export class AddQuestionAnswerComponent implements OnInit {
             console.log("---------------------------------------------------------")
             this.questionAnswers = quesAnswersArrCopy
             if(this.questionAnswers.length == this.selectedQuiz.maxQuestions)
-            {  this.dialogBoxService.open("Questionnaire added/updated successfully", 'information');
+            {  this.dialogBoxService.open("Questions added/updated successfully", 'information');
               this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId,this.selectedQuiz)
           
 
@@ -877,7 +877,7 @@ export class AddQuestionAnswerComponent implements OnInit {
                     if(successTextFlag )
                     {
                          successTextFlag = false;
-                       this.dialogBoxService.open("Questionnaire added/updated successfully", 'information');
+                       this.dialogBoxService.open("Questions added/updated successfully", 'information');
 
                     }
                     // this.getDataForMarks(this.selectedQuizId)
@@ -951,7 +951,7 @@ export class AddQuestionAnswerComponent implements OnInit {
                     if(successTextFlag )
                     {
                          successTextFlag = false;
-                       this.dialogBoxService.open("Questionnaire added/updated successfully", 'information');
+                       this.dialogBoxService.open("Questions added/updated successfully", 'information');
 
                     }
                     // console.log("questionanswersarray");
@@ -990,7 +990,7 @@ export class AddQuestionAnswerComponent implements OnInit {
             this.questionAnswers = quesAnswersArrCopy
             if(this.questionAnswers.length == this.selectedQuiz.maxQuestions)
             {
-              this.dialogBoxService.open("Questionnaire added/updated successfully", 'information');
+              this.dialogBoxService.open("Questions added/updated successfully", 'information');
               
               this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId,this.selectedQuiz)
             }
