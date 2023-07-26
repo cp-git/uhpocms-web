@@ -262,6 +262,8 @@ export class ProfileComponent implements OnInit {
     this.file = event.target.files[0];
     this.emptyProfile.profilePics = this.file.name;
     console.log(this.file);
+    console.log(this.file.name);
+
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -462,21 +464,13 @@ export class ProfileComponent implements OnInit {
       type: 'application/json'
     })
 
-    let formData = new FormData();
-    formData.append("file", this.file);
-    formData.append("admin", new Blob([JSON.stringify(currentData)], { type: 'application/json' }));
 
+    if (this.file == null) {
+      console.log("in data..");
 
-    let varData = currentData.profilePics;
-    console.log("var Data" + varData);
-
-
-    if (varData === currentData.profilePics) {
-      console.log("Data.." + varData);
-      // formData.append("file", varData);
       this.service.updateProfileByAuthuser(currentData.userId, currentData).subscribe(
         response => {
-          console.log("in services");
+          console.log("in json data.." + response);
 
           this.dialogBoxService.open('Profile Updated Successfully', 'information')
           this.back();
@@ -486,21 +480,42 @@ export class ProfileComponent implements OnInit {
         }
       );
 
-    }
 
+
+    }
     else {
+
+      console.log("in formdata...")
+
+
+
+      let formData = new FormData();
+
+
+
       formData.append("file", this.file);
+      currentData.profilePics = this.file.name;
+
+      formData.append("admin", new Blob([JSON.stringify(currentData)], { type: 'application/json' }));
+
+
+
+
       this.service.updateProfileByActiveAuthuser(currentData.userId, formData).subscribe(
         response => {
+          console.log(currentData.profilePics);
+          console.log(response);
           this.dialogBoxService.open('Profile Updated Successfully', 'information')
+          location.reload();
           this.back();
         },
         error => {
           this.dialogBoxService.open('Failed to Update Profile', 'warning')
         }
       );
-
     }
+
+
 
   }
 

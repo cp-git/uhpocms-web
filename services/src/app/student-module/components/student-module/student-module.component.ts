@@ -1932,7 +1932,7 @@ export class StudentModuleComponent implements OnInit {
   allQueMarks: any;
   onQuizSubmit(questionAnswersArray: OneQuestionAnswer[]) {
 
-    alert(this.selectedCategoryName);
+    // alert(this.selectedCategoryName);
     this.questionAnswers = questionAnswersArray;
     this.quizProgress = new QuizProgress();
 
@@ -1948,7 +1948,7 @@ export class StudentModuleComponent implements OnInit {
     this.questionAnswers.forEach((queAns, index) => {
 
       this.allQueMarks = queAns.maxMarks;
-     // alert(this.allQueMarks);
+      //alert(this.allQueMarks);
       // finding correct answer for current question in loop
       let trueAnswer: string = '';
       if (queAns.correct1) {
@@ -2001,22 +2001,25 @@ export class StudentModuleComponent implements OnInit {
     }
     this.addQuizProgress(score);
 
-    if (this.allQueMarks >= this.selectedQuiz.passMark) {
+    if (score >= this.selectedQuiz.passMark) {
       // show dialog box with green exam pass
       var grade = '';
-      if (this.allQueMarks >= 90) {
+      var maxMarks = this.selectedQuiz.maxMarks;
+      // alert(score);
+      if (score >= maxMarks * 1.0) {
+
         grade = 'A+';
-      } else if (this.allQueMarks >= 80) {
+      } else if (score >= maxMarks * 0.9) {
         grade = 'A';
-      } else if (this.allQueMarks >= 75) {
+      } else if (score >= maxMarks * 0.8) {
         grade = 'B+';
-      } else if (this.allQueMarks >= 70) {
+      } else if (score >= maxMarks * 0.75) {
         grade = 'B';
-      } else if (this.allQueMarks >= 60) {
+      } else if (score >= maxMarks * 0.6) {
         grade = 'C';
-      } else if (this.allQueMarks >= 50) {
+      } else if (score >= maxMarks * 0.5) {
         grade = 'D';
-      } else if (this.allQueMarks >= 40) {
+      } else if (score >= maxMarks * 0.4) {
         grade = 'E';
       }
       this.getQuizByStudIdAndQuizId(this.selectedQuiz)
@@ -2039,7 +2042,7 @@ export class StudentModuleComponent implements OnInit {
 
   addQuizProgress(score: number) {
     console.log(score);
-    // alert(score);
+    //alert(score);
 
     // adding all value to quizprogress object to store result
     this.quizProgress.studentId = this.studentId;
