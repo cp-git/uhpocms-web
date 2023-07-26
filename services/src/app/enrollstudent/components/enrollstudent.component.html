@@ -1,11 +1,10 @@
 <div class="container">
     <!-- <h1 class="text-left">Enroll Course To Student</h1>
     <button class="btn btn-primary top-right rounded-button" (click)="back()">Back</button> -->
-   
-    <app-module-header   [moduleName]="moduleName"
-    [buttons]="{showAddButton: showAddButton, showActivateButton: showActivateButton}"
-    (backButtonClicked)="back()">
-</app-module-header>
+
+    <app-module-header [moduleName]="moduleName"
+        [buttons]="{showAddButton: showAddButton, showActivateButton: showActivateButton}" (backButtonClicked)="back()">
+    </app-module-header>
 
     <div class="container">
         <div class="form-group row">
@@ -80,7 +79,8 @@
                                 <!-- code to display checkbox  -->
                                 <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                                     <input id="item-{{index}}" type="checkbox"
-                                        [checked]=" enrolledStudentArr.includes(item.adminId)" [disabled]="assignedUsers.includes(item.adminId) || (item.adminId == profileId)"
+                                        [checked]=" enrolledStudentArr.includes(item.adminId)"
+                                        [disabled]="assignedUsers.includes(item.adminId) || (item.adminId == profileId)"
                                         (change)="onChangeSelectedProfiles($event,item$)" />
                                     {{item.fullName}}
                                 </ng-template>
@@ -97,8 +97,7 @@
         <div class="card-block row justify-content-between col-sm-12">
             <div class="col-sm-3">
                 <button #submitButton class="form-control" id="loginbtn" class="btn btn-primary rounded-button"
-                    (click)="saveEnrolledStudent(course.courseId,_profile.adminId);"
-                    >Submit</button>
+                    (click)="saveEnrolledStudent(course.courseId,_profile.adminId);">Submit</button>
 
             </div>
         </div>
@@ -108,5 +107,3 @@
 
     </div>
 </div>
-
-

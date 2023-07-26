@@ -427,11 +427,11 @@ this.course.courseId=0;
     this.enrolledStudent.courseId = courseId;
     this.enrolledStudent.profileId = profileId;
     // Check if any selected user is already assigned
-  const isAlreadyAssigned = this.selected.some((profileId) => this.assignedUsers.includes(profileId));
-  if (isAlreadyAssigned) {
-    this.dialogBoxService.open("students are already assigned to the course.", 'information');
-    return; // Exit the function, no further actions needed
-  }
+    const isAlreadyAssigned = this.selected.some((profileId) => this.assignedUsers.includes(profileId));
+    if (isAlreadyAssigned) {
+      this.dialogBoxService.open("students are already assigned to the course.", 'information');
+      return; // Exit the function, no further actions needed
+    }
     // Subtract enrolledUsers from selected array
     this.selected = this.selected.filter((profileId) => !this.assignedUsers.includes(profileId));
     // Delete the unchecked assignments
@@ -501,7 +501,8 @@ this.course.courseId=0;
           location.reload(); // Refresh the page
         }
       });
-    }}
+    }
+  }
   // checkFields() {
   //   // Check if any fields are empty
   //   if (!this.admininstitution.adminInstitutionName || !this.department.name || !this.course.courseName|| !) {
@@ -523,6 +524,8 @@ this.course.courseId=0;
     }
     return this.formComplete;
   }
+
+
   //function to enable submit button only after all fields selection
   disablefunc() {
     if ((this.selected.length != 0) && (this.course.courseId != undefined) && (this.department.id != undefined)) {
@@ -590,5 +593,5 @@ this.course.courseId=0;
 
 
   }
-  
+
 }
