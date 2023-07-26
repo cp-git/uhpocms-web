@@ -400,9 +400,12 @@ export class AccessControlComponent {
       this.sessionData = sessionStorage.getItem('admininstitution');
       //console.log(this.sessionData);
       this.data = JSON.parse(this.sessionData);
-      for (var inst in this.data) {
-        this.institutions.push(this.data[inst]);
+      if(this.institutions.length<=0){
+        for (var inst in this.data) {
+          this.institutions.push(this.data[inst]);
+        }
       }
+     
     }
     catch (err) {
       console.log("Error", err);
@@ -485,13 +488,54 @@ export class AccessControlComponent {
         // adding some parameter in master module array
         this.masterModules.forEach(module => {
           switch (module.moduleName) {
-        
+            case 'ASSIGN_TEACHERS':
+              module.hasCreate = false;
+              module.hasActivate = false;
+              module.hasDelete = false;
+              module.hasUpdate = false;
+              module.hasView = true;
+              break;
+            case 'ENROLL_STUDENTS':
+              module.hasCreate = false;
+              module.hasActivate = false;
+              module.hasDelete = false;
+              module.hasUpdate = false;
+              module.hasView = true;
+              break;
+            case 'ANNOUNCEMENT':
+              module.hasCreate = true;
+              module.hasActivate = false;
+              module.hasDelete = false;
+              module.hasUpdate = false;
+              module.hasView = true;
+              break;
+            case 'LESSONS':
+              module.hasCreate = false;
+              module.hasActivate = false;
+              module.hasDelete = false;
+              module.hasUpdate = false;
+              module.hasView = true;
+              break;
+            case 'REVIEW_ANSWERS':
+              module.hasCreate = false;
+              module.hasActivate = false;
+              module.hasDelete = false;
+              module.hasUpdate = false;
+              module.hasView = true;
+              break;
+            case 'QUESTION_ANSWER':
+              module.hasCreate = true;
+              module.hasActivate = false;
+              module.hasDelete = false;
+              module.hasUpdate = false;
+              module.hasView = true;
+              break;
             default:
-              module.canCreate = true;
-              module.canActivate = true;
-              module.canDelete = true;
-              module.canUpdate = true;
-              module.canView = true;
+              module.hasCreate = true;
+              module.hasActivate = true;
+              module.hasDelete = true;
+              module.hasUpdate = true;
+              module.hasView = true;
               break;
           }
         })
