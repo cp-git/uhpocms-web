@@ -159,7 +159,7 @@ export class AddQuestionAnswerComponent implements OnInit {
   // with buttons to show and hide based on permissions 
   private async loadAndLinkUserPermissions() {
     this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.QUESTION_ANSWER, this.userAndRolePermissions, this.buttonsArray);
-    await this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(userModule.QUESTION_ANSWER,this.userAndRolePermissions, this.buttonsArray);
   }
 
 
