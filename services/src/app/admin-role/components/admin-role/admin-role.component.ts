@@ -90,7 +90,7 @@ export class AdminRoleComponent implements OnInit {
   // with buttons to show and hide based on permissions 
   private async loadAndLinkUserPermissions() {
     this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.ROLE, this.userAndRolePermissions, this.buttonsArray);
-    await this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(userModule.ROLE, this.userAndRolePermissions, this.buttonsArray);
   }
 
   // back button functionality
@@ -102,9 +102,10 @@ export class AdminRoleComponent implements OnInit {
       this.viewUpdate = false;
       this.viewActivate = false;
 
-      this.buttonsArray.showAddButton = true;
-      this.buttonsArray.showActivateButton = true;
+      // this.buttonsArray.showAddButton = true;
+      // this.buttonsArray.showActivateButton = true;
 
+      this.userPermissionService.toggleButtonsPermissions(userModule.ROLE, this.userAndRolePermissions, this.buttonsArray);
     } else {
       this.location.back();
     }

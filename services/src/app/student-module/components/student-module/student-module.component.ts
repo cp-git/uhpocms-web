@@ -1948,7 +1948,7 @@ export class StudentModuleComponent implements OnInit {
     this.questionAnswers.forEach((queAns, index) => {
 
       this.allQueMarks = queAns.maxMarks;
-      alert(this.allQueMarks);
+     // alert(this.allQueMarks);
       // finding correct answer for current question in loop
       let trueAnswer: string = '';
       if (queAns.correct1) {
@@ -2039,7 +2039,7 @@ export class StudentModuleComponent implements OnInit {
 
   addQuizProgress(score: number) {
     console.log(score);
-    alert(score);
+    // alert(score);
 
     // adding all value to quizprogress object to store result
     this.quizProgress.studentId = this.studentId;
