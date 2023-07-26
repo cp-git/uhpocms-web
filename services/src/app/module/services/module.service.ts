@@ -31,6 +31,11 @@ export class ModuleService {
     return this._http.patch<any>(`${this.moduleUrl}/` + moduleName, {});
   }
 
+  // activate module by module id
+  activateModuleById(moduleId: number): Observable<any> {
+    return this._http.patch<any>(`${this.moduleUrl}/activate/` + moduleId, {});
+  }
+
   // Add teacher module
   addTeacherModule(module: Module): Observable<any> {
     return this._http.post<any>(`${this.moduleUrl}`, module);

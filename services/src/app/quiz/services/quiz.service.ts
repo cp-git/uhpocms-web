@@ -48,7 +48,7 @@ export class QuizService {
     return this.http.get<any>(`${this.quizUrl}/inactive?inactivequizzes=all`);
   }
 
-  updateActiveStatus(id : number, quiz: Quiz): Observable<any> {
+  updateActiveStatus(id: number, quiz: Quiz): Observable<any> {
     return this.http.patch<any>(`${this.quizUrl}/` + id, quiz);
   }
 

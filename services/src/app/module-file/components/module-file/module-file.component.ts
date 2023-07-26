@@ -167,7 +167,7 @@ export class ModuleFileComponent {
 
   // back button functionality
   back() {
-    //this.emptyModuleFile = new ModuleFile();
+    this.emptyModuleFile = new ModuleFile();
     if (this.viewAll == false) {
       this.viewAll = true;
       this.viewOne = false;
