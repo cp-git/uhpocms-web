@@ -176,6 +176,7 @@ export class EnrollstudentComponent {
       case 'admin':
       case 'coadmin':
         instId = this._profile.institutionId;
+        this.courses =[];
         this._deptService.getDepartmentsByInstitutionId(instId).subscribe(
           (response) => {
             this.departments = response;
@@ -194,6 +195,14 @@ export class EnrollstudentComponent {
         break;
 
     }
+  }
+  onChangeInstitution() {
+    this.department.id = 0;
+this.course.courseId=0;
+  }
+
+  onChangeDepartment() {
+    this.course.courseId=0;
   }
   getTeacherByCourseId(courseId: any) {
     this.assignedUsers = [];
@@ -418,11 +427,11 @@ export class EnrollstudentComponent {
     this.enrolledStudent.courseId = courseId;
     this.enrolledStudent.profileId = profileId;
     // Check if any selected user is already assigned
-  const isAlreadyAssigned = this.selected.some((profileId) => this.assignedUsers.includes(profileId));
-  if (isAlreadyAssigned) {
-    this.dialogBoxService.open("students are already assigned to the course.", 'information');
-    return; // Exit the function, no further actions needed
-  }
+    const isAlreadyAssigned = this.selected.some((profileId) => this.assignedUsers.includes(profileId));
+    if (isAlreadyAssigned) {
+      this.dialogBoxService.open("students are already assigned to the course.", 'information');
+      return; // Exit the function, no further actions needed
+    }
     // Subtract enrolledUsers from selected array
     this.selected = this.selected.filter((profileId) => !this.assignedUsers.includes(profileId));
     // Delete the unchecked assignments
@@ -492,7 +501,8 @@ export class EnrollstudentComponent {
           location.reload(); // Refresh the page
         }
       });
-    }}
+    }
+  }
   // checkFields() {
   //   // Check if any fields are empty
   //   if (!this.admininstitution.adminInstitutionName || !this.department.name || !this.course.courseName|| !) {
@@ -514,6 +524,8 @@ export class EnrollstudentComponent {
     }
     return this.formComplete;
   }
+
+
   //function to enable submit button only after all fields selection
   disablefunc() {
     if ((this.selected.length != 0) && (this.course.courseId != undefined) && (this.department.id != undefined)) {
@@ -581,5 +593,5 @@ export class EnrollstudentComponent {
 
 
   }
-  
+
 }

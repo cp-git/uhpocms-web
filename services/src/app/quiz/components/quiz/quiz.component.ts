@@ -60,7 +60,7 @@ export class QuizComponent implements OnInit {
   categories: Category[] = [];
   userRole: any;
   titleWithUserRole: boolean = true;
-  quesInQuiz : Question[] = [];
+  quesInQuiz: Question[] = [];
   // for user Permissions
   buttonsArray: any;
   userRoleId: any;
@@ -137,14 +137,14 @@ export class QuizComponent implements OnInit {
 
     this.buttonsArray.showAddButton = false;
     this.buttonsArray.showActivateButton = false;
-    
-// assingning data to current data for child component
+
+    // assingning data to current data for child component
     this.currentData = objectReceived;
     let time = objectReceived.setTimer;
     let hours = Math.floor(time / 3600);
     let minutes = Math.floor((time % 3600) / 60);
-    this.currentData.setTimerInHours= hours;
-    this.currentData.setTimerInMinutes= minutes;   
+    this.currentData.setTimerInHours = hours;
+    this.currentData.setTimerInMinutes = minutes;
   }
 
   // For navigate to update screen with data
@@ -162,8 +162,8 @@ export class QuizComponent implements OnInit {
     let time = objectReceived.setTimer;
     let hours = Math.floor(time / 3600);
     let minutes = Math.floor((time % 3600) / 60);
-    this.currentData.setTimerInHours= hours;
-    this.currentData.setTimerInMinutes= minutes;
+    this.currentData.setTimerInHours = hours;
+    this.currentData.setTimerInMinutes = minutes;
 
   }
 
@@ -271,13 +271,13 @@ export class QuizComponent implements OnInit {
   addQuiz(currentData: Quiz) {
 
     console.log(currentData)
-    console.log( typeof currentData.passMark)
-    console.log( typeof currentData.maxMarks)
-    let passMark:any = currentData.passMark
-     passMark = parseInt(passMark)
-    
-     let maxMarks:any = currentData.maxMarks;
-     maxMarks = parseInt(maxMarks)
+    console.log(typeof currentData.passMark)
+    console.log(typeof currentData.maxMarks)
+    let passMark: any = currentData.passMark
+    passMark = parseInt(passMark)
+
+    let maxMarks: any = currentData.maxMarks;
+    maxMarks = parseInt(maxMarks)
 
 
     // Calculate the total timer duration in seconds
@@ -285,29 +285,28 @@ export class QuizComponent implements OnInit {
     const timerInSeconds = (currentData.setTimerInHours * 3600) + (currentData.setTimerInMinutes * 60);
     console.log(timerInSeconds);
     currentData.setTimer = timerInSeconds;
-    
-  
+
+
     // Set other properties and make the API call to add the quiz
 
     currentData.active = false;
-    if(passMark <= maxMarks )
-    {
-    this.quizService.addQuiz(currentData).subscribe(
-      data => {
-        this.dialogBoxService.open('Quiz Added successfully', 'information')
-        this.emptyQuiz = {} as Quiz;
-        this.ngOnInit();
-        this.back();
+    if (passMark <= maxMarks) {
+      this.quizService.addQuiz(currentData).subscribe(
+        data => {
+          this.dialogBoxService.open('Quiz Added successfully', 'information')
+          this.emptyQuiz = {} as Quiz;
+          this.ngOnInit();
+          this.back();
 
 
-      }
-      ,
-      error => {
-        this.dialogBoxService.open('Failed to add Quiz','warning')
-      }
-    )
+        }
+        ,
+        error => {
+          this.dialogBoxService.open('Failed to add Quiz', 'warning')
+        }
+      )
     }
-    else{
+    else {
       this.dialogBoxService.open('Quiz max marks should be greater than passing marks', 'warning');
     }
   }
@@ -318,17 +317,16 @@ export class QuizComponent implements OnInit {
     // calling service for updating data
     console.log(currentData)
     console.log(currentData)
-    console.log( typeof currentData.passMark)
-    console.log( typeof currentData.maxMarks)
-    let passMark:any = currentData.passMark
-     passMark = parseInt(passMark)
-     const timerInSeconds = (currentData.setTimerInHours * 3600) + (currentData.setTimerInMinutes * 60);
-     currentData.setTimer = timerInSeconds;
-     let maxMarks:any = currentData.maxMarks;
-     maxMarks = parseInt(maxMarks)
+    console.log(typeof currentData.passMark)
+    console.log(typeof currentData.maxMarks)
+    let passMark: any = currentData.passMark
+    passMark = parseInt(passMark)
+    const timerInSeconds = (currentData.setTimerInHours * 3600) + (currentData.setTimerInMinutes * 60);
+    currentData.setTimer = timerInSeconds;
+    let maxMarks: any = currentData.maxMarks;
+    maxMarks = parseInt(maxMarks)
 
-    if(passMark <= maxMarks )
-    {
+    if (passMark <= maxMarks) {
       this.quizService.updateQuiz(currentData.title, currentData).subscribe(
         response => {
           this.dialogBoxService.open('Quiz Updated successfully', 'information')
@@ -339,14 +337,14 @@ export class QuizComponent implements OnInit {
           this.dialogBoxService.open('Quiz updation failed', 'warning')
         }
       );
+    }
+    else {
+      this.dialogBoxService.open('Quiz max marks should be greater than passing marks', 'warning');
+    }
   }
-  else{
-    this.dialogBoxService.open('Quiz max marks should be greater than passing marks', 'warning');
-  }
-}
-  
 
-  
+
+
 
 
   // for getting all inactive quiz
@@ -364,8 +362,8 @@ export class QuizComponent implements OnInit {
       }
     );
   }
- async getQuesByQuizId(quizId : number){
-   await  this.quesService.getAllQuestionsByQuizId(quizId).toPromise().then(
+  async getQuesByQuizId(quizId: number) {
+    await this.quesService.getAllQuestionsByQuizId(quizId).toPromise().then(
       (response) => {
         this.quesInQuiz = response;
         console.log(response);
@@ -374,26 +372,25 @@ export class QuizComponent implements OnInit {
   }
   // for activating quiz using title
   private async activateQuiz(quiz: Quiz) {
-    
+
     // calling service to activating Quiz
     console.log("Inside activateQuiz(quiz: Quiz)  ")
-  await  this.getQuesByQuizId(quiz.quizId);
-   console.log(this.quesInQuiz)
-   console.log(quiz.maxQuestions)
-    if(this.quesInQuiz.length == quiz.maxQuestions)
-    {
-    this.quizService.updateActiveStatus(quiz.quizId, quiz).subscribe(
-      response => {
-        console.log("Activated Quiz");
-        this.dialogBoxService.open('Quiz Activated', 'information')
-        this.ngOnInit();
-      },
-      error => {
-        this.dialogBoxService.open('Failed to Activate', 'warning')
-      }
-    );
+    await this.getQuesByQuizId(quiz.quizId);
+    console.log(this.quesInQuiz)
+    console.log(quiz.maxQuestions)
+    if (this.quesInQuiz.length == quiz.maxQuestions) {
+      this.quizService.updateActiveStatus(quiz.quizId, quiz).subscribe(
+        response => {
+          console.log("Activated Quiz");
+          this.dialogBoxService.open('Quiz Activated', 'information')
+          this.ngOnInit();
+        },
+        error => {
+          this.dialogBoxService.open('Failed to Activate', 'warning')
+        }
+      );
     }
-    else{this.dialogBoxService.open('Please add questions to the quiz', 'warning')}
+    else { this.dialogBoxService.open('Please add questions to the quiz', 'warning') }
   }
 
   // loading courses 

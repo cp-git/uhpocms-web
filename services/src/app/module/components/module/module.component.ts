@@ -120,6 +120,7 @@ export class ModuleComponent {
 
   // back button functionality
   back() {
+    this.emptyModule = {} as Module;
     if (this.viewAll == false) {
       this.viewAll = true;
       this.viewOne = false;
@@ -180,7 +181,7 @@ export class ModuleComponent {
   // For navigate to activate screen with data
   // function will call when child update button is clicked 
   onChildActivateClick(objectReceived: Module): void {
-    this.activeModule(objectReceived.moduleName);
+    this.activeModule(objectReceived.moduleId);
   }
 
   // for navigating to add screen
@@ -429,10 +430,10 @@ export class ModuleComponent {
 
 
   // For activating Module
-  private activeModule(name: string) {
-
+  private activeModule(moduleId: any) {
+    //alert(moduleId);
     // calling service to activating admin role
-    this.service.activateModule(name).subscribe(
+    this.service.activateModuleById(moduleId).subscribe(
       response => {
         this.dialogBoxServices.open('Module Activated', 'information');
         this.ngOnInit();
