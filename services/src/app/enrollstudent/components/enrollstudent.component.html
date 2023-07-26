@@ -12,10 +12,10 @@
             <div class="col-sm-4">
                 <label class="badg">Institution</label>
                 <div class="form-group">
-                    <select [(ngModel)]="_profile.institutionId" class="form-control"
+                    <select (change)="onChangeInstitution()"[(ngModel)]="_profile.institutionId" class="form-control"
                         (click)="  getDepartmentsByInstId(_profile.institutionId); getProfileByRoleAndInstId(_profile.institutionId)"
-                        (change)="disablefunc()">
-                        <option value="undefined" disabled>Select</option>
+                        >
+                        <option value="undefined" selected>Select</option>
                         <option *ngFor="let institute of institutions" value="{{institute.adminInstitutionId}}"
                             class="dropdown-item">
                             {{institute.adminInstitutionName}}
@@ -26,9 +26,9 @@
             <div class="col-sm-4">
                 <label class="badg">Department</label>
                 <div class="form-group">
-                    <select [(ngModel)]="department.id" class="form-control"
+                    <select (change)="onChangeDepartment()"[(ngModel)]="department.id" class="form-control"
                         (click)="getCoursesByDeptId(department.id)">
-                        <option value="undefined" disabled>Select</option>
+                        <option value="0"selected>Select</option>
                         <option *ngFor="let department of departments" value="{{department.id}}">
                             {{department.name}}
                         </option>
@@ -40,7 +40,7 @@
                 <div class="form-group">
                     <select name="courseid" [(ngModel)]="course.courseId" class="form-control"
                         (click)="onCourseSelect(course.courseId)">
-                        <option value="undefined" disabled>Select</option>
+                        <option value="0" disabled>Select</option>
                         <option *ngFor="let course of courses" value="{{course.courseId}}">
                             {{course.courseName}}
                         </option>
@@ -60,7 +60,7 @@
                                 [clearable]="true" appendTo="body" [multiple]="true" [(ngModel)]="selected"
                                 groupBy="selectedAllGroup" [selectableGroup]="true" [selectableGroupAsModel]="false"
                                 [virtualScroll]="true" (change)="disablefunc()"
-                                [disabled]="_profile.institutionId==undefined||department.id==undefined||course.courseId==undefined">
+                                [disabled]="course.courseId<=0 || course.courseId == undefined">
                                 <!-- //code to display select all checkbox -->
                                 <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
                                     <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" />

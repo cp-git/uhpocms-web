@@ -25,7 +25,7 @@ import { InstituteServicesService } from 'app/institute-details/services/institu
 export class AssigncoursetoteacherComponent {
   moduleName = 'Assign Course To Teacher';
   _profile = new Profile();
-
+  _disablevar: boolean = false;
   _profileArray: Profile[] = [];
 
   _profileArrCopy: Profile[] = [];
@@ -130,6 +130,7 @@ export class AssigncoursetoteacherComponent {
   }
 
   private getAllInstitution() {
+    
     // fetching all institution
     this._institutionService.fetchAdminInstitutionList().subscribe(
       (response) => {
@@ -155,9 +156,9 @@ export class AssigncoursetoteacherComponent {
   }
 
   getDepartmentByInstId(instId: number) {
-
+   
     instId = this._profile.institutionId;
-
+    this.courses =[];
     this._deptService.getDepartmentsByInstitutionId(instId).subscribe(
       (response: Department[]) => {
         this.departments = response;
@@ -170,7 +171,14 @@ export class AssigncoursetoteacherComponent {
       }
     )
   }
+  onChangeInstitution() {
+    this.department.id = 0;
+this.course.courseId=0;
+  }
 
+  onChangeDepartment() {
+    this.course.courseId=0;
+  }
   //function for get Course by department id
   getCoursesByDeptId(deptId: number) {
     console.log(this.department);
@@ -326,6 +334,17 @@ export class AssigncoursetoteacherComponent {
     //   this.prevSelected = [...this.selected];
     // }
   }
+
+  
+  disablefunc() {
+    if ((this.selected.length != 0) && (this.course.courseId != 0) && (this.department.id != 0)) {
+      this._disablevar = true;
+    }
+    else {
+      this._disablevar = false;
+    }
+  }
+  
   private arraysEqual(a: any[], b: any[]): boolean {
     if (a === b) return true;
     if (a == null || b == null) return false;
