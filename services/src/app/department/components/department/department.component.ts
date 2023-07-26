@@ -108,7 +108,7 @@ export class DepartmentComponent implements OnInit {
   // with buttons to show and hide based on permissions 
   private async loadAndLinkUserPermissions() {
     this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.DEPARTMENT, this.userAndRolePermissions, this.buttonsArray);
-    await this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(userModule.DEPARTMENT,this.userAndRolePermissions, this.buttonsArray);
 
     // try {
     //   let sessionData: any = sessionStorage.getItem('permissions');
@@ -159,7 +159,7 @@ export class DepartmentComponent implements OnInit {
 
       // this.showAddButton = true;
       // this.showActivateButton = true;
-      this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+      this.userPermissionService.toggleButtonsPermissions(userModule.DEPARTMENT,this.userAndRolePermissions, this.buttonsArray);
 
 
     } else {

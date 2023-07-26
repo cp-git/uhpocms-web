@@ -38,10 +38,10 @@ export class AnnouncementComponent implements OnInit {
   profileId: any;
   userId: any;
   userRole: any;
-  displayInstituteLogo : any;
-  instituteId : any;
-  sessionData : any;
-  data:any;
+  displayInstituteLogo: any;
+  instituteId: any;
+  sessionData: any;
+  data: any;
   profiles: Profile[] = []; // list of inactive Profile
   profile: Profile;
 
@@ -52,13 +52,13 @@ export class AnnouncementComponent implements OnInit {
   buttonsArray: any;
   userAndRolePermissions: AuthUserPermission[] = [];
   userModule = userModule;
-  
-  constructor(private location: Location,private dialogBoxService:DialogBoxService, private announcementService: AnnouncementService, private router: Router, private authService: AuthService, private activatedRoute: ActivatedRoute,private userPermissionService: AuthUserPermissionService,
+
+  constructor(private location: Location, private dialogBoxService: DialogBoxService, private announcementService: AnnouncementService, private router: Router, private authService: AuthService, private activatedRoute: ActivatedRoute, private userPermissionService: AuthUserPermissionService,
     private profileServ: ProfileService) {
-      this.profile = new Profile();
-      this.displayInstituteLogo = `${environment.adminInstitutionUrl}/institution/getFileById`;
-     
-      this.profileId = sessionStorage.getItem("profileId");
+    this.profile = new Profile();
+    this.displayInstituteLogo = `${environment.adminInstitutionUrl}/institution/getFileById`;
+
+    this.profileId = sessionStorage.getItem("profileId");
 
     this.buttonsArray = {
       showAddButton: false,
@@ -72,7 +72,7 @@ export class AnnouncementComponent implements OnInit {
     this.currentAnnouncement = new Announcement();
     this.userRole = sessionStorage.getItem('userRole');
     this.userId = sessionStorage.getItem('userId');
-    
+
     //  this.createAnnouncementComponent.isCreateScreen ;
   }
 
@@ -86,11 +86,11 @@ export class AnnouncementComponent implements OnInit {
     this.changeRole(this.profileId, this.userRole);
   }
 
-   // this function for loading permission from session storage and link permission 
+  // this function for loading permission from session storage and link permission 
   // with buttons to show and hide based on permissions 
   private async loadAndLinkUserPermissions() {
     this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.ANNOUNCEMENT, this.userAndRolePermissions, this.buttonsArray);
-    await this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(userModule.ANNOUNCEMENT, this.userAndRolePermissions, this.buttonsArray);
   }
 
   //function to get announcements by profile id
@@ -156,7 +156,7 @@ export class AnnouncementComponent implements OnInit {
           //  alert(this.studentName);
           console.log(this.profile.firstName, this.profile.lastName, this.profile.fullName, "  + ++++ + + ", this.instituteId);
           this.instituteId = this.data[i].institutionId;
-          
+
 
           //  alert(JSON.stringify(this.profileInstituteId));
           break; // Assuming the profileId is unique, exit the loop after finding the matching profile
@@ -209,11 +209,11 @@ export class AnnouncementComponent implements OnInit {
 
     if (screen === 'sent') {
       this.isViewSent = true;
-    this.router.navigate([`/announcement/${this.userRole}/views`, announement.id])
+      this.router.navigate([`/announcement/${this.userRole}/views`, announement.id])
 
-    }else{
-    this.router.navigate([`/announcement/${this.userRole}/viewr`, announement.id])
-      
+    } else {
+      this.router.navigate([`/announcement/${this.userRole}/viewr`, announement.id])
+
     }
     // this.currentAnnouncement = announement;
   }
@@ -231,28 +231,28 @@ export class AnnouncementComponent implements OnInit {
       if (response) {
         console.log('User clicked OK');
         // Do something if the user clicked OK
-    this.announcementService.deleteAnnouncementById(announcementId).subscribe(
-      response => {
-        this.dialogBoxService.open('Announcement deleted successfully', 'information');
-        this.ngOnInit();
-      },
-      (error) => {
-        this.dialogBoxService.open('Announcement deletion Failed', 'warning');
+        this.announcementService.deleteAnnouncementById(announcementId).subscribe(
+          response => {
+            this.dialogBoxService.open('Announcement deleted successfully', 'information');
+            this.ngOnInit();
+          },
+          (error) => {
+            this.dialogBoxService.open('Announcement deletion Failed', 'warning');
+          }
+        );
+      } else {
+        console.log('User clicked Cancel');
+        // Do something if the user clicked Cancel
       }
-    );
-  } else {
-    console.log('User clicked Cancel');
-    // Do something if the user clicked Cancel
+    });
   }
-});
-}
 
   //function to route back
   back() {
     this.location.back();
   }
 
- 
+
 
   private loadAdminInstitutions() {
     try {
