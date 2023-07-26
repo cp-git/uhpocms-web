@@ -141,7 +141,7 @@ export class ModuleFileComponent {
   // with buttons to show and hide based on permissions 
   private async loadAndLinkUserPermissions() {
     this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.MODULE_FILE, this.userAndRolePermissions, this.buttonsArray);
-    await this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(userModule.MODULE_FILE,this.userAndRolePermissions, this.buttonsArray);
   }
 
   submitClicked(eventData: any) {
@@ -177,7 +177,7 @@ export class ModuleFileComponent {
 
       // this.buttonsArray.showAddButton = true;
       // this.buttonsArray.showActivateButton = true;
-      this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+      this.userPermissionService.toggleButtonsPermissions(userModule.MODULE_FILE, this.userAndRolePermissions, this.buttonsArray);
 
     } else {
       this.location.back();

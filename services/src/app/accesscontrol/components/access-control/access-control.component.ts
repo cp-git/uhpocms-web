@@ -38,6 +38,7 @@ export class AccessControlComponent {
   viewActivate: boolean = false;
 
   // for buttons to view
+  // currently no use (therfore, assigned to false) // removeve this comment if you are going to use following variables
   showAddButton: boolean = false;
   showActivateButton: boolean = false;
 
@@ -87,7 +88,7 @@ export class AccessControlComponent {
     private departmentService: DepartmentService,
     private adminRoleService: AdminRoleService,
     private groupPermissionService: AuthGroupPermissionService,
-    private dialogboxService:DialogBoxService
+    private dialogboxService: DialogBoxService
   ) {
 
     this.advFilterPipe = new AdvFilterPipe();
@@ -111,7 +112,7 @@ export class AccessControlComponent {
     this.loadMasterModules();
     this.loadAllUserPermissions();
     this.loadActiveAuthUsers();
-    this.getAllAccessControls();
+    // this.getAllAccessControls();
     this.getProfiles();
 
     this.loadAllGroupPermissions();
@@ -207,18 +208,27 @@ export class AccessControlComponent {
     this.addOrUpdateAccessControls(objectReceived);
   }
 
+  // filtering profile based on institution id
   filteredProfiles: Profile[] = [];
+
   onChangeInstitution() {
+    // filtering profile based on institution id
+
     this.filteredProfiles = this.advFilterPipe.transform(this.profiles, 'institutionId', this.selectedInstitutionId)
     console.log(this.filteredProfiles);
+
+    // setting value foir unselect dropdown
     this.selectedDepartmentId = undefined;
     this.selectedUserId = undefined;
     this.emptyAccesscontrol = {} as Accesscontrol;
 
   }
   onChangeDepartment() {
+    // filtering profile based on institution id
     this.filteredProfiles = this.advFilterPipe.transform(this.profiles, 'adminDepartment', this.selectedDepartmentId)
     console.log(this.filteredProfiles);
+
+    // setting value foir unselect dropdown
     this.selectedUserId = undefined;
     this.emptyAccesscontrol = {} as Accesscontrol;
 
@@ -472,6 +482,20 @@ export class AccessControlComponent {
         this.masterModules = response;
         console.log(this.masterModules);
 
+        // adding some parameter in master module array
+        this.masterModules.forEach(module => {
+          switch (module.moduleName) {
+        
+            default:
+              module.canCreate = true;
+              module.canActivate = true;
+              module.canDelete = true;
+              module.canUpdate = true;
+              module.canView = true;
+              break;
+          }
+        })
+
       }
     );
   }
@@ -508,7 +532,7 @@ export class AccessControlComponent {
       this.userPermissionService.assignPermissionsToUserId(userId, userRoleId, moduleAndPermissionsIds).subscribe(
         (response) => {
           //alert("Permissions Updated...");
-          this.dialogboxService.open('Permissions updated','information');
+          this.dialogboxService.open('Permissions updated', 'information');
           this.ngOnInit();
         }
       )
@@ -517,7 +541,7 @@ export class AccessControlComponent {
 
       this.userPermissionService.assignPermissionsToRoleId(userRoleId, moduleAndPermissionsIds).subscribe(
         (response) => {
-          this.dialogboxService.open('Permissions updated','information');
+          this.dialogboxService.open('Permissions updated', 'information');
           this.ngOnInit();
         }
       )

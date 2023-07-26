@@ -130,7 +130,7 @@ export class ModuleComponent {
 
       // this.buttonsArray.showAddButton = true;
       // this.buttonsArray.showActivateButton = true;
-      this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+      this.userPermissionService.toggleButtonsPermissions(userModule.MODULE, this.userAndRolePermissions, this.buttonsArray);
 
     } else {
       this.location.back();
@@ -142,7 +142,7 @@ export class ModuleComponent {
   // with buttons to show and hide based on permissions 
   private async loadAndLinkUserPermissions() {
     this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.MODULE, this.userAndRolePermissions, this.buttonsArray);
-    await this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(userModule.MODULE, this.userAndRolePermissions, this.buttonsArray);
   }
 
   // For navigate to view screen with data
