@@ -1,5 +1,6 @@
 .btn-secondary:hover {
     background-color: red !important;
+    border-radius: 15px !important;
 }
 .modal-body {
     font-size: 16px;
@@ -13,7 +14,9 @@
 .btn-primary {
     border-radius: 15px !important;
 }
-
+.btn-secondary {
+    border-radius: 15px !important;
+}
 
 
 

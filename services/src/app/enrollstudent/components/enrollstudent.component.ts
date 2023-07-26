@@ -176,6 +176,7 @@ export class EnrollstudentComponent {
       case 'admin':
       case 'coadmin':
         instId = this._profile.institutionId;
+        this.courses =[];
         this._deptService.getDepartmentsByInstitutionId(instId).subscribe(
           (response) => {
             this.departments = response;
@@ -194,6 +195,14 @@ export class EnrollstudentComponent {
         break;
 
     }
+  }
+  onChangeInstitution() {
+    this.department.id = 0;
+this.course.courseId=0;
+  }
+
+  onChangeDepartment() {
+    this.course.courseId=0;
   }
   getTeacherByCourseId(courseId: any) {
     this.assignedUsers = [];
