@@ -104,7 +104,7 @@ export class AddQuestionAnswerComponent implements OnInit {
   userId: any;
   buttonsArray: any;
   userAndRolePermissions: AuthUserPermission[] = [];
- 
+
 
   generatedQuestionAnswerIdArr: number[] = [];
   generatedQuestionAnswerId: number = 0;;
@@ -117,7 +117,7 @@ export class AddQuestionAnswerComponent implements OnInit {
     private service: QuestionService,
     private courseService: TeacherCourseService,
     private userPermissionService: AuthUserPermissionService,
-    private dialogBoxService: DialogBoxService, private quizServ: QuizService, private categoryServ: CategoryService,private router: Router
+    private dialogBoxService: DialogBoxService, private quizServ: QuizService, private categoryServ: CategoryService, private router: Router
   ) {
 
     console.log("called contructor +++++++++++++++++++++++++++");
@@ -149,7 +149,7 @@ export class AddQuestionAnswerComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAndLinkUserPermissions();
-  
+
     // this.getAllQuestions();  // for getting all active questions
 
 
@@ -159,7 +159,7 @@ export class AddQuestionAnswerComponent implements OnInit {
   // with buttons to show and hide based on permissions 
   private async loadAndLinkUserPermissions() {
     this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.QUESTION_ANSWER, this.userAndRolePermissions, this.buttonsArray);
-    await this.userPermissionService.toggleButtonsPermissions(userModule.QUESTION_ANSWER,this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(userModule.QUESTION_ANSWER, this.userAndRolePermissions, this.buttonsArray);
   }
 
 
@@ -480,30 +480,30 @@ export class AddQuestionAnswerComponent implements OnInit {
         this.questionAnswer.answers.push(this.answer);
       }
 
-      try{
-      if (mcqArr.length > 0) {
-        console.log("ANSWERSSSSssssssssssssssssssssssssssssss")
-        console.log(queAnsNew['content1'].toLowerCase())
-        console.log(queAnsNew['content2'].toLowerCase())
-        console.log(queAnsNew['content3'].toLowerCase())
-        console.log(queAnsNew['content4'].toLowerCase())
+      try {
+        if (mcqArr.length > 0) {
+          console.log("ANSWERSSSSssssssssssssssssssssssssssssss")
+          console.log(queAnsNew['content1'].toLowerCase())
+          console.log(queAnsNew['content2'].toLowerCase())
+          console.log(queAnsNew['content3'].toLowerCase())
+          console.log(queAnsNew['content4'].toLowerCase())
 
-        if ((queAnsNew['content1'].toLowerCase() == queAnsNew['content2'].toLowerCase()) ||
-          (queAnsNew['content1'].toLowerCase() == queAnsNew['content3'].toLowerCase()) ||
-          (queAnsNew['content1'].toLowerCase() == queAnsNew['content4'].toLowerCase()) ||
-          (queAnsNew['content2'].toLowerCase() == queAnsNew['content3'].toLowerCase()) ||
-          (queAnsNew['content2'].toLowerCase() == queAnsNew['content4'].toLowerCase()) ||
-          (queAnsNew['content3'].toLowerCase() == queAnsNew['content4'].toLowerCase())) {
-          answerEqualityChk = true;
-          if (answerEqualityChk == true) {
-            answerEqualityChkStatic = true
+          if ((queAnsNew['content1'].toLowerCase() == queAnsNew['content2'].toLowerCase()) ||
+            (queAnsNew['content1'].toLowerCase() == queAnsNew['content3'].toLowerCase()) ||
+            (queAnsNew['content1'].toLowerCase() == queAnsNew['content4'].toLowerCase()) ||
+            (queAnsNew['content2'].toLowerCase() == queAnsNew['content3'].toLowerCase()) ||
+            (queAnsNew['content2'].toLowerCase() == queAnsNew['content4'].toLowerCase()) ||
+            (queAnsNew['content3'].toLowerCase() == queAnsNew['content4'].toLowerCase())) {
+            answerEqualityChk = true;
+            if (answerEqualityChk == true) {
+              answerEqualityChkStatic = true
+            }
+
           }
-
         }
       }
-    }
-      catch(error){
-       
+      catch (error) {
+
       }
 
       //   console.log("this.questionAnswer")
@@ -560,482 +560,477 @@ export class AddQuestionAnswerComponent implements OnInit {
     console.log(lAnsArr.length)
     console.log(answerEqualityChk)
     let quesAnswersArrCopy: any[] = [];
-   
+
     console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
-    if(((mcqArr.length > 0) && ((queAns['queAnsArray'].length) == (mcqArr.length))) || ((lAnsArr.length > 0) && (queAns['queAnsArray'].length) == (lAnsArr.length))){
-    if ((this.passMarks <= this.totMarksToDisplay) && (this.maxMarks == this.totMarksToDisplay)) {
-  
-      if (((mcqArr.length > 0) && (!answerEqualityChkStatic)) && ((lAnsArr.length <= 0)) || ((mcqArr.length <= 0) && (!answerEqualityChkStatic)) && ((lAnsArr.length > 0))) {
+    if (((mcqArr.length > 0) && ((queAns['queAnsArray'].length) == (mcqArr.length))) || ((lAnsArr.length > 0) && (queAns['queAnsArray'].length) == (lAnsArr.length))) {
+      if ((this.passMarks <= this.totMarksToDisplay) && (this.maxMarks == this.totMarksToDisplay)) {
+
+        if (((mcqArr.length > 0) && (!answerEqualityChkStatic)) && ((lAnsArr.length <= 0)) || ((mcqArr.length <= 0) && (!answerEqualityChkStatic)) && ((lAnsArr.length > 0))) {
 
 
 
-        if ((queAns['queAnsArray'].length) == (mcqArr.length))
-        // if(((queAns['queAnsArray'].length) == (mcqArr.length)) && ((queAns['queAnsArray'].length) == (questionIdArr.length)))
-        {
+          if ((queAns['queAnsArray'].length) == (mcqArr.length))
+          // if(((queAns['queAnsArray'].length) == (mcqArr.length)) && ((queAns['queAnsArray'].length) == (questionIdArr.length)))
+          {
 
-          let successTextFlag:boolean = true;
-          console.log("if((queAns['queAnsArray'].length) == (mcqArr.length))")
-          this.questionAnswers = [];
+            let successTextFlag: boolean = true;
+            console.log("if((queAns['queAnsArray'].length) == (mcqArr.length))")
+            this.questionAnswers = [];
 
-          for (let newArr of newQuestionAnsArr) {
+            for (let newArr of newQuestionAnsArr) {
 
-            console.log("++++++++++++++++++++++++++++++")
-            console.log("newArr")
-            console.log(newArr)
-            console.log(quesAnswersArrCopy)
-           
-            const instituteJson = JSON.stringify(newArr);
+              console.log("++++++++++++++++++++++++++++++")
+              console.log("newArr")
+              console.log(newArr)
+              console.log(quesAnswersArrCopy)
 
-            const blob = new Blob([instituteJson], {
-              type: 'application/json'
-            })
+              const instituteJson = JSON.stringify(newArr);
 
-            let formData = new FormData();
+              const blob = new Blob([instituteJson], {
+                type: 'application/json'
+              })
 
-            for (var i = 0; i < this.myFiles.length; i++) {
-              formData.append("files", this.myFiles[i]);
-            }
+              let formData = new FormData();
 
-
-            console.log("newArr  before form  data")
-            console.log(newArr)
-            formData.append("request", new Blob([JSON.stringify(newArr)], { type: 'application/json' }));
-
-            console.log(formData)
-            console.log(maxQuesInQuizFlag)
-
-
-
-            if ((newArr.question['questionId'] == 0) || (newArr.question['questionId'] == undefined)) {
-              console.log("if( ( newArr.question['questionId'] == 0) || ( newArr.question['questionId'] == undefined))")
-              if ((newArr.question.questionIsMCQ == true) && (maxQuesInQuizFlag)) {
-                console.log("if((newArr.question.questionIsMCQ == true)  &&   ( maxQuesInQuizFlag )) ")
-                // if(newArr.question.questionIsMCQ == true)
-                // { console.log("  if(newArr.question.questionIsMCQ == true)")
-
-
-                try{
-                                this.service.addQuestion(formData).subscribe(
-                                  // const response = await this.service.addQuestion(formData).toPromise(
-                                  (response: number) => {
-                                  
-
-                                    this.generatedQuestionAnswerId = response;
-                                    // this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
-                                    console.log(response)
-                                    quesAnswersArrCopy.push({
-                                      questionId: this.generatedQuestionAnswerId,
-                                      questionFigure: newArr.question['questionFigure'],
-                                      questionContent: newArr.question['questionContent'],
-                                      questionExplanation: newArr.question['questionExplanation'],
-                                      questionOrderNo: newArr.question['questionOrderNo'],
-                                      questionIsMCQ: newArr.question['questionIsMCQ'],
-                                      questionQuizId: newArr.question['questionQuizId'],
-                                      questionCategoryId: newArr.question['questionCategoryId'],
-                                      questionIsActive: newArr.question['questionIsActive'],
-                                      questionCreatedBy: newArr.question['questionCreatedBy'],
-                                      questionCreatedOn: newArr.question['questionCreatedOn'],
-                                      questionModifiedBy: newArr.question['questionModifiedBy'],
-                                      questionModifiedOn: newArr.question['questionModifiedOn'],
-                                      correct1: newArr.answers[0].correct,
-                                      content1: newArr.answers[0].content,
-                                      correct2: newArr.answers[1].correct,
-                                      content2: newArr.answers[1].content,
-                                      correct3: newArr.answers[2].correct,
-                                      content3: newArr.answers[2].content,
-                                      correct4: newArr.answers[3].correct,
-                                      content4: newArr.answers[3].content,
-                                      isFormDirty: false,
-                                      isFormSubmitted: true,
-                                      image: true,
-                                      isOptionSelected: true,
-                                      selectedAnswer: '',
-                                      maxMarks: newArr.question['maxMarks'],
-                                      totalMarks: this.totalMarks
-                                    })
-
-                                    this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId,this.selectedQuiz)
-
-                                    console.log("questionanswersarray");
-                                    console.log(newArr)
-                                    console.log(this.generatedQuestionAnswerId)
-                                    console.log("Question Added Successfully");
-
-                                    quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
-                                    if(successTextFlag )
-                                    {
-                                         successTextFlag = false;
-                                       this.dialogBoxService.open("Questions added/updated successfully", 'information');
-
-                                    }
-                                    // this.getDataForMarks(this.selectedQuizId)
-                                    // this.getAllQuestionAnswers(this.selectedQuizId)
-
-
-                                  },
-                                  (error) => {
-                                    // quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
-
-                                    console.log(newArr.question['questionContent'])
-                                    console.log("Question added failed");
-                                    // if (!isFirstAlertDisplayed) {
-                                    //  this.dialogBoxService.open("Please enter details for all questions ", 'information');
-                                    //  isFirstAlertDisplayed = true;
-                                    //   }
-                                  }
-                                )
-                }
-                catch(error){}
+              for (var i = 0; i < this.myFiles.length; i++) {
+                formData.append("files", this.myFiles[i]);
               }
-            }
-            else if (newArr.question['questionId'] > 0) {
-              console.log(  "if (newArr.question['questionId'] > 0)")
-              if ((queAns['queAnsArray'].length) >= (questionIdArr.length) && (newArr.question.questionIsMCQ == true)) {
-                console.log("if ((queAns['queAnsArray'].length) == (questionIdArr.length) && (newArr.question.questionIsMCQ == true))")
-                {
-                  try{
-                  this.service.addQuestion(formData).subscribe(
-                    (response) => {
 
 
-                      this.generatedQuestionAnswerId = response;
-                      this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
-                      console.log(response)
-                      quesAnswersArrCopy.push({
-                        questionId: this.generatedQuestionAnswerId,
-                        questionFigure: newArr.question['questionFigure'],
-                        questionContent: newArr.question['questionContent'],
-                        questionExplanation: newArr.question['questionExplanation'],
-                        questionOrderNo: newArr.question['questionOrderNo'],
-                        questionIsMCQ: newArr.question['questionIsMCQ'],
-                        questionQuizId: newArr.question['questionQuizId'],
-                        questionCategoryId: newArr.question['questionCategoryId'],
-                        questionIsActive: newArr.question['questionIsActive'],
-                        questionCreatedBy: newArr.question['questionCreatedBy'],
-                        questionCreatedOn: newArr.question['questionCreatedOn'],
-                        questionModifiedBy: newArr.question['questionModifiedBy'],
-                        questionModifiedOn: newArr.question['questionModifiedOn'],
-                        correct1: newArr.answers[0].correct,
-                        content1: newArr.answers[0].content,
-                        correct2: newArr.answers[1].correct,
-                        content2: newArr.answers[1].content,
-                        correct3: newArr.answers[2].correct,
-                        content3: newArr.answers[2].content,
-                        correct4: newArr.answers[3].correct,
-                        content4: newArr.answers[3].content,
-                        isFormDirty: false,
-                        isFormSubmitted: true,
-                        image: true,
-                        isOptionSelected: true,
-                        selectedAnswer: '',
-                        maxMarks: newArr.question['maxMarks'],
-                        totalMarks: this.totalMarks
-                      })
-                      this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId,this.selectedQuiz)
-                      console.log("((((((((((((((((((((((((((((((((((")
-                      console.log(quesAnswersArrCopy)
-                      console.log(this.generatedQuestionAnswerId)
-                      console.log("Question Added Successfully");
+              console.log("newArr  before form  data")
+              console.log(newArr)
+              formData.append("request", new Blob([JSON.stringify(newArr)], { type: 'application/json' }));
 
-                      quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
-                      if(successTextFlag )
-                      {
-                           successTextFlag = false;
-                         this.dialogBoxService.open("Questions added/updated successfully", 'information');
+              console.log(formData)
+              console.log(maxQuesInQuizFlag)
 
+
+
+              if ((newArr.question['questionId'] == 0) || (newArr.question['questionId'] == undefined)) {
+                console.log("if( ( newArr.question['questionId'] == 0) || ( newArr.question['questionId'] == undefined))")
+                if ((newArr.question.questionIsMCQ == true) && (maxQuesInQuizFlag)) {
+                  console.log("if((newArr.question.questionIsMCQ == true)  &&   ( maxQuesInQuizFlag )) ")
+                  // if(newArr.question.questionIsMCQ == true)
+                  // { console.log("  if(newArr.question.questionIsMCQ == true)")
+
+
+                  try {
+                    this.service.addQuestion(formData).subscribe(
+                      // const response = await this.service.addQuestion(formData).toPromise(
+                      (response: number) => {
+
+
+                        this.generatedQuestionAnswerId = response;
+                        // this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
+                        console.log(response)
+                        quesAnswersArrCopy.push({
+                          questionId: this.generatedQuestionAnswerId,
+                          questionFigure: newArr.question['questionFigure'],
+                          questionContent: newArr.question['questionContent'],
+                          questionExplanation: newArr.question['questionExplanation'],
+                          questionOrderNo: newArr.question['questionOrderNo'],
+                          questionIsMCQ: newArr.question['questionIsMCQ'],
+                          questionQuizId: newArr.question['questionQuizId'],
+                          questionCategoryId: newArr.question['questionCategoryId'],
+                          questionIsActive: newArr.question['questionIsActive'],
+                          questionCreatedBy: newArr.question['questionCreatedBy'],
+                          questionCreatedOn: newArr.question['questionCreatedOn'],
+                          questionModifiedBy: newArr.question['questionModifiedBy'],
+                          questionModifiedOn: newArr.question['questionModifiedOn'],
+                          correct1: newArr.answers[0].correct,
+                          content1: newArr.answers[0].content,
+                          correct2: newArr.answers[1].correct,
+                          content2: newArr.answers[1].content,
+                          correct3: newArr.answers[2].correct,
+                          content3: newArr.answers[2].content,
+                          correct4: newArr.answers[3].correct,
+                          content4: newArr.answers[3].content,
+                          isFormDirty: false,
+                          isFormSubmitted: true,
+                          image: true,
+                          isOptionSelected: true,
+                          selectedAnswer: '',
+                          maxMarks: newArr.question['maxMarks'],
+                          totalMarks: this.totalMarks
+                        })
+
+                        this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId, this.selectedQuiz)
+
+                        console.log("questionanswersarray");
+                        console.log(newArr)
+                        console.log(this.generatedQuestionAnswerId)
+                        console.log("Question Added Successfully");
+
+                        quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+                        if (successTextFlag) {
+                          successTextFlag = false;
+                          this.dialogBoxService.open("Questions added/updated successfully", 'information');
+
+                        }
+                        // this.getDataForMarks(this.selectedQuizId)
+                        // this.getAllQuestionAnswers(this.selectedQuizId)
+
+
+                      },
+                      (error) => {
+                        // quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+
+                        console.log(newArr.question['questionContent'])
+                        console.log("Question added failed");
+                        // if (!isFirstAlertDisplayed) {
+                        //  this.dialogBoxService.open("Please enter details for all questions ", 'information');
+                        //  isFirstAlertDisplayed = true;
+                        //   }
                       }
-                      // console.log("questionanswersarray");
-                      // console.log(newArrs)
-                      // this.getDataForMarks(this.selectedQuizId)
-                      // this.getAllQuestionAnswers(this.selectedQuizId)
-
-                    },
-                    (error) => {
-                      // quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
-
-                      console.log(newArr.question['questionContent'])
-                      console.log("Question added failed");
-                      // if (!isFirstAlertDisplayed) {
-                      //  this.dialogBoxService.open("Please enter details for all questions ", 'information');
-                      //  isFirstAlertDisplayed = true;
-                      //   }
-                    }
-                  )
+                    )
                   }
-                  catch(error){}
+                  catch (error) { }
                 }
               }
+              else if (newArr.question['questionId'] > 0) {
+                console.log("if (newArr.question['questionId'] > 0)")
+                if ((queAns['queAnsArray'].length) >= (questionIdArr.length) && (newArr.question.questionIsMCQ == true)) {
+                  console.log("if ((queAns['queAnsArray'].length) == (questionIdArr.length) && (newArr.question.questionIsMCQ == true))")
+                  {
+                    try {
+                      this.service.addQuestion(formData).subscribe(
+                        (response) => {
 
+
+                          this.generatedQuestionAnswerId = response;
+                          this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
+                          console.log(response)
+                          quesAnswersArrCopy.push({
+                            questionId: this.generatedQuestionAnswerId,
+                            questionFigure: newArr.question['questionFigure'],
+                            questionContent: newArr.question['questionContent'],
+                            questionExplanation: newArr.question['questionExplanation'],
+                            questionOrderNo: newArr.question['questionOrderNo'],
+                            questionIsMCQ: newArr.question['questionIsMCQ'],
+                            questionQuizId: newArr.question['questionQuizId'],
+                            questionCategoryId: newArr.question['questionCategoryId'],
+                            questionIsActive: newArr.question['questionIsActive'],
+                            questionCreatedBy: newArr.question['questionCreatedBy'],
+                            questionCreatedOn: newArr.question['questionCreatedOn'],
+                            questionModifiedBy: newArr.question['questionModifiedBy'],
+                            questionModifiedOn: newArr.question['questionModifiedOn'],
+                            correct1: newArr.answers[0].correct,
+                            content1: newArr.answers[0].content,
+                            correct2: newArr.answers[1].correct,
+                            content2: newArr.answers[1].content,
+                            correct3: newArr.answers[2].correct,
+                            content3: newArr.answers[2].content,
+                            correct4: newArr.answers[3].correct,
+                            content4: newArr.answers[3].content,
+                            isFormDirty: false,
+                            isFormSubmitted: true,
+                            image: true,
+                            isOptionSelected: true,
+                            selectedAnswer: '',
+                            maxMarks: newArr.question['maxMarks'],
+                            totalMarks: this.totalMarks
+                          })
+                          this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId, this.selectedQuiz)
+                          console.log("((((((((((((((((((((((((((((((((((")
+                          console.log(quesAnswersArrCopy)
+                          console.log(this.generatedQuestionAnswerId)
+                          console.log("Question Added Successfully");
+
+                          quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+                          if (successTextFlag) {
+                            successTextFlag = false;
+                            this.dialogBoxService.open("Questions added/updated successfully", 'information');
+
+                          }
+                          // console.log("questionanswersarray");
+                          // console.log(newArrs)
+                          // this.getDataForMarks(this.selectedQuizId)
+                          // this.getAllQuestionAnswers(this.selectedQuizId)
+
+                        },
+                        (error) => {
+                          // quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+
+                          console.log(newArr.question['questionContent'])
+                          console.log("Question added failed");
+                          // if (!isFirstAlertDisplayed) {
+                          //  this.dialogBoxService.open("Please enter details for all questions ", 'information');
+                          //  isFirstAlertDisplayed = true;
+                          //   }
+                        }
+                      )
+                    }
+                    catch (error) { }
+                  }
+                }
+
+              }
+
+              console.log("quesAnswersArrCopy in mcq Loop")
+              console.log(quesAnswersArrCopy)
+              // console.log( quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo))
+              // quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+
+              // quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+              console.log("---------------------------------------------------------")
+              this.questionAnswers = quesAnswersArrCopy
+              if (this.questionAnswers.length == this.selectedQuiz.maxQuestions) {
+                this.dialogBoxService.open("Questions added/updated successfully", 'information');
+                this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId, this.selectedQuiz)
+
+
+              }
+              console.log(quesAnswersArrCopy)
+              console.log(this.questionAnswers)
             }
-
-            console.log("quesAnswersArrCopy in mcq Loop")
-            console.log(quesAnswersArrCopy)
-            // console.log( quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo))
-            // quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
-
-            // quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
-            console.log("---------------------------------------------------------")
-            this.questionAnswers = quesAnswersArrCopy
-            if(this.questionAnswers.length == this.selectedQuiz.maxQuestions)
-            {  this.dialogBoxService.open("Questions added/updated successfully", 'information');
-              this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId,this.selectedQuiz)
-          
-
-            }
-            console.log(quesAnswersArrCopy)
-            console.log(this.questionAnswers)
           }
-        }
-        else if (((queAns['queAnsArray'].length) != (mcqArr.length)) && (mcqArr.length > 0)) {
-          this.dialogBoxService.open("Please enter all details of all question and answers", 'warning');
-        }
-
-        if ((queAns['queAnsArray'].length) == (lAnsArr.length)) {
-          let successTextFlag:boolean = true;
-          this.questionAnswers = [];
-          for (let newArr of newQuestionAnsArr) {
-
-            console.log("++++++++++++++++++++++++++++++")
-            console.log(newArr)
-            console.log(quesAnswersArrCopy)
-            const instituteJson = JSON.stringify(newArr);
-
-            const blob = new Blob([instituteJson], {
-              type: 'application/json'
-            })
-
-            let formData = new FormData();
-
-            for (var i = 0; i < this.myFiles.length; i++) {
-              formData.append("files", this.myFiles[i]);
-            }
-
-
-            console.log("newArr  before form  data")
-            console.log(newArr)
-            formData.append("request", new Blob([JSON.stringify(newArr)], { type: 'application/json' }));
-
-            console.log(formData)
-            console.log(maxQuesInQuizFlag)
-
-
-
-            if ((newArr.question['questionId'] == 0) || (newArr.question['questionId'] == undefined)) {
-              if ((newArr.question.questionIsMCQ == false) && (maxQuesInQuizFlag)) {
-                console.log(" if(  newArr.question['questionId'] == 0)")
-                // if(newArr.question.questionIsMCQ == true)
-                // { console.log("  if(newArr.question.questionIsMCQ == true)")
-
-
-                try{
-                this.service.addQuestion(formData).subscribe(
-                  // const response = await this.service.addQuestion(formData).toPromise(
-                  (response: number) => {
-
-
-                    this.generatedQuestionAnswerId = response;
-                    // this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
-                    console.log(response)
-                    quesAnswersArrCopy.push({
-                      questionId: this.generatedQuestionAnswerId,
-                      questionFigure: newArr.question['questionFigure'],
-                      questionContent: newArr.question['questionContent'],
-                      questionExplanation: newArr.question['questionExplanation'],
-                      questionOrderNo: newArr.question['questionOrderNo'],
-                      questionIsMCQ: newArr.question['questionIsMCQ'],
-                      questionQuizId: newArr.question['questionQuizId'],
-                      questionCategoryId: newArr.question['questionCategoryId'],
-                      questionIsActive: newArr.question['questionIsActive'],
-                      questionCreatedBy: newArr.question['questionCreatedBy'],
-                      questionCreatedOn: newArr.question['questionCreatedOn'],
-                      questionModifiedBy: newArr.question['questionModifiedBy'],
-                      questionModifiedOn: newArr.question['questionModifiedOn'],
-                      correct1: newArr.answers[0].correct,
-                      content1: newArr.answers[0].content,
-                      correct2: newArr.answers[1].correct,
-                      content2: newArr.answers[1].content,
-                      correct3: newArr.answers[2].correct,
-                      content3: newArr.answers[2].content,
-                      correct4: newArr.answers[3].correct,
-                      content4: newArr.answers[3].content,
-                      isFormDirty: false,
-                      isFormSubmitted: true,
-                      image: true,
-                      isOptionSelected: true,
-                      selectedAnswer: '',
-                      maxMarks: newArr.question['maxMarks'],
-                      totalMarks: this.totalMarks
-                    })
-
-                    this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId,this.selectedQuiz)
-                    console.log("questionanswersarray");
-                    console.log(newArr)
-                    console.log(this.generatedQuestionAnswerId)
-                    console.log("Question Added Successfully");
-
-                    quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
-                    if(successTextFlag )
-                    {
-                         successTextFlag = false;
-                       this.dialogBoxService.open("Questions added/updated successfully", 'information');
-
-                    }
-                    // this.getDataForMarks(this.selectedQuizId)
-                    // this.getAllQuestionAnswers(this.selectedQuizId)
-
-
-                  },
-                  (error) => {
-                    // quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
-
-                    console.log(newArr.question['questionContent'])
-                    console.log("Question added failed");
-                    // if (!isFirstAlertDisplayed) {
-                    //  this.dialogBoxService.open("Please enter details for all questions ", 'information');
-                    //  isFirstAlertDisplayed = true;
-                    //   }
-                  }
-                )
-                }
-                catch(error){}
-              }
-            }
-            else if (newArr.question['questionId'] > 0) {
-
-              if (((queAns['queAnsArray'].length) >= (questionIdArr.length)) && (newArr.question.questionIsMCQ == false)) {
-                try{
-                this.service.addQuestion(formData).subscribe(
-                  (response) => {
-
-
-                    this.generatedQuestionAnswerId = response;
-                    this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
-                    console.log(response)
-                    quesAnswersArrCopy.push({
-                      questionId: this.generatedQuestionAnswerId,
-                      questionFigure: newArr.question['questionFigure'],
-                      questionContent: newArr.question['questionContent'],
-                      questionExplanation: newArr.question['questionExplanation'],
-                      questionOrderNo: newArr.question['questionOrderNo'],
-                      questionIsMCQ: newArr.question['questionIsMCQ'],
-                      questionQuizId: newArr.question['questionQuizId'],
-                      questionCategoryId: newArr.question['questionCategoryId'],
-                      questionIsActive: newArr.question['questionIsActive'],
-                      questionCreatedBy: newArr.question['questionCreatedBy'],
-                      questionCreatedOn: newArr.question['questionCreatedOn'],
-                      questionModifiedBy: newArr.question['questionModifiedBy'],
-                      questionModifiedOn: newArr.question['questionModifiedOn'],
-                      correct1: newArr.answers[0].correct,
-                      content1: newArr.answers[0].content,
-                      correct2: newArr.answers[1].correct,
-                      content2: newArr.answers[1].content,
-                      correct3: newArr.answers[2].correct,
-                      content3: newArr.answers[2].content,
-                      correct4: newArr.answers[3].correct,
-                      content4: newArr.answers[3].content,
-                      isFormDirty: false,
-                      isFormSubmitted: true,
-                      image: true,
-                      isOptionSelected: true,
-                      selectedAnswer: '',
-                      maxMarks: newArr.question['maxMarks'],
-                      totalMarks: this.totalMarks
-                    })
-                    this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId,this.selectedQuiz)
-                    console.log("((((((((((((((((((((((((((((((((((")
-                    console.log(quesAnswersArrCopy)
-                    console.log(this.generatedQuestionAnswerId)
-                    console.log("Question Added Successfully");
-
-                    quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
-                    if(successTextFlag )
-                    {
-                         successTextFlag = false;
-                       this.dialogBoxService.open("Questions added/updated successfully", 'information');
-
-                    }
-                    // console.log("questionanswersarray");
-                    // console.log(newArrs)
-                    // this.getDataForMarks(this.selectedQuizId)
-                    // this.getAllQuestionAnswers(this.selectedQuizId)
-
-                  },
-                  (error) => {
-                    // quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
-
-                    console.log(newArr.question['questionContent'])
-                    console.log("Question added failed");
-                    // if (!isFirstAlertDisplayed) {
-                    //  this.dialogBoxService.open("Please enter details for all questions ", 'information');
-                    //  isFirstAlertDisplayed = true;
-                    //   }
-                  }
-                )
-                }
-                catch(error){
-                  
-                }
-              }
-            }
-
-            // quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
-            // quesAnswersArrCopy.sort((a, b) => a.questionOrderNo.toString().localeCompare(b.questionOrderNo.toString()));
-
-            console.log(quesAnswersArrCopy)
-            // console.log( quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo))
-            // quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
-
-            // quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
-            console.log("---------------------------------------------------------")
-            this.questionAnswers = quesAnswersArrCopy
-            if(this.questionAnswers.length == this.selectedQuiz.maxQuestions)
-            {
-              this.dialogBoxService.open("Questions added/updated successfully", 'information');
-              
-              this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId,this.selectedQuiz)
-            }
-            console.log(quesAnswersArrCopy)
-            console.log(this.questionAnswers)
-           
+          else if (((queAns['queAnsArray'].length) != (mcqArr.length)) && (mcqArr.length > 0)) {
+            this.dialogBoxService.open("Please enter all details of all question and answers", 'warning');
           }
-        } else if (((queAns['queAnsArray'].length) != (lAnsArr.length)) && (lAnsArr.length > 0)) {
-          this.dialogBoxService.open("Please enter all details of all question and answers", 'warning');
+
+          if ((queAns['queAnsArray'].length) == (lAnsArr.length)) {
+            let successTextFlag: boolean = true;
+            this.questionAnswers = [];
+            for (let newArr of newQuestionAnsArr) {
+
+              console.log("++++++++++++++++++++++++++++++")
+              console.log(newArr)
+              console.log(quesAnswersArrCopy)
+              const instituteJson = JSON.stringify(newArr);
+
+              const blob = new Blob([instituteJson], {
+                type: 'application/json'
+              })
+
+              let formData = new FormData();
+
+              for (var i = 0; i < this.myFiles.length; i++) {
+                formData.append("files", this.myFiles[i]);
+              }
+
+
+              console.log("newArr  before form  data")
+              console.log(newArr)
+              formData.append("request", new Blob([JSON.stringify(newArr)], { type: 'application/json' }));
+
+              console.log(formData)
+              console.log(maxQuesInQuizFlag)
+
+
+
+              if ((newArr.question['questionId'] == 0) || (newArr.question['questionId'] == undefined)) {
+                if ((newArr.question.questionIsMCQ == false) && (maxQuesInQuizFlag)) {
+                  console.log(" if(  newArr.question['questionId'] == 0)")
+                  // if(newArr.question.questionIsMCQ == true)
+                  // { console.log("  if(newArr.question.questionIsMCQ == true)")
+
+
+                  try {
+                    this.service.addQuestion(formData).subscribe(
+                      // const response = await this.service.addQuestion(formData).toPromise(
+                      (response: number) => {
+
+
+                        this.generatedQuestionAnswerId = response;
+                        // this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
+                        console.log(response)
+                        quesAnswersArrCopy.push({
+                          questionId: this.generatedQuestionAnswerId,
+                          questionFigure: newArr.question['questionFigure'],
+                          questionContent: newArr.question['questionContent'],
+                          questionExplanation: newArr.question['questionExplanation'],
+                          questionOrderNo: newArr.question['questionOrderNo'],
+                          questionIsMCQ: newArr.question['questionIsMCQ'],
+                          questionQuizId: newArr.question['questionQuizId'],
+                          questionCategoryId: newArr.question['questionCategoryId'],
+                          questionIsActive: newArr.question['questionIsActive'],
+                          questionCreatedBy: newArr.question['questionCreatedBy'],
+                          questionCreatedOn: newArr.question['questionCreatedOn'],
+                          questionModifiedBy: newArr.question['questionModifiedBy'],
+                          questionModifiedOn: newArr.question['questionModifiedOn'],
+                          correct1: newArr.answers[0].correct,
+                          content1: newArr.answers[0].content,
+                          correct2: newArr.answers[1].correct,
+                          content2: newArr.answers[1].content,
+                          correct3: newArr.answers[2].correct,
+                          content3: newArr.answers[2].content,
+                          correct4: newArr.answers[3].correct,
+                          content4: newArr.answers[3].content,
+                          isFormDirty: false,
+                          isFormSubmitted: true,
+                          image: true,
+                          isOptionSelected: true,
+                          selectedAnswer: '',
+                          maxMarks: newArr.question['maxMarks'],
+                          totalMarks: this.totalMarks
+                        })
+
+                        this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId, this.selectedQuiz)
+                        console.log("questionanswersarray");
+                        console.log(newArr)
+                        console.log(this.generatedQuestionAnswerId)
+                        console.log("Question Added Successfully");
+
+                        quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+                        if (successTextFlag) {
+                          successTextFlag = false;
+                          this.dialogBoxService.open("Questions added/updated successfully", 'information');
+
+                        }
+                        // this.getDataForMarks(this.selectedQuizId)
+                        // this.getAllQuestionAnswers(this.selectedQuizId)
+
+
+                      },
+                      (error) => {
+                        // quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+
+                        console.log(newArr.question['questionContent'])
+                        console.log("Question added failed");
+                        // if (!isFirstAlertDisplayed) {
+                        //  this.dialogBoxService.open("Please enter details for all questions ", 'information');
+                        //  isFirstAlertDisplayed = true;
+                        //   }
+                      }
+                    )
+                  }
+                  catch (error) { }
+                }
+              }
+              else if (newArr.question['questionId'] > 0) {
+
+                if (((queAns['queAnsArray'].length) >= (questionIdArr.length)) && (newArr.question.questionIsMCQ == false)) {
+                  try {
+                    this.service.addQuestion(formData).subscribe(
+                      (response) => {
+
+
+                        this.generatedQuestionAnswerId = response;
+                        this.generatedQuestionAnswerIdArr.push(this.generatedQuestionAnswerId)
+                        console.log(response)
+                        quesAnswersArrCopy.push({
+                          questionId: this.generatedQuestionAnswerId,
+                          questionFigure: newArr.question['questionFigure'],
+                          questionContent: newArr.question['questionContent'],
+                          questionExplanation: newArr.question['questionExplanation'],
+                          questionOrderNo: newArr.question['questionOrderNo'],
+                          questionIsMCQ: newArr.question['questionIsMCQ'],
+                          questionQuizId: newArr.question['questionQuizId'],
+                          questionCategoryId: newArr.question['questionCategoryId'],
+                          questionIsActive: newArr.question['questionIsActive'],
+                          questionCreatedBy: newArr.question['questionCreatedBy'],
+                          questionCreatedOn: newArr.question['questionCreatedOn'],
+                          questionModifiedBy: newArr.question['questionModifiedBy'],
+                          questionModifiedOn: newArr.question['questionModifiedOn'],
+                          correct1: newArr.answers[0].correct,
+                          content1: newArr.answers[0].content,
+                          correct2: newArr.answers[1].correct,
+                          content2: newArr.answers[1].content,
+                          correct3: newArr.answers[2].correct,
+                          content3: newArr.answers[2].content,
+                          correct4: newArr.answers[3].correct,
+                          content4: newArr.answers[3].content,
+                          isFormDirty: false,
+                          isFormSubmitted: true,
+                          image: true,
+                          isOptionSelected: true,
+                          selectedAnswer: '',
+                          maxMarks: newArr.question['maxMarks'],
+                          totalMarks: this.totalMarks
+                        })
+                        this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId, this.selectedQuiz)
+                        console.log("((((((((((((((((((((((((((((((((((")
+                        console.log(quesAnswersArrCopy)
+                        console.log(this.generatedQuestionAnswerId)
+                        console.log("Question Added Successfully");
+
+                        quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+                        if (successTextFlag) {
+                          successTextFlag = false;
+                          this.dialogBoxService.open("Questions added/updated successfully", 'information');
+
+                        }
+                        // console.log("questionanswersarray");
+                        // console.log(newArrs)
+                        // this.getDataForMarks(this.selectedQuizId)
+                        // this.getAllQuestionAnswers(this.selectedQuizId)
+
+                      },
+                      (error) => {
+                        // quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+
+                        console.log(newArr.question['questionContent'])
+                        console.log("Question added failed");
+                        // if (!isFirstAlertDisplayed) {
+                        //  this.dialogBoxService.open("Please enter details for all questions ", 'information');
+                        //  isFirstAlertDisplayed = true;
+                        //   }
+                      }
+                    )
+                  }
+                  catch (error) {
+
+                  }
+                }
+              }
+
+              // quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+              // quesAnswersArrCopy.sort((a, b) => a.questionOrderNo.toString().localeCompare(b.questionOrderNo.toString()));
+
+              console.log(quesAnswersArrCopy)
+              // console.log( quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo))
+              // quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+
+              // quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
+              console.log("---------------------------------------------------------")
+              this.questionAnswers = quesAnswersArrCopy
+              if (this.questionAnswers.length == this.selectedQuiz.maxQuestions) {
+                this.dialogBoxService.open("Questions added/updated successfully", 'information');
+
+                this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId, this.selectedQuiz)
+              }
+              console.log(quesAnswersArrCopy)
+              console.log(this.questionAnswers)
+
+            }
+          } else if (((queAns['queAnsArray'].length) != (lAnsArr.length)) && (lAnsArr.length > 0)) {
+            this.dialogBoxService.open("Please enter all details of all question and answers", 'warning');
+          }
+
+
+
+
+
+
+
+        }
+        else {
+          this.dialogBoxService.open("Please enter unique answers", 'information');
         }
 
 
+        // })
 
-
-
-
+      } else {
+        console.log("Pass Marks $$$$$$$$$$$$$$$$$$$$$4 Total Marks")
+        console.log(this.passMarks)
+        console.log(this.maxMarks)
+        console.log(this.totalMarks)
+        this.dialogBoxService.open("Please enter total marks based on passing marks and maximum marks of quiz", 'warning');
 
       }
-      else {
-        this.dialogBoxService.open("Please enter unique answers", 'information');
-      }
-
-
-      // })
-
-    } else {
-      console.log("Pass Marks $$$$$$$$$$$$$$$$$$$$$4 Total Marks")
-      console.log(this.passMarks)
-      console.log(this.maxMarks)
-      console.log(this.totalMarks)
-      this.dialogBoxService.open("Please enter total marks based on passing marks and maximum marks of quiz", 'warning');
-
     }
-  }
-  else{
-    this.dialogBoxService.open("Please enter all details of all question and answers", 'warning');
-  }
-  
+    else {
+      this.dialogBoxService.open("Please enter all details of all question and answers", 'warning');
+    }
+
 
   }
-  updateActiveStatusOfQuiz(id : number,quiz:Quiz){
-    this.quizServ.updateActiveStatus(id,quiz).subscribe(
-      (response)=>{
+  updateActiveStatusOfQuiz(id: number, quiz: Quiz) {
+    this.quizServ.updateActiveStatus(id, quiz).subscribe(
+      (response) => {
         console.log("Quiz updated succesfully")
-    
+
       }
     )
   }
@@ -1265,27 +1260,27 @@ export class AddQuestionAnswerComponent implements OnInit {
   // back button functionality
   back() {
     if (this.viewAll == false) {
-    //   sessionStorage.removeItem('actinacquiz');
-    //   this.appComponent.loadActInacQuizs();
-    //   this.loadQuizzes();
+      //   sessionStorage.removeItem('actinacquiz');
+      //   this.appComponent.loadActInacQuizs();
+      //   this.loadQuizzes();
 
-    //   console.log("Entered in IF loop")
-    //   this.viewAll = true;
-    //   this.viewOne = false;
-    //   this.viewAdd = false;
-    //   this.viewUpdate = false;
-    //   this.viewActivate = false;
-    //   this.viewQuePaper = false;
-    sessionStorage.removeItem('actinacquiz');
+      //   console.log("Entered in IF loop")
+      //   this.viewAll = true;
+      //   this.viewOne = false;
+      //   this.viewAdd = false;
+      //   this.viewUpdate = false;
+      //   this.viewActivate = false;
+      //   this.viewQuePaper = false;
+      sessionStorage.removeItem('actinacquiz');
 
-    // Call loadInactQuizzes() and wait for it to resolve before calling loadQuizzes()
-    this.sharedDataService.loadInactQuizzes().then(() => {
-      // this.appComponent.loadActInacQuizs(); // Assuming this line is required to load data in appComponent
-    
-      // After loadInactQuizzes() is resolved, call loadQuizzes()
-   
-    this.loadQuizzes()
-  });
+      // Call loadInactQuizzes() and wait for it to resolve before calling loadQuizzes()
+      this.sharedDataService.loadInactQuizzes().then(() => {
+        // this.appComponent.loadActInacQuizs(); // Assuming this line is required to load data in appComponent
+
+        // After loadInactQuizzes() is resolved, call loadQuizzes()
+
+        this.loadQuizzes()
+      });
       // Additional code for updating the UI (if needed)
       this.viewAll = true;
       this.viewOne = false;
@@ -1293,14 +1288,14 @@ export class AddQuestionAnswerComponent implements OnInit {
       this.viewUpdate = false;
       this.viewActivate = false;
       this.viewQuePaper = false;
-  
-  } 
-else {
-     
-          // Clear the session storage
-    console.log("Landed here in else part")
 
-    this.location.back();
+    }
+    else {
+
+      // Clear the session storage
+      console.log("Landed here in else part")
+
+      this.location.back();
     }
 
   }
@@ -1448,9 +1443,9 @@ else {
     try {
       this.sessionData = sessionStorage.getItem('actinacquiz');
       // this.sessionData = sessionStorage.getItem('quiz')
-console.log("########################################")
-console.log(sessionStorage.getItem('actinacquiz'))
-// console.log(sessionStorage.getItem('quiz'))
+      console.log("########################################")
+      console.log(sessionStorage.getItem('actinacquiz'))
+      // console.log(sessionStorage.getItem('quiz'))
       this.data = JSON.parse(this.sessionData);
       console.log("######################################################3")
       console.log(this.data)
