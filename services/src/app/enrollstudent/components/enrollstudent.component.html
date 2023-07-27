@@ -57,15 +57,15 @@
                             <ng-select [items]="_profileArray" bindLabel="fullName" [searchable]="true"
                                 [closeOnSelect]="false" bindValue="adminId" placeholder="Select Students"
                                 [clearable]="true" appendTo="body" [multiple]="true" [(ngModel)]="selected"
-                                groupBy="selectedAllGroup" [selectableGroup]="true" [selectableGroupAsModel]="false"
+                                groupBy="selectedAllGroups" [selectableGroup]="true" [selectableGroupAsModel]="false"
                                 [virtualScroll]="true" (change)="disablefunc()"
                                 [disabled]="course.courseId<=0 || course.courseId == undefined">
                                 <!-- //code to display select all checkbox -->
-                                <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                                <!-- <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
                                     <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" />
                                     Select
                                     All
-                                </ng-template>
+                                </ng-template> -->
                                 <!-- code to disable display of selected students in input field -->
                                 <ng-template ng-multi-label-tmp>
                                     <span style="display:block" class="ng-value" *ngFor="let teacher of selected">
