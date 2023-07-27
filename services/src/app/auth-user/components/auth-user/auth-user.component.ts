@@ -193,7 +193,7 @@ export class AuthUserComponent implements OnInit {
               profileData.adminEmail = currentData.authUserEmail;
 
               // Save the updated profile
-              this.profileService.updateProfileByActiveAuthuser(currentData.authUserId, profileData).subscribe(
+              this.profileService.updateProfileByAuthuser(currentData.authUserId, profileData).subscribe(
                 profileUpdateResponse => {
                   console.log(`Profile updated successfully!`);
                   this.back();
