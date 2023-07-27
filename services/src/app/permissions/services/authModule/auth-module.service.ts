@@ -13,8 +13,8 @@ export class AuthModuleService {
   private accessPrivilegeUrl = environment.accessPrivilegeUrl;
   constructor(private http: HttpClient) { }
 
-  getAllAuthModules(): Observable<AuthModule[]> {
-    return this.http.get<AuthModule[]>(`${this.accessPrivilegeUrl}/modules`);
+  getAllAuthModules(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.accessPrivilegeUrl}/modules`);
 
   }
 

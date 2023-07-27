@@ -124,7 +124,7 @@ export class TeacherCourseComponent implements OnInit {
   // with buttons to show and hide based on permissions 
   private async loadAndLinkUserPermissions() {
     this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.COURSE, this.userAndRolePermissions, this.buttonsArray);
-    await this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(userModule.COURSE,this.userAndRolePermissions, this.buttonsArray);
   }
 
   // this function for loading permission from session storage and link permission 
@@ -207,8 +207,9 @@ export class TeacherCourseComponent implements OnInit {
       this.viewActivate = false;
       // this.accessControl(this.userRole);
       // this.toggleButtonsPermissions(this.buttonsArray);
-
-      this.userPermissionService.toggleButtonsPermissions(this.userAndRolePermissions, this.buttonsArray);
+      console.log(this.userAndRolePermissions);
+      
+      this.userPermissionService.toggleButtonsPermissions(userModule.COURSE, this.userAndRolePermissions, this.buttonsArray);
 
     } else {
       this.location.back();
@@ -456,13 +457,17 @@ private async addCourse(currentData: any) {
     )
   }
   private loadAdminInstitutions() {
+    
     try {
       this.sessionData = sessionStorage.getItem('admininstitution');
       // console.log(this.sessionData);
       this.data = JSON.parse(this.sessionData);
-      for (var inst in this.data) {
-        this.adminInstitutions.push(this.data[inst]);
+      if(this.adminInstitutions.length<=0){
+        for (var inst in this.data) {
+          this.adminInstitutions.push(this.data[inst]);
+        }
       }
+     
     }
     catch (err) {
       console.log("Error", err)

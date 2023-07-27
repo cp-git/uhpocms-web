@@ -113,10 +113,18 @@ export class AuthUserPermissionService {
 
 
   // for showing and hinding buttons
-  async toggleButtonsPermissions(userAndRolePermissions: AuthUserPermission[], buttonsArray: any) {
+  async toggleButtonsPermissions(moduleId: number, userAndRolePermissions: AuthUserPermission[], buttonsArray: any) {
     console.log(userAndRolePermissions);
 
+    // filtering only those permissions which are for the current module
+    userAndRolePermissions = userAndRolePermissions.filter((item: { moduleId: number; }) =>
+      item.moduleId == moduleId
+    );
+    
     userAndRolePermissions.forEach(element => {
+      // console.log(element);
+      // console.log(buttonsArray);
+
       if (element.permissionId == userPermission.CREATE) {
         console.log("CREATE");
         buttonsArray.showAddButton = true;

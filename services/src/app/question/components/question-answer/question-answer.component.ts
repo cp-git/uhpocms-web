@@ -446,21 +446,24 @@ export class QuestionAnswerComponent implements OnInit {
           }
         );
 
-        const courseCodeAndCourseName = `${this.courseCode} : ${this.courseName}`;
+        const courseCodeAndCourseName = `Course Code : ${this.courseCode}   Course Name : ${this.courseName}`;
         // Add the remaining content
         questionSection.push(
-          { text: 'Institute :' + this.institutionName, style: 'header', alignment: 'center' },
-          { text: 'Department :' + this.departmentName, style: 'deptHeader', alignment: 'center' },
+          { text: 'Institute : ' + this.institutionName, style: 'header', alignment: 'center' },
+          { text: 'Department : ' + this.departmentName, style: 'deptHeader', alignment: 'center' },
           { text: courseCodeAndCourseName, alignment: 'center' },
-          { text: 'Module :' + this.moduleName, alignment: 'center' },
-          { text: 'Quiz :' + this.quizTitle, alignment: 'center' },
+          { text: 'Module : ' + this.moduleName, alignment: 'center' },
+          { text: 'Quiz : ' + this.quizTitle, alignment: 'center' },
           {
             columns: [
               //{ text: 'Course Code' + ': ' + this.courseCode, alignment: 'left' },
-              { text: 'Passing Marks :' + ' ' + this.passMark, alignment: 'right' },
+
+              { text: 'Max mark  : ' + this.selectedQuiz.maxMarks, alignment: 'right' },
             ]
           },
+          { text: 'Pass mark :' + ' ' + this.passMark, alignment: 'right' },
         );
+
 
         this.questionNumber = 1;
         let questionFigureUrl: any;
@@ -468,6 +471,7 @@ export class QuestionAnswerComponent implements OnInit {
         const questionPromises: any = [];
         for (const questionAnswer of this.questionAnswers) {
 
+          const questionMark = questionAnswer.maxMarks;
           console.log(questionAnswer);
           questionFigureUrl = null;
           const questionContent = questionAnswer.questionContent;
@@ -496,7 +500,7 @@ export class QuestionAnswerComponent implements OnInit {
 
 
           console.log("Question with figure 0000000000000000000000000000000");
-          await this.fetchFile(questionFigureUrl, questionSection, questionContent, options, answer);
+          await this.fetchFile(questionFigureUrl, questionSection, questionContent, options, answer, questionMark);
           console.log("hhhhhhhhhhhhhhhhhh");
 
 
@@ -600,15 +604,22 @@ export class QuestionAnswerComponent implements OnInit {
   }
 
 
-  async fetchFile(questionFigureUrl: any, questionSection: any, questionContent: any, options: any, answer: any) {
+  async fetchFile(questionFigureUrl: any, questionSection: any, questionContent: any, options: any, answer: any, questionMark: any) {
     return new Promise<void>((resolve) => {
       this.http.get(questionFigureUrl, { responseType: 'blob' }).subscribe((figureBlob: Blob) => {
         const reader = new FileReader();
         reader.onloadend = () => {
           const imageDataUrl = reader.result as string;
 
-          const questionText = `${this.questionNumber}. ${questionContent}`;
-          questionSection.push({ text: questionText, style: 'questionContent' });
+          questionSection.push({ text: '\n\n' });
+          const questionText = `${this.questionNumber}. ${questionContent} `;
+          const queMark = ` ${questionMark}`;
+          questionSection.push({
+            columns: [
+              { text: questionText, style: 'questionContent' },
+              { text: queMark + " : Mark", alignment: 'right' }
+            ]
+          });
           console.log(imageDataUrl);
 
           if (imageDataUrl) {
@@ -627,7 +638,7 @@ export class QuestionAnswerComponent implements OnInit {
 
           questionSection.push({ text: 'Correct answer : ' + answer, style: 'answer' });
           // Add two line spaces after each question
-        questionSection.push({ text: '\n\n' });
+          questionSection.push({ text: '\n\n' });
           this.questionNumber++;
 
           resolve(); // Resolve the Promise when the image is added
@@ -635,8 +646,17 @@ export class QuestionAnswerComponent implements OnInit {
         reader.readAsDataURL(figureBlob);
       }, (error) => {
         console.error('Error fetching question image:', error);
-        const questionText = `${this.questionNumber}. ${questionContent}`;
-        questionSection.push({ text: questionText, style: 'questionContent' });
+        //  const questionText = `${this.questionNumber}. ${questionContent}`;
+        questionSection.push({ text: '\n\n' });
+        const questionText = `${this.questionNumber}. ${questionContent} `;
+        const queMark = ` ${questionMark}`;
+        questionSection.push({
+          columns: [
+            { text: questionText, style: 'questionContent' },
+            { text: queMark + " : Mark", alignment: 'right' }
+          ]
+        });
+
 
         if (this.quizCategory.categoryName == 'MCQ') {
           questionSection.push({ text: 'Options:' })
@@ -644,8 +664,8 @@ export class QuestionAnswerComponent implements OnInit {
         }
 
         questionSection.push({ text: 'Correct answer: ' + answer, style: 'answer' });
-     // Add two line spaces after each question
-     questionSection.push({ text: '\n\n' });
+        // Add two line spaces after each question
+        questionSection.push({ text: '\n\n' });
         this.questionNumber++;
         resolve(); // Resolve the Promise even if an error occurs
       });

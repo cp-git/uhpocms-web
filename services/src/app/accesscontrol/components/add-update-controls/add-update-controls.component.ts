@@ -130,11 +130,21 @@ export class AddUpdateControlsComponent implements OnInit {
   onClickSubmit() {
 
     console.log(this.moduleAndPermissionsIds);
+    let selectedUserRoleId: number = 0;
+
+    if (this.userRoleId > 0) {
+      selectedUserRoleId = this.userRoleId;
+    } else if (this.roleId > 0) {
+      selectedUserRoleId = this.roleId;
+    }
+
+    console.log(selectedUserRoleId);
+
     let data: any = {
       access: this.selectedOptionForAccess,
       permissionIds: this.moduleAndPermissionsIds,
       userId: this.userId,
-      userRoleId: this.userRoleId
+      userRoleId: selectedUserRoleId
     }
     console.log(data);
 
@@ -145,11 +155,12 @@ export class AddUpdateControlsComponent implements OnInit {
     this.institutionId = undefined;
     this.userId = 0;
     this.departmentId = undefined;
-    this.userRoleId = this.roleId;
+    this.userRoleId = undefined;
   }
 
-  onChangeUserRoleId() {
+  onChangeUserRole() {
     this.userId = 0;
+    this.roleId = 0;
   }
 
   onChangeControl() {
@@ -157,5 +168,8 @@ export class AddUpdateControlsComponent implements OnInit {
     this.userId = 0;
     this.departmentId = undefined;
     this.roleId = 0;
+    this.userRoleId = undefined;
   }
+
+
 }

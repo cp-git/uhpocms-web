@@ -25,7 +25,7 @@ import { InstituteServicesService } from 'app/institute-details/services/institu
 export class AssigncoursetoteacherComponent {
   moduleName = 'Assign Course To User';
   _profile = new Profile();
-
+  _disablevar: boolean = false;
   _profileArray: Profile[] = [];
 
   _profileArrCopy: Profile[] = [];
@@ -130,6 +130,7 @@ export class AssigncoursetoteacherComponent {
   }
 
   private getAllInstitution() {
+    
     // fetching all institution
     this._institutionService.fetchAdminInstitutionList().subscribe(
       (response) => {
@@ -155,9 +156,9 @@ export class AssigncoursetoteacherComponent {
   }
 
   getDepartmentByInstId(instId: number) {
-
+   
     instId = this._profile.institutionId;
-
+    this.courses =[];
     this._deptService.getDepartmentsByInstitutionId(instId).subscribe(
       (response: Department[]) => {
         this.departments = response;
@@ -170,7 +171,14 @@ export class AssigncoursetoteacherComponent {
       }
     )
   }
+  onChangeInstitution() {
+    this.department.id = 0;
+this.course.courseId=0;
+  }
 
+  onChangeDepartment() {
+    this.course.courseId=0;
+  }
   //function for get Course by department id
   getCoursesByDeptId(deptId: number) {
     console.log(this.department);
@@ -326,6 +334,17 @@ export class AssigncoursetoteacherComponent {
     //   this.prevSelected = [...this.selected];
     // }
   }
+
+  
+  disablefunc() {
+    if ((this.selected.length != 0) && (this.course.courseId != 0) && (this.department.id != 0)) {
+      this._disablevar = true;
+    }
+    else {
+      this._disablevar = false;
+    }
+  }
+  
   private arraysEqual(a: any[], b: any[]): boolean {
     if (a === b) return true;
     if (a == null || b == null) return false;
@@ -340,6 +359,7 @@ export class AssigncoursetoteacherComponent {
   inserted: boolean = false;
   //function for save the course id with profile ID
   saveAssignTeacher(courseId: number, profileId: number) {
+    
     this.inserted = false;
     console.log("Profile array copy down");
     console.log(this._profileArrCopy);
@@ -347,6 +367,13 @@ export class AssigncoursetoteacherComponent {
     console.log(this._profileArray);
     this.assignTeacher.courseId = (courseId);
     this.assignTeacher.profileId = profileId;
+    // Check if any selected user is already assigned
+  const isAlreadyAssigned = this.selected.some((profileId) => this.enrolledUsers.includes(profileId));
+  if (isAlreadyAssigned) {
+    this.dialogBoxService.open("Already assigned to the course.", 'information');
+    return; // Exit the function, no further actions needed
+    
+  }
     // Subtract enrolledUsers from selected array
   this.selected = this.selected.filter((profileId) => !this.enrolledUsers.includes(profileId));
   // Delete the unchecked assignments
@@ -363,23 +390,29 @@ export class AssigncoursetoteacherComponent {
       (response) => {
         this.inserted = true;
       },
-      (error) => {
-        this.inserted = false;
-        this.dialogBoxService.open('Failed to assign', 'warning');
-      }
     );
   }
-  if (this.inserted=true) {
-    this.dialogBoxService.open("Assign Course To Teacher successfully !", 'information').then((response) => {
+  if (this.selected.length > 0 && this.unCheckedProfiles.size > 0) {
+    this.dialogBoxService.open("Users assigned and removed from the course!", 'information').then((response) => {
       if (response) {
         location.reload(); // Refresh the page
       }
     });
-  } else {
-    console.log("Already Course Assigned");
-  }
+  } else if (this.selected.length > 0) {
+    this.dialogBoxService.open("Users assigned to the course successfully!", 'information').then((response) => {
+      if (response) {
+        location.reload(); // Refresh the page
+      }
+    });
+  } else if (this.unCheckedProfiles.size > 0) {
+    this.dialogBoxService.open("Users removed from the course!", 'information').then((response) => {
+      if (response) {
+        location.reload(); // Refresh the page
+      }
+    });
+  }}
   // this.ngOnInit();
-}
+
 
   onScrollToEnd() {
     console.log('onscrollEend');

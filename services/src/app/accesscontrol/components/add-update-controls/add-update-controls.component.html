@@ -2,7 +2,7 @@
     <div class="col-sm-3">
         <label for="access">Assign Permission To : </label>
         <select id="accessTo" name="accessto" class="form-control" [(ngModel)]="selectedOptionForAccess"
-            (click)="onChangeControl()">
+            (change)="onChangeControl()">
             <option value="undefined">Select</option>
             <option *ngFor="let controlFor of controlBasedOn" [value]="controlFor">{{controlFor}}
             </option>
@@ -15,7 +15,7 @@
         <div class="col-sm-3">
             <label for="institutionId">Institution</label>
             <select id="institution" name="institutionId" class="form-control" [(ngModel)]="institutionId"
-                (click)="onChangeInstitution()">
+                (change)="onChangeInstitution()">
                 <option value="undefined">Select</option>
                 <option *ngFor="let inst of institutions" [value]="inst.adminInstitutionId">
                     {{inst.adminInstitutionName}}
@@ -27,7 +27,7 @@
         <div class="col-sm-3">
             <label for="departmentId">Department</label>
             <select id="department" name="departmentId" class="form-control" [(ngModel)]="departmentId"
-                (click)="onChangeDepartment()">
+                (change)="onChangeDepartment()">
                 <option value="undefined" disabled>Select</option>
                 <option *ngFor="let dept of departments |advFilter:'institutionId':institutionId" [value]="dept.id">
                     {{dept.name}}</option>
@@ -37,7 +37,8 @@
 
         <div class="col-sm-3">
             <label for="userRole">User Roles</label>
-            <select id="userrole" name="userRole" class="form-control" [(ngModel)]="userRoleId">
+            <select id="userrole" name="userRole" class="form-control" [(ngModel)]="userRoleId"
+                (change)="onChangeUserRole()">
                 <option value="undefined" disabled>Select</option>
                 <option *ngFor=" let role of roles" [value]="role.roleId">{{role.roleName}}</option>
             </select>
@@ -46,7 +47,7 @@
 
         <div class="col-sm-3">
             <label for="userName">User</label>
-            <select id="userName" name="userId" class="form-control" [(ngModel)]="userId" (click)="onChangeUser()">
+            <select id="userName" name="userId" class="form-control" [(ngModel)]="userId" (change)="onChangeUser()">
                 <option value="0" disabled>Select</option>
                 <option
                     *ngFor="let user of profiles |filter:'institutionId':institutionId | filter:'adminDepartment':departmentId | filter:'userRoleId':userRoleId"
@@ -61,21 +62,21 @@
     <div *ngIf="selectedOptionForAccess==controlBasedOn[1]">
         <div class="col-sm-3">
             <label for="roles">Roles</label>
-            <select id="roleid" name="roleId" class="form-control" [(ngModel)]="roleId" (click)="onChangeRole()">
+            <select id="roleid" name="roleId" class="form-control" [(ngModel)]="roleId" (change)="onChangeRole()">
                 <option value="0">Select</option>
                 <option *ngFor="let role of roles" [value]="role.roleId">{{role.roleName}}</option>
             </select>
             <br>
         </div>
     </div>
-    
+
 </div>
 <div class="container">
     <input type="checkbox" disabled="true" style="background-color: lawngreen;">
     <label for="activate">&nbsp; Individual Permissions</label>&nbsp;&nbsp;&nbsp;&nbsp;
     <input type="checkbox" disabled="true" style="background-color: red;">
     <label for="activate">&nbsp; Role Permissions</label>
-   
+
 </div>
 
 
@@ -107,3 +108,7 @@
 <!-- {{roleId|json}} -->
 
 <!-- {{userPermissions|json}} -->
+<!-- 
+a{{userRoleId|json}}
+b{{roleId|json}}
+c{{userId|json}} -->

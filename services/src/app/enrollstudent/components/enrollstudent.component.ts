@@ -17,8 +17,8 @@ import { TeacherCourseService } from 'app/teacher-course/services/teacher-course
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { Profile } from 'app/profiles/class/profile';
 import { ProfileService } from 'app/profiles/services/profile.service';
-
-
+import { Assignteacher } from 'app/assigncoursetoteacher/class/assignteacher';
+import { AssigncourseteacherService } from 'app/assigncoursetoteacher/services/assigncourseteacher.service';
 import { EnrolltostudentService } from '../service/enrolltostudent.service';
 import { Location } from '@angular/common';
 import { Enrolltostudent } from '../class/enrolltostudent';
@@ -71,12 +71,12 @@ export class EnrollstudentComponent {
   showAddButton: boolean = false;
   showActivateButton: boolean = false;
 
-  
-  displayInstituteLogo : any;
-  instituteId : any;
-  sessionData : any;
-  data:any;
- 
+  assignedUsers: any[] = [];
+  displayInstituteLogo: any;
+  instituteId: any;
+  sessionData: any;
+  data: any;
+
   profiles: Profile[] = []; // list of inactive Profile
   profile: Profile;
 
@@ -86,16 +86,17 @@ export class EnrollstudentComponent {
     private _institutionService: AdmininstitutionService,
     private _deptService: DepartmentService,
     private courseService: TeacherCourseService,
+    private assignTeacherService: AssigncourseteacherService,
     private profileService: ProfileService,
     private enrollstuService: EnrolltostudentService,
     private location: Location,
     private dialogBoxService: DialogBoxService,
     private courprogServ: CourseProgressService) {
-      this.profile = new Profile();
-      this.displayInstituteLogo = `${environment.adminInstitutionUrl}/institution/getFileById`;
-     
-      this.profileId = sessionStorage.getItem("profileId");
-    
+    this.profile = new Profile();
+    this.displayInstituteLogo = `${environment.adminInstitutionUrl}/institution/getFileById`;
+
+    this.profileId = sessionStorage.getItem("profileId");
+
     this.userRole = sessionStorage.getItem('userRole');
   }
   //ngoninit
@@ -146,7 +147,7 @@ export class EnrollstudentComponent {
           //  alert(this.studentName);
           console.log(this.profile.firstName, this.profile.lastName, this.profile.fullName, "  + ++++ + + ", this.instituteId);
           this.instituteId = this.data[i].institutionId;
-          
+
 
           //  alert(JSON.stringify(this.profileInstituteId));
           break; // Assuming the profileId is unique, exit the loop after finding the matching profile
@@ -175,6 +176,7 @@ export class EnrollstudentComponent {
       case 'admin':
       case 'coadmin':
         instId = this._profile.institutionId;
+        this.courses =[];
         this._deptService.getDepartmentsByInstitutionId(instId).subscribe(
           (response) => {
             this.departments = response;
@@ -194,7 +196,31 @@ export class EnrollstudentComponent {
 
     }
   }
+  onChangeInstitution() {
+    this.department.id = 0;
+this.course.courseId=0;
+  }
 
+  onChangeDepartment() {
+    this.course.courseId=0;
+  }
+  getTeacherByCourseId(courseId: any) {
+    this.assignedUsers = [];
+    this.assignTeacherService.getTeacherByCourseId(courseId).subscribe(
+      response => {
+        // this.courses = response;
+        console.log(response);
+        response.forEach((data: Assignteacher) => {
+          this.assignedUsers.push(data.profileId);
+          console.log("xyz++++++++++++++++++++" + this.assignedUsers);
+
+        })
+      },
+      error => {
+        console.log("failed to fetch data");
+      }
+    );
+  }
   //function to get courses based on department id
   getCoursesByDeptId(deptId: number) {
     this.course = {} as Course;
@@ -390,24 +416,33 @@ export class EnrollstudentComponent {
   }
   onCourseSelect(courseId: any) {
     // console.log(courseId);
+    this.getTeacherByCourseId(courseId);
     this.getStudentByCourseId(courseId);
   }
   //Function for assign course to student
   inserted: boolean = false;
   saveEnrolledStudent(courseId: number, profileId: number) {
-
+    let isStudentEnrolled = false;
     this.inserted = false;
     this.enrolledStudent.courseId = courseId;
     this.enrolledStudent.profileId = profileId;
-     // Delete the unchecked assignments
-     this.unCheckedProfiles.forEach((profileId)=>{
+    // Check if any selected user is already assigned
+    const isAlreadyAssigned = this.selected.some((profileId) => this.assignedUsers.includes(profileId));
+    if (isAlreadyAssigned) {
+      this.dialogBoxService.open("students are already assigned to the course.", 'information');
+      return; // Exit the function, no further actions needed
+    }
+    // Subtract enrolledUsers from selected array
+    this.selected = this.selected.filter((profileId) => !this.assignedUsers.includes(profileId));
+    // Delete the unchecked assignments
+    this.unCheckedProfiles.forEach((profileId) => {
       console.log(profileId);
 
       this.deleteEnrollStudent(courseId, profileId);
-      
-      this.enrolledStudentArr =  this.enrolledStudentArr.filter((element) => element !== profileId);
-        console.log(this.enrolledStudentArr);
-        
+
+      this.enrolledStudentArr = this.enrolledStudentArr.filter((element) => element !== profileId);
+      console.log(this.enrolledStudentArr);
+
     });
     for (let i = 0; i < this.selected.length; i++) {
       this.courseProgress = new CourseProgress();
@@ -415,6 +450,7 @@ export class EnrollstudentComponent {
       this.enrolledStudent.profileId = this.selected[i];
       this.enrollstuService.saveEnrolledStudents(this.enrolledStudent).subscribe(
         (response) => {
+          isStudentEnrolled = true;
           // if (i == 0) {
           // console.log("Student Enrolled Successfully");
           // location.reload();
@@ -446,13 +482,26 @@ export class EnrollstudentComponent {
         }
       )
     }
-    this.dialogBoxService.open("Students enrolled to course successfully !", 'information').then((response) => {
-      if (response) {
-        location.reload(); // Refresh the page
-      }
 
-    });
-   
+    if (this.selected.length > 0 && this.unCheckedProfiles.size > 0) {
+      this.dialogBoxService.open("Students enrolled and removed from the course!", 'information').then((response) => {
+        if (response) {
+          location.reload(); // Refresh the page
+        }
+      });
+    } else if (this.selected.length > 0) {
+      this.dialogBoxService.open("Students enrolled to the course successfully!", 'information').then((response) => {
+        if (response) {
+          location.reload(); // Refresh the page
+        }
+      });
+    } else if (this.unCheckedProfiles.size > 0) {
+      this.dialogBoxService.open("Students removed from the course!", 'information').then((response) => {
+        if (response) {
+          location.reload(); // Refresh the page
+        }
+      });
+    }
   }
   // checkFields() {
   //   // Check if any fields are empty
@@ -475,6 +524,8 @@ export class EnrollstudentComponent {
     }
     return this.formComplete;
   }
+
+
   //function to enable submit button only after all fields selection
   disablefunc() {
     if ((this.selected.length != 0) && (this.course.courseId != undefined) && (this.department.id != undefined)) {
@@ -505,7 +556,7 @@ export class EnrollstudentComponent {
       .subscribe(
         (response) => {
           console.log('Enroll Student deleted successfully');
-  
+
           // Delete the corresponding CourseProgress entry
           this.courprogServ.deleteCourseProgressByCourseIdAndStudentId(courseId, profileId)
             .subscribe(
@@ -538,7 +589,9 @@ export class EnrollstudentComponent {
       this.unCheckedProfiles.delete(item.value.adminId)
       console.log(this.unCheckedProfiles);
     }
+    this.selected = this.selected.filter((profileId) => !this.assignedUsers.includes(profileId));
 
 
   }
+
 }

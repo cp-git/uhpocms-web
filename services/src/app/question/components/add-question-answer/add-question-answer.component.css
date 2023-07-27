@@ -10,7 +10,11 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
-
+/* Component CSS file or global styles */
+.active-row {
+    background-color: #acbdd0;; /* Change this to the desired highlight color */
+    /* Add any other styling you want to apply to the highlighted row */
+  }
 .fa-pencil,
 .fa-eye,
 .fa-sync-alt,
