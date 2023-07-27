@@ -157,7 +157,7 @@ export class ProfileComponent implements OnInit {
   // function will call when child view button is clicked 
   onChildViewClick(objectReceived: any): void {
     console.log(objectReceived);
-    
+
     // changing column array
     // this.allColumnNames = ProfileAllColumnForUpdate;
 
@@ -278,14 +278,22 @@ export class ProfileComponent implements OnInit {
     }
 
     if (key == 'userRoleId') {
+      console.log(this.userRoles);
+
+      console.log(this.backupUserRoles);
+
       this.userRoles = this.backupUserRoles;
       const selectedRole = this.adminRoles.find(role => role.roleId == dataReceived.userRoleId);
       const userRole = this.backupUserRoles.find((role: { roleName: string | undefined; }) => role.roleName == selectedRole?.roleName)
 
       console.log(selectedRole);
+      console.log(userRole);
+
       if (userRole != undefined) {
         this.emptyProfile.userRole = userRole.roleName;
-        this.currentData.userRole = userRole.roleName;
+        if (this.viewUpdate) {
+          this.currentData.userRole = userRole.roleName;
+        }
         this.userRoles = this.userRoles.filter((role: { roleName: string | undefined; }) => role.roleName == selectedRole?.roleName)
         console.log(this.userRoles);
       }
