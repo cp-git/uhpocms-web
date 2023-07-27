@@ -36,7 +36,7 @@ export class AddQuestionAnswerComponent implements OnInit {
   currentPage = 1;
 
   // title heading
-  moduleName: string = "QA";
+  moduleName: string = "Questions & Answers";
 
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data

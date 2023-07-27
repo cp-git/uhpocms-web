@@ -12,7 +12,7 @@
 
                 </div>
             </div> -->
-            <app-module-header [titleWithUserRole]="titleWithUserRole" [moduleName]="moduleName"
+            <app-module-header [moduleName]="moduleName"
                 [buttons]="{showAddButton:buttonsArray.showAddButton,showActivateButton:buttonsArray.showActivateButton}"
                 (addButtonClicked)="onAddClick()" (activateButtonClicked)="onActivateClick()"
                 (backButtonClicked)="back()"></app-module-header>
@@ -27,7 +27,7 @@
                     <ng-container *ngTemplateOutlet="backButton;"></ng-container>
                 </div>
             </div> -->
-            <app-module-header [titleWithUserRole]="titleWithUserRole" [moduleName]="moduleName"
+            <app-module-header [moduleName]="moduleName"
                 (backButtonClicked)="back()"></app-module-header>
         </ng-container>
 

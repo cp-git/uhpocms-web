@@ -35,7 +35,7 @@ export class ReviewAnswerComponent implements OnInit {
     currentPage = 1;
     totalQuizMarks: any;
     // title heading
-    moduleName: string = "Review";
+    moduleName: string = "Review Answers";
   
     columnNames: any; // header for minimum visible column data
     allColumnNames: any; // header for all visible column data

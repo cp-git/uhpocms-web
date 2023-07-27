@@ -23,7 +23,7 @@ import { Question } from 'app/question/class/question';
 export class QuizComponent implements OnInit {
 
   // title heading for Quiz
-  moduleName: string = "Quiz";
+  moduleName: string = "Quiz Administration";
 
   viewUpdate: boolean = false;
   viewAdd: boolean = false;

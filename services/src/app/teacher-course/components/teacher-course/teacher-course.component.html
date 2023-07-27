@@ -15,7 +15,7 @@
                     <ng-container *ngTemplateOutlet="backButton"></ng-container>
                 </div>
             </div> -->
-            <app-module-header [titleWithUserRole]="true" [moduleName]="moduleName"
+            <app-module-header [moduleName]="moduleName"
                 [buttons]="{showAddButton:buttonsArray.showAddButton,showActivateButton:buttonsArray.showActivateButton}"
                 (addButtonClicked)="onAddClick()" (activateButtonClicked)="onActivateClick()"
                 (backButtonClicked)="back()"></app-module-header>

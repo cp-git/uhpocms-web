@@ -24,7 +24,7 @@ import { environment } from 'environments/environment.development';
 export class ModuleFileComponent {
 
   // title heading
-  moduleName: string = "Module Content";
+  moduleName: string = "Module Content Administration";
 
   controlEnabled: boolean = true;
   module = new Module();

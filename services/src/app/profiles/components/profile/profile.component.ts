@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Profile } from 'app/profiles/class/profile';
-import { ProfileAllColumn, ProfileColumn, ProfileUpdateColumn } from 'app/profiles/column-names/profile-column';
+import { ProfileAllColumn, ProfileColumn, ProfileUpdateColumn, ProfileViewOneColumn } from 'app/profiles/column-names/profile-column';
 import { ProfileService } from 'app/profiles/services/profile.service';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { Department } from 'app/department/class/department';
@@ -21,7 +21,7 @@ import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box
 export class ProfileComponent implements OnInit {
 
   // title heading
-  moduleName: string = "Profile's Administration";
+  moduleName: string = "Profile Administration";
 
   // for scren view
   viewUpdate: boolean = false;
@@ -43,6 +43,7 @@ export class ProfileComponent implements OnInit {
 
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
+  viewOneColumnNames: any;
   updateColumn: any;
   // To be assigned based on the module
   readonly primaryIdColumnName: string = 'adminId';
@@ -71,7 +72,8 @@ export class ProfileComponent implements OnInit {
   displayUrl!: any;
 
   imagesUrl!: any;
-
+  userRoles: any;
+  backupUserRoles: any;
   constructor(
     private location: Location,
     private service: ProfileService,
@@ -85,6 +87,7 @@ export class ProfileComponent implements OnInit {
     this.columnNames = ProfileColumn;
     this.allColumnNames = ProfileAllColumn;
     this.updateColumn = ProfileUpdateColumn;
+    this.viewOneColumnNames = ProfileViewOneColumn;
     // creating empty object
     this.emptyProfile = new Profile();
 
@@ -93,7 +96,8 @@ export class ProfileComponent implements OnInit {
 
     this.profileUrl = `${environment.instituteAdminUrl}/profile`;
 
-
+    this.userRoles = [{ roleName: 'admin' }, { roleName: 'student' }, { roleName: 'teacher' }];
+    this.backupUserRoles = [...this.userRoles];
   }
 
   ngOnInit(): void {
@@ -138,7 +142,7 @@ export class ProfileComponent implements OnInit {
     this.showActivateButton = false;
 
     // changing column array
-    this.changePassingArray();
+    // this.changePassingArray();
   }
 
   // for navigating to activate screen
@@ -152,12 +156,13 @@ export class ProfileComponent implements OnInit {
   // For navigate to view screen with data
   // function will call when child view button is clicked 
   onChildViewClick(objectReceived: any): void {
+    console.log(objectReceived);
 
     // changing column array
     // this.allColumnNames = ProfileAllColumnForUpdate;
 
     // changing column array
-    this.changePassingArray();
+    // this.changePassingArray();
 
     // hiding view of all column and displaying all Profile's screen
     this.viewOne = true;
@@ -173,7 +178,7 @@ export class ProfileComponent implements OnInit {
   onChildUpdateClick(objectReceived: Profile): void {
 
     // changing column array
-    this.changePassingArray();
+    // this.changePassingArray();
     // this.allColumnNames = ProfileAllColumnForUpdate;
 
     // hiding update screen and displaying all Profile's screen
@@ -183,6 +188,8 @@ export class ProfileComponent implements OnInit {
     this.showActivateButton = false;
     // assingning data to current data for child component
     this.currentData = objectReceived;
+    // this.getSelectedOptionOfDropdown({ currentData: this.currentData, key: 'userRoleId' })
+    this.userRoles = this.backupUserRoles.filter((role: { roleName: string; }) => role.roleName == this.currentData.userRole)
   }
 
   // For navigate to update screen with data
@@ -199,63 +206,103 @@ export class ProfileComponent implements OnInit {
 
   // on addComponents's submit button clicked
   onAddProfileSubmit(objectReceived: Profile): void {
-    const selectedRole = this.adminRoles.find(role => role.roleId == objectReceived.userRoleId);
+    // const selectedRole = this.adminRoles.find(role => role.roleId == objectReceived.userRoleId);
 
-    if (selectedRole) {
-      objectReceived.userRole = selectedRole.roleName
-      console.log(objectReceived);
+    // if (selectedRole) {
+    //   objectReceived.userRole = selectedRole.roleName
+    //   console.log(objectReceived);
 
-      this.addProfile(objectReceived);
-    }
+    //   this.addProfile(objectReceived);
+    // }
+    this.addProfile(objectReceived);
+
   }
 
   // on updateComponents's submit button clicked
   onUpdateProfileSubmit(objectReceived: Profile) {
     // console.log(JSON.stringify(objectReceived))
-    const selectedRole = this.adminRoles.find(role => role.roleId == objectReceived.userRoleId);
+    // const selectedRole = this.adminRoles.find(role => role.roleId == objectReceived.userRoleId);
 
-    if (selectedRole) {
-      objectReceived.userRole = selectedRole.roleName
-      console.log(objectReceived);
+    // if (selectedRole) {
+    //   objectReceived.userRole = selectedRole.roleName
+    //   console.log(objectReceived);
 
-      this.updateProfile(objectReceived);
-    }
+    //   this.updateProfile(objectReceived);
+    // }
+
+    this.updateProfile(objectReceived);
+
   }
 
-  getSelectedOptionOfDropdown(dataReceived: Profile) {
-    this.cleanProfileObject(this.emptyProfile);
-    this.service.getProfileByUserId(dataReceived.userId).subscribe(
-      (data: Profile) => {
-        console.log(data);
-        // this.emptyProfile = data;
-        this.emptyProfile.institutionId = data.institutionId;
-        this.emptyProfile.adminDepartment = data.adminDepartment;
-        this.emptyProfile.userRoleId = data.userRoleId;
-        this.emptyProfile.dob = data.dob;
-        this.emptyProfile.adminGender = data.adminGender;
-        this.emptyProfile.mobilePhone = data.mobilePhone;
-        this.emptyProfile.adminAddress1 = data.adminAddress1;
-        this.emptyProfile.adminAddress2 = data.adminAddress2;
-        this.emptyProfile.adminState = data.adminState;
-        this.emptyProfile.adminCity = data.adminCity;
-        this.emptyProfile.adminZip = data.adminZip;
-        this.emptyProfile.profilePics = data.profilePics;
-        this.emptyProfile.activeUser = data.activeUser;
+  getSelectedOptionOfDropdown(data: any) {
 
+    const dataReceived = data.currentData;
+    const key = data.key;
+    console.log(key);
+
+    if (key == 'userId') {
+      this.cleanProfileObject(this.emptyProfile);
+      this.service.getProfileByUserId(dataReceived.userId).subscribe(
+        (data: Profile) => {
+          console.log(data);
+          // this.emptyProfile = data;
+          this.emptyProfile.institutionId = data.institutionId;
+          this.emptyProfile.adminDepartment = data.adminDepartment;
+          this.emptyProfile.userRole = data.userRole;
+          this.emptyProfile.userRoleId = data.userRoleId;
+          this.emptyProfile.dob = data.dob;
+          this.emptyProfile.adminGender = data.adminGender;
+          this.emptyProfile.mobilePhone = data.mobilePhone;
+          this.emptyProfile.adminAddress1 = data.adminAddress1;
+          this.emptyProfile.adminAddress2 = data.adminAddress2;
+          this.emptyProfile.adminState = data.adminState;
+          this.emptyProfile.adminCity = data.adminCity;
+          this.emptyProfile.adminZip = data.adminZip;
+          this.emptyProfile.profilePics = data.profilePics;
+          this.emptyProfile.activeUser = data.activeUser;
+
+        }
+      );
+
+      this.authUserService.getAuthUserById(dataReceived.userId).subscribe(
+        (data: Authuser) => {
+          this.emptyProfile.firstName = data.authUserFirstName;
+          this.emptyProfile.lastName = data.authUserLastName;
+          this.emptyProfile.adminEmail = data.authUserEmail;
+        },
+        (error) => {
+          console.log("failed to fetch auth user");
+
+        }
+      )
+    }
+
+    if (key == 'userRoleId') {
+      console.log(this.userRoles);
+
+      console.log(this.backupUserRoles);
+
+      this.userRoles = this.backupUserRoles;
+      const selectedRole = this.adminRoles.find(role => role.roleId == dataReceived.userRoleId);
+      const userRole = this.backupUserRoles.find((role: { roleName: string | undefined; }) => role.roleName == selectedRole?.roleName)
+
+      console.log(selectedRole);
+      console.log(userRole);
+
+      if (userRole != undefined) {
+        this.emptyProfile.userRole = userRole.roleName;
+        if (this.viewUpdate) {
+          this.currentData.userRole = userRole.roleName;
+        }
+        this.userRoles = this.userRoles.filter((role: { roleName: string | undefined; }) => role.roleName == selectedRole?.roleName)
+        console.log(this.userRoles);
       }
-    );
-
-    this.authUserService.getAuthUserById(dataReceived.userId).subscribe(
-      (data: Authuser) => {
-        this.emptyProfile.firstName = data.authUserFirstName;
-        this.emptyProfile.lastName = data.authUserLastName;
-        this.emptyProfile.adminEmail = data.authUserEmail;
-      },
-      (error) => {
-        console.log("failed to fetch auth user");
-
+      else {
+        this.userRoles = this.backupUserRoles;
+        this.emptyProfile.userRole = '';
+        this.currentData.userRole = ''
       }
-    )
+    }
   }
 
   onFileSelected(event: any) {
@@ -644,19 +691,19 @@ export class ProfileComponent implements OnInit {
   // description - for add functionality we requires inactive authusers and 
   // for viewAll / viewOne / Update we requires active authusers
 
-  changePassingArray() {
-    // Find the object with key 'userId'
-    const authUserArray = this.allColumnNames.find((column: { key: string, arrayName: string; }) => {
-      if (column.key === 'userId' && (this.viewAdd === false)) {
-        column.arrayName = 'activeAuthUsers';
-      }
-      if (column.key === 'userId' && (this.viewAdd === true)) {
-        column.arrayName = 'inactiveAuthUsers';
-      }
-    });
+  // changePassingArray() {
+  //   // Find the object with key 'userId'
+  //   const authUserArray = this.allColumnNames.find((column: { key: string, arrayName: string; }) => {
+  //     if (column.key === 'userId' && (this.viewAdd === false)) {
+  //       column.arrayName = 'activeAuthUsers';
+  //     }
+  //     if (column.key === 'userId' && (this.viewAdd === true)) {
+  //       column.arrayName = 'inactiveAuthUsers';
+  //     }
+  //   });
 
 
-  }
+  // }
 
   cleanProfileObject(object: any) {
     this.emptyProfile.institutionId = 0;
@@ -672,7 +719,7 @@ export class ProfileComponent implements OnInit {
     this.emptyProfile.adminZip = '';
     this.emptyProfile.profilePics = '';
     this.emptyProfile.activeUser = false;
-
+    this.emptyProfile.userRoleId = 0;
     this.emptyProfile.firstName = '';
     this.emptyProfile.lastName = '';
     this.emptyProfile.adminEmail = '';

@@ -23,7 +23,7 @@ import { InstituteServicesService } from 'app/institute-details/services/institu
   styleUrls: ['./assigncoursetoteacher.component.css']
 })
 export class AssigncoursetoteacherComponent {
-  moduleName = 'Assign Course To Teacher';
+  moduleName = 'Assign Course To User';
   _profile = new Profile();
   _disablevar: boolean = false;
   _profileArray: Profile[] = [];

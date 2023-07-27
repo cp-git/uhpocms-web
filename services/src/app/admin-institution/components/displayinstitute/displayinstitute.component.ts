@@ -13,7 +13,7 @@ import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box
   styleUrls: ['./displayinstitute.component.css']
 })
 export class DisplayinstituteComponent {
-  moduleName = 'Institute Administration';
+  moduleName = 'Institution Administration';
   @Input() admininstitutions: AdminInstitution[] = [];
   // Institution array
   // admininstitutions: AdminInstitution[] = [];

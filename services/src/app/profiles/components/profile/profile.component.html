@@ -85,7 +85,7 @@
 
 <ng-template #viewadd>
     <app-add-update [data]="{currentData:emptyProfile , columnNames:allColumnNames}"
-        [dropdown]="{adminInstitutions,departments,adminRoles,inactiveAuthUsers,genders}"
+        [dropdown]="{adminInstitutions,departments,adminRoles,inactiveAuthUsers,genders,userRoles}"
         (submitClicked)="onAddProfileSubmit($event)" (getSelectedOptionOfDropdown)="getSelectedOptionOfDropdown($event)"
         (change)="onFileSelected($event)"></app-add-update>
 
@@ -95,7 +95,7 @@
 <ng-template #viewactivate>
     <app-view-all *ngIf="allInActiveData.length>0"
         [data]="{moduleData:this.allInActiveData , columnNames:this.columnNames}"
-        [dropdown]="{adminInstitutions,departments,adminRoles,activeAuthUsers,genders}"
+        [dropdown]="{adminInstitutions,departments,adminRoles,activeAuthUsers,genders,userRoles}"
         [idsColumnName]="{columnName:primaryIdColumnName}" [isActivateScreen]="true"
         (activateClicked)="onChildActivateClick($event)">
     </app-view-all>
@@ -108,17 +108,17 @@
 
 
 <ng-template #viewone>
-    <app-view-one [data]="{currentData:currentData , columnNames:allColumnNames}"
-        [dropdown]="{adminInstitutions,departments,adminRoles,activeAuthUsers,genders}">
+    <app-view-one [data]="{currentData:currentData , columnNames:viewOneColumnNames}"
+        [dropdown]="{adminInstitutions,departments,adminRoles,activeAuthUsers,genders,userRoles}">
     </app-view-one>
     <img src="{{displayUrl}}/{{currentData.adminId}}" (click)="display(currentData.adminId)">
 </ng-template>
 
 <ng-template #viewupdate>
     <app-add-update [data]="{currentData:currentData , columnNames:updateColumn}"
-        [dropdown]="{adminInstitutions,departments,adminRoles,activeAuthUsers,genders}"
-        (submitClicked)="onUpdateProfileSubmit($event)" (change)="onFileSelected($event)">
-    </app-add-update>
+        [dropdown]="{adminInstitutions,departments,adminRoles,activeAuthUsers,genders,userRoles}"
+        (submitClicked)="onUpdateProfileSubmit($event)" (change)="onFileSelected($event)"
+        (getSelectedOptionOfDropdown)="getSelectedOptionOfDropdown($event)"></app-add-update>
 
     <!-- <img width="100%" *ngIf="imagesUrl" src={{imagesUrl}} class="image"> -->
 
@@ -127,7 +127,5 @@
         <img *ngIf="currentData.adminId" src="{{displayUrl}}/{{currentData.adminId}}"
             (click)="display(currentData.adminId)" style="max-width: 350px">
     </ng-template>
-
-
 
 </ng-template>

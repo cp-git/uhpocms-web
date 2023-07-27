@@ -42,7 +42,7 @@
         (deleteClicked)="onChildDeleteClick($event)" [buttons]="{updateButton:updateButton, deleteButton:deleteButton}">
     </app-view-all>
     <div *ngIf="allData.length==0">
-        <h3>No roles</h3>
+        <h3>No Permissions</h3>
     </div>
 </ng-template>
 
@@ -52,7 +52,7 @@
         [idsColumnName]="{columnName:primaryIdColumnName}" [isActivateScreen]="true">
     </app-view-all>
     <div *ngIf="allInActiveData.length==0">
-        <h3>No Inactive roles</h3>
+        <h3>No Inactive Permissions</h3>
     </div>
 </ng-template>
 

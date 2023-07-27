@@ -12,7 +12,7 @@ import { Location } from '@angular/common';
 export class AuthModuleComponent {
 
   // title heading
-  moduleName: string = "AuthModule Administration";
+  moduleName: string = "Master-Module Administration";
 
   // for scren view
   viewUpdate: boolean = false;

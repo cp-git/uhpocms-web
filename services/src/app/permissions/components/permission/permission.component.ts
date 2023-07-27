@@ -12,7 +12,7 @@ import { Location } from '@angular/common';
 export class PermissionComponent {
 
   // title heading
-  moduleName: string = "Permission Administration";
+  moduleName: string = "Master-Permission Administration";
 
   // for scren view
   viewUpdate: boolean = false;

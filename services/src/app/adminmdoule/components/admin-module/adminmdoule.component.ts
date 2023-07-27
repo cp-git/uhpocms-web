@@ -30,7 +30,7 @@ export class AdminmdouleComponent {
   userPermissions: AuthUserPermission[] = [];;
   modulePermissionIds: Set<number> = new Set<number>();
   authModule = userModule;
-
+  actualUserRole: any;
   constructor(private _route: Router, private _auth: AuthUserService, private _authenticationService: AuthenticationserviceService, private _activatedRoute: ActivatedRoute,
     private accessControlService: AccesscontrolService,
     private userPermissionService: AuthUserPermissionService
@@ -50,7 +50,7 @@ export class AdminmdouleComponent {
     this.userRoleId = sessionStorage.getItem('userRoleId');
     // this.loadAccessControl();
     this.userPermissionService.getAllPermissionsByRoleIdAndUserId(this.userRoleId, this.userId)
-
+    this.actualUserRole = sessionStorage.getItem('actualUserRole')
   }
 
   // function for loading permissions from session storage

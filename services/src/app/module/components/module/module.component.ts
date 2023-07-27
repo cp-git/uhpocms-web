@@ -24,7 +24,7 @@ import { CourseDepartment } from 'app/teacher-course/class/course-department';
 })
 export class ModuleComponent {
 
-  moduleName: string = 'Module';
+  moduleName: string = 'Module Administration';
 
   //screen view
   viewUpdate: boolean = false;

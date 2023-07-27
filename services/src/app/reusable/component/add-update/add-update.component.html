@@ -80,7 +80,7 @@
                         <label class="float-label">{{ column.label }}</label>
                         <select name="{{column.key}}" [(ngModel)]="currentData[column.key]" class="form-control"
                             required="" [disabled]="column.disable"
-                            (change)="column.functionOnDropdownClick ? onDropdownSelected(currentData) : null"
+                            (change)="column.functionOnDropdownClick ? onDropdownSelected(currentData,column.key) : null"
                             (change)="column.functionForDependentKeys ? onDropdownSelectedForDependentKeys(currentData,column.dependentKeys):null">
                             <option value="undefined" disabled>Select</option>
                             <ng-container *ngIf="[column.toSort] then sortDropdown else simpleDropdown"></ng-container>
