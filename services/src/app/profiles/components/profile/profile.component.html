@@ -95,7 +95,7 @@
 <ng-template #viewactivate>
     <app-view-all *ngIf="allInActiveData.length>0"
         [data]="{moduleData:this.allInActiveData , columnNames:this.columnNames}"
-        [dropdown]="{adminInstitutions,departments,adminRoles,activeAuthUsers,genders}"
+        [dropdown]="{adminInstitutions,departments,adminRoles,activeAuthUsers,genders,userRoles}"
         [idsColumnName]="{columnName:primaryIdColumnName}" [isActivateScreen]="true"
         (activateClicked)="onChildActivateClick($event)">
     </app-view-all>

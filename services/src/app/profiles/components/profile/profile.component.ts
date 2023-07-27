@@ -189,7 +189,7 @@ export class ProfileComponent implements OnInit {
     // assingning data to current data for child component
     this.currentData = objectReceived;
     // this.getSelectedOptionOfDropdown({ currentData: this.currentData, key: 'userRoleId' })
-    this.userRoles = this.userRoles.filter((role: { roleName: string; }) => role.roleName == this.currentData.userRole)
+    this.userRoles = this.backupUserRoles.filter((role: { roleName: string; }) => role.roleName == this.currentData.userRole)
   }
 
   // For navigate to update screen with data
