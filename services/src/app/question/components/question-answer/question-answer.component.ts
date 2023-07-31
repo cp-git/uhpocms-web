@@ -14,6 +14,8 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
 
 import { Content, TDocumentDefinitions } from 'pdfmake/interfaces';
+import { QuizService } from 'app/quiz/services/quiz.service';
+import { Quiz } from 'app/quiz/class/quiz';
 
 @Component({
   selector: 'app-question-answer',
@@ -133,7 +135,7 @@ export class QuestionAnswerComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private questionService: QuestionService,
-    private renderer: Renderer2
+    private renderer: Renderer2,private quizServ: QuizService
   ) {
     this.profileId = sessionStorage.getItem('profileId');
     this.profile = new Profile();
@@ -205,6 +207,61 @@ export class QuestionAnswerComponent implements OnInit {
       // }
     }
 
+
+  }
+
+  onDelete(queAns:OneQuestionAnswer){
+
+    let questionAnsCopy:OneQuestionAnswer[] = [];
+    questionAnsCopy = this.questionAnswers;
+    let quiz :Quiz = new Quiz();
+    console.log("INside DLETE FUNCTION")
+    console.log(queAns)
+
+    console.log(this.questionAnswers)
+     
+   this.questionService.deleteQuesAndAns(queAns.questionId).subscribe(
+    (response)=>{
+      console.log("Delete Complete")
+
+      questionAnsCopy = questionAnsCopy.filter(
+        (item) => item.questionId !== queAns.questionId
+      );
+      
+      this.quizServ.getQuizQuizId(queAns.questionQuizId).subscribe(
+        (response)=>{
+             
+                  quiz = response;
+                  console.log("QUIZ IN DELETE AFTER GET BY ID")
+                  console.log(response)
+                  console.log(quiz)
+                  quiz.maxQuestions = quiz.maxQuestions - 1;
+        
+                  this.quizServ.updateQuiz(quiz.title , quiz).subscribe(
+                    (response)=>{
+                      console.log("Quiz updated Successfully")
+                      this.questionAnswers = questionAnsCopy;
+
+                      console.log("AFter DELETE QuestionAnswersArray")
+                      console.log(this.questionAnswers)
+                
+                    }
+                  )
+
+        }
+
+       
+      )
+      // Update the original array with the modified copy
+      // this.questionAnswers = questionAnsCopy;
+
+      // console.log("AFter DELETE QuestionAnswersArray")
+      // console.log(this.questionAnswers)
+
+    
+
+    }
+   )
 
   }
 

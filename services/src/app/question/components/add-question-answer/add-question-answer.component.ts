@@ -1562,7 +1562,5 @@ export class AddQuestionAnswerComponent implements OnInit {
 
   }
 
-  onDeleteClicked(object: any) {
 
-  }
 }

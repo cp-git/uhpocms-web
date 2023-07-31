@@ -82,4 +82,9 @@ export class QuizService {
     return this.http.get<Quiz[]>(`${this.quizUrl}/enroll/inactive/profileid?id=${profileId}`);
 
   }
+
+
+  getQuizQuizId(quizId: number): Observable<any> {
+    return this.http.get<any>(`${this.quizUrl}/quizId/${quizId}`);
+  }
 }

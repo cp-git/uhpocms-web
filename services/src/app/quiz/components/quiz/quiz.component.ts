@@ -66,7 +66,7 @@ export class QuizComponent implements OnInit {
   userRoleId: any;
   userAndRolePermissions: AuthUserPermission[] = [];
   userModule = userModule;
-
+  
   constructor(
     private quizService: QuizService,
     private location: Location,
