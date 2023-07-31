@@ -48,8 +48,9 @@
                             </ng-container>
 
                             <ng-container *ngFor="let quiz of quizzes |filter:'moduleId':module.moduleId">
-                                <div>
+                                <div style="display: flex;">
                                     <br>
+                                    <div style="width:10%">
                                     <ng-container *ngIf="quizPassedProgresses.includes(quiz.quizId); else failedIcon">
                                         <span class="fa fa-check-circle " style="color:blue"></span>
                                     </ng-container>
@@ -61,19 +62,22 @@
                                     <ng-template #fileIcon>
                                         <span class="far fa-file-alt"></span>
                                     </ng-template> &nbsp;&nbsp;
+                                </div>
+                                  <div style="width:60%">  <a (click)="onQuizClicked(quiz)"
+                                    [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId) && selectedCourse.accessModuleInOrder} ">{{quiz.title}}</a>
+                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  </div>
 
-                                    <a (click)="onQuizClicked(quiz)"
-                                        [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId) && selectedCourse.accessModuleInOrder}">{{quiz.title}}</a>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
+                                   <div style="width:30%;margin-right: 2%;">
                                     <a class="retakequiz"
-                                        *ngIf="((!quiz.singleAttempt && (quizFailedProgresses.includes(quiz.quizId) || quizPassedProgresses.includes(quiz.quizId))) || quizFailedProgresses.includes(quiz.quizId))"
-                                        (click)="onRetakeQuizClicked(quiz)" >Retake</a>
-                                    
+                                    *ngIf="((!quiz.singleAttempt && (quizFailedProgresses.includes(quiz.quizId) || quizPassedProgresses.includes(quiz.quizId))) || quizFailedProgresses.includes(quiz.quizId))"
+                                    (click)="onRetakeQuizClicked(quiz)" >Retake</a>
+                                
 
 
-                                        <a *ngIf="((shouldShowReviewButton(quiz.quizId)) && (shouldShowReviewButtonStat(quiz.quizId)))" class="retakequiz" style="margin-left: 2%;"
-                                            (click)="getAllAnswersAttempted(quiz.quizId)">Review</a>
+                                    <a *ngIf="((shouldShowReviewButton(quiz.quizId)) && (shouldShowReviewButtonStat(quiz.quizId)))" class="retakequiz" style="margin-left: 2%;"
+                                        (click)="getAllAnswersAttempted(quiz.quizId)">Review</a>
+                                   </div>
 
                                 </div>
                             </ng-container>

@@ -44,7 +44,7 @@ export const TeacherQuizUpdateColumn = [
     { key: 'moduleId', label: 'Module Name', type: 'dropdown', arrayName: 'modules', toSort: true, sortBasedOn: 'courseId', foreignKeyColumn: 'courseId_id', columnId: 'moduleId', columnName: 'moduleName', disable: 'true' },
     { key: 'categoryId', label: 'Category Name', type: 'dropdown', arrayName: 'categories', columnId: 'categoryId', columnName: 'categoryName', disable: 'true' },
 
-    { key: 'title', label: 'Quiz Title', type: 'input', subtype: 'text' },
+    { key: 'title', label: 'Quiz Title', type: 'input', subtype: 'text' , disable :'true'},
     { key: 'description', label: 'Quiz Description', type: 'input', subtype: 'text' },
     { key: 'url', label: 'Quiz Url', type: 'input', subtype: 'text' },
     { key: 'maxQuestions', label: 'Max Questions', type: 'input', subtype: 'number' },

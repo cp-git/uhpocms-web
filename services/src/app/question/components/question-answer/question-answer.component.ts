@@ -14,6 +14,9 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
 
 import { Content, TDocumentDefinitions } from 'pdfmake/interfaces';
+import { QuizService } from 'app/quiz/services/quiz.service';
+import { Quiz } from 'app/quiz/class/quiz';
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 
 @Component({
   selector: 'app-question-answer',
@@ -133,7 +136,7 @@ export class QuestionAnswerComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private questionService: QuestionService,
-    private renderer: Renderer2
+    private renderer: Renderer2,private quizServ: QuizService,  private dialogBoxService: DialogBoxService,
   ) {
     this.profileId = sessionStorage.getItem('profileId');
     this.profile = new Profile();
@@ -206,6 +209,118 @@ export class QuestionAnswerComponent implements OnInit {
     }
 
 
+  }
+
+  onDelete(queAns:OneQuestionAnswer){
+
+    let questionAnsCopy:OneQuestionAnswer[] = [];
+    questionAnsCopy = this.questionAnswers;
+    let quiz :Quiz = new Quiz();
+    let passMarkQuiz :Quiz = new Quiz();
+    console.log("INside DLETE FUNCTION")
+    console.log(queAns)
+    let  passMark :number =0;
+    let quizTotalMarks:number = 0; 
+
+  if((queAns.questionId == 0) || (queAns.questionId == undefined))
+  {
+    this.quizServ.getQuizQuizId(this.selectedQuizId).subscribe(
+      (response)=>{
+           
+                quiz = response;
+                console.log("QUIZ IN DELETE AFTER GET BY ID")
+                console.log(response)
+                console.log(quiz)
+              
+                quiz.maxQuestions = quiz.maxQuestions - 1;
+      
+                this.quizServ.updateQuiz(quiz.title , quiz).subscribe(
+                  (response)=>{
+                    console.log("Quiz updated Successfully")
+                                      // Find the index of the queAns object in questionAnsCopy
+                      const indexToDelete = questionAnsCopy.findIndex(
+                        (item) => item === queAns
+                      );
+
+                      // If the index is found (not -1), remove the element from the array
+                      if (indexToDelete !== -1) {
+                        questionAnsCopy.splice(indexToDelete, 1);
+                      }
+
+
+
+                      console.log("After DELETE QuestionAnswersArray");
+                      console.log(questionAnsCopy);
+
+                    console.log("AFter DELETE QuestionAnswersArray")
+                    console.log(this.questionAnswers)
+
+                    this.dialogBoxService.open("Question deleted successfully", 'information');
+                  }
+                )
+
+      }
+
+     
+    )
+  }
+
+  else {
+   this.questionService.deleteQuesAndAns(queAns.questionId).subscribe(
+    (response)=>{
+      console.log("Delete Complete")
+
+      questionAnsCopy = questionAnsCopy.filter(
+        (item) => item.questionId !== queAns.questionId
+      );
+      
+      this.quizServ.getQuizQuizId(queAns.questionQuizId).subscribe(
+        (response)=>{
+             
+                  quiz = response;
+                  console.log("QUIZ IN DELETE AFTER GET BY ID")
+                  console.log(response)
+                  console.log(quiz)
+                  passMark = quiz.passMark;
+                  quiz.maxQuestions = quiz.maxQuestions - 1;
+        
+                  this.quizServ.updateQuiz(quiz.title , quiz).subscribe(
+                    (response)=>{
+                      console.log("Quiz updated Successfully")
+                      questionAnsCopy.forEach((oneQuesAns:OneQuestionAnswer)=> quizTotalMarks = quizTotalMarks +  oneQuesAns.maxMarks)
+
+
+                      this.questionAnswers = questionAnsCopy;
+    
+                      console.log("AFter DELETE QuestionAnswersArray")
+                      console.log(this.questionAnswers)  
+                      if(quizTotalMarks < passMark )
+                      {
+
+                      this.dialogBoxService.open("Question deleted successfully, Kindly update quiz passing marks from Quiz Panel", 'information'); 
+
+                      }
+                      else{
+                      this.dialogBoxService.open("Question deleted successfully", 'information'); 
+                      }
+                    }
+                  )
+
+        }
+
+       
+      )
+      // Update the original array with the modified copy
+      // this.questionAnswers = questionAnsCopy;
+
+      // console.log("AFter DELETE QuestionAnswersArray")
+      // console.log(this.questionAnswers)
+
+    
+
+    }
+   )
+  }
   }
 
   onFormSubmit(queAns: OneQuestionAnswer, queAnsArray: OneQuestionAnswer[]) {
