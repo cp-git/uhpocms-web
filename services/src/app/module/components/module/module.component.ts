@@ -17,6 +17,8 @@ import { Department } from 'app/department/class/department';
 import { AdvFilterPipe } from 'app/shared/pipes/adv-filter/adv-filter.pipe';
 import { FilterPipe } from 'app/shared/pipes/filter/filter.pipe';
 import { CourseDepartment } from 'app/teacher-course/class/course-department';
+import { ModuleFileService } from 'app/module-file/services/module-file.service';
+import { ModuleFile } from 'app/module-file/class/module-file';
 @Component({
   selector: 'app-module',
   templateUrl: './module.component.html',
@@ -60,7 +62,7 @@ export class ModuleComponent {
 
   emptyModule: Module;  // empty admin role
   currentData!: Module;  // for update and view, to show existing data
-
+  moduleFilesInModule:ModuleFile[] = [];
 
   // for user Permissions
   buttonsArray: any;
@@ -83,6 +85,7 @@ export class ModuleComponent {
     private userPermissionService: AuthUserPermissionService,
     private institutionService: AdmininstitutionService,
     private departmentService: DepartmentService,
+    private moduleFileService:ModuleFileService
 
   ) {
 
@@ -298,14 +301,14 @@ export class ModuleComponent {
     //   alert("End date must be after start date");
     //   return;
     // }
-    // currentData.moduleIsActive = true;  // setting active true
+    currentData.moduleIsActive = false;  // setting active false
     // calling service for adding data
     //console.log(JSON.stringify(currentData));
     this.service.addTeacherModule(currentData).subscribe(
       (data) => {
         //  console.log(this.currentData)
         console.log('Module added Successfully');
-        this.dialogBoxServices.open("Module added Successfully", 'information');
+        this.dialogBoxServices.open("Module added Successfully but its status is InActive", 'information');
         this.emptyModule = {} as Module;
         this.ngOnInit();
         this.back();
@@ -427,22 +430,44 @@ export class ModuleComponent {
     );
 
   }
-
-
-  // For activating Module
-  private activeModule(moduleId: any) {
-    //alert(moduleId);
-    // calling service to activating admin role
-    this.service.activateModuleById(moduleId).subscribe(
-      response => {
-        this.dialogBoxServices.open('Module Activated', 'information');
-        this.ngOnInit();
-      },
-      error => {
-        this.dialogBoxServices.open('Failed to Activate', 'warning');
-      }
-    );
+ 
+  async getModuleFileByModuleId(moduleId: number): Promise<any> {
+    try {
+      const response: any = await this.moduleFileService.getModuleFilesByModuleId(moduleId).toPromise();
+      this.moduleFilesInModule = response;
+      console.log(response);
+    } catch (error) {
+      console.error('Error fetching module files:', error);
+      throw error; 
+    }
   }
+  
+  // For activating Module
+  private async activeModule(moduleId: any) {
+    try {
+      console.log("Inside activateModule(module: Module)");
+      await this.getModuleFileByModuleId(moduleId);
+  
+      if (this.moduleFilesInModule && this.moduleFilesInModule.length > 0) {
+        this.service.activateModuleById(moduleId).subscribe(
+          () => {
+            this.dialogBoxServices.open('Module Activated', 'information');
+            this.ngOnInit();
+          },
+          error => {
+            console.error('Error activating module:', error);
+            this.dialogBoxServices.open('Failed to Activate', 'warning');
+          }
+        );
+      } else {
+        this.dialogBoxServices.open('Module has no files. Cannot activate without files.', 'warning');
+      }
+    } catch (error) {
+      console.error('Error during module activation:', error);
+      this.dialogBoxServices.open('An error occurred during module activation', 'warning');
+    }
+  }
+  
 
   private loadDataBasedOnRole(userRole: any) {
     console.log(userRole);
