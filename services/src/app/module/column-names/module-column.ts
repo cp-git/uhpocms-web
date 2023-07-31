@@ -21,7 +21,7 @@ export const ModuleAllColumn = [
     { key: 'moduleEndDate', label: 'End Date', type: 'date', minValue: 'moduleStartDate' },
     // { key: 'moduleCourse', label: 'Module course', type: 'input' },
     { key: 'moduleOrderNo', label: 'Module Order No', type: 'input',subtype:'number' },
-    { key: 'moduleIsActive', label: 'Is Active', type: 'checkbox' }
+    
 ]
 
 
@@ -35,5 +35,5 @@ export const UpdateAllColumn = [
     { key: 'moduleEndDate', label: 'End Date', type: 'date', minValue: 'moduleStartDate' },
     // { key: 'moduleCourse', label: 'Module course', type: 'input' },
     { key: 'moduleOrderNo', label: 'Module Order No', type: 'input',subtype:'number' },
-    { key: 'moduleIsActive', label: 'Is Active', type: 'checkbox' }
+   
 ]

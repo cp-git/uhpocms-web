@@ -14,6 +14,7 @@ import { userModule } from 'app/permissions/enum/user-module.enum';
 import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
 import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
 import { environment } from 'environments/environment.development';
+
 // import { Profile } from 'app/profiles/class/profile';
 // import { AssignedteachercourseComponent } from 'app/displayAssignedCourseToTeacher/components/assignedteachercourse/assignedteachercourse.component';
 @Component({
@@ -29,7 +30,7 @@ export class ModuleFileComponent {
   controlEnabled: boolean = true;
   module = new Module();
   modules: Module[] = []; //for all module data
-
+  moduleFilesInModule:ModuleFile[] = [];
   modulesFile: ModuleFile[] = [];
   moduleFile = new ModuleFile();
 
@@ -345,7 +346,6 @@ export class ModuleFileComponent {
     location.reload();
   }
 
-
   // Add module file
   addModuleFile(objectReceived: ModuleFile) {
     // objectReceived.moduleFileIsActive = true;
@@ -370,6 +370,7 @@ export class ModuleFileComponent {
 
         console.log('File Added successfully');
         this.dialogBoxServices.open("File Added successfully", 'information');
+        this.activeModule(objectReceived.moduleId)
 
         this.emptyModuleFile = {} as ModuleFile;
         this.ngOnInit();
@@ -383,6 +384,43 @@ export class ModuleFileComponent {
 
     );
   }
+  async getModuleFileByModuleId(moduleId: number): Promise<any> {
+    try {
+      const response: any = await this.moduleFileService.getModuleFilesByModuleId(moduleId).toPromise();
+      this.moduleFilesInModule = response;
+      console.log(response);
+    } catch (error) {
+      console.error('Error fetching module files:', error);
+      throw error; 
+    }
+  }
+  // For activating Module
+  private async activeModule(moduleId: any) {
+    try {
+      console.log("Inside activateModule(module: Module)");
+      await this.getModuleFileByModuleId(moduleId);
+  
+      if (this.moduleFilesInModule && this.moduleFilesInModule.length > 0) {
+        this.moduleService.activateModuleById(moduleId).subscribe(
+          () => {
+            console.log("Module Activated");
+            //this.dialogBoxServices.open('Module Activated', 'information');
+            this.ngOnInit();
+          },
+          error => {
+            console.error('Error activating module:', error);
+            //this.dialogBoxServices.open('Failed to Activate', 'warning');
+          }
+        );
+      } else {
+        this.dialogBoxServices.open('Module has no files. Cannot activate without files.', 'warning');
+      }
+    } catch (error) {
+      console.error('Error during module activation:', error);
+      this.dialogBoxServices.open('An error occurred during module activation', 'warning');
+    }
+  }
+
 
   // For updating module files by id
   private updateModuleFileById(currentData: ModuleFile) {
