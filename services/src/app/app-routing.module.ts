@@ -62,6 +62,7 @@ import { AuthModuleComponent } from './permissions/components/auth-module/auth-m
 import { AccessControlComponent } from './accesscontrol/components/access-control/access-control.component';
 import { AnalyticsComponent } from './admin-analytics/analytics/analytics.component';
 import { ReviewAnswerComponent } from './review-answer/components/review-answer/review-answer.component';
+import { AllCourseComponent } from './teacher-course/components/all-course/all-course.component';
 
 
 const routes: Routes = [
@@ -191,6 +192,7 @@ const routes: Routes = [
 
   { path: 'Course', component: TeacherCourseComponent },
   { path: 'Course/:userName', component: TeacherCourseComponent },
+  { path: 'Courses', component: AllCourseComponent },
 
   { path: 'Module', component: ModuleComponent },
   { path: 'Module/:userName', component: ModuleComponent },

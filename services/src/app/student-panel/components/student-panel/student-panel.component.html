@@ -54,14 +54,26 @@
 
         <div class="container">
             <!-- first row  -->
-            <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.COURSE)">
+            <div class="col-md-4">
                 <div class="card text-center" (click)="RedirectToStudentCourse()">
                     <div class="card-header">
                         <span class="fas fa-book-open fa-4x" style="color:rgb(21,114,213)"></span>
                     </div>
                     <div class="card-body">
                         <!--<h3 class="card-title">Courses</h3>-->
-                        <button class="btn btn-primary">Courses</button>
+                        <button class="btn btn-primary">Enrolled Courses</button>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-md-4" *ngIf="modulePermissionIds.has(authModule.COURSE)">
+                <div class="card text-center" (click)="redirectToAllCourses()">
+                    <div class="card-header">
+                        <span class="fas fa-book-open fa-4x" style="color:rgb(21,114,213)"></span>
+                    </div> 
+                    <div class="card-body">
+                        <!--<h3 class="card-title">Courses</h3>-->
+                        <button class="btn btn-primary">All Courses</button>
                     </div>
                 </div>
             </div>

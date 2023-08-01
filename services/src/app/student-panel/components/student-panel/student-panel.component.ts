@@ -196,4 +196,9 @@ export class StudentPanelComponent {
   redirectToNotification() {
     this._route.navigate(['announcement/student', { id: this.profileId }]);
   }
+
+  //navigates the user to courses panel for all courses
+  redirectToAllCourses() {
+    this._route.navigate(['Courses']);
+  }
 }
