@@ -12,7 +12,7 @@
 
                 </div>
             </div> -->
-            <app-module-header [moduleName]="moduleName"
+            <app-module-header [titleWithUserRole]="titleWithUserRole" [moduleName]="moduleName"
                 [buttons]="{showAddButton:showAddButton,showActivateButton:showActivateButton}"
                 (addButtonClicked)="onAddClick()" (activateButtonClicked)="onActivateClick()"
                 (backButtonClicked)="back()"></app-module-header>

@@ -35,7 +35,7 @@ export class QuestionAnswerComponent implements OnInit {
   @Input() selectedCategoryName: any;
   @Input() selectedQuizId: any;
   @Input() generatedQuestionAnswerId: number = 0;
-  @Input() totalQuizMarks: any;
+  @Input() totalQuizMarks!: number;
   @Output() submitClicked: EventEmitter<any> = new EventEmitter();
 
   totalMarks: number = 0;
@@ -53,7 +53,7 @@ export class QuestionAnswerComponent implements OnInit {
   questionUrl!: string;
 
   displayUrl!: any
-
+quizToMarks!: number;
   profileId: any;
 
   isPageValid: boolean = false;
@@ -68,7 +68,7 @@ export class QuestionAnswerComponent implements OnInit {
   adminInstitutions: AdminInstitution[] = [];
   institution: AdminInstitution;
   instituteName: any;
-
+  quizTotalMarks!: number;
   quizTitle: any;
   selectedQuiz: any;
 
@@ -219,9 +219,18 @@ export class QuestionAnswerComponent implements OnInit {
     let passMarkQuiz :Quiz = new Quiz();
     console.log("INside DLETE FUNCTION")
     console.log(queAns)
-    let  passMark :number =0;
-    let quizTotalMarks:number = 0; 
+    let  passMark :number =0 ;
+    this.totalQuizMarks = 0; 
+    
+    console.log(" questionAnsCopy before going to delete")
+    console.log(questionAnsCopy)
 
+  if(questionAnsCopy.length == 1){                   
+     this.dialogBoxService.open("Delete unsuccessfull. At least one question should be present.", 'warning');
+}
+  else{
+    this.dialogBoxService.open('Are you sure you want to delete this Question ? ', 'decision').then((response) => {
+      if (response) {
   if((queAns.questionId == 0) || (queAns.questionId == undefined))
   {
     this.quizServ.getQuizQuizId(this.selectedQuizId).subscribe(
@@ -233,7 +242,20 @@ export class QuestionAnswerComponent implements OnInit {
                 console.log(quiz)
               
                 quiz.maxQuestions = quiz.maxQuestions - 1;
-      
+
+                // questionAnsCopy.forEach((queAnsActual:OneQuestionAnswer)=>this.totalQuizMarks = this.totalQuizMarks + queAnsActual.maxMarks)
+                questionAnsCopy.forEach((queAnsActual) => {
+                  if (typeof this.totalQuizMarks === 'undefined') {
+                    this.totalQuizMarks = 0;
+                  }
+                  this.totalQuizMarks += queAnsActual.maxMarks;
+                });
+                quiz.maxMarks = this.totalQuizMarks
+                this.quizTotalMarks = this.totalQuizMarks
+             
+               
+                console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%")
+                console.log(this.totalQuizMarks)
                 this.quizServ.updateQuiz(quiz.title , quiz).subscribe(
                   (response)=>{
                     console.log("Quiz updated Successfully")
@@ -247,14 +269,15 @@ export class QuestionAnswerComponent implements OnInit {
                         questionAnsCopy.splice(indexToDelete, 1);
                       }
 
-
+                     
 
                       console.log("After DELETE QuestionAnswersArray");
                       console.log(questionAnsCopy);
 
                     console.log("AFter DELETE QuestionAnswersArray")
                     console.log(this.questionAnswers)
-
+                    this.questionAnswers = questionAnsCopy;
+                    
                     this.dialogBoxService.open("Question deleted successfully", 'information');
                   }
                 )
@@ -264,7 +287,7 @@ export class QuestionAnswerComponent implements OnInit {
      
     )
   }
-
+  
   else {
    this.questionService.deleteQuesAndAns(queAns.questionId).subscribe(
     (response)=>{
@@ -273,7 +296,7 @@ export class QuestionAnswerComponent implements OnInit {
       questionAnsCopy = questionAnsCopy.filter(
         (item) => item.questionId !== queAns.questionId
       );
-      
+       
       this.quizServ.getQuizQuizId(queAns.questionQuizId).subscribe(
         (response)=>{
              
@@ -283,18 +306,28 @@ export class QuestionAnswerComponent implements OnInit {
                   console.log(quiz)
                   passMark = quiz.passMark;
                   quiz.maxQuestions = quiz.maxQuestions - 1;
-        
+                  // questionAnsCopy.forEach((queAnsActual:OneQuestionAnswer)=>this.totalQuizMarks = this.totalQuizMarks + queAnsActual.maxMarks)
+                  questionAnsCopy.forEach((queAnsActual) => {
+                    if (typeof this.totalQuizMarks === 'undefined') {
+                      this.totalQuizMarks = 0;
+                    }
+                    this.totalQuizMarks  = this.totalQuizMarks + queAnsActual.maxMarks;
+                  });
+                  quiz.maxMarks = this.totalQuizMarks
+                  this.quizTotalMarks = this.totalQuizMarks
+                  console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%")
+                  console.log(this.totalQuizMarks)
                   this.quizServ.updateQuiz(quiz.title , quiz).subscribe(
                     (response)=>{
                       console.log("Quiz updated Successfully")
-                      questionAnsCopy.forEach((oneQuesAns:OneQuestionAnswer)=> quizTotalMarks = quizTotalMarks +  oneQuesAns.maxMarks)
+                      // questionAnsCopy.forEach((oneQuesAns:OneQuestionAnswer)=> quizTotalMarks = quizTotalMarks +  oneQuesAns.maxMarks)
 
 
                       this.questionAnswers = questionAnsCopy;
-    
+
                       console.log("AFter DELETE QuestionAnswersArray")
                       console.log(this.questionAnswers)  
-                      if(quizTotalMarks < passMark )
+                      if(this.totalQuizMarks < passMark )
                       {
 
                       this.dialogBoxService.open("Question deleted successfully, Kindly update quiz passing marks from Quiz Panel", 'information'); 
@@ -321,7 +354,11 @@ export class QuestionAnswerComponent implements OnInit {
     }
    )
   }
+}
+
+});
   }
+}
 
   onFormSubmit(queAns: OneQuestionAnswer, queAnsArray: OneQuestionAnswer[]) {
     this.submittedQuestionAnswer = {} as OneQuestionAnswer;
