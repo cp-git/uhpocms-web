@@ -98,12 +98,16 @@ export class DepartmentService {
   }
 
   //service to get dept by provided profile id
-  getDepartmentsByProfileId(id: number): Observable<Department[]> {
+  getDepartmentsOfAssignCoursesByProfileId(id: number): Observable<Department[]> {
     return this._http.get<Department[]>(`${this.departmentUrl}/department/profile/` + id);
   }
 
   //service to get dept by provided institution id
   getInactiveDepartmentsByInstitutionId(id: number): Observable<Department[]> {
     return this._http.get<Department[]>(`${this.departmentUrl}/department/inactive/instid/` + id);
+  }
+
+  getDepartmentOfProfileId(profileId:number): Observable<Department[]>{
+    return this._http.get<Department[]>(`${this.departmentUrl}/department/profileid/${profileId}`);
   }
 }

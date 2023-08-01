@@ -515,7 +515,7 @@ export class ModuleComponent {
 
   // For getting all active departments by institution id
   getDepartmentByProfileId(profileId: any) {
-    this.departmentService.getDepartmentsByProfileId(profileId).subscribe(
+    this.departmentService.getDepartmentsOfAssignCoursesByProfileId(profileId).subscribe(
       (response) => {
         console.log(response);
         this.departments = response;

@@ -431,4 +431,9 @@ profile: Profile;
   RedirectToAdminDept() {
     this._route.navigate(['Department', this.userName]);
   }
+
+  //navigates the user to courses panel for all courses
+  redirectToAllCourses() {
+    this._route.navigate(['Courses']);
+  }
 }

@@ -17,7 +17,7 @@
                 [checked]="(userPermissionsIds.has(CREATE) || groupPermissionsIds.has(CREATE))&& (userPermissionsIds.has(VIEW)) "
                 [disabled]="groupPermissionsIds.has(CREATE)" (change)="updatePermissions($event, CREATE)"
                 [ngClass]="{'groupPerm': (assignPermissionTo == 'ROLE' && userPermissionsIds.has(CREATE))}">
-            <label for="create">&nbsp; CREATE</label>
+            <label for="create">&nbsp; ADD</label>
         </div>
         <div *ngIf="module.hasDelete">
             <input type="checkbox" id="delete" [value]="DELETE"
