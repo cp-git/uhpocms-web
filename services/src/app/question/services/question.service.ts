@@ -34,6 +34,11 @@ export class QuestionService {
   }
 
 
+  deleteQuesAndAns(quesId:number)
+  {
+    return this.http.delete<any>(`${this.questionUrl}/question/deletequeansbyid/${quesId}`)
+  }
+
   //get question by quesiton figure
   getQuestion(questionFigure: string): Observable<Question> {
     return this.http.get<Question>(`${this.questionUrl}/question/${questionFigure}`);

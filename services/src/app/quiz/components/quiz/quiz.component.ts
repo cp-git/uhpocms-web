@@ -36,7 +36,7 @@ export class QuizComponent implements OnInit {
   // showActivateButton: boolean = true;
 
   //Display Column Names
-
+  
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
 
@@ -66,7 +66,7 @@ export class QuizComponent implements OnInit {
   userRoleId: any;
   userAndRolePermissions: AuthUserPermission[] = [];
   userModule = userModule;
-
+  
   constructor(
     private quizService: QuizService,
     private location: Location,
@@ -325,10 +325,22 @@ export class QuizComponent implements OnInit {
     currentData.setTimer = timerInSeconds;
     let maxMarks: any = currentData.maxMarks;
     maxMarks = parseInt(maxMarks)
+    let quesArrInQuiz : Question[] =[];
+    let updatedQuiz : Quiz = new Quiz();
+    this.quesService.getAllQuestionsByQuizId(currentData.quizId).subscribe(
+      (response)=>{
+          quesArrInQuiz = response;
+      }
+    )
 
     if (passMark <= maxMarks) {
+      if(currentData.maxQuestions > quesArrInQuiz.length)
+      { currentData.active = false;}
       this.quizService.updateQuiz(currentData.title, currentData).subscribe(
         response => {
+          
+
+         updatedQuiz = response
           this.dialogBoxService.open('Quiz Updated successfully', 'information')
           this.ngOnInit();
           this.back();

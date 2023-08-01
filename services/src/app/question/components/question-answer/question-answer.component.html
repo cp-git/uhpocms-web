@@ -34,8 +34,9 @@
 
             </div>
             <!-- <div class="totalMarks"> Total Marks - {{ queAns['totalMarks'] }}</div> -->
-
-            <div class="totalMarks"> Total Marks - {{totalQuizMarks}}</div> 
+            <div class="totalMarks"> Total Marks - {{totalQuizMarks}}</div>
+            <!-- <div class="totalMarks"> Total Marks - {{quizTotalMarks}}</div> -->
+            <!-- <div class="totalMarks"> Max Marks - {{totalQuizMarks}}</div>  -->
             
        
           
@@ -125,6 +126,10 @@
                 <button class="btn submitbutton"
                     [ngClass]="{'dirtySubmitButton' : myForm.dirty && queAns['isFormDirty'], 'noChangeSubmitButton' :queAns['isFormSubmitted']}"
                     type="submit" [disabled]="!myForm.valid || !queAns['isOptionSelected']">Submit</button>
+
+                    <button class="btn submitbutton"
+                    [ngClass]="{'dirtySubmitButton' : myForm.dirty && queAns['isFormDirty'], 'noChangeSubmitButton' :queAns['isFormSubmitted']}"
+                    type="button" (click)="onDelete(queAns)">Delete</button>
             </div>
 
         </div>

@@ -100,7 +100,7 @@ export class AddQuestionAnswerComponent implements OnInit {
   passMarks: number = 0
   maxMarks: number = 0
   myFiles: string[] = [];
-
+   
   userId: any;
   buttonsArray: any;
   userAndRolePermissions: AuthUserPermission[] = [];
@@ -1055,7 +1055,7 @@ export class AddQuestionAnswerComponent implements OnInit {
       (response) => {
         quiz = response.filter((quiz: Quiz) => quiz.quizId == quizId)
         this.passMarks = quiz[0].passMark;
-        // this.maxMarks = quiz[0].maxMarks;
+        this.maxMarks = quiz[0].maxMarks;
         console.log(quiz)
 
       }
@@ -1145,10 +1145,14 @@ export class AddQuestionAnswerComponent implements OnInit {
 
     this.quizServ.fetchAllActInactQuizs().subscribe(
       (response) => {
-        let quiz: Quiz[] = response.filter((quiz: Quiz) => quiz.quizId == quizId)
+        let quiz: Quiz[] = response.filter((quiz: Quiz) => quiz.quizId === quizId)
         this.passMarks = quiz[0].passMark;
         this.maxMarks = quiz[0].maxMarks;
         this.totalQuizMarks = quiz[0].maxMarks
+
+
+        console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+        console.log(this.totalQuizMarks)
         console.log(quiz[0].maxMarks)
         console.log(quiz)
 
@@ -1562,7 +1566,5 @@ export class AddQuestionAnswerComponent implements OnInit {
 
   }
 
-  onDeleteClicked(object: any) {
 
-  }
 }

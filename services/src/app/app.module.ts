@@ -89,6 +89,7 @@ import { ReviewModule } from './review-answer/module/review/review.module';
 import { CategoryModule } from './category/module-name/category.module';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -157,7 +158,8 @@ import { CategoryModule } from './category/module-name/category.module';
     FormsModule,
     StudentModuleModule,
     MatDialogModule,
-    PermissionModule
+    PermissionModule,
+
   ],
 
   providers: [
