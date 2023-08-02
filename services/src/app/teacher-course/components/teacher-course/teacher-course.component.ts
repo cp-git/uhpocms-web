@@ -106,6 +106,15 @@ export class TeacherCourseComponent implements OnInit {
     //   showUpdateButton: false,
     //   showDeleteButton: false
     // }
+
+    switch(this.userRole){
+      case 'teacher':
+        this.moduleName = 'Assigned Courses';
+        break;
+      case 'student':
+        this.moduleName = 'Enrolled Courses';
+        break;
+    }
   }
 
   ngOnInit(): void {
