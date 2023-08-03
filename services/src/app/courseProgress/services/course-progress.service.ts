@@ -54,7 +54,7 @@ export class CourseProgressService {
       this.cache.removeFromCache(`${this.courseProgressUrl}/courseprog?id=all`);
       this.cache.setDataInCache(`${this.courseProgressUrl}/courseprog?id=all`, data);
     }),
-    shareReplay(1)
+   
   );
   }
 
