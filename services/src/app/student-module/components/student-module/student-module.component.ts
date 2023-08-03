@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, NgZone, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModuleFile } from 'app/class/module-file';
 
 import { Course } from 'app/teacher-course/class/course';
@@ -203,7 +203,7 @@ export class StudentModuleComponent implements OnInit {
     private courseProgServ: CourseProgressService,
     private quizReService: QuizresultService,
     private service: QuestionService, private dialogBoxServices: DialogBoxService,
-    private reviewServ: QuizresultService, private ngZone: NgZone
+    private reviewServ: QuizresultService, private ngZone: NgZone, private router: Router
   ) {
     this.selectedQuizProgress = new QuizProgress();
     this.selectedQuiz = new Quiz();
@@ -852,7 +852,16 @@ export class StudentModuleComponent implements OnInit {
 
   //navigates back to the student data page
   back() {
-    this._location.back();
+    this.courseProgServ.getAllCourseProgress();
+   // Use window.onpopstate to detect when the user navigates back
+  window.onpopstate = () => {
+    // Reload the previous page when the user navigates back
+    window.location.reload();
+  };
+
+  // Navigate back using Location.back()
+  this._location.back();
+    
     // this.route.navigate(['studentdata/student', this.userName])
   }
 
