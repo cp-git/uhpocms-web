@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { DataServiceCache } from 'app/cache/service/data-service.service';
 import { of } from 'rxjs/internal/observable/of';
 import { tap } from 'rxjs/internal/operators/tap';
+import { shareReplay } from 'rxjs/internal/operators/shareReplay';
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +53,8 @@ export class CourseProgressService {
       // Update cache with new data
       this.cache.removeFromCache(`${this.courseProgressUrl}/courseprog?id=all`);
       this.cache.setDataInCache(`${this.courseProgressUrl}/courseprog?id=all`, data);
-    })
+    }),
+    shareReplay(1)
   );
   }
 
