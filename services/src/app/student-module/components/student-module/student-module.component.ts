@@ -1027,6 +1027,9 @@ export class StudentModuleComponent implements OnInit {
 
           addedcourseProgress = response;
           this.courProgPercentage = addedcourseProgress.progress;
+          this.courseProgServ.getAllCourseProgress().subscribe(
+            (response)=>{}
+          )
           console.log("   this.courProgPercentage  in add  " + this.courProgPercentage)
 
         }
@@ -1044,7 +1047,9 @@ export class StudentModuleComponent implements OnInit {
         (response) => {
           updatedcourseProgress = response;
           this.courProgPercentage = updatedcourseProgress.progress;
-
+          this.courseProgServ.getAllCourseProgress().subscribe(
+            (response)=>{}
+          )
 
           console.log("   this.courProgPercentage  in update " + this.courProgPercentage)
 

@@ -222,7 +222,7 @@
        
         <div class="col-sm-3">
             <h4>Select Category</h4>
-            <select name="dropdown" (change)="onCategoryChange(selectedCategoryId )" [(ngModel)]="selectedCategoryId"
+            <select name="dropdown" (change)="onCategoryChange(selectedCategoryId)" [(ngModel)]="selectedCategoryId"
                 class="form-control" required="" [disabled]="viewAdd || viewQuePaper">
                 <option value="undefined">Select Category</option>
                 <option *ngFor="let option of categories" [ngValue]="option['categoryId']">

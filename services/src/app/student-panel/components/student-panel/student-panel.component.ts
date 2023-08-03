@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ChartdataComponent } from 'app/charts/components/chartdata/chartdata.component';
 import { CourseProgressService } from 'app/courseProgress/services/course-progress.service';
 import { CourseProgress } from 'app/courseProgress/class/courseprogress';
@@ -33,6 +33,7 @@ export class StudentPanelComponent {
   profiles: Profile[] = []; // list of inactive Profile
   profile: Profile;
   userId: any;
+  private isComponentLoaded = false;
 
   userPermissions: AuthUserPermission[] = [];;
   modulePermissionIds: Set<number> = new Set<number>();
@@ -51,12 +52,15 @@ export class StudentPanelComponent {
 
     // Calling function to get permissions from session storage
     this.loadAllPermissions();
+   
+
 
   }
-
-
+  
   // Initialize component properties with current route parameters
   ngOnInit(): void {
+   
+
     this.loadProfiles(this.profileId);
     this.userId = sessionStorage.getItem('userId')
 
@@ -64,9 +68,12 @@ export class StudentPanelComponent {
     this._route.navigate(['../'], { relativeTo: this._activatedRoute });
     this.profileId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
+    
     this.getAllCourseProgress();
+
   }
 
+ 
   // function for loading permissions from session storage
   loadAllPermissions() {
     try {
@@ -94,6 +101,8 @@ export class StudentPanelComponent {
 
   //function to get all data for course progress 
   async getAllCourseProgress() {
+    // location.reload();
+
     let filteredCouProgArr: CourseProgress[] = [];
     this.courseProgServ.getAllCourseProgress().subscribe(
       async (response) => {
@@ -197,3 +206,7 @@ export class StudentPanelComponent {
     this._route.navigate(['announcement/student', { id: this.profileId }]);
   }
 }
+function resolve() {
+  throw new Error('Function not implemented.');
+}
+

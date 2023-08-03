@@ -62,6 +62,7 @@ import { AuthModuleComponent } from './permissions/components/auth-module/auth-m
 import { AccessControlComponent } from './accesscontrol/components/access-control/access-control.component';
 import { AnalyticsComponent } from './admin-analytics/analytics/analytics.component';
 import { ReviewAnswerComponent } from './review-answer/components/review-answer/review-answer.component';
+import { CourseProgressResolver } from './student-panel/class/course-progress-resolver';
 
 
 const routes: Routes = [
