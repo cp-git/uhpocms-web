@@ -76,7 +76,7 @@
     cursor: pointer;
     width: 305px;
     /* Adjust the width as desired */
-    height: 50px;
+    height: auto;
 }
 
 .form-check label:hover {

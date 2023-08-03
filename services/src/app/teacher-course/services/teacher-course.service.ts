@@ -9,6 +9,7 @@ import { Coursesyllabus } from 'app/class/coursesyllabus';
 import { DataServiceCache } from 'app/cache/service/data-service.service';
 import { of } from 'rxjs/internal/observable/of';
 import { tap } from 'rxjs/internal/operators/tap';
+import { Department } from 'app/department/class/department';
 
 @Injectable({
   providedIn: 'root'
@@ -172,5 +173,10 @@ export class TeacherCourseService {
   getInactiveCoursesByInstitutionId(institutionId: number): Observable<any> {
 
     return this.http.get<any>(`${this.courseUrl}/inactive/institutionId/${institutionId}`);
+  }
+
+  getAllCoursesByDepartmentId(departmentId : number): Observable<Course[]>{
+    return this.http.get<Course[]>(`${this.courseUrl}/deptId/${departmentId}`)
+
   }
 }

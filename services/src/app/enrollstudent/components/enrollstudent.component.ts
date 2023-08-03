@@ -186,7 +186,7 @@ export class EnrollstudentComponent {
         );
         break;
       case 'teacher':
-        this._deptService.getDepartmentsByProfileId(this.profileId).subscribe(
+        this._deptService.getDepartmentsOfAssignCoursesByProfileId(this.profileId).subscribe(
           (response) => {
             this.departments = response;
           },
@@ -320,7 +320,7 @@ this.course.courseId=0;
   getDepartmentByProfileId(profileId: number) {
     console.log("this.selected.length " + this.selected.length)
     // profileId = this._profile.profileId;
-    this._deptService.getDepartmentsByProfileId(profileId).subscribe(
+    this._deptService.getDepartmentsOfAssignCoursesByProfileId(profileId).subscribe(
       (response) => {
         this.departments = response;
         this.instId = this.departments[0].institutionId;
