@@ -4,7 +4,7 @@ import { TimerFormatPipe } from "app/shared/pipes/timerFormat/timer-format.pipe"
 export const TeacherQuizColumn = [
     { key: 'title', label: 'Quiz Title', type: 'input', subtype: 'text' },
     { key: 'description', label: 'Quiz Description', type: 'input', subtype: 'text' },
-    { key: 'url', label: 'Quiz Url', type: 'input', subtype: 'text' },
+   
 
     {key:'setTimer',label:'Quiz Timing(HH:MM)',type:'time'},
     { key: 'courseId', label: 'Course Name', type: 'dropdown', arrayName: 'courses', columnId: 'courseId', columnName: 'courseName' },
@@ -21,7 +21,7 @@ export const TeacherQuizAllColumn = [
 
     { key: 'title', label: 'Quiz Title', type: 'input', subtype: 'text' },
     { key: 'description', label: 'Quiz Description', type: 'input', subtype: 'text' },
-    { key: 'url', label: 'Quiz Url', type: 'input', subtype: 'text' },
+   
     { key: 'maxQuestions', label: 'Max Questions', type: 'input', subtype: 'number' },
     { key: 'passMark', label: 'Passing Marks', type: 'input', subtype: 'number' },
     { key: 'maxMarks', label: 'Max Marks', type: 'input', subtype: 'number' },
@@ -30,12 +30,9 @@ export const TeacherQuizAllColumn = [
     { key: 'setTimerInHours', label: 'Quiz Timing (In Hours)', type: 'input', subtype: 'number' },
     { key: 'setTimerInMinutes', label: 'Quiz Timing (In Minutes)', type: 'input', subtype: 'number' },
     { key: 'quizOrderNo', label: 'QuizOrderNo', type: 'input', subtype: 'number' },
-    { key: 'answersAtEnd', label: 'AnswerAtEnd', type: 'checkbox' },
 
     { key: 'randomOrder', label: 'Random Order', type: 'checkbox' },
-    { key: 'examPaper', label: 'Exam Paper', type: 'checkbox' },
     { key: 'singleAttempt', label: 'Single Attempt', type: 'checkbox' },
-    { key: 'draft', label: 'Quiz Draft', type: 'checkbox' },
 ]
 
 export const TeacherQuizUpdateColumn = [
@@ -46,7 +43,6 @@ export const TeacherQuizUpdateColumn = [
 
     { key: 'title', label: 'Quiz Title', type: 'input', subtype: 'text' , disable :'true'},
     { key: 'description', label: 'Quiz Description', type: 'input', subtype: 'text' },
-    { key: 'url', label: 'Quiz Url', type: 'input', subtype: 'text' },
     { key: 'maxQuestions', label: 'Max Questions', type: 'input', subtype: 'number' },
     { key: 'passMark', label: 'Passing Marks', type: 'input', subtype: 'number' },
     { key: 'maxMarks', label: 'Max Marks', type: 'input', subtype: 'number' },
@@ -55,10 +51,7 @@ export const TeacherQuizUpdateColumn = [
     { key: 'setTimerInHours', label: 'Quiz Timing (In Hours)', type: 'input', subtype: 'number' },
     { key: 'setTimerInMinutes', label: 'Quiz Timing (In Minutes)', type: 'input', subtype: 'number' },
     { key: 'quizOrderNo', label: 'QuizOrderNo', type: 'input', subtype: 'number' },
-    { key: 'answersAtEnd', label: 'AnswerAtEnd', type: 'checkbox' },
 
     { key: 'randomOrder', label: 'Random Order', type: 'checkbox' },
-    { key: 'examPaper', label: 'Exam Paper', type: 'checkbox' },
     { key: 'singleAttempt', label: 'Single Attempt', type: 'checkbox' },
-    { key: 'draft', label: 'Quiz Draft', type: 'checkbox' },
 ]
