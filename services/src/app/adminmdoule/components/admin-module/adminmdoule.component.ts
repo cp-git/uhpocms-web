@@ -146,7 +146,7 @@ export class AdminmdouleComponent {
     this._route.navigate(['analytics']);
   }
 
-  RedirectToCategory(){
+  RedirectToCategory() {
     this._route.navigate(['category']);
   }
 
