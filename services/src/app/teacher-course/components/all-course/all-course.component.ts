@@ -143,6 +143,7 @@ export class AllCourseComponent implements OnInit {
         this.buttonsArray
       );
     } else {
+      
       this.location.back();
     }
   }
@@ -218,12 +219,18 @@ export class AllCourseComponent implements OnInit {
   private updateCourse(currentData: Course) {
     // calling service for updating data
     this.service.updateCourseById(currentData.courseId, currentData).subscribe(
-      (response) => {
+      (response) => 
+      { 
+    
+
         this.dialogBoxServices.open(
           'Course updated successfully',
           'information'
         );
+        
+      
         this.back();
+        this.getAllCourse();
       },
       (error) => {
         this.dialogBoxServices.open('Course Updation Failed', 'warning');
