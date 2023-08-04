@@ -194,7 +194,8 @@ const routes: Routes = [
 
   { path: 'Course', component: TeacherCourseComponent },
   { path: 'Course/:userName', component: TeacherCourseComponent },
- 
+  { path: 'Courses', component: AllCourseComponent },
+
 
   { path: 'Module', component: ModuleComponent },
   { path: 'Module/:userName', component: ModuleComponent },
