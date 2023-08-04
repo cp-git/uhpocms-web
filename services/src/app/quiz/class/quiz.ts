@@ -2,17 +2,16 @@ export class Quiz {
     quizId!: number;
     title!: string;
     description!: String;
-    url!: String;
     randomOrder!: boolean;
     maxQuestions!: number;
-    answersAtEnd!: boolean;
-    examPaper!: boolean;
+    
+    
     singleAttempt: boolean = false;
     passMark!: number;
     maxMarks!: number;
     successText!: string;
     failText!: string;
-    draft!: boolean;
+    
     quizOrderNo!: number;
     courseId!: number;
     moduleId!: number;

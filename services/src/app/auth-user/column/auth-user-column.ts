@@ -5,8 +5,7 @@ export const AuthUserColumn = [
     { key: 'authUserLastName', label: 'Last Name', type: 'input' },
     { key: 'authUserEmail', label: 'Email', type: 'email' },
     { key: 'authUserDateJoined', label: 'Join Date', type: 'date', maxValue: new Date().toISOString().split('T')[0] },
-    { key: 'authUserIsStaff', label: 'Is Staff', type: 'checkbox' },
-    { key: 'authUserIsSuperUser', label: 'Is Superuser', type: 'checkbox' }
+   
 ]
 export const AuthUserAllColumn = [
     { key: 'authUserFirstName', label: 'First Name', type: 'input' },
@@ -15,8 +14,7 @@ export const AuthUserAllColumn = [
     { key: 'authUserName', label: 'User Name', type: 'input' },
     { key: 'authUserPassword', label: 'Password', type: 'input' },
     { key: 'authUserDateJoined', label: 'Join Date', type: 'date', maxValue: new Date().toISOString().split('T')[0] },
-    { key: 'authUserIsStaff', label: 'Is Staff', type: 'checkbox' },
-    { key: 'authUserIsSuperUser', label: 'Is Superuser', type: 'checkbox' }
+  
 ]
 export const AuthUserUpdateColumn = [
     { key: 'authUserFirstName', label: 'First Name', type: 'input' },
@@ -26,8 +24,7 @@ export const AuthUserUpdateColumn = [
     { key: 'authUserPassword', label: 'Password', type: 'input' },
 
     { key: 'authUserDateJoined', label: 'Join Date', type: 'date', maxValue: new Date().toISOString().split('T')[0] },
-    { key: 'authUserIsStaff', label: 'Is Staff', type: 'checkbox' },
-    { key: 'authUserIsSuperUser', label: 'Is Superuser', type: 'checkbox' }
+  
 ]
 export const AuthUserViewOneColumn = [
 
@@ -38,6 +35,5 @@ export const AuthUserViewOneColumn = [
     { key: 'authUserName', label: 'User Name', type: 'input' },
     { key: 'authUserPassword', label: 'Password', type: 'password' },
     { key: 'authUserDateJoined', label: 'Join Date', type: 'date', maxValue: new Date().toISOString().split('T')[0] },
-    { key: 'authUserIsStaff', label: 'Is Staff', type: 'checkbox' },
-    { key: 'authUserIsSuperUser', label: 'Is Superuser', type: 'checkbox' }
+  
 ]

@@ -6,9 +6,9 @@ export class Authuser {
     authUserLastName!: string;
     authUserEmail!: string;
     authUserLastLogin!: Date;
-    authUserIsStaff!: boolean;
+ 
     authUserIsActive!: boolean;
-    authUserIsSuperUser!: boolean;
+   
     authUserDateJoined!: Date;
     authUserCreatedBy!: string;
     authUserCreatedOn!: Date;
