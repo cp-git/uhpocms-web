@@ -313,7 +313,7 @@ export class QuizComponent implements OnInit {
 
 
   // for updating quiz using title
-  private updateQuiz(currentData: Quiz) {
+  private async updateQuiz(currentData: Quiz) {
     // calling service for updating data
     console.log(currentData)
     console.log(currentData)
@@ -327,15 +327,21 @@ export class QuizComponent implements OnInit {
     maxMarks = parseInt(maxMarks)
     let quesArrInQuiz : Question[] =[];
     let updatedQuiz : Quiz = new Quiz();
-    this.quesService.getAllQuestionsByQuizId(currentData.quizId).subscribe(
-      (response)=>{
-          quesArrInQuiz = response;
-      }
-    )
+    // await this.quesService.getAllQuestionsByQuizId(currentData.quizId).subscribe(
+    //   (response)=>{
+    //       quesArrInQuiz = response;
+    //       console.log(quesArrInQuiz);
+    //   }
+    // )
+    quesArrInQuiz = await this.quesService.getAllQuestionsByQuizId(currentData.quizId).toPromise();
 
     if (passMark <= maxMarks) {
-      if(currentData.maxQuestions > quesArrInQuiz.length)
-      { currentData.active = false;}
+      console.log(" if (passMark <= maxMarks) ")
+      console.log(currentData.maxQuestions)
+      console.log(quesArrInQuiz.length)
+      if((currentData.maxQuestions > quesArrInQuiz.length) && (quesArrInQuiz.length != 0))
+      { console.log("ENtered in if loop for update")
+        currentData.active = false;}
       this.quizService.updateQuiz(currentData.title, currentData).subscribe(
         response => {
           
