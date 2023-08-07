@@ -488,6 +488,13 @@ export class AccessControlComponent {
         // adding some parameter in master module array
         this.masterModules.forEach(module => {
           switch (module.moduleName) {
+            case 'INSTITUTION':
+              module.hasCreate = true;
+              module.hasActivate = true;
+              module.hasDelete = true;
+              module.hasUpdate = false;
+              module.hasView = true;
+              break;
             case 'ASSIGN_TEACHERS':
               module.hasCreate = false;
               module.hasActivate = false;
