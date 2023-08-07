@@ -39,6 +39,7 @@ export const environment = {
   courseDepartmentUrl: `http://localhost:8090/course/uhpocms`,
   emailUrl: `http://localhost:8090/email/uhpocms`,
   moduleUrl: `http://localhost:8090/module/uhpocms`,
+  
   quizUrl: `http://localhost:8090/quiz/uhpocms`,
   adminRoleUrl: `http://localhost:8090/adminrole/uhpocms`,
   questionUrl: `http://localhost:8090/question/uhpocms`,
