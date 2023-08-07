@@ -63,7 +63,7 @@
                                         <span class="far fa-file-alt"></span>
                                     </ng-template> &nbsp;&nbsp;
                                 </div>
-                                  <div style="width:60%">  <a (click)="onQuizClicked(quiz)"
+                                  <div style="width:53% ;OVERFLOW: auto;">  <a (click)="onQuizClicked(quiz)"
                                     [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId) && selectedCourse.accessModuleInOrder} ">{{quiz.title}}</a>
                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                   </div>
