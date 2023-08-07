@@ -7,6 +7,9 @@ import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'environments/environment.development';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
+import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
+import { userModule } from 'app/permissions/enum/user-module.enum';
+import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
 @Component({
   selector: 'app-displayinstitute',
   templateUrl: './displayinstitute.component.html',
@@ -26,22 +29,37 @@ export class DisplayinstituteComponent {
   userName!: string;
   adminId: any;
   institutionId: any;
+
   // for buttons to view
-  showAddButton: boolean = true;
-  showActivateButton: boolean = true;
+  // showAddButton: boolean = true;
+  // showActivateButton: boolean = true;
+
   private readonly institutionUrl!: string;
 
   displayUrl: any;
 
+  // for user Permissions
+  buttonsArray: any;
+  userAndRolePermissions: AuthUserPermission[] = [];
+  userModule = userModule;
+
   //constructor
-  constructor(private _institutionService: AdmininstitutionService, private _route: Router, private location: Location, private _activatedRoute: ActivatedRoute, private _sanitizer: DomSanitizer, private dialogBoxService: DialogBoxService) {
+  constructor(private _institutionService: AdmininstitutionService, private _route: Router, private location: Location, private _activatedRoute: ActivatedRoute, private _sanitizer: DomSanitizer, private dialogBoxService: DialogBoxService, private userPermissionService: AuthUserPermissionService) {
     this.admininstitution = new AdminInstitution();
     this.institutionUrl = `${environment.adminInstitutionUrl}/institution`;
+
+    // Assining default values
+    this.buttonsArray = {
+      showAddButton: false,
+      showActivateButton: false,
+      showUpdateButton: false,
+      showDeleteButton: false
+    }
   }
 
   //ngOnint function
   ngOnInit(): void {
-
+    this.loadAndLinkUserPermissions();
     //if not authenticated route back to login page
     if (sessionStorage.getItem('authenticatedUser') == null) {
       this._route.navigate(['login']);
@@ -60,7 +78,12 @@ export class DisplayinstituteComponent {
     }
   }
 
-
+  // this function for loading permission from session storage and link permission 
+  // with buttons to show and hide based on permissions 
+  private async loadAndLinkUserPermissions() {
+    this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.INSTITUTION, this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(userModule.INSTITUTION, this.userAndRolePermissions, this.buttonsArray);
+  }
 
 
   // for displaying empty when there is no data on ui

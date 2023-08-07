@@ -13,6 +13,9 @@ import { Authuser } from 'app/auth-user/class/auth-user';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment.development';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
+import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
+import { userModule } from 'app/permissions/enum/user-module.enum';
+import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -35,8 +38,8 @@ export class ProfileComponent implements OnInit {
   imageUrl!: any;
 
   // for buttons to view
-  showAddButton: boolean = true;
-  showActivateButton: boolean = true;
+  // showAddButton: boolean = true;
+  // showActivateButton: boolean = true;
 
   // If all data is available or not
   dataAvailable: boolean = false;
@@ -74,6 +77,12 @@ export class ProfileComponent implements OnInit {
   imagesUrl!: any;
   userRoles: any;
   backupUserRoles: any;
+
+  // for user Permissions
+  buttonsArray: any;
+  userAndRolePermissions: AuthUserPermission[] = [];
+  userModule = userModule;
+
   constructor(
     private location: Location,
     private service: ProfileService,
@@ -81,7 +90,8 @@ export class ProfileComponent implements OnInit {
     private adminRoleService: AdminRoleService,
     private authUserService: AuthUserService,
     private http: HttpClient,
-    private dialogBoxService: DialogBoxService
+    private dialogBoxService: DialogBoxService,
+    private userPermissionService: AuthUserPermissionService
   ) {
     // assigng Columns
     this.columnNames = ProfileColumn;
@@ -98,9 +108,18 @@ export class ProfileComponent implements OnInit {
 
     this.userRoles = [{ roleName: 'admin' }, { roleName: 'student' }, { roleName: 'teacher' }];
     this.backupUserRoles = [...this.userRoles];
+
+    // Assining default values
+    this.buttonsArray = {
+      showAddButton: false,
+      showActivateButton: false,
+      showUpdateButton: false,
+      showDeleteButton: false
+    }
   }
 
   ngOnInit(): void {
+    this.loadAndLinkUserPermissions();
     this.loadInactiveAuthUsers();
     this.loadActiveAuthUsers();
     this.getAllAdminProfiles();
@@ -115,6 +134,13 @@ export class ProfileComponent implements OnInit {
 
   }
 
+  // this function for loading permission from session storage and link permission 
+  // with buttons to show and hide based on permissions 
+  private async loadAndLinkUserPermissions() {
+    this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.PROFILE, this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(userModule.PROFILE, this.userAndRolePermissions, this.buttonsArray);
+  }
+
   // back button functionality
   back() {
     if (this.viewAll == false) {
@@ -124,8 +150,11 @@ export class ProfileComponent implements OnInit {
       this.viewUpdate = false;
       this.viewActivate = false;
 
-      this.showAddButton = true;
-      this.showActivateButton = true;
+      // this.buttonsArray.showAddButton = true;
+      // this.buttonsArray.showActivateButton = true;
+
+      this.userPermissionService.toggleButtonsPermissions(userModule.PROFILE, this.userAndRolePermissions, this.buttonsArray);
+
     } else {
       this.location.back();
     }
@@ -138,8 +167,8 @@ export class ProfileComponent implements OnInit {
 
     this.viewAll = false;
     this.viewAdd = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
 
     // changing column array
     // this.changePassingArray();
@@ -149,8 +178,8 @@ export class ProfileComponent implements OnInit {
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
   }
 
   // For navigate to view screen with data
@@ -167,8 +196,8 @@ export class ProfileComponent implements OnInit {
     // hiding view of all column and displaying all Profile's screen
     this.viewOne = true;
     this.viewAll = false;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
 
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
@@ -184,8 +213,8 @@ export class ProfileComponent implements OnInit {
     // hiding update screen and displaying all Profile's screen
     this.viewAll = false;
     this.viewUpdate = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
     // assingning data to current data for child component
     this.currentData = objectReceived;
     // this.getSelectedOptionOfDropdown({ currentData: this.currentData, key: 'userRoleId' })
