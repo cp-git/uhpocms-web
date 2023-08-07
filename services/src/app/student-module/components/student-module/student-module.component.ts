@@ -2130,7 +2130,7 @@ export class StudentModuleComponent implements OnInit {
     console.log("reviewButtonStat in allanswersattempted" + this.reviewButtonStat)
     // alert(this.reviewButtonStat)
     console.log(this.selectedStudProfileId)
-
+   try{
     this.quizReService.getAllStudentAnswersByStduentIdAndQuizId(this.studentId, quizId).subscribe(
       (result) => {
 
@@ -2228,7 +2228,11 @@ export class StudentModuleComponent implements OnInit {
         console.log("failed to get answers");
       }
     );
-
+   }
+   finally{
+    this.reviewButtonStat = false;
+   }
+    
 
   }
 
