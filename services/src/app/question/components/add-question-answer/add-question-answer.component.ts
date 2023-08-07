@@ -393,7 +393,7 @@ export class AddQuestionAnswerComponent implements OnInit {
         console.log(this.questionAnswer.question['questionIsMCQ'])
         if (this.selectedQuiz.categoryId == this.mcqCategory[0].categoryId) {
 
-          if ((queAnsNew.content1 != '') && (queAnsNew.content1 != undefined) && (queAnsNew.content2 != '') && (queAnsNew.content2 != undefined) && (queAnsNew.content3 != '') && (queAnsNew.content3 != undefined) && (queAnsNew.content4 != '') && (queAnsNew.content4 != undefined)) {
+          if ((queAnsNew.content1 != '') && (queAnsNew.content1 != undefined) && (queAnsNew.content2 != '') && (queAnsNew.content2 != undefined) && (queAnsNew.content3 != '') && (queAnsNew.content3 != undefined) && (queAnsNew.content4 != '') && (queAnsNew.content4 != undefined) && (queAnsNew.correct1 != undefined) &&  (queAnsNew.correct2 != undefined) && (queAnsNew.correct3 != undefined) &&  (queAnsNew.correct4 != undefined)) {
             mcqArr.push(queAnsNew)
             console.log(queAnsNew.questionContent + " " + queAnsNew.questionExplanation + " " + queAnsNew.questionOrderNo + " " + queAnsNew.maxMarks)
             console.log("Entered in If loop of mcq")

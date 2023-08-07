@@ -371,6 +371,7 @@ export class StudentQuizComponent implements OnInit {
         );
       },
       error => {
+        
         console.log("failed to get answers");
       }
     );
