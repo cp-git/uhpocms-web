@@ -327,12 +327,7 @@ export class QuizComponent implements OnInit {
     maxMarks = parseInt(maxMarks)
     let quesArrInQuiz : Question[] =[];
     let updatedQuiz : Quiz = new Quiz();
-    // await this.quesService.getAllQuestionsByQuizId(currentData.quizId).subscribe(
-    //   (response)=>{
-    //       quesArrInQuiz = response;
-    //       console.log(quesArrInQuiz);
-    //   }
-    // )
+
     quesArrInQuiz = await this.quesService.getAllQuestionsByQuizId(currentData.quizId).toPromise();
 
     if (passMark <= maxMarks) {
@@ -344,8 +339,6 @@ export class QuizComponent implements OnInit {
         currentData.active = false;}
       this.quizService.updateQuiz(currentData.title, currentData).subscribe(
         response => {
-          
-
          updatedQuiz = response
           this.dialogBoxService.open('Quiz Updated successfully', 'information')
           this.ngOnInit();
