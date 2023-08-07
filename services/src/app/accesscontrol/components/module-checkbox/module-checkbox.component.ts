@@ -102,7 +102,7 @@ export class ModuleCheckboxComponent implements OnInit {
 
   moduleAndPermissionIds: any;
   onSelectPermission() {
-    console.log("hey");
+    console.log(this.moduleAndPermissionIds);
 
     this.moduleAndPermissionIds = {
       moduleId: this.module.id,
