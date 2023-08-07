@@ -143,8 +143,11 @@ export class AllCourseComponent implements OnInit {
         this.buttonsArray
       );
     } else {
+
       
       this.location.back();
+
+
     }
   }
 
@@ -187,8 +190,17 @@ export class AllCourseComponent implements OnInit {
 
   // for navigating to add screen
   onAddClick() {
+
+    this.emptyCourse = {} as Course;
+
+    console.log("Clicked on  onAddClick()  ")
+    console.log(this.currentData);
     this.viewAll = false;
     this.viewAdd = true;
+  
+
+  
+
     this.buttonsArray.showAddButton = false;
     this.buttonsArray.showActivateButton = false;
   }
@@ -203,6 +215,7 @@ export class AllCourseComponent implements OnInit {
 
   // on addComponents's submit button clicked
   onAddCourseSubmit(objectReceived: Course): void {
+
     this.addCourse(objectReceived);
   }
 
@@ -275,6 +288,7 @@ export class AllCourseComponent implements OnInit {
       this.back();
     } catch (error) {
       this.dialogBoxServices.open('Failed to add Course', 'warning');
+      
     }
   }
 
