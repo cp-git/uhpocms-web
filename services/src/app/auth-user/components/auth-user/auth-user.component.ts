@@ -60,8 +60,8 @@ export class AuthUserComponent implements OnInit {
   buttonsArray: any;
   userAndRolePermissions: AuthUserPermission[] = [];
   userModule = userModule;
-  
-  constructor(private service: AuthUserService, private profileService: ProfileService, private location: Location, private dialogBoxService: DialogBoxService,  private userPermissionService: AuthUserPermissionService,) {
+
+  constructor(private service: AuthUserService, private profileService: ProfileService, private location: Location, private dialogBoxService: DialogBoxService, private userPermissionService: AuthUserPermissionService,) {
 
     // assigng headers
     // this.adminRoleHeader = AdminRoleColumn;
@@ -339,18 +339,37 @@ export class AuthUserComponent implements OnInit {
   // For activating admin role using role id
   private activateAuthuser(authUserId: number) {
 
-    // calling service to activating admin role
-    this.service.activateAuthUserById(authUserId).subscribe(
-      response => {
-        // alert("Activated auth user");
-        console.log("Activated auth user");
-        this.ngOnInit();
+    this.profileService.getProfileByUserId(authUserId).subscribe(
+      data => {
+        console.log("Data..." + authUserId)
+
+        // calling service to activating admin role
+        this.service.activateAuthUserById(authUserId).subscribe(
+          response => {
+            // alert("Activated auth user");
+            console.log("Activated auth user");
+            this.ngOnInit();
+          },
+          error => {
+            // alert("Failed to activate");
+            console.log("Failed to activate");
+          }
+
+
+        );
       },
       error => {
         // alert("Failed to activate");
         console.log("Failed to activate");
+        this.dialogBoxService.open('User activation failed as profile not complete', 'warning');
       }
+
+
     );
+
+
+
+
   }
 
 }
