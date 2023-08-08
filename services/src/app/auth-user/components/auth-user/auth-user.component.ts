@@ -11,6 +11,9 @@ import { ProfileService } from 'app/profiles/services/profile.service';
 import { json } from 'body-parser';
 import { Profile } from 'app/profiles/class/profile';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
+import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
+import { userModule } from 'app/permissions/enum/user-module.enum';
+import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
 
 @Component({
   selector: 'app-auth-user',
@@ -32,8 +35,8 @@ export class AuthUserComponent implements OnInit {
   dataAvailable: boolean = false;
 
   // for buttons to view
-  showAddButton: boolean = true;
-  showActivateButton: boolean = true;
+  // showAddButton: boolean = true;
+  // showActivateButton: boolean = true;
 
   // adminRoleHeader: any; // header for minimum visible column data
   // adminRoleAllHeader: any;  // header for all visible column data
@@ -53,9 +56,12 @@ export class AuthUserComponent implements OnInit {
   emptyAuthUser: Authuser;  // empty auth user
   currentData!: Authuser;  // for update and view, to show existing data
 
-
-
-  constructor(private service: AuthUserService, private profileService: ProfileService, private location: Location, private dialogBoxService: DialogBoxService) {
+  // for user Permissions
+  buttonsArray: any;
+  userAndRolePermissions: AuthUserPermission[] = [];
+  userModule = userModule;
+  
+  constructor(private service: AuthUserService, private profileService: ProfileService, private location: Location, private dialogBoxService: DialogBoxService,  private userPermissionService: AuthUserPermissionService,) {
 
     // assigng headers
     // this.adminRoleHeader = AdminRoleColumn;
@@ -67,12 +73,29 @@ export class AuthUserComponent implements OnInit {
     this.viewOneColumn = AuthUserViewOneColumn;
     // creating empty object
     this.emptyAuthUser = new Authuser();
+
+    // Assining default values
+    this.buttonsArray = {
+      showAddButton: false,
+      showActivateButton: false,
+      showUpdateButton: false,
+      showDeleteButton: false
+    }
   }
 
   ngOnInit(): void {
+    this.loadAndLinkUserPermissions(); // for loading permissions
+
     this.getAllAuthUser();  // for getting all active auth user
     this.getInActiveAuthUser(); // for getting all inactive auth user
     this.fetchProfileData();
+  }
+
+  // this function for loading permission from session storage and link permission 
+  // with buttons to show and hide based on permissions 
+  private async loadAndLinkUserPermissions() {
+    this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.AUTH_USER, this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(userModule.AUTH_USER, this.userAndRolePermissions, this.buttonsArray);
   }
 
   // back button functionality
@@ -84,8 +107,10 @@ export class AuthUserComponent implements OnInit {
       this.viewUpdate = false;
       this.viewActivate = false;
 
-      this.showAddButton = true;
-      this.showActivateButton = true;
+      // this.showAddButton = true;
+      // this.showActivateButton = true;
+      this.userPermissionService.toggleButtonsPermissions(userModule.AUTH_USER, this.userAndRolePermissions, this.buttonsArray);
+
     } else {
       this.location.back();
     }
@@ -99,8 +124,8 @@ export class AuthUserComponent implements OnInit {
     // hiding view of all column and displaying all auth users screen 
     this.viewOne = true;
     this.viewAll = false;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
 
     this.currentData = objectReceived;    // assingning data to current data for child component
   }
@@ -112,8 +137,8 @@ export class AuthUserComponent implements OnInit {
     // hiding update screen and displaying all admin roles screen 
     this.viewAll = false;
     this.viewUpdate = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
 
     // assingning data to current data for child component
     this.currentData = objectReceived;
@@ -135,16 +160,16 @@ export class AuthUserComponent implements OnInit {
   onAddClick() {
     this.viewAll = false;
     this.viewAdd = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
   }
 
   // for navigating to activate screen
   onActivateClick() {
     this.viewAll = false;
     this.viewActivate = true;
-    this.showAddButton = false;
-    this.showActivateButton = false;
+    this.buttonsArray.showAddButton = false;
+    this.buttonsArray.showActivateButton = false;
   }
 
   // on addComponents's submit button clicked

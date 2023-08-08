@@ -13,7 +13,7 @@
         </div> -->
 
         <app-module-header [moduleName]="moduleName"
-            [buttons]="{showAddButton:showAddButton,showActivateButton:showActivateButton}"
+            [buttons]="{showAddButton:buttonsArray.showAddButton,showActivateButton:buttonsArray.showActivateButton}"
             (addButtonClicked)="addInstitute()" (activateButtonClicked)="redirectToActivateInstitution()"
             (backButtonClicked)="back()"></app-module-header>
 
@@ -28,11 +28,11 @@
                     <div><button #btn1 id="demo"
                             class="btn btn-primary institutebtn">{{institution.adminInstitutionName}}</button>
                     </div>
-                    <div>
+                    <div *ngIf="buttonsArray.showDeleteButton">
                         <button class="btn btn-danger institutebtn" id="deletebtn"
-                          (click)="deleteInstitution(institution.adminInstitutionId)">Deactivate</button>
-                      </div>
-                      
+                            (click)="deleteInstitution(institution.adminInstitutionId)">Deactivate</button>
+                    </div>
+
                 </div>
 
             </div>
