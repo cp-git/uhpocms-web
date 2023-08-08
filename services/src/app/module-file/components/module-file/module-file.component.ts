@@ -125,6 +125,7 @@ export class ModuleFileComponent {
   }
 
   ngOnInit(): void {
+    console.log("CALED NGONINT%%%%%%%%%%%%%%%%%")
     this.loadAndLinkUserPermissions();
 
     this.activationScreenStatus = false;
@@ -168,19 +169,33 @@ export class ModuleFileComponent {
 
   // back button functionality
   back() {
+    console.log(this.currentData)
+  
+    this.currentData = new ModuleFile();
+
     this.emptyModuleFile = new ModuleFile();
+    this.loadDataBasedOnRole(this.userRole)
+
     if (this.viewAll == false) {
+      // this.ngOnInit();
+   
       this.viewAll = true;
+      console.log(this.currentData)
+      console.log(this.allData)
       this.viewOne = false;
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
-
+    
       // this.buttonsArray.showAddButton = true;
       // this.buttonsArray.showActivateButton = true;
       this.userPermissionService.toggleButtonsPermissions(userModule.MODULE_FILE, this.userAndRolePermissions, this.buttonsArray);
+      console.log("Back Button called88888888888888888888")
+
 
     } else {
+      // this.currentData = new ModuleFile();
+
       this.location.back();
     }
 
@@ -209,6 +224,7 @@ export class ModuleFileComponent {
     this.viewUpdate = true;
     this.buttonsArray.showAddButton = false;
     this.buttonsArray.showActivateButton = false;
+    
     // assingning data to current data for child component
     this.currentData = objectReceived;
   }
@@ -435,6 +451,7 @@ export class ModuleFileComponent {
           // this.uploadfileService.uploadFiles(this.files).subscribe();
           console.log('Module File updated successfully !' + response);
           this.dialogBoxServices.open("Module File updated successfully !", 'information');
+ 
           this.back();
 
         },
@@ -448,7 +465,7 @@ export class ModuleFileComponent {
     }
     else {
 
-
+      
       let formData = new FormData();
       for (let i = 0; i < this.files.length; i++) {
         formData.append("files", this.files[i]);
@@ -475,6 +492,7 @@ export class ModuleFileComponent {
       );
       console.log('Module File updated successfully !');
       this.dialogBoxServices.open("Module File updated successfully !", 'information');
+
       this.back();
     }
   }
