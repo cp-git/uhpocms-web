@@ -74,8 +74,11 @@ export class ActivateInstitutionComponent implements OnInit {
     this._institutionService.activateInstitutionById(institutionId).subscribe(
       response => {
         // alert("Institution activated");
-        this.dialogBoxService.open('Institute Activated', 'information');
-        this.ngOnInit();
+        this.dialogBoxService.open("Institute Activated", "information").then((response) => {
+          if (response) {
+            location.reload(); // Refresh the page
+          }
+        });
       },
       error => {
         // alert("Institution activation failed");
