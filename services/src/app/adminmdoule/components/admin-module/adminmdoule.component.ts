@@ -8,7 +8,7 @@ import { AuthenticationserviceService } from 'app/authenticationlogin/service/au
 import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
 import { userModule } from 'app/permissions/enum/user-module.enum';
 import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
-
+import { Location } from '@angular/common';
 
 
 
@@ -33,7 +33,7 @@ export class AdminmdouleComponent {
   actualUserRole: any;
   constructor(private _route: Router, private _auth: AuthUserService, private _authenticationService: AuthenticationserviceService, private _activatedRoute: ActivatedRoute,
     private accessControlService: AccesscontrolService,
-    private userPermissionService: AuthUserPermissionService
+    private userPermissionService: AuthUserPermissionService, private _location: Location
   ) {
     // this.accessControlData = new Accesscontrol();
 
@@ -42,7 +42,9 @@ export class AdminmdouleComponent {
   }
 
   ngOnInit(): void {
-
+    if (!this._auth.isUserLoggedIn()) {
+      this._route.navigate(['authenticationlogin']);
+    }
     this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
     this.userId = sessionStorage.getItem('userId')
@@ -117,9 +119,8 @@ export class AdminmdouleComponent {
   }
 
   RedirectTOLogin() {
-    sessionStorage.removeItem('profileId');
-    sessionStorage.removeItem('userId');
-    this._route.navigate(['home'])
+    this._auth.logout()
+    this._route.navigate(['authenticationlogin']);
   }
 
 

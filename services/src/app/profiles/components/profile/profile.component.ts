@@ -538,8 +538,7 @@ export class ProfileComponent implements OnInit {
 
     const blob = new Blob([instituteJson], {
       type: 'application/json'
-    })
-
+    });
 
     if (this.file == null) {
       console.log("in data..");
@@ -548,51 +547,42 @@ export class ProfileComponent implements OnInit {
         response => {
           console.log("in json data.." + response);
 
-          this.dialogBoxService.open('Profile Updated Successfully', 'information')
+          this.dialogBoxService.open("Profile Updated Successfully", 'information').then((response) => {
+            if (response) {
+              location.reload(); // Refresh the page
+            }
+          });
+
           this.back();
         },
         error => {
-          this.dialogBoxService.open('Failed to Update Profile', 'warning')
+          this.dialogBoxService.open('Failed to Update Profile', 'warning');
         }
       );
 
-
-
-    }
-    else {
-
-      console.log("in formdata...")
-
-
+    } else {
+      console.log("in formdata...");
 
       let formData = new FormData();
-
-
 
       formData.append("file", this.file);
       currentData.profilePics = this.file.name;
 
       formData.append("admin", new Blob([JSON.stringify(currentData)], { type: 'application/json' }));
 
-
-
-
       this.service.updateProfileByActiveAuthuser(currentData.userId, formData).subscribe(
         response => {
           console.log(currentData.profilePics);
           console.log(response);
-          this.dialogBoxService.open('Profile Updated Successfully', 'information')
+          this.dialogBoxService.open('Profile Updated Successfully', 'information');
           location.reload();
           this.back();
         },
         error => {
-          this.dialogBoxService.open('Failed to Update Profile', 'warning')
+          this.dialogBoxService.open('Failed to Update Profile', 'warning');
         }
       );
     }
-
-
-
   }
 
   // For deleting profile (soft delete)
