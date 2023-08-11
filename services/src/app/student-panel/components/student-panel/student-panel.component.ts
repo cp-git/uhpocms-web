@@ -10,7 +10,7 @@ import { ProfileService } from 'app/profiles/services/profile.service';
 import { environment } from 'environments/environment.development';
 import { userModule } from 'app/permissions/enum/user-module.enum';
 import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
-
+import { AuthUserService } from 'app/auth-user/services/auth-user.service';
 @Component({
   selector: 'app-student-panel',
   templateUrl: './student-panel.component.html',
@@ -25,11 +25,11 @@ export class StudentPanelComponent {
   profileId: any;
   courseProgressArr: CourseProgress[] = [];
   userName!: string;
-  displayInstituteLogo : any;
-  instituteId : any;
-  sessionData : any;
-  data:any;
-  
+  displayInstituteLogo: any;
+  instituteId: any;
+  sessionData: any;
+  data: any;
+
   profiles: Profile[] = []; // list of inactive Profile
   profile: Profile;
   userId: any;
@@ -43,37 +43,41 @@ export class StudentPanelComponent {
     private _activatedRoute: ActivatedRoute,
     private courseProgServ: CourseProgressService,
     private courseService: TeacherCourseService,
-    private profileServ: ProfileService
-  ) {this.profile = new Profile();
+    private profileServ: ProfileService,
+    private _auth: AuthUserService
+  ) {
+    this.profile = new Profile();
     this.displayInstituteLogo = `${environment.adminInstitutionUrl}/institution/getFileById`;
-   
+
     this.profileId = sessionStorage.getItem("profileId");
     this.actualUserRole = sessionStorage.getItem("actualUserRole");
 
     // Calling function to get permissions from session storage
     this.loadAllPermissions();
-   
+
 
 
   }
-  
+
   // Initialize component properties with current route parameters
   ngOnInit(): void {
-   
+    if (!this._auth.isUserLoggedIn()) {
+      this._route.navigate(['authenticationlogin']);
+    } else {
 
-    this.loadProfiles(this.profileId);
-    this.userId = sessionStorage.getItem('userId')
+      this.loadProfiles(this.profileId);
+      this.userId = sessionStorage.getItem('userId')
 
-    //code to realod the page by navigating here to this page
-    this._route.navigate(['../'], { relativeTo: this._activatedRoute });
-    this.profileId = this._activatedRoute.snapshot.paramMap.get('id');
-    this.userName = this._activatedRoute.snapshot.params['userName'];
-    
-    this.getAllCourseProgress();
+      //code to realod the page by navigating here to this page
+      this._route.navigate(['../'], { relativeTo: this._activatedRoute });
+      this.profileId = this._activatedRoute.snapshot.paramMap.get('id');
+      this.userName = this._activatedRoute.snapshot.params['userName'];
 
+      this.getAllCourseProgress();
+    }
   }
 
- 
+
   // function for loading permissions from session storage
   loadAllPermissions() {
     try {
@@ -136,7 +140,7 @@ export class StudentPanelComponent {
           //  alert(this.studentName);
           console.log(this.profile.firstName, this.profile.lastName, this.profile.fullName, "  + ++++ + + ", this.instituteId);
           this.instituteId = this.data[i].institutionId;
-          
+
 
           //  alert(JSON.stringify(this.profileInstituteId));
           break; // Assuming the profileId is unique, exit the loop after finding the matching profile
@@ -193,8 +197,7 @@ export class StudentPanelComponent {
   }
 
   RedirectTOLogin() {
-    sessionStorage.removeItem('profileId');
-    sessionStorage.removeItem('userId');
+    this._auth.logout()
     this._route.navigate(['authenticationlogin']);
   }
 

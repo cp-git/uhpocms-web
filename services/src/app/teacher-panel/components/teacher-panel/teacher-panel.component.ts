@@ -12,6 +12,7 @@ import { Course } from 'app/teacher-course/class/course';
 import { TeacherCourseService } from 'app/teacher-course/services/teacher-course.service';
 import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
 import { userModule } from 'app/permissions/enum/user-module.enum';
+import { AuthUserService } from 'app/auth-user/services/auth-user.service';
 userModule
 @Component({
   selector: 'app-teacher-panel',
@@ -42,33 +43,33 @@ export class TeacherPanelComponent {
   // studProgDetailArr: [string, string, number] = ['','',0];
   studProgDetailArr: any[] = [];
   courseProgArr: CourseProgress[] = [];
-  clickedCourse:Course =new Course();
-  barClicked :boolean = false;
-  closeButtonStatus : boolean = true;
-  displayInstituteLogo : any;
-instituteId : any;
-sessionData : any;
-data:any;
-profileId : any
-profiles: Profile[] = []; // list of inactive Profile
-profile: Profile;
+  clickedCourse: Course = new Course();
+  barClicked: boolean = false;
+  closeButtonStatus: boolean = true;
+  displayInstituteLogo: any;
+  instituteId: any;
+  sessionData: any;
+  data: any;
+  profileId: any
+  profiles: Profile[] = []; // list of inactive Profile
+  profile: Profile;
 
   userPermissions: AuthUserPermission[] = [];;
   modulePermissionIds: Set<number> = new Set<number>();
   userId: any;
   authModule = userModule;
-  userRole : any;
+  userRole: any;
   actualUserRole: any;
 
-  constructor(private _route: Router, private _activatedRoute: ActivatedRoute, private courseProgServ: CourseProgressService, private courseService: TeacherCourseService, private assignCouServ: AssignCourseToTeacherService, private profileServ: ProfileService) {
+  constructor(private _route: Router, private _auth: AuthUserService, private _activatedRoute: ActivatedRoute, private courseProgServ: CourseProgressService, private courseService: TeacherCourseService, private assignCouServ: AssignCourseToTeacherService, private profileServ: ProfileService) {
     this.profile = new Profile();
     this.displayInstituteLogo = `${environment.adminInstitutionUrl}/institution/getFileById`;
     this.userRole = sessionStorage.getItem("userRole");
     this.actualUserRole = sessionStorage.getItem("actualUserRole");
 
     this.profileId = sessionStorage.getItem("profileId");
-       // Calling function to get permissions from session storage
-       this.loadAllPermissions();
+    // Calling function to get permissions from session storage
+    this.loadAllPermissions();
   }
 
 
@@ -93,7 +94,7 @@ profile: Profile;
           //  alert(this.studentName);
           console.log(this.profile.firstName, this.profile.lastName, this.profile.fullName, "  + ++++ + + ", this.instituteId);
           this.instituteId = this.data[i].institutionId;
-          
+
 
           //  alert(JSON.stringify(this.profileInstituteId));
           break; // Assuming the profileId is unique, exit the loop after finding the matching profile
@@ -106,25 +107,31 @@ profile: Profile;
 
 
   ngOnInit(): void {
-    this.userId = sessionStorage.getItem('userId')
+    if (!this._auth.isUserLoggedIn()) {
+      this._route.navigate(['authenticationlogin']);
+    } else {
 
-    this._route.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        if (event.navigationTrigger === 'popstate') {
-          location.reload();
+
+      this.userId = sessionStorage.getItem('userId')
+
+      this._route.events.subscribe((event) => {
+        if (event instanceof NavigationStart) {
+          if (event.navigationTrigger === 'popstate') {
+            location.reload();
+          }
         }
-      }
-    });
-   this.loadProfiles(this.profileId);
+      });
+      this.loadProfiles(this.profileId);
 
-    this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
-    this.userName = this._activatedRoute.snapshot.params['userName'];
-    console.log(this.teacherId)
-    this._route.navigate(['../'], { relativeTo: this._activatedRoute });
-    this.getAllCourseProgress();
-    //String initialized so that at start it should be null
-    this.clickedCourse.courseName = '';
+      this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
+      this.userName = this._activatedRoute.snapshot.params['userName'];
+      console.log(this.teacherId)
+      this._route.navigate(['../'], { relativeTo: this._activatedRoute });
+      this.getAllCourseProgress();
+      //String initialized so that at start it should be null
+      this.clickedCourse.courseName = '';
 
+    }
   }
 
   // function for loading permissions from session storage
@@ -398,12 +405,9 @@ profile: Profile;
 
   //navigates the user to a route called authenticationlogin
   RedirectTOLogin() {
-    sessionStorage.removeItem('')
-    sessionStorage.removeItem('profileId');
-    sessionStorage.removeItem('userId');
-    this._route.navigate(['authenticationlogin'])
+    this._auth.logout()
+    this._route.navigate(['authenticationlogin']);
   }
-
   //navigates the user to a route called announcement/teacher and passes an id parameter
   redirectToAnnouncements() {
     this._route.navigate(['announcement/teacher', { id: this.teacherId }])

@@ -85,7 +85,7 @@ export class AddUpdateComponent implements OnInit {
     console.log('called onDropdownSelected');
     console.log(currentData);
 
-    const data = {currentData: currentData, key: key}
+    const data = { currentData: currentData, key: key }
     this.getSelectedOptionOfDropdown.emit(data);
   }
 
