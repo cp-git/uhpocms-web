@@ -401,7 +401,7 @@ profile: Profile;
     sessionStorage.removeItem('')
     sessionStorage.removeItem('profileId');
     sessionStorage.removeItem('userId');
-    this._route.navigate(['authenticationlogin'])
+    this._route.navigate(['home'])
   }
 
   //navigates the user to a route called announcement/teacher and passes an id parameter
