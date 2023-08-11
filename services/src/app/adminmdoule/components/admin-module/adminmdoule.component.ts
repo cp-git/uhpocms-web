@@ -119,7 +119,7 @@ export class AdminmdouleComponent {
   RedirectTOLogin() {
     sessionStorage.removeItem('profileId');
     sessionStorage.removeItem('userId');
-    this._route.navigate(['authenticationlogin'])
+    this._route.navigate(['home'])
   }
 
 

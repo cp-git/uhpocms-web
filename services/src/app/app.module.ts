@@ -12,7 +12,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CommonModule } from '@angular/common';
 
-import { LoginComponentComponent } from './Login/login-component/login-component.component';
 
 import { AdminroleComponent } from './roleadmin/components/adminrole/adminrole.component';
 
@@ -87,13 +86,14 @@ import { PolarChartComponent } from './charts/components/polar-chart/polar-chart
 import { StudentModuleModule } from './student-module/student-module.module';
 import { ReviewModule } from './review-answer/module/review/review.module';
 import { CategoryModule } from './category/module-name/category.module';
+import { LoginPopupComponent } from './authlogin/components/login-popup/login-popup.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponentComponent,
+
     AdminroleComponent,
     AdminroleComponent,
     LoginauthComponent,
@@ -125,6 +125,7 @@ import { CategoryModule } from './category/module-name/category.module';
     BarChartComponent,
     AnalyticsComponent,
     PolarChartComponent,
+    LoginPopupComponent,
       
   ],
 

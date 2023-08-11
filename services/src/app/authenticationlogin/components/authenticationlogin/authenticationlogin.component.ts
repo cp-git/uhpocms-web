@@ -40,50 +40,7 @@ export class AuthenticationloginComponent {
 
   userLogin() {
 
-    // this._auth.loginDataAuthUser(this.authUser).subscribe(
-    //   (data) => {
-    //     const userName = data.authUserFirstName;
-    //     this._instituteadminprofile
-    //       ._getAllInstituteAdminList()
-    //       .subscribe((data) => {
-    //         this._instituteAdminArray = data;
-    //         console.log(data);
-
-    //         for (let i = 0; i <= this._instituteAdminArray.length; i++) {
-
-    //           //console.log(this._authList[i].authUserId);
-
-    //           if (this._instituteAdminArray[i].userId === this.authUser.authUserId) {
-    //             console.log(this._instituteAdminArray[i].userId + "authuser_id in instituteadmin profile..")
-    //             console.log(this.authUser.authUserId + "authuser_id in Auth User profile..")
-    //             console.log(this._instituteAdminArray[i].userRole);
-
-    //             if (this._instituteAdminArray[i].userRole == 'admin') {
-    //               this._route.navigate(['adminmodule/admin/', userName])
-    //             }
-    //             else if (this._instituteAdminArray[i].userRole == 'teacher') {
-    //               this._route.navigate(['teacherdisplay/teacher/', userName])
-    //             }
-    //             else if (this._instituteAdminArray[i].userRole == 'student') {
-    //               this._route.navigate(['studentdata/student/', userName]);
-    //             }
-
-
-    //           }
-    //         }
-
-
-    //       },
-    //         (error) => console.log("error"));
-
-
-    //     this.authUser = data;
-    //     console.log(this.authUser.authUserId);
-    //     console.log('User Successfully Logged In..');
-    //     //this._route.navigate(['demo']);
-    //   },
-    //   (error) => console.log(error)
-    // );
+    
 
     this._auth.loginDataAuthUser(this.authUser).subscribe(
       (data) => {

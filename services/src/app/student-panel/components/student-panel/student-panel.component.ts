@@ -195,7 +195,7 @@ export class StudentPanelComponent {
   RedirectTOLogin() {
     sessionStorage.removeItem('profileId');
     sessionStorage.removeItem('userId');
-    this._route.navigate(['authenticationlogin']);
+    this._route.navigate(['home']);
   }
 
   RedirectToStudentModule() {
