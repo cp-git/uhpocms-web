@@ -7,13 +7,13 @@
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
                         <input name="{{column.key}}" type="{{column.subtype}}" [(ngModel)]="currentData[column.key]"
-                            class="form-control" required="" [disabled]="column.disable">
+                            class="form-control" required="" [disabled]="column.disable" [maxLength]="column.maxLength">
                     </ng-container>
                     <ng-container *ngSwitchCase="'email'">
                         <span class="form-bar"></span>
                         <label class="float-label">{{ column.label }}</label>
                         <input name="{{column.key}}" type="email" [(ngModel)]="currentData[column.key]"
-                            class="form-control" required="" [disabled]="column.disable">
+                            class="form-control" required="" [disabled]="column.disable" pattern="{{column.pattern}}">
                     </ng-container>
                     <ng-container *ngSwitchCase="'date'">
                         <span class="form-bar"></span>

@@ -163,8 +163,13 @@ export class DisplayinstituteComponent {
         this._institutionService.deleteInstitutionById(adminInstitutionId).subscribe(
 
           (response) => {
-            this.dialogBoxService.open('Institute deleted successfully', 'information');
-            this.ngOnInit();
+            this.dialogBoxService.open("Institute deleted successfully", "information").then((response) => {
+              if (response) {
+                location.reload(); // Refresh the page
+              }
+            });
+
+
           },
           (error) => {
             this.dialogBoxService.open('Institute deletion Failed', 'warning');
