@@ -5,7 +5,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginauthComponent } from './authlogin/components/loginauth.component';
 
 import { EmailComponent } from './email/components/email/email.component';
-import { LoginComponentComponent } from './Login/login-component/login-component.component';
 import { QuizComponent } from './quiz/components/quiz/quiz.component';
 import { AdminroleComponent } from './roleadmin/components/adminrole/adminrole.component';
 // import { QuestionComponent } from './teacherquestion/question/question.component';
@@ -64,6 +63,7 @@ import { AnalyticsComponent } from './admin-analytics/analytics/analytics.compon
 import { ReviewAnswerComponent } from './review-answer/components/review-answer/review-answer.component';
 
 import { AllCourseComponent } from './teacher-course/components/all-course/all-course.component';
+import { LoginPopupComponent } from './authlogin/components/login-popup/login-popup.component';
 
 
 
@@ -122,8 +122,8 @@ const routes: Routes = [
   //auth user routes
   // { path: 'authuser', component: AuthuserComponent },
   //login route
-  { path: 'demo', component: LoginComponentComponent },
   { path: 'login', component: LoginauthComponent },
+  { path: 'loginpopup', component: LoginPopupComponent },
   //instituteadmin routes
   //admindepartment routes
   { path: 'department', component: DepartmentComponent },
