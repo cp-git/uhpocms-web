@@ -202,7 +202,7 @@ export class ReviewAnswerComponent implements OnInit {
 
               console.log(response)
               console.log("Student answers save");
-              this.dialogBoxServices.open('Review submitted successfully', 'information')
+              this.dialogBoxServices.open('Review submitted successfully', 'information');
 
               console.log(typeof this.totalReviewMarks)
               console.log(typeof reviewObjectStuAnswer.marks)
