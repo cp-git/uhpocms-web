@@ -32,10 +32,12 @@
                                     *ngIf="module.moduleId == file.moduleId && selectedCourseId == module.courseId_id">
                                     <div class="dropdown-item">
                                         <li>
-                                            <span *ngIf="filteredProgressFileIds && file.moduleFileId && filteredProgressFileIds.includes(file.moduleFileId); else elseBlock"
+                                            <span
+                                                *ngIf="filteredProgressFileIds && file.moduleFileId && filteredProgressFileIds.includes(file.moduleFileId); else elseBlock"
                                                 class="fa fa-check-circle" aria-hidden="true"></span>
                                             <ng-template #elseBlock>
-                                                <span [ngClass]="getFileIconClass(file.moduleFile)" aria-hidden="true"></span>
+                                                <span [ngClass]="getFileIconClass(file.moduleFile)"
+                                                    aria-hidden="true"></span>
                                             </ng-template>
                                             &nbsp;&nbsp;
                                             <a (click)="changeSelectedFileAndModule(file, module)"
@@ -51,70 +53,68 @@
                                 <div style="display: flex;">
                                     <br>
                                     <div style="width:10%">
-                                    <ng-container *ngIf="quizPassedProgresses.includes(quiz.quizId); else failedIcon">
-                                        <span class="fa fa-check-circle " style="color:blue"></span>
-                                    </ng-container>
-                                    <ng-template #failedIcon>
-                                        <ng-container *ngIf="quizFailedProgresses.includes(quiz.quizId); else fileIcon">
-                                            <span class="fa fa-times-circle" style="color:red"></span>
+                                        <ng-container
+                                            *ngIf="quizPassedProgresses.includes(quiz.quizId); else failedIcon">
+                                            <span class="fa fa-check-circle " style="color:blue"></span>
                                         </ng-container>
-                                    </ng-template> &nbsp;&nbsp;
-                                    <ng-template #fileIcon>
-                                        <span class="far fa-file-alt"></span>
-                                    </ng-template> &nbsp;&nbsp;
-                                </div>
-                                  <div style="width:53% ;OVERFLOW: auto;">  <a (click)="onQuizClicked(quiz)"
-                                    [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId) && selectedCourse.accessModuleInOrder} ">{{quiz.title}}</a>
-                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                  </div>
+                                        <ng-template #failedIcon>
+                                            <ng-container
+                                                *ngIf="quizFailedProgresses.includes(quiz.quizId); else fileIcon">
+                                                <span class="fa fa-times-circle" style="color:red"></span>
+                                            </ng-container>
+                                        </ng-template> &nbsp;&nbsp;
+                                        <ng-template #fileIcon>
+                                            <span class="far fa-file-alt"></span>
+                                        </ng-template> &nbsp;&nbsp;
+                                    </div>
+                                    <div style="width:53% ;OVERFLOW: auto;"> <a (click)="onQuizClicked(quiz)"
+                                            [ngClass]="{'disabled-container': !accessibleModuleIds.has(module.moduleId) && selectedCourse.accessModuleInOrder} ">{{quiz.title}}</a>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </div>
 
-                                   <div style="width:30%;margin-right: 2%;">
-                                    <a class="retakequiz"
-                                    *ngIf="((!quiz.singleAttempt && (quizFailedProgresses.includes(quiz.quizId) || quizPassedProgresses.includes(quiz.quizId))) || quizFailedProgresses.includes(quiz.quizId))"
-                                    (click)="onRetakeQuizClicked(quiz)" >Retake</a>
-                                
+                                    <div style="width:30%;margin-right: 2%;">
+                                        <a class="retakequiz"
+                                            *ngIf="((!quiz.singleAttempt && (quizFailedProgresses.includes(quiz.quizId) || quizPassedProgresses.includes(quiz.quizId))) || quizFailedProgresses.includes(quiz.quizId))"
+                                            (click)="onRetakeQuizClicked(quiz)">Retake</a>
 
 
-                                    <a *ngIf="((shouldShowReviewButton(quiz.quizId)) && (shouldShowReviewButtonStat(quiz.quizId)))" class="retakequiz" style="margin-left: 2%;"
-                                        (click)="getAllAnswersAttempted(quiz.quizId)">Review</a>
-                                   </div>
+
+                                        <a *ngIf="((shouldShowReviewButton(quiz.quizId)) && (shouldShowReviewButtonStat(quiz.quizId)))"
+                                            class="retakequiz" style="margin-left: 2%;"
+                                            (click)="getAllAnswersAttempted(quiz.quizId)">Review</a>
+                                    </div>
 
                                 </div>
                             </ng-container>
                         </ul>
                     </ng-container>
 
-             
- 
-  <ng-template #quizview>   
-<!--   
+
+
+                    <ng-template #quizview>
+                        <!--   
                         {{reviewButtonStat}} -->
-                <!-- Existing code... -->
+                        <!-- Existing code... -->
 
-                    <div *ngIf="reviewButtonStat == true">
-                        <app-student-review
-                        [generatedQuestionAnswerId]="generatedQuestionAnswerId"
-                        [questionAnswers]="correctQuestionAnswer"
-                        [pagination]="true"
-                        [selectedQuizId]="selectedQuizId"
-                        [selectedCategoryId]="selectedCategoryId"
-                        [selectedCategoryName]="selectedCategoryName"
-                        [totalReviewMarks]="totalReviewMarks"
-                        [totalQuizMarks]="totalQuizMarks"
-                        (submitClicked)="onFormSubmit($event)"
-                        ></app-student-review>
-                    </div>
-  
+                        <div *ngIf="reviewButtonStat == true">
+                            <app-student-review [generatedQuestionAnswerId]="generatedQuestionAnswerId"
+                                [questionAnswers]="correctQuestionAnswer" [pagination]="true"
+                                [selectedQuizId]="selectedQuizId" [selectedCategoryId]="selectedCategoryId"
+                                [selectedCategoryName]="selectedCategoryName" [totalReviewMarks]="totalReviewMarks"
+                                [totalQuizMarks]="totalQuizMarks"
+                                (submitClicked)="onFormSubmit($event)"></app-student-review>
+                        </div>
 
 
 
-  <!-- Existing code... -->
-  
+
+                        <!-- Existing code... -->
+
 
 
                         <div
-                            *ngIf="(selectedQuiz!=null && (selectedQuiz.singleAttempt==true && !(quizPassedProgresses.includes(selectedQuiz.quizId))) || (selectedQuiz.singleAttempt==false)) &&  (reviewButtonStat == false) ; else singleAttempt "> 
-                      
+                            *ngIf="(selectedQuiz!=null && (selectedQuiz.singleAttempt==true && !(quizPassedProgresses.includes(selectedQuiz.quizId))) || (selectedQuiz.singleAttempt==false)) &&  (reviewButtonStat == false) ; else singleAttempt ">
+
                             <app-student-quiz [onQuizClick]="onQuizClick" [isRetakingQuiz]="isRetakingQuiz"
                                 [retakingQuiz]="retakingQuiz" [quizPassedProgresses]="quizPassedProgresses"
                                 [quizFailedProgresses]="quizFailedProgresses" [submitted]="submitted"
@@ -123,14 +123,14 @@
                                 (onQuizSubmit)="onQuizSubmit($event)"></app-student-quiz>
 
 
-                      
-                  </div> 
+
+                        </div>
 
 
                     </ng-template>
                     <ng-template #singleAttempt>
                         <ng-container *ngIf="showalert">
-               
+
                         </ng-container>
                     </ng-template>
                 </div>
@@ -158,7 +158,7 @@
                 </h5>
             </ng-template> -->
 
-           
+
 
             <div style="font-size: 20px;"
                 [hidden]="selectedQuizName=='' || (!isRetakingQuiz && (quizFailedProgresses.includes(selectedQuiz.quizId) || quizPassedProgresses.includes(selectedQuiz.quizId)))">
@@ -172,7 +172,7 @@
         <div class="col-xs-12 col-sm-6 col-md-9 viewpanel">
 
             <div *ngIf="selectedFile; else quizview ">
-               
+
                 <ng-container *ngIf="format=='pdf'">
                     <app-pdf-viewer [blobUrl]="selectedFileData"
                         (savePDFProgress)="onSavePDFProgress($event)"></app-pdf-viewer>
@@ -189,3 +189,5 @@
         </div>
     </div>
 </div>
+
+{{totalPercent}}
