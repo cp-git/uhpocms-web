@@ -1566,11 +1566,15 @@ export class StudentModuleComponent implements OnInit {
       this.isRetakingQuiz = true;
       this.retakingQuiz++;
       this.cd.restart();
+      console.log(" Retake Quiz..." + this.addeedQuizProgress1);
+
+
     } else {
       this.onQuizClick++;
       this.isRetakingQuiz = false;
       if (!(this.quizFailedProgresses.includes(quiz.quizId) || this.quizPassedProgresses.includes(quiz.quizId))) {
         this.cd.restart();
+        console.log("Without Retake Quiz..." + this.addeedQuizProgress1);
       }
     }
 
@@ -2091,6 +2095,8 @@ export class StudentModuleComponent implements OnInit {
           response => {
             this.addeedQuizProgress1 = response;
             for (let j = 0; j < this.addeedQuizProgress1.length; j++) {
+
+              myaData = this.addeedQuizProgress1[j].score;
               // console.log("Response based on student" + this.addeedQuizProgress1[j].score);
 
 
@@ -2111,41 +2117,95 @@ export class StudentModuleComponent implements OnInit {
                 response => {
 
                   if (this.addeedQuizProgress1[h].quizId == response.quizId) {
-                    // console.log(response.quizId);
-                    // console.log(response.maxMarks);
-
-                    this.quizDataStore.push(response.maxMarks);
-                    //console.log(this.quizDataStore);
-
-                    let data = 0;
-                    for (let k = 0; k < this.quizDataStore.length; k++) {
-                      //  console.log("This is quiz Maxmark Data..." + this.quizDataStore[k]);
-
-                      console.log("This is Passing marks" + this.quizDataStore[k].passMark);
+                    console.log("This is quiz id" + response.quizId);
+                    console.log("This is max marks" + response.maxMarks);
 
 
-                      data = data + this.quizDataStore[k];
-                      console.log("mar marks Data.." + data);
+                    console.log(this.isRetakingQuiz);
 
-                      // this.totalPercent = (val * 100) / data;
-                      // console.log(this.totalPercent);
+                    let myVal = 0;
+                    if (this.isRetakingQuiz == false) {
+                      this.quizDataStore.push(response);
+                      console.log(this.quizDataStore);
 
-                      // if (this.totalPercent > 0 && this.totalPercent <= 25) {
-                      //   alert("D")
-                      // }
-                      // else if (this.totalPercent > 25 && this.totalPercent <= 50) {
-                      //   alert("C")
-                      // }
-                      // else if (this.totalPercent > 50 && this.totalPercent <= 75) {
-                      //   alert("B")
-                      // }
-                      // else if (this.totalPercent > 75 && this.totalPercent <= 100) {
-                      //   alert("A")
-                      // }
+
+                      for (let m = 0; m <= this.quizDataStore.length; m++) {
+                        console.log(this.quizDataStore[m].maxMarks);
+
+
+                        myVal = myVal + this.quizDataStore[m].maxMarks;
+                        console.log(myVal);
+
+
+                        this.totalPercent = (val * 100) / myVal;
+                        console.log(this.totalPercent);
+
+                      }
 
 
 
                     }
+                    else {
+
+                      let myVal = 0;
+
+                      for (let m = 0; m <= this.quizDataStore.length; m++) {
+                        console.log(this.quizDataStore[m].maxMarks);
+
+                        myVal = myVal + this.quizDataStore[m].maxMarks;
+                        console.log(myVal);
+
+                        this.totalPercent = (val * 100) / myVal;
+                        console.log(this.totalPercent);
+                      }
+
+
+
+
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    // this.quizDataStore.push(response.maxMarks);
+                    // console.log(this.quizDataStore);
+
+                    // let data = 0;
+                    // for (let k = 0; k < this.quizDataStore.length; k++) {
+                    //   console.log(this.quizDataStore[k]);
+
+                    //   data = data + this.quizDataStore[k].maxMarks;
+                    //   console.log(data);
+
+                    // this.totalPercent = (val * 100) / data;
+                    // console.log(this.totalPercent);
+
+                    // if (this.totalPercent > 0 && this.totalPercent <= 25) {
+                    //   alert("D")
+                    // }
+                    // else if (this.totalPercent > 25 && this.totalPercent <= 50) {
+                    //   alert("C")
+                    // }
+                    // else if (this.totalPercent > 50 && this.totalPercent <= 75) {
+                    //   alert("B")
+                    // }
+                    // else if (this.totalPercent > 75 && this.totalPercent <= 100) {
+                    //   alert("A")
+                    // }
+
+
+
+                    //   }
 
 
 
@@ -2222,6 +2282,11 @@ export class StudentModuleComponent implements OnInit {
     //.log("reviewButtonStat in onretake quizClicked" + this.reviewButtonStat)
     // alert(this.reviewButtonStat)
     this.onQuizClicked(quiz, true);
+    console.log("In Retake Quiz..");
+
+
+
+
   }
 
   getAllAnswersAttempted(quizId: number) {
