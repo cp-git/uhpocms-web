@@ -185,6 +185,10 @@ export class StudentModuleComponent implements OnInit {
   shouldShowReviewButtonStatValue!: boolean;
   showReview: boolean = false;
   totalPercent!: number;
+  PercentageGrade!: number;
+  QuizGrade!: String;
+
+
 
 
 
@@ -2137,10 +2141,26 @@ export class StudentModuleComponent implements OnInit {
                         console.log(myVal);
 
 
-                        this.totalPercent = (val * 100) / myVal;
-                        console.log(this.totalPercent);
+                        this.PercentageGrade = (val * 100) / myVal;
+                        console.log(this.PercentageGrade);
+
+                        if (this.PercentageGrade >= 0 && this.PercentageGrade <= 25) {
+                          this.QuizGrade = 'D';
+                        }
+                        else if (this.PercentageGrade > 25 && this.PercentageGrade <= 50) {
+                          this.QuizGrade = 'C';
+                        }
+                        else if (this.PercentageGrade > 50 && this.PercentageGrade <= 75) {
+                          this.QuizGrade = 'B';
+                        }
+                        else if (this.PercentageGrade > 75 && this.PercentageGrade <= 100) {
+                          this.QuizGrade = 'A';
+                        }
 
                       }
+
+
+
 
 
 
@@ -2155,9 +2175,24 @@ export class StudentModuleComponent implements OnInit {
                         myVal = myVal + this.quizDataStore[m].maxMarks;
                         console.log(myVal);
 
-                        this.totalPercent = (val * 100) / myVal;
-                        console.log(this.totalPercent);
+                        this.PercentageGrade = (val * 100) / myVal;
+                        console.log(this.PercentageGrade);
+
+                        if (this.PercentageGrade >= 0 && this.PercentageGrade <= 25) {
+                          this.QuizGrade = 'D';
+                        }
+                        else if (this.PercentageGrade >= 25 && this.PercentageGrade <= 50) {
+                          this.QuizGrade = 'C';
+                        }
+                        else if (this.PercentageGrade >= 50 && this.PercentageGrade <= 75) {
+                          this.QuizGrade = 'B';
+                        }
+                        else if (this.PercentageGrade >= 75 && this.PercentageGrade <= 100) {
+                          this.QuizGrade = 'A';
+                        }
                       }
+
+
 
 
 

@@ -140,6 +140,7 @@
 
 
             <h5 style="color:blue">Course Progress: {{courProgPercentage}}% Completed</h5>
+            <h5>Quiz Progress : {{PercentageGrade}} And QuizGrade :{{QuizGrade}}</h5>
             <h5 *ngIf="selectedQuizName && (quizFailedProgresses.includes(selectedQuiz.quizId) || quizPassedProgresses.includes(selectedQuiz.quizId))"
                 style="color:blue">
                 {{ selectedQuizName }}: {{ selectedQuizProgress.score }} Marks -
