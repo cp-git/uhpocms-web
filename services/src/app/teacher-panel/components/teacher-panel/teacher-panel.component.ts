@@ -406,7 +406,7 @@ export class TeacherPanelComponent {
   //navigates the user to a route called authenticationlogin
   RedirectTOLogin() {
     this._auth.logout()
-    this._route.navigate(['authenticationlogin']);
+    this._route.navigate(['']);
   }
   //navigates the user to a route called announcement/teacher and passes an id parameter
   redirectToAnnouncements() {

@@ -162,6 +162,8 @@ export class StudentModuleComponent implements OnInit {
   quizProgress!: QuizProgress;  // quizProgress object used to save progress in table
   questionAnswers: OneQuestionAnswer[] = [];    // array of question and answers
   addeedQuizProgress: QuizProgress = new QuizProgress();
+  addeedQuizProgress1: QuizProgress[] = [];
+  quizDataStore: any[] = [];
   reviewStatusLocal: any[] = [];
   ; //to store quizprogress data
   submitted: boolean = false;
@@ -182,6 +184,13 @@ export class StudentModuleComponent implements OnInit {
   private quizReviewStatusCache: { [quizId: number]: boolean[] } = {};
   shouldShowReviewButtonStatValue!: boolean;
   showReview: boolean = false;
+  totalPercent!: number;
+  PercentageGrade!: number;
+  QuizGrade!: String;
+
+
+
+
 
   // ------------------------VARIABLE DECLARATION END------------------------------
 
@@ -225,7 +234,7 @@ export class StudentModuleComponent implements OnInit {
 
     this.reviewButtonStat = false;
     this.cdr.detectChanges();
-    console.log("reviewButtonStat in ngonint" + this.reviewButtonStat)
+    //.log("reviewButtonStat in ngonint" + this.reviewButtonStat)
     this.studentId = this.activateRoute.snapshot.paramMap.get('id');
     this.userName = this.activateRoute.snapshot.params['userName'];
     this.loadCourseOfStudent(this.studentId);
@@ -240,7 +249,7 @@ export class StudentModuleComponent implements OnInit {
     this.getQuizPorgressesByStudentId(this.studentId);
 
     this.filterUniqueModuleIds();
-    console.log(this.reviewButtonStat)
+    //.log(this.reviewButtonStat)
 
 
   }
@@ -256,7 +265,7 @@ export class StudentModuleComponent implements OnInit {
         this.selectedCourseName = this.courses[0].courseName;
         this.selectedCourseId = this.courses[0].courseId;
 
-        // console.log(this.selectedCourseId)
+        // //.log(this.selectedCourseId)
 
         try {
           this.couresFlag = false;
@@ -265,24 +274,24 @@ export class StudentModuleComponent implements OnInit {
           //FUNCTION TO TRACK COURSE PROGRESS
           this.trackCourseProgress(this.selectedCourseId)
 
-          // console.log(this.selectedCourseId)
+          // //.log(this.selectedCourseId)
           this.chkCoursePogress(this.selectedCourseId)
 
 
         }
         catch (e) {
-          console.log(e)
+          //.log(e)
         }
 
         this.sortAccessibleModules();
       },
       error => {
-        console.log(error);
+        //.log(error);
 
       }
     );
-    console.log(this.courses)
-    console.log(this.selectedCourseId);
+    //.log(this.courses)
+    //.log(this.selectedCourseId);
 
 
   }
@@ -319,15 +328,15 @@ export class StudentModuleComponent implements OnInit {
 
 
 
-      console.log(this.selectedModule.moduleId)
+      //.log(this.selectedModule.moduleId)
 
       this.fileProgService.getAllFileProgressByModIdStudId(this.selectedModule.moduleId, this.studentId).subscribe(
         (response) => {
 
 
           this.newModuleFileProgressArr = response;
-          console.log("gffgfgfg")
-          console.log(this.newModuleFileProgressArr)
+          //.log("gffgfgfg")
+          //.log(this.newModuleFileProgressArr)
 
           // //loop through all data in file progress table
           for (let z = 0; z < this.newModuleFileProgressArr.length; z++) {
@@ -358,15 +367,15 @@ export class StudentModuleComponent implements OnInit {
           if (this.selectedFile.moduleFileId === this.newModuleFileProgressArr[k].fileId) {
 
 
-            console.log("  if(this.selectedFile.moduleFileId == this.fileIdArr[i] )")
+            //.log("  if(this.selectedFile.moduleFileId == this.fileIdArr[i] )")
             this.moduleFileProgress = this.newModuleFileProgressArr[k];
             this.flag = true;
             k = this.newModuleFileProgressArr.length;
 
           }
 
-          // console.log("this.moduleFileProgress outside")
-          // console.log(this.moduleFileProgress)
+          // //.log("this.moduleFileProgress outside")
+          // //.log(this.moduleFileProgress)
           //if flag is true
           if (this.flag == true) {
 
@@ -374,11 +383,11 @@ export class StudentModuleComponent implements OnInit {
 
 
             if (this.moduleFileProgress.progress == 100) {
-              console.log("Enered in  this.moduleFileProgress.progress == 10")
+              //.log("Enered in  this.moduleFileProgress.progress == 10")
               this.moduleProgresscCeateUpdate(this.selectedModule.moduleId);
               //FUNCTION TO TRACK COURSE PROGRESS
               this.trackCourseProgress(this.selectedCourseId)
-              // console.log(this.selectedModule)
+              // //.log(this.selectedModule)
 
             }
 
@@ -386,15 +395,15 @@ export class StudentModuleComponent implements OnInit {
             else if ((this.moduleFileProgress.progress < 100 || this.completionPercentage == 100) && (this.completionPercentage > this.moduleFileProgress.progress)) {
 
 
-              console.log(" else if ((this.moduleFileProgress.progress < 100 || this.completionPercentage == 100) && (this.completionPercentage > this.moduleFileProgress.progress))");
+              //.log(" else if ((this.moduleFileProgress.progress < 100 || this.completionPercentage == 100) && (this.completionPercentage > this.moduleFileProgress.progress))");
               let modFileProg: Modulefileprogress = new Modulefileprogress();
 
               this.moduleFileProgress.progress = this.completionPercentage;
 
               this.moduleFileProgress.currentFilePageNo = this.videoPlayerRef.nativeElement.currentTime;
-              console.log("Entered in else if loop")
-              console.log("Value caught true");
-              console.log(this.moduleFileProgress.progress)
+              //.log("Entered in else if loop")
+              //.log("Value caught true");
+              //.log(this.moduleFileProgress.progress)
               this.fileProgService.updatedModuleFileProgress(this.moduleFileProgress).subscribe(
                 response => {
                   // alert("file status saved successfully through put method");
@@ -435,8 +444,8 @@ export class StudentModuleComponent implements OnInit {
       //if file not present in table enter new entry
       else if (this.uniqueFileIdArr.includes(this.selectedFile.moduleFileId) == false) {
 
-        console.log(" else if (this.uniqueFileIdArr.includes(this.selectedFile.moduleFileId) == false)");
-        // console.log("this.selectedModule.moduleId   "+this.selectedModule.moduleId)
+        //.log(" else if (this.uniqueFileIdArr.includes(this.selectedFile.moduleFileId) == false)");
+        // //.log("this.selectedModule.moduleId   "+this.selectedModule.moduleId)
         let modFileProg: Modulefileprogress = new Modulefileprogress();
         this.moduleFileProgress.id = 0;
         this.moduleFileProgress.progress = this.completionPercentage;
@@ -445,15 +454,15 @@ export class StudentModuleComponent implements OnInit {
         this.moduleFileProgress.fileId = this.selectedFile.moduleFileId;
         this.moduleFileProgress.studentId = this.studentId;
         this.moduleFileProgress.courseId = this.selectedCourseId;
-        console.log("object for post")
-        console.log(this.moduleFileProgress)
+        //.log("object for post")
+        //.log(this.moduleFileProgress)
         this.fileProgService.addFileProgressStatus(this.moduleFileProgress).subscribe(
           response => {
 
             modFileProg = response;
 
 
-            console.log("inside addFileProgressStatus")
+            //.log("inside addFileProgressStatus")
 
 
 
@@ -481,23 +490,23 @@ export class StudentModuleComponent implements OnInit {
     // this.videoPlayer.src = this.videoSrc;
     // this.videoPlayer.load(); // Reload the video
     // this.videoPlayer.play(); // Start playing the new video
-    console.log("onSelectedFileChanged() called")
+    //.log("onSelectedFileChanged() called")
     this.updatedPercentage = 0;
     this.completionPercentage = 0;
-    console.log(this.updatedPercentage)
+    //.log(this.updatedPercentage)
     let blob: Blob;
     this.modulefileService.getFile(this.selectedFile.moduleFileId).subscribe(
       (response: ArrayBuffer) => {
-        console.log(response);
+        //.log(response);
         const bytes = new Uint8Array(response);
         // Create an ArrayBuffer
         const arrayBuffer = new ArrayBuffer(4);
         const dataView = new DataView(arrayBuffer);
         dataView.setInt32(0, 42);
-        console.log(dataView);
+        //.log(dataView);
         // Create a Blob from the ArrayBuffer
         const blob2 = new Blob([arrayBuffer]);
-        console.log(blob2);
+        //.log(blob2);
         // Check if the file is a PDF
         if (String.fromCharCode.apply(null, Array.from(bytes.subarray(0, 4))) === '%PDF') {
           blob = new Blob([response], { type: 'application/pdf' });
@@ -507,7 +516,7 @@ export class StudentModuleComponent implements OnInit {
         }
         // Check if the file is a video
         const mp4Signature = String.fromCharCode.apply(null, Array.from(bytes.subarray(4, 8)));
-        console.log(mp4Signature);
+        //.log(mp4Signature);
         if (mp4Signature === 'ftypisom' || mp4Signature === 'ftypmp42' || mp4Signature.startsWith('ftyp')) {
           blob = new Blob([response], { type: 'video/mp4' });
           this.selectedFileType = 'video/mp4'
@@ -519,7 +528,7 @@ export class StudentModuleComponent implements OnInit {
             this.videoPlayerRef.nativeElement.currentTime = this.selectedFileProgress.currentFilePageNo;
           }
         }
-        console.log(this.selectedFileData);
+        //.log(this.selectedFileData);
       }
     );
   }
@@ -560,20 +569,20 @@ export class StudentModuleComponent implements OnInit {
   //       }
   //     }
   //   )
-  //     .catch((error) => { console.log(error) })
+  //     .catch((error) => { //.log(error) })
   // }
 
   private async getModFilesByModuleId(moduleId: number) {
     this.modFilesArray = [];
     try {
       const data = await this.modFileServc.getModuleFilesByModuleId(moduleId).toPromise();
-      console.log(data);
+      //.log(data);
       if (data != undefined) {
         this.modFilesArray = data;
       }
 
     } catch (error) {
-      console.log("no data fetched");
+      //.log("no data fetched");
     }
   }
 
@@ -581,14 +590,14 @@ export class StudentModuleComponent implements OnInit {
   //Loads the modules of the courses using the getModuleByCourseId() method of StudentService
   async loadModuleOfCourse(studentCourses: Course[]) {
     this.reviewButtonStat = false
-    console.log("reviewButtonStat in loadModules" + this.reviewButtonStat)
+    //.log("reviewButtonStat in loadModules" + this.reviewButtonStat)
     let filteredModules: Module[] = [];
     studentCourses.forEach(async course => {
 
       const modules: any = await this.moduleService.getModuleByCourseId(course.courseId).toPromise();
       // .subscribe(
       // response => {
-      //   console.log(response)
+      //   //.log(response)
       if (modules != undefined) {
         for (const module of await modules) {
           // modules.forEach(async module => {
@@ -596,16 +605,16 @@ export class StudentModuleComponent implements OnInit {
           await this.getModFilesByModuleId(module.moduleId);
 
           if (this.modFilesArray.length != 0) {
-            console.log(module);
+            //.log(module);
 
             this.modules.push(module);
-            console.log(module)
-            console.log(this.selectedCourseId)
+            //.log(module)
+            //.log(this.selectedCourseId)
             if (this.selectedCourseId == module.courseId_id) {
               this.selectedModule = module;
 
-              console.log("inside loadModuleOfCourse")
-              console.log(module)
+              //.log("inside loadModuleOfCourse")
+              //.log(module)
             }
           }
           this.loadModuleFilesOfCourses(this.studentId);
@@ -619,7 +628,7 @@ export class StudentModuleComponent implements OnInit {
 
       // },
       //   error => {
-      //     console.log(error);
+      //     //.log(error);
       //   }
       // );
     })
@@ -629,7 +638,7 @@ export class StudentModuleComponent implements OnInit {
   //loads the module files assigned to the student using the getModuleFilesByStudentId() method of StudentService
   loadModuleFilesOfCourses(studentId: number) {
     this.reviewButtonStat = false;
-    console.log("reviewButtonStat in loadModulesFiles" + this.reviewButtonStat)
+    //.log("reviewButtonStat in loadModulesFiles" + this.reviewButtonStat)
     this.modulefileService.getModuleFilesOfEnrolledCoursesOfModulesByProfileId(studentId).subscribe(
       response => {
         this.studentModuleFiles = response;
@@ -650,7 +659,7 @@ export class StudentModuleComponent implements OnInit {
 
       },
       error => {
-        console.log("Failed to load student course");
+        //.log("Failed to load student course");
       }
     );
 
@@ -660,7 +669,7 @@ export class StudentModuleComponent implements OnInit {
   getModuleFiles(studentId: number) {
     this.moduleFileService.getModuleFilesOfEnrolledCoursesOfModulesByProfileId(studentId).subscribe(
       response => {
-        console.log(response);
+        //.log(response);
       }
     )
   }
@@ -672,9 +681,9 @@ export class StudentModuleComponent implements OnInit {
   onCourseSelect(courseId: any) {
 
     this.reviewButtonStat = false;
-    console.log("reviewButtonStat in loadCourses" + this.reviewButtonStat)
+    //.log("reviewButtonStat in loadCourses" + this.reviewButtonStat)
     this.selectedCourse = this.courses.find(course => course.courseId == courseId) ?? {} as Course;
-    console.log(JSON.stringify(this.selectedCourse));
+    //.log(JSON.stringify(this.selectedCourse));
 
     // this.selectedCourse = this.courses.find(course => course.courseId == courseId);
     // for store progress when user switch course
@@ -702,10 +711,10 @@ export class StudentModuleComponent implements OnInit {
     this.selectedModule = undefined;
     //FUNCTION TO TRACK COURSE PROGRESS
     this.trackCourseProgress(courseId)
-    // console.log(this.selectedCourseId);
-    // console.log(this.selectedModule);
+    // //.log(this.selectedCourseId);
+    // //.log(this.selectedModule);
 
-    console.log("   this.courProgPercentage  in onCourseSelect" + this.courProgPercentage)
+    //.log("   this.courProgPercentage  in onCourseSelect" + this.courProgPercentage)
 
     //names of attributes
     let departmentname: any;
@@ -725,77 +734,77 @@ export class StudentModuleComponent implements OnInit {
     let deptinstituteId: any;
     this.moduleService.getAllModules().subscribe(
       response => {
-        //console.log(response);
+        ////.log(response);
         this.modulesArray = response;
-        //  console.log(this.modulesArray);
+        //  //.log(this.modulesArray);
 
         for (let i = 0; i < this.modulesArray.length; i++) {
-          // console.log(this.modulesArray[i]);
+          // //.log(this.modulesArray[i]);
 
           if (courseId == this.modulesArray[i].courseId_id) {
             modulecourseId = this.modulesArray[i].courseId_id;
 
             let modulesId = this.modulesArray[i].moduleId;
-            console.log("Modules Id" + modulesId)
-            console.log("module course : " + this.modulesArray[i].moduleName);
+            //.log("Modules Id" + modulesId)
+            //.log("module course : " + this.modulesArray[i].moduleName);
 
-            // console.log("module course id" + this.modulesArray[i].courseId_id);
+            // //.log("module course id" + this.modulesArray[i].courseId_id);
 
-            // console.log("course table" + courseId);
+            // //.log("course table" + courseId);
 
             this.courseService.getAllCourses().subscribe(
               response => {
 
                 this.courseArray = response;
                 for (let k = 0; k < this.courseArray.length; k++) {
-                  // console.log(this.courseArray[i])
+                  // //.log(this.courseArray[i])
 
                   if (modulecourseId == this.courseArray[k].courseId) {
                     institutioncourseId = this.courseArray[k].instId;
-                    // console.log("course name :" + this.courseArray[k].courseName)
+                    // //.log("course name :" + this.courseArray[k].courseName)
 
                     this.courseName = this.courseArray[k].courseName;
-                    console.log("Course Name :" + this.courseName)
+                    //.log("Course Name :" + this.courseName)
 
                     this.instituteadminService.fetchAdminInstitutionList().subscribe(
                       response => {
                         this.instituteArray = response;
 
                         for (let h = 0; h < this.instituteArray.length; h++) {
-                          //console.log(this.instituteArray[i]);
+                          ////.log(this.instituteArray[i]);
 
                           if (institutioncourseId == this.instituteArray[h].adminInstitutionId) {
                             deptinstituteId = this.instituteArray[h].adminInstitutionId;
-                            //console.log("institute name : " + this.instituteArray[h].adminInstitutionName);
+                            ////.log("institute name : " + this.instituteArray[h].adminInstitutionName);
                             this.instituteName = this.instituteArray[h].adminInstitutionName;
-                            console.log(this.instituteName);
+                            //.log(this.instituteName);
 
                             this.courseService.getCoursesDepartmentId().subscribe(
                               response => {
                                 this.coursedepartmentArray = response;
 
                                 for (let z = 0; z < this.coursedepartmentArray.length; z++) {
-                                  //  console.log(this.coursedepartmentArray[z]);
+                                  //  //.log(this.coursedepartmentArray[z]);
 
                                   if (courseId == this.coursedepartmentArray[z].courseId) {
-                                    // console.log(courseId);
-                                    // console.log(this.coursedepartmentArray[z].department_id);
+                                    // //.log(courseId);
+                                    // //.log(this.coursedepartmentArray[z].department_id);
                                     departId = this.coursedepartmentArray[z].department_id;
 
 
                                     this.departmentService.getAllDepartments().subscribe(
                                       response => {
                                         this.departmentArray = response;
-                                        // console.log(response)
+                                        // //.log(response)
 
                                         for (let c = 0; c < this.departmentArray.length; c++) {
 
-                                          //console.log(this.departmentArray[c]);
+                                          ////.log(this.departmentArray[c]);
 
                                           if (departId == this.departmentArray[c].id) {
-                                            // console.log(this.departmentArray[c].name);
+                                            // //.log(this.departmentArray[c].name);
                                             this.departmentName = this.departmentArray[c].name;
-                                            console.log(this.departmentName);
+                                            //.log(this.departmentName);
 
 
 
@@ -822,15 +831,15 @@ export class StudentModuleComponent implements OnInit {
 
                           }
                         }
-                        // console.log(response)
+                        // //.log(response)
 
                       })
 
 
                   }
                 }
-                // console.log(response);
-                //console.log("in course" + modulecourseId);
+                // //.log(response);
+                ////.log("in course" + modulecourseId);
               }
             )
 
@@ -853,21 +862,21 @@ export class StudentModuleComponent implements OnInit {
   //navigates back to the student data page
   back() {
     this.courseProgServ.getAllCourseProgress();
-   // Use window.onpopstate to detect when the user navigates back
-  window.onpopstate = () => {
-    // Reload the previous page when the user navigates back
-    window.location.reload();
-  };
+    // Use window.onpopstate to detect when the user navigates back
+    window.onpopstate = () => {
+      // Reload the previous page when the user navigates back
+      window.location.reload();
+    };
 
-  // Navigate back using Location.back()
-  this._location.back();
-    
+    // Navigate back using Location.back()
+    this._location.back();
+
     // this.route.navigate(['studentdata/student', this.userName])
   }
 
   changeselectedModuleName(moduleId: any) {
     this.selectedModule = moduleId;
-    //console.log(moduleId);
+    ////.log(moduleId);
 
   }
 
@@ -911,7 +920,7 @@ export class StudentModuleComponent implements OnInit {
 
     this.fileProgService.getFileProgressByFileIdAndStudentId(this.selectedFile.moduleFileId, this.studentId).subscribe(
       (response) => {
-        console.log(response);
+        //.log(response);
         this.selectedFileProgress = response;
       }
     );
@@ -921,12 +930,12 @@ export class StudentModuleComponent implements OnInit {
 
 
     this.moduleName = module.moduleName;
-    console.log(this.moduleName)
+    //.log(this.moduleName)
 
 
 
     this.moduleFileName = file.moduleFileId;
-    //console.log(name);
+    ////.log(name);
 
   }
 
@@ -935,19 +944,19 @@ export class StudentModuleComponent implements OnInit {
   trackModuleProgress(courseId: number) {
     this.statusModuleProg;
     let trackModules: Module[] = [];
-    console.log("Called")
+    //.log("Called")
     let moduleId: number;
     //get modules from module table
     this.moduleService.getModuleByCourseId(courseId).subscribe(
       response => {
-        console.log("Inside getModuleByCourseId(moduleId)")
+        //.log("Inside getModuleByCourseId(moduleId)")
         response.forEach(module => {
           trackModules.push(module);
-          console.log(module);
-          console.log(moduleId)
+          //.log(module);
+          //.log(moduleId)
           if (courseId == module.courseId_id) {
             this.trackedModule = module;
-            console.log(module.courseId_id)
+            //.log(module.courseId_id)
 
             try {
 
@@ -960,7 +969,7 @@ export class StudentModuleComponent implements OnInit {
                   if (this.statusModuleProg.progress == 100) {
                     // this.trackCourseProgress(this.selectedCourseId)
                   }
-                  console.log(this.statusModuleProg)
+                  //.log(this.statusModuleProg)
                   this.statusModuleProgArr.push(this.statusModuleProg.moduleId)
                   //function to get Unique entries
                   this.filterUniqueModuleIds();
@@ -975,16 +984,16 @@ export class StudentModuleComponent implements OnInit {
 
 
       })
-    console.log(this.statusModuleProgArr);
+    //.log(this.statusModuleProgArr);
     this.unistatusModuleProgArr = this.statusModuleProgArr.filter((value, index, self) => self.indexOf(value) === index);
 
-    console.log(this.unistatusModuleProgArr);
+    //.log(this.unistatusModuleProgArr);
 
   }
 
   existingmoduleProgress(moduleId: number, courseId: number) {
 
-    console.log(moduleId)
+    //.log(moduleId)
     this.moduleProgSErv.getModuleProgressByModIdStudId(moduleId, this.studentId).subscribe(
       (response) => {
 
@@ -1001,7 +1010,7 @@ export class StudentModuleComponent implements OnInit {
   filterUniqueModuleIds() {
     // Filter and store unique values in unistatusModuleProgArr
     this.unistatusModuleProgArr = this.statusModuleProgArr.filter((value, index, self) => self.indexOf(value) === index);
-    console.log(this.unistatusModuleProgArr);
+    //.log(this.unistatusModuleProgArr);
   }
 
 
@@ -1011,16 +1020,16 @@ export class StudentModuleComponent implements OnInit {
     let moduleArray: Module[] = [];
     let moduleProgArray: Moduleprogress[] = [];
 
-    console.log(courseId)
+    //.log(courseId)
     await this.totalFilesAndQuizzesInCourse(courseId)
     await this.actualModFileAndQuizCompleted(this.studentId, courseId)
     await this.chkCoursePogress(courseId);
 
-    console.log("this.existingCourseProg")
-    console.log(this.existingCourseProg)
+    //.log("this.existingCourseProg")
+    //.log(this.existingCourseProg)
     if (this.existingCourseProg.courseId != courseId) {
       let addedcourseProgress: CourseProgress = new CourseProgress();
-      console.log("if(this.existingCourseProg.courseId != courseId && this.existingCourseProg.studentId != this.studentId)")
+      //.log("if(this.existingCourseProg.courseId != courseId && this.existingCourseProg.studentId != this.studentId)")
 
       this.courseProgress.id = 0;
       this.courseProgress.courseId = this.selectedCourseId;
@@ -1037,9 +1046,9 @@ export class StudentModuleComponent implements OnInit {
           addedcourseProgress = response;
           this.courProgPercentage = addedcourseProgress.progress;
           this.courseProgServ.getAllCourseProgress().subscribe(
-            (response)=>{}
+            (response) => { }
           )
-          console.log("   this.courProgPercentage  in add  " + this.courProgPercentage)
+          //.log("   this.courProgPercentage  in add  " + this.courProgPercentage)
 
         }
       )
@@ -1049,7 +1058,7 @@ export class StudentModuleComponent implements OnInit {
 
     else if ((this.existingCourseProg.courseId == courseId) && (this.existingCourseProg.studentId == this.studentId)) {
       let updatedcourseProgress: CourseProgress = new CourseProgress();
-      console.log(" else if(this.existingCourseProg.courseId === courseId && this.existingCourseProg.studentId === this.studentId)")
+      //.log(" else if(this.existingCourseProg.courseId === courseId && this.existingCourseProg.studentId === this.studentId)")
       this.existingCourseProg.progress = ((this.completedFileIds.length + this.completedQuizids.length) * 100) / (this.moduleFileIdsForCour.length + this.quizIdsForCour.length);
 
       this.courseProgServ.updateCourseProgress(this.existingCourseProg).subscribe(
@@ -1057,10 +1066,10 @@ export class StudentModuleComponent implements OnInit {
           updatedcourseProgress = response;
           this.courProgPercentage = updatedcourseProgress.progress;
           this.courseProgServ.getAllCourseProgress().subscribe(
-            (response)=>{}
+            (response) => { }
           )
 
-          console.log("   this.courProgPercentage  in update " + this.courProgPercentage)
+          //.log("   this.courProgPercentage  in update " + this.courProgPercentage)
 
         }
       )
@@ -1073,31 +1082,31 @@ export class StudentModuleComponent implements OnInit {
 
     //     moduleArray = response;
 
-    //     console.log(response)
+    //     //.log(response)
     //     this.moduleArray = moduleArray;
 
 
 
     //     this.moduleProgSErv.getModuleProgByCourseId(courseId).subscribe(
     //       (response) => {
-    //         console.log(this.selectedCourseId)
+    //         //.log(this.selectedCourseId)
     //         moduleProgArray = response;
 
     //         this.moduleProgArray = moduleProgArray.filter((array) => array.studentId == this.studentId && array.progress == 100)
-    //         console.log(response)
+    //         //.log(response)
 
 
 
-    //         console.log("moduleProgArray.length " + this.moduleProgArray.length + "moduleProgArray.length " + this.moduleArray.length)
+    //         //.log("moduleProgArray.length " + this.moduleProgArray.length + "moduleProgArray.length " + this.moduleArray.length)
     //         if ((this.moduleProgArray.length <= this.moduleArray.length) && this.moduleProgArray.length != 0) {
 
-    //           console.log(this.existingCourseProg)
-    //           console.log("if ((this.moduleProgArray.length <= this.moduleArray.length) &&  this.moduleProgArray.length != 0)")
+    //           //.log(this.existingCourseProg)
+    //           //.log("if ((this.moduleProgArray.length <= this.moduleArray.length) &&  this.moduleProgArray.length != 0)")
 
-    //           console.log(this.existingCourseProg)
+    //           //.log(this.existingCourseProg)
     //           if (this.existingCourseProg.courseId != courseId) {
     //             let addedcourseProgress: CourseProgress = new CourseProgress();
-    //             console.log("if(this.existingCourseProg.courseId != courseId && this.existingCourseProg.studentId != this.studentId)")
+    //             //.log("if(this.existingCourseProg.courseId != courseId && this.existingCourseProg.studentId != this.studentId)")
 
     //             this.courseProgress.id = 0;
     //             this.courseProgress.courseId = this.selectedCourseId;
@@ -1121,7 +1130,7 @@ export class StudentModuleComponent implements OnInit {
 
     //           else if ((this.existingCourseProg.courseId == courseId) && (this.existingCourseProg.studentId == this.studentId)) {
     //             let updatedcourseProgress: CourseProgress = new CourseProgress();
-    //             console.log(" else if(this.existingCourseProg.courseId === courseId && this.existingCourseProg.studentId === this.studentId)")
+    //             //.log(" else if(this.existingCourseProg.courseId === courseId && this.existingCourseProg.studentId === this.studentId)")
     //             this.existingCourseProg.progress = (this.moduleProgArray.length * 100) / this.moduleArray.length;
 
     //             this.courseProgServ.updateCourseProgress(this.existingCourseProg).subscribe(
@@ -1147,7 +1156,7 @@ export class StudentModuleComponent implements OnInit {
 
 
 
-    console.log(courseId)
+    //.log(courseId)
     try {
       this.courseProgServ.getCourseProgByCourseIdStudId(courseId, this.studentId).subscribe(
         (response) => {
@@ -1165,8 +1174,8 @@ export class StudentModuleComponent implements OnInit {
   }
   // Filter the modules array based on selectedCourse
   getFilteredModules(): any[] {
-    console.log("in module function data")
-    console.log(this.modules);
+    //.log("in module function data")
+    //.log(this.modules);
     for (const i in this.modules) {
       if (this.modules[i].courseId_id === this.selectedCourseId) {
         return this.modules
@@ -1179,20 +1188,20 @@ export class StudentModuleComponent implements OnInit {
 
   getAllFileProgress() {
 
-    console.log("getAllFileProgress()")
+    //.log("getAllFileProgress()")
     this.fileProgService.getAllFileProgressStatus().subscribe(
       (response) => {
         this.fileProgress = response
 
-        console.log(this.studentId)
-        console.log(this.fileProgress)
+        //.log(this.studentId)
+        //.log(this.fileProgress)
         this.filteredFileProg = this.fileProgress.filter(obj => obj.studentId == this.studentId && obj.progress == 100);
         this.filteredProgressFileIds = this.filteredFileProg.map(progress => progress.fileId);
 
-        console.log(this.filteredFileProg)
+        //.log(this.filteredFileProg)
 
 
-        console.log(this.filteredProgressFileIds);
+        //.log(this.filteredProgressFileIds);
 
         // this.cdr.detectChanges();
       }
@@ -1203,16 +1212,16 @@ export class StudentModuleComponent implements OnInit {
   }
 
   private moduleProgresscCeateUpdate(moduleId: number) {
-    console.log("Entered in moduleProgresscCeateUpdate()")
+    //.log("Entered in moduleProgresscCeateUpdate()")
     let updatedModuleProgress: Moduleprogress = new Moduleprogress;
     let moduleArr: ModuleFile[] = [];
     let modFileProgress: Modulefileprogress[] = [];
     this.existingmoduleProgress(moduleId, this.selectedCourseId);
-    console.log(moduleId)
+    //.log(moduleId)
     this.getAllQuizzesByModuleId(moduleId);
-    console.log(this.quizIdArr1);
+    //.log(this.quizIdArr1);
     this.getAllQuizProgress(moduleId);
-    console.log(this.quizIdArr2);
+    //.log(this.quizIdArr2);
 
     // get data from modulefile table my module Id
     this.modulefileService.getModuleFilesByModuleId(moduleId).subscribe(
@@ -1220,11 +1229,11 @@ export class StudentModuleComponent implements OnInit {
 
         moduleArr = response;
 
-        console.log("moduleArr.length inside " + moduleArr.length);
+        //.log("moduleArr.length inside " + moduleArr.length);
         this.moduleArrCopy = moduleArr;
         // this.getAllFileProgress();
 
-        console.log("moduleArr.length outside " + this.moduleArrCopy.length);
+        //.log("moduleArr.length outside " + this.moduleArrCopy.length);
 
         //get data from ModuleFileProgress table where progress is 100
         this.fileProgService.getAllFileProgressByModIdStudIdProg(moduleId, this.studentId).subscribe(
@@ -1232,56 +1241,56 @@ export class StudentModuleComponent implements OnInit {
 
             modFileProgress = response;
 
-            console.log("modulebasedArr.length inside " + modFileProgress);
+            //.log("modulebasedArr.length inside " + modFileProgress);
             this.modFileProgressCopy = modFileProgress;
-            console.log("two lenghts outside " + this.moduleArrCopy.length + "     " + this.modFileProgressCopy.length);
+            //.log("two lenghts outside " + this.moduleArrCopy.length + "     " + this.modFileProgressCopy.length);
 
             let arr1Len = this.quizIdArr1.length + this.moduleArrCopy.length;
             let arr2Len = this.quizIdArr2.length + this.modFileProgressCopy.length;
 
-            console.log("this.quizIdArr2.length " + this.quizIdArr2.length + " this.modFileProgressCopy.length" + this.modFileProgressCopy.length)
-            console.log(" arr2Len   " + arr2Len)
-            console.log("this.quizIdArr1.length " + this.quizIdArr1.length + " this.moduleArrCopy.length" + this.moduleArrCopy.length)
-            console.log(" arr1Len   " + arr1Len)
+            //.log("this.quizIdArr2.length " + this.quizIdArr2.length + " this.modFileProgressCopy.length" + this.modFileProgressCopy.length)
+            //.log(" arr2Len   " + arr2Len)
+            //.log("this.quizIdArr1.length " + this.quizIdArr1.length + " this.moduleArrCopy.length" + this.moduleArrCopy.length)
+            //.log(" arr1Len   " + arr1Len)
 
             // if ((this.modFileProgressCopy.length <= this.moduleArrCopy.length) && this.modFileProgressCopy.length != 0) {
             if ((arr2Len <= arr1Len) && arr2Len != 0) {
 
 
               this.modulePercentage = (arr2Len * 100) / (arr1Len);
-              console.log("moduleArr.length == this.modulebasedArr.length")
+              //.log("moduleArr.length == this.modulebasedArr.length")
 
-              console.log(arr2Len + "       " + arr1Len)
-              console.log("module Percentage" + "  " + this.modulePercentage)
+              //.log(arr2Len + "       " + arr1Len)
+              //.log("module Percentage" + "  " + this.modulePercentage)
 
               this.moduleProgress.moduleId = moduleId;
-              console.log("this.selectedModule.moduleId   " + moduleId)
+              //.log("this.selectedModule.moduleId   " + moduleId)
               this.moduleProgress.courseId = this.selectedCourseId;
               this.moduleProgress.studentId = this.studentId;
               this.moduleProgress.progress = this.modulePercentage;
 
               //condition to check if moduleProgress entity array filtered by course includes current array
-              console.log(this.unistatusModuleProgArr);
+              //.log(this.unistatusModuleProgArr);
 
 
 
-              console.log(this.updatedModuleProgress)
+              //.log(this.updatedModuleProgress)
               if (this.updatedModuleProgress.moduleId == moduleId) {
 
 
 
-                console.log(" if (this.unistatusModuleProgArr.includes(this.selectedModule.moduleId) == true)");
+                //.log(" if (this.unistatusModuleProgArr.includes(this.selectedModule.moduleId) == true)");
 
                 this.updatedModuleProgress.progress = this.modulePercentage;
 
-                console.log(" this.statusModuleProg.progress ")
-                console.log(this.statusModuleProg)
+                //.log(" this.statusModuleProg.progress ")
+                //.log(this.statusModuleProg)
 
                 this.moduleProgSErv.updateModuleProgress(this.updatedModuleProgress).subscribe(
                   (response) => {
 
                     this.existingmoduleProgress(moduleId, this.selectedCourseId);
-                    console.log(this.updatedModuleProgress)
+                    //.log(this.updatedModuleProgress)
                   }
 
                 )
@@ -1290,8 +1299,8 @@ export class StudentModuleComponent implements OnInit {
 
               else if (this.updatedModuleProgress.moduleId != moduleId) {
                 //   else if (this.unistatusModuleProgArr.includes(moduleId) == false){
-                console.log(" else if (this.unistatusModuleProgArr.includes(this.selectedModule.moduleId) == false) ")
-                console.log(this.moduleProgress)
+                //.log(" else if (this.unistatusModuleProgArr.includes(this.selectedModule.moduleId) == false) ")
+                //.log(this.moduleProgress)
 
                 //service to save data in module progress table
                 this.moduleProgSErv.addModuleProgressStatus(this.moduleProgress).subscribe(
@@ -1386,7 +1395,7 @@ export class StudentModuleComponent implements OnInit {
   }
   public shouldShowReviewButtonStat(quizId: number): boolean {
 
-    //console.log(this.reviewStatusLocal)
+    ////.log(this.reviewStatusLocal)
 
     return this.reviewStatusLocal.includes(quizId) && this.reviewStatusLocal.includes(true);
   }
@@ -1408,7 +1417,7 @@ export class StudentModuleComponent implements OnInit {
                 // const reviewStat = [...new Set(response.map((studRez) => studRez.reviewStat && studRez.quizId))];
                 const combinedArray = [...new Set(response.filter(studRez => studRez.reviewStat && studRez.quizId).flatMap(studRez => [studRez.reviewStat, studRez.quizId]))];
 
-                console.log(combinedArray); // Array containing unique values of studRez.reviewStat and studRez.quizId
+                //.log(combinedArray); // Array containing unique values of studRez.reviewStat and studRez.quizId
 
                 this.reviewStatusLocal = this.reviewStatusLocal.concat(combinedArray)
                 const quizIdsInResponse = [...new Set(response.map((quiz) => quiz.quizId))];
@@ -1466,7 +1475,7 @@ export class StudentModuleComponent implements OnInit {
   private getAllQuizzesByModuleId(moduleId: number) {
     this.reviewButtonStat = false;
     this.cdr.detectChanges();
-    console.log("reviewButtonStat in loadQuizzes" + this.reviewButtonStat)
+    //.log("reviewButtonStat in loadQuizzes" + this.reviewButtonStat)
     let quizArr: Quiz[] = [];
     this.quizService.getAllQuizzesByModuleId(moduleId).subscribe(
       (data: Quiz[]) => {
@@ -1493,20 +1502,20 @@ export class StudentModuleComponent implements OnInit {
         // Extract quiz IDs from filtered quiz progress array'
 
         filteredQuizProgressId = quizprogress.map((prog) => prog.quizId);
-        console.log(response)
-        console.log(quizprogress)
-        console.log(filteredQuizProgressId)
+        //.log(response)
+        //.log(quizprogress)
+        //.log(filteredQuizProgressId)
 
-        console.log(this.quizIdArr1)
+        //.log(this.quizIdArr1)
         this.quizIdArr2 = filteredQuizProgressId.filter(element => this.quizIdArr1.includes(element));
-        console.log(this.quizIdArr2)
+        //.log(this.quizIdArr2)
       }
     )
 
 
   }
   onQuizProgressAdded(addeedQuizProgress: any) {
-    console.log(addeedQuizProgress);
+    //.log(addeedQuizProgress);
     let quizArr: Quiz[] = [];
     let filteredQuizArr: Quiz[] = [];
     let moduleIdArr: number[] = [];
@@ -1518,10 +1527,10 @@ export class StudentModuleComponent implements OnInit {
         // Map the quiz array to an array of quiz IDs
         moduleIdArr = filteredQuizArr.map(quiz => quiz.moduleId);
 
-        console.log(moduleIdArr[0])
+        //.log(moduleIdArr[0])
 
 
-        console.log(moduleIdArr[0])
+        //.log(moduleIdArr[0])
         // handle the emitted value here
         if (addeedQuizProgress.completed == true) {
           this.moduleProgresscCeateUpdate(moduleIdArr[0]);
@@ -1535,7 +1544,7 @@ export class StudentModuleComponent implements OnInit {
   showalert: boolean = false;
 
   showAlert(): void {
-    //console.log(this.showalert);
+    ////.log(this.showalert);
     if (this.showalert) {
       //  alert("sorry! you cant able to attend quiz again");
       this.dialogboxService.open('sorry! you can`t able to attend quiz again', 'warning');
@@ -1547,13 +1556,13 @@ export class StudentModuleComponent implements OnInit {
 
   onScoreReceived(score: number) {
     this.score = score;
-    console.log('Received score: ' + score);
-    console.log('Current score: ' + this.score);
+    //.log('Received score: ' + score);
+    //.log('Current score: ' + this.score);
   }
 
   onQuizClicked(quiz: Quiz, retake: boolean = false) {
     this.reviewButtonStat = false;
-    console.log("reviewButtonStat in QuizClicked" + this.reviewButtonStat)
+    //.log("reviewButtonStat in QuizClicked" + this.reviewButtonStat)
     this.cd.stop();
     // if clicked on retake quiz option
     if (retake) {
@@ -1561,11 +1570,15 @@ export class StudentModuleComponent implements OnInit {
       this.isRetakingQuiz = true;
       this.retakingQuiz++;
       this.cd.restart();
+      console.log(" Retake Quiz..." + this.addeedQuizProgress1);
+
+
     } else {
       this.onQuizClick++;
       this.isRetakingQuiz = false;
       if (!(this.quizFailedProgresses.includes(quiz.quizId) || this.quizPassedProgresses.includes(quiz.quizId))) {
         this.cd.restart();
+        console.log("Without Retake Quiz..." + this.addeedQuizProgress1);
       }
     }
 
@@ -1585,13 +1598,13 @@ export class StudentModuleComponent implements OnInit {
     this.currentTime = 0;
 
     this.showalert = true;
-    console.log(this.showalert);
+    //.log(this.showalert);
 
     // this.selectedFile = '';
     this.selectedQuiz = quiz;
     this.setTimer = this.selectedQuiz.setTimer;
     this.selectedQuizName = quiz.title;
-    console.log(this.quizProgressOfStudent);
+    //.log(this.quizProgressOfStudent);
 
     // // Find the corresponding progress in quizProgressOfStudent array
     // const progress = this.quizProgressOfStudent.find(qp => qp.quizId === quiz.quizId);
@@ -1649,21 +1662,21 @@ export class StudentModuleComponent implements OnInit {
         })
       },
       (error) => {
-        console.log("failed to fetch progress data");
+        //.log("failed to fetch progress data");
 
       }
     )
   }
 
   onSaveQuizProgress(quizProgress: any) {
-    console.log(quizProgress);
+    //.log(quizProgress);
 
     this.quizPassedProgresses = this.removeElementFromStringArray(this.quizPassedProgresses, quizProgress.quizId)
     this.quizFailedProgresses = this.removeElementFromStringArray(this.quizFailedProgresses, quizProgress.quizId)
-    console.log(this.quizProgressOfStudent);
+    //.log(this.quizProgressOfStudent);
 
     this.quizProgressOfStudent = this.removeElementFromArray(this.quizProgressOfStudent, quizProgress.id);
-    console.log(this.quizProgressOfStudent);
+    //.log(this.quizProgressOfStudent);
 
     if (quizProgress.completed == true) {
       this.quizPassedProgresses.push(quizProgress.quizId);
@@ -1671,10 +1684,10 @@ export class StudentModuleComponent implements OnInit {
       this.quizFailedProgresses.push(quizProgress.quizId);
     }
     this.quizProgressOfStudent.push(quizProgress);
-    console.log(this.quizProgressOfStudent);
+    //.log("Passed Data for quiz..." + this.quizProgressOfStudent);
 
-    console.log(this.quizPassedProgresses);
-    console.log(this.quizFailedProgresses);
+    //.log(this.quizPassedProgresses);
+    //.log(this.quizFailedProgresses);
     this.sortAccessibleModules();
     this.findProgressOfSelectedQuiz(this.selectedQuiz);
   }
@@ -1708,10 +1721,10 @@ export class StudentModuleComponent implements OnInit {
         this.moduleProgSErv.getModuleProgressesByCourseIdAndStudentId(this.selectedCourseId, this.studentId).subscribe(
           (response) => {
             response.forEach(moduleProgress => {
-              // console.log(response);
+              // //.log(response);
 
               const foundedModule = studentModules.find(module => module.moduleId == moduleProgress.moduleId);
-              // console.log(foundedModule);
+              // //.log(foundedModule);
               if (foundedModule) {
                 this.accessibleModuleIds.add(foundedModule.moduleId);
                 studentModuleProgress.push(moduleProgress);
@@ -1721,7 +1734,7 @@ export class StudentModuleComponent implements OnInit {
 
             if (studentModuleProgress.length <= 0) {
               this.accessibleModuleIds.add(studentModules[0].moduleId);
-              console.log(this.accessibleModuleIds);
+              //.log(this.accessibleModuleIds);
 
             } else {
               let lastModuleProgress = studentModuleProgress[studentModuleProgress.length - 1];
@@ -1765,19 +1778,19 @@ export class StudentModuleComponent implements OnInit {
 
       })
       .catch((error) => {
-        console.error('Error fetching modules:', error);
+        //.error('Error fetching modules:', error);
       });
 
 
-    // console.log('moduleIds');
-    // console.log(moduleIds);
+    // //.log('moduleIds');
+    // //.log(moduleIds);
 
     // Code to get file id based on module id's array
     for (let j of moduleIds) {
       try {
         const response = await this.moduleFileService.getModuleFilesByModuleId(j).toPromise();
-        // console.log('moduleIds in for loop');
-        // console.log(moduleIds);
+        // //.log('moduleIds in for loop');
+        // //.log(moduleIds);
         if (response) {
           moduleFilesForCourId = response;
           moduleFilesForCourId = moduleFilesForCourId.filter((elem) => elem.moduleFileIsActive == true)
@@ -1788,7 +1801,7 @@ export class StudentModuleComponent implements OnInit {
           }
         }
       } catch (error) {
-        console.error('Error fetching module files:', error);
+        //.error('Error fetching module files:', error);
       }
     }
 
@@ -1804,9 +1817,9 @@ export class StudentModuleComponent implements OnInit {
       }
     );
 
-    // console.log('Module id and quiz ids array');
-    // console.log(this.moduleFileIdsForCour);
-    // console.log(this.quizIdsForCour);
+    // //.log('Module id and quiz ids array');
+    // //.log(this.moduleFileIdsForCour);
+    // //.log(this.quizIdsForCour);
 
   }
 
@@ -1823,32 +1836,32 @@ export class StudentModuleComponent implements OnInit {
     this.completedFileIds = [];
     this.completedQuizids = [];
 
-    // console.log(this.moduleFileIdsForCour);
+    // //.log(this.moduleFileIdsForCour);
     await this.totalFilesAndQuizzesInCourse(courseId);
 
     //function to get array of moduke files completed progress 100
     await this.fileProgService.getAllFileProgressStatus().toPromise().then((response) => {
       if (response) {
         modFileProgress = response;
-        // console.log(modFileProgress)
-        // console.log(studentId + "    " + courseId)
+        // //.log(modFileProgress)
+        // //.log(studentId + "    " + courseId)
         filteredModFileProgress = modFileProgress.filter((element) => (element.studentId == studentId) && (element.courseId == courseId) && (element.progress == 100));
         filteredModFileProgressIds = filteredModFileProgress.map((elem) => elem.fileId)
 
-        // console.log(filteredModFileProgress)
-        // console.log(this.moduleFileIdsForCour)
-        // console.log(filteredModFileProgressIds)
+        // //.log(filteredModFileProgress)
+        // //.log(this.moduleFileIdsForCour)
+        // //.log(filteredModFileProgressIds)
         for (let fileId of this.moduleFileIdsForCour) {
 
-          // console.log("  for (let j in this.moduleFileIdsForCour) {")
+          // //.log("  for (let j in this.moduleFileIdsForCour) {")
           if ((filteredModFileProgressIds.includes(fileId)) && (!this.completedFileIds.includes(fileId))) {
-            // console.log(fileId)
+            // //.log(fileId)
             this.completedFileIds.push(fileId)
           }
 
         }
-        // console.log(this.completedFileIds)
-        // console.log()
+        // //.log(this.completedFileIds)
+        // //.log()
       }
 
 
@@ -1861,16 +1874,16 @@ export class StudentModuleComponent implements OnInit {
       quizProgress = data;
       filteredQuizProgress = quizProgress.filter((elem) => elem.completed == true)
       filteredQuizProgressQuizIds = filteredQuizProgress.map((elem) => elem.quizId)
-      // console.log("filteredModFileProgressIds")
-      // console.log(filteredQuizProgressQuizIds)
-      // console.log(this.quizIdsForCour)
-      // console.log(this.quizIdsForCour)
+      // //.log("filteredModFileProgressIds")
+      // //.log(filteredQuizProgressQuizIds)
+      // //.log(this.quizIdsForCour)
+      // //.log(this.quizIdsForCour)
       for (let quizId of this.quizIdsForCour) {
 
-        // console.log("Entered in for loop")
-        // console.log(this.quizIdsForCour)
+        // //.log("Entered in for loop")
+        // //.log(this.quizIdsForCour)
         if ((filteredQuizProgressQuizIds.includes(quizId)) && (!this.completedQuizids.includes(quizId))) {
-          // console.log("entered in if loop")
+          // //.log("entered in if loop")
           this.completedQuizids.push(quizId)
         }
       }
@@ -1881,9 +1894,9 @@ export class StudentModuleComponent implements OnInit {
     }
 
 
-    // console.log("complted file ids and quiz ids")
-    // console.log(this.completedFileIds)
-    // console.log(this.completedQuizids)
+    // //.log("complted file ids and quiz ids")
+    // //.log(this.completedFileIds)
+    // //.log(this.completedQuizids)
 
 
   }
@@ -1894,12 +1907,12 @@ export class StudentModuleComponent implements OnInit {
   onSavePDFProgress(progressData: any) {
     const progressedPageNumber = progressData.progressedPageNumber;
     const totalNumPages = progressData.totalNumPages;
-    // console.log(progressData);
+    // //.log(progressData);
 
     let pdfProgressInPercentage = (100 / totalNumPages) * progressedPageNumber;
     pdfProgressInPercentage = Math.floor(pdfProgressInPercentage);
-    // console.log(this.selectedFile);
-    // console.log(this.studentId);
+    // //.log(this.selectedFile);
+    // //.log(this.studentId);
     const moduleFileProgress: Modulefileprogress = {
       id: 0,
       progress: pdfProgressInPercentage,
@@ -1912,9 +1925,9 @@ export class StudentModuleComponent implements OnInit {
 
     this.fileProgService.updateModuleFileProgressByFileIdAndStudentId(this.selectedFile.moduleFileId, this.studentId, moduleFileProgress).subscribe(
       (response) => {
-        // console.log("pdf progress saved : " + response);
+        // //.log("pdf progress saved : " + response);
         if (pdfProgressInPercentage == 100) {
-          // console.log("Completed");
+          // //.log("Completed");
           this.filteredProgressFileIds.push(response.fileId);
           this.sortAccessibleModules();
           //FUNCTION TO UPDATE MODULE PROGRESS ON QUIZ PROGRESS REACHED 100%
@@ -1934,12 +1947,12 @@ export class StudentModuleComponent implements OnInit {
     this.moduleFileProgress.studentId = this.studentId;
     this.moduleFileProgress.courseId = this.selectedCourseId;
     this.moduleFileProgress.progress = this.completionPercentage;
-    console.log(this.moduleFileProgress);
+    //.log(this.moduleFileProgress);
 
     this.fileProgService.updateModuleFileProgressByFileIdAndStudentId(this.selectedFile.moduleFileId, this.studentId, this.moduleFileProgress).subscribe(
       response => {
-        console.log(response);
-        console.log("updated progress after paused")
+        //.log(response);
+        //.log("updated progress after paused")
       }
     )
   }
@@ -1950,8 +1963,10 @@ export class StudentModuleComponent implements OnInit {
     this.questionAnswers = questionAnswersArray;
     this.quizProgress = new QuizProgress();
 
-    console.log(this.questionAnswers);
-    console.log(this.selectedQuiz);
+
+
+    //.log(this.questionAnswers);
+    //.log(this.selectedQuiz);
 
 
     let notAttendedQuestions: any[] = [];
@@ -1992,15 +2007,16 @@ export class StudentModuleComponent implements OnInit {
       this.studentAnswer.selectedOption = (queAns.selectedAnswer == trueAnswer);
       this.studentAnswer.answerId = 0;
       this.studentAnswer.reviewStat = false;
-      console.log("@@@@@@@@@@@@@@@@@@@@@", this.studentAnswer);
+      //.log("@@@@@@@@@@@@@@@@@@@@@", this.studentAnswer);
       this.quizProgServ.addStudentAnswers(this.studentAnswer).subscribe(
         (response) => {
           // this.studentAnswers.push(response);
           // this.studentAnswers = response;
-          console.log("Student answers saved");
+          //.log("Student answers saved");
+          //.log(response);
         },
         (error) => {
-          console.log("Failed to save student answers");
+          //.log("Failed to save student answers");
         }
       );
 
@@ -2019,7 +2035,8 @@ export class StudentModuleComponent implements OnInit {
       // show dialog box with green exam pass
       var grade = '';
       var maxMarks = this.selectedQuiz.maxMarks;
-      // alert(score);
+      alert(score);
+
       if (score >= maxMarks * 1.0) {
 
         grade = 'A+';
@@ -2055,7 +2072,7 @@ export class StudentModuleComponent implements OnInit {
   }
 
   addQuizProgress(score: number) {
-    console.log(score);
+    //.log(score);
     //alert(score);
 
     // adding all value to quizprogress object to store result
@@ -2068,21 +2085,207 @@ export class StudentModuleComponent implements OnInit {
       this.quizProgress.completed = false;
     }
     this.quizProgress.numberOfAttempts = 1;
-    console.log(this.quizProgress);
+
+    //.log(this.quizProgress);
 
     this.quizProgServ.addQuizProgressOfStudent(this.quizProgress).subscribe(
       (response) => {
-
         this.addeedQuizProgress = response;
+
+        let val = 0;
+        let myaData = 0;
+
+        this.quizProgServ.getQuizProgressesByStudentId(this.quizProgress.studentId).subscribe(
+          response => {
+            this.addeedQuizProgress1 = response;
+            for (let j = 0; j < this.addeedQuizProgress1.length; j++) {
+
+              myaData = this.addeedQuizProgress1[j].score;
+              // console.log("Response based on student" + this.addeedQuizProgress1[j].score);
+
+
+              val = val + this.addeedQuizProgress1[j].score;
+
+            }
+
+            console.log("This is val" + val);
+
+
+
+            for (let h = 0; h < this.addeedQuizProgress1.length; h++) {
+              // console.log("Quiz id based on student id" + this.addeedQuizProgress1[h].quizId);
+
+
+
+              this.quizService.getQuizQuizId(this.quizProgress.quizId).subscribe(
+                response => {
+
+                  if (this.addeedQuizProgress1[h].quizId == response.quizId) {
+                    console.log("This is quiz id" + response.quizId);
+                    console.log("This is max marks" + response.maxMarks);
+
+
+                    console.log(this.isRetakingQuiz);
+
+                    let myVal = 0;
+                    if (this.isRetakingQuiz == false) {
+                      this.quizDataStore.push(response);
+                      console.log(this.quizDataStore);
+
+
+                      for (let m = 0; m <= this.quizDataStore.length; m++) {
+                        console.log(this.quizDataStore[m].maxMarks);
+
+
+                        myVal = myVal + this.quizDataStore[m].maxMarks;
+                        console.log(myVal);
+
+
+                        this.PercentageGrade = (val * 100) / myVal;
+                        console.log(this.PercentageGrade);
+
+                        if (this.PercentageGrade >= 0 && this.PercentageGrade <= 25) {
+                          this.QuizGrade = 'D';
+                        }
+                        else if (this.PercentageGrade > 25 && this.PercentageGrade <= 50) {
+                          this.QuizGrade = 'C';
+                        }
+                        else if (this.PercentageGrade > 50 && this.PercentageGrade <= 75) {
+                          this.QuizGrade = 'B';
+                        }
+                        else if (this.PercentageGrade > 75 && this.PercentageGrade <= 100) {
+                          this.QuizGrade = 'A';
+                        }
+
+                      }
+
+
+
+
+
+
+                    }
+                    else {
+
+                      let myVal = 0;
+
+                      for (let m = 0; m <= this.quizDataStore.length; m++) {
+                        console.log(this.quizDataStore[m].maxMarks);
+
+                        myVal = myVal + this.quizDataStore[m].maxMarks;
+                        console.log(myVal);
+
+                        this.PercentageGrade = (val * 100) / myVal;
+                        console.log(this.PercentageGrade);
+
+                        if (this.PercentageGrade >= 0 && this.PercentageGrade <= 25) {
+                          this.QuizGrade = 'D';
+                        }
+                        else if (this.PercentageGrade >= 25 && this.PercentageGrade <= 50) {
+                          this.QuizGrade = 'C';
+                        }
+                        else if (this.PercentageGrade >= 50 && this.PercentageGrade <= 75) {
+                          this.QuizGrade = 'B';
+                        }
+                        else if (this.PercentageGrade >= 75 && this.PercentageGrade <= 100) {
+                          this.QuizGrade = 'A';
+                        }
+                      }
+
+
+
+
+
+
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    // this.quizDataStore.push(response.maxMarks);
+                    // console.log(this.quizDataStore);
+
+                    // let data = 0;
+                    // for (let k = 0; k < this.quizDataStore.length; k++) {
+                    //   console.log(this.quizDataStore[k]);
+
+                    //   data = data + this.quizDataStore[k].maxMarks;
+                    //   console.log(data);
+
+                    // this.totalPercent = (val * 100) / data;
+                    // console.log(this.totalPercent);
+
+                    // if (this.totalPercent > 0 && this.totalPercent <= 25) {
+                    //   alert("D")
+                    // }
+                    // else if (this.totalPercent > 25 && this.totalPercent <= 50) {
+                    //   alert("C")
+                    // }
+                    // else if (this.totalPercent > 50 && this.totalPercent <= 75) {
+                    //   alert("B")
+                    // }
+                    // else if (this.totalPercent > 75 && this.totalPercent <= 100) {
+                    //   alert("A")
+                    // }
+
+
+
+                    //   }
+
+
+
+                  }
+
+
+
+                }
+              )
+
+
+
+
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          }
+        )
+
+
+        console.log("Data @@@@" + this.addeedQuizProgress.score)
         // alert("Quiz progress saved");
-        console.log("Quiz progress saved");
+        //.log("Quiz progress saved");
         this.onQuizProgressAdded(this.addeedQuizProgress);
         // alert("Quiz progress saved");
         this.onSaveQuizProgress(this.addeedQuizProgress);
 
       },
       (error) => {
-        console.log("Failed to save Progress");
+        //.log("Failed to save Progress");
       }
     );
   }
@@ -2096,7 +2299,7 @@ export class StudentModuleComponent implements OnInit {
     if (ev.action === 'done') {
       // Save current value
       localStorage.setItem('time', `${ev.left / 1000}`)
-      // console.log(this.studentQuizComponent.questionAnswers);
+      // //.log(this.studentQuizComponent.questionAnswers);
 
       this.onQuizSubmit(this.studentQuizComponent.questionAnswers);
 
@@ -2111,9 +2314,14 @@ export class StudentModuleComponent implements OnInit {
   onRetakeQuizClicked(quiz: Quiz) {
     this.reviewButtonStat = false;
     this.cdr.detectChanges();
-    console.log("reviewButtonStat in onretake quizClicked" + this.reviewButtonStat)
+    //.log("reviewButtonStat in onretake quizClicked" + this.reviewButtonStat)
     // alert(this.reviewButtonStat)
     this.onQuizClicked(quiz, true);
+    console.log("In Retake Quiz..");
+
+
+
+
   }
 
   getAllAnswersAttempted(quizId: number) {
@@ -2122,117 +2330,117 @@ export class StudentModuleComponent implements OnInit {
     this.quizResult = [];
     this.totalQuizMarks = 0;
     this.totalReviewMarks = 0;
-    console.log(quizId)
-    console.log("QuizId in  getAllAnswersAttempted")
+    //.log(quizId)
+    //.log("QuizId in  getAllAnswersAttempted")
     this.reviewButtonStat = true;
     this.cdr.detectChanges();
 
-    console.log("reviewButtonStat in allanswersattempted" + this.reviewButtonStat)
+    //.log("reviewButtonStat in allanswersattempted" + this.reviewButtonStat)
     // alert(this.reviewButtonStat)
-    console.log(this.selectedStudProfileId)
-   try{
-    this.quizReService.getAllStudentAnswersByStduentIdAndQuizId(this.studentId, quizId).subscribe(
-      (result) => {
+    //.log(this.selectedStudProfileId)
+    try {
+      this.quizReService.getAllStudentAnswersByStduentIdAndQuizId(this.studentId, quizId).subscribe(
+        (result) => {
 
-        this.quizResult = result;
-        console.log(this.quizResult)
-        this.questionAnswers = []; // Initialize questionAnswers as an array
-        this.correctQuestionAnswer = []
+          this.quizResult = result;
+          //.log(this.quizResult)
+          this.questionAnswers = []; // Initialize questionAnswers as an array
+          this.correctQuestionAnswer = []
 
-        console.log(quizId)
-        if (this.quizResult.length != 0) {
-          this.service.getAllQuestionsByQuizId(quizId).subscribe(
-            (response: any[]) => {
+          //.log(quizId)
+          if (this.quizResult.length != 0) {
+            this.service.getAllQuestionsByQuizId(quizId).subscribe(
+              (response: any[]) => {
 
-              console.log("responses for question")
-              console.log(response);
+                //.log("responses for question")
+                //.log(response);
 
-              response.forEach(
-                question => {
-                  console.log(question)
-                  this.totalQuizMarks = this.totalQuizMarks + question.maxMarks;
+                response.forEach(
+                  question => {
+                    //.log(question)
+                    this.totalQuizMarks = this.totalQuizMarks + question.maxMarks;
 
-                  console.log(" this.totalQuizMarks   " + this.totalQuizMarks + "  this.totalReviewMarks  " + this.totalReviewMarks)
-                  this.queAns = {} as OneQuestionAnswer;
-                  this.correctQueAns = {} as CorrectQuestionAnswer
+                    //.log(" this.totalQuizMarks   " + this.totalQuizMarks + "  this.totalReviewMarks  " + this.totalReviewMarks)
+                    this.queAns = {} as OneQuestionAnswer;
+                    this.correctQueAns = {} as CorrectQuestionAnswer
 
-                  const filteredAnswers = this.quizResult.filter(answer => answer.questionId == question.questionId);
-
-
+                    const filteredAnswers = this.quizResult.filter(answer => answer.questionId == question.questionId);
 
 
-                  filteredAnswers.forEach((answer: StudentAnswer, index: number) => {
-                    this.totalReviewMarks = this.totalReviewMarks + answer.marks;
-                    // console.log(answer);
-                    // console.log(index)
-                    if (index === 0) {
-                      this.correctQueAns.content1 = answer.questionContent;
-                      this.correctQueAns.marks =
-                        this.correctQueAns.questionId = answer.questionId;
-                      this.correctQueAns.questionQuizId = quizId;
-                      this.correctQueAns.reviewcontent = answer.teacherRemark;
 
-                      console.log("ANSWERS ")
-                      console.log(this.correctQueAns.content1)
-                      console.log(answer.marks)
-                      console.log(question.maxMarks)
 
-                      console.log(answer.marks)
-                      console.log(question.maxMarks)
+                    filteredAnswers.forEach((answer: StudentAnswer, index: number) => {
+                      this.totalReviewMarks = this.totalReviewMarks + answer.marks;
+                      // //.log(answer);
+                      // //.log(index)
+                      if (index === 0) {
+                        this.correctQueAns.content1 = answer.questionContent;
+                        this.correctQueAns.marks =
+                          this.correctQueAns.questionId = answer.questionId;
+                        this.correctQueAns.questionQuizId = quizId;
+                        this.correctQueAns.reviewcontent = answer.teacherRemark;
 
-                      this.correctQueAns.marks = answer.marks;
-                      this.correctQueAns.profileId = this.selectedStudProfileId;
-                      console.log(this.correctQueAns)
+                        //.log("ANSWERS ")
+                        //.log(this.correctQueAns.content1)
+                        //.log(answer.marks)
+                        //.log(question.maxMarks)
+
+                        //.log(answer.marks)
+                        //.log(question.maxMarks)
+
+                        this.correctQueAns.marks = answer.marks;
+                        this.correctQueAns.profileId = this.selectedStudProfileId;
+                        //.log(this.correctQueAns)
+                      }
+                    })
+
+
+
+                    // Push question and filtered answers into questionAnswers array
+                    let isFormSubmitted = false;
+                    if (question.questionId > 0) {
+                      isFormSubmitted = true;
                     }
-                  })
+
+                    this.correctQuestionAnswer.push({
+                      ...question,
+                      maxMarks: question.maxMarks,
+                      content1: this.correctQueAns.content1,
+                      isFormDirty: false,
+                      isFormSubmitted: isFormSubmitted,
+                      image: false,
+                      isOptionSelected: true,
+                      selectedAnswer: '',
+                      questionId: this.correctQueAns.questionId,
+                      questionQuizId: this.correctQueAns.questionQuizId,
+                      profileId: this.correctQueAns.profileId,
+                      reviewcontent: this.correctQueAns.reviewcontent,
+                      marks: this.correctQueAns.marks
 
 
-
-                  // Push question and filtered answers into questionAnswers array
-                  let isFormSubmitted = false;
-                  if (question.questionId > 0) {
-                    isFormSubmitted = true;
-                  }
-
-                  this.correctQuestionAnswer.push({
-                    ...question,
-                    maxMarks: question.maxMarks,
-                    content1: this.correctQueAns.content1,
-                    isFormDirty: false,
-                    isFormSubmitted: isFormSubmitted,
-                    image: false,
-                    isOptionSelected: true,
-                    selectedAnswer: '',
-                    questionId: this.correctQueAns.questionId,
-                    questionQuizId: this.correctQueAns.questionQuizId,
-                    profileId: this.correctQueAns.profileId,
-                    reviewcontent: this.correctQueAns.reviewcontent,
-                    marks: this.correctQueAns.marks
-
-
+                    });
                   });
-                });
 
-              console.log(this.correctQuestionAnswer);
-              if (this.viewAdd == true) {
-                this.initialiseQuestion(this.selectedQuiz.maxQuestions);
+                //.log(this.correctQuestionAnswer);
+                if (this.viewAdd == true) {
+                  this.initialiseQuestion(this.selectedQuiz.maxQuestions);
+                }
               }
-            }
 
 
 
-          );
+            );
+          }
+        },
+        error => {
+          //.log("failed to get answers");
         }
-      },
-      error => {
-        console.log("failed to get answers");
-      }
-    );
-   }
-   finally{
-    this.reviewButtonStat = false;
-   }
-    
+      );
+    }
+    finally {
+      this.reviewButtonStat = false;
+    }
+
 
   }
 
@@ -2254,14 +2462,14 @@ export class StudentModuleComponent implements OnInit {
     let marksStatArr: boolean[] = []
     let isSecondAlertDisplayed = false;
     let isFirstAlertDisplayed = false;
-    console.log(queAns)
-    console.log("queAns['queAnsArray']")
-    console.log(queAns['queAnsArray'])
+    //.log(queAns)
+    //.log("queAns['queAnsArray']")
+    //.log(queAns['queAnsArray'])
     this.questionAnswer = {} as QuestionAnswer;
     this.oneQuestionAnswer = {} as OneQuestionAnswer;
     this.correctQueAns = {} as CorrectQuestionAnswer;
     // Form is valid, do something with the form data
-    // console.log("queAns " + JSON.stringify(queAns));
+    // //.log("queAns " + JSON.stringify(queAns));
     queAns['queAnsArray'].forEach((queAnsForMarks: any) => {
       marksArray.push(queAnsForMarks.marks)
       if (queAnsForMarks.marks > queAnsForMarks.maxMarks) {
@@ -2284,13 +2492,13 @@ export class StudentModuleComponent implements OnInit {
       reviewObjectStuAnswer.studentId = queAnsNew.profileId;
       reviewObjectStuAnswer.teacherRemark = queAnsNew.reviewcontent;
       reviewObjectStuAnswer.selectedOption = false;
-      console.log(queAnsNew.reviewcontent)
+      //.log(queAnsNew.reviewcontent)
 
       this.questionAnswer.question = {} as Question;
       this.questionAnswer.question['questionId'] = queAnsNew.questionId;
 
 
-      console.log(reviewObjectStuAnswer)
+      //.log(reviewObjectStuAnswer)
 
       // if(queAnsNew.marks != '')
       if (marksArray.includes('') == false) {
@@ -2302,10 +2510,10 @@ export class StudentModuleComponent implements OnInit {
               // this.studentAnswers.push(response);
               // this.studentAnswers = response;
 
-              console.log(response)
-              console.log("Student answers saved");
-              console.log(typeof this.totalReviewMarks)
-              console.log(typeof reviewObjectStuAnswer.marks)
+              //.log(response)
+              //.log("Student answers saved");
+              //.log(typeof this.totalReviewMarks)
+              //.log(typeof reviewObjectStuAnswer.marks)
               if (queAnsNew.marks == '') {
                 reviewObjectStuAnswer.marks = 0;
               }
@@ -2316,7 +2524,7 @@ export class StudentModuleComponent implements OnInit {
               this.submitClicked.emit(this.totalReviewMarks);
             },
             (error) => {
-              console.log("Failed to save student answers");
+              //.log("Failed to save student answers");
             }
           );
 
