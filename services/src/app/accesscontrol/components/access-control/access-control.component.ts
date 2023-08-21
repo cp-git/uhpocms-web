@@ -400,12 +400,12 @@ export class AccessControlComponent {
       this.sessionData = sessionStorage.getItem('admininstitution');
       //console.log(this.sessionData);
       this.data = JSON.parse(this.sessionData);
-      if(this.institutions.length<=0){
+      if (this.institutions.length <= 0) {
         for (var inst in this.data) {
           this.institutions.push(this.data[inst]);
         }
       }
-     
+
     }
     catch (err) {
       console.log("Error", err);
@@ -532,6 +532,13 @@ export class AccessControlComponent {
               break;
             case 'QUESTION_ANSWER':
               module.hasCreate = true;
+              module.hasActivate = false;
+              module.hasDelete = false;
+              module.hasUpdate = false;
+              module.hasView = true;
+              break;
+            case 'ANALYTICS':
+              module.hasCreate = false;
               module.hasActivate = false;
               module.hasDelete = false;
               module.hasUpdate = false;
