@@ -37,6 +37,7 @@ import { QuizresultService } from 'app/quiz/services/quizresult.service';
 import { QuestionService } from 'app/question/services/question.service';
 import { QuestionAnswer } from 'app/question/class/question-answer';
 import { Question } from 'app/question/class/question';
+import { StudentQuiz } from 'app/quiz-progress/class/student-quiz';
 
 
 @Component({
@@ -160,8 +161,10 @@ export class StudentModuleComponent implements OnInit {
   moduleProgArray: Moduleprogress[] = [];
   correctQueAns: CorrectQuestionAnswer = new CorrectQuestionAnswer();
   quizProgress!: QuizProgress;  // quizProgress object used to save progress in table
+  studentQuiz!: StudentQuiz;
   questionAnswers: OneQuestionAnswer[] = [];    // array of question and answers
   addeedQuizProgress: QuizProgress = new QuizProgress();
+  addedQuizOverAllProgress: StudentQuiz = new StudentQuiz();
   addeedQuizProgress1: QuizProgress[] = [];
   quizDataStore: any[] = [];
   reviewStatusLocal: any[] = [];
@@ -187,6 +190,9 @@ export class StudentModuleComponent implements OnInit {
   totalPercent!: number;
   PercentageGrade!: number;
   QuizGrade!: String;
+
+  quizData!: number;
+  quizCOurseId: any[] = [];
 
 
 
@@ -238,6 +244,9 @@ export class StudentModuleComponent implements OnInit {
     this.studentId = this.activateRoute.snapshot.paramMap.get('id');
     this.userName = this.activateRoute.snapshot.params['userName'];
     this.loadCourseOfStudent(this.studentId);
+
+
+
 
 
     this.selectedCourseId = '1'
@@ -1633,6 +1642,7 @@ export class StudentModuleComponent implements OnInit {
     const progress = this.quizProgressOfStudent.find(qp => qp.quizId === quiz.quizId);
     if (progress) {
       this.selectedQuizProgress = progress;
+
     } else {
 
       this.selectedQuizProgress = {
@@ -1642,8 +1652,12 @@ export class StudentModuleComponent implements OnInit {
         studentId: this.studentId,
         quizId: quiz.quizId,
         score: 0,
+        courseId: quiz.courseId
+
+
         // Include any other properties from QuizProgress
       };
+      console.log(quiz.courseId);
     }
   }
 
@@ -2074,11 +2088,14 @@ export class StudentModuleComponent implements OnInit {
   addQuizProgress(score: number) {
     //.log(score);
     //alert(score);
-
     // adding all value to quizprogress object to store result
     this.quizProgress.studentId = this.studentId;
     this.quizProgress.quizId = this.selectedQuiz.quizId;
     this.quizProgress.score = score;
+    this.quizProgress.courseId = this.selectedCourseId;
+
+
+
     if (score >= this.selectedQuiz.passMark) {
       this.quizProgress.completed = true;
     } else {
@@ -2144,6 +2161,8 @@ export class StudentModuleComponent implements OnInit {
                         this.PercentageGrade = (val * 100) / myVal;
                         console.log(this.PercentageGrade);
 
+                        console.log("DDD" + this.studentQuiz);
+
                         if (this.PercentageGrade >= 0 && this.PercentageGrade <= 25) {
                           this.QuizGrade = 'D';
                         }
@@ -2156,6 +2175,22 @@ export class StudentModuleComponent implements OnInit {
                         else if (this.PercentageGrade > 75 && this.PercentageGrade <= 100) {
                           this.QuizGrade = 'A';
                         }
+
+
+                        // this.studentQuiz.maxMarks = myVal;
+                        // this.studentQuiz.obtainMarks = val;
+                        // this.studentQuiz.studentId = this.studentId;
+                        // this.studentQuiz.studentId = this.selectedCourseId;
+                        // this.studentQuiz.percentage = this.PercentageGrade;
+                        // this.studentQuiz.grade = this.QuizGrade;
+
+
+
+
+
+
+
+
 
                       }
 
@@ -2190,6 +2225,16 @@ export class StudentModuleComponent implements OnInit {
                         else if (this.PercentageGrade >= 75 && this.PercentageGrade <= 100) {
                           this.QuizGrade = 'A';
                         }
+
+                        // this.studentQuiz.maxMarks = myVal;
+                        // this.studentQuiz.obtainMarks = val;
+                        // this.studentQuiz.studentId = this.studentId;
+                        // this.studentQuiz.studentId = this.selectedCourseId;
+                        // this.studentQuiz.percentage = this.PercentageGrade;
+                        // this.studentQuiz.grade = this.QuizGrade;
+
+
+
                       }
 
 
@@ -2197,7 +2242,15 @@ export class StudentModuleComponent implements OnInit {
 
 
 
+
+
                     }
+
+
+
+
+
+
 
 
 
@@ -2244,7 +2297,11 @@ export class StudentModuleComponent implements OnInit {
 
 
 
+
+
                   }
+
+
 
 
 
@@ -2273,8 +2330,21 @@ export class StudentModuleComponent implements OnInit {
 
 
           }
+
+
         )
 
+
+        // this.quizProgServ.addQuizAllProgressOfStudent(this.studentQuiz).subscribe(
+        //   response => {
+        //     this.addedQuizOverAllProgress = response;
+        //     console.log("in progress..");
+
+        //     console.log(response);
+
+        //   }
+
+        // )
 
         console.log("Data @@@@" + this.addeedQuizProgress.score)
         // alert("Quiz progress saved");
