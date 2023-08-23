@@ -25,7 +25,7 @@ export class QuizProgressService {
   }
 
   addQuizProgressOfStudent(quizProgress: QuizProgress): Observable<QuizProgress> {
-    return this.http.post<QuizProgress>('http://localhost:8092/uhpocms/quizprogress', quizProgress);
+    return this.http.post<QuizProgress>(`${this.quizProgressUrl}`, quizProgress);
 
   }
 
@@ -77,13 +77,13 @@ export class QuizProgressService {
   }
 
   addQuizAllProgressOfStudent(studentQuiz: StudentQuiz): Observable<any> {
-    return this.http.post<QuizProgress>('http://localhost:8092/uhpocms/allquizprogress', studentQuiz);
+    return this.http.post<QuizProgress>(`${this.quizProgressUrl}/allquizprogress`, studentQuiz);
 
   }
 
 
   displayStudentProgress(studentId: number): Observable<QuizProgress[]> {
-    return this.http.get<QuizProgress[]>(`http://localhost:8092/uhpocms/studentprogress/${studentId}`);
+    return this.http.get<QuizProgress[]>(`${this.quizProgressUrl}/studentprogress/${studentId}`);
 
   }
 
