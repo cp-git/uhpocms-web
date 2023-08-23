@@ -5,6 +5,6 @@ export class StudentQuiz {
     studentId!: number;
     courseId!: number;
     percentage!: number;
-    grade!: String;
+    grade!: any;
 
 }

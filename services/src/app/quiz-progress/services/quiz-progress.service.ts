@@ -82,4 +82,10 @@ export class QuizProgressService {
   }
 
 
+  displayStudentProgress(studentId: number): Observable<QuizProgress[]> {
+    return this.http.get<QuizProgress[]>(`http://localhost:8092/uhpocms/studentprogress/${studentId}`);
+
+  }
+
+
 }

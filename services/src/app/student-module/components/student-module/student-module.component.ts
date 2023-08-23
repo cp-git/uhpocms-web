@@ -191,8 +191,10 @@ export class StudentModuleComponent implements OnInit {
   PercentageGrade!: number;
   QuizGrade!: String;
 
-  quizData!: number;
+  quizData: String = '';
   quizCOurseId: any[] = [];
+
+  grade: any = '';
 
 
 
@@ -249,6 +251,12 @@ export class StudentModuleComponent implements OnInit {
 
 
 
+
+
+
+
+
+
     this.selectedCourseId = '1'
 
 
@@ -257,8 +265,30 @@ export class StudentModuleComponent implements OnInit {
     this.getAllFileProgress();
     this.getQuizPorgressesByStudentId(this.studentId);
 
+    this.addQuizProgress(this.selectedCourseId);
+
     this.filterUniqueModuleIds();
     //.log(this.reviewButtonStat)
+
+    this.quizProgServ.displayStudentProgress(this.studentId).subscribe(
+      dd => {
+        console.log("dd" + dd);
+        this.quizDataStore = dd;
+
+        for (let m = 0; m < this.quizDataStore.length; m++) {
+          console.log("Final Grade..." + this.quizDataStore[m]);
+
+          this.quizData = this.quizDataStore[m];
+
+        }
+
+      }
+    )
+
+
+
+
+
 
 
   }
@@ -285,6 +315,11 @@ export class StudentModuleComponent implements OnInit {
 
           // //.log(this.selectedCourseId)
           this.chkCoursePogress(this.selectedCourseId)
+
+
+
+
+
 
 
         }
@@ -1579,7 +1614,9 @@ export class StudentModuleComponent implements OnInit {
       this.isRetakingQuiz = true;
       this.retakingQuiz++;
       this.cd.restart();
-      console.log(" Retake Quiz..." + this.addeedQuizProgress1);
+      //console.log(" Retake Quiz..." + this.addeedQuizProgress1);
+      console.log("Welcome...######");
+
 
 
     } else {
@@ -1642,6 +1679,28 @@ export class StudentModuleComponent implements OnInit {
     const progress = this.quizProgressOfStudent.find(qp => qp.quizId === quiz.quizId);
     if (progress) {
       this.selectedQuizProgress = progress;
+      if (this.selectedQuizProgress.score >= quiz.passMark * 1.0) {
+
+        this.grade = 'A+';
+
+      } else if (this.selectedQuizProgress.score >= quiz.passMark * 0.9) {
+        this.grade = 'A';
+      } else if (this.selectedQuizProgress.score >= quiz.passMark * 0.8) {
+        this.grade = 'B+';
+      } else if (this.selectedQuizProgress.score >= quiz.passMark * 0.75) {
+        this.grade = 'B';
+      } else if (this.selectedQuizProgress.score >= quiz.passMark * 0.6) {
+        this.grade = 'C';
+      } else if (this.selectedQuizProgress.score >= quiz.passMark * 0.5) {
+        this.grade = 'D';
+      } else if (this.selectedQuizProgress.score >= quiz.passMark * 0.4) {
+        this.grade = 'E';
+      }
+
+
+
+
+      console.log("Progress of Quiz..." + this.selectedQuizProgress.score)
 
     } else {
 
@@ -1681,6 +1740,10 @@ export class StudentModuleComponent implements OnInit {
       }
     )
   }
+
+
+
+
 
   onSaveQuizProgress(quizProgress: any) {
     //.log(quizProgress);
@@ -2047,29 +2110,29 @@ export class StudentModuleComponent implements OnInit {
 
     if (score >= this.selectedQuiz.passMark) {
       // show dialog box with green exam pass
-      var grade = '';
+      // var grade = '';
       var maxMarks = this.selectedQuiz.maxMarks;
       alert(score);
 
       if (score >= maxMarks * 1.0) {
 
-        grade = 'A+';
+        this.grade = 'A+';
       } else if (score >= maxMarks * 0.9) {
-        grade = 'A';
+        this.grade = 'A';
       } else if (score >= maxMarks * 0.8) {
-        grade = 'B+';
+        this.grade = 'B+';
       } else if (score >= maxMarks * 0.75) {
-        grade = 'B';
+        this.grade = 'B';
       } else if (score >= maxMarks * 0.6) {
-        grade = 'C';
+        this.grade = 'C';
       } else if (score >= maxMarks * 0.5) {
-        grade = 'D';
+        this.grade = 'D';
       } else if (score >= maxMarks * 0.4) {
-        grade = 'E';
+        this.grade = 'E';
       }
       this.getQuizByStudIdAndQuizId(this.selectedQuiz)
 
-      this.dialogboxService.open(this.selectedQuiz.successText + '  ' + grade, 'information');
+      this.dialogboxService.open(this.selectedQuiz.successText + '  ' + this.grade, 'information');
       //alert("Total score: " + score);
 
     } else {
@@ -2085,7 +2148,7 @@ export class StudentModuleComponent implements OnInit {
     this.cd.stop();
   }
 
-  addQuizProgress(score: number) {
+  async addQuizProgress(score: number) {
     //.log(score);
     //alert(score);
     // adding all value to quizprogress object to store result
@@ -2109,255 +2172,259 @@ export class StudentModuleComponent implements OnInit {
       (response) => {
         this.addeedQuizProgress = response;
 
+
+
+
+
+
+
+
+
         let val = 0;
         let myaData = 0;
 
-        this.quizProgServ.getQuizProgressesByStudentId(this.quizProgress.studentId).subscribe(
-          response => {
-            this.addeedQuizProgress1 = response;
-            for (let j = 0; j < this.addeedQuizProgress1.length; j++) {
+        // this.quizProgServ.getQuizProgressesByStudentId(this.quizProgress.studentId).subscribe(
+        //   response => {
+        //     this.addeedQuizProgress1 = response;
 
-              myaData = this.addeedQuizProgress1[j].score;
-              // console.log("Response based on student" + this.addeedQuizProgress1[j].score);
+        //     this.quizProgServ.displayStudentProgress(this.quizProgress.studentId).subscribe(
+        //       data => {
+        //         console.log("Data..." + data);
+
+        //         this.quizDataStore = data;
+
+        //         for (let i = 0; i < this.quizDataStore.length; i++) {
+        //           this.quizData = this.quizDataStore[i];
+        //         }
+
+        //         console.log("This is Individual Data...." + this.quizData);
 
 
-              val = val + this.addeedQuizProgress1[j].score;
 
+        //       }
+
+        //     )
+
+
+        // for (let j = 0; j < this.addeedQuizProgress1.length; j++) {
+
+        //   myaData = this.addeedQuizProgress1[j].score;
+        //   // console.log("Response based on student" + this.addeedQuizProgress1[j].score);
+
+
+        //   val = val + this.addeedQuizProgress1[j].score;
+
+        // }
+
+        // console.log("This is val" + val);
+
+
+
+        // for (let h = 0; h < this.addeedQuizProgress1.length; h++) {
+        //   // console.log("Quiz id based on student id" + this.addeedQuizProgress1[h].quizId);
+
+
+
+        //   this.quizService.getQuizQuizId(this.quizProgress.quizId).subscribe(
+        //     response => {
+
+        //       if (this.addeedQuizProgress1[h].quizId == response.quizId) {
+        //         console.log("This is quiz id" + response.quizId);
+        //         console.log("This is max marks" + response.maxMarks);
+
+
+        //         console.log(this.isRetakingQuiz);
+
+        //         let myVal = 0;
+        //         if (this.isRetakingQuiz == false) {
+        //           this.quizDataStore.push(response);
+        //           console.log(this.quizDataStore);
+
+
+        //           for (let m = 0; m <= this.quizDataStore.length; m++) {
+        //             console.log(this.quizDataStore[m].maxMarks);
+
+
+        //             myVal = myVal + this.quizDataStore[m].maxMarks;
+        //             console.log(myVal);
+
+
+        //             this.PercentageGrade = (val * 100) / myVal;
+        //             console.log(this.PercentageGrade);
+
+        //             console.log("DDD" + this.studentQuiz);
+
+        //             if (this.PercentageGrade >= 0 && this.PercentageGrade <= 25) {
+        //               this.QuizGrade = 'D';
+        //             }
+        //             else if (this.PercentageGrade > 25 && this.PercentageGrade <= 50) {
+        //               this.QuizGrade = 'C';
+        //             }
+        //             else if (this.PercentageGrade > 50 && this.PercentageGrade <= 75) {
+        //               this.QuizGrade = 'B';
+        //             }
+        //             else if (this.PercentageGrade > 75 && this.PercentageGrade <= 100) {
+        //               this.QuizGrade = 'A';
+        //             }
+
+
+
+        //           }
+
+
+
+
+
+
+        //         }
+        //         else {
+
+        //           let myVal = 0;
+
+        //           for (let m = 0; m <= this.quizDataStore.length; m++) {
+        //             console.log(this.quizDataStore[m].maxMarks);
+
+        //             myVal = myVal + this.quizDataStore[m].maxMarks;
+        //             console.log(myVal);
+
+        //             this.PercentageGrade = (val * 100) / myVal;
+        //             console.log(this.PercentageGrade);
+
+        //             if (this.PercentageGrade >= 0 && this.PercentageGrade <= 25) {
+        //               this.QuizGrade = 'D';
+        //             }
+        //             else if (this.PercentageGrade >= 25 && this.PercentageGrade <= 50) {
+        //               this.QuizGrade = 'C';
+        //             }
+        //             else if (this.PercentageGrade >= 50 && this.PercentageGrade <= 75) {
+        //               this.QuizGrade = 'B';
+        //             }
+        //             else if (this.PercentageGrade >= 75 && this.PercentageGrade <= 100) {
+        //               this.QuizGrade = 'A';
+        //             }
+
+
+
+
+        //           }
+
+
+
+
+
+
+
+
+        //         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //       }
+
+
+
+
+
+        //     }
+        //   )
+
+
+
+
+
+
+        // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      }
+
+
+    )
+
+
+
+
+
+
+
+    // alert("Quiz progress saved");
+    //.log("Quiz progress saved");
+    this.onQuizProgressAdded(this.addeedQuizProgress);
+    // alert("Quiz progress saved");
+    this.onSaveQuizProgress(this.addeedQuizProgress);
+
+
+    this.quizProgServ.getQuizProgressesByStudentId(this.quizProgress.studentId).subscribe(
+      response => {
+        this.addeedQuizProgress1 = response;
+
+        this.quizProgServ.displayStudentProgress(this.quizProgress.studentId).subscribe(
+          data => {
+            console.log("Data..." + data);
+
+            this.quizDataStore = data;
+
+            for (let i = 0; i < this.quizDataStore.length; i++) {
+              this.quizData = this.quizDataStore[i];
             }
 
-            console.log("This is val" + val);
-
-
-
-            for (let h = 0; h < this.addeedQuizProgress1.length; h++) {
-              // console.log("Quiz id based on student id" + this.addeedQuizProgress1[h].quizId);
-
-
-
-              this.quizService.getQuizQuizId(this.quizProgress.quizId).subscribe(
-                response => {
-
-                  if (this.addeedQuizProgress1[h].quizId == response.quizId) {
-                    console.log("This is quiz id" + response.quizId);
-                    console.log("This is max marks" + response.maxMarks);
-
-
-                    console.log(this.isRetakingQuiz);
-
-                    let myVal = 0;
-                    if (this.isRetakingQuiz == false) {
-                      this.quizDataStore.push(response);
-                      console.log(this.quizDataStore);
-
-
-                      for (let m = 0; m <= this.quizDataStore.length; m++) {
-                        console.log(this.quizDataStore[m].maxMarks);
-
-
-                        myVal = myVal + this.quizDataStore[m].maxMarks;
-                        console.log(myVal);
-
-
-                        this.PercentageGrade = (val * 100) / myVal;
-                        console.log(this.PercentageGrade);
-
-                        console.log("DDD" + this.studentQuiz);
-
-                        if (this.PercentageGrade >= 0 && this.PercentageGrade <= 25) {
-                          this.QuizGrade = 'D';
-                        }
-                        else if (this.PercentageGrade > 25 && this.PercentageGrade <= 50) {
-                          this.QuizGrade = 'C';
-                        }
-                        else if (this.PercentageGrade > 50 && this.PercentageGrade <= 75) {
-                          this.QuizGrade = 'B';
-                        }
-                        else if (this.PercentageGrade > 75 && this.PercentageGrade <= 100) {
-                          this.QuizGrade = 'A';
-                        }
-
-
-                        // this.studentQuiz.maxMarks = myVal;
-                        // this.studentQuiz.obtainMarks = val;
-                        // this.studentQuiz.studentId = this.studentId;
-                        // this.studentQuiz.studentId = this.selectedCourseId;
-                        // this.studentQuiz.percentage = this.PercentageGrade;
-                        // this.studentQuiz.grade = this.QuizGrade;
-
-
-
-
-
-
-
-
-
-                      }
-
-
-
-
-
-
-                    }
-                    else {
-
-                      let myVal = 0;
-
-                      for (let m = 0; m <= this.quizDataStore.length; m++) {
-                        console.log(this.quizDataStore[m].maxMarks);
-
-                        myVal = myVal + this.quizDataStore[m].maxMarks;
-                        console.log(myVal);
-
-                        this.PercentageGrade = (val * 100) / myVal;
-                        console.log(this.PercentageGrade);
-
-                        if (this.PercentageGrade >= 0 && this.PercentageGrade <= 25) {
-                          this.QuizGrade = 'D';
-                        }
-                        else if (this.PercentageGrade >= 25 && this.PercentageGrade <= 50) {
-                          this.QuizGrade = 'C';
-                        }
-                        else if (this.PercentageGrade >= 50 && this.PercentageGrade <= 75) {
-                          this.QuizGrade = 'B';
-                        }
-                        else if (this.PercentageGrade >= 75 && this.PercentageGrade <= 100) {
-                          this.QuizGrade = 'A';
-                        }
-
-                        // this.studentQuiz.maxMarks = myVal;
-                        // this.studentQuiz.obtainMarks = val;
-                        // this.studentQuiz.studentId = this.studentId;
-                        // this.studentQuiz.studentId = this.selectedCourseId;
-                        // this.studentQuiz.percentage = this.PercentageGrade;
-                        // this.studentQuiz.grade = this.QuizGrade;
-
-
-
-                      }
-
-
-
-
-
-
-
-
-                    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    // this.quizDataStore.push(response.maxMarks);
-                    // console.log(this.quizDataStore);
-
-                    // let data = 0;
-                    // for (let k = 0; k < this.quizDataStore.length; k++) {
-                    //   console.log(this.quizDataStore[k]);
-
-                    //   data = data + this.quizDataStore[k].maxMarks;
-                    //   console.log(data);
-
-                    // this.totalPercent = (val * 100) / data;
-                    // console.log(this.totalPercent);
-
-                    // if (this.totalPercent > 0 && this.totalPercent <= 25) {
-                    //   alert("D")
-                    // }
-                    // else if (this.totalPercent > 25 && this.totalPercent <= 50) {
-                    //   alert("C")
-                    // }
-                    // else if (this.totalPercent > 50 && this.totalPercent <= 75) {
-                    //   alert("B")
-                    // }
-                    // else if (this.totalPercent > 75 && this.totalPercent <= 100) {
-                    //   alert("A")
-                    // }
-
-
-
-                    //   }
-
-
-
-
-
-                  }
-
-
-
-
-
-                }
-              )
-
-
-
-
-
-
-            }
-
-
-
-
-
-
-
-
-
-
-
+            console.log("This is Individual Data...." + this.quizData);
 
 
 
 
           }
 
-
         )
-
-
-        // this.quizProgServ.addQuizAllProgressOfStudent(this.studentQuiz).subscribe(
-        //   response => {
-        //     this.addedQuizOverAllProgress = response;
-        //     console.log("in progress..");
-
-        //     console.log(response);
-
-        //   }
-
-        // )
-
-        console.log("Data @@@@" + this.addeedQuizProgress.score)
-        // alert("Quiz progress saved");
-        //.log("Quiz progress saved");
-        this.onQuizProgressAdded(this.addeedQuizProgress);
-        // alert("Quiz progress saved");
-        this.onSaveQuizProgress(this.addeedQuizProgress);
 
       },
       (error) => {
         //.log("Failed to save Progress");
       }
     );
+
+
+
+
   }
 
 
