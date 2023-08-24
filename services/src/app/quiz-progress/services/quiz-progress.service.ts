@@ -5,6 +5,7 @@ import { QuizProgress } from '../class/quiz-progress';
 import { environment } from 'environments/environment.development';
 import { StudentAnswer } from 'app/student-module/class/student-answer';
 import { DataServiceCache } from 'app/cache/service/data-service.service';
+import { StudentQuiz } from '../class/student-quiz';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class QuizProgressService {
   }
 
   addQuizProgressOfStudent(quizProgress: QuizProgress): Observable<QuizProgress> {
-    return this.http.post<QuizProgress>(`${this.quizProgressUrl}`, quizProgress);
+    return this.http.post<QuizProgress>(`http://localhost:8090/quizprogress/uhpocms/quizprogress`, quizProgress);
 
   }
 
@@ -54,25 +55,36 @@ export class QuizProgressService {
   }
 
 
-  
-  getStudProfileByCourIdModId(courseId:any, moduleId: any){
-    const cachedData = this.cache.getDataFromCache(`${this.quizProgressUrl}/courIdAndmodId/` + courseId +"/"+moduleId);
+
+  getStudProfileByCourIdModId(courseId: any, moduleId: any) {
+    const cachedData = this.cache.getDataFromCache(`${this.quizProgressUrl}/courIdAndmodId/` + courseId + "/" + moduleId);
     if (cachedData) {
       return of(cachedData);
     }
 
-    return this.http.get<QuizProgress[]>(`${this.quizProgressUrl}/courIdAndmodId/` + courseId +"/"+moduleId).pipe(
-    //   tap(data => this.cache.setDataInCache(`${this.courseProgressUrl}/courseprog?id=all`, data))
-    // );
+    return this.http.get<QuizProgress[]>(`${this.quizProgressUrl}/courIdAndmodId/` + courseId + "/" + moduleId).pipe(
+      //   tap(data => this.cache.setDataInCache(`${this.courseProgressUrl}/courseprog?id=all`, data))
+      // );
 
-    tap(data => {
-      // Update cache with new data
-      this.cache.removeFromCache(`${this.quizProgressUrl}/courIdAndmodId/` + courseId +"/"+moduleId);
-      this.cache.setDataInCache((`${this.quizProgressUrl}/courIdAndmodId/` + courseId +"/"+moduleId), data);
-    })
-  );
+      tap(data => {
+        // Update cache with new data
+        this.cache.removeFromCache(`${this.quizProgressUrl}/courIdAndmodId/` + courseId + "/" + moduleId);
+        this.cache.setDataInCache((`${this.quizProgressUrl}/courIdAndmodId/` + courseId + "/" + moduleId), data);
+      })
+    );
 
-  
+
+  }
+
+  addQuizAllProgressOfStudent(studentQuiz: StudentQuiz): Observable<any> {
+    return this.http.post<QuizProgress>(`${this.quizProgressUrl}/allquizprogress`, studentQuiz);
+
+  }
+
+
+  displayStudentProgress(studentId: number): Observable<QuizProgress[]> {
+    return this.http.get<QuizProgress[]>(`http://localhost:8090/quizprogress/uhpocms/studentprogress/${studentId}`);
+
   }
 
 

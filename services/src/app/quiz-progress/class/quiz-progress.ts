@@ -5,4 +5,5 @@ export class QuizProgress {
     completed!: boolean;
     quizId!: number;
     studentId!: number;
+    courseId!: number;
 }
