@@ -273,7 +273,7 @@ export class ProfileComponent implements OnInit {
       this.cleanProfileObject(this.emptyProfile);
       this.service.getProfileByUserId(dataReceived.userId).subscribe(
         (data: Profile) => {
-          console.log(data);
+          console.log("This is Profile Data..." + data.firstName);
           // this.emptyProfile = data;
           this.emptyProfile.institutionId = data.institutionId;
           this.emptyProfile.adminDepartment = data.adminDepartment;
@@ -448,8 +448,16 @@ export class ProfileComponent implements OnInit {
   // For dropdown fetching inactive authusers required for add screen
   private loadInactiveAuthUsers() {
     this.authUserService.getAllInactiveAuthUsers().subscribe(
-      (response: Authuser[]) => {
+      response => {
         this.inactiveAuthUsers = response;
+        console.log("Inactive Users" + this.inactiveAuthUsers)
+
+        let name;
+        for (let j = 0; j <= this.inactiveAuthUsers.length; j++) {
+          console.log("Inactive data.." + this.inactiveAuthUsers[j]);
+
+        }
+
       }
     );
   }
