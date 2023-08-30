@@ -109,7 +109,7 @@ export class AuthUserService {
 
   //Get All Inactive Auth Users
   getAllInactiveAuthUsers(): Observable<Authuser[]> {
-    return this._http.get<Authuser[]>(`${this._baseUrl}?username=inactive`);
+    return this._http.get<Authuser[]>(`${this._baseUrl}?username=inactiveprofile`);
   }
 
 
