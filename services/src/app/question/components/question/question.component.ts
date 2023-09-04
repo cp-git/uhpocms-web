@@ -59,7 +59,7 @@ export class QuestionComponent implements OnInit {
 
   file!: File;
 
-  constructor(private service: QuestionService, private location: Location,private dialogBoxService:DialogBoxService) {
+  constructor(private service: QuestionService, private location: Location, private dialogBoxService: DialogBoxService) {
 
     // assigng headers
     // this.QuestionHeader = QuestionColumn;
@@ -105,7 +105,7 @@ export class QuestionComponent implements OnInit {
   onFileSelected(event: any) {
     this.file = event.target.files[0];
     this.emptyQuestion.questionFigure = this.file.name;
-    console.log(this.file);
+
 
   }
 
@@ -233,24 +233,24 @@ export class QuestionComponent implements OnInit {
   private deleteQuestion(questionFigure: string) {
     this.dialogBoxService.open('Are you sure you want to delete this Question ? ', 'decision').then((response) => {
       if (response) {
-        console.log('User clicked OK');
+
         // Do something if the user clicked OK
-    // calling service to soft delete
-    this.service.deleteQuestion(questionFigure).subscribe(
-      (response) => {
-        this.dialogBoxService.open('Question deleted successfully', 'information');
-        this.ngOnInit();
-      },
-      (error) => {
-        this.dialogBoxService.open('Question deletion Failed', 'warning');
+        // calling service to soft delete
+        this.service.deleteQuestion(questionFigure).subscribe(
+          (response) => {
+            this.dialogBoxService.open('Question deleted successfully', 'information');
+            this.ngOnInit();
+          },
+          (error) => {
+            this.dialogBoxService.open('Question deletion Failed', 'warning');
+          }
+        );
+      } else {
+
+        // Do something if the user clicked Cancel
       }
-    );
-  } else {
-    console.log('User clicked Cancel');
-    // Do something if the user clicked Cancel
+    });
   }
-});
-}
 
   // For getting all inactive questions
   private getInActiveQuestions() {

@@ -41,7 +41,7 @@ export class InactiveTeacherCourseComponent {
   ngOnInit(): void {
     this.teacherId = this.activatedRoute.snapshot.params['id'];
     this.userName = this.activatedRoute.snapshot.params['userName'];
-    console.log(this.userName + " " + this.teacherId)
+
 
     //this.teacherId = this.activatedRoute.snapshot.paramMap.get('id');
     this.getInactiveCoursesByProfileId(this.userName);

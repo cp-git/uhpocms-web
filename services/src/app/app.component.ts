@@ -16,7 +16,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent  implements OnInit{
+export class AppComponent implements OnInit {
   title = 'roleAdmin';
 
   adminInstitutions: AdminInstitution[] = [];
@@ -32,8 +32,8 @@ export class AppComponent  implements OnInit{
   userRoleId: any;
   private refreshDataSubject: Subject<void> = new Subject<void>();
 
-  constructor(private _appService: AppService,private sharedDataService: SharedDataServiceService,
-    private userPermissionService: AuthUserPermissionService,private activatedRoute: ActivatedRoute,) {
+  constructor(private _appService: AppService, private sharedDataService: SharedDataServiceService,
+    private userPermissionService: AuthUserPermissionService, private activatedRoute: ActivatedRoute,) {
     this.userId = sessionStorage.getItem('userId');
     this.userRoleId = sessionStorage.getItem('userRoleId');
   }
@@ -48,16 +48,16 @@ export class AppComponent  implements OnInit{
     this.loadActInacQuizs();
     //alert(sessionStorage.getItem("instituteprofile"));
 
-  //   this.sharedDataService.onDataRefresh().subscribe(() => {
-  // // Clear the session storage and reload the updated data
-  // sessionStorage.removeItem('actinacquiz');
-  //       this.loadActInacQuizs();
-  //     });
-  
+    //   this.sharedDataService.onDataRefresh().subscribe(() => {
+    // // Clear the session storage and reload the updated data
+    // sessionStorage.removeItem('actinacquiz');
+    //       this.loadActInacQuizs();
+    //     });
 
-  //   // Initial load of quizzes
-  //   this.loadActInacQuizs();
-  
+
+    //   // Initial load of quizzes
+    //   this.loadActInacQuizs();
+
   }
   onAppQuestionAnswerBackButtonClicked() {
     // Emit a value to notify the app-question-answer component to refresh data
@@ -97,7 +97,6 @@ export class AppComponent  implements OnInit{
     this._appService.fetchAllActInactQuizs().subscribe(
       (response) => {
         this.actInactquizs = response;
-        console.log("inside  loadActInacQuizs() ")
         sessionStorage.setItem('actinacquiz', JSON.stringify(this.actInactquizs));
       },
       (error) => {

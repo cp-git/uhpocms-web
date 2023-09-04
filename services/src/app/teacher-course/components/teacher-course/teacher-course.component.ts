@@ -107,7 +107,7 @@ export class TeacherCourseComponent implements OnInit {
     //   showDeleteButton: false
     // }
 
-    switch(this.userRole){
+    switch (this.userRole) {
       case 'teacher':
         this.moduleName = 'Assigned Courses';
         break;
@@ -140,27 +140,27 @@ export class TeacherCourseComponent implements OnInit {
   // this function for loading permission from session storage and link permission
   // with buttons to show and hide based on permissions
   // private loadAndLinkUserPermissions() {
-  //   // console.log("hey 1");
+
 
   //   try {
   //     let sessionData: any = sessionStorage.getItem('permissions');
-  //     //console.log(this.sessionData);
+  //    
   //     let data = JSON.parse(sessionData);
   //     for (var inst in data) {
   //       this.userAndRolePermissions.push(data[inst]);
   //     }
   //   }
   //   catch (err) {
-  //     console.log("Error", err);
+  //    
   //   }
-  //   // console.log("hey 2");
+  //  
 
   //   this.userPermissionService.linkPermissions(userModule.COURSE, this.userAndRolePermissions, this.buttonsArray);
-  //   // console.log("hey 3");
+  //
 
-  //   console.log(this.buttonsArray);
+  //   
   //   this.toggleButtonsPermissions(this.buttonsArray);
-  //   // console.log("hey 4");
+  // 
 
   // }
 
@@ -186,7 +186,7 @@ export class TeacherCourseComponent implements OnInit {
   }
 
   // accessControl(userRole: string) {
-  //   console.log(userRole);
+
 
   //   switch (userRole) {
   //     case 'admin' || 'coadmin':
@@ -217,7 +217,7 @@ export class TeacherCourseComponent implements OnInit {
       this.viewActivate = false;
       // this.accessControl(this.userRole);
       // this.toggleButtonsPermissions(this.buttonsArray);
-      // console.log(this.userAndRolePermissions);
+
 
       // this.userPermissionService.toggleButtonsPermissions(userModule.COURSE, this.userAndRolePermissions, this.buttonsArray);
     } else {
@@ -230,7 +230,7 @@ export class TeacherCourseComponent implements OnInit {
   // For navigate to view screen with data
   // function will call when child view button is clicked
   onChildViewClick(objectReceived: any): void {
-    console.log(objectReceived);
+
 
     // hiding view of all column and displaying all course screen
     this.viewOne = true;
@@ -328,12 +328,12 @@ export class TeacherCourseComponent implements OnInit {
 
   //     this.courseDepartment.courseId = data.courseId;
   //     this.courseDepartment.department_id = currentData.departmentId;
-  //     console.log("coursedept" + JSON.stringify(this.courseDepartment));
+  //    
 
   //     const courseAndDepartment = await this.service.assignCourseToDepartment(this.courseDepartment).toPromise();
   //     if (courseAndDepartment) {
   //       await this.loadIdsOfAllCoursesWithDepartmentId();
-  //       // console.log('Course Added successfully');
+  //      
 
   //       if (data.courseIsActive) {
   //         this.dialogBoxServices.open("Course Added successfully", 'information').then((response) => {
@@ -359,7 +359,7 @@ export class TeacherCourseComponent implements OnInit {
   private async loadIdsOfAllCoursesWithDepartmentId() {
     try {
       const data = await this.service.getCoursesDepartmentId().toPromise();
-      console.log(data);
+
       this.courseDepartments = data;
     } catch (error) {
       console.log('no data fetched');
@@ -374,7 +374,7 @@ export class TeacherCourseComponent implements OnInit {
   //   // calling service to get all data
   //   this.service.getAllCourses().subscribe(
   //     response => {
-  //       console.log(response);
+
 
   //       // this.allData = response; //assign data to local variable
   //       this.allData = [];
@@ -389,7 +389,7 @@ export class TeacherCourseComponent implements OnInit {
   //           this.allData.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name
   //         })
   //       })
-  //       console.log(this.allData);
+
 
   //     },
   //     error => {
@@ -403,12 +403,12 @@ export class TeacherCourseComponent implements OnInit {
   // private deleteCourse(courseId: number) {
   //   this.dialogBoxServices.open('Are you sure you want to delete this Course ? ', 'decision').then((response) => {
   //     if (response) {
-  //       console.log('User clicked OK');
+
   //       // Do something if the user clicked OK
   //       // calling service to soft delete
   //       this.service.deleteCourseByCourseId(courseId).subscribe(
   //         (response) => {
-  //           console.log('Course deleted successfully');
+  //        
   //           this.dialogBoxServices.open("Course deleted successfully", 'information').then((response) => {
   //             if (response) {
   //               location.reload(); // Refresh the page
@@ -436,7 +436,7 @@ export class TeacherCourseComponent implements OnInit {
   //   // calling service to get all inactive record
   //   this.service.getAllDeactivateCourses().subscribe(
   //     response => {
-  //       console.log(response);
+
 
   //       this.allInActiveData = [];
 
@@ -453,7 +453,7 @@ export class TeacherCourseComponent implements OnInit {
   //         })
 
   //       })
-  //       console.log(this.allInActiveData);
+  //      
   //     },
   //     error => {
   //       console.log('No data in table ');
@@ -469,7 +469,7 @@ export class TeacherCourseComponent implements OnInit {
   //   this.departmentService.getAllDepartments().subscribe(
   //     response => {
   //       this.departments = response;
-  //       console.log(this.departments);
+  //    
 
   //     },
   //     error => {
@@ -484,7 +484,7 @@ export class TeacherCourseComponent implements OnInit {
 
   //   try {
   //     this.sessionData = sessionStorage.getItem('admininstitution');
-  //     // console.log(this.sessionData);
+
   //     this.data = JSON.parse(this.sessionData);
   //     if (this.adminInstitutions.length <= 0) {
   //       for (var inst in this.data) {
@@ -521,14 +521,13 @@ export class TeacherCourseComponent implements OnInit {
   // }
 
   // private loadAllCoursesWithDepartmentId() {
-  //   console.log("started");
 
   //   this.service.getCoursesDepartmentId().subscribe(
   //     (data) => {
-  //       console.log(data);
+
 
   //       this.courseDepartments = data;
-  //       console.log("end");
+
   //     }, error => {
   //       console.log("no data fetched");
   //     }
@@ -537,7 +536,7 @@ export class TeacherCourseComponent implements OnInit {
   // }
 
   private async loadCoursesBasedOnRole(userRole: string) {
-    console.log(userRole);
+
 
     switch (userRole) {
       // case 'admin' || 'coadmin':
@@ -585,7 +584,6 @@ export class TeacherCourseComponent implements OnInit {
       (data) => {
         this.allData = [];
         data.forEach((course: Course) => {
-          // console.log(course);
 
           this.courseDepartments.find((coursedepartment: CourseDepartment) => {
             if (course.courseId == coursedepartment.courseId) {
@@ -625,7 +623,7 @@ export class TeacherCourseComponent implements OnInit {
             ); // order by alphabets for course name
           });
         });
-        console.log(this.allData);
+
       },
       (error) => {
         console.log(error);
@@ -658,7 +656,7 @@ export class TeacherCourseComponent implements OnInit {
     this.departmentService
       .getDepartmentsByInstitutionId(institutionId)
       .subscribe((response) => {
-        console.log(response);
+
 
         this.departments = response;
       });
@@ -668,7 +666,7 @@ export class TeacherCourseComponent implements OnInit {
   // getAllInactiveDeparmentsByInstitutionId(institutionId: any) {
   //   this.departmentService.getInactiveDepartmentsByInstitutionId(institutionId).subscribe(
   //     (response) => {
-  //       console.log(response);
+
 
   //       this.inactiveD = response;
   //     }
@@ -680,8 +678,8 @@ export class TeacherCourseComponent implements OnInit {
   //     .getInactiveCoursesByInstitutionId(instituteId)
   //     .subscribe((response) => {
   //       this.allInActiveData = response;
-  //       console.log(response);
+  //      
   //     });
   // }
-  
+
 }

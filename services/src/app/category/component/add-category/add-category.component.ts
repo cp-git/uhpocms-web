@@ -21,7 +21,7 @@ export class AddCategoryComponent {
 
 
   isHidden: boolean = false;
-  constructor(private categoryService: CategoryService, private _route: Router,private dialogBoxService:DialogBoxService) {
+  constructor(private categoryService: CategoryService, private _route: Router, private dialogBoxService: DialogBoxService) {
     this.category = new Category();
 
   }
@@ -39,8 +39,8 @@ export class AddCategoryComponent {
       response => {
         this.category = response;
 
-        console.log("category add successfully");
-        this.dialogBoxService.open('category add successfully','information');
+
+        this.dialogBoxService.open('category add successfully', 'information');
         this._route.navigate(['category']);
 
         if (this.categories.length > 0) {
@@ -50,7 +50,7 @@ export class AddCategoryComponent {
       },
       error => {
         console.log("please enter valid details");
-        this.dialogBoxService.open('Failed to Add category','warning');
+        this.dialogBoxService.open('Failed to Add category', 'warning');
       }
 
     )

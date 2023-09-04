@@ -96,7 +96,7 @@ export class DepartmentComponent implements OnInit {
     // this.getAllDepartments();
     // this.getInactiveDepartment();
 
-    console.log(this.userAndRolePermissions);
+
 
     this.loadAndLinkUserPermissions();
 
@@ -108,18 +108,18 @@ export class DepartmentComponent implements OnInit {
   // with buttons to show and hide based on permissions 
   private async loadAndLinkUserPermissions() {
     this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.DEPARTMENT, this.userAndRolePermissions, this.buttonsArray);
-    await this.userPermissionService.toggleButtonsPermissions(userModule.DEPARTMENT,this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(userModule.DEPARTMENT, this.userAndRolePermissions, this.buttonsArray);
 
     // try {
     //   let sessionData: any = sessionStorage.getItem('permissions');
-    //   //console.log(this.sessionData);
+
     //   let data = JSON.parse(sessionData);
     //   for (var inst in data) {
     //     this.userAndRolePermissions.push(data[inst]);
     //   }
     // }
     // catch (err) {
-    //   console.log("Error", err);
+
     // }
 
     // // for linking permissions to buttons array
@@ -159,7 +159,7 @@ export class DepartmentComponent implements OnInit {
 
       // this.showAddButton = true;
       // this.showActivateButton = true;
-      this.userPermissionService.toggleButtonsPermissions(userModule.DEPARTMENT,this.userAndRolePermissions, this.buttonsArray);
+      this.userPermissionService.toggleButtonsPermissions(userModule.DEPARTMENT, this.userAndRolePermissions, this.buttonsArray);
 
 
     } else {
@@ -243,7 +243,7 @@ export class DepartmentComponent implements OnInit {
   private loadAdminInstitutions() {
     try {
       this.sessionData = sessionStorage.getItem('admininstitution');
-      //console.log(this.sessionData);
+
       this.data = JSON.parse(this.sessionData);
       for (var inst in this.data) {
         this.adminInstitutions.push(this.data[inst]);
@@ -272,34 +272,33 @@ export class DepartmentComponent implements OnInit {
     );
   }
 
- // For adding department
- private addDepartment(currentData: Department) {
-  // currentData.active = true; // setting active true
+  // For adding department
+  private addDepartment(currentData: Department) {
+    // currentData.active = true; // setting active true
 
-  // calling service for adding data
-  this.service.insertDepartment(currentData).subscribe(
-    (data) => {
-      console.log('Department added Successfully');
-      if (data.active) {
-        this.dialogBoxServices.open("Department added successfully", 'information').then((response) => {
-          if (response) {
-            location.reload(); // Refresh the page
-          }
+    // calling service for adding data
+    this.service.insertDepartment(currentData).subscribe(
+      (data) => {
+        if (data.active) {
+          this.dialogBoxServices.open("Department added successfully", 'information').then((response) => {
+            if (response) {
+              location.reload(); // Refresh the page
+            }
 
-        });
-      } else {
-        this.dialogBoxServices.open("Department added successfully but NOT ACTIVE", 'information');
+          });
+        } else {
+          this.dialogBoxServices.open("Department added successfully but NOT ACTIVE", 'information');
+        }
+        this.emptyDepartment = {} as Department;
+        this.ngOnInit();
+        this.back();
+
+      },
+      (error) => {
+        this.dialogBoxServices.open("Department is Already Present pls Select Another Name", 'warning');
       }
-      this.emptyDepartment = {} as Department;
-      this.ngOnInit();
-      this.back();
-     
-    },
-    (error) => {
-      this.dialogBoxServices.open("Department is Already Present pls Select Another Name", 'warning');
-    }
-  );
-}
+    );
+  }
 
   // for getting all departments
   private getAllDepartments() {
@@ -325,24 +324,23 @@ export class DepartmentComponent implements OnInit {
   private deleteDepartment(id: number) {
     this.dialogBoxServices.open('Are you sure you want to delete this Department ? ', 'decision').then((response) => {
       if (response) {
-        console.log('User clicked OK');
         // Do something if the user clicked OK
         // calling service to soft delte
-    this.service.deleteDepartmentById(id).subscribe(
-      (response) => {
-        this.dialogBoxServices.open("Department deleted successfully", 'information').then((response) => {
-          if (response) {
-            location.reload(); // Refresh the page
-          }
+        this.service.deleteDepartmentById(id).subscribe(
+          (response) => {
+            this.dialogBoxServices.open("Department deleted successfully", 'information').then((response) => {
+              if (response) {
+                location.reload(); // Refresh the page
+              }
 
-        });
-        this.ngOnInit();
-       
-      },
-      (error) => {
-        this.dialogBoxServices.open('Department deletion Failed', 'warning');
-      }
-    )
+            });
+            this.ngOnInit();
+
+          },
+          (error) => {
+            this.dialogBoxServices.open('Department deletion Failed', 'warning');
+          }
+        )
       }
       else {
         console.log('User clicked Cancel');
@@ -376,7 +374,7 @@ export class DepartmentComponent implements OnInit {
 
         });
         this.ngOnInit();
-        
+
       },
       (error) => {
         this.dialogBoxServices.open("Failed to Activate", 'warning');
@@ -386,14 +384,13 @@ export class DepartmentComponent implements OnInit {
 
 
   private getDataBasedOnRole(userRole: any) {
-    console.log(userRole);
+
 
     switch (userRole) {
       case 'admin' || 'coadmin':
         this.loadAdminInstitutions();
         this.getAllDepartments();
         this.getInactiveDepartment();
-        console.log("done");
 
         break;
       case 'teacher':
@@ -412,7 +409,7 @@ export class DepartmentComponent implements OnInit {
     this.institutionService.getInstitutionByProfileId(profileId).subscribe(
       (response) => {
         this.adminInstitutions = response;
-        console.log(response);
+
 
         // for getting active and inactive departments using institution id
         this.getAllDepartmentsByInstitutionId(this.adminInstitutions[0].adminInstitutionId);
@@ -425,7 +422,7 @@ export class DepartmentComponent implements OnInit {
   getAllDepartmentsByInstitutionId(institutionId: any) {
     this.service.getDepartmentsByInstitutionId(institutionId).subscribe(
       (response) => {
-        console.log(response);
+
 
         this.allData = response;
       }
@@ -436,7 +433,6 @@ export class DepartmentComponent implements OnInit {
   getAllInactiveDeparmentsByInstitutionId(institutionId: any) {
     this.service.getInactiveDepartmentsByInstitutionId(institutionId).subscribe(
       (response) => {
-        console.log(response);
 
         this.allInActiveData = response;
       }

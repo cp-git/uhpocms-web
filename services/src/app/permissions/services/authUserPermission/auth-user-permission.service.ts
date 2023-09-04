@@ -44,31 +44,31 @@ export class AuthUserPermissionService {
   linkPermissions(moduleId: number, userAndRolePermissions: AuthUserPermission[], buttonArray: any) {
     // let data: any = moduleName.toUpperCase;
     // let module: any = userModule[data];
-    console.log(userAndRolePermissions);
+
 
     userAndRolePermissions = userAndRolePermissions.filter(item =>
       item.moduleId == moduleId
     );
-    console.log(userAndRolePermissions);
+
 
     userAndRolePermissions.forEach(element => {
       if (element.permissionId == userPermission.CREATE) {
-        console.log("CREATE");
+
         buttonArray.showAddButton = true;
       }
 
       if (element.permissionId == userPermission.DELETE) {
-        console.log("DELETE");
+
         buttonArray.deleteButton = true;
       }
 
       if (element.permissionId == userPermission.UPDATE) {
-        console.log("UPDATE");
+
         buttonArray.updateButton = true;
       }
 
       if (element.permissionId == userPermission.ACTIVATE) {
-        console.log("ACTIVATE");
+
         buttonArray.showActivateButton = true;
       }
     })
@@ -91,17 +91,17 @@ export class AuthUserPermissionService {
         for (var inst in data) {
           userAndRolePermissions.push(data[inst]);
         }
-        console.log(userAndRolePermissions);
+
 
         // filtering only those permissions which are for the current module
         userAndRolePermissions = userAndRolePermissions.filter((item: { moduleId: number; }) =>
           item.moduleId == moduleId
         );
-        console.log(userAndRolePermissions);
+
 
         // showing and hiding buttons based on permissions
         // this.toggleButtonsPermissions(userAndRolePermissions, buttonsArray);
-        // console.log(userAndRolePermissions);
+
 
         resolve(userAndRolePermissions); // Resolve the Promise when the function completes successfully
       } catch (err) {
@@ -114,34 +114,33 @@ export class AuthUserPermissionService {
 
   // for showing and hinding buttons
   async toggleButtonsPermissions(moduleId: number, userAndRolePermissions: AuthUserPermission[], buttonsArray: any) {
-    console.log(userAndRolePermissions);
+
 
     // filtering only those permissions which are for the current module
     userAndRolePermissions = userAndRolePermissions.filter((item: { moduleId: number; }) =>
       item.moduleId == moduleId
     );
-    
+
     userAndRolePermissions.forEach(element => {
-      // console.log(element);
-      // console.log(buttonsArray);
+
 
       if (element.permissionId == userPermission.CREATE) {
-        console.log("CREATE");
+
         buttonsArray.showAddButton = true;
       }
 
       if (element.permissionId == userPermission.DELETE) {
-        console.log("DELETE");
+
         buttonsArray.showDeleteButton = true;
       }
 
       if (element.permissionId == userPermission.UPDATE) {
-        console.log("UPDATE");
+
         buttonsArray.showUpdateButton = true;
       }
 
       if (element.permissionId == userPermission.ACTIVATE) {
-        console.log("ACTIVATE");
+
         buttonsArray.showActivateButton = true;
       }
     })

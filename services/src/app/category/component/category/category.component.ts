@@ -49,14 +49,14 @@ export class CategoryComponent {
   userModule = userModule;
 
   constructor(
-    private service: CategoryService, 
-    private location: Location, 
-    private _route: Router, 
+    private service: CategoryService,
+    private location: Location,
+    private _route: Router,
     private dialogBoxService: DialogBoxService,
     private userPermissionService: AuthUserPermissionService,
-    
-    ) {
-   
+
+  ) {
+
     // Assining default values
     this.buttonsArray = {
       showAddButton: false,
@@ -84,7 +84,7 @@ export class CategoryComponent {
   // with buttons to show and hide based on permissions 
   private async loadAndLinkUserPermissions() {
     this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.CATEGORY, this.userAndRolePermissions, this.buttonsArray);
-    await this.userPermissionService.toggleButtonsPermissions(userModule.CATEGORY,this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(userModule.CATEGORY, this.userAndRolePermissions, this.buttonsArray);
   }
 
   // back button functionality
@@ -95,8 +95,8 @@ export class CategoryComponent {
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
-      
-      this.userPermissionService.toggleButtonsPermissions(userModule.CATEGORY,this.userAndRolePermissions, this.buttonsArray);
+
+      this.userPermissionService.toggleButtonsPermissions(userModule.CATEGORY, this.userAndRolePermissions, this.buttonsArray);
 
     } else {
       this.location.back();
@@ -175,15 +175,15 @@ export class CategoryComponent {
   // For updating category
   private updateRole(currentData: Category) {
     // calling service for updating data
-    console.log(currentData)
+
     this.service.updateCategory(currentData, currentData.categoryId).subscribe(
       response => {
-        console.log(`Category updated successfully !`);
+
         this.dialogBoxService.open('Category updated successfully', 'information');
         this.back();
       },
       error => {
-        console.log(`Category updation failed !`);
+
         this.dialogBoxService.open('Category updation failed', 'warning')
       }
     );
@@ -198,8 +198,6 @@ export class CategoryComponent {
 
     this.service.insertCategory(toCreateCategory).subscribe(
       response => {
-
-        console.log("Category added successfully");
         this.dialogBoxService.open('Category added successfully', 'information')
         this.emptyCategory = {} as Category;
         this.ngOnInit();
@@ -207,7 +205,6 @@ export class CategoryComponent {
 
       },
       error => {
-        console.log("Cannot add category successfully ");
         this.dialogBoxService.open('Failed to Add category', 'warning')
       }
 
@@ -239,12 +236,12 @@ export class CategoryComponent {
   private deleteCategory(categoryId: number) {
     this.dialogBoxService.open('Are you sure you want to delete this Category ? ', 'decision').then((response) => {
       if (response) {
-        console.log('User clicked OK');
+
         // Do something if the user clicked OK
         // calling service to soft delete
         this.service.deleteCategoryById(categoryId).subscribe(
           (response) => {
-            console.log('Category deleted successfully');
+
             this.dialogBoxService.open('Category deleted successfully', 'information');
             this.ngOnInit();
           },
@@ -253,7 +250,7 @@ export class CategoryComponent {
           }
         );
       } else {
-        console.log('User clicked Cancel');
+
         // Do something if the user clicked Cancel
       }
     });
@@ -282,12 +279,11 @@ export class CategoryComponent {
     // calling service to activating category
     this.service.updateActiveStatus(categoryName).subscribe(
       response => {
-        console.log("Activated category");
+
         this.dialogBoxService.open('Category Activated', 'information')
         this.ngOnInit();
       },
       error => {
-        console.log("Failed to activate");
         this.dialogBoxService.open('Failed to activate', 'warning')
       }
     );

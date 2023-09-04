@@ -48,7 +48,7 @@ export class AdminmdouleComponent {
     this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
     this.userId = sessionStorage.getItem('userId')
-    console.log(this.userId)
+
     this.userRoleId = sessionStorage.getItem('userRoleId');
     // this.loadAccessControl();
     this.userPermissionService.getAllPermissionsByRoleIdAndUserId(this.userRoleId, this.userId)
@@ -60,7 +60,7 @@ export class AdminmdouleComponent {
     try {
       let sessionData: any;
       sessionData = sessionStorage.getItem('permissions');
-      // console.log(sessionData);
+
 
       // converting string json into json object
       let data = JSON.parse(sessionData);
@@ -70,7 +70,7 @@ export class AdminmdouleComponent {
       this.userPermissions.forEach(permission => {
         this.modulePermissionIds.add(permission.moduleId);
       });
-      // console.log(this.modulePermissionIds);
+
 
     }
     catch (err) {
@@ -80,7 +80,7 @@ export class AdminmdouleComponent {
   }
 
   // loadAccessControl() {
-  //   console.log(this.accessControlData);
+
 
   //   this.accessControlService.getAccessControlByUserId(this.userId).subscribe(
   //     (response) => {
@@ -90,7 +90,7 @@ export class AdminmdouleComponent {
 
   //   // if (this.accessControlData.userId != this.userId || (this.accessControlData == undefined || this.accessControlData == null)) {
   //   //   this.accessControlData = this.accessControlService.accessControlData;
-  //   console.log(this.accessControlData);
+
   //   // }
   // }
 

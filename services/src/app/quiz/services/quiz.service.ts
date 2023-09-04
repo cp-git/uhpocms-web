@@ -24,7 +24,7 @@ export class QuizService {
 
   fetchAllActInactQuizs(): Observable<any> {
     // alert(this.baseUrl + this.quizWar + this.quizURL)
-    console.log("Inside  fetchAllActInactQuizs() ")
+
     return this.http.get<any>(`${this.quizUrl}/` + "actInactQuizzes?actInac=all");
   }
 

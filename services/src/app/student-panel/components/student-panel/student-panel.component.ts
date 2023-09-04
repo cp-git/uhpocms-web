@@ -83,7 +83,7 @@ export class StudentPanelComponent {
     try {
       let sessionData: any;
       sessionData = sessionStorage.getItem('permissions');
-      // console.log(sessionData);
+
 
       // converting string json into json object
       let data = JSON.parse(sessionData);
@@ -93,7 +93,7 @@ export class StudentPanelComponent {
       this.userPermissions.forEach(permission => {
         this.modulePermissionIds.add(permission.moduleId);
       });
-      // console.log(this.modulePermissionIds);
+
 
     }
     catch (err) {
@@ -112,7 +112,6 @@ export class StudentPanelComponent {
       async (response) => {
         this.courseProgressArr = response;
         filteredCouProgArr = this.courseProgressArr.filter((element) => element.studentId == this.profileId);
-        console.log(filteredCouProgArr);
 
         for (let i = 0; i < filteredCouProgArr.length; i++) {
           const remainingPercentage: number = 100 - filteredCouProgArr[i].progress;
@@ -138,7 +137,7 @@ export class StudentPanelComponent {
           this.profile = this.data;
           this.instituteId = this.data[i].institutionId;
           //  alert(this.studentName);
-          console.log(this.profile.firstName, this.profile.lastName, this.profile.fullName, "  + ++++ + + ", this.instituteId);
+
           this.instituteId = this.data[i].institutionId;
 
 

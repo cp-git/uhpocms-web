@@ -98,7 +98,7 @@ export class AssignedteachercourseComponent {
 
       this.teacherId = this.activatedRoute.snapshot.paramMap.get('id');
       this.userName = this.activatedRoute.snapshot.params['userName'];
-      console.log(this.userName)
+
 
       this.getCoursesByProfileId(this.teacherId);
 
@@ -129,7 +129,7 @@ export class AssignedteachercourseComponent {
       response => {
         this.courses = response;
 
-        console.log(response);
+
       },
       error => {
         console.log("failed to fetch data");
@@ -146,10 +146,10 @@ export class AssignedteachercourseComponent {
 
     this.courseSyllabusServices.addCourseSyllabus(this.courseSyllabus).subscribe(
       (data) => {
-        console.log(this.courseSyllabus)
-        //console.log(data);
+
+
         this.coursesSyllabus = data;
-        console.log('syllabus Added successfully');
+
       },
       (error) => console.log('failed to upload ')
     );

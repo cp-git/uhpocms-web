@@ -220,7 +220,7 @@ export class AuthUserComponent implements OnInit {
               // Save the updated profile
               this.profileService.updateProfileByAuthuser(currentData.authUserId, profileData).subscribe(
                 profileUpdateResponse => {
-                  console.log(`Profile updated successfully!`);
+
                   this.back();
                 },
                 profileUpdateError => {
@@ -259,7 +259,7 @@ export class AuthUserComponent implements OnInit {
     this.service.addAuthUser(currentData).subscribe(
       (data) => {
         // alert('AuthUser added Successfully');
-        //console.log('User added Successfully');
+
         this.dialogBoxService.open("user added successfully, but their status is currently listed as inactive.", 'information');
         this.emptyAuthUser = {} as Authuser;
         this.ngOnInit();
@@ -299,7 +299,7 @@ export class AuthUserComponent implements OnInit {
   private deleteAuthuser(authUserName: string) {
     this.dialogBoxService.open('Are you sure you want to delete this User ? ', 'decision').then((response) => {
       if (response) {
-        console.log('User clicked OK');
+
         // Do something if the user clicked OK
         // calling service to soft delete
         this.service.deleteAuthUser(authUserName).subscribe(
@@ -313,7 +313,7 @@ export class AuthUserComponent implements OnInit {
           }
         );
       } else {
-        console.log('User clicked Cancel');
+
         // Do something if the user clicked Cancel
       }
     });
@@ -341,13 +341,13 @@ export class AuthUserComponent implements OnInit {
 
     this.profileService.getProfileByUserId(authUserId).subscribe(
       data => {
-        console.log("Data..." + authUserId)
+
 
         // calling service to activating admin role
         this.service.activateAuthUserById(authUserId).subscribe(
           response => {
             // alert("Activated auth user");
-            console.log("Activated auth user");
+
             this.ngOnInit();
           },
           error => {

@@ -34,7 +34,7 @@ export class AddinstituteComponent {
 
   moduleName: string = 'Institute Administration'
   //constructor
-  constructor(private _institutionService: AdmininstitutionService, private _route: Router, private _activatedRoute: ActivatedRoute,private dialogueBoxService:DialogBoxService) {
+  constructor(private _institutionService: AdmininstitutionService, private _route: Router, private _activatedRoute: ActivatedRoute, private dialogueBoxService: DialogBoxService) {
     this.admininstitution = new AdminInstitution();
     this.fileName = '';
   }
@@ -52,15 +52,15 @@ export class AddinstituteComponent {
   onFileSelected(event: any) {
     this.file = event.target.files[0];
     this.admininstitution.adminInstitutionPicture = this.file.name;
-    console.log(this.file);
-    //console.log(this.admininstitution.adminInstitutionPicture);
+
+
   }
 
   // for inserting new Institution in table
   addInstitution(inst: AdminInstitution) {
-    console.log("in function...")
+
     if (this.backupInst.findIndex((data) => data.adminInstitutionName === inst.adminInstitutionName) >= 0) {
-      console.log('Institute name already exists. Please enter another.');
+
     } else {
       this.admininstitution = {} as AdminInstitution;
       this.admininstitution.adminInstitutionName = inst.adminInstitutionName;
@@ -76,10 +76,10 @@ export class AddinstituteComponent {
 
       this._institutionService.addInstitution(formData).subscribe(
         (response) => {
-          console.log("in api");
+
           this.admininstitution = {} as AdminInstitution;
           this.admininstitution = response;
-          console.log(response)
+
 
           this.admininstitutions[this.admininstitutions.indexOf(inst)] = Object.assign(
             {},

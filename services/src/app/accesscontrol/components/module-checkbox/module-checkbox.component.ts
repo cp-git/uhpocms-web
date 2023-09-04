@@ -13,14 +13,14 @@ export class ModuleCheckboxComponent implements OnInit {
   @Input() userPermissions: any;
   @Input() groupPermissions: any;
   @Input() assignPermissionTo: any;
-  
+
   @Output() onChangePermissions: EventEmitter<any> = new EventEmitter();
   @Input() accessControl!: any;
   // accessControl: AccessControl;
   showInnerCheckboxes = false;
   userPermissionsIds: Set<number> = new Set<number>();
   groupPermissionsIds: Set<number> = new Set<number>();
-  
+
   // permissions
   CREATE: any = userPermission.CREATE;
   DELETE: any = userPermission.DELETE;
@@ -33,10 +33,7 @@ export class ModuleCheckboxComponent implements OnInit {
     // this.accessControl = new AccessControl();
   }
   ngOnInit(): void {
-    console.log(this.userPermissions);
-    console.log(this.groupPermissions);
 
-    // console.log(this.userPermissionsIds);
     this.onSelectPermission();
 
   }
@@ -49,7 +46,7 @@ export class ModuleCheckboxComponent implements OnInit {
           this.userPermissionsIds.add(permissions.permissionId);
         }
       })
-      console.log(this.userPermissionsIds);
+
 
     }
     if (changes['groupPermissions']) {
@@ -59,7 +56,7 @@ export class ModuleCheckboxComponent implements OnInit {
           this.groupPermissionsIds.add(permissions.permissionId);
         }
       })
-      console.log(this.groupPermissionsIds);
+
 
     }
   }
@@ -79,7 +76,7 @@ export class ModuleCheckboxComponent implements OnInit {
   }
 
   updatePermissions(event: any, permission: number) {
-    console.log("called");
+
 
     let checked = event.target.checked;
 
@@ -102,7 +99,7 @@ export class ModuleCheckboxComponent implements OnInit {
 
   moduleAndPermissionIds: any;
   onSelectPermission() {
-    console.log(this.moduleAndPermissionIds);
+
 
     this.moduleAndPermissionIds = {
       moduleId: this.module.id,

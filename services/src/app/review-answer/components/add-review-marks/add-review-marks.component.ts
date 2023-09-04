@@ -25,10 +25,10 @@ export class AddReviewMarksComponent implements OnInit {
   @Input() selectedCategoryName: any;
   @Input() selectedQuizId: any;
   @Input() generatedQuestionAnswerId: number = 0;
-  @Input() totalReviewMarks: number = 0; 
+  @Input() totalReviewMarks: number = 0;
   @Input() totalQuizMarks: any; // Define the Input property
   @Output() submitClicked: EventEmitter<any> = new EventEmitter();
-  
+
 
 
   mcqAnswer: any;
@@ -77,7 +77,7 @@ export class AddReviewMarksComponent implements OnInit {
   }
 
   onFileSelected(event: any, queAns: OneQuestionAnswer) {
-  
+
     const file = event.target.files[0];
     this.fileName = file.name;
 
@@ -89,7 +89,7 @@ export class AddReviewMarksComponent implements OnInit {
     reader.readAsDataURL(file);
     queAns.questionFigure = this.fileName;
 
- 
+
     if (queAns.isFormDirty == false) {
       queAns.isFormDirty = true;
       queAns.isFormSubmitted = false;
@@ -109,32 +109,32 @@ export class AddReviewMarksComponent implements OnInit {
     }
   }
 
-  onFormSubmit(queAns: OneQuestionAnswer,queAnsArray: OneQuestionAnswer[]) {
+  onFormSubmit(queAns: OneQuestionAnswer, queAnsArray: OneQuestionAnswer[]) {
     this.submittedQuestionAnswer = {} as OneQuestionAnswer;
     this.submittedQuestionAnswer = queAns;
-    console.log(queAns);
+
     // let optionSelected :boolean = this.isOptionSelected
 
 
-  //  console.log(this.myNumber)
+
 
     if ((this.selectedCategoryName.toUpperCase() != 'MCQ')) {
       queAns.correct1 = true;
     }
 
     if (queAns.questionId > 0) {
-      this.submitClicked.emit({queAns,queAnsArray});
+      this.submitClicked.emit({ queAns, queAnsArray });
 
     } else {
       queAns.questionId = 0;
-      this.submitClicked.emit({queAns,queAnsArray});
+      this.submitClicked.emit({ queAns, queAnsArray });
     }
 
     queAns.isFormDirty = false;
     queAns.isFormSubmitted = true;
   }
 
- 
+
 
   onAnswerSelected(queAns: any, option: any) {
 

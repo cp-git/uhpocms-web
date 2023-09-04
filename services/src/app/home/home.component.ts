@@ -39,15 +39,17 @@ export class HomeComponent {
   adminRoles: AdminRole[] = []
   _instituteAdminArray: Profile[] = [];
   constructor(private _route: Router, private _auth: AuthUserService,
-  
+
     private _instituteadminprofile: ProfileService,
     private authenticationService: AuthenticationserviceService,
     private userPermissionService: AuthUserPermissionService,
     private accessControlService: AccesscontrolService,
     private authModuleService: AuthModuleService,
     private adminRoleService: AdminRoleService
-) {  this.loadAdminRoles();
-  this._getAllList();}
+  ) {
+    this.loadAdminRoles();
+    this._getAllList();
+  }
 
   // public src="assets/videos/university_video.mp4"
   public src = 'assets/videos/university_video.mp4';
@@ -55,23 +57,22 @@ export class HomeComponent {
     this._route.navigate(['login']);
   }
 
- 
+
   userLogin() {
 
-    
+
 
     this._auth.loginDataAuthUser(this.authUser).subscribe(
       (data) => {
-        console.log(data);
 
         const userName = data.authUserFirstName + " " + data.authUserLastName;
         this._instituteadminprofile.getAllProfiles().subscribe(async (data) => {
           this._instituteAdminArray = data;
-          console.log(data);
+
 
           for (let i = 0; i < this._instituteAdminArray.length; i++) {
 
-            //console.log(this._authList[i].authUserId);
+
 
             if (this._instituteAdminArray[i].userId == this.authUser.authUserId) {
 
@@ -104,8 +105,7 @@ export class HomeComponent {
 
 
         this.authUser = data;
-        //console.log(this.authUser.authUserId);
-        // console.log('User Successfully Logged In..');
+
         //this._route.navigate(['demo']);
       },
       (error) => console.log(error)
@@ -117,7 +117,7 @@ export class HomeComponent {
   _getAllList() {
     this._instituteadminprofile.getAllProfiles().subscribe((data1) => {
       this._instituteAdminArray = data1;
-      // console.log(data1);
+
     });
 
     //get all institution ids
@@ -149,7 +149,7 @@ export class HomeComponent {
       ).toPromise();
 
       const userPermissions = response;
-      console.log(userPermissions);
+
       sessionStorage.setItem('permissions', JSON.stringify(userPermissions));
     } catch (error) {
       // Handle any errors that occurred during the asynchronous call
@@ -163,7 +163,7 @@ export class HomeComponent {
     sessionStorage.setItem('profileId', profile.adminId.toString());
     sessionStorage.setItem('userId', profile.userId.toString());
     sessionStorage.setItem('userRoleId', profile.userRoleId.toString());
-    console.log(profile);
+
 
     const actualUserRole = this.adminRoles.find(role => role.roleId == profile.userRoleId);
     if (actualUserRole != undefined)
@@ -182,7 +182,7 @@ export class HomeComponent {
     );
   }
 
-  
+
   openPopup() {
     this.displayStyle = "block";
   }

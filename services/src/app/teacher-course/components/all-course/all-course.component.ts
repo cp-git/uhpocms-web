@@ -135,7 +135,7 @@ export class AllCourseComponent implements OnInit {
       this.viewActivate = false;
       // this.accessControl(this.userRole);
       // this.toggleButtonsPermissions(this.buttonsArray);
-      console.log(this.userAndRolePermissions);
+
 
       this.userPermissionService.toggleButtonsPermissions(
         userModule.COURSE,
@@ -144,7 +144,7 @@ export class AllCourseComponent implements OnInit {
       );
     } else {
 
-      
+
       this.location.back();
 
 
@@ -165,7 +165,7 @@ export class AllCourseComponent implements OnInit {
   // For navigate to update screen with data
   // function will call when child update button is clicked
   onChildUpdateClick(objectReceived: Course): void {
-    console.log(objectReceived);
+
 
     // hiding update screen and displaying all course screen
     this.viewAll = false;
@@ -193,13 +193,12 @@ export class AllCourseComponent implements OnInit {
 
     this.emptyCourse = {} as Course;
 
-    console.log("Clicked on  onAddClick()  ")
-    console.log(this.currentData);
+
     this.viewAll = false;
     this.viewAdd = true;
-  
 
-  
+
+
 
     this.buttonsArray.showAddButton = false;
     this.buttonsArray.showActivateButton = false;
@@ -232,16 +231,15 @@ export class AllCourseComponent implements OnInit {
   private updateCourse(currentData: Course) {
     // calling service for updating data
     this.service.updateCourseById(currentData.courseId, currentData).subscribe(
-      (response) => 
-      { 
-    
+      (response) => {
+
 
         this.dialogBoxServices.open(
           'Course updated successfully',
           'information'
         );
-        
-      
+
+
         this.back();
         this.getAllCourse();
       },
@@ -258,14 +256,14 @@ export class AllCourseComponent implements OnInit {
 
       this.courseDepartment.courseId = data.courseId;
       this.courseDepartment.department_id = currentData.departmentId;
-      console.log('coursedept' + JSON.stringify(this.courseDepartment));
+
 
       const courseAndDepartment = await this.service
         .assignCourseToDepartment(this.courseDepartment)
         .toPromise();
       if (courseAndDepartment) {
         await this.loadIdsOfAllCoursesWithDepartmentId();
-        // console.log('Course Added successfully');
+
 
         if (data.courseIsActive) {
           this.dialogBoxServices
@@ -288,17 +286,17 @@ export class AllCourseComponent implements OnInit {
       this.back();
     } catch (error) {
       this.dialogBoxServices.open('Failed to add Course', 'warning');
-      
+
     }
   }
 
   private async loadIdsOfAllCoursesWithDepartmentId() {
     try {
       const data = await this.service.getCoursesDepartmentId().toPromise();
-      console.log(data);
+
       this.courseDepartments = data;
     } catch (error) {
-      console.log('no data fetched');
+
     }
   }
 
@@ -307,7 +305,6 @@ export class AllCourseComponent implements OnInit {
     // calling service to get all data
     this.service.getAllCourses().subscribe(
       (response) => {
-        console.log(response);
 
         // this.allData = response; //assign data to local variable
         this.allData = [];
@@ -324,7 +321,7 @@ export class AllCourseComponent implements OnInit {
             ); // order by alphabets for course name
           });
         });
-        console.log(this.allData);
+
       },
       (error) => {
         console.log('No data in table ');
@@ -338,12 +335,12 @@ export class AllCourseComponent implements OnInit {
       .open('Are you sure you want to delete this Course ? ', 'decision')
       .then((response) => {
         if (response) {
-          console.log('User clicked OK');
+
           // Do something if the user clicked OK
           // calling service to soft delete
           this.service.deleteCourseByCourseId(courseId).subscribe(
             (response) => {
-              console.log('Course deleted successfully');
+
               this.dialogBoxServices
                 .open('Course deleted successfully', 'information')
                 .then((response) => {
@@ -368,7 +365,7 @@ export class AllCourseComponent implements OnInit {
     // calling service to get all inactive record
     this.service.getAllDeactivateCourses().subscribe(
       (response) => {
-        console.log(response);
+
 
         this.allInActiveData = [];
 
@@ -385,7 +382,7 @@ export class AllCourseComponent implements OnInit {
             ); // order by alphabets for course name
           });
         });
-        console.log(this.allInActiveData);
+
       },
       (error) => {
         console.log('No data in table ');
@@ -398,10 +395,10 @@ export class AllCourseComponent implements OnInit {
     this.departmentService.getAllDepartments().subscribe(
       (response) => {
         this.departments = response;
-        console.log(this.departments);
+
       },
       (error) => {
-        console.log('failed to get departments');
+
         this.dialogBoxServices.open('failed to get departments', 'information');
       }
     );
@@ -409,7 +406,7 @@ export class AllCourseComponent implements OnInit {
   private loadAdminInstitutions() {
     try {
       this.sessionData = sessionStorage.getItem('admininstitution');
-      // console.log(this.sessionData);
+
       this.data = JSON.parse(this.sessionData);
       if (this.adminInstitutions.length <= 0) {
         for (var inst in this.data) {
@@ -442,7 +439,6 @@ export class AllCourseComponent implements OnInit {
   }
 
   private async loadCoursesBasedOnRole(userRole: string) {
-    console.log(userRole);
 
     switch (userRole) {
       case 'admin' || 'coadmin':
@@ -494,7 +490,7 @@ export class AllCourseComponent implements OnInit {
   //     (data) => {
   //       this.allData = [];
   //       data.forEach((course: Course) => {
-  //         // console.log(course);
+  //        
 
   //         this.courseDepartments.find((coursedepartment: CourseDepartment) => {
   //           if (course.courseId == coursedepartment.courseId) {
@@ -534,7 +530,7 @@ export class AllCourseComponent implements OnInit {
   //           ); // order by alphabets for course name
   //         });
   //       });
-  //       console.log(this.allData);
+  //       
   //     },
   //     (error) => {
   //       console.log(error);
@@ -565,7 +561,6 @@ export class AllCourseComponent implements OnInit {
     this.departmentService
       .getDepartmentsByInstitutionId(institutionId)
       .subscribe((response) => {
-        console.log(response);
 
         this.departments = response;
       });
@@ -575,7 +570,7 @@ export class AllCourseComponent implements OnInit {
   // getAllInactiveDeparmentsByInstitutionId(institutionId: any) {
   //   this.departmentService.getInactiveDepartmentsByInstitutionId(institutionId).subscribe(
   //     (response) => {
-  //       console.log(response);
+  //     
 
   //       this.inactiveD = response;
   //     }
@@ -587,13 +582,12 @@ export class AllCourseComponent implements OnInit {
       .getInactiveCoursesByInstitutionId(instituteId)
       .subscribe((response) => {
         this.allInActiveData = response;
-        console.log(response);
+
       });
   }
 
   // getting all courses using department id
   private getCoursesByDepartmentId(departmentId: number) {
-    console.log('inside12345');
 
     this.service.getCourseByDepartmentId(departmentId).subscribe(
       (response) => {
@@ -625,13 +619,13 @@ export class AllCourseComponent implements OnInit {
 
   // getting department usign profile id
   private async getDepartmentByProfileId(profileId: number) {
-    console.log(profileId);
+
 
     const result = await this.departmentService
       .getDepartmentOfProfileId(profileId)
       .toPromise();
 
-    console.log(result);
+
 
     if (result !== undefined) {
       this.departments = result;

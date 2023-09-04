@@ -53,7 +53,7 @@ export class QuestionAnswerComponent implements OnInit {
   questionUrl!: string;
 
   displayUrl!: any
-quizToMarks!: number;
+  quizToMarks!: number;
   profileId: any;
 
   isPageValid: boolean = false;
@@ -136,7 +136,7 @@ quizToMarks!: number;
   constructor(
     private http: HttpClient,
     private questionService: QuestionService,
-    private renderer: Renderer2,private quizServ: QuizService,  private dialogBoxService: DialogBoxService,
+    private renderer: Renderer2, private quizServ: QuizService, private dialogBoxService: DialogBoxService,
   ) {
     this.profileId = sessionStorage.getItem('profileId');
     this.profile = new Profile();
@@ -147,7 +147,7 @@ quizToMarks!: number;
   ngOnInit(): void {
     this.displayUrl = this.questionUrl + '/getFileById';
 
-    console.log(this.totalQuizMarks)
+
 
     this.loadProfiles(this.profileId);
     this.getQuizDetailsByQuizId(this.selectedQuizId);
@@ -157,7 +157,7 @@ quizToMarks!: number;
     this.loadCategories(this.selectedQuizCategoryId);
 
 
-    console.log(this.questionAnswers)
+
 
   }
 
@@ -169,7 +169,7 @@ quizToMarks!: number;
   }
 
   onFileSelected(event: any, queAns: OneQuestionAnswer) {
-    // console.log(JSON.stringify(queAns))
+
     const file = event.target.files[0];
     this.fileName = file.name;
 
@@ -181,7 +181,7 @@ quizToMarks!: number;
     reader.readAsDataURL(file);
     queAns.questionFigure = this.fileName;
 
-    // console.log(queAns.questionFigure)
+
 
     if (queAns.isFormDirty == false) {
       queAns.isFormDirty = true;
@@ -196,51 +196,40 @@ quizToMarks!: number;
       this.submittedQuestionAnswer.questionId = this.generatedQuestionAnswerId;
 
     }
-    // console.log(this.submittedQuestionAnswer);
+
 
     if (changes['questionAnswers']) {
       this.questionAnswers = this.questionAnswers;
-      // console.log("inside   ngOnChanges");
-      // console.log(this.questionAnswers)
 
-      // for(let i of this.questionAnswers){
-      //   this.totalMarks += i.maxMarks;
-      // }
+
     }
 
 
   }
 
-  onDelete(queAns:OneQuestionAnswer){
+  onDelete(queAns: OneQuestionAnswer) {
 
-    let questionAnsCopy:OneQuestionAnswer[] = [];
+    let questionAnsCopy: OneQuestionAnswer[] = [];
     questionAnsCopy = this.questionAnswers;
-    let quiz :Quiz = new Quiz();
-    let passMarkQuiz :Quiz = new Quiz();
-    console.log("INside DLETE FUNCTION")
-    console.log(queAns)
-    let  passMark :number =0 ;
-    this.totalQuizMarks = 0; 
-    
-    console.log(" questionAnsCopy before going to delete")
-    console.log(questionAnsCopy)
+    let quiz: Quiz = new Quiz();
+    let passMarkQuiz: Quiz = new Quiz();
 
-  if(questionAnsCopy.length == 1){                   
-     this.dialogBoxService.open("Delete unsuccessfull. At least one question should be present.", 'warning');
-}
-  else{
-    this.dialogBoxService.open('Are you sure you want to delete this Question ? ', 'decision').then((response) => {
-      if (response) {
-  if((queAns.questionId == 0) || (queAns.questionId == undefined))
-  {
-    this.quizServ.getQuizQuizId(this.selectedQuizId).subscribe(
-      (response)=>{
-           
+    let passMark: number = 0;
+    this.totalQuizMarks = 0;
+
+
+    if (questionAnsCopy.length == 1) {
+      this.dialogBoxService.open("Delete unsuccessfull. At least one question should be present.", 'warning');
+    }
+    else {
+      this.dialogBoxService.open('Are you sure you want to delete this Question ? ', 'decision').then((response) => {
+        if (response) {
+          if ((queAns.questionId == 0) || (queAns.questionId == undefined)) {
+            this.quizServ.getQuizQuizId(this.selectedQuizId).subscribe(
+              (response) => {
+
                 quiz = response;
-                console.log("QUIZ IN DELETE AFTER GET BY ID")
-                console.log(response)
-                console.log(quiz)
-              
+
                 quiz.maxQuestions = quiz.maxQuestions - 1;
 
                 // questionAnsCopy.forEach((queAnsActual:OneQuestionAnswer)=>this.totalQuizMarks = this.totalQuizMarks + queAnsActual.maxMarks)
@@ -252,118 +241,106 @@ quizToMarks!: number;
                 });
                 quiz.maxMarks = this.totalQuizMarks
                 this.quizTotalMarks = this.totalQuizMarks
-             
-               
-                console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%")
-                console.log(this.totalQuizMarks)
-                this.quizServ.updateQuiz(quiz.title , quiz).subscribe(
-                  (response)=>{
-                    console.log("Quiz updated Successfully")
-                                      // Find the index of the queAns object in questionAnsCopy
-                      const indexToDelete = questionAnsCopy.findIndex(
-                        (item) => item === queAns
-                      );
 
-                      // If the index is found (not -1), remove the element from the array
-                      if (indexToDelete !== -1) {
-                        questionAnsCopy.splice(indexToDelete, 1);
-                      }
 
-                     
 
-                      console.log("After DELETE QuestionAnswersArray");
-                      console.log(questionAnsCopy);
+                this.quizServ.updateQuiz(quiz.title, quiz).subscribe(
+                  (response) => {
 
-                    console.log("AFter DELETE QuestionAnswersArray")
-                    console.log(this.questionAnswers)
+                    // Find the index of the queAns object in questionAnsCopy
+                    const indexToDelete = questionAnsCopy.findIndex(
+                      (item) => item === queAns
+                    );
+
+                    // If the index is found (not -1), remove the element from the array
+                    if (indexToDelete !== -1) {
+                      questionAnsCopy.splice(indexToDelete, 1);
+                    }
+
+
+
+
+
                     this.questionAnswers = questionAnsCopy;
-                    
+
                     this.dialogBoxService.open("Question deleted successfully", 'information');
                   }
                 )
 
-      }
-
-     
-    )
-  }
-  
-  else {
-   this.questionService.deleteQuesAndAns(queAns.questionId).subscribe(
-    (response)=>{
-      console.log("Delete Complete")
-
-      questionAnsCopy = questionAnsCopy.filter(
-        (item) => item.questionId !== queAns.questionId
-      );
-       
-      this.quizServ.getQuizQuizId(queAns.questionQuizId).subscribe(
-        (response)=>{
-             
-                  quiz = response;
-                  console.log("QUIZ IN DELETE AFTER GET BY ID")
-                  console.log(response)
-                  console.log(quiz)
-                  passMark = quiz.passMark;
-                  quiz.maxQuestions = quiz.maxQuestions - 1;
-                  // questionAnsCopy.forEach((queAnsActual:OneQuestionAnswer)=>this.totalQuizMarks = this.totalQuizMarks + queAnsActual.maxMarks)
-                  questionAnsCopy.forEach((queAnsActual) => {
-                    if (typeof this.totalQuizMarks === 'undefined') {
-                      this.totalQuizMarks = 0;
-                    }
-                    this.totalQuizMarks  = this.totalQuizMarks + queAnsActual.maxMarks;
-                  });
-                  quiz.maxMarks = this.totalQuizMarks
-                  this.quizTotalMarks = this.totalQuizMarks
-                  console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%")
-                  console.log(this.totalQuizMarks)
-                  this.quizServ.updateQuiz(quiz.title , quiz).subscribe(
-                    (response)=>{
-                      console.log("Quiz updated Successfully")
-                      // questionAnsCopy.forEach((oneQuesAns:OneQuestionAnswer)=> quizTotalMarks = quizTotalMarks +  oneQuesAns.maxMarks)
+              }
 
 
-                      this.questionAnswers = questionAnsCopy;
+            )
+          }
 
-                      console.log("AFter DELETE QuestionAnswersArray")
-                      console.log(this.questionAnswers)  
-                      if(this.totalQuizMarks < passMark )
-                      {
+          else {
+            this.questionService.deleteQuesAndAns(queAns.questionId).subscribe(
+              (response) => {
 
-                      this.dialogBoxService.open("Question deleted successfully, Kindly update quiz passing marks from Quiz Panel", 'information'); 
 
+                questionAnsCopy = questionAnsCopy.filter(
+                  (item) => item.questionId !== queAns.questionId
+                );
+
+                this.quizServ.getQuizQuizId(queAns.questionQuizId).subscribe(
+                  (response) => {
+
+                    quiz = response;
+
+                    passMark = quiz.passMark;
+                    quiz.maxQuestions = quiz.maxQuestions - 1;
+                    // questionAnsCopy.forEach((queAnsActual:OneQuestionAnswer)=>this.totalQuizMarks = this.totalQuizMarks + queAnsActual.maxMarks)
+                    questionAnsCopy.forEach((queAnsActual) => {
+                      if (typeof this.totalQuizMarks === 'undefined') {
+                        this.totalQuizMarks = 0;
                       }
-                      else{
-                      this.dialogBoxService.open("Question deleted successfully", 'information'); 
-                      }
-                    }
-                  )
+                      this.totalQuizMarks = this.totalQuizMarks + queAnsActual.maxMarks;
+                    });
+                    quiz.maxMarks = this.totalQuizMarks
+                    this.quizTotalMarks = this.totalQuizMarks
 
+                    this.quizServ.updateQuiz(quiz.title, quiz).subscribe(
+                      (response) => {
+
+                        // questionAnsCopy.forEach((oneQuesAns:OneQuestionAnswer)=> quizTotalMarks = quizTotalMarks +  oneQuesAns.maxMarks)
+
+
+                        this.questionAnswers = questionAnsCopy;
+
+
+                        if (this.totalQuizMarks < passMark) {
+
+                          this.dialogBoxService.open("Question deleted successfully, Kindly update quiz passing marks from Quiz Panel", 'information');
+
+                        }
+                        else {
+                          this.dialogBoxService.open("Question deleted successfully", 'information');
+                        }
+                      }
+                    )
+
+                  }
+
+
+                )
+                // Update the original array with the modified copy
+                // this.questionAnswers = questionAnsCopy;
+
+
+
+
+              }
+            )
+          }
         }
 
-       
-      )
-      // Update the original array with the modified copy
-      // this.questionAnswers = questionAnsCopy;
-
-      // console.log("AFter DELETE QuestionAnswersArray")
-      // console.log(this.questionAnswers)
-
-    
-
+      });
     }
-   )
   }
-}
-
-});
-  }
-}
 
   onFormSubmit(queAns: OneQuestionAnswer, queAnsArray: OneQuestionAnswer[]) {
     this.submittedQuestionAnswer = {} as OneQuestionAnswer;
     this.submittedQuestionAnswer = queAns;
-    console.log(queAns);
 
     // Disable the submit button
 
@@ -487,7 +464,7 @@ quizToMarks!: number;
         this.passMark = this.quizInfo[5];
         this.courseCode = this.quizInfo[6];
 
-        console.log(this.quizInfo + "**************"); // Output the retrieved data to the console
+
       },
       (error) => {
         console.log(error); // Handle any errors
@@ -518,7 +495,7 @@ quizToMarks!: number;
       // alert(profileInstituteId + "id");
       this.sessionData = sessionStorage.getItem('admininstitution');
 
-      // console.log(this.sessionData);
+
       this.data = JSON.parse(this.sessionData);
       for (var inst in this.data) {
         if (this.data[inst].adminInstitutionId == profileInstituteId) {
@@ -546,7 +523,7 @@ quizToMarks!: number;
           this.selectedQuizCategoryId = quiz.categoryId;
           // alert(this.selectedQuizCategoryId);
           this.loadCategories(this.quizCategory.categoryId);
-          console.log(this.quizTitle) // Quiz title of the selected quiz
+
           break; // Exit the loop after finding the matching quiz
         }
       }
@@ -567,7 +544,7 @@ quizToMarks!: number;
           this.quizCategory = category;
           //alert(JSON.stringify(this.quizCategory));
 
-          console.log(JSON.stringify(this.quizCategory) + ""); // Entire object of the selected category
+
           break; // Exit the loop after finding the matching category
         }
       }
@@ -624,7 +601,7 @@ quizToMarks!: number;
         for (const questionAnswer of this.questionAnswers) {
 
           const questionMark = questionAnswer.maxMarks;
-          console.log(questionAnswer);
+
           questionFigureUrl = null;
           const questionContent = questionAnswer.questionContent;
 
@@ -632,10 +609,10 @@ quizToMarks!: number;
           if (questionAnswer.questionFigure != null) {
             questionFigureUrl = this.questionUrl + '/getFileById/' + questionAnswer.questionId;
           } else {
-            console.log("containg no figure ****************");
+
           }
 
-          console.log(questionFigureUrl);
+
 
           const options = [
             { correct: questionAnswer.correct1, content: questionAnswer.content1 },
@@ -651,9 +628,9 @@ quizToMarks!: number;
 
 
 
-          console.log("Question with figure 0000000000000000000000000000000");
+
           await this.fetchFile(questionFigureUrl, questionSection, questionContent, options, answer, questionMark);
-          console.log("hhhhhhhhhhhhhhhhhh");
+
 
 
 
@@ -772,7 +749,7 @@ quizToMarks!: number;
               { text: queMark + " : Mark", alignment: 'right' }
             ]
           });
-          console.log(imageDataUrl);
+
 
           if (imageDataUrl) {
             questionSection.push({

@@ -96,9 +96,9 @@ export class BarChartComponent {
       options: {
         // responsive: false,
         // maintainAspectRatio: true,
-       
-       
-    
+
+
+
         onClick: (event, elements) => {
           if (elements.length > 0) {
             const element = elements[0];
@@ -167,7 +167,7 @@ export class BarChartComponent {
     });
 
 
-    console.log(this.chart)
+
   }
 
 
@@ -182,7 +182,7 @@ export class BarChartComponent {
     const label = this.chart.data.labels[index];
 
     // Use the retrieved data to display a popup or perform any desired action
-    console.log(`Clicked bar: ${label} - Value: ${value}`);
+
     // Show your popup or perform other actions here
     this.click.emit();
     this.clickData.emit({ value, label });

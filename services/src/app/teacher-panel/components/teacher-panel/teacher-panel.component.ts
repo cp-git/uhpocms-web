@@ -92,7 +92,7 @@ export class TeacherPanelComponent {
           this.profile = this.data;
           this.instituteId = this.data[i].institutionId;
           //  alert(this.studentName);
-          console.log(this.profile.firstName, this.profile.lastName, this.profile.fullName, "  + ++++ + + ", this.instituteId);
+
           this.instituteId = this.data[i].institutionId;
 
 
@@ -125,7 +125,7 @@ export class TeacherPanelComponent {
 
       this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
       this.userName = this._activatedRoute.snapshot.params['userName'];
-      console.log(this.teacherId)
+
       this._route.navigate(['../'], { relativeTo: this._activatedRoute });
       this.getAllCourseProgress();
       //String initialized so that at start it should be null
@@ -139,7 +139,7 @@ export class TeacherPanelComponent {
     try {
       let sessionData: any;
       sessionData = sessionStorage.getItem('permissions');
-      // console.log(sessionData);
+
 
       // converting string json into json object
       let data = JSON.parse(sessionData);
@@ -149,7 +149,7 @@ export class TeacherPanelComponent {
       this.userPermissions.forEach(permission => {
         this.modulePermissionIds.add(permission.moduleId);
       });
-      // console.log(this.modulePermissionIds);
+
 
     }
     catch (err) {
@@ -166,17 +166,16 @@ export class TeacherPanelComponent {
     this.dchartcurrentIndex = 0;
     this.barClicked = true;
 
-    console.log(this.barClicked)
+
     let courseProgressArr: CourseProgress[] = [];
     let filteredCourseProgressArr: CourseProgress[] = [];
-    console.log("Function called")
+
     // Perform actions with the data
-    console.log('Received right-click data:', data);
+
 
     this.popupDataValue = data.value;
     this.popupDataLabel = data.label;
-    console.log('Received right-click data:', this.popupDataValue, this.popupDataLabel);
-    console.log(courseId)
+
 
     const rangeArray = this.popupDataLabel.split("-"); // Split the string into an array of two elements
 
@@ -187,17 +186,14 @@ export class TeacherPanelComponent {
 
 
 
-    console.log(startValue); // Output: 26
-    console.log(endValue); // Output: 75
-    // console.log( parseInt(this.popupDataLabel))
+
     this.courseProgServ.getAllCourseProgress().subscribe(
       (data) => {
-        console.log(startValue); // Output: 26
-        console.log(endValue); // Output: 75
+
         courseProgressArr = data;
         filteredCourseProgressArr = courseProgressArr.filter((elem) => elem.courseId == courseId && ((elem.progress >= startValue) && (elem.progress <= endValue)))
 
-        console.log(filteredCourseProgressArr)
+
         this.courseProgressArr = filteredCourseProgressArr
 
       }
@@ -211,18 +207,17 @@ export class TeacherPanelComponent {
     this.studProgDetailArr = [];
     let profile: Profile = new Profile();
 
-    console.log(this.courseProgressArr);
+
 
     for (let i = 0; i < this.courseProgressArr.length; i++) {
-      console.log("Entered in for loop");
+
       const remainingPercentage: number = 100 - this.courseProgressArr[i].progress;
 
 
       this.profileServ.getProfileByAdminId(this.courseProgressArr[i].studentId).subscribe(
         (data) => {
           profile = data;
-          console.log(i)
-          console.log(profile);
+
           this.studProgDetailArr.push([this.courseProgressArr[i].progress, remainingPercentage, profile.firstName + ' ' + profile.lastName]);
 
           // Check if all the data has been retrieved
@@ -231,7 +226,7 @@ export class TeacherPanelComponent {
       );
 
     }
-    console.log(this.studProgDetailArr);
+
   }
 
 
@@ -255,7 +250,7 @@ export class TeacherPanelComponent {
 
         await this.getAllCourseIds();
 
-        console.log(this.courseIds);
+
         for (let m = 0; m < this.courseIds.length; m++) {
           let courseName: String = ' ';
           let cnt1 = 0;
@@ -269,7 +264,7 @@ export class TeacherPanelComponent {
           //  for(let i=0; i<this.courseProgressArr.length; i++){
 
           //  if(this.courseIds[m] == this.courseProgressArr[i].courseId) {
-          console.log("Course Id in if loop  " + this.courseIds[m])
+
           await this.getCourseNameById(this.courseIds[m]);
 
 
@@ -299,7 +294,7 @@ export class TeacherPanelComponent {
           else {
             // this.barCharts[m] =  [Math.round((cnt1*100)/totalStudsArr.length) , Math.round((cnt2*100)/totalStudsArr.length) , Math.round((cnt3*100)/totalStudsArr.length) , Math.round((cnt4*100)/totalStudsArr.length)  , this.course.courseName]
             this.barCharts[m] = [cnt1, cnt2, cnt3, cnt4, this.course.courseName + '  [' + totalStudsArr.length + ' students]', this.course.courseId]
-            console.log(this.barCharts[m])
+
           }
         }
       }
@@ -370,7 +365,7 @@ export class TeacherPanelComponent {
           this.course = data;
           if (this.barClicked) {
             this.clickedCourse = data;
-            console.log(this.clickedCourse.courseName)
+
           }
 
           resolve();

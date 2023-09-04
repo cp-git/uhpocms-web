@@ -23,7 +23,7 @@ export class ActivateRoleComponent implements OnInit {
   ngOnInit(): void {
     this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
-    console.log(this.userName)
+
     this.loadAdminRoles();
   }
 
@@ -42,7 +42,7 @@ export class ActivateRoleComponent implements OnInit {
   activateRole(roleId: number) {
     this._roleService.activateAdminRole(roleId).subscribe(
       response => {
-        console.log("Role activated");
+
         this.ngOnInit();
       },
       error => {

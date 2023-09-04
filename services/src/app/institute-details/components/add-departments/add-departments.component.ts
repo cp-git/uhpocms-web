@@ -52,7 +52,7 @@ export class AddDepartmentsComponent {
   addDepartment(dept: Department) {
     // If the department name already exists, the method displays an alert message to the user
     if (this.backupDept.findIndex((data) => data.name === dept.name) >= 0) {
-      console.log('Department name already exist. please enter another.');
+
     } else {
       // assigning value
       this.department = {} as Department;
@@ -77,7 +77,7 @@ export class AddDepartmentsComponent {
 
           this.departments.push(this.department);
           this.backupDept.push(Object.assign({}, this.department));
-          console.log('Added Successfully');
+
           this.location.back();
 
 

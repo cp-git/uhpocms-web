@@ -150,14 +150,12 @@ export class ReviewAnswerComponent implements OnInit {
     let marksStatArr: boolean[] = []
     let isSecondAlertDisplayed = false;
     let isFirstAlertDisplayed = false;
-    console.log(queAns)
-    console.log("queAns['queAnsArray']")
-    console.log(queAns['queAnsArray'])
+
     this.questionAnswer = {} as QuestionAnswer;
     this.oneQuestionAnswer = {} as OneQuestionAnswer;
     this.correctQueAns = {} as CorrectQuestionAnswer;
     // Form is valid, do something with the form data
-    // console.log("queAns " + JSON.stringify(queAns));
+
     queAns['queAnsArray'].forEach((queAnsForMarks: any) => {
       marksArray.push(queAnsForMarks.marks)
       if (queAnsForMarks.marks > queAnsForMarks.maxMarks) {
@@ -182,13 +180,9 @@ export class ReviewAnswerComponent implements OnInit {
       reviewObjectStuAnswer.teacherRemark = queAnsNew.reviewcontent;
       reviewObjectStuAnswer.selectedOption = false;
       reviewObjectStuAnswer.modifiedOn = new Date();
-      console.log(queAnsNew.reviewcontent)
 
       this.questionAnswer.question = {} as Question;
       this.questionAnswer.question['questionId'] = queAnsNew.questionId;
-
-      console.log("reviewObjectStuAnswer")
-      console.log(reviewObjectStuAnswer)
 
       // if(queAnsNew.marks != '')
       if (marksArray.includes('') == false) {
@@ -200,12 +194,9 @@ export class ReviewAnswerComponent implements OnInit {
               // this.studentAnswers.push(response);
               // this.studentAnswers = response;
 
-              console.log(response)
-              console.log("Student answers save");
+
               this.dialogBoxServices.open('Review submitted successfully', 'information');
 
-              console.log(typeof this.totalReviewMarks)
-              console.log(typeof reviewObjectStuAnswer.marks)
               if (queAnsNew.marks == '') {
                 reviewObjectStuAnswer.marks = 0;
               }
@@ -328,7 +319,7 @@ export class ReviewAnswerComponent implements OnInit {
         this.questionAnswers = []; // Initialize questionAnswers as an array
         this.service.getAllQuestionsByQuizId(quizId).subscribe(
           (response: any[]) => {
-            console.log(response);
+
 
             response.forEach(
               question => {
@@ -336,13 +327,12 @@ export class ReviewAnswerComponent implements OnInit {
 
                 // Filter the answers based on questionId
                 const filteredAnswers = this.answers.filter(answer => answer.questionid == question.questionId);
-                // console.log(filteredAnswers);
+
 
 
 
                 filteredAnswers.forEach((answer: Answer, index: number) => {
-                  // console.log(answer);
-                  // console.log(index)
+
                   if (index === 0) {
                     this.queAns.correct1 = answer.correct;
                     this.queAns.content1 = answer.content;
@@ -382,7 +372,7 @@ export class ReviewAnswerComponent implements OnInit {
                   selectedAnswer: ''
                 });
               });
-            // console.log("questionAnswer " + JSON.stringify(this.questionAnswers));
+
 
             if (this.viewAdd == true) {
               this.initialiseQuestion(this.selectedQuiz.maxQuestions);
@@ -423,7 +413,7 @@ export class ReviewAnswerComponent implements OnInit {
   onUpdateQuestionSubmit(currentData: Question) {
     this.service.updatedQuestion(currentData).subscribe(
       (response) => {
-        console.log("Question updated successfuly");
+
       },
       (error) => {
         console.log("Question updation failed");
@@ -511,7 +501,7 @@ export class ReviewAnswerComponent implements OnInit {
     // calling service for adding data
     this.service.addQuestion(formData).subscribe(
       response => {
-        console.log('Question added Successfully');
+
         // this.emptyQuestion = {} as Question;
         this.ngOnInit();
         this.back();
@@ -527,7 +517,7 @@ export class ReviewAnswerComponent implements OnInit {
     // calling service to soft delete
     this.service.deleteQuestion(questionFigure).subscribe(
       (response) => {
-        console.log('Question deleted successfully');
+
         this.ngOnInit();
       },
       (error) => {
@@ -548,11 +538,10 @@ export class ReviewAnswerComponent implements OnInit {
       this.sessionData = sessionStorage.getItem('quiz');
 
       this.data = JSON.parse(this.sessionData);
-      console.log("Inside load Quizzes")
-      console.log(this.data)
+
       for (var inst in this.data) {
         if (this.data[inst].categoryId == this.writtenCategoryId) {
-          console.log(this.data[inst])
+
           this.allData.push(this.data[inst]);
         }
       }
@@ -568,10 +557,8 @@ export class ReviewAnswerComponent implements OnInit {
 
       this.data = JSON.parse(this.sessionData);
 
-      // console.log("Inside load Categories")
-      // console.log(this.data)
+
       for (var inst in this.data) {
-        // console.log(this.data[inst])
 
         if (this.data[inst].categoryName.toLowerCase() == "written") {
 
@@ -600,7 +587,6 @@ export class ReviewAnswerComponent implements OnInit {
 
     this.courseService.getAssignedCourseOfTeacher(this.profileId).subscribe(
       (data) => {
-        console.log(data);
 
         this.courses = data;
       },
@@ -637,25 +623,22 @@ export class ReviewAnswerComponent implements OnInit {
     this.studProfileArr = [];
     this.studProfileIds = [];
     let quizProgressArray: QuizProgress[] = [];
-    console.log(this.selectedCourseId);
-    console.log(this.selectedModuleId);
 
     return new Promise<any>((resolve, reject) => {
       this.quizProgServ.getStudProfileByCourIdModId(this.selectedCourseId, this.selectedModuleId).subscribe(
         (response) => {
           quizProgressArray = response;
-          console.log(quizProgressArray);
+
           for (let i of quizProgressArray) {
             this.studProfileIds.push(i.studentId);
           }
-          console.log(this.studProfileIds);
 
           const profilePromises = [...new Set(this.studProfileIds)].map((id) => this.getProfileById(id));
 
           Promise.all(profilePromises)
             .then((profiles) => {
               this.studProfileArr = profiles;
-              console.log(this.studProfileArr);
+
               resolve(this.studProfileArr);
             })
             .catch((error) => {
@@ -685,10 +668,9 @@ export class ReviewAnswerComponent implements OnInit {
   onStudentChange(id: number) {
     this.selectedStudProfileId = id;
 
-    console.log("  this.selectedStudProfileId")
-    console.log(this.selectedStudProfileId)
+
     if (this.selectedStudProfileId == 'undefined') {
-      console.log("entered in if loop")
+
       this.reviewButtonStat = false;
     }
     else {
@@ -698,12 +680,12 @@ export class ReviewAnswerComponent implements OnInit {
 
   // selectedCategory!: Category;
   onAddUpdatClicked(object: any) {
-    // console.log(JSON.stringify(object))
+
     this.selectedQuiz = object;
     this.selectedQuizId = this.selectedQuiz.quizId;
     this.selectedCategoryId = this.selectedQuiz.categoryId;
 
-    // console.log(this.selectedCategoryId);
+
     this.categories.find(c => {
       if (c.categoryId === this.selectedCategoryId) {
         this.selectedCategoryName = c.categoryName;
@@ -716,7 +698,7 @@ export class ReviewAnswerComponent implements OnInit {
         this.selectedCategoryName = c.categoryName;
       }
     });
-    // console.log(this.selectedCategoryName)
+
     this.viewAll = false;
     this.viewAdd = true;
     this.viewQuePaper = false;
@@ -733,15 +715,14 @@ export class ReviewAnswerComponent implements OnInit {
     this.service.getAllQuestionsByQuizId(quizId).subscribe(
       (response: any[]) => {
 
-        console.log("responses for question")
-        console.log(response);
+
 
         response.forEach(
           question => {
-            console.log(question)
+
             this.totalQuizMarks = this.totalQuizMarks + question.maxMarks;
             this.totalReviewMarks = this.totalReviewMarks + question.marks;
-            console.log(" this.totalQuizMarks   " + this.totalQuizMarks + "  this.totalReviewMarks  " + this.totalReviewMarks)
+
           })
       })
 
@@ -752,34 +733,31 @@ export class ReviewAnswerComponent implements OnInit {
     this.quizResult = [];
     this.totalQuizMarks = 0;
     this.totalReviewMarks = 0;
-    console.log(quizId)
-    console.log("QuizId in  getAllAnswersAttempted")
 
 
-    console.log(this.selectedStudProfileId)
+
 
     this.quizReService.getAllStudentAnswersByStduentIdAndQuizId(this.selectedStudProfileId, quizId).subscribe(
       (result) => {
 
         this.quizResult = result;
-        console.log(this.quizResult)
+
         this.questionAnswers = []; // Initialize questionAnswers as an array
         this.correctQuestionAnswer = []
 
-        console.log(quizId)
+
         if (this.quizResult.length != 0) {
           this.service.getAllQuestionsByQuizId(quizId).subscribe(
             (response: any[]) => {
 
-              console.log("responses for question")
-              console.log(response);
+
 
               response.forEach(
                 question => {
-                  console.log(question)
+
                   this.totalQuizMarks = this.totalQuizMarks + question.maxMarks;
 
-                  console.log(" this.totalQuizMarks   " + this.totalQuizMarks + "  this.totalReviewMarks  " + this.totalReviewMarks)
+
                   this.queAns = {} as OneQuestionAnswer;
                   this.correctQueAns = {} as CorrectQuestionAnswer
 
@@ -790,8 +768,7 @@ export class ReviewAnswerComponent implements OnInit {
 
                   filteredAnswers.forEach((answer: StudentAnswer, index: number) => {
                     this.totalReviewMarks = this.totalReviewMarks + answer.marks;
-                    // console.log(answer);
-                    // console.log(index)
+
                     if (index === 0) {
                       this.correctQueAns.content1 = answer.questionContent;
                       this.correctQueAns.marks =
@@ -800,11 +777,7 @@ export class ReviewAnswerComponent implements OnInit {
                       this.correctQueAns.reviewcontent = answer.teacherRemark;
                       this.correctQueAns.reviewStatus = answer.reviewStat;
 
-                      console.log(answer.marks)
-                      console.log(question.maxMarks)
 
-                      console.log(answer.marks)
-                      console.log(question.maxMarks)
 
                       this.correctQueAns.marks = answer.marks;
 
@@ -855,8 +828,7 @@ export class ReviewAnswerComponent implements OnInit {
 
                   });
                 });
-              // console.log("questionAnswer " + JSON.stringify(this.questionAnswers));
-              console.log(this.correctQuestionAnswer);
+
               if (this.viewAdd == true) {
                 this.initialiseQuestion(this.selectedQuiz.maxQuestions);
               }

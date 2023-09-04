@@ -59,7 +59,7 @@ export class AddUpdateControlsComponent implements OnInit {
     if (changes['masterModules']) {
       this.masterModules = this.masterModules;
       // this.userId = sessionStorage.getItem('selectedUserId')
-      console.log(this.userId);
+
       this.emptyValues();
 
     }
@@ -81,11 +81,9 @@ export class AddUpdateControlsComponent implements OnInit {
 
   // data is in form of module Id and permissions ids
   onChangePermissions(data: any) {
-    console.log(data);
-    console.log(this.moduleAndPermissionsIds);
 
     const index = this.moduleAndPermissionsIds.findIndex((permissions: { moduleId: any; }) => permissions.moduleId == data.moduleId);
-    console.log(index);
+
 
     if (index !== -1) {
       this.moduleAndPermissionsIds.splice(index, 1);
@@ -94,12 +92,12 @@ export class AddUpdateControlsComponent implements OnInit {
       this.moduleAndPermissionsIds.push(data);
     }
 
-    console.log(JSON.stringify(this.moduleAndPermissionsIds));
+
   }
 
   onChangeUser() {
     // this.moduleAndPermissionsIds = [];
-    // console.log(this.moduleAndPermissionsIds);
+
     this.profiles.forEach(profile => {
 
       if (profile.userId == this.userId) {
@@ -108,7 +106,7 @@ export class AddUpdateControlsComponent implements OnInit {
         // sessionStorage.setItem('selectedUserId', profile.userId.toString());
 
       }
-      // console.log(profile);
+
 
     });
 
@@ -129,7 +127,7 @@ export class AddUpdateControlsComponent implements OnInit {
 
   onClickSubmit() {
 
-    console.log(this.moduleAndPermissionsIds);
+
     let selectedUserRoleId: number = 0;
 
     if (this.userRoleId > 0) {
@@ -138,7 +136,7 @@ export class AddUpdateControlsComponent implements OnInit {
       selectedUserRoleId = this.roleId;
     }
 
-    console.log(selectedUserRoleId);
+
 
     let data: any = {
       access: this.selectedOptionForAccess,
@@ -146,7 +144,7 @@ export class AddUpdateControlsComponent implements OnInit {
       userId: this.userId,
       userRoleId: selectedUserRoleId
     }
-    console.log(data);
+
 
     this.onClickAssignPermissions.emit(data);
   }

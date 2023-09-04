@@ -185,7 +185,7 @@ export class ProfileComponent implements OnInit {
   // For navigate to view screen with data
   // function will call when child view button is clicked 
   onChildViewClick(objectReceived: any): void {
-    console.log(objectReceived);
+
 
     // changing column array
     // this.allColumnNames = ProfileAllColumnForUpdate;
@@ -239,7 +239,7 @@ export class ProfileComponent implements OnInit {
 
     // if (selectedRole) {
     //   objectReceived.userRole = selectedRole.roleName
-    //   console.log(objectReceived);
+
 
     //   this.addProfile(objectReceived);
     // }
@@ -249,12 +249,12 @@ export class ProfileComponent implements OnInit {
 
   // on updateComponents's submit button clicked
   onUpdateProfileSubmit(objectReceived: Profile) {
-    // console.log(JSON.stringify(objectReceived))
+
     // const selectedRole = this.adminRoles.find(role => role.roleId == objectReceived.userRoleId);
 
     // if (selectedRole) {
     //   objectReceived.userRole = selectedRole.roleName
-    //   console.log(objectReceived);
+
 
     //   this.updateProfile(objectReceived);
     // }
@@ -267,13 +267,13 @@ export class ProfileComponent implements OnInit {
 
     const dataReceived = data.currentData;
     const key = data.key;
-    console.log(key);
+
 
     if (key == 'userId') {
       this.cleanProfileObject(this.emptyProfile);
       this.service.getProfileByUserId(dataReceived.userId).subscribe(
         (data: Profile) => {
-          console.log("This is Profile Data..." + data.firstName);
+
           // this.emptyProfile = data;
           this.emptyProfile.institutionId = data.institutionId;
           this.emptyProfile.adminDepartment = data.adminDepartment;
@@ -307,16 +307,13 @@ export class ProfileComponent implements OnInit {
     }
 
     if (key == 'userRoleId') {
-      console.log(this.userRoles);
 
-      console.log(this.backupUserRoles);
 
       this.userRoles = this.backupUserRoles;
       const selectedRole = this.adminRoles.find(role => role.roleId == dataReceived.userRoleId);
       const userRole = this.backupUserRoles.find((role: { roleName: string | undefined; }) => role.roleName == selectedRole?.roleName)
 
-      console.log(selectedRole);
-      console.log(userRole);
+
 
       if (userRole != undefined) {
         this.emptyProfile.userRole = userRole.roleName;
@@ -324,7 +321,7 @@ export class ProfileComponent implements OnInit {
           this.currentData.userRole = userRole.roleName;
         }
         this.userRoles = this.userRoles.filter((role: { roleName: string | undefined; }) => role.roleName == selectedRole?.roleName)
-        console.log(this.userRoles);
+
       }
       else {
         this.userRoles = this.backupUserRoles;
@@ -337,8 +334,7 @@ export class ProfileComponent implements OnInit {
   onFileSelected(event: any) {
     this.file = event.target.files[0];
     this.emptyProfile.profilePics = this.file.name;
-    console.log(this.file);
-    console.log(this.file.name);
+
 
 
     const reader = new FileReader();
@@ -401,7 +397,7 @@ export class ProfileComponent implements OnInit {
   // const institutionName = "exampleInstitution";
   // const activeInstitutionProfiles = getAllProfilesByInstitution(institutionName);
 
-  // console.log(activeInstitutionProfiles);
+
 
 
   // fetching institutions data from session storage
@@ -450,11 +446,10 @@ export class ProfileComponent implements OnInit {
     this.authUserService.getAllInactiveAuthUsers().subscribe(
       response => {
         this.inactiveAuthUsers = response;
-        console.log("Inactive Users" + this.inactiveAuthUsers)
+
 
         let name;
         for (let j = 0; j <= this.inactiveAuthUsers.length; j++) {
-          console.log("Inactive data.." + this.inactiveAuthUsers[j]);
 
         }
 
@@ -497,7 +492,7 @@ export class ProfileComponent implements OnInit {
 
     // this.service.addProfile(formData).subscribe(
     //   (response) => {
-    //     console.log(response);
+
     //     this.ngOnInit();
     //     this.back();
 
@@ -549,11 +544,11 @@ export class ProfileComponent implements OnInit {
     });
 
     if (this.file == null) {
-      console.log("in data..");
+
 
       this.service.updateProfileByAuthuser(currentData.userId, currentData).subscribe(
         response => {
-          console.log("in json data.." + response);
+
 
           this.dialogBoxService.open("Profile Updated Successfully", 'information').then((response) => {
             if (response) {
@@ -569,7 +564,7 @@ export class ProfileComponent implements OnInit {
       );
 
     } else {
-      console.log("in formdata...");
+
 
       let formData = new FormData();
 
@@ -580,8 +575,6 @@ export class ProfileComponent implements OnInit {
 
       this.service.updateProfileByActiveAuthuser(currentData.userId, formData).subscribe(
         response => {
-          console.log(currentData.profilePics);
-          console.log(response);
           this.dialogBoxService.open('Profile Updated Successfully', 'information');
           location.reload();
           this.back();
@@ -600,13 +593,13 @@ export class ProfileComponent implements OnInit {
   private deleteProfile(currentData: Profile) {
     this.dialogBoxService.open('Are you sure you want to delete this Profile? ', 'decision').then((response) => {
       if (response) {
-        console.log('User clicked OK');
+
         // Do something if the user clicked OK
         // calling service to soft delete
         currentData.activeUser = false;
         this.service.deleteProfileByActiveAuthuser(currentData.userId, currentData).subscribe(
           response => {
-            console.log(currentData);
+
             this.activeAuthUsers.find(authUser => {
               if (authUser.authUserId == currentData.userId) {
                 this.authUserService.deleteAuthUser(authUser.authUserName).subscribe(
@@ -623,7 +616,7 @@ export class ProfileComponent implements OnInit {
           }
         );
       } else {
-        console.log('User clicked Cancel');
+
         // Do something if the user clicked Cancel
       }
     });
@@ -667,7 +660,7 @@ export class ProfileComponent implements OnInit {
       }
     );
     // } else {
-    //   console.log("profile is incomplete to activate!");
+    //  
     // }
 
   }
@@ -758,7 +751,7 @@ export class ProfileComponent implements OnInit {
 
     this.service.getProfileByAdminId(adminId).subscribe(
       (response) => {
-        console.log(response);
+
       }
     )
   }

@@ -41,7 +41,6 @@ export class AddUpdateuploadComponent {
 
   onSubmitClicked(objectData: any): void {
 
-    // console.log("emit " + (JSON.stringify(objectData)));
 
     this.submitClicked.emit(objectData);
   }
@@ -70,14 +69,14 @@ export class AddUpdateuploadComponent {
 
   file!: File;
   onFileSelected(event: any, key: string) {
-    // console.log(event);
+
     const input = event.target as HTMLInputElement;
-    // console.log(input);
+
     if (input && input.files) {
       this.files = input.files;
 
     }
-    // console.log(this.files);
+
     this.sentFileData.emit(this.files);
 
     if (event.target) {
@@ -92,8 +91,6 @@ export class AddUpdateuploadComponent {
     return option ? option[column.columnName] : '';
   }
   onDropdownSelectedForDependentKeys(currentData: any, dependentKeys: any[]) {
-    console.log(currentData);
-    console.log(dependentKeys);
 
     if (currentData && dependentKeys) {
       dependentKeys.forEach(key => {

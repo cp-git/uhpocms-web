@@ -99,7 +99,7 @@ export class CreateAnnouncementComponent {
     } else {
       this.isCreateScreen = true;
     }
-    console.log(this.profileIDs);
+
 
 
     switch (this.userRole) {
@@ -130,7 +130,7 @@ export class CreateAnnouncementComponent {
     this.announcementService.getStudentsAssignedToTeacher(profileId).subscribe(
       response => {
         this.instituteAdmins = response;
-        console.log(this.instituteAdmins);
+
         this.sortProfiles();
       },
       error => {
@@ -143,7 +143,7 @@ export class CreateAnnouncementComponent {
     this.announcementService.getEnrolledProfilesOfCourseByOneStudentId(profileId).subscribe(
       response => {
         this.instituteAdmins = response;
-        console.log(this.instituteAdmins);
+
         this.sortProfiles();
       },
       error => {
@@ -154,7 +154,7 @@ export class CreateAnnouncementComponent {
 
   ngAfterViewInit() {
     // subscribe to NavigationEnd event
-    // console.log();
+
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
@@ -200,7 +200,7 @@ export class CreateAnnouncementComponent {
     if (this.validate(announcement) && this.profileIDs.length > 0) {
       this.insertAnnouncement(announcement);
     } else {
-      console.log("Fields are empty or Select users to send announcement");
+
     }
 
   }
@@ -240,7 +240,7 @@ export class CreateAnnouncementComponent {
   private sendAnnouncementsToProfileIDs() {
     this.announcementService.sendAnnouncementsToProfileIDs(this.announcementId, this.profileIDs).subscribe(
       success => {
-        console.log("Announcement sent successfully")
+
 
         // for after successfully sending announcement modal is close 
         this.closeModalBtn.nativeElement.click();
@@ -282,7 +282,7 @@ export class CreateAnnouncementComponent {
     this.teachers = [];
     this.otherRoles = [];
     this.instituteAdmins.forEach(profile => {
-      // console.log(profile.userRole)
+
       switch (profile.userRole) {
         case 'admin':
           this.admins.push(profile);
@@ -302,7 +302,7 @@ export class CreateAnnouncementComponent {
 
       }
     });
-    console.log(this.instituteAdmins);
+
 
     this.users.set("Students", this.students);
     this.users.set("Teachers", this.teachers);

@@ -146,7 +146,7 @@ export class PermissionComponent {
     // calling service for updating data
     this.service.updateAuthPermission(currentData.id, currentData).subscribe(
       response => {
-        console.log(`AuthPermission updated successfully !`);
+
         this.back();
       },
       error => {
@@ -161,7 +161,7 @@ export class PermissionComponent {
     // calling service for adding data
     this.service.addAuthPermission(currentData).subscribe(
       (data) => {
-        console.log('Permission added Successfully');
+
         this.emptyAuthPermission = {} as AuthPermission;
         this.ngOnInit();
         this.back();
@@ -178,7 +178,7 @@ export class PermissionComponent {
     // calling service to get all data
     this.service.getAllPermissions().subscribe(
       response => {
-        console.log(response);
+
 
         this.allData = response; //assign data to local variable
       },
@@ -194,7 +194,7 @@ export class PermissionComponent {
     // calling service to soft delte
     this.service.deleteAuthPermission(id).subscribe(
       (response) => {
-        console.log('Admin Permission deleted successfully');
+
         this.ngOnInit();
       },
       (error) => {

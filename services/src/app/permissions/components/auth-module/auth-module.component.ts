@@ -146,7 +146,7 @@ export class AuthModuleComponent {
     // calling service for updating data
     this.service.updateAuthModule(currentData.id, currentData).subscribe(
       response => {
-        console.log(`AuthModule updated successfully !`);
+
         this.back();
       },
       error => {
@@ -161,7 +161,7 @@ export class AuthModuleComponent {
     // calling service for adding data
     this.service.addAuthModule(currentData).subscribe(
       (data) => {
-        console.log('AuthModule added Successfully');
+
         this.emptyAuthModule = {} as AuthModule;
         this.ngOnInit();
         this.back();
@@ -192,7 +192,7 @@ export class AuthModuleComponent {
     // calling service to soft delte
     this.service.deleteAuthModule(id).subscribe(
       (response) => {
-        console.log('Admin AuthModule deleted successfully');
+
         this.ngOnInit();
       },
       (error) => {

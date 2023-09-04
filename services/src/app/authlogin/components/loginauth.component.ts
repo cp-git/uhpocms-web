@@ -40,7 +40,6 @@ export class LoginauthComponent {
   userLogin() {
     this._auth.loginDataAuthUser(this.authUser).subscribe(
       (data) => {
-        console.log('User Successfully Logged In..');
         this._route.navigate(['adminrole']);
       },
       (error) => console.log(error)

@@ -40,7 +40,6 @@ export class AddUpdateComponent implements OnInit {
       this.currentData = this.data.currentData;
     }
     if (changes['dropdown']) {
-      console.log(this.dropdown);
 
       this.dropdown = this.dropdown;
     }
@@ -55,7 +54,7 @@ export class AddUpdateComponent implements OnInit {
 
 
   onFileSelected(event: any) {
-    // console.log(event);
+
 
 
     this.file = event.target.files[0];
@@ -68,22 +67,18 @@ export class AddUpdateComponent implements OnInit {
       this.optionsArray1 = this.dropdown1?.optionsArray1;
       this.dropdownColumnId1 = this.dropdown1?.dropdownColumnId1;
       this.dropdownColumnName1 = this.dropdown1?.dropdownColumnName1;
-      // console.log( this.optionsArray1 )
-      console.log(this.optionsArray1)
+
     }
 
     if (this.dropdown2?.optionsArray2 != undefined) {
       this.optionsArray2 = this.dropdown2?.optionsArray2;
       this.dropdownColumnId2 = this.dropdown2?.dropdownColumnId2;
       this.dropdownColumnName2 = this.dropdown2?.dropdownColumnName2;
-      // console.log( this.optionsArray2)
-      console.log(this.optionsArray2)
+
     }
   }
 
   onDropdownSelected(currentData: any, key: any) {
-    console.log('called onDropdownSelected');
-    console.log(currentData);
 
     const data = { currentData: currentData, key: key }
     this.getSelectedOptionOfDropdown.emit(data);
@@ -95,8 +90,6 @@ export class AddUpdateComponent implements OnInit {
   }
 
   onDropdownSelectedForDependentKeys(currentData: any, dependentKeys: any[]) {
-    console.log(currentData);
-    console.log(dependentKeys);
 
     if (currentData && dependentKeys) {
       dependentKeys.forEach(key => {

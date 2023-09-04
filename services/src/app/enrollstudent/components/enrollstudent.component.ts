@@ -114,7 +114,7 @@ export class EnrollstudentComponent {
   // function to get all institutions
   private getAllInstitution() {
     // fetching all institution
-    //console.log("this.selected.length " + this.selected.length)
+
     this._institutionService.fetchAdminInstitutionList().subscribe(
       (response) => {
         // assigning received data to institutionfo
@@ -145,7 +145,6 @@ export class EnrollstudentComponent {
           this.profile = this.data;
           this.instituteId = this.data[i].institutionId;
           //  alert(this.studentName);
-          console.log(this.profile.firstName, this.profile.lastName, this.profile.fullName, "  + ++++ + + ", this.instituteId);
           this.instituteId = this.data[i].institutionId;
 
 
@@ -170,13 +169,13 @@ export class EnrollstudentComponent {
   getDepartmentsByInstId(instId: number) {
     this.department = {} as Department;
     this.course = {} as Course;
-    console.log("this.selected.length " + this.selected.length);
+
 
     switch (this.userRole) {
       case 'admin':
       case 'coadmin':
         instId = this._profile.institutionId;
-        this.courses =[];
+        this.courses = [];
         this._deptService.getDepartmentsByInstitutionId(instId).subscribe(
           (response) => {
             this.departments = response;
@@ -198,21 +197,21 @@ export class EnrollstudentComponent {
   }
   onChangeInstitution() {
     this.department.id = 0;
-this.course.courseId=0;
+    this.course.courseId = 0;
   }
 
   onChangeDepartment() {
-    this.course.courseId=0;
+    this.course.courseId = 0;
   }
   getTeacherByCourseId(courseId: any) {
     this.assignedUsers = [];
     this.assignTeacherService.getTeacherByCourseId(courseId).subscribe(
       response => {
         // this.courses = response;
-        console.log(response);
+
         response.forEach((data: Assignteacher) => {
           this.assignedUsers.push(data.profileId);
-          console.log("xyz++++++++++++++++++++" + this.assignedUsers);
+
 
         })
       },
@@ -234,14 +233,14 @@ this.course.courseId=0;
             this.courses = response;
             this.courses = this.courses.filter((elem) => elem.courseIsActive == true)
             this.courses.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1)
-            console.log("admin" + this.courses);
+
           }
         );
         break;
       case 'teacher':
         this.courseService.getCourseByDepartmentIdAndProfileId(deptId, this.profileId).subscribe(
           (response) => {
-            console.log("coursesteacher " + JSON.stringify(response));
+
             this.courses = response;
 
             this.courses = this.courses.filter((elem) => elem.courseIsActive == true)
@@ -259,7 +258,6 @@ this.course.courseId=0;
     deptId = this.department.id;
     this.courseService.getCourseByDepartmentIdAndProfileId(deptId, profileId).subscribe(
       (response) => {
-        // console.log("coursesteacher " + JSON.stringify(response));
         this.courses = response;
 
         this.courses = this.courses.filter((elem) => elem.courseIsActive == true)
@@ -279,9 +277,9 @@ this.course.courseId=0;
       (response) => {
         this._profileArray = response;
         this._profileArray.map((i) => { i.fullName = i.firstName + ' ' + i.lastName + ' - ' + i.adminEmail; return i; });
-        console.log(response)
+
         // instId = this._profile.institutionId;
-        console.log(instId);
+
         this.selectAllForDropdownItems(this._profileArray);
       }
     )
@@ -301,14 +299,13 @@ this.course.courseId=0;
         // this.courses = response;
 
 
-        console.log(response);
 
 
 
 
         response.forEach((data: Enrolltostudent) => {
           this.enrolledStudentArr.push(data.profileId);
-          console.log(this.enrolledStudentArr);
+
         })
       },
       error => {
@@ -318,13 +315,13 @@ this.course.courseId=0;
   }
   //function to get department based on profile id
   getDepartmentByProfileId(profileId: number) {
-    console.log("this.selected.length " + this.selected.length)
+
     // profileId = this._profile.profileId;
     this._deptService.getDepartmentsOfAssignCoursesByProfileId(profileId).subscribe(
       (response) => {
         this.departments = response;
         this.instId = this.departments[0].institutionId;
-        console.log("deptbyprofile" + this.departments);
+
       }
 
     )
@@ -332,13 +329,13 @@ this.course.courseId=0;
 
   //function to get Institution based on profile id
   getInstitutionByProfileId(profileId: number) {
-    console.log("this.selected.length " + this.selected.length)
+
     // profileId = this._profile.profileId;
     this._institutionService.getInstitutionByProfileId(profileId).subscribe(
       (response) => {
         this.institutions = response;
 
-        console.log("instbyprofile" + this.institutions);
+
       }
 
     )
@@ -347,7 +344,7 @@ this.course.courseId=0;
   getAssignedCoursesOfTeacher(teacherId: number) {
     this.courseService.getAssignedCourseOfTeacher(teacherId).subscribe(
       (data) => {
-        console.log("courses " + JSON.stringify(data));
+
 
 
         // this.getAllModules();
@@ -366,7 +363,7 @@ this.course.courseId=0;
     );
   }
   private EnrollCoursesToStudentBasedOnRole(userRole: string) {
-    console.log(userRole);
+
 
     switch (userRole) {
       case 'admin' || 'coadmin':
@@ -385,8 +382,7 @@ this.course.courseId=0;
     }
   }
   onOptionSelected(item: any) {
-    console.log(JSON.stringify(item))
-    console.log(this.selected);
+
     // this.selected = this.selected.filter(profileId=> this.assignTeacherArr.includes(item.adminId));
     this.selected.forEach((profileId, index) => {
       if (this.enrolledStudentArr.includes(profileId)) this.selected.splice(index, 1);
@@ -394,7 +390,7 @@ this.course.courseId=0;
   }
   ngDoCheck() {
     if (!this.arraysEqual(this.selected, this.prevSelected)) {
-      // console.log('Items changed:', this.selected);
+
       for (let i = this.selected.length - 1; i >= 0; i--) {
         const profileId = this.selected[i];
         if (this.enrolledStudentArr.includes(profileId)) {
@@ -402,7 +398,7 @@ this.course.courseId=0;
         }
       }
       ;
-      //  console.log('new items changed:', this.selected);
+
       this.prevSelected = [...this.selected];
     }
     // if (this.selected.length !== this.prevSelected.length) {
@@ -415,7 +411,7 @@ this.course.courseId=0;
     // }
   }
   onCourseSelect(courseId: any) {
-    // console.log(courseId);
+
     this.getTeacherByCourseId(courseId);
     this.getStudentByCourseId(courseId);
   }
@@ -436,12 +432,11 @@ this.course.courseId=0;
     this.selected = this.selected.filter((profileId) => !this.assignedUsers.includes(profileId));
     // Delete the unchecked assignments
     this.unCheckedProfiles.forEach((profileId) => {
-      console.log(profileId);
+
 
       this.deleteEnrollStudent(courseId, profileId);
 
       this.enrolledStudentArr = this.enrolledStudentArr.filter((element) => element !== profileId);
-      console.log(this.enrolledStudentArr);
 
     });
     for (let i = 0; i < this.selected.length; i++) {
@@ -457,8 +452,7 @@ this.course.courseId=0;
           // this.dialogBoxService.open("Students enrolled to course successfully !", 'information');
 
           responseEnrollStu = response;
-          console.log(responseEnrollStu)
-          console.log(response)
+
           // this.dialogBoxService.open("Students enrolled to course successfully !", 'information');
           this.courseProgress.id = 0;
           this.courseProgress.courseId = courseId;
@@ -555,13 +549,13 @@ this.course.courseId=0;
     this.enrollstuService.deleteEnrollStudentByCourseIdAndProfileId(courseId, profileId)
       .subscribe(
         (response) => {
-          console.log('Enroll Student deleted successfully');
+
 
           // Delete the corresponding CourseProgress entry
           this.courprogServ.deleteCourseProgressByCourseIdAndStudentId(courseId, profileId)
             .subscribe(
               (response) => {
-                console.log('CourseProgress entry deleted successfully');
+
               },
               (error) => {
                 console.error('Failed to delete CourseProgress entry', error);
@@ -578,16 +572,15 @@ this.course.courseId=0;
   unCheckedProfiles: Set<number> = new Set<number>;
   onChangeSelectedProfiles(event: any, item: any) {
     // alert();
-    console.log(item);
-    console.log(event);
+
 
     const isChecked = event.target.checked;
     if (!isChecked) {
       this.unCheckedProfiles.add(item.value.adminId)
-      console.log(this.unCheckedProfiles);
+
     } else {
       this.unCheckedProfiles.delete(item.value.adminId)
-      console.log(this.unCheckedProfiles);
+
     }
     this.selected = this.selected.filter((profileId) => !this.assignedUsers.includes(profileId));
 

@@ -140,7 +140,6 @@ export class EmailComponent implements OnInit {
 
   // on updateComponents's submit button clicked
   onUpdateEmailSubmit(objectReceived: Email) {
-    // console.log(JSON.stringify(objectReceived))
     this.updateEmail(objectReceived);
   }
 
@@ -182,7 +181,6 @@ export class EmailComponent implements OnInit {
     currentData.emailIsActive = true;
     this.service.insertEmail(currentData).subscribe(
       response => {
-        console.log('Email added successfully');
         this.emptyEmail = {} as Email;
         this.ngOnInit();
         this.back();
@@ -198,7 +196,6 @@ export class EmailComponent implements OnInit {
   private updateEmail(currentData: Email) {
     this.service.updateEmail(currentData).subscribe(
       response => {
-        console.log('Email updated successfully');
         this.back();
       },
       error => {
@@ -211,7 +208,6 @@ export class EmailComponent implements OnInit {
   private deleteEmail(currentData: Email) {
     this.service.deleteEmail(currentData.title).subscribe(
       response => {
-        console.log('Email deleted successfully');
         this.ngOnInit();
       },
       error => {

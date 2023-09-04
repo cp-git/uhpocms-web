@@ -145,7 +145,7 @@ export class StudentQuizComponent implements OnInit {
 
     // if quizDate value is changed then this condition will be true
     if (changes['quizData'] || changes['onQuizClick']) {
-      console.log("chnages onQuizClick");
+
 
       await this.loadStudentAnswers(this.studentId, this.quizData.quizId);
       this.loadQuizData();
@@ -153,7 +153,6 @@ export class StudentQuizComponent implements OnInit {
     }
 
     if (changes['retakingQuiz']) {
-      console.log("chaged" + this.isRetakingQuiz);
 
       if (this.isRetakingQuiz) {
         // this.loadQuizData();
@@ -170,7 +169,6 @@ export class StudentQuizComponent implements OnInit {
     this.quizProgesServ.getQuizProgressesByQuizIdAndStudId(selectedQuizId, studentId).subscribe(
       (response: any) => {
         this.quizScore = response;
-        console.log(JSON.stringify(this.quizScore));
 
       },
       (error: any) => {
@@ -191,8 +189,7 @@ export class StudentQuizComponent implements OnInit {
         if (category.categoryId === selectedQuizCategoryId) {
           this.selectedQuizCategory = category;
 
-          console.log(JSON.stringify(this.selectedQuizCategory)); // Entire object of the selected category
-          break; // Exit the loop after finding the matching category
+
         }
       }
     } catch (err) {
@@ -229,7 +226,7 @@ export class StudentQuizComponent implements OnInit {
   //   this.quizProgressService.getQuizProgressesByStudentId(studentId).subscribe(
   //     (data) => {
   //       this.quizProgresses = data;
-  //       console.log(data);
+
 
   //     },
   //     (error) => {
@@ -277,24 +274,22 @@ export class StudentQuizComponent implements OnInit {
         //Fetching all Questions by quiz Id 
         this.questionService.getShuffledQuestionsByQuizId(quizId).subscribe(
           (response: any[]) => {
-            console.log(response);
+
             this.questionAnswers = [];
             response.forEach(
               question => {
-                console.log(question);
 
                 let trueAnswer: string = '';
                 this.queAns = {} as OneQuestionAnswer;
 
                 // Filter the answers based on questionId
                 const filteredAnswers = this.answers.filter(answer => answer.questionid == question.questionId);
-                // console.log(filteredAnswers);
+
 
 
                 // assigning answers to question of questionAnswer array of object
                 filteredAnswers.forEach((answer: Answer, index: number) => {
-                  // console.log(answer);
-                  // console.log(index)
+
                   if (index === 0) {
                     if (answer.correct) {
                       trueAnswer = answer.content;
@@ -330,19 +325,19 @@ export class StudentQuizComponent implements OnInit {
                 }
 
                 let studentSelectedAnswer: string = '';
-                console.log(this.studentAnswers);
+
 
                 // getting selected answer of student and question
                 this.fetchStudentAnswers.forEach(studAns => {
-                  console.log(studAns);
+
 
                   if (studAns.questionId == question.questionId) {
-                    console.log(studAns.questionContent);
+
 
                     studentSelectedAnswer = studAns.questionContent;
                   }
                 })
-                console.log(question);
+
 
                 this.questionAnswers.push({
                   ...question,
@@ -362,7 +357,7 @@ export class StudentQuizComponent implements OnInit {
                   trueAnswer: trueAnswer
                 });
               });
-            console.log("questionAnswers " + (this.questionAnswers) + "*");
+
             if (this.isRetakingQuiz) {
               // this.loadQuizData();
               this.clearAnswers();
@@ -371,7 +366,7 @@ export class StudentQuizComponent implements OnInit {
         );
       },
       error => {
-        
+
         console.log("failed to get answers");
       }
     );
@@ -399,8 +394,6 @@ export class StudentQuizComponent implements OnInit {
   // onFormSubmit() {
   //   this.quizProgress = new QuizProgress();
 
-  //   console.log(this.questionAnswers);
-  //   console.log(this.quizData);
 
 
   //   let notAttendedQuestions: any[] = [];
@@ -456,16 +449,16 @@ export class StudentQuizComponent implements OnInit {
 
 
   //       addedQuizProgress = response;
-  //       console.log("Quiz progress saved");
+
   //       this.onSaveQuizProgress.emit(addedQuizProgress);
 
   //     },
   //     (error) => {
-  //       console.log("Failed to save Progress");
+
   //     }
   //   );
 
-  //   console.log("Total score : " + score);
+
 
   // }
 
@@ -476,8 +469,7 @@ export class StudentQuizComponent implements OnInit {
   // onFormSubmit() {
   //   this.quizProgress = new QuizProgress();
 
-  //   console.log(this.questionAnswers);
-  //   console.log(this.quizData);
+
 
 
   //   let notAttendedQuestions: any[] = [];
@@ -534,12 +526,12 @@ export class StudentQuizComponent implements OnInit {
 
 
   //       addedQuizProgress = response;
-  //       console.log("Quiz progress saved");
+
   //       this.onSaveQuizProgress.emit(addedQuizProgress);
 
   //     },
   //     (error) => {
-  //       console.log("Failed to save Progress");
+
   //     }
   //   );
 
@@ -574,8 +566,7 @@ export class StudentQuizComponent implements OnInit {
   }
 
   clearAnswers() {
-    console.log("eraseing answers");
-    console.log(this.questionAnswers);
+
 
     this.questionAnswers.forEach(queAns => {
 
@@ -583,7 +574,7 @@ export class StudentQuizComponent implements OnInit {
       this.currentPage = 1;
 
     })
-    console.log(this.questionAnswers);
+
 
   }
 
@@ -593,7 +584,7 @@ export class StudentQuizComponent implements OnInit {
 
     await this.quizProgressService.getAllStudentAnswersByStduentIdAndQuizId(studentId, quizId).toPromise().then(
       (response) => {
-        console.log(response);
+
 
         if (response != undefined) {
           this.fetchStudentAnswers = response;
@@ -620,8 +611,7 @@ export class StudentQuizComponent implements OnInit {
           this.selectedQuizCategoryId = quiz.categoryId;
           // alert(this.selectedQuizCategoryId);
           this.loadCategory(this.quizCategory.categoryId);
-          console.log(this.quizTitle + ""); // Quiz title of the selected quiz
-          break; // Exit the loop after finding the matching quiz
+
         }
       }
     } catch (err) {
@@ -643,7 +633,7 @@ export class StudentQuizComponent implements OnInit {
         this.passMark = this.quizInfo[5];
         this.courseCode = this.quizInfo[6];
 
-        console.log(this.quizInfo + "**************"); // Output the retrieved data to the console
+
       },
       (error) => {
         console.log(error); // Handle any errors
@@ -669,7 +659,7 @@ export class StudentQuizComponent implements OnInit {
           this.profile = this.data;
           this.studentName = this.data[i].firstName + " " + this.data[i].lastName;
           //  alert(this.studentName);
-          console.log(this.profile.firstName, this.profile.lastName, this.profile.fullName, "  + ++++ + + ", this.profileInstituteId);
+
           this.profileInstituteId = this.data[i].institutionId;
 
           //  alert(JSON.stringify(this.profileInstituteId));
@@ -686,7 +676,7 @@ export class StudentQuizComponent implements OnInit {
     try {
       // alert(profileInstituteId + "id");
       this.sessionData = sessionStorage.getItem('admininstitution');
-      // console.log(this.sessionData);
+
       this.data = JSON.parse(this.sessionData);
       for (var inst in this.data) {
         if (this.data[inst].adminInstitutionId == profileInstituteId) {
@@ -744,22 +734,20 @@ export class StudentQuizComponent implements OnInit {
           { text: 'Max mark  : ' + this.selectedQuiz.maxMarks, alignment: 'right' },
         );
 
-        console.log(this.quizScore.score + "score");
 
-        console.log(this.questionAnswers + " Before Loop +++");
 
         const questionPromises: any = [];
         this.questionNumber = 1;
         // Use `map` to iterate over the questionAnswers array and create an array of Promises
         for (const questionAnswer of this.questionAnswers) {
-          console.log(questionAnswer + "222222222222222222222222");
+
           const questionFigureUrl = this.questionUrl + '/getFileById/' + questionAnswer.questionId;
           const questionContent = questionAnswer.questionContent;
           const questionMark = questionAnswer.maxMarks;
           if (questionAnswer.questionFigure != null) {
             const questionFigureUrl = this.questionUrl + '/getFileById/' + questionAnswer.questionId;
           } else {
-            console.log("figure is contained *****************");
+
           }
           const selectedAns = questionAnswer.selectedAnswer;
 
@@ -777,7 +765,7 @@ export class StudentQuizComponent implements OnInit {
 
 
 
-          console.log("Question with figure ");
+
           await this.fetchFile(questionFigureUrl, questionSection, questionContent, options, answer, selectedAns, questionMark);
 
         };
@@ -899,7 +887,7 @@ export class StudentQuizComponent implements OnInit {
             ]
           });
 
-          console.log(imageDataUrl);
+
 
           if (imageDataUrl) {
             questionSection.push({

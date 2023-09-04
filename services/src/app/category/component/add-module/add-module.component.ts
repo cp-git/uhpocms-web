@@ -41,7 +41,7 @@ export class AddModuleComponent {
 
 
   addmodule(module: Module) {
-    console.log(JSON.stringify(module));
+
     var moduleId = module.moduleId;
 
     module.moduleIsActive = true;
@@ -49,10 +49,10 @@ export class AddModuleComponent {
 
     this._service.addTeacherModule(module).subscribe(
       data => {
-        //console.log(data);
+
         this.module = data;
 
-        console.log("Module Added successfully");
+
 
         if (this._teacherModule.length > 0) {
           this.isVisible = false;
@@ -70,13 +70,12 @@ export class AddModuleComponent {
     for (var course in this.data) {
       this.courses.push(this.data[course]);
     }
-    //console.log(this.courses);
+
   }
 
   ngOnInit(): void {
     this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
-    console.log(this.userName)
     this.loadCourses();
   }
 }

@@ -47,16 +47,14 @@ export class CourseDepartmentComponent {
   ngOnInit(): void {
     this.adminId = this.route.snapshot.paramMap.get('id');
     this.userName = this.route.snapshot.params['userName'];
-    console.log(this.userName)
+
     this.route.paramMap.subscribe(
       (params) => {
         this.id = params.get("id");
         if (this.id) {
-          console.log(this.id)
           this.courseService.getCourseByDepartmentId(this.id).subscribe(
             (coursedata: Course[]) => {
               this.courses = coursedata;
-              console.log(coursedata);
             }
           )
         }

@@ -30,7 +30,7 @@ export class ModuleFileComponent {
   controlEnabled: boolean = true;
   module = new Module();
   modules: Module[] = []; //for all module data
-  moduleFilesInModule:ModuleFile[] = [];
+  moduleFilesInModule: ModuleFile[] = [];
   modulesFile: ModuleFile[] = [];
   moduleFile = new ModuleFile();
 
@@ -125,7 +125,7 @@ export class ModuleFileComponent {
   }
 
   ngOnInit(): void {
-    console.log("CALED NGONINT%%%%%%%%%%%%%%%%%")
+
     this.loadAndLinkUserPermissions();
 
     this.activationScreenStatus = false;
@@ -143,12 +143,12 @@ export class ModuleFileComponent {
   // with buttons to show and hide based on permissions 
   private async loadAndLinkUserPermissions() {
     this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.MODULE_FILE, this.userAndRolePermissions, this.buttonsArray);
-    await this.userPermissionService.toggleButtonsPermissions(userModule.MODULE_FILE,this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(userModule.MODULE_FILE, this.userAndRolePermissions, this.buttonsArray);
   }
 
   submitClicked(eventData: any) {
     // Handle the emitted data here
-    console.log("Received event data:", eventData);
+
   }
   navAddModuleFile() {
     this._route.navigate(['addModuleFile']);
@@ -169,8 +169,7 @@ export class ModuleFileComponent {
 
   // back button functionality
   back() {
-    console.log(this.currentData)
-  
+
     this.currentData = new ModuleFile();
 
     this.emptyModuleFile = new ModuleFile();
@@ -178,19 +177,18 @@ export class ModuleFileComponent {
 
     if (this.viewAll == false) {
       // this.ngOnInit();
-   
+
       this.viewAll = true;
-      console.log(this.currentData)
-      console.log(this.allData)
+
       this.viewOne = false;
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
-    
+
       // this.buttonsArray.showAddButton = true;
       // this.buttonsArray.showActivateButton = true;
       this.userPermissionService.toggleButtonsPermissions(userModule.MODULE_FILE, this.userAndRolePermissions, this.buttonsArray);
-      console.log("Back Button called88888888888888888888")
+
 
 
     } else {
@@ -224,7 +222,7 @@ export class ModuleFileComponent {
     this.viewUpdate = true;
     this.buttonsArray.showAddButton = false;
     this.buttonsArray.showActivateButton = false;
-    
+
     // assingning data to current data for child component
     this.currentData = objectReceived;
   }
@@ -259,14 +257,13 @@ export class ModuleFileComponent {
 
   // on addComponents's submit button clicked
   onAddModuleSubmit(receivedArray: any): void {
-    console.log("my" + JSON.stringify(receivedArray));
+
 
     this.addModuleFile(receivedArray);
   }
 
   onRecievedFiles(recievedFiles: FileList) {
     this.files = recievedFiles;
-    console.log(this.files);
 
 
   }
@@ -286,12 +283,12 @@ export class ModuleFileComponent {
       for (var module in this.data) {
         this.modules.push(this.data[module]);
       }
-      //console.log(this.courses);
+
     }
     catch (err) {
       console.log("Error", err);
     }
-    console.log(this.courses);
+
     this.filteredModules = [];
     this.courses.forEach(course => {
       this.modules.forEach(module => {
@@ -301,7 +298,7 @@ export class ModuleFileComponent {
       })
     })
 
-    // console.log(this.filteredModules);
+
 
 
 
@@ -310,7 +307,7 @@ export class ModuleFileComponent {
   private loadCourses() {
     try {
       this.sessionData = sessionStorage.getItem('course');
-      // console.log(this.sessionData);
+
       this.data = JSON.parse(this.sessionData);
       for (var inst in this.data) {
         this.courses.push(this.data[inst]);
@@ -327,7 +324,6 @@ export class ModuleFileComponent {
   private getAssignedCoursesOfTeacher(teacherId: number) {
     this.service.getAssignedCourseOfTeacher(teacherId).subscribe(
       (data) => {
-        //console.log(data);
 
         this.courses = data;
         this.loadModules();
@@ -365,7 +361,7 @@ export class ModuleFileComponent {
   // Add module file
   addModuleFile(objectReceived: ModuleFile) {
     // objectReceived.moduleFileIsActive = true;
-    console.log("view " + JSON.stringify(this.files));
+
 
 
 
@@ -378,13 +374,12 @@ export class ModuleFileComponent {
 
     this.moduleFileService.addModuleFile(formData).subscribe(
       (data) => {
-        //console.log(this.moduleFile)
-        //console.log(data);
+
         this.uploadfileService.uploadFiles(this.files).subscribe();
 
         this.moduleFile = data;
 
-        console.log('File Added successfully');
+
         this.dialogBoxServices.open("File Added successfully", 'information');
         this.activeModule(objectReceived.moduleId)
 
@@ -404,22 +399,21 @@ export class ModuleFileComponent {
     try {
       const response: any = await this.moduleFileService.getModuleFilesByModuleId(moduleId).toPromise();
       this.moduleFilesInModule = response;
-      console.log(response);
+
     } catch (error) {
       console.error('Error fetching module files:', error);
-      throw error; 
+      throw error;
     }
   }
   // For activating Module
   private async activeModule(moduleId: any) {
     try {
-      console.log("Inside activateModule(module: Module)");
+
       await this.getModuleFileByModuleId(moduleId);
-  
+
       if (this.moduleFilesInModule && this.moduleFilesInModule.length > 0) {
         this.moduleService.activateModuleById(moduleId).subscribe(
           () => {
-            console.log("Module Activated");
             //this.dialogBoxServices.open('Module Activated', 'information');
             this.ngOnInit();
           },
@@ -449,15 +443,15 @@ export class ModuleFileComponent {
       this.moduleFileService.updateModuleFileJsonById(currentData.moduleFileId, currentData).subscribe(
         response => {
           // this.uploadfileService.uploadFiles(this.files).subscribe();
-          console.log('Module File updated successfully !' + response);
+
           this.dialogBoxServices.open("Module File updated successfully !", 'information');
- 
+
           this.back();
 
         },
         error => {
           this.dialogBoxServices.open("Module File updation failed", 'warning');
-          console.log('Module File updation failed !');
+
         }
 
       );
@@ -465,7 +459,7 @@ export class ModuleFileComponent {
     }
     else {
 
-      
+
       let formData = new FormData();
       for (let i = 0; i < this.files.length; i++) {
         formData.append("files", this.files[i]);
@@ -486,11 +480,11 @@ export class ModuleFileComponent {
         },
         error => {
           this.dialogBoxServices.open("Module File updation failed", 'warning');
-          console.log('Module File updation failed !');
+
         }
 
       );
-      console.log('Module File updated successfully !');
+
       this.dialogBoxServices.open("Module File updated successfully !", 'information');
 
       this.back();
@@ -503,12 +497,12 @@ export class ModuleFileComponent {
   // for getting all module files
   private getAllModulesFile() {
     // calling service to get all data
-    console.log(this.modules);
+
     this.moduleFileService.fetchModuleFileList().subscribe(
       response => {
 
         this.allData = [];
-        console.log(this.allData);
+
         response.forEach((moduleFile: ModuleFile) => {
           this.filteredModules.find((module: Module) => {
             if (moduleFile.moduleId == module.moduleId) {
@@ -539,17 +533,17 @@ export class ModuleFileComponent {
   private deleteModuleFileById(moduleFileId: number) {
     this.dialogBoxServices.open('Are you sure you want to delete this ModuleFile ? ', 'decision').then((response) => {
       if (response) {
-        console.log('User clicked OK');
+
         // Do something if the user clicked OK
         // calling service to soft delte
         this.moduleFileService.deleteModuleFileById(moduleFileId).subscribe(
           (response) => {
             this.dialogBoxServices.open("Module File deleted successfully !", 'information');
-            console.log('Module File deleted successfully');
+
             this.ngOnInit();
           },
           (error) => {
-            console.log('Module File deletion failed');
+
             this.dialogBoxServices.open("Module File deletion failed", 'warning');
           }
         );
@@ -580,13 +574,13 @@ export class ModuleFileComponent {
 
     this.moduleFileService.activatemoduleFileById(moduleFileId).subscribe(
       response => {
-        console.log("Activated modulefile");
+
         this.dialogBoxServices.open("Activated modulefile", 'information');
         this.ngOnInit();
       },
       error => {
         this.dialogBoxServices.open("Failed to activate", 'warning');
-        console.log("Failed to activate");
+
       }
     );
   }
@@ -595,14 +589,14 @@ export class ModuleFileComponent {
 
     this.moduleFileService.getFile(moduleFileId).subscribe(
       (response) => {
-        console.log(response);
+
       }
     )
   }
 
   // for calling ifferent service based on role
   private async loadDataBasedOnRole(userRole: any) {
-    console.log(userRole);
+
 
     switch (userRole) {
 
@@ -634,7 +628,7 @@ export class ModuleFileComponent {
   private getAssignedCoursesByProfileId(teacherId: number) {
     this.courseService.getAssignedCourseOfTeacher(teacherId).subscribe(
       (data) => {
-        console.log("courses " + JSON.stringify(data));
+
         this.courses = data;
       },
       error => {
@@ -646,7 +640,7 @@ export class ModuleFileComponent {
   private getEnrolledCoursesByProfileId(studentId: number) {
     this.courseService.getCourseByStudentId(studentId).subscribe(
       (data) => {
-        console.log("courses " + JSON.stringify(data));
+
         this.courses = data;
       },
       error => {
@@ -674,7 +668,7 @@ export class ModuleFileComponent {
       (response) => {
         this.allData = [];
         this.allInActiveData = [];
-        console.log(this.allData);
+
         response.forEach((moduleFile: ModuleFile) => {
           this.modules.find((module: Module) => {
             if (moduleFile.moduleId == module.moduleId) {
@@ -684,7 +678,7 @@ export class ModuleFileComponent {
                   courseId: module.courseId_id,
 
                 });
-                console.log(this.allData);
+
 
               } else {
                 this.allInActiveData.push({
@@ -692,7 +686,7 @@ export class ModuleFileComponent {
                   courseId: module.courseId_id,
 
                 });
-                console.log(this.allInActiveData);
+
 
               }
 
@@ -711,7 +705,7 @@ export class ModuleFileComponent {
 
         this.allData = [];
         this.allInActiveData = [];
-        console.log(this.allData);
+
         response.forEach((moduleFile: ModuleFile) => {
           this.modules.find((module: Module) => {
             if (moduleFile.moduleId == module.moduleId) {
@@ -721,7 +715,7 @@ export class ModuleFileComponent {
                   courseId: module.courseId_id,
 
                 });
-                console.log(this.allData);
+
 
               } else {
                 this.allInActiveData.push({
@@ -729,7 +723,7 @@ export class ModuleFileComponent {
                   courseId: module.courseId_id,
 
                 });
-                console.log(this.allInActiveData);
+
 
               }
 

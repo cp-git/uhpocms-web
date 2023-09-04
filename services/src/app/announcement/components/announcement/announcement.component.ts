@@ -154,7 +154,6 @@ export class AnnouncementComponent implements OnInit {
           this.profile = this.data;
           this.instituteId = this.data[i].institutionId;
           //  alert(this.studentName);
-          console.log(this.profile.firstName, this.profile.lastName, this.profile.fullName, "  + ++++ + + ", this.instituteId);
           this.instituteId = this.data[i].institutionId;
 
 
@@ -178,7 +177,7 @@ export class AnnouncementComponent implements OnInit {
     this.announcementService.fetchAllAnnouncements().subscribe(
       response => {
         this.announcements = response;
-        console.log(this.announcements);
+
 
       },
       error => {
@@ -192,7 +191,7 @@ export class AnnouncementComponent implements OnInit {
     this.announcementService.getAnnouncementBySendBy(profileId).subscribe(
       response => {
         this.outgoingAnnoucements = response;
-        console.log(this.outgoingAnnoucements);
+
 
       },
       error => {
@@ -229,7 +228,7 @@ export class AnnouncementComponent implements OnInit {
   public deleteAnnouncementById(announcementId: number) {
     this.dialogBoxService.open('Are you sure you want to delete this Announcement ? ', 'decision').then((response) => {
       if (response) {
-        console.log('User clicked OK');
+
         // Do something if the user clicked OK
         this.announcementService.deleteAnnouncementById(announcementId).subscribe(
           response => {
@@ -241,7 +240,7 @@ export class AnnouncementComponent implements OnInit {
           }
         );
       } else {
-        console.log('User clicked Cancel');
+
         // Do something if the user clicked Cancel
       }
     });
@@ -257,7 +256,7 @@ export class AnnouncementComponent implements OnInit {
   private loadAdminInstitutions() {
     try {
       this.sessionData = sessionStorage.getItem('instituteprofile');
-      // console.log(this.sessionData);
+
       this.data = JSON.parse(this.sessionData);
       for (var inst in this.data) {
         this.allData.push(this.data[inst]);

@@ -38,8 +38,7 @@ export class PolarChartComponent {
 
     let cvs: any;
     cvs = this.pChart.nativeElement;
-    console.log("json array")
-    console.log(this.jsonArray)
+
 
     //  const combinedData = this.chartLabels.map((label: string, index: number) => {
     //   return {
@@ -113,7 +112,6 @@ export class PolarChartComponent {
                 }
               } else {
                 this.zeroCourses.emit({ label, value });
-                console.log(label, value + "//////////////////////////");
                 return '';
 
 
@@ -154,8 +152,7 @@ export class PolarChartComponent {
   // ngAfterViewInit() {
   //   let cvs: any;
   //   cvs = this.pChart.nativeElement;
-  //   console.log("json array");
-  //   console.log(this.jsonArray);
+
 
   //   const combinedData = this.chartLabels.map((label: string, index: number) => {
   //     return {
@@ -214,9 +211,7 @@ export class PolarChartComponent {
     const label = this.chart.data.labels[index];
 
     // Use the retrieved data to display a popup or perform any desired action
-    console.log(`Clicked section: ${label} - Value: ${value}`);
-    console.log(value)
-    console.log(label)
+
     // Show your popup or perform other actions here
     this.click.emit();
     this.clickData.emit({ value, label });

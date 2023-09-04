@@ -39,7 +39,7 @@ export class AdminroleComponent {
     this._service.addAdminRole(this.admin).subscribe(
       (data) => {
 
-        console.log('Role added Successfully');
+
         this.ngOnInit();
       },
       (error) =>
@@ -56,10 +56,10 @@ export class AdminroleComponent {
 
       this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
       this.userName = this._activatedRoute.snapshot.params['userName'];
-      console.log(this.userName)
+
       this._service.fetchadminlist().subscribe(
         (data) => {
-          console.log('Response Received...');
+
           this._adminRole = data;
 
           if (this._adminRole.length > 0) {
@@ -81,7 +81,7 @@ export class AdminroleComponent {
     if (
       this._backupRole.findIndex((data) => data.roleName === role.roleName) < 0
     ) {
-      console.log('roleName not exist for update. please enter another.');
+
     } else {
       this.admin.roleName = role.roleName;
       this.admin.roleDescription = role.roleDescription;
@@ -89,7 +89,7 @@ export class AdminroleComponent {
       this._service.updateadminlist(this.admin.roleName, this.admin).subscribe(
         (data) => {
 
-          console.log('Role Successfully Updated...');
+
           this.ngOnInit();
         },
         (error) => console.log(error)
@@ -101,7 +101,7 @@ export class AdminroleComponent {
   deleteAdminRole(roleName: string) {
     this._service.deleteAdmin(roleName).subscribe(
       (data) => {
-        console.log('Data Deleted...');
+
         this.ngOnInit();
       },
       (error) => console.log(error)

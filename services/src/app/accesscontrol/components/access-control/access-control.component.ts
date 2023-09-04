@@ -168,7 +168,7 @@ export class AccessControlComponent {
     this.showActivateButton = false;
 
     this.currentData = objectReceived;    // assingning data to current data for child component
-    console.log(this.currentData);
+
   }
 
 
@@ -215,7 +215,7 @@ export class AccessControlComponent {
     // filtering profile based on institution id
 
     this.filteredProfiles = this.advFilterPipe.transform(this.profiles, 'institutionId', this.selectedInstitutionId)
-    console.log(this.filteredProfiles);
+
 
     // setting value foir unselect dropdown
     this.selectedDepartmentId = undefined;
@@ -226,7 +226,7 @@ export class AccessControlComponent {
   onChangeDepartment() {
     // filtering profile based on institution id
     this.filteredProfiles = this.advFilterPipe.transform(this.profiles, 'adminDepartment', this.selectedDepartmentId)
-    console.log(this.filteredProfiles);
+
 
     // setting value foir unselect dropdown
     this.selectedUserId = undefined;
@@ -235,20 +235,18 @@ export class AccessControlComponent {
   }
 
   onChangeUser() {
-    // console.log(data);
+
     // let userId = data.userId;
     // this.selectedUserId = data.userId;
     this.emptyAccesscontrol = new Accesscontrol()
-    console.log(this.selectedUserId);
-    console.log(this.allAccessControls);
-    console.log(this.emptyAccesscontrol);
+
 
     this.allAccessControls.forEach(control => {
       if (control.userId == this.selectedUserId) {
         this.emptyAccesscontrol = { ...control };
       }
     })
-    console.log(this.emptyAccesscontrol);
+
 
   }
 
@@ -282,7 +280,7 @@ export class AccessControlComponent {
     this.authUserService.authUserList().subscribe(
       response => {
         this.authUsers = response;
-        console.log(this.authUsers);
+
       }
     );
   }
@@ -318,7 +316,7 @@ export class AccessControlComponent {
   }
   // updating profile by usign userId(foreign key from authuser)
   private addOrUpdateAccessControls(currentData: Accesscontrol) {
-    console.log(currentData);
+
 
     this.service.addOrUpdateAccessControles(this.selectedUserId, currentData).subscribe(
       response => {
@@ -369,7 +367,7 @@ export class AccessControlComponent {
       response => {
         this.profiles = response; //assign data to local variable
         this.filteredProfiles = response;
-        console.log(this.profiles);
+
       },
       error => {
         console.log('No data in table ');
@@ -398,7 +396,7 @@ export class AccessControlComponent {
   private loadAdminInstitutions() {
     try {
       this.sessionData = sessionStorage.getItem('admininstitution');
-      //console.log(this.sessionData);
+
       this.data = JSON.parse(this.sessionData);
       if (this.institutions.length <= 0) {
         for (var inst in this.data) {
@@ -483,7 +481,7 @@ export class AccessControlComponent {
     this.authModuleService.getAllAuthModules().subscribe(
       (response) => {
         this.masterModules = response;
-        console.log(this.masterModules);
+
 
         // adding some parameter in master module array
         this.masterModules.forEach(module => {
@@ -562,7 +560,6 @@ export class AccessControlComponent {
     this.userPermissionService.getAllUserPermissions().subscribe(
       (response) => {
         this.userPermissions = response;
-        // console.log(this.userPermissions);
 
       }
     );
@@ -572,14 +569,14 @@ export class AccessControlComponent {
     this.groupPermissionService.getAllGroupPermissions().subscribe(
       (response) => {
         this.groupPermissions = response;
-        console.log(this.groupPermissions);
+
 
       }
     )
   }
 
   onClickAssignPermissions(data: any) {
-    console.log(data);
+
 
     let accessControlFor = data.access;
     let moduleAndPermissionsIds = data['permissionIds'];
@@ -595,7 +592,7 @@ export class AccessControlComponent {
         }
       )
     } else if (accessControlFor == 'ROLES') {
-      console.log("sending..");
+
 
       this.userPermissionService.assignPermissionsToRoleId(userRoleId, moduleAndPermissionsIds).subscribe(
         (response) => {
@@ -607,20 +604,17 @@ export class AccessControlComponent {
   }
 
   getSelectedOptionOfDropdown(data: any) {
-    console.log(data);
+
     let userId = data.userId;
     this.selectedUserId = data.userId;
     this.emptyAccesscontrol = new Accesscontrol()
-    console.log(userId);
-    console.log(this.allAccessControls);
-    console.log(this.emptyAccesscontrol);
 
     this.allAccessControls.forEach(control => {
       if (control.userId == userId) {
         this.emptyAccesscontrol = { ...control };
       }
     })
-    console.log(this.emptyAccesscontrol);
+
 
   }
 

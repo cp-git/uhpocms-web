@@ -18,11 +18,11 @@ export class ModuleHeaderComponent {
   @Output() addButtonClicked = new EventEmitter();
   @Output() activateButtonClicked = new EventEmitter();
 
-  displayInstituteLogo : any;
-  instituteId : any;
-  sessionData : any;
-  data:any;
-  profileId : any
+  displayInstituteLogo: any;
+  instituteId: any;
+  sessionData: any;
+  data: any;
+  profileId: any
   profiles: Profile[] = []; // list of inactive Profile
   profile: Profile;
 
@@ -30,13 +30,14 @@ export class ModuleHeaderComponent {
   constructor(private profileServ: ProfileService) {
     this.profile = new Profile();
     this.displayInstituteLogo = `${environment.adminInstitutionUrl}/institution/getFileById`;
-   
+
     this.profileId = sessionStorage.getItem("profileId");
     this.userRole = sessionStorage.getItem('userRole');
   }
 
   ngOnInit(): void {
-    this.loadProfiles(this.profileId);}
+    this.loadProfiles(this.profileId);
+  }
 
   back() {
     this.backButtonClicked.emit();
@@ -58,15 +59,15 @@ export class ModuleHeaderComponent {
       this.sessionData = sessionStorage.getItem('instituteprofile');
       //alert(JSON.stringify(this.sessionData));
       this.data = JSON.parse(this.sessionData);
-      
+
       for (var i = 0; i < this.data.length; i++) {
         if (this.data[i].adminId == this.profileId) {
           this.profile = this.data;
           this.instituteId = this.data[i].institutionId;
           //  alert(this.studentName);
-          console.log(this.profile.firstName, this.profile.lastName, this.profile.fullName, "  + ++++ + + ", this.instituteId);
+
           this.instituteId = this.data[i].institutionId;
-          
+
 
           //  alert(JSON.stringify(this.profileInstituteId));
           break; // Assuming the profileId is unique, exit the loop after finding the matching profile

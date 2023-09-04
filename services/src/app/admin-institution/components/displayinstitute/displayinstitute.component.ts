@@ -110,7 +110,7 @@ export class DisplayinstituteComponent {
 
 
         for (let i = 0; i < this.admininstitutions.length; i++) {
-          console.log(this.admininstitutions[i].adminInstitutionPicture);
+
         }
         this.admininstitutions.sort((a, b) => a.adminInstitutionName.toLowerCase() > b.adminInstitutionName.toLowerCase() ? 1 : -1) // order by alphabets for institution name
 
@@ -127,7 +127,7 @@ export class DisplayinstituteComponent {
       },
       (error) => {
         this.displayEmptyRow();
-        console.log('No data in table ');
+
       }
     );
   }
@@ -141,12 +141,12 @@ export class DisplayinstituteComponent {
   //     (response) => {
   //       this.admininstitutions.splice(this.admininstitutions.indexOf(inst), 1);
   //       this.backupInst.splice(this.admininstitutions.indexOf(inst), 1);
-  //       // console.log(inst.adminInstitutionName + ' Institution deleted successfully');
-  //       console.log(inst.adminInstitutionName + ' Institution deleted successfully');
+  //     
+  //      
   //       this.displayEmptyRow();
   //     },
   //     (error) => {
-  //       console.log('not able to delete \n' + JSON.stringify(error.error));
+  //    
   //     }
   //   );
   // }
@@ -157,7 +157,7 @@ export class DisplayinstituteComponent {
   deleteInstitution(adminInstitutionId: number) {
     this.dialogBoxService.open('Are you sure you want to delete this Institute ? ', 'decision').then((response) => {
       if (response) {
-        console.log('User clicked OK');
+
         // Do something if the user clicked OK
         // calling service to soft delte
         this._institutionService.deleteInstitutionById(adminInstitutionId).subscribe(
@@ -176,7 +176,7 @@ export class DisplayinstituteComponent {
           }
         );
       } else {
-        console.log('User clicked Cancel');
+
         // Do something if the user clicked Cancel
       }
     });

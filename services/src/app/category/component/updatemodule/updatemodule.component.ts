@@ -36,7 +36,6 @@ export class UpdatemoduleComponent {
     } else {
       this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
       this.userName = this._activatedRoute.snapshot.params['userName'];
-      console.log(this.userName)
       this.getAllModules();
       this.loadCourses();
     }
@@ -54,7 +53,7 @@ export class UpdatemoduleComponent {
   getAllModules() {
     this._service.getAllModules().subscribe(
       (data) => {
-        console.log('Response Received...');
+
         this._teacherModule = data;
 
         this._teacherModule.forEach((moduleData) => {
@@ -86,14 +85,14 @@ export class UpdatemoduleComponent {
     this.module.courseId_id = module.courseId_id;
     this._service.updateModule(this.module.moduleName, this.module).subscribe(
       (data) => {
-        // console.log(data)
+
         this.module = data;
         this._backupModule.set(
           this.module.moduleId,
           Object.assign({}, this.module)
         );
 
-        console.log('Data updated successfuly');
+
 
         if (this._teacherModule.length > 0) {
           this.isVisible = false;
@@ -116,7 +115,7 @@ export class UpdatemoduleComponent {
         );
         this._backupModule.delete(toDeleteModule.moduleId);
 
-        console.log(toDeleteModule.moduleName + ' deleted successfuly');
+
 
         if (this._teacherModule.length > 0) {
           this.isVisible = false;

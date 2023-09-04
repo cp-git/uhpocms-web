@@ -117,7 +117,7 @@ export class AnalyticsComponent {
 
 
   zeroEnrolledCourses(zeroCourses: { value: any; label: string }) {
-    console.log(zeroCourses);
+
 
     //this.courseResults = [];
     // this.couseNotEnrolledByAnyStudent = zeroCourses.label;
@@ -148,7 +148,7 @@ export class AnalyticsComponent {
       (response) => {
 
         this.institutions = response;
-        console.log(this.institutions)
+
 
       }
     )
@@ -168,7 +168,7 @@ export class AnalyticsComponent {
       this.deptServ.getDepartmentsByInstitutionId(instId).subscribe(
         (response) => {
           this.departments = response;
-          // console.log("departments array in func", this.departments);
+
           resolve(this.departments); // Resolve the promise with the departments
         },
         (error) => {
@@ -187,7 +187,7 @@ export class AnalyticsComponent {
 
           this.courses = response.filter((course: Course) => course.courseIsActive == true)
 
-          console.log("courses array in func", this.courses);
+
           resolve(this.courses)
         }
         ,
@@ -213,25 +213,21 @@ export class AnalyticsComponent {
   getProfileByProfileId(profileId: number) {
     this.filteredProfiles = [];
 
-    // console.log("Profiles array before API calling");
-    // console.log(this.profiles);
 
     return new Promise((resolve, reject) => {
       this.profileServ.getProfileByAdminId(profileId).subscribe(
         (response) => {
           let profile: Profile = response;
 
-          // console.log(profile);
+
 
           this.profiles.push(profile);
 
-          // console.log("Profiles in getProfileByProfileId");
-          // console.log(this.profiles);
+
 
           this.getProfileByInstitutionId(this.instId, '');
 
-          // console.log("profiles in department")
-          // console.log(this.profileForDept)
+
 
           //loop to get filterd profiles that belong to particular institute
           for (let profile of this.profiles) {
@@ -245,8 +241,7 @@ export class AnalyticsComponent {
           this.profiles = this.filteredProfiles;
           this.profiles = this.getUniqueProfilesByAdminId(this.profiles);
 
-          // console.log("profiles after loop")
-          // console.log(this.profiles)
+
           resolve(this.profiles);
         },
         (error) => {
@@ -271,7 +266,7 @@ export class AnalyticsComponent {
 
   //get filtered profiles as per institute id and course Id provided based on 'enrolled students' and 'assigned course to teacher arrays'
   async getProfilesInCourse(instId: number, courseId: number) {
-    console.log(courseId);
+
     this.profiles = [];
     let profile: any;
     this.profileIds = [];
@@ -283,8 +278,7 @@ export class AnalyticsComponent {
       this.enrollStuServ.getProfileByInstIdCourId(instId, courseId).subscribe(
         (response) => {
           const profiles = response.map((data: Enrolltostudent) => data.profileId);
-          // console.log("Profiles in enroll")
-          // console.log(profiles)
+
           resolve(response);
         },
         (error) => {
@@ -299,8 +293,7 @@ export class AnalyticsComponent {
         (response) => {
           // const profiles = response.map((data: Assignteacher) => data.profileId);
           resolve(response);
-          // console.log("Profiles in teacher")
-          // console.log(response)
+
 
         },
         (error) => {
@@ -314,7 +307,7 @@ export class AnalyticsComponent {
     this.studCntInCour = studentProfiles.length;
     this.teaCntInCour = teacherProfiles.length;
 
-    // console.log("")
+
     // Merge student and teacher profiles
     const profileIds = [...studentProfiles, ...teacherProfiles];
 
@@ -335,16 +328,14 @@ export class AnalyticsComponent {
     this.barCharts = [];
     this.deptNameCouCnt = [];
     this.studProgDetailArr = [];
-    // console.log("getAllDeptDetails(instId:number) called");
-    // console.log(instId);
+
     await this.getDepartmentsByInstId(instId);
-    // console.log("Departments length: " + this.departments.length);
+
     for (let dept of this.departments) {
 
       this.deptArray.length == this.departments.length;
 
       await this.getCoursesByDeptId(dept.id);
-      console.log("Courses array length: " + this.courses.length);
       courseLenArr.push(this.courses.length);
       this.deptNameArray.push(dept.name);
       this.deptNameCouCnt.push(dept.name + " - " + this.courses.length);
@@ -353,7 +344,7 @@ export class AnalyticsComponent {
     // this.deptArray[1] = this.deptNameArray;
     // this.deptArray[1] = deptNameArray;
 
-    // console.log(this.deptArray);
+
   }
 
 
@@ -419,7 +410,7 @@ export class AnalyticsComponent {
           this.course = data;
           if (this.barClicked) {
             this.clickedCourseOnBar = data;
-            console.log(this.clickedCourseOnBar.courseName)
+
           }
 
           resolve();
@@ -480,7 +471,7 @@ export class AnalyticsComponent {
 
 
         for (let i = 0; i < this.admininstitutions.length; i++) {
-          console.log(this.admininstitutions[i].adminInstitutionPicture);
+
         }
         this.admininstitutions.sort((a, b) => a.adminInstitutionName.toLowerCase() > b.adminInstitutionName.toLowerCase() ? 1 : -1) // order by alphabets for institution name
 
@@ -497,7 +488,7 @@ export class AnalyticsComponent {
       },
       (error) => {
         this.displayEmptyRow();
-        console.log('No data in table ');
+
       }
     );
   }
@@ -544,7 +535,7 @@ export class AnalyticsComponent {
     var valueBeforeHyphen = data.split(" - ")[0];
     this.zeroPeopleCountInCourses = false;
 
-    // console.log('Received right-click data:', valueBeforeHyphen);
+
 
     this.deptClicked = valueBeforeHyphen;
 
@@ -553,32 +544,26 @@ export class AnalyticsComponent {
         clickedDepartment = response.filter((elem) => elem.name == valueBeforeHyphen);
 
         await this.getCoursesByDeptId(clickedDepartment[0].id);
-        //   console.log("Courses in clicked funtcion")
-        //  console.log(this.courses)
+
         for (let cour of this.courses) {
           await this.getProfilesInCourse(instId, cour.courseId)
 
-          // console.log("Profiles in course")
-          // console.log(this.profiles)
 
-          // console.log("Profiles in course")
-          // console.log(this.profileIdForStuTea)
-          // console.log("Profiles Array lenght"+this.profileIdForStuTea.length) 
 
           profLen.push(this.profileIdForStuTea.length);
 
-          //  console.log(profLen)
+
           this.courseNameArr.push(cour.courseName)
 
 
-          //  console.log(this.courseNameArr)
+
         }
 
         //condition if only one course with zero people count present in department
         if ((profLen.length == 1) && (profLen[0] == 0) && (this.courseNameArr.length == 1)) {
           this.zeroPeopleCountInCourses = true
         }
-        // console.log(this.profilesLenghtArray)
+
         this.profilesLenghtArray.push(profLen)
       }
     )
@@ -599,39 +584,27 @@ export class AnalyticsComponent {
     this.profCategoryArr = [];
     this.profCategoryNames = ["students", "teachers"];
     this.studProgDetailArr = [];
-    // console.log('Received right-click data:', data);
 
-    // // this.popupDataValue = data.value;
-
-    // console.log('Received right-click data:', data.value, data.label);
 
     await this.getCourseByNameandINstId(data.label, instId);
 
     this.getProfilesInCourse(instId, this.clickedCourse[0].courseId)
 
     this.studCntInCour;
-    //   console.log("this.teaCntInCour")
-    //  console.log( this.teacIdsArr);
 
-
-    //  console.log("this.studIdsArr")
-    //  console.log( this.studIdsArr);
-
-    //   console.log(this.studCntInCour)
-    //   console.log(this.teaCntInCour)
 
     this.profCategoryArr[0] = [this.studCntInCour, this.teaCntInCour];
     // this.profCategoryArr.push(this.teaCntInCour);
 
 
-    // console.log(teacId)
+
     this.courseProgServ.getAllCourseProgress().subscribe(
       async (response) => {
         this.courseProgressArr = response;
 
         // await this.getAllCourseIds(teacId);
 
-        console.log(this.courseIds);
+
         // for (let m = 0; m < this.courseIds.length; m++) {
         let courseName: String = ' ';
         let cnt1 = 0;
@@ -642,7 +615,7 @@ export class AnalyticsComponent {
 
 
 
-        // console.log("Course Id in if loop  " + this.clickedCourse[0].courseId)
+
         await this.getCourseNameById(this.clickedCourse[0].courseId);
 
 
@@ -667,7 +640,7 @@ export class AnalyticsComponent {
         else {
           // this.barCharts[m] =  [Math.round((cnt1*100)/totalStudsArr.length) , Math.round((cnt2*100)/totalStudsArr.length) , Math.round((cnt3*100)/totalStudsArr.length) , Math.round((cnt4*100)/totalStudsArr.length)  , this.course.courseName]
           this.barCharts[0] = [cnt1, cnt2, cnt3, cnt4, this.course.courseName + '  [' + totalStudsArr.length + ' students]', this.course.courseId]
-          // console.log(this.barCharts[0])
+
         }
         // }
       }
@@ -687,25 +660,23 @@ export class AnalyticsComponent {
     let clickedDepartment: Department[] = [];
     this.deptClicked = '';
     this.studProgDetailArr = [];
-    // console.log(this.barClicked)
+
     // let courseProgressArr: CourseProgress[] = [];
     // let filteredCourseProgressArr: CourseProgress[] = [];
-    // console.log("Function called")
+
     // // Perform actions with the data
-    // console.log('Received right-click data:', data);
+
 
     // this.popupDataValue = data.value;
     this.deptClicked = data.label;
-    // console.log('Received right-click data:', data.value, data.label);
-    // console.log()
+
 
     this.deptServ.getDepartmentsByInstitutionId(instId).subscribe(
       async (response) => {
         clickedDepartment = response.filter((elem) => elem.name == data.label);
 
         await this.getCoursesByDeptId(clickedDepartment[0].id);
-        //   console.log("Courses in clicked funtcion")
-        //  console.log(this.courses)
+
         for (let cour of this.courses) {
           await this.getProfilesInCourse(instId, cour.courseId)
 
@@ -715,8 +686,7 @@ export class AnalyticsComponent {
 
           this.courseNameArr.push(cour.courseName)
 
-          //  console.log(this.profilesLenghtArray)
-          //  console.log(this.courseNameArr)
+
         }
         this.profilesLenghtArray.push(profLen)
       }
@@ -739,14 +709,14 @@ export class AnalyticsComponent {
   //fnction to get all data for course progress of students in bar chart 
   async getAllCourseProgress(teacId: number) {
 
-    // console.log(teacId)
+
     this.courseProgServ.getAllCourseProgress().subscribe(
       async (response) => {
         this.courseProgressArr = response;
 
         // await this.getAllCourseIds(teacId);
 
-        console.log(this.courseIds);
+
         for (let m = 0; m < this.courseIds.length; m++) {
           let courseName: String = ' ';
           let cnt1 = 0;
@@ -784,7 +754,7 @@ export class AnalyticsComponent {
           else {
             // this.barCharts[m] =  [Math.round((cnt1*100)/totalStudsArr.length) , Math.round((cnt2*100)/totalStudsArr.length) , Math.round((cnt3*100)/totalStudsArr.length) , Math.round((cnt4*100)/totalStudsArr.length)  , this.course.courseName]
             this.barCharts[m] = [cnt1, cnt2, cnt3, cnt4, this.course.courseName + '  [' + totalStudsArr.length + ' students]', this.course.courseId]
-            // console.log(this.barCharts[m])
+
           }
         }
       }
@@ -796,18 +766,15 @@ export class AnalyticsComponent {
     this.dchartcurrentIndex = 0;
     this.barClicked = true;
 
-    // console.log(this.barClicked)
+
     let courseProgressArr: CourseProgress[] = [];
     let filteredCourseProgressArr: CourseProgress[] = [];
-    // console.log("Function called")
+
     // // Perform actions with the data
-    // console.log('Received right-click data:', data);
+
 
     this.popupDataValue = data.value;
     this.popupDataLabel = data.label;
-
-    // console.log('Received right-click data:', this.popupDataValue, this.popupDataLabel);
-    // console.log(courseId)
 
     const rangeArray = this.popupDataLabel.split("-"); // Split the string into an array of two elements
 
@@ -824,17 +791,13 @@ export class AnalyticsComponent {
       }
     )
 
-    // console.log(startValue); // Output: 26
-    // console.log(endValue); // Output: 75
-    // console.log( parseInt(this.popupDataLabel))
     this.courseProgServ.getAllCourseProgress().subscribe(
       (data) => {
-        // console.log(startValue); // Output: 26
-        // console.log(endValue); // Output: 75
+
         courseProgressArr = data;
         filteredCourseProgressArr = courseProgressArr.filter((elem) => elem.courseId == courseId && ((elem.progress >= startValue) && (elem.progress <= endValue)))
 
-        // console.log(filteredCourseProgressArr)
+
         this.courseProgressArr = filteredCourseProgressArr
 
       }
@@ -852,18 +815,17 @@ export class AnalyticsComponent {
     this.studProgDetailArr = [];
     let profile: Profile = new Profile();
 
-    // console.log(this.courseProgressArr);
+
 
     for (let i = 0; i < this.courseProgressArr.length; i++) {
-      // console.log("Entered in for loop");
+
       const remainingPercentage: number = 100 - this.courseProgressArr[i].progress;
 
 
       this.profileServ.getProfileByAdminId(this.courseProgressArr[i].studentId).subscribe(
         (data) => {
           profile = data;
-          // console.log(i)
-          // console.log(profile);
+
           this.studProgDetailArr.push([this.courseProgressArr[i].progress, remainingPercentage, profile.firstName + ' ' + profile.lastName]);
 
           // Check if all the data has been retrieved
@@ -872,7 +834,7 @@ export class AnalyticsComponent {
       );
 
     }
-    // console.log(this.studProgDetailArr);
+
   }
 
 
@@ -881,7 +843,7 @@ export class AnalyticsComponent {
   doughnutNext() {
 
     this.dchartcurrentIndex += 3;
-    // console.log("this.dchartcurrentIndex value     " + this.dchartcurrentIndex)
+
 
   }
 

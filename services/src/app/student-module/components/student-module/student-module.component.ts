@@ -272,11 +272,11 @@ export class StudentModuleComponent implements OnInit {
 
     this.quizProgServ.displayStudentProgress(this.studentId).subscribe(
       dd => {
-        console.log("dd" + dd);
+
         this.quizDataStore = dd;
 
         for (let m = 0; m < this.quizDataStore.length; m++) {
-          console.log("Final Grade..." + this.quizDataStore[m]);
+
 
           this.quizData = this.quizDataStore[m];
 
@@ -1614,8 +1614,8 @@ export class StudentModuleComponent implements OnInit {
       this.isRetakingQuiz = true;
       this.retakingQuiz++;
       this.cd.restart();
-      //console.log(" Retake Quiz..." + this.addeedQuizProgress1);
-      console.log("Welcome...######");
+
+
 
 
 
@@ -1624,7 +1624,7 @@ export class StudentModuleComponent implements OnInit {
       this.isRetakingQuiz = false;
       if (!(this.quizFailedProgresses.includes(quiz.quizId) || this.quizPassedProgresses.includes(quiz.quizId))) {
         this.cd.restart();
-        console.log("Without Retake Quiz..." + this.addeedQuizProgress1);
+
       }
     }
 
@@ -1700,7 +1700,7 @@ export class StudentModuleComponent implements OnInit {
 
 
 
-      console.log("Progress of Quiz..." + this.selectedQuizProgress.score)
+
 
     } else {
 
@@ -1716,7 +1716,7 @@ export class StudentModuleComponent implements OnInit {
 
         // Include any other properties from QuizProgress
       };
-      console.log(quiz.courseId);
+
     }
   }
 
@@ -2189,7 +2189,7 @@ export class StudentModuleComponent implements OnInit {
 
         //     this.quizProgServ.displayStudentProgress(this.quizProgress.studentId).subscribe(
         //       data => {
-        //         console.log("Data..." + data);
+
 
         //         this.quizDataStore = data;
 
@@ -2197,7 +2197,7 @@ export class StudentModuleComponent implements OnInit {
         //           this.quizData = this.quizDataStore[i];
         //         }
 
-        //         console.log("This is Individual Data...." + this.quizData);
+
 
 
 
@@ -2209,19 +2209,19 @@ export class StudentModuleComponent implements OnInit {
         // for (let j = 0; j < this.addeedQuizProgress1.length; j++) {
 
         //   myaData = this.addeedQuizProgress1[j].score;
-        //   // console.log("Response based on student" + this.addeedQuizProgress1[j].score);
+
 
 
         //   val = val + this.addeedQuizProgress1[j].score;
 
         // }
 
-        // console.log("This is val" + val);
+
 
 
 
         // for (let h = 0; h < this.addeedQuizProgress1.length; h++) {
-        //   // console.log("Quiz id based on student id" + this.addeedQuizProgress1[h].quizId);
+
 
 
 
@@ -2229,30 +2229,24 @@ export class StudentModuleComponent implements OnInit {
         //     response => {
 
         //       if (this.addeedQuizProgress1[h].quizId == response.quizId) {
-        //         console.log("This is quiz id" + response.quizId);
-        //         console.log("This is max marks" + response.maxMarks);
 
-
-        //         console.log(this.isRetakingQuiz);
 
         //         let myVal = 0;
         //         if (this.isRetakingQuiz == false) {
         //           this.quizDataStore.push(response);
-        //           console.log(this.quizDataStore);
+
 
 
         //           for (let m = 0; m <= this.quizDataStore.length; m++) {
-        //             console.log(this.quizDataStore[m].maxMarks);
+        //           
 
 
         //             myVal = myVal + this.quizDataStore[m].maxMarks;
-        //             console.log(myVal);
+        //           
 
 
         //             this.PercentageGrade = (val * 100) / myVal;
-        //             console.log(this.PercentageGrade);
-
-        //             console.log("DDD" + this.studentQuiz);
+        //           
 
         //             if (this.PercentageGrade >= 0 && this.PercentageGrade <= 25) {
         //               this.QuizGrade = 'D';
@@ -2282,13 +2276,13 @@ export class StudentModuleComponent implements OnInit {
         //           let myVal = 0;
 
         //           for (let m = 0; m <= this.quizDataStore.length; m++) {
-        //             console.log(this.quizDataStore[m].maxMarks);
+        //            
 
         //             myVal = myVal + this.quizDataStore[m].maxMarks;
-        //             console.log(myVal);
+        //             
 
         //             this.PercentageGrade = (val * 100) / myVal;
-        //             console.log(this.PercentageGrade);
+        //           
 
         //             if (this.PercentageGrade >= 0 && this.PercentageGrade <= 25) {
         //               this.QuizGrade = 'D';
@@ -2399,7 +2393,7 @@ export class StudentModuleComponent implements OnInit {
 
         this.quizProgServ.displayStudentProgress(this.quizProgress.studentId).subscribe(
           data => {
-            console.log("Data..." + data);
+
 
             this.quizDataStore = data;
 
@@ -2407,7 +2401,7 @@ export class StudentModuleComponent implements OnInit {
               this.quizData = this.quizDataStore[i];
             }
 
-            console.log("This is Individual Data...." + this.quizData);
+
 
 
 
@@ -2454,7 +2448,7 @@ export class StudentModuleComponent implements OnInit {
     //.log("reviewButtonStat in onretake quizClicked" + this.reviewButtonStat)
     // alert(this.reviewButtonStat)
     this.onQuizClicked(quiz, true);
-    console.log("In Retake Quiz..");
+
 
 
 

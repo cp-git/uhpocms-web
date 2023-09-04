@@ -36,7 +36,7 @@ export class QuizComponent implements OnInit {
   // showActivateButton: boolean = true;
 
   //Display Column Names
-  
+
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
 
@@ -66,7 +66,7 @@ export class QuizComponent implements OnInit {
   userRoleId: any;
   userAndRolePermissions: AuthUserPermission[] = [];
   userModule = userModule;
-  
+
   constructor(
     private quizService: QuizService,
     private location: Location,
@@ -119,7 +119,7 @@ export class QuizComponent implements OnInit {
   // with buttons to show and hide based on permissions 
   private async loadAndLinkUserPermissions() {
     this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.QUIZ, this.userAndRolePermissions, this.buttonsArray);
-    await this.userPermissionService.toggleButtonsPermissions(userModule.QUIZ,this.userAndRolePermissions, this.buttonsArray);
+    await this.userPermissionService.toggleButtonsPermissions(userModule.QUIZ, this.userAndRolePermissions, this.buttonsArray);
   }
 
   // function will call when child update button is clicked 
@@ -234,7 +234,7 @@ export class QuizComponent implements OnInit {
             course => course.courseId).includes(data.courseId));
 
         this.allQuizData.sort((a, b) => a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1) // order by alphabets for title
-        console.log("filtered daTA " + JSON.stringify(this.allQuizData));
+
 
       },
       (error) => {
@@ -248,7 +248,7 @@ export class QuizComponent implements OnInit {
   deleteQuiz(title: string) {
     this.dialogBoxService.open('Are you sure you want to delete this Quiz ? ', 'decision').then((response) => {
       if (response) {
-        console.log('User clicked OK');
+
         // Do something if the user clicked OK
         this.quizService.deleteQuiz(title).subscribe(
           (data) => {
@@ -261,7 +261,7 @@ export class QuizComponent implements OnInit {
           }
         );
       } else {
-        console.log('User clicked Cancel');
+
         // Do something if the user clicked Cancel
       }
     });
@@ -270,9 +270,7 @@ export class QuizComponent implements OnInit {
   // for adding quiz
   addQuiz(currentData: Quiz) {
 
-    console.log(currentData)
-    console.log(typeof currentData.passMark)
-    console.log(typeof currentData.maxMarks)
+
     let passMark: any = currentData.passMark
     passMark = parseInt(passMark)
 
@@ -281,9 +279,9 @@ export class QuizComponent implements OnInit {
 
 
     // Calculate the total timer duration in seconds
-    console.log(JSON.stringify(currentData))
+
     const timerInSeconds = (currentData.setTimerInHours * 3600) + (currentData.setTimerInMinutes * 60);
-    console.log(timerInSeconds);
+
     currentData.setTimer = timerInSeconds;
 
 
@@ -315,31 +313,26 @@ export class QuizComponent implements OnInit {
   // for updating quiz using title
   private async updateQuiz(currentData: Quiz) {
     // calling service for updating data
-    console.log(currentData)
-    console.log(currentData)
-    console.log(typeof currentData.passMark)
-    console.log(typeof currentData.maxMarks)
+
     let passMark: any = currentData.passMark
     passMark = parseInt(passMark)
     const timerInSeconds = (currentData.setTimerInHours * 3600) + (currentData.setTimerInMinutes * 60);
     currentData.setTimer = timerInSeconds;
     let maxMarks: any = currentData.maxMarks;
     maxMarks = parseInt(maxMarks)
-    let quesArrInQuiz : Question[] =[];
-    let updatedQuiz : Quiz = new Quiz();
+    let quesArrInQuiz: Question[] = [];
+    let updatedQuiz: Quiz = new Quiz();
 
     quesArrInQuiz = await this.quesService.getAllQuestionsByQuizId(currentData.quizId).toPromise();
 
     if (passMark <= maxMarks) {
-      console.log(" if (passMark <= maxMarks) ")
-      console.log(currentData.maxQuestions)
-      console.log(quesArrInQuiz.length)
-      if((currentData.maxQuestions > quesArrInQuiz.length) && (quesArrInQuiz.length != 0))
-      { console.log("ENtered in if loop for update")
-        currentData.active = false;}
+
+      if ((currentData.maxQuestions > quesArrInQuiz.length) && (quesArrInQuiz.length != 0)) {
+        currentData.active = false;
+      }
       this.quizService.updateQuiz(currentData.title, currentData).subscribe(
         response => {
-         updatedQuiz = response
+          updatedQuiz = response
           this.dialogBoxService.open('Quiz Updated successfully', 'information')
           this.ngOnInit();
           this.back();
@@ -377,7 +370,6 @@ export class QuizComponent implements OnInit {
     await this.quesService.getAllQuestionsByQuizId(quizId).toPromise().then(
       (response) => {
         this.quesInQuiz = response;
-        console.log(response);
 
       });
   }
@@ -385,14 +377,13 @@ export class QuizComponent implements OnInit {
   private async activateQuiz(quiz: Quiz) {
 
     // calling service to activating Quiz
-    console.log("Inside activateQuiz(quiz: Quiz)  ")
+
     await this.getQuesByQuizId(quiz.quizId);
-    console.log(this.quesInQuiz)
-    console.log(quiz.maxQuestions)
+
     if (this.quesInQuiz.length == quiz.maxQuestions) {
       this.quizService.updateActiveStatus(quiz.quizId, quiz).subscribe(
         response => {
-          console.log("Activated Quiz");
+
           this.dialogBoxService.open('Quiz Activated', 'information')
           this.ngOnInit();
         },
@@ -444,7 +435,7 @@ export class QuizComponent implements OnInit {
   private getAssignedCoursesOfTeacher(teacherId: number) {
     this.courseService.getAssignedCourseOfTeacher(teacherId).subscribe(
       (data) => {
-        console.log(data);
+
 
         this.courses = data;
         this.getAllQuizzes(this.courses);  // for getting all active Quizs
@@ -457,7 +448,7 @@ export class QuizComponent implements OnInit {
   }
 
   private loadDataBasedOnRole(userRole: any) {
-    console.log(userRole);
+
 
     switch (userRole) {
       // case 'admin' || 'coadmin':
@@ -499,7 +490,7 @@ export class QuizComponent implements OnInit {
   private getAssignedCoursesByProfileId(teacherId: number) {
     this.courseService.getAssignedCourseOfTeacher(teacherId).subscribe(
       (data) => {
-        console.log("courses " + JSON.stringify(data));
+
         this.courses = data;
       },
       error => {
@@ -511,7 +502,7 @@ export class QuizComponent implements OnInit {
   private getEnrolledCoursesByProfileId(studentId: number) {
     this.courseService.getCourseByStudentId(studentId).subscribe(
       (data) => {
-        console.log("courses " + JSON.stringify(data));
+
         this.courses = data;
       },
       error => {
@@ -525,8 +516,7 @@ export class QuizComponent implements OnInit {
       (response) => {
         this.modules = response.filter((data: { moduleIsActive: boolean; }) => data.moduleIsActive == true);
         // this.allInActiveData = response.filter((data: { moduleIsActive: boolean; }) => data.moduleIsActive == false);
-        // console.log(this.allInActiveData);
-        // console.log(this.allData);
+
 
 
       }

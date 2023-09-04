@@ -51,7 +51,7 @@ export class DisplaySchoolComponent {
 
     this.adminId = this.route.snapshot.paramMap.get('id');
     this.userName = this.route.snapshot.params['userName'];
-    console.log(this.userName)
+
 
 
 
@@ -62,11 +62,11 @@ export class DisplaySchoolComponent {
         this.id = params.get("id");
 
         if (this.id) {
-          console.log(this.id)
+
           this.deptService.getDepartmentsByInstitutionId(this.id).subscribe(
             (deptdata: Department[]) => {
               this.departments = deptdata;
-              console.log(deptdata);
+
             }
           )
         }

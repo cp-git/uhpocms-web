@@ -54,11 +54,11 @@ export class AdminRoleComponent implements OnInit {
   userAndRolePermissions: AuthUserPermission[] = [];
   userModule = userModule;
 
-  constructor(private service: AdminRoleService, 
+  constructor(private service: AdminRoleService,
     private location: Location,
-    private dialogBoxService:DialogBoxService,
+    private dialogBoxService: DialogBoxService,
     private userPermissionService: AuthUserPermissionService,
-    ) {
+  ) {
 
     // Assining default values
     this.buttonsArray = {
@@ -239,24 +239,23 @@ export class AdminRoleComponent implements OnInit {
   private deleteAdminRole(roleName: string) {
     this.dialogBoxService.open('Are you sure you want to delete this Role ? ', 'decision').then((response) => {
       if (response) {
-        console.log('User clicked OK');
         // Do something if the user clicked OK
         // calling service to soft delte
-    this.service.deleteAdminRole(roleName).subscribe(
-      (response) => {
-        this.dialogBoxService.open('Role deleted successfully', 'information');
-        this.ngOnInit();
-      },
-      (error) => {
-        this.dialogBoxService.open('Role deletion Failed', 'warning');
+        this.service.deleteAdminRole(roleName).subscribe(
+          (response) => {
+            this.dialogBoxService.open('Role deleted successfully', 'information');
+            this.ngOnInit();
+          },
+          (error) => {
+            this.dialogBoxService.open('Role deletion Failed', 'warning');
+          }
+        );
+      } else {
+
+        // Do something if the user clicked Cancel
       }
-    );
-  } else {
-    console.log('User clicked Cancel');
-    // Do something if the user clicked Cancel
+    });
   }
-});
-}
 
   // For getting all inactive admin roles
   private getInActiveAdminRoles() {

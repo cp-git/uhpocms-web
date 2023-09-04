@@ -62,7 +62,7 @@ export class ModuleComponent {
 
   emptyModule: Module;  // empty admin role
   currentData!: Module;  // for update and view, to show existing data
-  moduleFilesInModule:ModuleFile[] = [];
+  moduleFilesInModule: ModuleFile[] = [];
 
   // for user Permissions
   buttonsArray: any;
@@ -85,7 +85,7 @@ export class ModuleComponent {
     private userPermissionService: AuthUserPermissionService,
     private institutionService: AdmininstitutionService,
     private departmentService: DepartmentService,
-    private moduleFileService:ModuleFileService
+    private moduleFileService: ModuleFileService
 
   ) {
 
@@ -219,7 +219,7 @@ export class ModuleComponent {
     // calling service to get all data
     this.courseService.getAllCourses().subscribe(
       response => {
-        console.log(response);
+
         this.filterCourses = response;
         // const courseData = response; //assign data to local variable
         this.courses = [];
@@ -234,7 +234,7 @@ export class ModuleComponent {
             this.courses.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name
           })
         })
-        console.log(this.courses);
+
 
 
       },
@@ -250,7 +250,7 @@ export class ModuleComponent {
 
     try {
       const data = await this.courseService.getCoursesDepartmentId().toPromise();
-      console.log(data);
+
       this.courseDepartments = data;
 
     } catch (error) {
@@ -283,12 +283,12 @@ export class ModuleComponent {
     if (currentData.moduleId !== null) {
       this.service.updateModuleById(currentData.moduleId, currentData).subscribe(
         response => {
-          console.log(`Module updated successfully !`);
+
           this.dialogBoxServices.open("Module updated successfully !", 'information');
           this.back();
         },
         error => {
-          console.log(`Module updation failed !`);
+
           this.dialogBoxServices.open("Module updation failed !", 'warning');
         }
       );
@@ -303,11 +303,11 @@ export class ModuleComponent {
     // }
     currentData.moduleIsActive = false;  // setting active false
     // calling service for adding data
-    //console.log(JSON.stringify(currentData));
+
     this.service.addTeacherModule(currentData).subscribe(
       (data) => {
-        //  console.log(this.currentData)
-        console.log('Module added Successfully');
+
+
         this.dialogBoxServices.open("Module added Successfully but its status is InActive", 'information');
         this.emptyModule = {} as Module;
         this.ngOnInit();
@@ -315,7 +315,7 @@ export class ModuleComponent {
       },
       (error) => {
         this.dialogBoxServices.open("Module Name is already exist pls select another name..", 'warning');
-        console.log("Failed to add Module");
+
       });
   }
 
@@ -323,7 +323,7 @@ export class ModuleComponent {
   private getAssignedCoursesByProfileId(teacherId: number) {
     this.courseService.getAssignedCourseOfTeacher(teacherId).subscribe(
       (data) => {
-        console.log("courses " + JSON.stringify(data));
+
         this.courses = data;
         this.filterCourses = data;
       },
@@ -336,7 +336,7 @@ export class ModuleComponent {
   private getEnrolledCoursesByProfileId(studentId: number) {
     this.courseService.getCourseByStudentId(studentId).subscribe(
       (data) => {
-        console.log("courses " + JSON.stringify(data));
+
         this.courses = data;
         this.filterCourses = data;
       },
@@ -363,7 +363,7 @@ export class ModuleComponent {
         //     course => course.courseId).includes(data.courseId_id));
 
         this.allData.sort((a, b) => a.moduleName.toLowerCase() > b.moduleName.toLowerCase() ? 1 : -1) // order by alphabets for module name
-        console.log("filtered daTA " + JSON.stringify(this.allData));
+
 
 
         // if no data available
@@ -397,7 +397,7 @@ export class ModuleComponent {
 
     this.dialogBoxServices.open('Are you sure you want to delete this Module ? ', 'decision').then((response) => {
       if (response) {
-        console.log('User clicked OK');
+
         // Do something if the user clicked OK
         // calling service to soft delete
         this.service.deleteModuleById(moduleId).subscribe(
@@ -410,7 +410,7 @@ export class ModuleComponent {
           }
         );
       } else {
-        console.log('User clicked Cancel');
+
         // Do something if the user clicked Cancel
       }
     });
@@ -430,24 +430,24 @@ export class ModuleComponent {
     );
 
   }
- 
+
   async getModuleFileByModuleId(moduleId: number): Promise<any> {
     try {
       const response: any = await this.moduleFileService.getModuleFilesByModuleId(moduleId).toPromise();
       this.moduleFilesInModule = response;
-      console.log(response);
+
     } catch (error) {
       console.error('Error fetching module files:', error);
-      throw error; 
+      throw error;
     }
   }
-  
+
   // For activating Module
   private async activeModule(moduleId: any) {
     try {
-      console.log("Inside activateModule(module: Module)");
+
       await this.getModuleFileByModuleId(moduleId);
-  
+
       if (this.moduleFilesInModule && this.moduleFilesInModule.length > 0) {
         this.service.activateModuleById(moduleId).subscribe(
           () => {
@@ -467,10 +467,10 @@ export class ModuleComponent {
       this.dialogBoxServices.open('An error occurred during module activation', 'warning');
     }
   }
-  
+
 
   private loadDataBasedOnRole(userRole: any) {
-    console.log(userRole);
+
 
     switch (userRole) {
       // case 'admin' || 'coadmin':
@@ -505,7 +505,6 @@ export class ModuleComponent {
     this.institutionService.getInstitutionByProfileId(profileId).subscribe(
       (response) => {
         this.adminInstitutions = response;
-        console.log(response);
 
         // for getting active and inactive departments using institution id
         this.getDepartmentByProfileId(profileId);
@@ -517,7 +516,7 @@ export class ModuleComponent {
   getDepartmentByProfileId(profileId: any) {
     this.departmentService.getDepartmentsOfAssignCoursesByProfileId(profileId).subscribe(
       (response) => {
-        console.log(response);
+
         this.departments = response;
       }
     );
@@ -528,8 +527,6 @@ export class ModuleComponent {
       (response) => {
         this.allData = response.filter((data: { moduleIsActive: boolean; }) => data.moduleIsActive == true);
         this.allInActiveData = response.filter((data: { moduleIsActive: boolean; }) => data.moduleIsActive == false);
-        console.log(this.allInActiveData);
-        console.log(this.allData);
 
 
       }
@@ -577,7 +574,6 @@ export class ModuleComponent {
 
   }
   onChangeDepartment() {
-    console.log(this.courses);
 
     this.filterCourses = this.advFilterPipe.transform(this.courses, 'departmentId', this.selectedDepartmentId)
 
