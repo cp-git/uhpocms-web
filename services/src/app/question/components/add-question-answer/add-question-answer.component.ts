@@ -374,7 +374,7 @@ export class AddQuestionAnswerComponent implements OnInit {
       this.questionAnswer.question['maxMarks'] = queAnsNew.maxMarks;
       this.questionAnswer.question['questionIsMCQ'] = queAnsNew.questionIsMCQ;
 
-
+     
       if ((queAnsNew.questionId != 0) && (queAnsNew.questionId != null) && (queAnsNew.questionId != undefined)) {
         questionIdArr.push(queAnsNew.questionId);
       }
@@ -552,6 +552,7 @@ export class AddQuestionAnswerComponent implements OnInit {
 
     //started from here
     console.log(newQuestionAnsArr)
+    
     console.log("Pass Marks $$$$$$$$$$$$$$$$$$$$$4 Total Marks")
     console.log(this.passMarks)
     console.log(this.maxMarks)
@@ -647,7 +648,7 @@ export class AddQuestionAnswerComponent implements OnInit {
                           content4: newArr.answers[3].content,
                           isFormDirty: false,
                           isFormSubmitted: true,
-                          image: true,
+                          image: false,
                           isOptionSelected: true,
                           selectedAnswer: '',
                           maxMarks: newArr.question['maxMarks'],
@@ -660,7 +661,9 @@ export class AddQuestionAnswerComponent implements OnInit {
                         console.log(newArr)
                         console.log(this.generatedQuestionAnswerId)
                         console.log("Question Added Successfully");
+                        console.log("######################################")
 
+                        console.log(newArr.questionFigure)
                         quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
                         if (successTextFlag) {
                           successTextFlag = false;
@@ -724,7 +727,7 @@ export class AddQuestionAnswerComponent implements OnInit {
                             content4: newArr.answers[3].content,
                             isFormDirty: false,
                             isFormSubmitted: true,
-                            image: true,
+                            image: false,
                             isOptionSelected: true,
                             selectedAnswer: '',
                             maxMarks: newArr.question['maxMarks'],
@@ -735,7 +738,9 @@ export class AddQuestionAnswerComponent implements OnInit {
                           console.log(quesAnswersArrCopy)
                           console.log(this.generatedQuestionAnswerId)
                           console.log("Question Added Successfully");
+                          console.log("######################################")
 
+                          console.log(newArr.questionFigure)
                           quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
                           if (successTextFlag) {
                             successTextFlag = false;
@@ -858,7 +863,7 @@ export class AddQuestionAnswerComponent implements OnInit {
                           content4: newArr.answers[3].content,
                           isFormDirty: false,
                           isFormSubmitted: true,
-                          image: true,
+                          image: false,
                           isOptionSelected: true,
                           selectedAnswer: '',
                           maxMarks: newArr.question['maxMarks'],
@@ -870,7 +875,9 @@ export class AddQuestionAnswerComponent implements OnInit {
                         console.log(newArr)
                         console.log(this.generatedQuestionAnswerId)
                         console.log("Question Added Successfully");
+                        console.log("######################################")
 
+                        console.log(newArr.questionFigure)
                         quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
                         if (successTextFlag) {
                           successTextFlag = false;
@@ -932,7 +939,7 @@ export class AddQuestionAnswerComponent implements OnInit {
                           content4: newArr.answers[3].content,
                           isFormDirty: false,
                           isFormSubmitted: true,
-                          image: true,
+                          image: false,
                           isOptionSelected: true,
                           selectedAnswer: '',
                           maxMarks: newArr.question['maxMarks'],
@@ -943,7 +950,9 @@ export class AddQuestionAnswerComponent implements OnInit {
                         console.log(quesAnswersArrCopy)
                         console.log(this.generatedQuestionAnswerId)
                         console.log("Question Added Successfully");
+                        console.log("######################################")
 
+                        console.log(newArr.questionFigure)
                         quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
                         if (successTextFlag) {
                           successTextFlag = false;
@@ -976,7 +985,7 @@ export class AddQuestionAnswerComponent implements OnInit {
 
               // quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
               // quesAnswersArrCopy.sort((a, b) => a.questionOrderNo.toString().localeCompare(b.questionOrderNo.toString()));
-
+              console.log("quesAnswersArrCopy")
               console.log(quesAnswersArrCopy)
               // console.log( quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo))
               // quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
@@ -989,6 +998,9 @@ export class AddQuestionAnswerComponent implements OnInit {
 
                 this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId, this.selectedQuiz)
               }
+
+
+              console.log("quesAnswersArrCopy")
               console.log(quesAnswersArrCopy)
               console.log(this.questionAnswers)
 
@@ -1529,6 +1541,8 @@ export class AddQuestionAnswerComponent implements OnInit {
   // selectedCategory!: Category;
   onAddUpdatClicked(object: any) {
     // console.log(JSON.stringify(object))
+    console.log("Object IN onAddUpdatClicked")
+    console.log(object)
     this.selectedQuiz = object;
     this.selectedQuizId = this.selectedQuiz.quizId;
     this.selectedCategoryId = this.selectedQuiz.categoryId;

@@ -25,12 +25,26 @@
     <form #myForm="ngForm" (ngSubmit)="onFormSubmit(queAns,questionAnswers)">
         <div class="jumbotron">
             <h4>Question : {{ index }}</h4>
-            <div class="img" *ngIf="queAns.questionFigure">
+
+         
+
+    
+                <div class="img" *ngIf="queAns.questionFigure">
+            
+               
+               
                 <img *ngIf="queAns['image'] ;else viewImage" src="{{image}}" style="max-width: 350px">
+          
+                  
+                  
+                   
                 <ng-template #viewImage>
+              
                     <img *ngIf="queAns['questionId']" src="{{displayUrl}}/{{queAns['questionId']}}"
                         style="max-width: 350px">
                 </ng-template>
+
+            
 
             </div>
             <!-- <div class="totalMarks"> Total Marks - {{ queAns['totalMarks'] }}</div> -->
