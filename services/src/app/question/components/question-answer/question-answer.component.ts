@@ -363,6 +363,8 @@ quizToMarks!: number;
   onFormSubmit(queAns: OneQuestionAnswer, queAnsArray: OneQuestionAnswer[]) {
     this.submittedQuestionAnswer = {} as OneQuestionAnswer;
     this.submittedQuestionAnswer = queAns;
+   
+    console.log("}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}")
     console.log(queAns);
 
     // Disable the submit button
