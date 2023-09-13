@@ -147,7 +147,7 @@ export class EmailComponent implements OnInit {
   // Funcation calls specific to this module
   ///////////////////////////////////////////
 
-  // for getting all admin Profiles
+  /////////////////////////////////////  GET ALL DATA OF PROFILE //////////////////////////////////////////
   private getAllAdminProfiles() {
 
     // calling service to get all data
@@ -160,6 +160,8 @@ export class EmailComponent implements OnInit {
       }
     );
   }
+
+  ////////////////////////////////////////////  GET ALL EMAILS ////////////////////////////////////////////
 
   // for getting all admin Emails
   private getAllEmails() {
@@ -176,7 +178,8 @@ export class EmailComponent implements OnInit {
   }
 
 
-  // adding Email
+  ////////////////////////////////////////// CREATE NEW EMAIL ////////////////////////////////////////////////
+
   private addEmail(currentData: Email) {
     currentData.emailIsActive = true;
     this.service.insertEmail(currentData).subscribe(
@@ -192,7 +195,8 @@ export class EmailComponent implements OnInit {
     );
   }
 
-  // updating Email by usign title
+  /////////////////////////////   UPDATE THE EMAIL    //////////////////////////////////////////////////////////
+
   private updateEmail(currentData: Email) {
     this.service.updateEmail(currentData).subscribe(
       response => {
@@ -203,6 +207,9 @@ export class EmailComponent implements OnInit {
       }
     );
   }
+
+
+  ////////////////////////////////// DELETE THE EMAIL  ///////////////////////////////////////////////////////////
 
   // For deleting Email (soft delete) using title
   private deleteEmail(currentData: Email) {
@@ -216,35 +223,6 @@ export class EmailComponent implements OnInit {
     );
   }
 
-  // // For getting all inactive Email
-  // private getInActiveEmails() {
 
-  //   // calling service to get all inactive record
-  //   this.service.getAllDeactivatedEmails().subscribe(
-  //     response => {
-  //       this.allInActiveData = response;
-  //     },
-  //     error => {
-  //       console.log('No data in table ');
-  //     }
-  //   );
-
-
-  // // for activate Email by using admin id
-  // activateEmail(Email: Email) {
-  //   // if (this.isObjectComplete(Email)) {
-  //   this.service.activateEmail(Email.emailId).subscribe(
-  //     response => {
-
-  //       console.log('Email activated successfully');
-  //       this.ngOnInit();
-
-  //     },
-  //     error => {
-  //       console.log("Email activation failed");
-  //     }
-  //   );
-
-  // }
 
 }

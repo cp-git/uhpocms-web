@@ -20,42 +20,53 @@ export class QuizProgressService {
     this.studentAnswerUrl = `${environment.studentAnswerUrl}`;
   }
 
+
+  //Used
   getQuizProgressesByStudentId(studentId: number): Observable<QuizProgress[]> {
     return this.http.get<QuizProgress[]>(`${this.quizProgressUrl}/${studentId}`);
   }
 
+  //Used
   addQuizProgressOfStudent(quizProgress: QuizProgress): Observable<QuizProgress> {
     return this.http.post<QuizProgress>(`http://localhost:8090/quizprogress/uhpocms/quizprogress`, quizProgress);
 
   }
 
+  //Used
   getQuizProgressesByQuizIdAndStudId(quizId: number, studentId: number): Observable<QuizProgress> {
     return this.http.get<QuizProgress>(`${this.quizProgressUrl}/${quizId}/${studentId}`);
   }
 
+
+  //Not Used
   getQuizProgressesByQuizIdAndStudIdProg(quizId: number, studentId: number): Observable<QuizProgress> {
     return this.http.get<QuizProgress>(`${this.quizProgressUrl}/progress/${quizId}/${studentId}`);
   }
 
 
+  //Used
   getAllQuizProgressdata(): Observable<QuizProgress[]> {
     return this.http.get<QuizProgress[]>(`${this.quizProgressUrl}?data=all`);
   }
 
+  //Used
   addStudentAnswers(quizProgress: StudentAnswer): Observable<StudentAnswer> {
     return this.http.put<StudentAnswer>(`${this.studentAnswerUrl}`, quizProgress);
   }
 
+
+  //Not Used
   getAllStudentAnswers(quizId: number): Observable<StudentAnswer[]> {
     return this.http.get<StudentAnswer[]>(`${environment.studentAnswerUrl}/${quizId}`);
   }
 
+  //Used :StudentQuizResult API
   getAllStudentAnswersByStduentIdAndQuizId(studentId: number, quizId: number): Observable<StudentAnswer[]> {
     return this.http.get<StudentAnswer[]>(`${environment.studentAnswerUrl}/${studentId}/${quizId}`);
   }
 
 
-
+  //Used in Review Answer
   getStudProfileByCourIdModId(courseId: any, moduleId: any) {
     const cachedData = this.cache.getDataFromCache(`${this.quizProgressUrl}/courIdAndmodId/` + courseId + "/" + moduleId);
     if (cachedData) {
@@ -76,12 +87,16 @@ export class QuizProgressService {
 
   }
 
+
+  //Not Used
   addQuizAllProgressOfStudent(studentQuiz: StudentQuiz): Observable<any> {
     return this.http.post<QuizProgress>(`${this.quizProgressUrl}/allquizprogress`, studentQuiz);
 
   }
 
 
+
+  //Used
   displayStudentProgress(studentId: number): Observable<QuizProgress[]> {
     return this.http.get<QuizProgress[]>(`http://localhost:8090/quizprogress/uhpocms/studentprogress/${studentId}`);
 

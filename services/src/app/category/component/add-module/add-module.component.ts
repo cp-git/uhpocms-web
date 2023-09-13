@@ -40,6 +40,7 @@ export class AddModuleComponent {
   moduleName!: string;
 
 
+  //////////////////////////////////////////////////  ADD TEACHER MODULE  USED MODULE SERVICE ///////////////////////////////////////////
   addmodule(module: Module) {
 
     var moduleId = module.moduleId;
@@ -63,6 +64,8 @@ export class AddModuleComponent {
     )
   }
 
+
+  //////////////////////////////////////////////////////  LOAD COURSES FROM SESSION STORAGE ////////////////////////////////////
   private loadCourses() {
     this.sessionData = sessionStorage.getItem("course");
     this.data = JSON.parse(this.sessionData);
@@ -73,6 +76,7 @@ export class AddModuleComponent {
 
   }
 
+  /////////////////////////////////////////   LOAD ON PAGE //////////////////////////////////////////////
   ngOnInit(): void {
     this.teacherId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];

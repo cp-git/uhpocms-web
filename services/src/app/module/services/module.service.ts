@@ -12,78 +12,76 @@ export class ModuleService {
   constructor(private _http: HttpClient) {
 
     this.moduleUrl = environment.moduleUrl + '/module';
-    
-    
+
+
   }
 
-  // get all modules
+  ////////////////////////////////////////// SERVICE  GET ALL MODULES  ////////////////////////////////////  
   getAllModules(): Observable<any> {
     return this._http.get<any>(`${this.moduleUrl}?name=all`);
   }
 
-  // get all inactive modules
+  ///////////////////////////////// SERVICE- GET INACTIVE MODULE LIST  ////////////////////////////////// 
   getInactivemoduleList(): Observable<any> {
     return this._http.get<any>(`${this.moduleUrl}/inactive?inactivemodules=all`);
   }
 
-  // activate module by module name
-  activateModule(moduleName: string): Observable<any> {
-    return this._http.patch<any>(`${this.moduleUrl}/` + moduleName, {});
-  }
 
-  // activate module by module id
+
+  /////////////////////////////// SERVICE - ACTIVATE THE MODULE /////////////////////////////////////// 
   activateModuleById(moduleId: number): Observable<any> {
     return this._http.patch<any>(`${this.moduleUrl}/activate/` + moduleId, {});
   }
 
-  // Add teacher module
+  // ////////////////////////////////////// CREATE A NEW MODULE ////////////////////////////////////
   addTeacherModule(module: Module): Observable<any> {
     return this._http.post<any>(`${this.moduleUrl}`, module);
   }
 
-  // delete module by module name
+  ///////////////////////////////////// DELETE THE MODULE BY MODULE NAME  //////////////////////////////
   deleteModule(moduleName: string): Observable<any> {
     return this._http.delete<any>(`${this.moduleUrl}/` + moduleName);
   }
 
-  // delete module by module name
+  /////////////////////////////////////  DELETE THE MODULE NAME ///////////////////////////////////////
   deleteModuleById(moduleId: number): Observable<any> {
     return this._http.delete<any>(`${this.moduleUrl}/moduleId/` + moduleId);
   }
 
-  getModuleList(moduleName: string): Observable<any> {
-    return this._http.get<any>(`${this.moduleUrl}/` + moduleName);
-  }
 
 
-  // update module by module name
+
+  // update module by module name Used in category
   updateModule(moduleName: string, module: Module): Observable<any> {
     return this._http.put<any>(`${this.moduleUrl}/` + moduleName, module);
   }
 
-  // update module by module id
+  // update module by module id  
   updateModuleById(moduleId: number, module: Module): Observable<any> {
     return this._http.put<any>(`${this.moduleUrl}/moduleId/` + moduleId, module);
   }
 
-  // get module by module name
-  getModule(moduleName: string): Observable<Module> {
-    return this._http.get<Module>(`${this.moduleUrl}/module/` + moduleName);
-  }
 
+
+  //Course
   getModuleByCourseId(moduleId: number): Observable<Module[]> {
     return this._http.get<Module[]>(`${this.moduleUrl}/courseId/${moduleId}`);
   }
 
+  //Used
   getModulesByCourseId(courseId: number): Observable<any> {
     return this._http.get<any>(`${this.moduleUrl}/courseId/${courseId}`);
 
   }
 
+
+
   getModulesOfAssignedCoursesByProfileId(profileId: number): Observable<Module[]> {
     return this._http.get<Module[]>(`${this.moduleUrl}/assign/profileid/${profileId}`);
 
   }
+
+
   getModulesOfEnrolledCoursesByProfileId(profileId: number): Observable<any> {
     return this._http.get<any>(`${this.moduleUrl}/enroll/profileid/${profileId}`);
 

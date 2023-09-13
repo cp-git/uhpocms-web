@@ -28,32 +28,29 @@ export class TeacherCourseService {
     this.syllabusUrl = environment.syllabusUrl;
   }
 
-  //get all courses
+  ////////////////////////////// SERVICE - GET ALL COURSES //////////////////////////////////////////
   getAllCourses(): Observable<any> {
     return this.http.get<any>(this.courseUrl + "?name=all");
   }
 
-  //add a new course 
+
+  //////////////////////////////// SERVICE - INSERTION OF COURSE /////////////////////////////////////
   addCourse(course: Course): Observable<any> {
     return this.http.post<any>(this.courseUrl, course);
   }
 
-  //delete a course By ID
+  //////////////////////////////////// SERVICE - DELETE COURSE BY ID /////////////////////////////////////////
   deleteCourseByCourseId(courseId: number): Observable<any> {
     return this.http.delete<any>(this.courseUrl + '/courseId/' + courseId);
   }
 
-  //update a course by ID
+  /////////////////////////// SERVICE - UPDATE COURSE BY COURSE ID ///////////////////////////////////////////
   updateCourseById(courseId: number, course: Course): Observable<any> {
     return this.http.put<any>(this.courseUrl + '/courseID/' + courseId, course);
   }
 
-  //get a course by name
-  getCourse(courseName: string): Observable<Course> {
-    return this.http.get<Course>(this.courseUrl + '/' + courseName);
-  }
 
-  //get a course by ID
+  ///////////////////////////// SERVICE - GET COURSE BY COURSE ID ///////////////////////////////////////
   getCourseByCourseId(courseId: number): Observable<any> {
     const cachedData = this.cache.getDataFromCache(this.courseUrl + '/courseId/' + courseId);
     if (cachedData) {
@@ -76,21 +73,21 @@ export class TeacherCourseService {
     );
   }
 
-  //get all inactive courses
+
+  ////////////////////////// SERVICE - GET ALL INACTIVE COURSES ///////////////////////////////////////
+  //get all inactive courses --Used
   getAllDeactivateCourses(): Observable<Course[]> {
     return this.http.get<Course[]>(`${this.courseUrl}?name=inactive`);
   }
 
-  //activate a course
+  /////////////////////////// SERVICE - ACTIVATE COURSE BY COURSE ID//////////////////////////////
   activateCourseById(courseId: number): Observable<any> {
     return this.http.patch<any>(`${this.courseUrl}/activate/` + courseId, {});
   }
-  // //get courses by department ID. 
-  // getCourseByDepartmentId(deptid: number) {
-  //   return this.http.get<any>(`${this.courseUrl}/deptId/` + deptid)
-  // }
 
-  //get courses by department ID. 
+
+  /////////////////////////// SERVICE - GET COURSES BY DEPARTMENT ID ///////////////////////////////
+
   getCourseByDepartmentId(deptid: number) {
     const cachedData = this.cache.getDataFromCache(`${this.courseUrl}/deptId/` + deptid)
     if (cachedData) {
@@ -110,9 +107,9 @@ export class TeacherCourseService {
 
   }
 
+  ///////////////////// FECTHING COURSE BY INSTITUTION ID USED IN VIEW COURSES COMPONENT TS FILE //////////////////////
 
-
-  //fetching the course by InstituteId
+  //fetching the course by InstituteId --Used  in  src/app/institute-details/components/view-courses/view-courses.component.ts
   getCourseByInstitutionId(id: string): Observable<any> {
     const cachedData = this.cache.getDataFromCache(this.courseUrl + '/institutionId/' + id);
     if (cachedData) {
@@ -131,16 +128,23 @@ export class TeacherCourseService {
     );
 
   }
+
+  /////////////////////////////// FETCHING COURSE BY DEPARTMENT ID AND PROFILE ID ////////////////////////////////////
   //fetching the course by dept id and profile id
   getCourseByDepartmentIdAndProfileId(department_id: number, profileId: number): Observable<any> {
     return this.http.get<any>(this.courseUrl + '/department/' + department_id + '/profile/' + profileId);
   }
 
 
+
+  ////////////////////////////// ASSIGNING COURSE TO DEPARTMENT //////////////////////////////////////////////////////
   assignCourseToDepartment(coursedepartment: CourseDepartment): Observable<any> {
     return this.http.post<any>(`${this.courseDepartmentUrl}/department`, coursedepartment);
   }
 
+
+
+  ////////////////////////////// GET COURSES BY DEPARTMENT ID /////////////////////////////////////////////////////
   getCoursesDepartmentId(): Observable<any> {
 
     return this.http.get<any>(`${this.courseDepartmentUrl}/department?id=all`);
@@ -150,32 +154,44 @@ export class TeacherCourseService {
 
 
 
-  //add course syllabus with course id
+  /////////////////////////////////////  ADDING COURSE SYALLBUS  //////////////////////////////////////////////
+
   addCourseSyllabus(courseSyllabus: Coursesyllabus): Observable<any> {
     return this.http.post<any>(`${this.syllabusUrl}`, courseSyllabus);
   }
 
-  //get assign Course to teacher by profile id 
+
+
+  ////////////////////////// GET ASSIGN COURSE TO TEACHER BY PROFILE ID USED IN MODULE COMPONENT ///////////////////////////////////////
+
   getAssignedCourseOfTeacher(teacherId: number): Observable<any> {
 
     return this.http.get<any>(`${this.assignCourseUrl}/teacherid/` + teacherId);
   }
 
-  //get inactive assigned course to teacher by profile id
+
+  /////////////////////////// GET INACTIVE ASSIGNED COURSE TO TEACHER BY PROFILE ID ////////////////////////
   getInactiveAssignedCourseToTeacher(teacherId: number): Observable<any> {
     return this.http.get<any>(`${this.assignCourseUrl}/inactive/teacherid/` + teacherId);
   }
 
+
+  //////////////////////////////////   GET COURSES BY STUDENT ID   /////////////////////////////////////////////////
   getCourseByStudentId(studentId: number): Observable<Course[]> {
     return this.http.get<Course[]>(`${this.courseUrl}/profileId/${studentId}`);
   }
 
+
+  /////////////////////////// GET INACTIVE COURSES BY INSTITUTE ID //////////////////////////////////////////////
   getInactiveCoursesByInstitutionId(institutionId: number): Observable<any> {
 
     return this.http.get<any>(`${this.courseUrl}/inactive/institutionId/${institutionId}`);
   }
 
-  getAllCoursesByDepartmentId(departmentId : number): Observable<Course[]>{
+
+  //////////////////////////////  GET ALL COURSES BY DEPARTMENT ID   ////////////////////////////////////////////
+
+  getAllCoursesByDepartmentId(departmentId: number): Observable<Course[]> {
     return this.http.get<Course[]>(`${this.courseUrl}/deptId/${departmentId}`)
 
   }

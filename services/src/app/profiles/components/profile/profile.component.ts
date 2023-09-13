@@ -263,6 +263,9 @@ export class ProfileComponent implements OnInit {
 
   }
 
+
+
+  ///////////////////// DISPLAY THE DROPDOWN AUTH USER DATA /////////////////////
   getSelectedOptionOfDropdown(data: any) {
 
     const dataReceived = data.currentData;
@@ -331,6 +334,8 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+
+  ////////////////////////// CODE FOR WHEN IMAGE IS SELECTED //////////////////////////////////////////////
   onFileSelected(event: any) {
     this.file = event.target.files[0];
     this.emptyProfile.profilePics = this.file.name;
@@ -356,7 +361,9 @@ export class ProfileComponent implements OnInit {
   // Funcation calls specific to this module
   ///////////////////////////////////////////
 
-  // for getting all admin Profiles
+
+  //////////////////////////////// GETTING ALL PROFILE DATA ////////////////////////////////////////
+
   private getAllAdminProfiles() {
     this.dataAvailable = true;
 
@@ -384,23 +391,11 @@ export class ProfileComponent implements OnInit {
 
 
 
-  //   // Assuming you have a function to retrieve all profiles
-  // getAllProfilesByInstitution(institutionName) {
-  //   const profiles = this.getAllAdminProfiles(); // Replace with your function to retrieve all profiles
-  //   const activeInstitutionProfiles = profiles.filter((profile:any) => {
-  //     return profile.institution === institutionName && profile.institution.isActive;
-  //   });
-
-  //   return activeInstitutionProfiles;
-  // }
-
-  // const institutionName = "exampleInstitution";
-  // const activeInstitutionProfiles = getAllProfilesByInstitution(institutionName);
 
 
 
 
-  // fetching institutions data from session storage
+  //////////////////////// FETCHING THE ADMIN INSTITUTION FROM SESSION STORAGE /////////////////////////////
   private loadAdminInstitutions() {
 
     try {
@@ -416,7 +411,8 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  // fetching department data
+
+  //////////////////////// FETCHING ADMIN DEPARTMENT FROM SESSION STORAGE ////////////////////////////////// 
   private loadDepartments() {
     this.departmentService.getAllDepartments().subscribe(
       response => {
@@ -429,7 +425,7 @@ export class ProfileComponent implements OnInit {
   }
 
 
-  // loading admin roles for dropdown
+  /////////////////////// FETCHING THE ADMIN ROLE FROM SESSION STORAGE //////////////////////////////////////
   private loadAdminRoles() {
     this.adminRoleService.getAdminRoles().subscribe(
       response => {
@@ -441,7 +437,7 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  // For dropdown fetching inactive authusers required for add screen
+  ///////////////////// FETCH ALL INACTIVE AUTH USER /////////////////////////////////////////////////////
   private loadInactiveAuthUsers() {
     this.authUserService.getAllInactiveAuthUsers().subscribe(
       response => {
@@ -458,7 +454,7 @@ export class ProfileComponent implements OnInit {
   }
 
 
-  // For dropdown fetching active authusers required for update view and view all, view one screen
+  //////////////////// FETCH ACTIVE AUTH USER ///////////////////////////////////////////////////////////
   private loadActiveAuthUsers() {
     this.authUserService.authUserList().subscribe(
       (response: Authuser[]) => {
@@ -468,7 +464,7 @@ export class ProfileComponent implements OnInit {
   }
 
 
-  // for genders dropdown
+  //////////////////////// SELECT THE GENDER ///////////////////////////////////////////////////////
   private loadGenders() {
     this.genders = [
       { "value": 'male', "name": "Male" },
@@ -476,7 +472,7 @@ export class ProfileComponent implements OnInit {
       { "value": 'other', "name": "Other" }]
   }
 
-  // adding profile by usign userId(foreign key from authuser)
+  /////////////////////// INSERTING THE PROFILE USER ALONG WITH FORMDATA /////////////////////////
   private addProfile(currentData: Profile) {
 
     const instituteJson = JSON.stringify(currentData);
@@ -534,7 +530,7 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  // updating profile by usign userId(foreign key from authuser)
+  ////////////////////  UPDATE THE PROFILE DATA USING FORMDATA AND JSON DATA /////////////////////////
   private updateProfile(currentData: Profile) {
 
     const instituteJson = JSON.stringify(currentData);
@@ -586,9 +582,9 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  // For deleting profile (soft delete)
-  // temporary using saveOrUpdate() for soft deleting later on change with delete by Id
-  //(aftering convertin gby Id please change function call and remove this comment)
+
+  /////////////////////////// DELETE THE PROFILE DATA ///////////////////////////////////
+
 
   private deleteProfile(currentData: Profile) {
     this.dialogBoxService.open('Are you sure you want to delete this Profile? ', 'decision').then((response) => {
@@ -622,7 +618,7 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  // For getting all inactive admin roles
+  ///////////////////////////////// GET ALL INACTIVE PROFILE DATA ///////////////////////////////////////
   private getInActiveProfiles() {
 
     // calling service to get all inactive record
@@ -639,7 +635,7 @@ export class ProfileComponent implements OnInit {
   }
 
 
-  // for activate profile by using admin id
+  /////////////////////// ACTIVATE THE PROFILE DATA USING ADMIN ID ////////////////////////////////////
   activateProfile(profile: Profile) {
     // if (this.isObjectComplete(profile)) {
     this.service.activateProfile(profile.adminId).subscribe(
@@ -666,32 +662,7 @@ export class ProfileComponent implements OnInit {
   }
 
 
-  // getCurrentAuthUser(id: any) {
-  //   // console.log(id)
 
-  //   this.allInActiveData.forEach(profile => {
-  //     // console.log("check " + profile.userId + " " + parseInt(id) + (profile.userId === parseInt(id)))
-  //     if (profile.userId === parseInt(id)) {
-  //       // console.log(JSON.stringify(profile))
-  //       this.emptyProfile = Object.assign({}, profile);
-  //       this.foundMatch = true;
-  //       return;
-  //     }
-  //   });
-  //   if (!this.foundMatch) {
-  //     this.emptyProfile = {} as InstituteAdmin;
-  //   }
-
-  //   this.activeAuthUsers.forEach(user => {
-  //     if (user.authUserId == id) {
-  //       this.currentAuthUser = user;
-  //       this.emptyProfile.userId = this.currentAuthUser.authUserId;
-  //       this.emptyProfile.firstName = this.currentAuthUser.authUserFirstName;
-  //       this.emptyProfile.lastName = this.currentAuthUser.authUserLastName;
-  //       this.emptyProfile.adminEmail = this.currentAuthUser.authUserEmail;
-  //     }
-  //   })
-  // }
 
   ////////////////////////////////////////////
   // common
@@ -707,23 +678,6 @@ export class ProfileComponent implements OnInit {
     return true;
   }
 
-  // For changing passing array while calling child component
-  // description - for add functionality we requires inactive authusers and 
-  // for viewAll / viewOne / Update we requires active authusers
-
-  // changePassingArray() {
-  //   // Find the object with key 'userId'
-  //   const authUserArray = this.allColumnNames.find((column: { key: string, arrayName: string; }) => {
-  //     if (column.key === 'userId' && (this.viewAdd === false)) {
-  //       column.arrayName = 'activeAuthUsers';
-  //     }
-  //     if (column.key === 'userId' && (this.viewAdd === true)) {
-  //       column.arrayName = 'inactiveAuthUsers';
-  //     }
-  //   });
-
-
-  // }
 
   cleanProfileObject(object: any) {
     this.emptyProfile.institutionId = 0;
@@ -747,6 +701,7 @@ export class ProfileComponent implements OnInit {
 
 
 
+  ////////////////////////////////////  FETCHING THE DATA USING ADMIN ID ///////////////////////////////
   display(adminId: number) {
 
     this.service.getProfileByAdminId(adminId).subscribe(

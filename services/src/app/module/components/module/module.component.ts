@@ -213,7 +213,7 @@ export class ModuleComponent {
     this.updateModule(objectReceived);
   }
 
-  // for getting all courses
+  //////////////////////////////////////////////////////  LOAD COURSES  ////////////////////////////////////////////////////
   private async loadCourses() {
     await this.loadIdsOfAllCoursesWithDepartmentId();
     // calling service to get all data
@@ -246,6 +246,8 @@ export class ModuleComponent {
   }
 
   courseDepartments: CourseDepartment[] = [];
+
+  //////////////////////////////////////   LOAD ID OF ALL COURSES WITH DEPARTMENT ID  //////////////////////////
   private async loadIdsOfAllCoursesWithDepartmentId() {
 
     try {
@@ -258,26 +260,9 @@ export class ModuleComponent {
     }
   }
 
-  ///////////////////////////////////////////
-  // Funcation calls specific to this module
-  ///////////////////////////////////////////
 
-  // For updating admin role
-  // private updateModule(currentData: Module) {
-  //   // calling service for updating data
-  //   this.service.updateModule(currentData.moduleName, currentData).subscribe(
-  //     response => {
-  //       console.log(`Module updated successfully !`);
-  //       this.back();
-  //     },
-  //     error => {
-  //       console.log(`Module updation failed !`);
-  //     }
-  //   );
-  // }
 
-  ///update module by id
-  // For updating admin role
+  ///////////////////////////////////////////  UPDATE THE MODULE BY USING MODULE ID  /////////////////////////////////////
   private updateModule(currentData: Module) {
     // calling service for updating data
     if (currentData.moduleId !== null) {
@@ -295,7 +280,7 @@ export class ModuleComponent {
     }
   }
 
-  // For adding 
+  ///////////////////////////////////////////////  ADD A NEW MODULE ////////////////////////////////////////////////
   private addModule(currentData: Module) {
     // if (currentData.moduleStartDate && currentData.moduleEndDate && currentData.moduleEndDate <= currentData.moduleStartDate) {
     //   alert("End date must be after start date");
@@ -319,7 +304,7 @@ export class ModuleComponent {
       });
   }
 
-  //getting courses assigned to teacher using profileId
+  /////////////////////////////////////// GET ASSIGN COURSES BASED ON PROFILE USED COURSE SERVICE API  /////////////////////////////////
   private getAssignedCoursesByProfileId(teacherId: number) {
     this.courseService.getAssignedCourseOfTeacher(teacherId).subscribe(
       (data) => {
@@ -332,7 +317,8 @@ export class ModuleComponent {
       }
     );
   }
-  //getting courses assigned to teacher using profileId
+
+  ////////////////////////////////////  COURSES ENROLLED TO TEACHER USING PROFILE ID    /////////////////////////////////////
   private getEnrolledCoursesByProfileId(studentId: number) {
     this.courseService.getCourseByStudentId(studentId).subscribe(
       (data) => {
@@ -349,7 +335,7 @@ export class ModuleComponent {
 
 
 
-  // for getting all modules by course id
+  /////////////////////////////////////// GET ALL MODULES  ///////////////////////////////
   private getAllModules() {
     this.dataAvailable = true;
 
@@ -377,22 +363,9 @@ export class ModuleComponent {
     );
   }
 
-  // // For deleting (soft delete) 
-  // private deleteModule(name: string) {
 
-  //   // calling service to soft delte
-  //   this.service.deleteModule(name).subscribe(
-  //     (response) => {
-  //       console.log('Module deleted successfully');
-  //       this.ngOnInit();
-  //     },
-  //     (error) => {
-  //       console.log('Module deletion failed');
-  //     }
-  //   );
-  // }
 
-  // For deleting (soft delete) 
+  ////////////////////////////////    DELETE THE MODULE USING MODULE  ID    ///////////////////////////////// 
   private deleteModule(moduleId: number) {
 
     this.dialogBoxServices.open('Are you sure you want to delete this Module ? ', 'decision').then((response) => {
@@ -415,7 +388,9 @@ export class ModuleComponent {
       }
     });
   }
-  // For getting all inactive admin roles
+
+
+  /////////////////////////////////  GET INACTIVE MODULE LIST  /////////////////////////////////////////////
   private getInactiveModule() {
 
     // calling service to get all inactive record
@@ -431,6 +406,7 @@ export class ModuleComponent {
 
   }
 
+  ///////////////////////////   GET MODULE FILE BY MODULE ID    /////////////////////////////////////////
   async getModuleFileByModuleId(moduleId: number): Promise<any> {
     try {
       const response: any = await this.moduleFileService.getModuleFilesByModuleId(moduleId).toPromise();
@@ -442,7 +418,7 @@ export class ModuleComponent {
     }
   }
 
-  // For activating Module
+  ///////////////////////////////////////////// ACTIVATE MODULE BY MODULE ID  ///////////////////////////////
   private async activeModule(moduleId: any) {
     try {
 
@@ -500,7 +476,7 @@ export class ModuleComponent {
     }
   }
 
-  // function for getting institituions and all departments of that institution by profile id
+  ///////  GETTING ALL INSTITUTION AND DEPARTMENTS OF PERTICULAR INSTITUTE BY PROFILE ID ADMIN INSTITUTION API ///////
   getInstitutionAndDepartmentsOfUserByUserId(profileId: any) {
     this.institutionService.getInstitutionByProfileId(profileId).subscribe(
       (response) => {
@@ -512,7 +488,8 @@ export class ModuleComponent {
     );
   }
 
-  // For getting all active departments by institution id
+
+  ////////// GET ALL ACTIVE DEPARTMENT BY INSTITUTION ID ADMIN DEPARTMENT API ///////
   getDepartmentByProfileId(profileId: any) {
     this.departmentService.getDepartmentsOfAssignCoursesByProfileId(profileId).subscribe(
       (response) => {
@@ -522,6 +499,7 @@ export class ModuleComponent {
     );
   }
 
+  ////////////////////////  MODULES ASSIGN TO PERTICULAR PROFILE ID   //////////////////////////////
   getModulesOfAssignedCoursesByProfileId(profileId: number) {
     this.service.getModulesOfAssignedCoursesByProfileId(profileId).subscribe(
       (response) => {
@@ -533,6 +511,8 @@ export class ModuleComponent {
     );
   }
 
+
+  /////////////////////////  MODULES OF ENROLLED COURSES BY PROFILE ID   /////////////////////////////
   getModulesOfEnrolledCoursesByProfileId(profileId: number) {
     this.service.getModulesOfEnrolledCoursesByProfileId(profileId).subscribe(
       (response) => {
@@ -541,7 +521,11 @@ export class ModuleComponent {
       }
     );
   }
-  // fetching institutions data from session storage
+
+
+
+  //////////////////////////////////// LOADING ADMIN INSTITUTION FROM SESSION STORAGE  //////////////////////
+
   private loadAdminInstitutions() {
 
     try {
@@ -557,7 +541,10 @@ export class ModuleComponent {
     }
   }
 
-  // fetching department data
+
+
+
+  /////////////////////////////// FETCHING DEPARTMENTS FROM SESSION STORAGE  //////////////////////////////////
   private loadDepartments() {
     this.departmentService.getAllDepartments().subscribe(
       response => {

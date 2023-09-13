@@ -20,6 +20,7 @@ export class ActivateRoleComponent implements OnInit {
 
   }
 
+  /////////////////////////// LOAD THE PAGE //////////////////////
   ngOnInit(): void {
     this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
     this.userName = this._activatedRoute.snapshot.params['userName'];
@@ -28,6 +29,7 @@ export class ActivateRoleComponent implements OnInit {
   }
 
 
+  //////////////////////////// LOAD ADMIN ROLE FROM SESSION STORAGE   //////////////////////////////////////////
   loadAdminRoles() {
     this._roleService.getAllDeactivatedRoles().subscribe(
       response => {
@@ -39,6 +41,8 @@ export class ActivateRoleComponent implements OnInit {
     );
   }
 
+
+  /////////////////////////////////// ACTIVATE ROLE BY ROLE ID ////////////////////////////////////
   activateRole(roleId: number) {
     this._roleService.activateAdminRole(roleId).subscribe(
       response => {

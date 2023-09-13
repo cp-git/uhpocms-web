@@ -39,7 +39,7 @@ export class AddinstituteComponent {
     this.fileName = '';
   }
 
-  //ngOninit function
+  //////////////////////////  CALLS ON WHEN FUNCTION WILL LOAD //////////////////////
   ngOnInit(): void {
 
     //variables to store data form url
@@ -48,7 +48,7 @@ export class AddinstituteComponent {
 
   }
 
-  //file selection code
+  //////////////////////   ON SELECTING THE FILE ////////////////////////////////////
   onFileSelected(event: any) {
     this.file = event.target.files[0];
     this.admininstitution.adminInstitutionPicture = this.file.name;
@@ -56,7 +56,7 @@ export class AddinstituteComponent {
 
   }
 
-  // for inserting new Institution in table
+  ///////////////////// INSERTING THE INSTITUTION  /////////////////////////////////
   addInstitution(inst: AdminInstitution) {
 
     if (this.backupInst.findIndex((data) => data.adminInstitutionName === inst.adminInstitutionName) >= 0) {
@@ -120,7 +120,7 @@ export class AddinstituteComponent {
     }
   }
 
-  //back button routing
+  //////////////////// BACK TO ROUTING ///////////////////////////////////////////
   back() {
     this._route.navigate(['displayinstitute', this.userName]);
   }

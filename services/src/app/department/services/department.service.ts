@@ -14,45 +14,36 @@ export class DepartmentService {
   private readonly departmentUrl: string;
   private readonly adminInstitutionUrl: string;
   departments: Department[] = [];
- 
-  constructor(private _http: HttpClient,private cache: DataServiceCache) {
+
+  constructor(private _http: HttpClient, private cache: DataServiceCache) {
     //urls from environment code
     this.departmentUrl = environment.departmentUrl;
     this.adminInstitutionUrl = environment.adminInstitutionUrl;
 
   }
 
-  //service to fetch alldepartments
+  //////////////////////////// SERVICE - GETTING ALL DEPARTMENTS ////////////////////////////////
   getAllDepartments(): Observable<Department[]> {
     return this._http.get<Department[]>(`${this.departmentUrl}/getdept?name=all`);
   }
 
-  //service to fetch all institutions
-  getAllInstitutions(): Observable<AdminInstitution[]> {
-    return this._http.get<AdminInstitution[]>(`${this.adminInstitutionUrl}/institution?name=all`);
-  }
 
-  //service to insert department
+
+  /////////////////////////// SERVICE - INSERTION OF DEPARTMENT ////////////////////////////////
   insertDepartment(department: Department): Observable<Department> {
-    return this._http.post<Department>("http://localhost:8090/department/uhpocms/department", department);
+    return this._http.post<Department>(`${this.departmentUrl}/department`, department);
   }
 
-  //service to delete deaprtment by deptname
-  deleteDepartment(name: string): Observable<any> {
-    return this._http.delete<Department>(`${this.departmentUrl}/department/` + name);
-  }
 
-  //service to update department by dept id
+
+  ////////////////////////// SERVICE - UPDATE DEPARTMENT BY DEPARTMENT ID ////////////////////
   updateDepartment(id: number, department: Department) {
     return this._http.put<Department>(`${this.departmentUrl}/department/departmentID/` + id, department);
   }
 
-  //service to get dept by dept name
-  getDepartmentByName(name: string) {
-    return this._http.get<Department>(`${this.departmentUrl}/getdept/` + name);
-  }
 
-  //service to get dept by provided institution id
+
+  //////////////////////////// SERVICE - GETTING DEPARTMENT BY INSTITUTION ID //////////////////
   getDepartmentsByInstitutionId(id: number): Observable<Department[]> {
     const cachedData = this.cache.getDataFromCache(`${this.departmentUrl}/department/institutionId/` + id);
     if (cachedData) {
@@ -60,54 +51,47 @@ export class DepartmentService {
     }
 
     return this._http.get<Department[]>(`${this.departmentUrl}/department/institutionId/` + id).pipe(
-    //   tap(data => this.cache.setDataInCache(`${this.courseProgressUrl}/courseprog?id=all`, data))
-    // );
+      //   tap(data => this.cache.setDataInCache(`${this.courseProgressUrl}/courseprog?id=all`, data))
+      // );
 
-    tap(data => {
-      // Update cache with new data
-      this.cache.removeFromCache(`${this.departmentUrl}/department/institutionId/` + id);
-      this.cache.setDataInCache((`${this.departmentUrl}/department/institutionId/` + id),data);
-    })
-  );
+      tap(data => {
+        // Update cache with new data
+        this.cache.removeFromCache(`${this.departmentUrl}/department/institutionId/` + id);
+        this.cache.setDataInCache((`${this.departmentUrl}/department/institutionId/` + id), data);
+      })
+    );
   }
 
-  //service to get all inactive departments
+  /////////////////////////// SERVICE - GETTING THE ALL DEACTIVATED DEPARTMENTS ////////////////////////
   getAllDeactivatedDepartments(): Observable<Department[]> {
     return this._http.get<Department[]>(`${this.departmentUrl}/getdept?name=inactive`);
   }
 
 
-  //service to activate department
+  ////////////////////////// SERVICE - ACTIVATE DEPARTMENT BY DEPARTMENT ID /////////////////////////
   activateDepartment(departmentId: number): Observable<any> {
     return this._http.patch<any>(`${this.departmentUrl}/department/activate/` + departmentId, {});
   }
 
-  // service to get department by dept id
-  getDepartmentbyId(departmentId: number): Observable<any> {
-    return this._http.get<Department>(this.departmentUrl + '/department' + '/deptId/' + departmentId);
-  }
 
-  //service to update department by depat name
-  updateDepartmentByName(name: string, department: Department) {
-    return this._http.put<Department>(`${this.departmentUrl}/department/` + name, department);
-  }
-
-  //service to delete department by dept id
+  //////////////////////////  SERVICE - DELETE DEPARTMENT BY DEPARTMENT ID ////////////////////////////
   deleteDepartmentById(departmentId: number): Observable<any> {
     return this._http.delete<any>(this.departmentUrl + '/department' + '/deptId/' + departmentId);
   }
 
-  //service to get dept by provided profile id
+  /////////////////////////  SERVICE - GETTING DEPARTMENT OF ASSIGNED COURSES BASED ON PROFILE ID //////////////////
   getDepartmentsOfAssignCoursesByProfileId(id: number): Observable<Department[]> {
     return this._http.get<Department[]>(`${this.departmentUrl}/department/profile/` + id);
   }
 
-  //service to get dept by provided institution id
+  /////////////////////// SERVICE - GETTING INACTIVE DEPARTMENT BY INSTITUTION ID ///////////////////////////////////
   getInactiveDepartmentsByInstitutionId(id: number): Observable<Department[]> {
     return this._http.get<Department[]>(`${this.departmentUrl}/department/inactive/instid/` + id);
   }
 
-  getDepartmentOfProfileId(profileId:number): Observable<Department[]>{
+
+  ///////////////////////// SERVICE - GET DEPARTMENT BY PROFILE  ID ///////////////////////////////////////////////
+  getDepartmentOfProfileId(profileId: number): Observable<Department[]> {
     return this._http.get<Department[]>(`${this.departmentUrl}/department/profileid/${profileId}`);
   }
 }

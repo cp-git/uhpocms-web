@@ -12,7 +12,7 @@ import { Profile } from 'app/profiles/class/profile';
 export class AnnouncementService {
   public selectedAnnouncement: Announcement;
 
-  // announcementUrl = "http://localhost:8090/announcement/uhpocms/announcement"
+
   announcementUrl = `${environment.announcementUrl}/announcement`;
 
   private profileUrl: string;
@@ -23,59 +23,63 @@ export class AnnouncementService {
 
   }
 
-  //function to get all announcements
+  //////////////////////////////////////// SERVICE - FETCHING ALL ANNOUNCEMENT   //////////////////////////////////////
   fetchAllAnnouncements() {
 
     return this._http.get<Announcement[]>(`${this.announcementUrl}?title=all`);
   }
 
-  //function to get announcements by title
-  fetchAnnouncementByTitle(title: string) {
 
-    return this._http.get<Announcement[]>(`${this.announcementUrl}/` + title);
-  }
+  //////////////////////////////// SERVICE - CREATE THE NEW ANNOUNCEMENT /////////////////////////////////////////
 
-  //function to create new announcement 
   insertAnnouncement(announcement: Announcement) {
     return this._http.post<Announcement>(`${this.announcementUrl}`, announcement);
   }
 
-  //update annoncement 
-  updateAnnouncement(announcement: Announcement) {
-    return this._http.put<Announcement>(`${this.announcementUrl}/` + announcement.announcementTitle, announcement);
-  }
+  ////////////////////////////// SERVICE - DELETE ANNOUNCEMENT  BY ANNOUNCEMENT ID ////////////////////////////
 
-  //function to delete announcement by announcement Id
   deleteAnnouncementById(announcementId: number): Observable<any> {
     return this._http.delete<any>(`${this.announcementUrl}/` + announcementId);
   }
 
-  //function to send announcement to profile id
+
+
+
+  //////////////////////////// SERVICE - SEND ANNOUCNCEMENT TO PROFILE ID  ////////////////////////////////////
   sendAnnouncementsToProfileIDs(id: number, profileIDs: number[]) {
     return this._http.post<Announcement>(`${this.announcementUrl}/send/` + id, profileIDs);
   }
 
-  //function to get announcement for particular user as per profile id
+
+  //////////////////////////////   SERVICE - FETCH ANNOUNCEMENT BY PROFILE ID  //////////////////////////////////
+  //function to get announcement for particular user as per profile id --Used
   fetchAnnouncementByProfileId(profileId: number) {
 
     return this._http.get<Announcement[]>(`${this.announcementUrl}/profileid?id=${profileId}`);
   }
 
-  //function to get profile by ids based on announcement
+
+
+  //////////////////////    FETCH PROFILE ID BY ANNOUNCEMENT ID   ////////////////////////////////////
   fetchProfileIdsByAnnouncementId(announcementId: number): Observable<AnnouncementTo[]> {
     return this._http.get<AnnouncementTo[]>(`${this.announcementUrl}/profileid/${announcementId}`);
   }
-   getAnnouncementBySendBy(profileId : number){
+
+  //////////////////////////  GET ANNOUNCEMENT BY SEND BY   /////////////////////////////////////////
+  getAnnouncementBySendBy(profileId: number) {
     return this._http.get<Announcement[]>(`${this.announcementUrl}/sendby?id=${profileId}`);
   }
 
-  getStudentsAssignedToTeacher(profileId : number){
-   // alert(`http://localhost:8081/uhpocms/profile/profiles/${profileId}`);
+
+  ///////////////////////////////  GET STUDENT ASSIGNED TO TEACHER ///////////////////////////////////
+  getStudentsAssignedToTeacher(profileId: number) {
     return this._http.get<Profile[]>(`${this.profileUrl}/profiles/${profileId}`);
   }
 
-  getEnrolledProfilesOfCourseByOneStudentId(profileId : number): Observable<Profile[]>{
+
+  //////////////////////////////////  GET ENROLLED PROFILE OF COURSES FOR ONE STUDENT   ////////////////
+  getEnrolledProfilesOfCourseByOneStudentId(profileId: number): Observable<Profile[]> {
     return this._http.get<Profile[]>(`${this.profileUrl}/profiles/studentid/${profileId}`);
 
-    }
+  }
 }

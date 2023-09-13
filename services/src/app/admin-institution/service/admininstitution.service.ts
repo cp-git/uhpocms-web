@@ -17,65 +17,41 @@ export class AdmininstitutionService {
 
   }
 
-  //service to get all institutions
+
+  /////////////////  SERVICE - FETCHING THE ALL INSTITUTION ////////////////////////////////
   fetchAdminInstitutionList(): Observable<any> {
     return this._http.get<any>(`${this.institutionUrl}?name=all`);
   }
 
-  //service to add institution
-  // addInstitution(formData: FormData): Observable<any> {
 
 
-
-  //   return this._http.post<any>("http://localhost:8091/uhpocms/institution", formData);
-  // }
-
+  ////////////////////  SERVICE - INSERTING THE INSTITUTE ALONG WITH IMAGE ////////////////////
   addInstitution(formData: FormData): Observable<any> {
     return this._http.post<any>(`${this.institutionUrl}`, formData);
   }
 
-  //service to delete institution
-  deleteInstitution(admininstitutionName: string): Observable<any> {
-    return this._http.delete<any>(`${this.institutionUrl}/` + admininstitutionName);
-  }
 
-  //service to get institution by institution name
-  getAdminInstitutionList(admininstitutionName: string): Observable<any> {
-    return this._http.get<any>(`${this.institutionUrl}/` + admininstitutionName);
-  }
 
-  //service to update institution
-  updateInstitutionList(admininstitutionName: string, admininstitution: AdminInstitution): Observable<any> {
-    return this._http.put<any>(
-      `${this.institutionUrl}/admininstitution/` + admininstitutionName,
-      admininstitution
-    );
-  }
-
-  getInstitution(admininstitutionName: string): Observable<AdminInstitution> {
-    return this._http.get<AdminInstitution>(`${this.institutionUrl}/admininstitution/` + admininstitutionName);
-  }
-
-  //service to get inactive institutions
+  ////////////////////// SERVICE - GET ALL INACTIVE INSTITUTION ////////////////////////////////
   getDeactivatedInstitutions(): Observable<AdminInstitution[]> {
     return this._http.get<AdminInstitution[]>(`${this.institutionUrl}?name=inactive`);
   }
 
-  //service to activate institution 
+  //////////////////////  SERVICE - ACTIVATE INSTITUTE BY ID ////////////////////////////////////
   activateInstitutionById(institutionId: number): Observable<any> {
     return this._http.patch<any>(`${this.institutionUrl}/activate/` + institutionId, {});
   }
 
-  //service to get institution by provided profile id
+
+  /////////////////////  SERVICE - INSTITUTION BY PROFILE ID ////////////////////////
   getInstitutionByProfileId(id: number): Observable<AdminInstitution[]> {
     return this._http.get<AdminInstitution[]>(`${this.institutionUrl}/profile/` + id);
   }
 
-  // service to delete institution By id
-  // deleteInstitutionById(institutionId: number): Observable<any> {
-  //   return this._http.delete<any>(`${this.institutionUrl}/institutionId/`+institutionId);
-  // }
 
+
+
+  /////////////////////// SERVICE - DELETE THE ADMIN INSTITUTION BY ID//////////////////////
   deleteInstitutionById(adminInstitutionId: number): Observable<any> {
     return this._http.delete<any>(`${this.institutionUrl}/institutionId/` + adminInstitutionId);
   }

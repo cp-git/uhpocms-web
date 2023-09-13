@@ -31,7 +31,7 @@ export class AdminroleComponent {
   adminId: any;
 
 
-  //Function for adding role
+  ////////////////////////////////////////////   INSERT A NEW ROLE ///////////////////////////////////////////////
   addrole(role: Admin) {
     this.admin.roleName = role.roleName;
     this.admin.roleDescription = role.roleDescription;
@@ -49,6 +49,7 @@ export class AdminroleComponent {
     );
   }
 
+  /////////////////////////// ON PAGE LOAD ENTIRE DATA /////////////////////////////////////////////////////
   ngOnInit(): void {
     if (sessionStorage.getItem('authenticatedUser') == null) {
       this._route.navigate(['/login']);
@@ -76,7 +77,7 @@ export class AdminroleComponent {
   }
 
 
-  //function for update for update role
+  //////////////////////////////////////////////// UPDATE THE ADMIN ROLE  //////////////////////////////////////////
   updateAdminRole(role: Admin) {
     if (
       this._backupRole.findIndex((data) => data.roleName === role.roleName) < 0
@@ -97,7 +98,7 @@ export class AdminroleComponent {
     }
   }
 
-  //function for delete role by role name
+  /////////////////////////////////////////////  DELETE THE ADMIN ROLE ///////////////////////////
   deleteAdminRole(roleName: string) {
     this._service.deleteAdmin(roleName).subscribe(
       (data) => {
@@ -109,7 +110,7 @@ export class AdminroleComponent {
   }
 
 
-  //function for get role by roleName
+  /////////////////////////////////////// GET ADMIN ROLE DETAILS BY USING ROLENAME ////////////////////////////
   getAdminRole(roleName: string) {
     this._service.getAdmin(roleName).subscribe((response: Admin) => {
       this.admin = response;

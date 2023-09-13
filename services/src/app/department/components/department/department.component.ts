@@ -239,7 +239,7 @@ export class DepartmentComponent implements OnInit {
     this.updateDepartment(objectReceived);
   }
 
-  // for loading adminInstitutitons from session data
+  ////////////////////////// LOAD ADMIN INSTITUTION DETAILS FROM SESSION STORAGE //////////////////////
   private loadAdminInstitutions() {
     try {
       this.sessionData = sessionStorage.getItem('admininstitution');
@@ -258,7 +258,7 @@ export class DepartmentComponent implements OnInit {
   // Funcation calls specific to this module
   ///////////////////////////////////////////
 
-  // For updating department
+  ////////////////////// UPDATING THE DEPARTMENT BY USING DEPARTMENT ID ///////////////////
   private updateDepartment(currentData: Department) {
     // calling service for updating data
     this.service.updateDepartment(currentData.id, currentData).subscribe(
@@ -272,7 +272,7 @@ export class DepartmentComponent implements OnInit {
     );
   }
 
-  // For adding department
+  ////////////////////  ADDING THE DEPARTMENT ///////////////////////////////
   private addDepartment(currentData: Department) {
     // currentData.active = true; // setting active true
 
@@ -300,7 +300,7 @@ export class DepartmentComponent implements OnInit {
     );
   }
 
-  // for getting all departments
+  //////////////////////////////////// FETCHING THE ALL DEPARTMENTS ///////////////////////////////////
   private getAllDepartments() {
     // this.dataAvailable = true;
 
@@ -320,7 +320,7 @@ export class DepartmentComponent implements OnInit {
     );
   }
 
-  // For deleting (soft delete) department
+  //////////////////////////////  DELETE THE DEPARTMENT USING THE DEPARTMENT ID //////////////////////////
   private deleteDepartment(id: number) {
     this.dialogBoxServices.open('Are you sure you want to delete this Department ? ', 'decision').then((response) => {
       if (response) {
@@ -348,7 +348,7 @@ export class DepartmentComponent implements OnInit {
     });
   }
 
-  // For getting all inactive departments
+  //////////////////////////////////// GET ALL INACTIVE DEPARTMENT //////////////////////////////
   private getInactiveDepartment() {
     // calling service to get all inactive record
     this.service.getAllDeactivatedDepartments().subscribe(
@@ -362,7 +362,7 @@ export class DepartmentComponent implements OnInit {
     );
   }
 
-  // For activating department using role id
+  //////////////////////////////  ACTIVATING THE DEPARTMENT BY USING DEPARTMENT ID ////////////////
   private activateDepartment(id: number) {
     // calling service to activating department
     this.service.activateDepartment(id).subscribe(
@@ -404,7 +404,7 @@ export class DepartmentComponent implements OnInit {
     }
   }
 
-  // function for getting institituions and all departments of that institution by profile id
+  /////////////////////////// GET INSTITUTION AND DEPARTMENT BY USER ID ///////////////////////////////////////
   getInstitutionAndDepartmentsOfUserByUserId(profileId: any) {
     this.institutionService.getInstitutionByProfileId(profileId).subscribe(
       (response) => {
@@ -418,7 +418,7 @@ export class DepartmentComponent implements OnInit {
     );
   }
 
-  // For getting all active departments by institution id
+  //////////////////////// GET ALL ACTIVE DEPARTMENTS BY INSTITUTION ID ///////////////////////
   getAllDepartmentsByInstitutionId(institutionId: any) {
     this.service.getDepartmentsByInstitutionId(institutionId).subscribe(
       (response) => {
@@ -429,7 +429,7 @@ export class DepartmentComponent implements OnInit {
     );
   }
 
-  // For getting all inactive departments by institution id
+  ////////////////////  GET ALL INACTIVE DEPARTMENT BY INSTITUTE ID ///////////////////////////
   getAllInactiveDeparmentsByInstitutionId(institutionId: any) {
     this.service.getInactiveDepartmentsByInstitutionId(institutionId).subscribe(
       (response) => {

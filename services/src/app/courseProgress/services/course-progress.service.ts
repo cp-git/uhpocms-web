@@ -15,52 +15,54 @@ export class CourseProgressService {
 
 
   courseProgressUrl: string;
-  constructor(private http: HttpClient, private cache: DataServiceCache) { 
+  constructor(private http: HttpClient, private cache: DataServiceCache) {
     this.courseProgressUrl = `${environment.courseProgressUrl}`;
   }
 
 
-  //add data to moduleprogress table
+  //add data to moduleprogress table --Used
   addCourseProgressStatus(courseProgress: CourseProgress): Observable<CourseProgress> {
     console.log(courseProgress)
     return this.http.post<CourseProgress>(`${this.courseProgressUrl}/courseprog`, courseProgress);
   }
 
 
+  //Used Student Module..
   getCourseProgByCourseIdStudId(courseId: number, studId: number) {
     return this.http.get<CourseProgress>(`${this.courseProgressUrl}/courseprog/${courseId}/${studId}`);
   }
 
-
-  updateCourseProgress(courseProgress: CourseProgress): Observable<CourseProgress> 
-  {console.log(courseProgress)
-      return this.http.put<CourseProgress>(`${this.courseProgressUrl}/courseprog/${courseProgress.id}`,courseProgress);
+  //Used
+  updateCourseProgress(courseProgress: CourseProgress): Observable<CourseProgress> {
+    console.log(courseProgress)
+    return this.http.put<CourseProgress>(`${this.courseProgressUrl}/courseprog/${courseProgress.id}`, courseProgress);
   }
 
 
-  getAllCourseProgress()
-  {
+  //Used
+  getAllCourseProgress() {
     const cachedData = this.cache.getDataFromCache(`${this.courseProgressUrl}/courseprog?id=all`);
     if (cachedData) {
       return of(cachedData);
     }
 
     return this.http.get<CourseProgress[]>(`${this.courseProgressUrl}/courseprog?id=all`).pipe(
-    //   tap(data => this.cache.setDataInCache(`${this.courseProgressUrl}/courseprog?id=all`, data))
-    // );
+      //   tap(data => this.cache.setDataInCache(`${this.courseProgressUrl}/courseprog?id=all`, data))
+      // );
 
-    tap(data => {
-      // Update cache with new data
-      this.cache.removeFromCache(`${this.courseProgressUrl}/courseprog?id=all`);
-      this.cache.setDataInCache(`${this.courseProgressUrl}/courseprog?id=all`, data);
-    }),
-   
-  );
+      tap(data => {
+        // Update cache with new data
+        this.cache.removeFromCache(`${this.courseProgressUrl}/courseprog?id=all`);
+        this.cache.setDataInCache(`${this.courseProgressUrl}/courseprog?id=all`, data);
+      }),
+
+    );
   }
 
+  //used
   deleteCourseProgressByCourseIdAndStudentId(courseId: number, profileId: number): Observable<any> {
     const url = `${this.courseProgressUrl}/courseprog/courseid/${courseId}/studentid/${profileId}`;
     return this.http.delete<any>(url);
   }
-  
+
 }

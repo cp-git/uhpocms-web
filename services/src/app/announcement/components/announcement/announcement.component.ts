@@ -93,7 +93,7 @@ export class AnnouncementComponent implements OnInit {
     await this.userPermissionService.toggleButtonsPermissions(userModule.ANNOUNCEMENT, this.userAndRolePermissions, this.buttonsArray);
   }
 
-  //function to get announcements by profile id
+  ////////////////////////////////////  GET ANNOUNCEMENT BY PROFILE ID  ///////////////////////////////
   private getAnnouncements(profileId: number) {
     this.announcementService.fetchAnnouncementByProfileId(profileId).subscribe(
       response => {
@@ -143,6 +143,8 @@ export class AnnouncementComponent implements OnInit {
 
   }
 
+
+  /////////////////////////////////  LOAD PROFILES FROM SESSION STORAGE //////////////////////////
   loadProfiles(profileId: number) {
     // alert(studentId);
     try {
@@ -172,6 +174,8 @@ export class AnnouncementComponent implements OnInit {
 
   }
 
+
+  ////////////////////////////////////   FETCHING THE ALL ANNOUNCEMENT  ////////////////////////////
   //function to get all announcements
   private getAllAnnouncements() {
     this.announcementService.fetchAllAnnouncements().subscribe(
@@ -186,7 +190,7 @@ export class AnnouncementComponent implements OnInit {
     );
   }
 
-  //function to get all announcements
+  /////////////////////////////////////  GET ANNOUNCEMENT SEND BY PROFILE ID ///////////////////////
   private getOutgoingAnnoucement(profileId: number) {
     this.announcementService.getAnnouncementBySendBy(profileId).subscribe(
       response => {
@@ -224,7 +228,9 @@ export class AnnouncementComponent implements OnInit {
     //this.router.navigate([`/announcement/${this.userRole}/view`, announement.id])
   }
 
-  //function to delete announcemnet by announcement Id
+
+
+  ///////////////////////////  DELETE  ANNOUNCEMENT BY ANNOUNCEMENT ID  //////////////////////
   public deleteAnnouncementById(announcementId: number) {
     this.dialogBoxService.open('Are you sure you want to delete this Announcement ? ', 'decision').then((response) => {
       if (response) {
@@ -252,7 +258,7 @@ export class AnnouncementComponent implements OnInit {
   }
 
 
-
+  ///////////////////// LOAD ADMIN INSTITUTIONS FROM SESSION STORAGE ////////////////////////
   private loadAdminInstitutions() {
     try {
       this.sessionData = sessionStorage.getItem('instituteprofile');

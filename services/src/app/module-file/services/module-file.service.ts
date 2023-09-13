@@ -14,82 +14,82 @@ export class ModuleFileService {
     this.moduleFileUrl = environment.moduleFileUrl;
   }
 
-  // // for add module File 
-  // addModuleFile(formData: FormData): Observable<any> {
-  //   return this._http.post<any>("http://localhost:8091/uhpocms/modulefile", formData);
-  // }
 
 
 
-  // for add module File 
+  /////////////////////////////////////////////// SERVICE - ADD MODULE FILE /////////////////////////////////////////////
   addModuleFile(formData: FormData): Observable<any> {
     return this._http.post<any>(`http://localhost:8090/modulefile/uhpocms/modulefile`, formData);
   }
 
-  // get all module file
+  /////////////////////////////////////////// SERVICE - GET ALL MODULE FILE ///////////////////////////////////////////
   fetchModuleFileList(): Observable<any> {
     return this._http.get<any>(`${this.moduleFileUrl}/modulefile?file=all`);
   }
 
-  // get all inactive module file
+  /////////////////////////////////////// SERVICE - GET ALL INACTIVE MODULE FILE //////////////////////////////
   getInactivemoduleFileList(): Observable<any> {
     return this._http.get<any>(`${this.moduleFileUrl}/inactive?inactivemodulesfile=all`);
   }
 
-  //activate a modulefile by id
+  //////////////////////////////// SERVICE - ACTIVATE MODULE FILE BY MODULE FILE ID /////////////////////////////////////
   activatemoduleFileById(moduleFileId: number): Observable<any> {
     return this._http.patch<any>(`${this.moduleFileUrl}/modulefile/activate/` + moduleFileId, {});
   }
 
-  // delete module file by file name
+  ///////////////////////////////// SERVICE - DELETE MODULE FILE BY FILE NAME /////////////////////////////////////////
   deleteModuleFile(moduleFile: string): Observable<any> {
     return this._http.delete<any>(`${this.moduleFileUrl}/` + moduleFile);
   }
 
+
+  /////////////////////////////// SERVICE - GET MODULE FILE BY MODULE FILE ///////////////////////////////////////////
   getModuleFileList(moduleFile: string): Observable<any> {
     return this._http.get<any>(`${this.moduleFileUrl}/` + moduleFile);
   }
 
-  // update module file by file name
+
+  //////////////////////////// SERVICE - UPDATE MODULE FILE BY MODULE FILE ///////////////////////////////////////////
   updateModuleFileList(moduleFile: string, modulefile: ModuleFile): Observable<any> {
     alert(`${this.moduleFileUrl}/` + moduleFile);
     return this._http.put<any>(`${this.moduleFileUrl}/modulefile/` + moduleFile, modulefile);
   }
 
-  // update module File by id
+  ////////////////////////// SERVICE - UPDATE MODULE FILE BY MODULE ID //////////////////////////////////////////////
   updateModuleFileById(moduleFileId: number, formData: FormData): Observable<any> {
     return this._http.put<any>(`http://localhost:8090/modulefile/uhpocms/modulefileById/` + moduleFileId, formData);
   }
 
-
-  // update module File by id
+  ////////////////////////////////// SERVICE - UPDATE  MODULE FILE BY MODULE FILE ID ///////////////////////////////
   updateModuleFileJsonById(moduleFileId: number, moduleFile: ModuleFile): Observable<any> {
     return this._http.put<any>(`${this.moduleFileUrl}/moduleupdatejson/` + moduleFileId, moduleFile);
   }
 
-  // delete module File by id
+
+  //////////////////////////////// SERVICE - DELETE MODULE FILE BY ID ////////////////////////////////////
   deleteModuleFileById(moduleFileId: number): Observable<any> {
     return this._http.delete<any>(`${this.moduleFileUrl}/modulefileById/` + moduleFileId);
   }
 
-  // get module file by file name
-  getModuleFile(moduleFile: string): Observable<ModuleFile> {
-    return this._http.get<ModuleFile>(`${this.moduleFileUrl}/modulefile/` + moduleFile);
-  }
 
+
+  ///////////////////////////////// SERVICE - GET MODULE FILE BY MODULE ID //////////////////////////////
   getModuleFilesByModuleId(moduleId: number): Observable<ModuleFile[]> {
     return this._http.get<ModuleFile[]>(`${this.moduleFileUrl}/modulefile/moduleId/${moduleId}`);
   }
 
 
+  ///////////////////////////// SERVICE - GET MODULE FILE OF ENROLLED COURSES OF MODULES BY PROFILE ID  /////////////////////////////
   getModuleFilesOfEnrolledCoursesOfModulesByProfileId(studentId: number): Observable<ModuleFile[]> {
     return this._http.get<ModuleFile[]>(`${this.moduleFileUrl}/modulefile/student?id=${studentId}`);
   }
 
+  ////////////////////////////////// SERVICE -GET MODULES OF ASSIGNED COURSE MODULE BY PROFILE ID  /////////////////////////////////
   getModuleFilesOfAssignedCoursesOfModulesByProfileId(teacherId: number): Observable<ModuleFile[]> {
     return this._http.get<ModuleFile[]>(`${this.moduleFileUrl}/modulefile/teacher?id=${teacherId}`);
   }
 
+  /////////////////////////////////// SERVICE - GET FILE BY MODULE FILE ID ////////////////////////////////////////////////////
   getFile(fileId: number): Observable<ArrayBuffer> {
     return this._http.get(`${this.moduleFileUrl}/files/${fileId}`, {
       responseType: 'arraybuffer'

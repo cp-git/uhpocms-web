@@ -36,25 +36,17 @@ export class TeacherCourseComponent implements OnInit {
   viewOne: boolean = false;
   viewActivate: boolean = false;
 
-  // buttons
-  // showAddButton: boolean = false;
-  // showActivateButton: boolean = false;
-
-  // buttonsArray: any;
-  // userAndRolePermissions: AuthUserPermission[] = [];
 
   // If all data is available or not
   dataAvailable: boolean = false;
 
-  // updateButton: boolean = false;
-  // deleteButton: boolean = false;
 
   courseDepartment: CourseDepartment;
   institutionId: number = 0;
   columnNames: any; // header for minimum visible column data
   allColumnNames: any; // header for all visible column data
 
-  // updateColumnNames: any;
+
 
   // To be assigned based on the module
   readonly primaryIdColumnName: string = 'courseId';
@@ -63,9 +55,9 @@ export class TeacherCourseComponent implements OnInit {
   readonly dropdownColumnName1: string = 'adminInstitutionName';
 
   allData: Course[] = []; // list of course
-  // allInActiveData: Course[] = []; // list of inactive course
 
-  // emptyCourse: Course; // empty course
+
+
   currentData!: Course; // for update and view, to show existing data
 
   userId: any;
@@ -89,10 +81,7 @@ export class TeacherCourseComponent implements OnInit {
     this.columnNames = CourseColumn;
     this.allColumnNames = CourseAllColumn;
 
-    // this.updateColumnNames = CourseUpdateColumn;
 
-    // creating empty object
-    // this.emptyCourse = new Course();
 
     this.courseDepartment = new CourseDepartment();
 
@@ -100,12 +89,7 @@ export class TeacherCourseComponent implements OnInit {
     this.profileId = sessionStorage.getItem('profileId');
     this.userRole = sessionStorage.getItem('userRole');
 
-    // this.buttonsArray = {
-    //   showAddButton: false,
-    //   showActivateButton: false,
-    //   showUpdateButton: false,
-    //   showDeleteButton: false
-    // }
+
 
     switch (this.userRole) {
       case 'teacher':
@@ -122,90 +106,20 @@ export class TeacherCourseComponent implements OnInit {
 
     this.initiliazation();
 
-    // this.buttonsArray = {
-    //   showAddButton: false,
-    //   showActivateButton: false,
-    //   showUpdateButton: false,
-    //   showDeleteButton: false
-    // }
+
   }
 
-  // this function for loading permission from session storage and link permission
-  // with buttons to show and hide based on permissions
-  // private async loadAndLinkUserPermissions() {
-  //   this.userAndRolePermissions = await this.userPermissionService.linkAndLoadPermissions(userModule.COURSE, this.userAndRolePermissions, this.buttonsArray);
-  //   await this.userPermissionService.toggleButtonsPermissions(userModule.COURSE, this.userAndRolePermissions, this.buttonsArray);
-  // }
-
-  // this function for loading permission from session storage and link permission
-  // with buttons to show and hide based on permissions
-  // private loadAndLinkUserPermissions() {
 
 
-  //   try {
-  //     let sessionData: any = sessionStorage.getItem('permissions');
-  //    
-  //     let data = JSON.parse(sessionData);
-  //     for (var inst in data) {
-  //       this.userAndRolePermissions.push(data[inst]);
-  //     }
-  //   }
-  //   catch (err) {
-  //    
-  //   }
-  //  
 
-  //   this.userPermissionService.linkPermissions(userModule.COURSE, this.userAndRolePermissions, this.buttonsArray);
-  //
 
-  //   
-  //   this.toggleButtonsPermissions(this.buttonsArray);
-  // 
-
-  // }
-
-  // private toggleButtonsPermissions(buttonsArray: any) {
-  //   if (buttonsArray.showActivateButton) {
-  //     this.showActivateButton = true;
-  //   }
-  //   if (buttonsArray.showAddButton) {
-  //     this.showAddButton = true;
-  //   }
-  //   if (buttonsArray.deleteButton) {
-  //     this.deleteButton = true;
-  //   }
-  //   if (buttonsArray.updateButton) {
-  //     this.updateButton = true;
-  //   }
-  // }
 
   private async initiliazation() {
-    // this.getAllCourse();  // for getting all active course
     await this.loadIdsOfAllCoursesWithDepartmentId();
     this.loadCoursesBasedOnRole(this.userRole);
   }
 
-  // accessControl(userRole: string) {
 
-
-  //   switch (userRole) {
-  //     case 'admin' || 'coadmin':
-  //       // if (this.viewActivate == false) {
-  //       //   this.showAddButton = true;
-  //       //   this.showActivateButton = true;
-  //       // }
-  //       break;
-  //     case 'teacher':
-  //       // this.showAddButton = false;
-  //       // this.showActivateButton = false;
-
-  //       break;
-  //     case 'student':
-  //       // this.showAddButton = false;
-  //       // this.showActivateButton = false;
-  //       break;
-  //   }
-  // }
 
   // back button functionality
   back() {
@@ -215,17 +129,13 @@ export class TeacherCourseComponent implements OnInit {
       this.viewAdd = false;
       this.viewUpdate = false;
       this.viewActivate = false;
-      // this.accessControl(this.userRole);
-      // this.toggleButtonsPermissions(this.buttonsArray);
 
-
-      // this.userPermissionService.toggleButtonsPermissions(userModule.COURSE, this.userAndRolePermissions, this.buttonsArray);
     } else {
       this.location.back();
     }
   }
 
-  // commented after separating enroll/assign courses and CRUD operation
+
 
   // For navigate to view screen with data
   // function will call when child view button is clicked
@@ -240,121 +150,7 @@ export class TeacherCourseComponent implements OnInit {
     this.currentData = objectReceived; // assingning data to current data for child component
   }
 
-  // // For navigate to update screen with data
-  // // function will call when child update button is clicked
-  // onChildUpdateClick(objectReceived: Course): void {
 
-  //   // hiding update screen and displaying all course screen
-  //   this.viewAll = false;
-  //   this.viewUpdate = true;
-  //   this.buttonsArray.showAddButton = false;
-  //   this.buttonsArray.showActivateButton = false;
-  //   // assingning data to current data for child component
-  //   this.currentData = objectReceived;
-  // }
-
-  // // For navigate to update screen with data
-  // // function will call when child update button is clicked
-  // onChildDeleteClick(objectReceived: Course): void {
-  //   this.deleteCourse(objectReceived.courseId);
-  // }
-
-  // // For navigate to activate screen with data
-  // // function will call when child update button is clicked
-  // onChildActivateClick(objectReceived: Course): void {
-  //   this.activateCourse(objectReceived.courseId);
-  // }
-
-  // commented after separating enroll/assign courses and CRUD operation
-
-  // // for navigating to add screen
-  // onAddClick() {
-  //   this.viewAll = false;
-  //   this.viewAdd = true;
-  //   this.buttonsArray.showAddButton = false;
-  //   this.buttonsArray.showActivateButton = false;
-  // }
-
-  // commented after separating enroll/assign courses and CRUD operation
-
-  // // for navigating to activate screen
-  // onActivateClick() {
-  //   this.viewAll = false;
-  //   this.viewActivate = true;
-  //   this.buttonsArray.showAddButton = false;
-  //   this.buttonsArray.showActivateButton = false;
-  // }
-
-  // commented after separating enroll/assign courses and CRUD operation
-
-  // // on addComponents's submit button clicked
-  // onAddCourseSubmit(objectReceived: Course): void {
-  //   this.addCourse(objectReceived);
-  // }
-
-  // commented after separating enroll/assign courses and CRUD operation
-
-  // // on updateComponents's submit button clicked
-  // onUpdateCourseSubmit(objectReceived: Course) {
-  //   this.updateCourse(objectReceived);
-  // }
-
-  ///////////////////////////////////////////
-  // Funcation calls specific to this module
-  ///////////////////////////////////////////
-
-  // commented after separating enroll/assign courses and CRUD operation
-
-  // // For updating course
-  // private updateCourse(currentData: Course) {
-  //   // calling service for updating data
-  //   this.service.updateCourseById(currentData.courseId, currentData).subscribe(
-  //     response => {
-  //       this.dialogBoxServices.open('Course updated successfully', 'information');
-  //       this.back();
-  //     },
-  //     error => {
-  //       this.dialogBoxServices.open('Course Updation Failed', 'warning');
-  //     }
-  //   );
-  // }
-
-  // commented after separating enroll/assign courses and CRUD operation
-
-  // // adding course to course and linking course to department
-  // private async addCourse(currentData: any) {
-  //   try {
-  //     const data = await this.service.addCourse(currentData).toPromise();
-
-  //     this.courseDepartment.courseId = data.courseId;
-  //     this.courseDepartment.department_id = currentData.departmentId;
-  //    
-
-  //     const courseAndDepartment = await this.service.assignCourseToDepartment(this.courseDepartment).toPromise();
-  //     if (courseAndDepartment) {
-  //       await this.loadIdsOfAllCoursesWithDepartmentId();
-  //      
-
-  //       if (data.courseIsActive) {
-  //         this.dialogBoxServices.open("Course Added successfully", 'information').then((response) => {
-  //           if (response) {
-  //             location.reload(); // Refresh the page
-  //           }
-
-  //         });
-  //       } else {
-  //         this.dialogBoxServices.open("Course added successfully but NOT ACTIVE", 'information');
-  //       }
-  //     }
-
-  //     this.emptyCourse = {} as Course;
-  //     this.ngOnInit();
-  //     this.back();
-
-  //   } catch (error) {
-  //     this.dialogBoxServices.open("Failed to add Course", 'warning');
-  //   }
-  // }
 
   private async loadIdsOfAllCoursesWithDepartmentId() {
     try {
@@ -366,206 +162,33 @@ export class TeacherCourseComponent implements OnInit {
     }
   }
 
-  // commented after separating enroll/assign courses and CRUD operation
-
-  // // for getting all courses
-  // private getAllCourse() {
-
-  //   // calling service to get all data
-  //   this.service.getAllCourses().subscribe(
-  //     response => {
 
 
-  //       // this.allData = response; //assign data to local variable
-  //       this.allData = [];
-  //       response.forEach((course: Course) => {
-  //         this.courseDepartments.find((coursedepartment: CourseDepartment) => {
-  //           if (course.courseId == coursedepartment.courseId) {
-  //             this.allData.push({
-  //               ...course,
-  //               departmentId: coursedepartment.department_id,
-  //             });
-  //           }
-  //           this.allData.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name
-  //         })
-  //       })
 
 
-  //     },
-  //     error => {
-  //       console.log('No data in table ');
-
-  //     }
-  //   );
-  // }
-
-  // // For deleting (soft delete) course using courseId
-  // private deleteCourse(courseId: number) {
-  //   this.dialogBoxServices.open('Are you sure you want to delete this Course ? ', 'decision').then((response) => {
-  //     if (response) {
-
-  //       // Do something if the user clicked OK
-  //       // calling service to soft delete
-  //       this.service.deleteCourseByCourseId(courseId).subscribe(
-  //         (response) => {
-  //        
-  //           this.dialogBoxServices.open("Course deleted successfully", 'information').then((response) => {
-  //             if (response) {
-  //               location.reload(); // Refresh the page
-  //             }
-
-  //           });
-  //           this.ngOnInit();
-
-  //         },
-  //         (error) => {
-  //           this.dialogBoxServices.open('Course deletion Failed', 'warning');
-  //         })
-  //     } else {
-  //       console.log('User clicked Cancel');
-  //     }
-  //   }
-  //   );
-  // }
-
-  // commented after separating enroll/assign courses and CRUD operation
-
-  // // For getting all inactive course
-  // private getAllInActiveCourse() {
-
-  //   // calling service to get all inactive record
-  //   this.service.getAllDeactivateCourses().subscribe(
-  //     response => {
 
 
-  //       this.allInActiveData = [];
-
-  //       response.forEach((course: Course) => {
-  //         this.courseDepartments.find((coursedepartment: CourseDepartment) => {
-  //           if (course.courseId == coursedepartment.courseId) {
-  //             this.allInActiveData.push({
-  //               ...course,
-  //               departmentId: coursedepartment.department_id,
-  //             });
-
-  //           }
-  //           this.allInActiveData.sort((a, b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1) // order by alphabets for course name
-  //         })
-
-  //       })
-  //      
-  //     },
-  //     error => {
-  //       console.log('No data in table ');
-  //     }
-  //   );
-
-  // }
-
-  // commented after separating enroll/assign courses and CRUD operation
-
-  // fetching department data
-  // private loadDepartments() {
-  //   this.departmentService.getAllDepartments().subscribe(
-  //     response => {
-  //       this.departments = response;
-  //    
-
-  //     },
-  //     error => {
-  //       console.log("failed to get departments");
-  //       this.dialogBoxServices.open("failed to get departments", 'information');
-  //     }
-  //   )
-  // }
-
-  // commented after separating enroll/assign courses and CRUD operation
-  // private loadAdminInstitutions() {
-
-  //   try {
-  //     this.sessionData = sessionStorage.getItem('admininstitution');
-
-  //     this.data = JSON.parse(this.sessionData);
-  //     if (this.adminInstitutions.length <= 0) {
-  //       for (var inst in this.data) {
-  //         this.adminInstitutions.push(this.data[inst]);
-  //       }
-  //     }
-
-  //   }
-  //   catch (err) {
-  //     console.log("Error", err)
-  //   }
-  // }
-
-  // // commented after separating enroll/assign courses and CRUD operation
-  // // For activating course using courseId
-  // private activateCourse(courseId: number) {
-
-  //   // calling service to activating admin role
-  //   this.service.activateCourseById(courseId).subscribe(
-  //     response => {
-  //       this.dialogBoxServices.open("Course Activated", 'information').then((response) => {
-  //         if (response) {
-  //           location.reload(); // Refresh the page
-  //         }
-
-  //       });
-  //       this.ngOnInit();
-
-  //     },
-  //     error => {
-  //       this.dialogBoxServices.open('Failed to Activate Course', 'warning');
-  //     }
-  //   );
-  // }
-
-  // private loadAllCoursesWithDepartmentId() {
-
-  //   this.service.getCoursesDepartmentId().subscribe(
-  //     (data) => {
 
 
-  //       this.courseDepartments = data;
 
-  //     }, error => {
-  //       console.log("no data fetched");
-  //     }
-  //   );
-
-  // }
 
   private async loadCoursesBasedOnRole(userRole: string) {
 
 
     switch (userRole) {
-      // case 'admin' || 'coadmin':
-      //   if (this.viewActivate == false) {
-      //     // this.showAddButton = true;
-      //     // this.showActivateButton = true;
-      //   }
-      //   this.getAllInActiveCourse(); // for getting all inactive course
-      //   this.loadAdminInstitutions();
-      //   this.loadDepartments();
-      //   this.getAllCourse();
-      //   break;
+
       case 'teacher':
-        // this.updateButton = false;
-        // this.deleteButton = false;
 
         // for getting only institituion profile id belongs
         // and departments of that institution
         await this.getInstitutionAndDepartmentsOfUserByUserId(this.profileId);
 
-        // For getting Inactive Course of that institutions
-        // this.getInactiveCoursesByInstitutionId(this.adminInstitutions[0].adminInstitutionId);
+
 
         this.getAssignedCoursesOfTeacher(this.profileId);
 
         break;
       case 'student':
-        // this.updateButton = false;
-        // this.deleteButton = false;
 
         // for getting only institituion profile id belongs
         // and departments of that institution
@@ -578,7 +201,7 @@ export class TeacherCourseComponent implements OnInit {
     }
   }
 
-  // for getting courses enroll for the student using  profileId
+  ////////////////////////////////  courses enrolled to student /////////////////////////////////
   private getCoursesEnrolledToStudent(studentId: number) {
     this.service.getCourseByStudentId(studentId).subscribe(
       (data) => {
@@ -604,7 +227,7 @@ export class TeacherCourseComponent implements OnInit {
     );
   }
 
-  //getting courses assigned to teacher using profileId
+  ///////////////////////// GETTING ASSIGN COURSES OF TEACHER ///////////////////////////////
   private getAssignedCoursesOfTeacher(teacherId: number) {
     this.service.getAssignedCourseOfTeacher(teacherId).subscribe(
       (response) => {
@@ -631,7 +254,8 @@ export class TeacherCourseComponent implements OnInit {
     );
   }
 
-  // function for getting institituions and all departments of that institution by profile id
+
+  ///////////////////// GETTING INSTITUTIONS AND ALL DEPARTMENT OF INSTITUTIONS BY PROFILE ID //////////
   private async getInstitutionAndDepartmentsOfUserByUserId(profileId: any) {
     try {
       const result = await this.institutionService
@@ -651,7 +275,8 @@ export class TeacherCourseComponent implements OnInit {
     );
   }
 
-  // For getting all active departments by institution id
+  ///////////////////////////// GET ALL ACTIVE DEPARTMENTS BY INSTITUTION ID //////////////////////////////////////
+
   getAllDepartmentsByInstitutionId(institutionId: any) {
     this.departmentService
       .getDepartmentsByInstitutionId(institutionId)
@@ -662,24 +287,5 @@ export class TeacherCourseComponent implements OnInit {
       });
   }
 
-  // // For getting all inactive departments by institution id
-  // getAllInactiveDeparmentsByInstitutionId(institutionId: any) {
-  //   this.departmentService.getInactiveDepartmentsByInstitutionId(institutionId).subscribe(
-  //     (response) => {
-
-
-  //       this.inactiveD = response;
-  //     }
-  //   );
-  // }
-
-  // private getInactiveCoursesByInstitutionId(instituteId: number) {
-  //   this.service
-  //     .getInactiveCoursesByInstitutionId(instituteId)
-  //     .subscribe((response) => {
-  //       this.allInActiveData = response;
-  //      
-  //     });
-  // }
 
 }

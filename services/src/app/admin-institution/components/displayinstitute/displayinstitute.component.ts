@@ -57,7 +57,7 @@ export class DisplayinstituteComponent {
     }
   }
 
-  //ngOnint function
+  /////////////////////////  DISPLAY WHEN PAGE WILL LOAD ////////////////////////
   ngOnInit(): void {
     this.loadAndLinkUserPermissions();
     //if not authenticated route back to login page
@@ -95,12 +95,12 @@ export class DisplayinstituteComponent {
     }
   }
 
-  //function to route 
+  //////////////////////////  ROUTE THE PAGE /////////////////////////////////
   addInstitute() {
     this._route.navigate(['addinstitute', this.userName])
   }
 
-  //function to get all institutions
+  ////////////////////////// GETTING ALL INSTITUTION /////////////////////////
   public getAllInstitution() {
     // fetching all institution
     this._institutionService.fetchAdminInstitutionList().subscribe(
@@ -134,26 +134,10 @@ export class DisplayinstituteComponent {
 
 
 
-  // // for deleting institution by name
-  // deleteInstitution(inst: AdminInstitution) {
-  //   // calling service mathod to delete institution
-  //   this._institutionService.deleteInstitution(inst.adminInstitutionName).subscribe(
-  //     (response) => {
-  //       this.admininstitutions.splice(this.admininstitutions.indexOf(inst), 1);
-  //       this.backupInst.splice(this.admininstitutions.indexOf(inst), 1);
-  //     
-  //      
-  //       this.displayEmptyRow();
-  //     },
-  //     (error) => {
-  //    
-  //     }
-  //   );
-  // }
 
 
 
-  // For deleting (soft delete) by id
+  ////////////////////////  DELETE THE INSTITUTION BY ID ///////////////////////////////////////
   deleteInstitution(adminInstitutionId: number) {
     this.dialogBoxService.open('Are you sure you want to delete this Institute ? ', 'decision').then((response) => {
       if (response) {

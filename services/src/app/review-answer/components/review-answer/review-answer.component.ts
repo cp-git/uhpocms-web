@@ -135,6 +135,7 @@ export class ReviewAnswerComponent implements OnInit {
     // this.getInActiveQuestions(); // for getting all inactive questions
   }
 
+  ////////////////////////////////////  ON SELECTING THE IMAGE ///////////////////////////////////////
   onFileSelected(event: any) {
     for (var i = 0; i < event.target.files.length; i++) {
       this.myFiles.push(event.target.files[i]);
@@ -142,6 +143,9 @@ export class ReviewAnswerComponent implements OnInit {
 
   }
 
+
+
+  /////////////////////////////////////////  ON FORM SUBMIT /////////////////////////////////
   onFormSubmit(queAns: any): void {
 
 
@@ -310,6 +314,7 @@ export class ReviewAnswerComponent implements OnInit {
   }
 
 
+  ///////////////////////////// GET ALL QUESTION AND ANSWERS ///////////////////////////////////////////
   private getAllQuestionAnswers(quizId: number) {
 
 
@@ -467,7 +472,7 @@ export class ReviewAnswerComponent implements OnInit {
   // Funcation calls specific to this module
   ///////////////////////////////////////////
 
-  // for getting all questions
+  ///////////////////////////////////////////////// GET ALL QUESTIONS ///////////////////////////////////////
   private getAllQuestions() {
 
     // calling service to get all data
@@ -484,7 +489,7 @@ export class ReviewAnswerComponent implements OnInit {
   }
 
 
-  // For adding question
+  // ////////////////////////////////////  ADD QUESTION AND ANSWERS  /////////////////////////////////////
   private addQuestion(questionAnswer: QuestionAnswer) {
 
     questionAnswer.question['questionIsActive'] = true;  // setting active true
@@ -511,7 +516,7 @@ export class ReviewAnswerComponent implements OnInit {
       });
   }
 
-  // For deleting (soft delete) question using questionFigure
+  ///////////////////////////////////////////// DELETE QUESTION BY QUESTION FIGURE ////////////////////////////////
   private deleteQuestion(questionFigure: string) {
 
     // calling service to soft delete
@@ -533,6 +538,7 @@ export class ReviewAnswerComponent implements OnInit {
   // Dropdown data function calls
   ////////////////////////////////////
 
+  //////////////////////////////////////// LOAD QUIZZESS FROM SESSION STORAGE ////////////////////////
   private loadQuizzes() {
     try {
       this.sessionData = sessionStorage.getItem('quiz');
@@ -551,6 +557,7 @@ export class ReviewAnswerComponent implements OnInit {
     }
   }
 
+  ///////////////////////////////// LOAD CATEGORY FROM SESSION STORAGE //////////////////////////////
   private loadCategories() {
     try {
       this.sessionData = sessionStorage.getItem('category');
@@ -572,18 +579,9 @@ export class ReviewAnswerComponent implements OnInit {
     }
 
   }
-  private loadCourses() {
-    // try {
-    //   this.sessionData = sessionStorage.getItem('course');
 
-    //   this.data = JSON.parse(this.sessionData);
-    //   for (var inst in this.data) {
-    //     this.courses.push(this.data[inst]);
-    //   }
-    // }
-    // catch (err) {
-    //   console.log("Error", err)
-    // }
+  ///////////////////// LOAD ASSIGNED COURSE OF TEACHER ///////////////////////////////////
+  private loadCourses() {
 
     this.courseService.getAssignedCourseOfTeacher(this.profileId).subscribe(
       (data) => {
@@ -597,6 +595,8 @@ export class ReviewAnswerComponent implements OnInit {
 
   }
 
+
+  //////////////////// LOAD MODULE FROM SESSION STORAGE  ////////////////////////////////
   private loadModules() {
 
     try {
@@ -618,7 +618,7 @@ export class ReviewAnswerComponent implements OnInit {
 
 
 
-
+  ////////////////////////////////// GET STUDENT PROFILE BY COURSE ID AND MODULE ID ////////////////////////////
   async loadStudents() {
     this.studProfileArr = [];
     this.studProfileIds = [];
@@ -652,6 +652,9 @@ export class ReviewAnswerComponent implements OnInit {
     });
   }
 
+
+
+  ///////////////////////////////////////// GET PROFILE BY ID /////////////////////////////////////////////
   async getProfileById(profId: number) {
     return new Promise<Profile>((resolve, reject) => {
       this.profileServ.getProfileByAdminId(profId).subscribe(
@@ -709,6 +712,7 @@ export class ReviewAnswerComponent implements OnInit {
   }
 
 
+  //////////////////////////////////////// GET ALL QUESTION BY QUIZ ID ////////////////////////////
   getAllQuestionsByQuizId(quizId: number) {
     this.totalQuizMarks = 0;
     this.totalReviewMarks = 0;
@@ -728,6 +732,8 @@ export class ReviewAnswerComponent implements OnInit {
 
   }
 
+
+  /////////////////////////// GET ALL ANSWER IS ATTEMPTED ///////////////////////////////
   getAllAnswersAttempted(quizId: number) {
     this.correctQuestionAnswer = [];
     this.quizResult = [];

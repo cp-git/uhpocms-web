@@ -76,6 +76,9 @@ export class AddReviewMarksComponent implements OnInit {
 
   }
 
+
+  ///////////////////////////// ON FILE SELECTED  ////////////////////////////////////////////////
+
   onFileSelected(event: any, queAns: OneQuestionAnswer) {
 
     const file = event.target.files[0];
@@ -109,6 +112,8 @@ export class AddReviewMarksComponent implements OnInit {
     }
   }
 
+
+  //////////////////////////////// ON FROM SUBMIT  ////////////////////////////////
   onFormSubmit(queAns: OneQuestionAnswer, queAnsArray: OneQuestionAnswer[]) {
     this.submittedQuestionAnswer = {} as OneQuestionAnswer;
     this.submittedQuestionAnswer = queAns;

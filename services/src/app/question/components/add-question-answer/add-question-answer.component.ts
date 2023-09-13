@@ -163,6 +163,7 @@ export class AddQuestionAnswerComponent implements OnInit {
   }
 
 
+  /////////////////////////////////// ON SELECTING THE FILE ////////////////////////////////////////
   onFileSelected(event: any) {
     for (var i = 0; i < event.target.files.length; i++) {
       this.myFiles.push(event.target.files[i]);
@@ -170,131 +171,8 @@ export class AddQuestionAnswerComponent implements OnInit {
 
   }
 
-  // // Working code
-  //   onFormSubmit(queAns: OneQuestionAnswer): void {
-  //     this.questionAnswer = {} as QuestionAnswer;
-  //     this.oneQuestionAnswer = {} as OneQuestionAnswer;
-
-  // //New REq Code start from here 
 
 
-
-
-  // //New REq Code end from here 
-
-
-
-
-  //   this.service.getAllQuestionsByQuizId(queAns.questionQuizId).subscribe(
-  //       (response: any[]) => {
-
-  //         response.forEach(
-  //           question => {
-
-  //             this.totalMarks = this.totalMarks + question.maxMarks;
-
-  //           })
-  //       });
-
-  //     this.questionAnswer.question = {} as Question;
-  //     this.questionAnswer.question['questionId'] = queAns.questionId;
-  //     this.questionAnswer.question['questionFigure'] = queAns.questionFigure;
-  //     this.questionAnswer.question['questionContent'] = queAns.questionContent;
-  //     this.questionAnswer.question['questionExplanation'] = queAns.questionExplanation;
-  //     this.questionAnswer.question['questionOrderNo'] = queAns.questionOrderNo;
-  //     this.questionAnswer.question['maxMarks'] = queAns.maxMarks;
-
-  //      queAns.totalMarks = this.totalMarks;
-  //     if (this.selectedCategoryName == 'MCQ' || this.selectedCategoryName == 'mcq') {
-  //       this.questionAnswer.question.questionIsMCQ = true;
-  //     } else {
-  //       this.questionAnswer.question.questionIsMCQ = false;
-
-  //     }
-  //     this.questionAnswer.question.questionQuizId = this.selectedQuizId;
-  //     this.questionAnswer.question.questionCategoryId = this.selectedQuiz.categoryId;
-  //     this.questionAnswer.question.questionIsActive = true;
-
-  //     // separating answer from object
-  //     // this.emptyAnswer = {} as Answer;
-  //     // this.emptyAnswer.id = this.questionAnswer.answers['id'];
-  //     // this.emptyAnswer.content = this.questionAnswer.answers['content'];
-  //     // this.emptyAnswer.correct = true;
-  //     // this.emptyAnswer.questionorderno = this.questionAnswer.answers['questionorderno'];
-  //     this.questionAnswer.answers = [];
-
-
-  //     // making object of answers
-  //     if (queAns['content1'] != '' || queAns['content1'] != undefined) {
-  //       this.answer = {} as Answer;
-  //       this.answer.content = queAns['content1'];
-  //       this.answer.correct = queAns['correct1'];
-  //       this.answer.questionorderno = queAns['questionOrderNo'];
-
-  //       this.questionAnswer.answers.push(this.answer);
-  //     }
-  //     if (queAns['content2'] != '' || queAns['content2'] != undefined) {
-  //       this.answer = {} as Answer;
-  //       this.answer.content = queAns['content2'];
-  //       this.answer.correct = queAns['correct2'];
-  //       this.answer.questionorderno = queAns['questionOrderNo'];
-
-  //       this.questionAnswer.answers.push(this.answer);
-  //     }
-
-  //     if (queAns['content3'] != '' || queAns['content3'] != undefined) {
-  //       this.answer = {} as Answer;
-
-  //       this.answer.content = queAns['content3'];
-  //       this.answer.correct = queAns['correct3'];
-  //       this.answer.questionorderno = queAns['questionOrderNo'];
-
-  //       this.questionAnswer.answers.push(this.answer);
-  //     }
-
-  //     if (queAns['content4'] != '' || queAns['content4'] != undefined) {
-  //       this.answer = {} as Answer;
-
-  //       this.answer.content = queAns['content4'];
-  //       this.answer.correct = queAns['correct4'];
-  //       this.answer.questionorderno = queAns['questionOrderNo'];
-  //       this.questionAnswer.answers.push(this.answer);
-  //     }
-
-
-
-
-  //     const instituteJson = JSON.stringify(this.questionAnswer);
-
-  //     const blob = new Blob([instituteJson], {
-  //       type: 'application/json'
-  //     })
-
-  //     let formData = new FormData();
-
-  //     for (var i = 0; i < this.myFiles.length; i++) {
-  //       formData.append("files", this.myFiles[i]);
-  //     }
-
-  //     formData.append("request", new Blob([JSON.stringify(this.questionAnswer)], { type: 'application/json' }));
-
-
-  //     this.service.addQuestion(formData).subscribe(
-  //       (response) => {
-
-
-  //         this.generatedQuestionAnswerId = response;
-
-  //         // this.getDataForMarks(this.selectedQuizId)
-  //         this.getAllQuestionAnswers(this.selectedQuizId)
-
-  //       },
-  //       (error) => {
-  //       
-  //       }
-  //     )
-
-  //   }
   async getMCQCategory() {
 
     await this.categoryServ._getAllCategorys().toPromise().then(
@@ -957,7 +835,7 @@ export class AddQuestionAnswerComponent implements OnInit {
     this.passMarks = 0;
     // this.maxMarks = 0;
 
-
+    /////////////////////////// GET ALL QUESTION BY QUESTION ID /////////////////////////////////////
     await this.service.getAllQuestionsByQuizId(quizId).toPromise().then(
       (response) => {
         quesArr = response || []; // Assign an empty array if response is undefined
@@ -965,6 +843,7 @@ export class AddQuestionAnswerComponent implements OnInit {
       }
     );
 
+    ////////////////////////////// FETCH ALL INACTIVE QUIZZESS ///////////////////////////
     await this.quizServ.fetchAllActInactQuizs().toPromise().then(
       (response) => {
         quiz = response.filter((quiz: Quiz) => quiz.quizId == quizId)
@@ -1000,33 +879,6 @@ export class AddQuestionAnswerComponent implements OnInit {
 
   }
 
-  // onChangeSelectedQuiz() {
-  //   this.questionAnswers = [];
-  //   this.selectedQuiz = this.quizzes.find(quiz => quiz.quizId == this.selectedQuizId);
-  //   // this.currentQuestions.length = this.selectedQuiz.maxQuestions;
-  //   // this.currentAnswers.length = this.selectedQuiz.maxQuestions;
-
-
-
-  //   this.service.getAllQuestionsByQuizId(this.selectedQuizId).subscribe(
-  //     response => {
-  //       this.allData = response; //assign data to local variable
-
-
-  //   this.service.getAllQuestionsByQuizId(this.selectedQuizId).subscribe(
-  //     response => {
-  //       this.allData = response; //assign data to local variable
-
-  //       this.getAllQuestionAnswers(this.selectedQuizId);
-
-
-
-  //     },
-  //     error => {
-  //       console.log('No data in table ');
-  //     }
-  //   );
-  // }
 
   private initialiseQuestion(length: number) {
     // this.questionAnswers = [];
@@ -1054,6 +906,8 @@ export class AddQuestionAnswerComponent implements OnInit {
     this.maxMarks = 0;
     this.totalQuizMarks = 0;
 
+
+    ///////////////////////////////////////////////// FETCH ALL INACTIVE QUIZZESS //////////////////////////////////
     this.quizServ.fetchAllActInactQuizs().subscribe(
       (response) => {
         let quiz: Quiz[] = response.filter((quiz: Quiz) => quiz.quizId === quizId)
@@ -1272,7 +1126,7 @@ export class AddQuestionAnswerComponent implements OnInit {
   // Funcation calls specific to this module
   ///////////////////////////////////////////
 
-  // for getting all questions
+  //////////////////////////////////////   GET ALL QUESTIONS ////////////////////////////////////////////
   private getAllQuestions() {
 
     // calling service to get all data
@@ -1289,7 +1143,7 @@ export class AddQuestionAnswerComponent implements OnInit {
   }
 
 
-  // For adding question
+  ///////////////////////////////////////// ADDING THE QUESTION ////////////////////////////////////////
   private addQuestion(questionAnswer: QuestionAnswer) {
 
     questionAnswer.question['questionIsActive'] = true;  // setting active true
@@ -1316,7 +1170,7 @@ export class AddQuestionAnswerComponent implements OnInit {
       });
   }
 
-  // For deleting (soft delete) question using questionFigure
+  ////////////////////////////////////////// DELETE QUESTION ///////////////////////////////////////////////
   private deleteQuestion(questionFigure: string) {
     this.dialogBoxService.open('Are you sure you want to delete this Question ? ', 'decision').then((response) => {
       if (response) {
@@ -1346,6 +1200,8 @@ export class AddQuestionAnswerComponent implements OnInit {
   // Dropdown data function calls
   ////////////////////////////////////
 
+
+  //////////////////////////////// LOAD QUIZZES FROM SESSION STORAGE ///////////////////////////////////////////
   private loadQuizzes() {
     this.allData = [];
     try {
@@ -1370,6 +1226,8 @@ export class AddQuestionAnswerComponent implements OnInit {
     }
   }
 
+
+  /////////////////////////////   LOAD CATEGORIES FROM SESSION STORAGE  ///////////////////////////////////
   private loadCategories() {
     try {
       this.sessionData = sessionStorage.getItem('category');
@@ -1384,19 +1242,10 @@ export class AddQuestionAnswerComponent implements OnInit {
     }
 
   }
+
+  /////////////////////// LOAD GET ASSIGNED COURSE OF TEACHER  /////////////////////////////////////////////
   private loadCourses() {
-    // try {
-    //   this.sessionData = sessionStorage.getItem('course');
-
-    //   this.data = JSON.parse(this.sessionData);
-    //   for (var inst in this.data) {
-    //     this.courses.push(this.data[inst]);
-    //   }
-    // }
-    // catch (err) {
-    //   console.log("Error", err)
-    // }
-
+    //Course Service...
     this.courseService.getAssignedCourseOfTeacher(this.profileId).subscribe(
       (data) => {
 
@@ -1410,6 +1259,9 @@ export class AddQuestionAnswerComponent implements OnInit {
 
   }
 
+
+
+  /////////////////////////////////////// LOAD  MODULES FROM SESSION STORAGE ///////////////////////////////
   private loadModules() {
 
     try {

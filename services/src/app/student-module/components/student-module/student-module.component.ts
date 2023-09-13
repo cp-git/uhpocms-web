@@ -270,6 +270,8 @@ export class StudentModuleComponent implements OnInit {
     this.filterUniqueModuleIds();
     //.log(this.reviewButtonStat)
 
+
+    //////////////////////////////////// DISPLAY STUDENT PROGRESS /////////////////////////////////////////
     this.quizProgServ.displayStudentProgress(this.studentId).subscribe(
       dd => {
 
@@ -293,8 +295,7 @@ export class StudentModuleComponent implements OnInit {
 
   }
 
-
-  //loads the courses of the student using the getCourseByStudentId() method of StudentService
+  /////////////////////////////////////////////// LOAD COURSE BY STUDENT ID /////////////////////////////////
   loadCourseOfStudent(studentId: number) {
     this.courseService.getCourseByStudentId(studentId).subscribe(
       response => {
@@ -373,7 +374,7 @@ export class StudentModuleComponent implements OnInit {
 
 
       //.log(this.selectedModule.moduleId)
-
+      /////////////////////////////////// GETTING FILE PROGRESS  BY MODULE ID AND STUDENT ID //////////////////////////////////////
       this.fileProgService.getAllFileProgressByModIdStudId(this.selectedModule.moduleId, this.studentId).subscribe(
         (response) => {
 
@@ -604,17 +605,7 @@ export class StudentModuleComponent implements OnInit {
 
 
 
-  // async getModFilesByModuleId(moduleId: number) {
-  //   this.modFilesArray = [];
-  //   await this.modFileServc.getModuleFilesByModuleId(moduleId).toPromise().then(
-  //     (response) => {
-  //       if (response) {
-  //         this.modFilesArray = response.filter((elem) => elem.moduleFileIsActive == true)
-  //       }
-  //     }
-  //   )
-  //     .catch((error) => { //.log(error) })
-  // }
+
 
   private async getModFilesByModuleId(moduleId: number) {
     this.modFilesArray = [];
@@ -710,6 +701,7 @@ export class StudentModuleComponent implements OnInit {
   }
 
 
+  ////////////////////    GET MODULE  FILES BY STUDENT ID ///////////////////////////////////////////
   getModuleFiles(studentId: number) {
     this.moduleFileService.getModuleFilesOfEnrolledCoursesOfModulesByProfileId(studentId).subscribe(
       response => {

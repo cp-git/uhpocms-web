@@ -168,6 +168,8 @@ export class QuestionAnswerComponent implements OnInit {
     this.renderer.removeChild(imgElement.parentNode, imgElement);
   }
 
+
+  /////////////////////////////////////////// ON SELECT IMAGE ///////////////////////////////////////
   onFileSelected(event: any, queAns: OneQuestionAnswer) {
 
     const file = event.target.files[0];
@@ -207,6 +209,8 @@ export class QuestionAnswerComponent implements OnInit {
 
   }
 
+
+  ///////////////////////////////////// DELETE QUESTION ANSWERS //////////////////////////////
   onDelete(queAns: OneQuestionAnswer) {
 
     let questionAnsCopy: OneQuestionAnswer[] = [];
@@ -338,6 +342,8 @@ export class QuestionAnswerComponent implements OnInit {
     }
   }
 
+
+  ////////////////////////////////////// ON FORM SUBMIT BUTTON ///////////////////////////
   onFormSubmit(queAns: OneQuestionAnswer, queAnsArray: OneQuestionAnswer[]) {
     this.submittedQuestionAnswer = {} as OneQuestionAnswer;
     this.submittedQuestionAnswer = queAns;
@@ -363,33 +369,6 @@ export class QuestionAnswerComponent implements OnInit {
     queAns.isFormSubmitted = true;
   }
 
-  // private initialisedMcqOptions() {
-  //   this.questionAnswers.forEach(queAns => {
-  //     queAns.answers.forEach((answer: Answer, index: number) => {
-  //       if (index === 0) {
-  //         queAns.answers[0] = answer;
-  //       } else if (index === 1) {
-  //         queAns.answers[1] = answer;
-  //       } else if (index === 2) {
-  //         queAns.answers[2] = answer;
-  //       } else if (index === 3) {
-  //         queAns.answers[3] = answer;
-  //       }
-  //     })
-  //     for (let i = queAns.answers.length; i < 4; i++) {
-  //       console.log(i)
-  //       if (i === 0) {
-  //         queAns.answers[0] = new Answer();
-  //       } else if (i === 1) {
-  //         queAns.answers[1] = new Answer();
-  //       } else if (i === 2) {
-  //         queAns.answers[2] = new Answer();
-  //       } else if (i === 3) {
-  //         queAns.answers[3] = new Answer();
-  //       }
-  //     }
-  //   })
-  // }
 
   onAnswerSelected(queAns: any, option: any) {
 
@@ -473,6 +452,8 @@ export class QuestionAnswerComponent implements OnInit {
   }
 
 
+
+  ///////////////////////////////////// LOAD SESSION STORAGE PROFILE DATA /////////////////////////////
   loadProfiles(profileId: number) {
     try {
       this.sessionData = sessionStorage.getItem('instituteprofile');
@@ -490,6 +471,8 @@ export class QuestionAnswerComponent implements OnInit {
     }
   }
 
+
+  /////////////////////////////////// LOAD ADMIN INSTITUTION FROM SESSION STORAGE ///////////////////////////////
   loadAdminInstitutions(profileInstituteId: number) {
     try {
       // alert(profileInstituteId + "id");
@@ -509,7 +492,7 @@ export class QuestionAnswerComponent implements OnInit {
     }
   }
 
-
+  //////////////////////////////////// LOAD QUIZ FROM SESSION STORAGE //////////////////////////////////////
   loadQuiz(selectedQuizId: number) {
     //alert(selectedQuizId);
     try {
@@ -534,7 +517,7 @@ export class QuestionAnswerComponent implements OnInit {
 
 
 
-
+  ///////////////////////////////////////////////  LOAD CATEGORY FROM SESSION STORAGE ///////////////////////////////
   loadCategories(selectedQuizCategoryId: number) {
     try {
       this.sessionData = sessionStorage.getItem('category');

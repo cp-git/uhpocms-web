@@ -127,6 +127,8 @@ export class AssigncoursetoteacherComponent {
     return _profileArrayForSelect.length > size;
   }
 
+
+  ////////////////////////////////////////////  GETTING THE LIST OF INSTITUTIONS   ////////////////////////////////////
   private getAllInstitution() {
 
     // fetching all institution
@@ -153,6 +155,8 @@ export class AssigncoursetoteacherComponent {
     );
   }
 
+
+  /////////////////////////////////////////////   GET DEPARTMENT BY INSTITUTE ID  //////////////////////////////////////
   getDepartmentByInstId(instId: number) {
 
     instId = this._profile.institutionId;
@@ -177,6 +181,8 @@ export class AssigncoursetoteacherComponent {
     this.course.courseId = 0;
   }
   //function for get Course by department id
+
+  ////////////////////////////    GET COURSES BY DEPARTMENT ID  //////////////////////////////////////////
   getCoursesByDeptId(deptId: number) {
 
     deptId = this.department.id;
@@ -191,8 +197,7 @@ export class AssigncoursetoteacherComponent {
     )
   }
 
-
-  ///Function for get profile by role and institution id 
+  //////////////////////////////////  GET PROFILE BASED ON ROLE AND INSTITUTE ID
   getProfileByRoleAndInstId(instId: number) {
     let userRole = "teacher";
     instId = this._profile.institutionId;
@@ -224,7 +229,7 @@ export class AssigncoursetoteacherComponent {
 
   }
 
-  // Method to delete assignment by courseId and profileId
+  ////////////////////////   DELETE ASSIGN TEACHER USING COURSE ID AND PROFILE ID   //////////////////////////////////////
   deleteAssignment(courseId: number, profileId: number) {
     this.assignTeacherService.deleteAssignToTeacherByCourseIdAndProfileId(courseId, profileId)
       .subscribe(
@@ -251,6 +256,8 @@ export class AssigncoursetoteacherComponent {
     this.getStudentByCourseId(courseId);
   }
 
+
+  //////////////////////////////////    GET TEACHER BY COURSE ID   ///////////////////////////////////////
   getTeacherByCourseId(courseId: any) {
     this.assignTeacherArr = [];
     this.assignTeacherService.getTeacherByCourseId(courseId).subscribe(
@@ -269,6 +276,7 @@ export class AssigncoursetoteacherComponent {
     );
   }
 
+  /////////////////////////////////////////////  GET STUDENT BY COURSE ID /////////////////////////////////
   getStudentByCourseId(courseId: any) {
 
     this.enrolledUsers = [];
@@ -318,15 +326,7 @@ export class AssigncoursetoteacherComponent {
       this.prevSelected = [...this.selected];
     }
 
-    // if (this.selected.length !== this.prevSelected.length) {
 
-    //   this.selected.forEach((profileId,index)=>{
-    //     if(this.assignTeacherArr.includes(profileId)) this.selected.splice(index,1);
-    //  });
-
-
-    //   this.prevSelected = [...this.selected];
-    // }
   }
 
 
@@ -352,6 +352,8 @@ export class AssigncoursetoteacherComponent {
   }
   inserted: boolean = false;
   //function for save the course id with profile ID
+
+  //////////////////////////////////////////  ASSIGNING COURSE TO TEACHER  //////////////////////////////////////////////
   saveAssignTeacher(courseId: number, profileId: number) {
 
     this.inserted = false;
@@ -464,6 +466,8 @@ export class AssigncoursetoteacherComponent {
         this.getInsitutionByProfileId(this.profileId);
     }
   }
+
+  //////////////////////////////  GET INSTITUTION BY PROFILE ID   /////////////////////////////////////////
 
   getInsitutionByProfileId(profileId: any) {
     this._institutionService.getInstitutionByProfileId(profileId).subscribe(

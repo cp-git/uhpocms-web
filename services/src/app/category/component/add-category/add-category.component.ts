@@ -29,6 +29,8 @@ export class AddCategoryComponent {
     this._route.navigate(['category'])
   }
 
+
+  ///////////////////////////////////////////////////////// CREATE NEW CATEGORY  ////////////////////////////////////////////
   addCategory(toCreateCategory: Category) {
 
     var categoryId = toCreateCategory.categoryId;

@@ -227,7 +227,7 @@ export class AllCourseComponent implements OnInit {
   // Funcation calls specific to this module
   ///////////////////////////////////////////
 
-  // For updating course
+  /////////////////////////////// UPDATE THE COURSE //////////////////////////////
   private updateCourse(currentData: Course) {
     // calling service for updating data
     this.service.updateCourseById(currentData.courseId, currentData).subscribe(
@@ -249,7 +249,7 @@ export class AllCourseComponent implements OnInit {
     );
   }
 
-  // adding course to course and linking course to department
+  ///////////////////////////// INSERTION OF COURSE ///////////////////////////////
   private async addCourse(currentData: any) {
     try {
       const data = await this.service.addCourse(currentData).toPromise();
@@ -290,6 +290,7 @@ export class AllCourseComponent implements OnInit {
     }
   }
 
+  //////////////////////LOAD ID OF ALL COURSES WITH DEPARTMENT ID //////////////////
   private async loadIdsOfAllCoursesWithDepartmentId() {
     try {
       const data = await this.service.getCoursesDepartmentId().toPromise();
@@ -300,7 +301,7 @@ export class AllCourseComponent implements OnInit {
     }
   }
 
-  // for getting all courses
+  ////////////////////////////////// GETTING ALL COURSES //////////////////////////
   private getAllCourse() {
     // calling service to get all data
     this.service.getAllCourses().subscribe(
@@ -329,7 +330,8 @@ export class AllCourseComponent implements OnInit {
     );
   }
 
-  // For deleting (soft delete) course using courseId
+  //////////////////////////////////  DELETE THE COURSE BY COURSE ID ////////////////////////
+
   private deleteCourse(courseId: number) {
     this.dialogBoxServices
       .open('Are you sure you want to delete this Course ? ', 'decision')
@@ -360,7 +362,8 @@ export class AllCourseComponent implements OnInit {
       });
   }
 
-  // For getting all inactive course
+
+  /////////////////////// GET ALL INACTIVE COURSES ///////////////////////////////////////////////////
   private getAllInActiveCourse() {
     // calling service to get all inactive record
     this.service.getAllDeactivateCourses().subscribe(
@@ -390,7 +393,8 @@ export class AllCourseComponent implements OnInit {
     );
   }
 
-  // fetching department data
+
+  /////////////////////////// FETCHING THE DEPARTMENTS  FROM SESSION STORAGE ///////////////////////////////
   private loadDepartments() {
     this.departmentService.getAllDepartments().subscribe(
       (response) => {
@@ -403,6 +407,8 @@ export class AllCourseComponent implements OnInit {
       }
     );
   }
+
+  /////////////////////////////// FETCHING THE ADMIN INSTITUTION FROM SESSION STORAGE //////////////////////////////
   private loadAdminInstitutions() {
     try {
       this.sessionData = sessionStorage.getItem('admininstitution');
@@ -418,7 +424,9 @@ export class AllCourseComponent implements OnInit {
     }
   }
 
-  // For activating course using courseId
+
+
+  /////////////////////////// ACTIVATAING THE COURSE USING COURSE ID /////////////////////////////////////////
   private activateCourse(courseId: number) {
     // calling service to activating admin role
     this.service.activateCourseById(courseId).subscribe(
@@ -438,6 +446,9 @@ export class AllCourseComponent implements OnInit {
     );
   }
 
+
+
+  ///////////////////////////// LOAD COURSES BASED ON ROLE//////////////////////////////////////////////
   private async loadCoursesBasedOnRole(userRole: string) {
 
     switch (userRole) {
@@ -461,10 +472,7 @@ export class AllCourseComponent implements OnInit {
         await this.getDepartmentByProfileId(this.profileId);
         this.getCoursesByDepartmentId(this.departments[0].id);
 
-        // // For getting Inactive Course of that institutions
-        // this.getInactiveCoursesByInstitutionId(this.adminInstitutions[0].adminInstitutionId);
 
-        // this.getAssignedCoursesOfTeacher(this.profileId);
 
         break;
       case 'student':
@@ -477,68 +485,14 @@ export class AllCourseComponent implements OnInit {
         await this.getDepartmentByProfileId(this.profileId);
         this.getCoursesByDepartmentId(this.departments[0].id);
 
-        // this.getInactiveCoursesByInstitutionId(this.adminInstitutions[0].adminInstitutionId);
 
-        // this.getCoursesEnrolledToStudent(this.profileId);
         break;
     }
   }
 
-  // for getting courses enroll for the student using  profileId
-  // private getCoursesEnrolledToStudent(studentId: number) {
-  //   this.service.getCourseByStudentId(studentId).subscribe(
-  //     (data) => {
-  //       this.allData = [];
-  //       data.forEach((course: Course) => {
-  //        
 
-  //         this.courseDepartments.find((coursedepartment: CourseDepartment) => {
-  //           if (course.courseId == coursedepartment.courseId) {
-  //             this.allData.push({
-  //               ...course,
-  //               departmentId: coursedepartment.department_id,
-  //             });
-  //           }
-  //           this.allData.sort((a, b) =>
-  //             a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1
-  //           ); // order by alphabets for course name
-  //         });
-  //       });
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
 
-  //getting courses assigned to teacher using profileId
-  // private getAssignedCoursesOfTeacher(teacherId: number) {
-  //   this.service.getAssignedCourseOfTeacher(teacherId).subscribe(
-  //     (response) => {
-  //       // this.allData = data;
-  //       this.allData = [];
-  //       response.forEach((course: Course) => {
-  //         this.courseDepartments.find((coursedepartment: CourseDepartment) => {
-  //           if (course.courseId == coursedepartment.courseId) {
-  //             this.allData.push({
-  //               ...course,
-  //               departmentId: coursedepartment.department_id,
-  //             });
-  //           }
-  //           this.allData.sort((a, b) =>
-  //             a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1
-  //           ); // order by alphabets for course name
-  //         });
-  //       });
-  //       
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
-
-  // function for getting institituions and all departments of that institution by profile id
+  //////////////// GETTING INSTITUTIONS AND ALL DEPARTMENTS OF INSTITUTE BY PROFILE FROM ADMIN INSTITUTIONS SERVICE  /////////////////
   private async getInstitutionAndDepartmentsOfUserByUserId(profileId: any) {
     try {
       const result = await this.institutionService
@@ -552,11 +506,11 @@ export class AllCourseComponent implements OnInit {
     } catch (error) {
       console.log('no data fetched');
     }
-    // for getting active and inactive departments using institution id
-    // this.getAllDepartmentsByInstitutionId(this.adminInstitutions[0].adminInstitutionId);
+
   }
 
-  // For getting all active departments by institution id
+
+  /////////////////////////// GET ALL ACTIVE DEPARTMENT BY INSTITUTE ID USED FROM DEPARTMENT SERVICE ////////////////////////
   getAllDepartmentsByInstitutionId(institutionId: any) {
     this.departmentService
       .getDepartmentsByInstitutionId(institutionId)
@@ -566,17 +520,8 @@ export class AllCourseComponent implements OnInit {
       });
   }
 
-  // // For getting all inactive departments by institution id
-  // getAllInactiveDeparmentsByInstitutionId(institutionId: any) {
-  //   this.departmentService.getInactiveDepartmentsByInstitutionId(institutionId).subscribe(
-  //     (response) => {
-  //     
 
-  //       this.inactiveD = response;
-  //     }
-  //   );
-  // }
-
+  ////////////////////////  GETTING INACTIVE COURSES BY INSTITUTION ID /////////////////////////////////////////
   private getInactiveCoursesByInstitutionId(instituteId: number) {
     this.service
       .getInactiveCoursesByInstitutionId(instituteId)
@@ -586,7 +531,8 @@ export class AllCourseComponent implements OnInit {
       });
   }
 
-  // getting all courses using department id
+  ///////////////////////// GETTING ALL COURSES USING DEPARTMENT ID //////////////////////////////////
+
   private getCoursesByDepartmentId(departmentId: number) {
 
     this.service.getCourseByDepartmentId(departmentId).subscribe(
@@ -617,7 +563,8 @@ export class AllCourseComponent implements OnInit {
     );
   }
 
-  // getting department usign profile id
+
+  //////////////////////  GETTING DEPARTMENT USING PROFILE IF USED IN DEPARTMENT SERVICE //////////////////////////////
   private async getDepartmentByProfileId(profileId: number) {
 
 

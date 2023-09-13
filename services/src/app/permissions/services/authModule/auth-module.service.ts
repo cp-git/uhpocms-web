@@ -23,6 +23,8 @@ export class AuthModuleService {
 
   }
 
+
+  //No API Present in BE
   updateAuthModule(moduleId: number, authModule: AuthModule): Observable<AuthModule[]> {
     return this.http.post<AuthModule[]>(`${this.accessPrivilegeUrl}/modules`, authModule);
 

@@ -13,22 +13,26 @@ export class EmailService {
     this.emailUrl = `${environment.emailUrl}/email`;
   }
 
-  // api call for fetching all emails 
+
+  ///////////////////////////////////// SERVICE - GET ALL EMAILS ///////////////////////////////////////
   getAllEmails() {
     return this.http.get<Email[]>(`${this.emailUrl}?title=all`);
   }
 
-  // api call for inserting new email
+
+  ////////////////////////////// SERVICE - CREATE NEW EMAIL //////////////////////////////////////////
   insertEmail(email: Email) {
     return this.http.post<Email>(`${this.emailUrl}`, email);
   }
 
-  // api call for update email by title
+
+  /////////////////////////////  SERVICE -UPDATE EMAIL //////////////////////////////////////////////
   updateEmail(email: Email) {
     return this.http.put<Email>(`${this.emailUrl}/${email.title}`, email);
   }
 
-  // api call for delete email by title
+
+  /////////////////////////// SERVICE -DELETE EMAIL  ///////////////////////////////////////////////
   deleteEmail(emailTitle: string) {
     return this.http.delete<Email>(`${this.emailUrl}/${emailTitle}`);
   }

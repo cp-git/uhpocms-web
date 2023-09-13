@@ -74,6 +74,8 @@ export class CreateAnnouncementComponent {
     }
   }
 
+
+  ////////////////////////////////////////  Load data on page ////////////////////////////////////////
   ngOnInit(): void {
 
 
@@ -125,6 +127,7 @@ export class CreateAnnouncementComponent {
 
 
   }
+  ////////////////////////////////////  GET STUDENT ASSIGN TO TEACHER COURSE ///////////////////////////////
   //function to get all announcements
   private studentsAssignedToTeacherCourse(profileId: number) {
     this.announcementService.getStudentsAssignedToTeacher(profileId).subscribe(
@@ -139,6 +142,7 @@ export class CreateAnnouncementComponent {
     );
   }
 
+  //////////////////////////////////  GET ENROLLED PROFILE OF COURSE BY ONE STUDENT ID //////////////////////////////////
   private getEnrolledProfilesOfCourseByOneStudentId(profileId: number) {
     this.announcementService.getEnrolledProfilesOfCourseByOneStudentId(profileId).subscribe(
       response => {
@@ -163,6 +167,8 @@ export class CreateAnnouncementComponent {
     });
   }
 
+
+  //////////////////////////////////  LOAD THE PROFILE DATA FROM SESSION STORAGE /////////////////////////////
   // getting institution profile data from session 
   private loadInstitutionProfile() {
     this.instituteAdmins = [];
@@ -192,6 +198,10 @@ export class CreateAnnouncementComponent {
     }
   }
 
+
+
+
+  ///////////////////////////////////////// SEND ANNOUNCEMENT     ///////////////////////////////////
   // sending announcements to users
   sendAnnouncements(announcement: Announcement) {
     // this.insertAnnouncement(announcement);
@@ -219,7 +229,8 @@ export class CreateAnnouncementComponent {
     }
     return true;
   }
-  // adding announement data in table
+
+  ////////////////////////////////////  CREATE THE ANNOUNCEMENT /////////////////////////////////////////
   private insertAnnouncement(announcement: Announcement) {
     this.announcementService.insertAnnouncement(announcement).subscribe(
       response => {
@@ -236,7 +247,7 @@ export class CreateAnnouncementComponent {
     );
   }
 
-  // sending announcements to users
+  /////////////////////////////////////////////////// SEND ANNOUNCEMENT TO PROFILE ID'S ////////////////////////////////////////
   private sendAnnouncementsToProfileIDs() {
     this.announcementService.sendAnnouncementsToProfileIDs(this.announcementId, this.profileIDs).subscribe(
       success => {

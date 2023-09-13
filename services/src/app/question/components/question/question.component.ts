@@ -165,7 +165,7 @@ export class QuestionComponent implements OnInit {
   // Funcation calls specific to this module
   ///////////////////////////////////////////
 
-  // for getting all questions
+  /////////////////////////////////////////// GET ALL QUESTIONS /////////////////////////////////////////
   private getAllQuestions() {
     this.dataAvailable = true;
 
@@ -187,7 +187,7 @@ export class QuestionComponent implements OnInit {
   }
 
 
-  // For adding question
+  ////////////////////////////////////////////  ADD QUESTIONS ANSWER //////////////////////////////
   private addQuestion(questionAnswer: QuestionAnswer) {
 
     const instituteJson = JSON.stringify(questionAnswer);
@@ -215,7 +215,7 @@ export class QuestionComponent implements OnInit {
       });
   }
 
-  // For updating Question
+  //////////////////////////////////////// UPDATE THE QUESTION //////////////////////////////////
   private updateQuestion(currentData: Question) {
     // calling service for updating data
     this.service.updatedQuestion(currentData).subscribe(
@@ -229,7 +229,7 @@ export class QuestionComponent implements OnInit {
     );
   }
 
-  // For deleting (soft delete) question using questionFigure
+  //////////////////////////////////////////////// DELETE QUESTION BY QUESTION FIGURE /////////////////////////////////
   private deleteQuestion(questionFigure: string) {
     this.dialogBoxService.open('Are you sure you want to delete this Question ? ', 'decision').then((response) => {
       if (response) {
@@ -252,7 +252,7 @@ export class QuestionComponent implements OnInit {
     });
   }
 
-  // For getting all inactive questions
+  /////////////////////////////////////////// GET IN ACTIVE QUESTIONS //////////////////////////////////////////
   private getInActiveQuestions() {
 
     // calling service to get all inactive record
@@ -268,7 +268,7 @@ export class QuestionComponent implements OnInit {
   }
 
 
-  // For activating question using role id
+  //////////////////////////////////////////// ACTIVATE QUESTION BY QUESTION FIGURE  ///////////////////////////
   private activateQuestion(questionFigure: string) {
 
     // calling service to activating question
@@ -289,6 +289,8 @@ export class QuestionComponent implements OnInit {
   // Dropdown data function calls
   ////////////////////////////////////
 
+
+  ////////////////////////////////// LOAD QUIZZESS FROM SESSION STORAGE ///////////////////////////////////
   private loadQuizzes() {
     try {
       this.sessionData = sessionStorage.getItem('quiz');
@@ -303,6 +305,8 @@ export class QuestionComponent implements OnInit {
     }
   }
 
+
+  /////////////////////////////// LOAD CATEGORY FROM SESSIONS STORAGE  ////////////////////////////////////
   private loadCategories() {
     try {
       this.sessionData = sessionStorage.getItem('category');

@@ -223,7 +223,7 @@ export class QuizComponent implements OnInit {
   // Funcation calls specific to this module
   ///////////////////////////////////////////
 
-  // for getting all quizzes
+  //////////////////////// GET ALL ACTIVE QUIZZESS ///////////////////////////////////////////////
   getAllQuizzes(courses: Course[]) {
     this.quizService.getAllQuizzes().subscribe(
       response => {
@@ -244,7 +244,7 @@ export class QuizComponent implements OnInit {
   }
 
 
-  // deleting quiz using title (soft delete)
+  ////////////////////////////////////// DELETE QUIZ BY QUIZ TITLE /////////////////////////////////////////////
   deleteQuiz(title: string) {
     this.dialogBoxService.open('Are you sure you want to delete this Quiz ? ', 'decision').then((response) => {
       if (response) {
@@ -267,7 +267,7 @@ export class QuizComponent implements OnInit {
     });
   }
 
-  // for adding quiz
+  /////////////////////////////////////// ADDING A NEW QUIZ //////////////////////////////////////////
   addQuiz(currentData: Quiz) {
 
 
@@ -310,7 +310,7 @@ export class QuizComponent implements OnInit {
   }
 
 
-  // for updating quiz using title
+  //////////////////////////////////////// UPDATING THE QUIZ ////////////////////////////////////
   private async updateQuiz(currentData: Quiz) {
     // calling service for updating data
 
@@ -351,7 +351,7 @@ export class QuizComponent implements OnInit {
 
 
 
-  // for getting all inactive quiz
+  /////////////////////////////////////////////////////  GET ALL INACTIVE QUIZ   ////////////////////////////////////
   private getInActiveQuiz() {
 
     // calling service to get all inactive record
@@ -366,6 +366,8 @@ export class QuizComponent implements OnInit {
       }
     );
   }
+
+  /////////////////////////////////////////// GET QUESTION BY QUIZ ID ///////////////////////////////////////////
   async getQuesByQuizId(quizId: number) {
     await this.quesService.getAllQuestionsByQuizId(quizId).toPromise().then(
       (response) => {
@@ -373,7 +375,7 @@ export class QuizComponent implements OnInit {
 
       });
   }
-  // for activating quiz using title
+  ///////////////////////////////// ACTIVATE QUIZ BY QUIZ TITLE ///////////////////////////////////////////////
   private async activateQuiz(quiz: Quiz) {
 
     // calling service to activating Quiz
@@ -395,7 +397,7 @@ export class QuizComponent implements OnInit {
     else { this.dialogBoxService.open('Please add questions to the quiz', 'warning') }
   }
 
-  // loading courses 
+  ///////////////////////////////////// LOAD ALL COURSES FROM SESSION STORAGE ///////////////////////////////// 
   private loadAllCourses() {
     this.courseService.getAllCourses().subscribe(
       (data) => {
@@ -407,7 +409,7 @@ export class QuizComponent implements OnInit {
     );
   }
 
-  // loading modules 
+  //////////////////////////// LOAD ALL MODULES FROM SESSION STORAGE //////////////////////////////////////// 
   private loadAllModules() {
     this.moduleService.getAllModules().subscribe(
       (data) => {
@@ -419,7 +421,7 @@ export class QuizComponent implements OnInit {
     )
   }
 
-  // loading categories 
+  /////////////////////////// LOAD ALL CATEGORIES FROM SESSION STORAGE //////////////////////////////////////// 
   private loadAllCategories() {
     this.categotyService._getAllCategorys().subscribe(
       (data) => {
@@ -431,7 +433,7 @@ export class QuizComponent implements OnInit {
     )
   }
 
-  //getting courses assigned to teacher using profileId
+  ////////////////////////// GET ASSIGNED COURSES OF TEACHER /////////////////////////////////////////////
   private getAssignedCoursesOfTeacher(teacherId: number) {
     this.courseService.getAssignedCourseOfTeacher(teacherId).subscribe(
       (data) => {
@@ -486,7 +488,9 @@ export class QuizComponent implements OnInit {
     }
   }
 
-  //getting courses assigned to teacher using profileId
+
+  ////////////////////////////////////// GET ASSIGNED COURSES BY PROFILE ID USED IN COURSE SERVICE ///////////////////////////////
+  //getting courses assigned to teacher using profileId  course Servic
   private getAssignedCoursesByProfileId(teacherId: number) {
     this.courseService.getAssignedCourseOfTeacher(teacherId).subscribe(
       (data) => {
@@ -498,7 +502,9 @@ export class QuizComponent implements OnInit {
       }
     );
   }
-  //getting courses enrolled to student using profileId
+
+  //////////////////////////////// GETTING COURSES ENROLLED TO PROFILE ID //////////////////////////////////
+  //getting courses enrolled to student using profileId  Course Service
   private getEnrolledCoursesByProfileId(studentId: number) {
     this.courseService.getCourseByStudentId(studentId).subscribe(
       (data) => {
@@ -511,6 +517,7 @@ export class QuizComponent implements OnInit {
     );
   }
 
+  /////////////////////////////////// GET MODULE OF ASSIGNED COURSES BY PROFILE ID  /////////////////////////
   getModulesOfAssignedCoursesByProfileId(profileId: number) {
     this.moduleService.getModulesOfAssignedCoursesByProfileId(profileId).subscribe(
       (response) => {
@@ -523,6 +530,8 @@ export class QuizComponent implements OnInit {
     );
   }
 
+
+  ////////////////////// GET MODULES OF ENROLLED COURSES BY PROFILE ID /////////////////////////////////
   getModulesOfEnrolledCoursesByProfileId(profileId: number) {
     this.moduleService.getModulesOfEnrolledCoursesByProfileId(profileId).subscribe(
       (response) => {
@@ -532,6 +541,8 @@ export class QuizComponent implements OnInit {
     );
   }
 
+
+  ////////////////////////////////// GET ACTIVE QUIZZESS OF MODULES OF ASSIGNED COURSES BY PROFILE ID /////////////////////
   getActiveQuizzesOfModulesOfAssignedCoursesByProfileId(profileId: number) {
     this.quizService.getActiveQuizzesOfModulesOfAssignedCoursesByProfileId(profileId).subscribe(
       (data) => {
@@ -541,6 +552,7 @@ export class QuizComponent implements OnInit {
     )
   }
 
+  ///////////////////////////////// GET INACTIVE QUIZZESS OF MODULES OF ASSIGNED COURSES BY PROFILE ID //////////////////////////
   getInactiveQuizzesOfModulesOfAssignedCoursesByProfileId(profileId: number) {
     this.quizService.getInactiveQuizzesOfModulesOfAssignedCoursesByProfileId(profileId).subscribe(
       (data) => {
@@ -550,6 +562,8 @@ export class QuizComponent implements OnInit {
     )
   }
 
+
+  ////////////////////////////// GET ACTIVE QUIZZESS OF MODULE ENROLLED COURSES BY PROFILE ID ////////////////////////////
   getActiveQuizzesOfModulesOfEnrolledCoursesByProfileId(profileId: number) {
     this.quizService.getActiveQuizzesOfModulesOfEnrolledCoursesByProfileId(profileId).subscribe(
       (data) => {
@@ -559,6 +573,7 @@ export class QuizComponent implements OnInit {
     )
   }
 
+  ////////////////////////// GET INACTIVE QUIZZESS OF MODULES ENROLLED COURSES BY PROFILE ID ////////////////////////////
   getInactiveQuizzesOfModulesOfEnrolledCoursesByProfileId(profileId: number) {
     this.quizService.getInactiveQuizzesOfModulesOfEnrolledCoursesByProfileId(profileId).subscribe(
       (data) => {

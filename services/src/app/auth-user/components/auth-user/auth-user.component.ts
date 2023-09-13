@@ -199,6 +199,11 @@ export class AuthUserComponent implements OnInit {
   ///////////////////////////////////////////
   profiles: Profile[] = [];
 
+
+
+
+  //////////////////////////////////// UPDATING OF AUTH USER ///////////////////////////////////////////
+
   private updateAuthuser(currentData: Authuser) {
     // Calling service for updating data
     this.service.updateAuthUser(currentData.authUserName, currentData).subscribe(
@@ -246,7 +251,10 @@ export class AuthUserComponent implements OnInit {
 
   currentDate = new Date();
 
-  // For adding auth user
+
+  ///////////////////////////////////// Insertion of Auth User ////////////////////////////////////////////
+
+
   private addAuthuser(currentData: Authuser) {
 
     currentData.authUserLastLogin = this.currentDate;
@@ -272,6 +280,12 @@ export class AuthUserComponent implements OnInit {
   }
 
 
+
+
+  //////////////////////////////// GET ALL AUTH USER //////////////////////////////////////////
+
+
+
   // for getting all auth user
   private getAllAuthUser() {
     this.dataAvailable = true;
@@ -294,6 +308,11 @@ export class AuthUserComponent implements OnInit {
       }
     );
   }
+
+
+
+  /////////////////////////// DELETE AUTH USER ////////////////////////////////////////
+
 
   // For deleting (soft delete) auth user using userName
   private deleteAuthuser(authUserName: string) {
@@ -319,6 +338,9 @@ export class AuthUserComponent implements OnInit {
     });
   }
 
+
+  //////////////////////////////// GET INACTIVE AUTH USER ////////////////////////////////////////////// 
+
   // For getting all inactive auth user
   private getInActiveAuthUser() {
 
@@ -335,6 +357,10 @@ export class AuthUserComponent implements OnInit {
 
   }
 
+
+
+
+  /////////////////////////////// ACTIVATE  AUTH USER ////////////////////////////////////////////////////
 
   // For activating admin role using role id
   private activateAuthuser(authUserId: number) {

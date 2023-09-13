@@ -172,7 +172,7 @@ export class CategoryComponent {
   // Funcation calls specific to this module
   ///////////////////////////////////////////
 
-  // For updating category
+  //////////////////////////////////////////////  UPDATE THE CATEGORY BY CATEGORY ID  /////////////////////////////////
   private updateRole(currentData: Category) {
     // calling service for updating data
 
@@ -189,7 +189,7 @@ export class CategoryComponent {
     );
   }
 
-
+  ///////////////////////////////////// ADD NEW CATEGORY ////////////////////////////////////////////////////////
   addCategory(toCreateCategory: Category) {
 
     var categoryId = toCreateCategory.categoryId;
@@ -210,8 +210,7 @@ export class CategoryComponent {
 
     )
   }
-
-  // for getting all category
+  ////////////////////////////////////////////  GETTING ALL CATEGORY  ////////////////////////////////
   private getAllCategories() {
     this.dataAvailable = true;
 
@@ -232,7 +231,7 @@ export class CategoryComponent {
     );
   }
 
-  //  // For deleting (soft delete) category using Id
+  ////////////////////////////////////// DELETE CATEGORY BY CATEGORY ID  ////////////////////////////////////////////
   private deleteCategory(categoryId: number) {
     this.dialogBoxService.open('Are you sure you want to delete this Category ? ', 'decision').then((response) => {
       if (response) {
@@ -258,7 +257,7 @@ export class CategoryComponent {
 
 
 
-  // For getting all inactive category
+  ///////////////////////////////////////////  GET ALL INACTIVE CATEGORIES  ///////////////////////////////////////
   private getInActiveCategories() {
 
     // calling service to get all inactive record
@@ -273,7 +272,7 @@ export class CategoryComponent {
 
   }
 
-  // For activating category
+  //////////////////////////////////////////// ACTIVATE THE CATEGORY /////////////////////////////////////////
   private activateCategory(categoryName: string) {
 
     // calling service to activating category

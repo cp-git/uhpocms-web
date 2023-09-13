@@ -19,61 +19,72 @@ export class QuestionService {
 
   }
 
+  /////////////////////////////////////////// SERVICE - FETCHED ALL QUESTIONS LIST ////////////////////////////////////////////////////
   getAllQuestions(): Observable<Question[]> {
     return this.http.get<Question[]>(`${this.questionUrl}/question?figure=all`);
   }
 
+
+  //////////////////////////////////////////// SERVICE - ADD QUESTION AND ANSWER //////////////////////////////////////////////////////
   addQuestion(formData: FormData): Observable<number> {
     return this.http.post<number>(`${this.questionUrl}/question/add`, formData);
   }
 
 
-  //delete question by question figure
+  ///////////////////////////////////////// SERVICE -DELETE QUESTION BY QUESTION FIGURE ////////////////////////////////////////////
   deleteQuestion(questionFigure: string): Observable<Question> {
     return this.http.delete<Question>(`${this.questionUrl}/question/${questionFigure}`);
   }
 
-
-  deleteQuesAndAns(quesId:number)
-  {
+  /////////////////////////////////////// SERVICE - DELETE QUESTION AND ANSWER //////////////////////////////////
+  deleteQuesAndAns(quesId: number) {
     return this.http.delete<any>(`${this.questionUrl}/question/deletequeansbyid/${quesId}`)
   }
 
-  //get question by quesiton figure
-  getQuestion(questionFigure: string): Observable<Question> {
-    return this.http.get<Question>(`${this.questionUrl}/question/${questionFigure}`);
-  }
+  // //get question by quesiton figure    Not used
+  // getQuestion(questionFigure: string): Observable<Question> {
+  //   return this.http.get<Question>(`${this.questionUrl}/question/${questionFigure}`);
+  // }
 
-  //update question by question figure
+
+  /////////////////////////////////// SERVICE - UPDATE QUESTION BY QUESTION FIGURE /////////////////////////////
   updatedQuestion(question: Question): Observable<Question> {
     return this.http.put<Question>(`${this.questionUrl}/question/byid/${question.questionId}`, question);
   }
 
-  //get inactive question list
+  ////////////////////////////////// SERVICE -GET INACTIVE QUESTIONS LIST  ////////////////////////////////
   getInactiveQuestionsList(): Observable<Question[]> {
     return this.http.get<Question[]>(`${this.questionUrl}/question/inactive?inactivequestions=all`);
   }
 
-  //get activate question
+  //////////////////////////////// SERVICE -ACTIVATE QUESTION ///////////////////////////////////////////
   activateQuestion(questionFigure: string): Observable<Question> {
     return this.http.patch<Question>(`${this.questionUrl}/question/${questionFigure}`, {});
   }
 
-  addAnswer(answer: Answer) {
-    return this.http.post<Answer>(`${this.answerUrl}/answer`, answer);
-  }
 
+  // //Not Used
+  // addAnswer(answer: Answer) {
+  //   return this.http.post<Answer>(`${this.answerUrl}/answer`, answer);
+  // }
+
+
+  ///////////////////////////////////// SERVICE - GET ALL QUESTION BY QUIZ ID ////////////////////////////
   getAllQuestionsByQuizId(quizId: number) {
     return this.http.get<any>(`${this.questionUrl}/questions?quizId=${quizId}`);
   }
 
+  ///////////////////////////////////// SERVICE -GET ALL ANSWERS /////////////////////////////////////////
   getAllAnswers(): Observable<Answer[]> {
     return this.http.get<Answer[]>(`${this.answerUrl}/answer?id=all`);
   }
+
+  //////////////////////////////////// SERVICE - GET SHUFFLED QUESTION BY QUIZ ID //////////////////////
   getShuffledQuestionsByQuizId(quizId: number) {
     return this.http.get<Question[]>(`${this.questionUrl}/questions/quizid/${quizId}`);
   }
 
+  ////////////////////////////// SERVICE - GET QUIZ DETAILS BY QUIZ ID ////////////////////////////// 
   getQuizDetailsByQuizId(quizId: number): Observable<any> {
     return this.http.get<any>(`http://localhost:8090/quiz/uhpocms/quiz/info/${quizId}`);
   }

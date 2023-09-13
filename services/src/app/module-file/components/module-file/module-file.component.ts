@@ -124,6 +124,8 @@ export class ModuleFileComponent {
     this.modulefileUrl = `${environment.moduleFileUrl}`;
   }
 
+
+  /////////////////////////////////////////////// ON PAGE LOAD ///////////////////////////////////////////////
   ngOnInit(): void {
 
     this.loadAndLinkUserPermissions();
@@ -262,6 +264,8 @@ export class ModuleFileComponent {
     this.addModuleFile(receivedArray);
   }
 
+
+  //////////////////////////////////////  ON SELECTING THE FILE  ////////////////////////////////////////
   onRecievedFiles(recievedFiles: FileList) {
     this.files = recievedFiles;
 
@@ -274,6 +278,7 @@ export class ModuleFileComponent {
   }
 
 
+  ///////////////////////////////////// LOAD MODULES FROM SESSION STORAGE //////////////////////////////////////
   private loadModules() {
     this.modules = [];
     try {
@@ -304,6 +309,9 @@ export class ModuleFileComponent {
 
   }
   filteredModules: Module[] = [];
+
+
+  ///////////////////////////////////////// LOAD COURSES FROM SESSION STORAGE ////////////////////////////////////
   private loadCourses() {
     try {
       this.sessionData = sessionStorage.getItem('course');
@@ -320,7 +328,7 @@ export class ModuleFileComponent {
 
   }
 
-  //getting courses assigned to teacher using profileId
+  ////////////////////////////////////////// GET ASSIGNED COURSES OF TEACHER  USED COURSE COMPONENT  ///////////////////////////////////
   private getAssignedCoursesOfTeacher(teacherId: number) {
     this.service.getAssignedCourseOfTeacher(teacherId).subscribe(
       (data) => {
@@ -335,17 +343,7 @@ export class ModuleFileComponent {
     );
   }
 
-  // getCoursesByProfileId(teacherId: any) {
-  //   this.service.getAssignedCourseToTeacher(teacherId).subscribe(
-  //     response => {
-  //       this.courses = response;
-  //       console.log(response);
-  //     },
-  //     error => {
-  //       console.log("failed to fetch data");
-  //     }
-  //   );
-  // }
+
 
   Home() {
     this.location.back();
@@ -358,7 +356,7 @@ export class ModuleFileComponent {
     location.reload();
   }
 
-  // Add module file
+  //////////////////////////////////////////////////////  CREATE NEW MODULE FILE //////////////////////////////////////////
   addModuleFile(objectReceived: ModuleFile) {
     // objectReceived.moduleFileIsActive = true;
 
@@ -395,6 +393,8 @@ export class ModuleFileComponent {
 
     );
   }
+
+  //////////////////////////////////  GET MODULE FILE BY MODULE ID ////////////////////////////////////////////////
   async getModuleFileByModuleId(moduleId: number): Promise<any> {
     try {
       const response: any = await this.moduleFileService.getModuleFilesByModuleId(moduleId).toPromise();
@@ -405,13 +405,16 @@ export class ModuleFileComponent {
       throw error;
     }
   }
-  // For activating Module
+  ////////////////////////////////////// ACTIVATE MODULE FILE BY MODULE FILE ID /////////////////////////////////////
   private async activeModule(moduleId: any) {
     try {
 
       await this.getModuleFileByModuleId(moduleId);
 
       if (this.moduleFilesInModule && this.moduleFilesInModule.length > 0) {
+
+
+        //Calling Service from Module component
         this.moduleService.activateModuleById(moduleId).subscribe(
           () => {
             //this.dialogBoxServices.open('Module Activated', 'information');
@@ -432,6 +435,7 @@ export class ModuleFileComponent {
   }
 
 
+  ///////////////////////////////// UPDATE MODULE FILE BY MODULE  FILE ID ////////////////////////////////
   // For updating module files by id
   private updateModuleFileById(currentData: ModuleFile) {
     // calling service for updating data
@@ -494,7 +498,7 @@ export class ModuleFileComponent {
 
 
 
-  // for getting all module files
+  ///////////////////////////////////////// GET ALL MODULE FILE AS LIST //////////////////////////////////////////
   private getAllModulesFile() {
     // calling service to get all data
 
@@ -528,8 +532,7 @@ export class ModuleFileComponent {
 
 
 
-
-  // For deleting (soft delete) by Id
+  //////////////////////////////////////  DELETE MODULE FILE BY MODULE FILE ID ///////////////////////////////////////
   private deleteModuleFileById(moduleFileId: number) {
     this.dialogBoxServices.open('Are you sure you want to delete this ModuleFile ? ', 'decision').then((response) => {
       if (response) {
@@ -554,6 +557,7 @@ export class ModuleFileComponent {
     });
   }
 
+  //////////////////////////////////////////  GET LIST OF INACTIVE MODULE FILE AS LIST  /////////////////////////////
   // For getting all inactive module files
   private getInactiveModuleFiles() {
 
@@ -568,7 +572,7 @@ export class ModuleFileComponent {
     );
 
   }
-  // For activating moduleFile using Id
+  ///////////////////////////////  ACTIVATE MODULE FILE BY MODULE FILE ID   //////////////////////////////////
   private activeModuleFile(moduleFileId: number) {
 
 
@@ -585,6 +589,8 @@ export class ModuleFileComponent {
     );
   }
 
+
+  /////////////////////////////////////   GET MODULE FILE BY MODULE FILE ID /////////////////////////////////
   display(moduleFileId: number) {
 
     this.moduleFileService.getFile(moduleFileId).subscribe(
@@ -623,8 +629,8 @@ export class ModuleFileComponent {
     }
   }
 
-
-  //getting courses assigned to teacher using profileId
+  ////////////////////////////////////////  GET COURSES ASSIGNED BY PROFILE ID ////////////////////////////////////////
+  //getting courses assigned to teacher using profileId  --Course Service
   private getAssignedCoursesByProfileId(teacherId: number) {
     this.courseService.getAssignedCourseOfTeacher(teacherId).subscribe(
       (data) => {
@@ -636,7 +642,11 @@ export class ModuleFileComponent {
       }
     );
   }
-  //getting courses assigned to teacher using profileId
+
+
+
+  //////////////////////////////////////// GET ENROLLED COURSES BY PROFILE ID //////////////////////////////////// 
+  //getting courses assigned to teacher using profileId  --Course Service
   private getEnrolledCoursesByProfileId(studentId: number) {
     this.courseService.getCourseByStudentId(studentId).subscribe(
       (data) => {
@@ -649,6 +659,8 @@ export class ModuleFileComponent {
     );
   }
 
+
+  ////////////////////////////////  GET MODULES ASSIGNED COURSES BY PROFILE ID 1////////////////////////////////
   async getModulesOfAssignedCoursesByProfileId(profileId: number) {
     const modules = await this.moduleService.getModulesOfAssignedCoursesByProfileId(profileId).toPromise();
     if (modules !== undefined) {
@@ -656,6 +668,7 @@ export class ModuleFileComponent {
     }
   }
 
+  /////////////////////////////// GET MODULES ENROLLED COURSES BY PROFILE ID ////////////////////////////////
   async getModulesOfEnrolledCoursesByProfileId(profileId: number) {
     const modules = await this.moduleService.getModulesOfEnrolledCoursesByProfileId(profileId).toPromise();
     if (modules !== undefined) {
@@ -663,6 +676,9 @@ export class ModuleFileComponent {
     }
   }
 
+
+
+  //////////////////////////////////// GET MODULE FILES OF ASSIGNED COURSES MODULES BY PROFILE ID //////////////////////////
   getModuleFilesOfAssignedCoursesOfModulesByProfileId(profileId: number) {
     this.moduleFileService.getModuleFilesOfAssignedCoursesOfModulesByProfileId(profileId).subscribe(
       (response) => {
@@ -699,6 +715,8 @@ export class ModuleFileComponent {
 
   }
 
+
+  ////////////////////////////////////////// GET MODULE FILES ENROLLED COURSES OF MODULE BY PROFILE ID ////////////////////////////
   getModuleFilesOfEnrolledCoursesOfModulesByProfileId(profileId: number) {
     this.moduleFileService.getModuleFilesOfEnrolledCoursesOfModulesByProfileId(profileId).subscribe(
       (response) => {
@@ -731,8 +749,7 @@ export class ModuleFileComponent {
             }
           })
         })
-        // this.allData = response.filter((data: { moduleFileIsActive: boolean; }) => data.moduleFileIsActive == true);
-        // this.allInActiveData = response.filter((data: { moduleFileIsActive: boolean; }) => data.moduleFileIsActive == false);
+
 
       }
     );

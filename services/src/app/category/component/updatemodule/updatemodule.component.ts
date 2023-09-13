@@ -105,6 +105,7 @@ export class UpdatemoduleComponent {
   }
 
 
+  //////////////////////////////////////////////  DELETE THE MODULE      //////////////////////////////////////////////////////
   //function for deleting module by module name
   deletemodule(toDeleteModule: Module) {
     this._service.deleteModule(toDeleteModule.moduleName).subscribe(
@@ -128,7 +129,7 @@ export class UpdatemoduleComponent {
   }
 
 
-  //load the courses data
+  ////////////////////////////////////////////////// LOAD THE COURSES FROM SESSION STORAGE  /////////////////////////////////////
   private loadCourses() {
     this.sessionData = sessionStorage.getItem('course');
     this.data = JSON.parse(this.sessionData);

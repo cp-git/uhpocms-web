@@ -99,22 +99,18 @@ export class EnrollstudentComponent {
 
     this.userRole = sessionStorage.getItem('userRole');
   }
-  //ngoninit
+  ///////////////////////////////////// RELOAD THE DATA ON PAGE //////////////////////////////////////
   ngOnInit() {
     // function to be loaded on page load
     this.loadProfiles(this.profileId);
-    // this.getAllInstitution();
     this.EnrollCoursesToStudentBasedOnRole(this.userRole);
-    // this.getDepartmentByProfileId(this.profileId);
-    // this.getInstitutionByProfileId(this.profileId);
-    // this.getAssignedCoursesOfTeacher(this.profileId);
-    // this.getDepartmentsByInstId(this.instId);
+
 
   }
-  // function to get all institutions
-  private getAllInstitution() {
-    // fetching all institution
 
+
+  ////////////////////////// GET ALL ADMIN INSTITUTION LIST /////////////////////////////////////////
+  private getAllInstitution() {
     this._institutionService.fetchAdminInstitutionList().subscribe(
       (response) => {
         // assigning received data to institutionfo
@@ -134,6 +130,8 @@ export class EnrollstudentComponent {
     );
   }
 
+
+  ///////////////////////////////////  LOAD PROFILES FROM SESSION STORAGE  /////////////////////////////////////////////////
   loadProfiles(profileId: number) {
     // alert(studentId);
     try {
@@ -165,6 +163,9 @@ export class EnrollstudentComponent {
     };
     allSelect(items);
   }
+
+
+  //////////////////////////////// GET DEPARTMENT BY INSTITUTION ID ///////////////////////////////////////
   // function to get departments based on institution ID
   getDepartmentsByInstId(instId: number) {
     this.department = {} as Department;
@@ -203,6 +204,10 @@ export class EnrollstudentComponent {
   onChangeDepartment() {
     this.course.courseId = 0;
   }
+
+
+
+  ///////////////////////////////   GET TEACHER BY COURSE ID  ////////////////////////////////////////////////
   getTeacherByCourseId(courseId: any) {
     this.assignedUsers = [];
     this.assignTeacherService.getTeacherByCourseId(courseId).subscribe(
@@ -220,7 +225,9 @@ export class EnrollstudentComponent {
       }
     );
   }
-  //function to get courses based on department id
+
+
+  /////////////////////////////////////  GET COURSES BY DEPARTMENT ID  ///////////////////////////////////////////////
   getCoursesByDeptId(deptId: number) {
     this.course = {} as Course;
     switch (this.userRole) {
@@ -252,7 +259,7 @@ export class EnrollstudentComponent {
 
 
 
-
+  ////////////////////////////////////////  GET COURSES BY DEPARTMENT AND PROFILE ID    ///////////////////////////////////
   getCoursesByDeptIdandProfileId(deptId: number, profileId: number) {
 
     deptId = this.department.id;
@@ -268,6 +275,7 @@ export class EnrollstudentComponent {
 
   }
 
+  /////////////////////////////////// GET PROFILE BASED ON ROLE AND INSTITUTE ID  /////////////////////////////////////
   //function to get profile based on role and institute id
   getProfileByRoleAndInstId(instId: number) {
     this.selected = [];
@@ -291,6 +299,8 @@ export class EnrollstudentComponent {
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+  //////////////////////////////////////  GET STUDENT BY COURSE ID  //////////////////////////////////////
+
   getStudentByCourseId(courseId: any) {
 
     this.enrolledStudentArr = [];
@@ -313,7 +323,9 @@ export class EnrollstudentComponent {
       }
     );
   }
-  //function to get department based on profile id
+
+  ///////////////////////////////////     GET DEPARTMENT BY PROFILE ID   /////////////////////////////////////////////////
+
   getDepartmentByProfileId(profileId: number) {
 
     // profileId = this._profile.profileId;
@@ -327,7 +339,8 @@ export class EnrollstudentComponent {
     )
   }
 
-  //function to get Institution based on profile id
+
+  //////////////////////////////     GET INSTITUTE BY PROFILE ID    ////////////////////////////////////////
   getInstitutionByProfileId(profileId: number) {
 
     // profileId = this._profile.profileId;
@@ -340,7 +353,9 @@ export class EnrollstudentComponent {
 
     )
   }
-  //getting courses assigned to teacher using profileId
+
+  //////////////////////////////  GETTING ASSIGNED COURSES OF TEACHER     //////////////////////////////////
+
   getAssignedCoursesOfTeacher(teacherId: number) {
     this.courseService.getAssignedCourseOfTeacher(teacherId).subscribe(
       (data) => {
@@ -362,6 +377,11 @@ export class EnrollstudentComponent {
       }
     );
   }
+
+
+
+
+  ////////////////////////////////////  GET ENROLLED COURSES TO STUDENT BASED ON ROLE   ///////////////////////////////////
   private EnrollCoursesToStudentBasedOnRole(userRole: string) {
 
 
@@ -401,15 +421,10 @@ export class EnrollstudentComponent {
 
       this.prevSelected = [...this.selected];
     }
-    // if (this.selected.length !== this.prevSelected.length) {
-    //   console.log('Selected items changed:', this.selected);
-    //   this.selected.forEach((profileId,index)=>{
-    //     if(this.assignTeacherArr.includes(profileId)) this.selected.splice(index,1);
-    //  });
-    //  console.log('new items changed:', this.selected);
-    //   this.prevSelected = [...this.selected];
-    // }
+
   }
+
+
   onCourseSelect(courseId: any) {
 
     this.getTeacherByCourseId(courseId);
@@ -417,6 +432,9 @@ export class EnrollstudentComponent {
   }
   //Function for assign course to student
   inserted: boolean = false;
+
+
+  //////////////////////////////////////    ASSIGN COURSE TO STUDENT     /////////////////////////////////////////////
   saveEnrolledStudent(courseId: number, profileId: number) {
     let isStudentEnrolled = false;
     this.inserted = false;
@@ -497,16 +515,7 @@ export class EnrollstudentComponent {
       });
     }
   }
-  // checkFields() {
-  //   // Check if any fields are empty
-  //   if (!this.admininstitution.adminInstitutionName || !this.department.name || !this.course.courseName|| !) {
-  //     // If any field is empty, disable the button
-  //     this.buttonDisabled = true;
-  //   } else {
-  //     // If all fields have a value, enable the button
-  //     this.buttonDisabled = false;
-  //   }
-  // }
+
   formComplete: boolean = false;
   isFormComplete(): boolean {
     if (this._profile.institutionId && this.department.id && this.course.courseId && this.selected.length > 0) {
@@ -543,6 +552,8 @@ export class EnrollstudentComponent {
     this.location.back();
   }
 
+
+  ////////////////////////////////  DELETE  ENROLLED COURSE TO STUDENT  /////////////////////////////////////////////
   // Method to delete assignment by courseId and profileId
   deleteEnrollStudent(courseId: number, profileId: number) {
     // Delete the enrolled student

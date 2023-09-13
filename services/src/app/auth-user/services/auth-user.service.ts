@@ -28,39 +28,53 @@ export class AuthUserService {
   }
 
 
-  //Fetching the Auth User List
+  ////////////////  SERVICE -FETCHING AUTH USER LIST  ///////////////////////////
+
   authUserList(): Observable<any> {
     return this._http.get<any>(this._baseUrl + '?username=all');
   }
 
-  //Adding Auth User
+
+
+  //////////////  SERVICE -INSERTION OF AUTH USER ///////////////////////////////
+
   addAuthUser(authuser: Authuser): Observable<any> {
     return this._http.post<any>(this._baseUrl, authuser);
   }
 
-  //Deleting the Auth User
+
+  ////////////  SERVICE - DELETE AUTH USER  ////////////////////////////////////
   deleteAuthUser(authUserName: string): Observable<any> {
     return this._http.delete<any>(this._baseUrl + "/" + authUserName);
   }
 
 
 
-  //Get Authuser by Auth User Name
+  /////////// SERVICE -GET AUTH USER NAME   ///////////////////////////////////////
+
   getAuthUser(authUserName: string): Observable<any> {
     return this._http.get<any>(this._baseUrl + "/" + authUserName);
   }
 
 
-  //Update AuthUser
+
+  ////////// SERVICE - UPDATE THE AUTH USER ///////////////////////////////////////
+
   updateAuthUser(authUserName: string, authuser: Authuser): Observable<any> {
     return this._http.put<any>(this._baseUrl + "/" + authUserName, authuser);
   }
 
-  //Login Service Using the DB
+
+
+  ////////// SERVICE API -LOGIN USING AUTH USER ///////////////////////////////////
+
+
   loginDataAuthUser(authuser: Authuser): Observable<any> {
     return this._http.post<any>(this._loginUrl, authuser);
   }
 
+
+  ////////////////////// BASIC AUTHORIZATION ///////////////////////////////////////
 
   //Authorization
   authenticationService(username: String, password: String) {
@@ -107,18 +121,28 @@ export class AuthUserService {
   }
 
 
-  //Get All Inactive Auth Users
+  ////////////////////////  END OF BASIC AUTHORIZATION /////////////////////////
+
+
+
+
+  //////////////////////  SERCVICE - GETTING INACTIVE AUTH USER ////////////////////////////
+
   getAllInactiveAuthUsers(): Observable<Authuser[]> {
-    return this._http.get<Authuser[]>(`${this._baseUrl}?username=inactiveprofile`);
+    return this._http.get<Authuser[]>(this._baseUrl + '?username=inactive');
   }
 
 
-  //Activate Auth Users
+
+
+  ///////////////////// SERVICE - ACTIVATE AUTH USER //////////////////////////
   activateAuthUserById(authUserId: number): Observable<any> {
     return this._http.patch<any>(`${this._baseUrl}/activate/` + authUserId, {});
   }
 
-  //Get Authuser by Auth User Id
+
+
+  /////////////////////// SERVICE - GET AUTH USER  API USED IN PROFILE COMPONENT /////////////
   getAuthUserById(authUserId: number): Observable<any> {
     return this._http.get<any>(`${this._baseUrl}/user?id=${authUserId}`);
   }
