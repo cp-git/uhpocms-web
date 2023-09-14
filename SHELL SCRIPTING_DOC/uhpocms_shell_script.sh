@@ -45,18 +45,30 @@ else
     exit 1  # Exit the script with an error code
 fi
 
-
 # Specify the program directories to search for psql.exe
 PROGRAM_DIRS=("C:/Program Files" "C:/Program Files (x86)")
 
-# Initialize a variable to store the path to psql.exe if found
+# Initialize a variable to store the path to psql.exe
 PSQL=""
+
+# Function to search for psql.exe in a directory
+search_psql() {
+    local dir="$1"
+    if [ -d "$dir/PostgreSQL" ]; then
+        local psql_path=$(find "$dir/PostgreSQL" -name psql.exe -print -quit)
+        if [ -n "$psql_path" ]; then
+            echo "$psql_path"
+            return 0
+        fi
+    fi
+    return 1
+}
 
 # Loop through the program directories and check for psql.exe
 for dir in "${PROGRAM_DIRS[@]}"; do
-    if [ -x "$dir/PostgreSQL/15/bin/psql.exe" ]; then
-        PSQL="$dir/PostgreSQL/15/bin/psql.exe"
-        break  # Stop searching once psql.exe is found
+    PSQL=$(search_psql "$dir")
+    if [ -n "$PSQL" ]; then
+        break
     fi
 done
 
@@ -67,6 +79,8 @@ else
     echo "PostgreSQL or psql.exe was not found in the specified directories."
     exit 1
 fi
+
+
 
 
 # Run the SQL script using psql

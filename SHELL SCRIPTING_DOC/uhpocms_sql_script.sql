@@ -196,7 +196,7 @@ INSERT INTO instituteadmin_profile
     userrole ,
     userroleid )
     
-VALUES(1,true,'PUNE','PUNE','PUNE',1,'admin@gmail.com','female','MH','411033','admin','2023-07-12 21:24:16.157+05:30','2023-07-12 21:24:16.157+05:30','Super',1,'Admin',9860622624,'admin','2023-07-12 21:24:16.157+05:30','user_logo.jpeg',1,'admin','1');
+VALUES(1,true,'PUNE','PUNE','PUNE',1,'admin@gmail.com','female','MH','411033','admin','2023-07-12 21:24:16.157+05:30','2023-07-12 21:24:16.157+05:30','Super',1,'ADMIN',9860622624,'admin','2023-07-12 21:24:16.157+05:30','user_logo.jpeg',1,'admin','1');
 
 
 
