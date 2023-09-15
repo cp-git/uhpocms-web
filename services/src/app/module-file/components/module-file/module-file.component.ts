@@ -33,6 +33,7 @@ export class ModuleFileComponent {
   moduleFilesInModule: ModuleFile[] = [];
   modulesFile: ModuleFile[] = [];
   moduleFile = new ModuleFile();
+  modulesData: Module[] = []; //for all module data
 
   inActivationScreenStatus: boolean = false;
   activationScreenStatus: boolean = false;
@@ -57,6 +58,7 @@ export class ModuleFileComponent {
   readonly primaryIdColumnName: string = 'id';
 
   allData: ModuleFile[] = [];
+  allModuleFileData: ModuleFile[] = [];
   allInActiveData: ModuleFile[] = [];
 
   sessionData: any;
@@ -132,11 +134,13 @@ export class ModuleFileComponent {
 
     this.activationScreenStatus = false;
     this.loadDataBasedOnRole(this.userRole)
-    // this.getAllModulesFile();
+    this.loadModules();
+    //  this.getAllModulesFile();
     // this.getAssignedCoursesOfTeacher(this.profileId);
     // this.getInactiveModuleFiles();
 
     // this.displayUrl = this.modulefileUrl + '/files'
+
 
     this.displayUrl = this.modulefileUrl + '/files'
   }
@@ -279,15 +283,23 @@ export class ModuleFileComponent {
 
 
   ///////////////////////////////////// LOAD MODULES FROM SESSION STORAGE //////////////////////////////////////
-  private loadModules() {
+  public loadModules() {
     this.modules = [];
     try {
       this.sessionData = sessionStorage.getItem('module');
       this.data = JSON.parse(this.sessionData);
+      console.log(this.data);
 
       for (var module in this.data) {
         this.modules.push(this.data[module]);
       }
+
+      console.log(this.modules);
+
+
+
+
+
 
     }
     catch (err) {
@@ -297,9 +309,13 @@ export class ModuleFileComponent {
     this.filteredModules = [];
     this.courses.forEach(course => {
       this.modules.forEach(module => {
+
         if (course.courseId == module.courseId_id) {
           this.filteredModules.push(module);
+
         }
+        console.log(this.filteredModules);
+
       })
     })
 
@@ -502,24 +518,11 @@ export class ModuleFileComponent {
   private getAllModulesFile() {
     // calling service to get all data
 
-    this.moduleFileService.fetchModuleFileList().subscribe(
+    this.moduleFileService.fetchModuleFileListActiveModule().subscribe(
       response => {
+        // console.log(response);
 
-        this.allData = [];
-
-        response.forEach((moduleFile: ModuleFile) => {
-          this.filteredModules.find((module: Module) => {
-            if (moduleFile.moduleId == module.moduleId) {
-              this.allData.push({
-                ...moduleFile,
-                courseId: module.courseId_id,
-
-              });
-
-            }
-          })
-        })
-        // this.allData = response; //assign data to local variable
+        this.allModuleFileData = response; //assign data to local variable
 
       },
       error => {
@@ -662,10 +665,44 @@ export class ModuleFileComponent {
 
   ////////////////////////////////  GET MODULES ASSIGNED COURSES BY PROFILE ID 1////////////////////////////////
   async getModulesOfAssignedCoursesByProfileId(profileId: number) {
-    const modules = await this.moduleService.getModulesOfAssignedCoursesByProfileId(profileId).toPromise();
-    if (modules !== undefined) {
-      this.modules = modules;
-    }
+    // const modules = await this.moduleService.getModulesOfAssignedCoursesByProfileId(profileId).toPromise();
+    // console.log(modules);
+
+    this.moduleService.getModulesOfAssignedCoursesByProfileId(profileId).subscribe(
+      response => {
+        console.log(response);
+
+        let name;
+        this.modulesData = response;
+
+        for (let u = 0; u < this.modulesData.length; u++) {
+          if (this.modulesData[u].moduleIsActive == true) {
+
+            console.log(this.modulesData[u]);
+
+          }
+
+
+
+        }
+
+
+
+      }
+    )
+
+
+
+
+
+
+
+
+
+
+
+
+
   }
 
   /////////////////////////////// GET MODULES ENROLLED COURSES BY PROFILE ID ////////////////////////////////
@@ -688,12 +725,14 @@ export class ModuleFileComponent {
         response.forEach((moduleFile: ModuleFile) => {
           this.modules.find((module: Module) => {
             if (moduleFile.moduleId == module.moduleId) {
-              if (moduleFile.moduleFileIsActive) {
-                this.allData.push({
-                  ...moduleFile,
-                  courseId: module.courseId_id,
+              if (module.moduleIsActive) {
+                if (moduleFile.moduleFileIsActive) {
+                  this.allData.push({
+                    ...moduleFile,
+                    courseId: module.courseId_id,
 
-                });
+                  });
+                }
 
 
               } else {

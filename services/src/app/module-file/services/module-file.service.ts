@@ -27,6 +27,12 @@ export class ModuleFileService {
     return this._http.get<any>(`${this.moduleFileUrl}/modulefile?file=all`);
   }
 
+  ////////////////////////////////// SERVICE - FETCH ALL MODULE FILE USING ACTIVE MODULE ////////////////
+
+  fetchModuleFileListActiveModule(): Observable<any> {
+    return this._http.get<any>(`http://localhost:8090/modulefile/uhpocms/modulefileActiveByModule?file=all`);
+  }
+
   /////////////////////////////////////// SERVICE - GET ALL INACTIVE MODULE FILE //////////////////////////////
   getInactivemoduleFileList(): Observable<any> {
     return this._http.get<any>(`${this.moduleFileUrl}/inactive?inactivemodulesfile=all`);
