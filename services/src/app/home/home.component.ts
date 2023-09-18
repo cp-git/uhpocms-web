@@ -64,11 +64,24 @@ export class HomeComponent {
 
     this._auth.loginDataAuthUser(this.authUser).subscribe(
       (data) => {
+<<<<<<< HEAD
+=======
+      
+        console.log("loginDataAuthUser")
+        console.log(data);
+>>>>>>> development
 
         const userName = data.authUserFirstName + " " + data.authUserLastName;
         this._instituteadminprofile.getAllProfiles().subscribe(async (data) => {
+
+          console.log(data)
           this._instituteAdminArray = data;
 
+<<<<<<< HEAD
+=======
+          console.log("getAllProfiles")
+          console.log(data);
+>>>>>>> development
 
           for (let i = 0; i < this._instituteAdminArray.length; i++) {
 

@@ -347,6 +347,12 @@ export class QuestionAnswerComponent implements OnInit {
   onFormSubmit(queAns: OneQuestionAnswer, queAnsArray: OneQuestionAnswer[]) {
     this.submittedQuestionAnswer = {} as OneQuestionAnswer;
     this.submittedQuestionAnswer = queAns;
+<<<<<<< HEAD
+=======
+   
+    console.log("}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}")
+    console.log(queAns);
+>>>>>>> development
 
     // Disable the submit button
 
