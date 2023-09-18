@@ -238,7 +238,7 @@ export class AddQuestionAnswerComponent implements OnInit {
       this.questionAnswer.question['maxMarks'] = queAnsNew.maxMarks;
       this.questionAnswer.question['questionIsMCQ'] = queAnsNew.questionIsMCQ;
 
-     
+
       if ((queAnsNew.questionId != 0) && (queAnsNew.questionId != null) && (queAnsNew.questionId != undefined)) {
         questionIdArr.push(queAnsNew.questionId);
       }
@@ -387,19 +387,7 @@ export class AddQuestionAnswerComponent implements OnInit {
 
 
     //started from here
-<<<<<<< HEAD
 
-=======
-    console.log(newQuestionAnsArr)
-    
-    console.log("Pass Marks $$$$$$$$$$$$$$$$$$$$$4 Total Marks")
-    console.log(this.passMarks)
-    console.log(this.maxMarks)
-    console.log(this.totalMarks)
-    console.log(mcqArr.length)
-    console.log(lAnsArr.length)
-    console.log(answerEqualityChk)
->>>>>>> development
     let quesAnswersArrCopy: any[] = [];
 
 
@@ -490,17 +478,8 @@ export class AddQuestionAnswerComponent implements OnInit {
 
                         this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId, this.selectedQuiz)
 
-<<<<<<< HEAD
 
-=======
-                        console.log("questionanswersarray");
-                        console.log(newArr)
-                        console.log(this.generatedQuestionAnswerId)
-                        console.log("Question Added Successfully");
-                        console.log("######################################")
->>>>>>> development
 
-                        console.log(newArr.questionFigure)
                         quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
                         if (successTextFlag) {
                           successTextFlag = false;
@@ -570,17 +549,9 @@ export class AddQuestionAnswerComponent implements OnInit {
                             totalMarks: this.totalMarks
                           })
                           this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId, this.selectedQuiz)
-<<<<<<< HEAD
 
-=======
-                          console.log("((((((((((((((((((((((((((((((((((")
-                          console.log(quesAnswersArrCopy)
-                          console.log(this.generatedQuestionAnswerId)
-                          console.log("Question Added Successfully");
-                          console.log("######################################")
->>>>>>> development
 
-                          console.log(newArr.questionFigure)
+
                           quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
                           if (successTextFlag) {
                             successTextFlag = false;
@@ -702,15 +673,8 @@ export class AddQuestionAnswerComponent implements OnInit {
                         })
 
                         this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId, this.selectedQuiz)
-<<<<<<< HEAD
 
-=======
-                        console.log("questionanswersarray");
-                        console.log(newArr)
-                        console.log(this.generatedQuestionAnswerId)
-                        console.log("Question Added Successfully");
-                        console.log("######################################")
->>>>>>> development
+
 
                         console.log(newArr.questionFigure)
                         quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
@@ -780,17 +744,9 @@ export class AddQuestionAnswerComponent implements OnInit {
                           totalMarks: this.totalMarks
                         })
                         this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId, this.selectedQuiz)
-<<<<<<< HEAD
 
-=======
-                        console.log("((((((((((((((((((((((((((((((((((")
-                        console.log(quesAnswersArrCopy)
-                        console.log(this.generatedQuestionAnswerId)
-                        console.log("Question Added Successfully");
-                        console.log("######################################")
->>>>>>> development
 
-                        console.log(newArr.questionFigure)
+
                         quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
                         if (successTextFlag) {
                           successTextFlag = false;
@@ -821,14 +777,10 @@ export class AddQuestionAnswerComponent implements OnInit {
 
               // quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
               // quesAnswersArrCopy.sort((a, b) => a.questionOrderNo.toString().localeCompare(b.questionOrderNo.toString()));
-<<<<<<< HEAD
 
 
-=======
-              console.log("quesAnswersArrCopy")
-              console.log(quesAnswersArrCopy)
               // console.log( quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo))
->>>>>>> development
+
               // quesAnswersArrCopy = quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
 
               // quesAnswersArrCopy.sort((a, b) => a.questionOrderNo - b.questionOrderNo);
@@ -840,13 +792,8 @@ export class AddQuestionAnswerComponent implements OnInit {
                 this.updateActiveStatusOfQuiz(this.selectedQuiz.quizId, this.selectedQuiz)
               }
 
-<<<<<<< HEAD
-=======
 
-              console.log("quesAnswersArrCopy")
-              console.log(quesAnswersArrCopy)
-              console.log(this.questionAnswers)
->>>>>>> development
+
 
             }
           } else if (((queAns['queAnsArray'].length) != (lAnsArr.length)) && (lAnsArr.length > 0)) {
@@ -1341,13 +1288,7 @@ export class AddQuestionAnswerComponent implements OnInit {
 
   // selectedCategory!: Category;
   onAddUpdatClicked(object: any) {
-<<<<<<< HEAD
 
-=======
-    // console.log(JSON.stringify(object))
-    console.log("Object IN onAddUpdatClicked")
-    console.log(object)
->>>>>>> development
     this.selectedQuiz = object;
     this.selectedQuizId = this.selectedQuiz.quizId;
     this.selectedCategoryId = this.selectedQuiz.categoryId;
