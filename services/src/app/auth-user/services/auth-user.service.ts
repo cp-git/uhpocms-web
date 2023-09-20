@@ -126,10 +126,16 @@ export class AuthUserService {
 
 
 
-  //////////////////////  SERCVICE - GETTING INACTIVE AUTH USER ////////////////////////////
+  //////////////////////  SERCVICE - GETTING INACTIVE AUTH USER PROFILE ////////////////////////////
 
-  getAllInactiveAuthUsers(): Observable<Authuser[]> {
+  getAllInactiveAuthUsersProfile(): Observable<Authuser[]> {
     return this._http.get<Authuser[]>(this._baseUrl + '?username=inactiveprofile');
+  }
+
+
+  //////////////////////// SERVICE -GETTING INACTIVE AUTH USERS /////////////////////////////////////
+  getAllInactiveAuthUsers(): Observable<Authuser[]> {
+    return this._http.get<Authuser[]>(this._baseUrl + '?username=inactive');
   }
 
 

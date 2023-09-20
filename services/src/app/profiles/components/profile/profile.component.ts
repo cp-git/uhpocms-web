@@ -439,7 +439,7 @@ export class ProfileComponent implements OnInit {
 
   ///////////////////// FETCH ALL INACTIVE AUTH USER /////////////////////////////////////////////////////
   private loadInactiveAuthUsers() {
-    this.authUserService.getAllInactiveAuthUsers().subscribe(
+    this.authUserService.getAllInactiveAuthUsersProfile().subscribe(
       response => {
         this.inactiveAuthUsers = response;
 
