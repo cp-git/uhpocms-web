@@ -4,3 +4,33 @@
     right: 0;
     padding: 1rem;
   }
+
+.footerButtons{
+  display: flex;
+  margin-bottom: 2% !important;
+
+}
+
+.modal-footer{
+  flex-direction: column ;
+}
+
+.forgotPass{
+  font-size:1.5rem;
+ 
+}
+
+.forgotPassLink{
+  padding: 10px 15px 10px 15px !important;
+  background:none !important;
+
+
+}
+
+.forgotPassLink:hover{
+  color: blue !important;
+}
+a:hover {
+  cursor: pointer; /* You can use 'pointer' or any other valid cursor style */
+  
+}

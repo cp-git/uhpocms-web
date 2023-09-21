@@ -87,7 +87,7 @@
           <div class="mb-3 mt-3">
               <label for="email">Username:</label>
               <input type="email" class="form-control" id="email" [(ngModel)]="authUser.authUserName"
-                  placeholder="Enter email" name="email">
+                  placeholder="Enter username" name="email">
           </div>
           <div class="mb-3">
               <label for="pwd">Password:</label>
@@ -95,11 +95,14 @@
                   [(ngModel)]="authUser.authUserPassword" placeholder="Enter password" name="pswd">
           </div>
 
-          <!-- <button type="submit" class="btn btn-primary" (click)="userLogin()">Submit</button> -->
+          <!-- <button type="submit" class="btn btn-primary" (click)="userLogin()">
+            
+          </button> -->
           
         </form>
       </div>
       <div class="modal-footer">
+        <div class="footerButtons">
         <button type="submit" class="btn btn-primary"  style="
         height: 3rem;
         width: 8rem ;font-size: 1.5rem;margin-right: 6%"  (click)="userLogin()">Submit</button>
@@ -111,9 +114,62 @@
           Close
         </button>
       </div>
+        <div class="forgotPass"><a class="nav-link scrollto forgotPassLink"  (click)="openPassPopup()">Forgot password?</a>
+          
+        
+        </div>
+      </div>
+      
     </div>
   </div>
 </div>
+
+<div
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+  [ngStyle]="{'display':displayFpStyle}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <h4 class="modal-title text-center" style="font-size:3rem; font-weight: 700;">Forgot Password</h4>
+      <button type="button" class="close" data-dismiss="modal" (click)="closePassPopup()">
+        <span aria-hidden="true">×</span>
+      </button>
+      <div class="modal-body">
+        <!-- <p>One Stop Solution for all CS problems</p> -->
+        <form>
+          <div class="mb-3 mt-3">
+              <label for="email">Email Id</label>
+              <input type="email" class="form-control" id="email" [(ngModel)]="authUser.authUserEmail"
+                  placeholder="Enter email" name="email">
+          </div>
+          
+          <!-- <button type="submit" class="btn btn-primary" (click)="userLogin(authUser.authUserEmail)">Submit</button> -->
+          
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="footerButtons">
+        <button type="submit" class="btn btn-primary"  style="
+        height: 3rem;
+        width: 8rem ;font-size: 1.5rem;margin-right: 6%"  (click)="forgotPass(authUser.authUserEmail)">Submit</button>
+
+        <button type="button" style="
+        height: 3rem;
+        width: 8rem ;font-size: 1.5rem;" class="btn btn-danger" 
+                (click)="closePassPopup()">
+          Close
+        </button>
+      </div>
+       
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
       
           </ul>
           <i class="bi bi-list mobile-nav-toggle"></i>

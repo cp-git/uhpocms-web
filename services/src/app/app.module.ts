@@ -87,6 +87,7 @@ import { StudentModuleModule } from './student-module/student-module.module';
 import { ReviewModule } from './review-answer/module/review/review.module';
 import { CategoryModule } from './category/module-name/category.module';
 import { LoginPopupComponent } from './authlogin/components/login-popup/login-popup.component';
+import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 
 
 
@@ -126,6 +127,7 @@ import { LoginPopupComponent } from './authlogin/components/login-popup/login-po
     AnalyticsComponent,
     PolarChartComponent,
     LoginPopupComponent,
+    ForgotpasswordComponent,
       
   ],
 

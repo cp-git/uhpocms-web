@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AccesscontrolService } from 'app/accesscontrol/services/accesscontrol.service';
 import { AdminRole } from 'app/admin-role/class/admin-role';
 import { AdminRoleService } from 'app/admin-role/services/admin-role.service';
@@ -9,9 +9,11 @@ import { AuthenticationserviceService } from 'app/authenticationlogin/service/au
 import { AuthService } from 'app/authlogin/service/auth.service';
 import { AuthModuleService } from 'app/permissions/services/authModule/auth-module.service';
 import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
+import { EmailRequest } from 'app/profiles/class/emailrequest';
 import { Profile } from 'app/profiles/class/profile';
 import { ProfileService } from 'app/profiles/services/profile.service';
-
+import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
+// import * as CryptoJS from 'crypto-js';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -34,20 +36,30 @@ export class HomeComponent {
   successMessage!: string;
   loginSuccess = false;
   displayStyle = "none";
+  displayFpStyle = "none";
 
   authUser = new Authuser();
   adminRoles: AdminRole[] = []
   _instituteAdminArray: Profile[] = [];
   constructor(private _route: Router, private _auth: AuthUserService,
-  
+    private actRoute: ActivatedRoute,
     private _instituteadminprofile: ProfileService,
     private authenticationService: AuthenticationserviceService,
     private userPermissionService: AuthUserPermissionService,
     private accessControlService: AccesscontrolService,
     private authModuleService: AuthModuleService,
-    private adminRoleService: AdminRoleService
+    private adminRoleService: AdminRoleService,
+    private dialogBoxService:DialogBoxService
+    // this._route.params.subscribe(params => {
+    //   const email = params['email'];
+     
+    // });
 ) {  this.loadAdminRoles();
-  this._getAllList();}
+  this._getAllList();
+  this.actRoute.params.subscribe(params => {
+    const email = params['email'];
+    // Now you can use the email ID in your component logic
+  });}
 
   // public src="assets/videos/university_video.mp4"
   public src = 'assets/videos/university_video.mp4';
@@ -59,7 +71,7 @@ export class HomeComponent {
   userLogin() {
 
     
-
+   
     this._auth.loginDataAuthUser(this.authUser).subscribe(
       (data) => {
       
@@ -118,6 +130,34 @@ export class HomeComponent {
     );
 
 
+  }
+
+  forgotPass(email:any){
+
+   let emailReq:EmailRequest = new EmailRequest();
+
+    emailReq.subject = "Request to change password\n";
+    emailReq.text = "We got your request to change the password:\n\n"
+    + "Please click on below link to change password\n"
+ 
+    +"http://localhost:4200/#/profile/"+email;
+
+  
+    // +`https://example.com/reset-password?email=${encodeURIComponent(encryptedEmail)}`;
+   
+
+
+
+
+ emailReq.to= email;
+    this._instituteadminprofile.sendEmail(emailReq).subscribe(response=>{console.log("Email Sent")
+    this.dialogBoxService.open('Please check your email to change the password', 'information');
+    this.displayFpStyle = "none";
+  })
+
+  }
+  navigateToProfile(email: string) {
+    this._route.navigate(['/profile', email]);
   }
 
   _getAllList() {
@@ -190,10 +230,21 @@ export class HomeComponent {
 
   
   openPopup() {
+
     this.displayStyle = "block";
+    this.displayFpStyle = "none";
   }
   closePopup() {
     this.displayStyle = "none";
   }
+
+  openPassPopup() {
+    this.displayFpStyle = "block";
+    this.displayStyle = "none";
+  }
+  closePassPopup() {
+    this.displayFpStyle = "none";
+  }
+
 
 }

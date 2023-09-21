@@ -64,6 +64,7 @@ import { ReviewAnswerComponent } from './review-answer/components/review-answer/
 
 import { AllCourseComponent } from './teacher-course/components/all-course/all-course.component';
 import { LoginPopupComponent } from './authlogin/components/login-popup/login-popup.component';
+import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 
 
 
@@ -97,7 +98,8 @@ const routes: Routes = [
   { path: 'teachercourse', component: TeacherCourseComponent },
   { path: 'teacher/:id', component: AssigncoursetoteacherComponent },
   // { path: 'teacher/:id/:userName', component: TeacherCourseComponent },
-
+  //////////////////$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$/////////////////////
+  { path: 'profile/:email', component: ForgotpasswordComponent },
   //category routing
   { path: 'addCategory', component: AddCategoryComponent },
   { path: 'addModule', component: AddModuleComponent },
