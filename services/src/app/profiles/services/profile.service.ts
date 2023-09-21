@@ -6,6 +6,7 @@ import { Profile } from '../class/profile';
 import { DataServiceCache } from 'app/cache/service/data-service.service';
 import { of } from 'rxjs/internal/observable/of';
 import { tap } from 'rxjs/internal/operators/tap';
+import { EmailRequest } from '../class/emailrequest';
 
 @Injectable({
   providedIn: 'root'
@@ -92,4 +93,11 @@ export class ProfileService {
   getProfileByAdminId(adminId: number): Observable<any> {
     return this.http.get<any>(`${this.profileUrl}/id/${adminId}`);
   }
+
+//add a new course 
+sendEmail(emailReq: EmailRequest): Observable<any> {
+  console.log("sendEmail Service")
+  console.log(this.profileUrl);
+  return this.http.post<any>(`${this.profileUrl}/send-email` ,emailReq);
+}
 }
