@@ -27,7 +27,7 @@ onSubmit(password:String,confirmPass:string){
   this.authServ.resetPassword(this.emailId, password).subscribe(
     (response)=>{
       // this.dialogBoxService.open('Password Changed Successfully', 'information');
-      this.dialogBoxService.open('Password Changed Successfully', 'information').then(() => {
+      this.dialogBoxService.open('Password changed successfully', 'information').then(() => {
         // Navigate to the desired link after the dialog is closed
         this._route.navigate(['/']);
       });
