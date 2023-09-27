@@ -30,7 +30,7 @@ export class ModuleFileService {
   ////////////////////////////////// SERVICE - FETCH ALL MODULE FILE USING ACTIVE MODULE ////////////////
 
   fetchModuleFileListActiveModule(): Observable<any> {
-    return this._http.get<any>(`http://localhost:8090/modulefile/uhpocms/modulefileActiveByModule?file=all`);
+    return this._http.get<any>(`http://localhost:8090/modulefile/uhpocms/modulefile?file=all`);
   }
 
   /////////////////////////////////////// SERVICE - GET ALL INACTIVE MODULE FILE //////////////////////////////

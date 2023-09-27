@@ -281,12 +281,17 @@ export class ModuleComponent {
   }
 
   ///////////////////////////////////////////////  ADD A NEW MODULE ////////////////////////////////////////////////
+
+
+  /*
+    Made a change added module it active directly
+  */
   private addModule(currentData: Module) {
     // if (currentData.moduleStartDate && currentData.moduleEndDate && currentData.moduleEndDate <= currentData.moduleStartDate) {
     //   alert("End date must be after start date");
     //   return;
     // }
-    currentData.moduleIsActive = false;  // setting active false
+    currentData.moduleIsActive = true;  // setting active false
     // calling service for adding data
 
     this.service.addTeacherModule(currentData).subscribe(
@@ -375,6 +380,7 @@ export class ModuleComponent {
         // calling service to soft delete
         this.service.deleteModuleById(moduleId).subscribe(
           (response) => {
+            console.log("delete response..." + response)
             this.dialogBoxServices.open('Module deleted successfully', 'information');
             this.ngOnInit();
           },
@@ -422,22 +428,18 @@ export class ModuleComponent {
   private async activeModule(moduleId: any) {
     try {
 
-      await this.getModuleFileByModuleId(moduleId);
 
-      if (this.moduleFilesInModule && this.moduleFilesInModule.length > 0) {
-        this.service.activateModuleById(moduleId).subscribe(
-          () => {
-            this.dialogBoxServices.open('Module Activated', 'information');
-            this.ngOnInit();
-          },
-          error => {
-            console.error('Error activating module:', error);
-            this.dialogBoxServices.open('Failed to Activate', 'warning');
-          }
-        );
-      } else {
-        this.dialogBoxServices.open('Module has no files. Cannot activate without files.', 'warning');
-      }
+      this.service.activateModuleById(moduleId).subscribe(
+        () => {
+          this.dialogBoxServices.open('Module Activated', 'information');
+          this.ngOnInit();
+        },
+        error => {
+          console.error('Error activating module:', error);
+          this.dialogBoxServices.open('Failed to Activate', 'warning');
+        }
+      );
+
     } catch (error) {
       console.error('Error during module activation:', error);
       this.dialogBoxServices.open('An error occurred during module activation', 'warning');
@@ -500,9 +502,15 @@ export class ModuleComponent {
   }
 
   ////////////////////////  MODULES ASSIGN TO PERTICULAR PROFILE ID   //////////////////////////////
+
+  /*
+    code for getting active and deactivate data from module
+  */
+
   getModulesOfAssignedCoursesByProfileId(profileId: number) {
     this.service.getModulesOfAssignedCoursesByProfileId(profileId).subscribe(
       (response) => {
+        console.log(response);
         this.allData = response.filter((data: { moduleIsActive: boolean; }) => data.moduleIsActive == true);
         this.allInActiveData = response.filter((data: { moduleIsActive: boolean; }) => data.moduleIsActive == false);
 
@@ -513,9 +521,15 @@ export class ModuleComponent {
 
 
   /////////////////////////  MODULES OF ENROLLED COURSES BY PROFILE ID   /////////////////////////////
+
+  /*
+   Used to filter active and inactive data
+  */
   getModulesOfEnrolledCoursesByProfileId(profileId: number) {
     this.service.getModulesOfEnrolledCoursesByProfileId(profileId).subscribe(
       (response) => {
+        console.log(response);
+
         this.allData = response.filter((data: { moduleIsActive: boolean; }) => data.moduleIsActive == true);
         this.allInActiveData = response.filter((data: { moduleIsActive: boolean; }) => data.moduleIsActive == false);
       }

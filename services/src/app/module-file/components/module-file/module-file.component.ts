@@ -61,6 +61,8 @@ export class ModuleFileComponent {
   allModuleFileData: ModuleFile[] = [];
   allInActiveData: ModuleFile[] = [];
 
+  dataDemo: [] = [];
+
   sessionData: any;
   data: any;
   userRole: any;
@@ -288,13 +290,13 @@ export class ModuleFileComponent {
     try {
       this.sessionData = sessionStorage.getItem('module');
       this.data = JSON.parse(this.sessionData);
-      console.log(this.data);
+
 
       for (var module in this.data) {
         this.modules.push(this.data[module]);
       }
 
-      console.log(this.modules);
+
 
 
 
@@ -314,7 +316,6 @@ export class ModuleFileComponent {
           this.filteredModules.push(module);
 
         }
-        console.log(this.filteredModules);
 
       })
     })
@@ -404,7 +405,7 @@ export class ModuleFileComponent {
 
       (error) => {
         this.dialogBoxServices.open("File is Already Present pls Select Another file..", 'warning');
-        console.log('failed to upload ')
+
       }
 
     );
@@ -425,25 +426,21 @@ export class ModuleFileComponent {
   private async activeModule(moduleId: any) {
     try {
 
-      await this.getModuleFileByModuleId(moduleId);
-
-      if (this.moduleFilesInModule && this.moduleFilesInModule.length > 0) {
 
 
-        //Calling Service from Module component
-        this.moduleService.activateModuleById(moduleId).subscribe(
-          () => {
-            //this.dialogBoxServices.open('Module Activated', 'information');
-            this.ngOnInit();
-          },
-          error => {
-            console.error('Error activating module:', error);
-            //this.dialogBoxServices.open('Failed to Activate', 'warning');
-          }
-        );
-      } else {
-        this.dialogBoxServices.open('Module has no files. Cannot activate without files.', 'warning');
-      }
+
+      //Calling Service from Module component
+      this.moduleService.activateModuleById(moduleId).subscribe(
+        () => {
+
+          this.ngOnInit();
+        },
+        error => {
+          console.error('Error activating module:', error);
+
+        }
+      );
+
     } catch (error) {
       console.error('Error during module activation:', error);
       this.dialogBoxServices.open('An error occurred during module activation', 'warning');
@@ -520,7 +517,7 @@ export class ModuleFileComponent {
 
     this.moduleFileService.fetchModuleFileListActiveModule().subscribe(
       response => {
-        // console.log(response);
+
 
         this.allModuleFileData = response; //assign data to local variable
 
@@ -545,6 +542,8 @@ export class ModuleFileComponent {
         this.moduleFileService.deleteModuleFileById(moduleFileId).subscribe(
           (response) => {
             this.dialogBoxServices.open("Module File deleted successfully !", 'information');
+            console.log(response);
+
 
             this.ngOnInit();
           },
@@ -567,7 +566,10 @@ export class ModuleFileComponent {
     // calling service to get all inactive record
     this.moduleFileService.getInactivemoduleFileList().subscribe(
       response => {
+
+
         this.allInActiveData = response;
+
       },
       error => {
         console.log('No data in table ');
@@ -584,6 +586,10 @@ export class ModuleFileComponent {
 
         this.dialogBoxServices.open("Activated modulefile", 'information');
         this.ngOnInit();
+        console.log(response);
+
+
+
       },
       error => {
         this.dialogBoxServices.open("Failed to activate", 'warning');
@@ -668,23 +674,14 @@ export class ModuleFileComponent {
     // const modules = await this.moduleService.getModulesOfAssignedCoursesByProfileId(profileId).toPromise();
     // console.log(modules);
 
+
     this.moduleService.getModulesOfAssignedCoursesByProfileId(profileId).subscribe(
       response => {
         console.log(response);
 
-        let name;
-        this.modulesData = response;
-
-        for (let u = 0; u < this.modulesData.length; u++) {
-          if (this.modulesData[u].moduleIsActive == true) {
-
-            console.log(this.modulesData[u]);
-
-          }
 
 
 
-        }
 
 
 
@@ -711,6 +708,8 @@ export class ModuleFileComponent {
     if (modules !== undefined) {
       this.modules = modules;
     }
+
+
   }
 
 
@@ -722,35 +721,24 @@ export class ModuleFileComponent {
         this.allData = [];
         this.allInActiveData = [];
 
-        response.forEach((moduleFile: ModuleFile) => {
-          this.modules.find((module: Module) => {
-            if (moduleFile.moduleId == module.moduleId) {
-              if (module.moduleIsActive) {
-                if (moduleFile.moduleFileIsActive) {
-                  this.allData.push({
-                    ...moduleFile,
-                    courseId: module.courseId_id,
 
-                  });
-                }
+        this.moduleFileService.fetchModuleFileList().subscribe(
+          response => {
 
+            this.allData = response;
+          }
+        )
 
-              } else {
-                this.allInActiveData.push({
-                  ...moduleFile,
-                  courseId: module.courseId_id,
+        this.moduleFileService.getInactivemoduleFileList().subscribe(
+          data1 => {
+            this.allInActiveData = data1;
 
-                });
-
-
-              }
-
-
-            }
           })
-        })
+
       }
-    );
+    )
+
+
 
   }
 
@@ -783,6 +771,9 @@ export class ModuleFileComponent {
 
 
               }
+
+
+
 
 
             }
