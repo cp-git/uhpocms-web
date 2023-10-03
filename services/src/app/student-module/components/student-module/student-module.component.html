@@ -152,9 +152,11 @@
             </h5>
 
             <h5 style="color:blue"> Course Grade :{{quizData}}</h5>
-
-
-
+            <div *ngIf="courProgPercentage == 100">
+            
+            <!-- <a href="http://localhost:8080/uhpocms/profile/generateCertificate/9/1/abc/computer science" target="_blank">Download Certificate</a> -->
+            <button class="downloadLink" (click)="downloadCertificate(studentId, instId, instName,instPicture, selectedCourseName)">Download Certificate</button>
+            </div>
             <!-- <h5 *ngIf="selectedQuizProgress.score > selectedQuiz.passMark; else failedText" style="color:blue">
                 {{selectedQuiz.successText}}
             </h5>
@@ -184,7 +186,7 @@
                         (savePDFProgress)="onSavePDFProgress($event)"></app-pdf-viewer>
                 </ng-container>
                 <ng-container>
-                    <video [hidden]="format!='video'" class="videoscreen" (ended)="videoEnd()"
+                    <video [hidden]="format!='video'" class="videoscreen" (ended)="videoEnd()" (play)="onViedoPlayed()"
                         (timeupdate)="onVideoTimeUpdate()" (pause)="pauseVideo()" controls oncontextmenu="return false;"
                         controls controlsList="nodownload" #videoPlayer>
                         <source [src]="selectedFileData" type="video/mp4" />
