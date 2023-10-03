@@ -7,6 +7,7 @@ import { DataServiceCache } from 'app/cache/service/data-service.service';
 import { of } from 'rxjs/internal/observable/of';
 import { tap } from 'rxjs/internal/operators/tap';
 import { EmailRequest } from '../class/emailrequest';
+import { Text } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -100,4 +101,20 @@ sendEmail(emailReq: EmailRequest): Observable<any> {
   console.log(this.profileUrl);
   return this.http.post<any>(`${this.profileUrl}/send-email` ,emailReq);
 }
+
+
+sendCertificateEmail(userId: number, instId: number, instName: string,instImg:string, courName: string): Observable<string> {
+  // Specify the response type as text to receive the download link as a string
+  return this.http.get<string>(`${this.profileUrl}/generateCertificate/${userId}/${instId}/${instName}/${instImg}/${courName}`, { responseType: 'json' });
+}
+
+
+downloadCertificateEmail(userId: number, instId: number, instName: string, instImg: string, courName: string): Observable<string> {
+  // Specify the response type as text to receive the download link as a string
+  const responseType: 'text' = 'text';
+  const url = `${this.profileUrl}/generateCertificate/${userId}/${instId}/${instName}/${instImg}/${courName}`;
+  
+  return this.http.get(url, { responseType });
+}
+
 }

@@ -68,7 +68,7 @@ export class AdmininstitutionService {
 
   //service to get institution by provided profile id
   getInstitutionByProfileId(id: number): Observable<AdminInstitution[]> {
-    return this._http.get<AdminInstitution[]>(`${this.institutionUrl}/profile/` + id);
+    return this._http.get<any[]>(`${this.institutionUrl}/profile/` + id);
   }
 
   // service to delete institution By id
