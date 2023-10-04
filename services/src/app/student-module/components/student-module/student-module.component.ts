@@ -199,15 +199,15 @@ export class StudentModuleComponent implements OnInit {
 
   grade: any = '';
 
- downloadLink:any
- instId:number=0;
- instName:string = '';
- instPicture:string = '';
- videoPlayed:boolean = false;
+  downloadLink: any
+  instId: number = 0;
+  instName: string = '';
+  instPicture: string = '';
+  videoPlayed: boolean = false;
   // ------------------------VARIABLE DECLARATION END------------------------------
 
   constructor(private activateRoute: ActivatedRoute,
-    private profServ :ProfileService,
+    private profServ: ProfileService,
     private courseService: TeacherCourseService,
     private moduleService: ModuleService,
     private modulefileService: ModuleFileService,
@@ -225,7 +225,7 @@ export class StudentModuleComponent implements OnInit {
     private courseProgServ: CourseProgressService,
     private quizReService: QuizresultService,
     private service: QuestionService, private dialogBoxServices: DialogBoxService,
-    private reviewServ: QuizresultService, private ngZone: NgZone, private router: Router,private http: HttpClient
+    private reviewServ: QuizresultService, private ngZone: NgZone, private router: Router, private http: HttpClient
   ) {
     this.selectedQuizProgress = new QuizProgress();
     this.selectedQuiz = new Quiz();
@@ -607,17 +607,17 @@ export class StudentModuleComponent implements OnInit {
     return this.videoPlayerRef.nativeElement;
   }
 
-  onViedoPlayed(){
-      this.videoPlayed = true;
+  onViedoPlayed() {
+    this.videoPlayed = true;
   }
 
- 
+
 
   private async getModFilesByModuleId(moduleId: number) {
     this.modFilesArray = [];
     try {
       const data = await this.modFileServc.getModuleFilesByModuleId(moduleId).toPromise();
-      //.log(data);
+      console.log(data);
       if (data != undefined) {
         this.modFilesArray = data;
       }
@@ -1060,8 +1060,8 @@ export class StudentModuleComponent implements OnInit {
 
     let moduleArray: Module[] = [];
     let moduleProgArray: Moduleprogress[] = [];
-    let institutionId :number =0;
-    let adminInstitution :  AdminInstitution[] = [];
+    let institutionId: number = 0;
+    let adminInstitution: AdminInstitution[] = [];
     //.log(courseId)
     await this.totalFilesAndQuizzesInCourse(courseId)
     await this.actualModFileAndQuizCompleted(this.studentId, courseId)
@@ -1071,101 +1071,101 @@ export class StudentModuleComponent implements OnInit {
     //.log(this.existingCourseProg)
     this.courseProgress.progress = ((this.completedFileIds.length + this.completedQuizids.length) * 100) / (this.moduleFileIdsForCour.length + this.quizIdsForCour.length);
     this.instituteadminService
-          .getInstitutionByProfileId(this.studentId)
-          .subscribe((response) => {
-            adminInstitution = response 
-            this.instId = adminInstitution[0].adminInstitutionId;
-            this.instName = adminInstitution[0].adminInstitutionName;
-            this.instPicture = adminInstitution[0].adminInstitutionPicture
-        
-
-
-    if (this.existingCourseProg.courseId != courseId) {
-      let addedcourseProgress: CourseProgress = new CourseProgress();
-      //.log("if(this.existingCourseProg.courseId != courseId && this.existingCourseProg.studentId != this.studentId)")
-
-      this.courseProgress.id = 0;
-      this.courseProgress.courseId = this.selectedCourseId;
-      this.courseProgress.studentId = this.studentId;
-      this.courseProgress.currentAssignNo = 1;
-      this.courseProgress.currentModuleNo = 1;
-      this.courseProgress.currentUnitNo = 1;
-      this.courseProgress.grade = 0;
-
-      let adminInstitution :  AdminInstitution[] = [];
-      
-      
+      .getInstitutionByProfileId(this.studentId)
+      .subscribe((response) => {
+        adminInstitution = response
+        this.instId = adminInstitution[0].adminInstitutionId;
+        this.instName = adminInstitution[0].adminInstitutionName;
+        this.instPicture = adminInstitution[0].adminInstitutionPicture
 
 
 
-      this.courseProgServ.addCourseProgressStatus(this.courseProgress).subscribe(
-        (response) => {
+        if (this.existingCourseProg.courseId != courseId) {
+          let addedcourseProgress: CourseProgress = new CourseProgress();
+          //.log("if(this.existingCourseProg.courseId != courseId && this.existingCourseProg.studentId != this.studentId)")
 
-          addedcourseProgress = response;
-          this.courProgPercentage = addedcourseProgress.progress;
+          this.courseProgress.id = 0;
+          this.courseProgress.courseId = this.selectedCourseId;
+          this.courseProgress.studentId = this.studentId;
+          this.courseProgress.currentAssignNo = 1;
+          this.courseProgress.currentModuleNo = 1;
+          this.courseProgress.currentUnitNo = 1;
+          this.courseProgress.grade = 0;
 
-          console.log("this.videoPlayed  "+this.videoPlayed);
-          if((this.courProgPercentage == 100)  && (this.videoPlayed == true)){
-            this.dialogboxService.open('Congratulations you have successfully completed the course \uD83D\uDC90', 'information');
-            this.profServ.sendCertificateEmail(this.studentId,this.instId,this.instName,this.instPicture,this.selectedCourseName).subscribe(
-              (response)=>{
-                console.log(" Certificate Generated Successfully")
-             
-          this.downloadLink = response
-          console.log(this.downloadLink)
-             
-              }
-            )
-         
-          }
-          this.courseProgServ.getAllCourseProgress().subscribe(
-            (response) => { }
-          )
-          //.log("   this.courProgPercentage  in add  " + this.courProgPercentage)
-        }
-      )
-
-    }
+          let adminInstitution: AdminInstitution[] = [];
 
 
-    else if ((this.existingCourseProg.courseId == courseId) && (this.existingCourseProg.studentId == this.studentId)) {
-      let updatedcourseProgress: CourseProgress = new CourseProgress();
-      //.log(" else if(this.existingCourseProg.courseId === courseId && this.existingCourseProg.studentId === this.studentId)")
-      this.existingCourseProg.progress = ((this.completedFileIds.length + this.completedQuizids.length) * 100) / (this.moduleFileIdsForCour.length + this.quizIdsForCour.length);
 
-      this.courseProgServ.updateCourseProgress(this.existingCourseProg).subscribe(
-        (response) => {
-          updatedcourseProgress = response;
-          this.courProgPercentage = updatedcourseProgress.progress;
-          console.log("this.videoPlayed  "+this.videoPlayed);
-          if((this.courProgPercentage == 100)  && (this.videoPlayed == true)){
-            this.dialogboxService.open('Congratulations you have successfully completed the course \uD83D\uDC90', 'information');
-            this.profServ.sendCertificateEmail(this.studentId,this.instId,this.instName,this.instPicture,this.selectedCourseName).subscribe(
-              (response)=>{
-                console.log(" Certificate Generated Successfully")
-               this.downloadLink = response
-               console.log(this.downloadLink)
-              }
-            )
-          }
-          this.courseProgServ.getAllCourseProgress().subscribe(
+
+
+          this.courseProgServ.addCourseProgressStatus(this.courseProgress).subscribe(
             (response) => {
-       
-             }
+
+              addedcourseProgress = response;
+              this.courProgPercentage = addedcourseProgress.progress;
+
+              console.log("this.videoPlayed  " + this.videoPlayed);
+              if ((this.courProgPercentage == 100) && (this.videoPlayed == true)) {
+                this.dialogboxService.open('Congratulations you have successfully completed the course \uD83D\uDC90', 'information');
+                this.profServ.sendCertificateEmail(this.studentId, this.instId, this.instName, this.instPicture, this.selectedCourseName).subscribe(
+                  (response) => {
+                    console.log(" Certificate Generated Successfully")
+
+                    this.downloadLink = response
+                    console.log(this.downloadLink)
+
+                  }
+                )
+
+              }
+              this.courseProgServ.getAllCourseProgress().subscribe(
+                (response) => { }
+              )
+              //.log("   this.courProgPercentage  in add  " + this.courProgPercentage)
+            }
           )
 
-          //.log("   this.courProgPercentage  in update " + this.courProgPercentage)
+        }
+
+
+        else if ((this.existingCourseProg.courseId == courseId) && (this.existingCourseProg.studentId == this.studentId)) {
+          let updatedcourseProgress: CourseProgress = new CourseProgress();
+          //.log(" else if(this.existingCourseProg.courseId === courseId && this.existingCourseProg.studentId === this.studentId)")
+          this.existingCourseProg.progress = ((this.completedFileIds.length + this.completedQuizids.length) * 100) / (this.moduleFileIdsForCour.length + this.quizIdsForCour.length);
+
+          this.courseProgServ.updateCourseProgress(this.existingCourseProg).subscribe(
+            (response) => {
+              updatedcourseProgress = response;
+              this.courProgPercentage = updatedcourseProgress.progress;
+              console.log("this.videoPlayed  " + this.videoPlayed);
+              if ((this.courProgPercentage == 100) && (this.videoPlayed == true)) {
+                this.dialogboxService.open('Congratulations you have successfully completed the course \uD83D\uDC90', 'information');
+                this.profServ.sendCertificateEmail(this.studentId, this.instId, this.instName, this.instPicture, this.selectedCourseName).subscribe(
+                  (response) => {
+                    console.log(" Certificate Generated Successfully")
+                    this.downloadLink = response
+                    console.log(this.downloadLink)
+                  }
+                )
+              }
+              this.courseProgServ.getAllCourseProgress().subscribe(
+                (response) => {
+
+                }
+              )
+
+              //.log("   this.courProgPercentage  in update " + this.courProgPercentage)
+
+            }
+          )
+
+
+
+
+
 
         }
-      )
-   
-
-    
-
-
-
-  }
-});
+      });
   }
 
 
@@ -1228,7 +1228,7 @@ export class StudentModuleComponent implements OnInit {
 
   }
 
-  downloadCertificate(userId:number,instId:number ,instName: string ,instImg:string,courName:string ) {
+  downloadCertificate(userId: number, instId: number, instName: string, instImg: string, courName: string) {
 
     // Replace these placeholders with the actual values you need
     // const userId = 9;
@@ -1238,12 +1238,12 @@ export class StudentModuleComponent implements OnInit {
 
     // Make an HTTP request to fetch the certificate content
     // this.http
-      // .get(`http://localhost:8080/uhpocms/profile/generateCertificate/${userId}/${instId}/${instName}/${instImg}/${courName}`, { responseType: 'text' })
-      // .subscribe((certificateHtml) => {
-        this.profServ.downloadCertificateEmail(userId,instId,instName,instImg,courName).subscribe(
-        (certificateHtml)=>{
- 
-      
+    // .get(`http://localhost:8080/uhpocms/profile/generateCertificate/${userId}/${instId}/${instName}/${instImg}/${courName}`, { responseType: 'text' })
+    // .subscribe((certificateHtml) => {
+    this.profServ.downloadCertificateEmail(userId, instId, instName, instImg, courName).subscribe(
+      (certificateHtml) => {
+
+
 
         // Create a blob from the HTML content
         const blob = new Blob([certificateHtml], { type: 'text/html' });
