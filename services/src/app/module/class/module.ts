@@ -1,7 +1,7 @@
 export class Module {
 
   moduleId!: number;
-
+  moduleReview!: boolean;
   moduleName!: string;
   moduleDescription!: string;
   moduleIsActive!: boolean;
@@ -14,5 +14,6 @@ export class Module {
   moduleCreatedDate!: Date;
   moduleUpdatedBy!: string;
   moduleUpdatedDate!: Date;
+
 
 }

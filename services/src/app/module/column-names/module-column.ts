@@ -6,8 +6,9 @@ export const ModuleColumn = [
     { key: 'courseId_id', label: 'Course Name', type: 'dropdown', arrayName: 'filterCourses', columnId: 'courseId', columnName: 'courseName' },
     { key: 'moduleStartDate', label: 'Start Date', type: 'date' },
     { key: 'moduleEndDate', label: 'End Date', type: 'date' },
-    { key: 'moduleOrderNo', label: 'Module Order No', type: 'input',subtype:'number' },
+    { key: 'moduleOrderNo', label: 'Module Order No', type: 'input', subtype: 'number' },
     // { key: 'moduleCourse', label: 'Module Course', type: 'input' }
+    { key: 'moduleReview', label: 'Module Review', type: 'checkbox', subtype: 'boolean' },
 
 ]
 
@@ -20,8 +21,9 @@ export const ModuleAllColumn = [
     { key: 'moduleStartDate', label: 'Start Date', type: 'date', minValue: new Date().toISOString().split('T')[0] },
     { key: 'moduleEndDate', label: 'End Date', type: 'date', minValue: 'moduleStartDate' },
     // { key: 'moduleCourse', label: 'Module course', type: 'input' },
-    { key: 'moduleOrderNo', label: 'Module Order No', type: 'input',subtype:'number' },
-    
+    { key: 'moduleOrderNo', label: 'Module Order No', type: 'input', subtype: 'number' },
+    { key: 'moduleReview', label: 'Module Review', type: 'checkbox', subtype: 'boolean' },
+
 ]
 
 
@@ -34,6 +36,7 @@ export const UpdateAllColumn = [
     { key: 'moduleStartDate', label: 'Start Date', type: 'date', },
     { key: 'moduleEndDate', label: 'End Date', type: 'date', minValue: 'moduleStartDate' },
     // { key: 'moduleCourse', label: 'Module course', type: 'input' },
-    { key: 'moduleOrderNo', label: 'Module Order No', type: 'input',subtype:'number' },
-   
+    { key: 'moduleOrderNo', label: 'Module Order No', type: 'input', subtype: 'number' },
+    { key: 'moduleReview', label: 'Module Review', type: 'checkbox', subtype: 'boolean' },
+
 ]

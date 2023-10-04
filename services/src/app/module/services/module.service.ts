@@ -12,8 +12,8 @@ export class ModuleService {
   constructor(private _http: HttpClient) {
 
     this.moduleUrl = environment.moduleUrl + '/module';
-    
-    
+
+
   }
 
   // get all modules

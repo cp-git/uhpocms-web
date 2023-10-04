@@ -62,7 +62,7 @@ export class ModuleComponent {
 
   emptyModule: Module;  // empty admin role
   currentData!: Module;  // for update and view, to show existing data
-  moduleFilesInModule:ModuleFile[] = [];
+  moduleFilesInModule: ModuleFile[] = [];
 
   // for user Permissions
   buttonsArray: any;
@@ -85,7 +85,7 @@ export class ModuleComponent {
     private userPermissionService: AuthUserPermissionService,
     private institutionService: AdmininstitutionService,
     private departmentService: DepartmentService,
-    private moduleFileService:ModuleFileService
+    private moduleFileService: ModuleFileService
 
   ) {
 
@@ -301,7 +301,7 @@ export class ModuleComponent {
     //   alert("End date must be after start date");
     //   return;
     // }
-    currentData.moduleIsActive = false;  // setting active false
+    currentData.moduleIsActive = true;  // setting active false
     // calling service for adding data
     //console.log(JSON.stringify(currentData));
     this.service.addTeacherModule(currentData).subscribe(
@@ -430,7 +430,7 @@ export class ModuleComponent {
     );
 
   }
- 
+
   async getModuleFileByModuleId(moduleId: number): Promise<any> {
     try {
       const response: any = await this.moduleFileService.getModuleFilesByModuleId(moduleId).toPromise();
@@ -438,16 +438,16 @@ export class ModuleComponent {
       console.log(response);
     } catch (error) {
       console.error('Error fetching module files:', error);
-      throw error; 
+      throw error;
     }
   }
-  
+
   // For activating Module
   private async activeModule(moduleId: any) {
     try {
       console.log("Inside activateModule(module: Module)");
       await this.getModuleFileByModuleId(moduleId);
-  
+
       if (this.moduleFilesInModule && this.moduleFilesInModule.length > 0) {
         this.service.activateModuleById(moduleId).subscribe(
           () => {
@@ -467,7 +467,7 @@ export class ModuleComponent {
       this.dialogBoxServices.open('An error occurred during module activation', 'warning');
     }
   }
-  
+
 
   private loadDataBasedOnRole(userRole: any) {
     console.log(userRole);

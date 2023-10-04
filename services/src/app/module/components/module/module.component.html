@@ -27,8 +27,7 @@
                     <ng-container *ngTemplateOutlet="backButton;"></ng-container>
                 </div>
             </div> -->
-            <app-module-header [moduleName]="moduleName"
-                (backButtonClicked)="back()"></app-module-header>
+            <app-module-header [moduleName]="moduleName" (backButtonClicked)="back()"></app-module-header>
         </ng-container>
 
         <ng-container *ngIf="viewAll">
@@ -107,6 +106,7 @@
 </ng-template>
 
 <ng-template #viewupdate>
-    <app-add-update [data]="{currentData:currentData , columnNames:allColumnNames1}" [dropdown]="{filterCourses}"
+    <app-add-update [data]="{currentData:currentData , columnNames:allColumnNames}" [dropdown]="{filterCourses}"
         (submitClicked)="onUpdateModuleSubmit($event)"></app-add-update>
+
 </ng-template>
