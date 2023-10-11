@@ -26,7 +26,7 @@
                     </div>
 
                     <div><button #btn1 id="demo"
-                            class="btn btn-primary institutebtn">{{institution.adminInstitutionName}}</button>
+                            class="btn btn-primary institutebtn" (click)="updateInstitution(institution.adminInstitutionId)" >{{institution.adminInstitutionName}}</button>
                     </div>
                     <div *ngIf="buttonsArray.showDeleteButton">
                         <button class="btn btn-danger institutebtn" id="deletebtn"

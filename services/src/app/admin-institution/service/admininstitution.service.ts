@@ -75,11 +75,20 @@ export class AdmininstitutionService {
   // deleteInstitutionById(institutionId: number): Observable<any> {
   //   return this._http.delete<any>(`${this.institutionUrl}/institutionId/`+institutionId);
   // }
+  //service to get institution by provided profile id
+  getInstitutionByInstId(id: number): Observable<AdminInstitution> {
+    return this._http.get<any>(`${this.institutionUrl}/instId/` + id);
+  }
 
   deleteInstitutionById(adminInstitutionId: number): Observable<any> {
     return this._http.delete<any>(`${this.institutionUrl}/institutionId/` + adminInstitutionId);
   }
 
+
+
+  updateInstitution(adminInstId:number,formData: FormData): Observable<any> {
+    return this._http.put<any>(`${this.institutionUrl}/`+adminInstId+`/update-image`, formData);
+  }
 
 
 }
