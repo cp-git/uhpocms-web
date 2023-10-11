@@ -103,16 +103,16 @@ sendEmail(emailReq: EmailRequest): Observable<any> {
 }
 
 
-sendCertificateEmail(userId: number, instId: number, instName: string,instImg:string, courName: string): Observable<string> {
+sendCertificateEmail(userId: number, instId: number, instName: string,instImg:string, sigImg:string,courName: string): Observable<string> {
   // Specify the response type as text to receive the download link as a string
-  return this.http.get<string>(`${this.profileUrl}/generateCertificate/${userId}/${instId}/${instName}/${instImg}/${courName}`, { responseType: 'json' });
+  return this.http.get<string>(`${this.profileUrl}/generateCertificate/${userId}/${instId}/${instName}/${instImg}/${sigImg}/${courName}`, { responseType: 'json' });
 }
 
 
-downloadCertificateEmail(userId: number, instId: number, instName: string, instImg: string, courName: string): Observable<string> {
+downloadCertificateEmail(userId: number, instId: number, instName: string, instImg: string, sigImg:string,  courName: string): Observable<string> {
   // Specify the response type as text to receive the download link as a string
   const responseType: 'text' = 'text';
-  const url = `${this.profileUrl}/generateCertificate/${userId}/${instId}/${instName}/${instImg}/${courName}`;
+  const url = `${this.profileUrl}/generateCertificate/${userId}/${instId}/${instName}/${instImg}/${sigImg}/${courName}`;
   
   return this.http.get(url, { responseType });
 }

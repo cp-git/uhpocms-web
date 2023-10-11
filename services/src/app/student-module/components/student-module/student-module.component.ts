@@ -171,6 +171,7 @@ export class StudentModuleComponent implements OnInit {
   addeedQuizProgress1: QuizProgress[] = [];
   quizDataStore: any[] = [];
   reviewStatusLocal: any[] = [];
+  sigPicture: any;
   ; //to store quizprogress data
   submitted: boolean = false;
   viewAdd: boolean = false;
@@ -1076,7 +1077,8 @@ export class StudentModuleComponent implements OnInit {
         adminInstitution = response
         this.instId = adminInstitution[0].adminInstitutionId;
         this.instName = adminInstitution[0].adminInstitutionName;
-        this.instPicture = adminInstitution[0].adminInstitutionPicture
+        this.instPicture = adminInstitution[0].adminInstitutionPicture;
+        this.sigPicture = adminInstitution[0].instSignature;
 
 
 
@@ -1107,7 +1109,7 @@ export class StudentModuleComponent implements OnInit {
               console.log("this.videoPlayed  " + this.videoPlayed);
               if ((this.courProgPercentage == 100) && (this.videoPlayed == true)) {
                 this.dialogboxService.open('Congratulations you have successfully completed the course \uD83D\uDC90', 'information');
-                this.profServ.sendCertificateEmail(this.studentId, this.instId, this.instName, this.instPicture, this.selectedCourseName).subscribe(
+                this.profServ.sendCertificateEmail(this.studentId, this.instId, this.instName, this.instPicture,this.sigPicture, this.selectedCourseName).subscribe(
                   (response) => {
                     console.log(" Certificate Generated Successfully")
 
@@ -1140,7 +1142,7 @@ export class StudentModuleComponent implements OnInit {
               console.log("this.videoPlayed  " + this.videoPlayed);
               if ((this.courProgPercentage == 100) && (this.videoPlayed == true)) {
                 this.dialogboxService.open('Congratulations you have successfully completed the course \uD83D\uDC90', 'information');
-                this.profServ.sendCertificateEmail(this.studentId, this.instId, this.instName, this.instPicture, this.selectedCourseName).subscribe(
+                this.profServ.sendCertificateEmail(this.studentId, this.instId, this.instName, this.instPicture,this.sigPicture, this.selectedCourseName).subscribe(
                   (response) => {
                     console.log(" Certificate Generated Successfully")
                     this.downloadLink = response
@@ -1228,7 +1230,7 @@ export class StudentModuleComponent implements OnInit {
 
   }
 
-  downloadCertificate(userId: number, instId: number, instName: string, instImg: string, courName: string) {
+  downloadCertificate(userId: number, instId: number, instName: string, instImg: string, sigImg:string,courName: string) {
 
     // Replace these placeholders with the actual values you need
     // const userId = 9;
@@ -1240,7 +1242,7 @@ export class StudentModuleComponent implements OnInit {
     // this.http
     // .get(`http://localhost:8080/uhpocms/profile/generateCertificate/${userId}/${instId}/${instName}/${instImg}/${courName}`, { responseType: 'text' })
     // .subscribe((certificateHtml) => {
-    this.profServ.downloadCertificateEmail(userId, instId, instName, instImg, courName).subscribe(
+    this.profServ.downloadCertificateEmail(userId, instId, instName, instImg, sigImg ,courName).subscribe(
       (certificateHtml) => {
 
 

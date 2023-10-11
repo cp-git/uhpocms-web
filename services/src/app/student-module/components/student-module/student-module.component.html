@@ -155,7 +155,7 @@
             <div *ngIf="courProgPercentage == 100">
             
             <!-- <a href="http://localhost:8080/uhpocms/profile/generateCertificate/9/1/abc/computer science" target="_blank">Download Certificate</a> -->
-            <button class="downloadLink" (click)="downloadCertificate(studentId, instId, instName,instPicture, selectedCourseName)">Download Certificate</button>
+            <button class="downloadLink" (click)="downloadCertificate(studentId, instId, instName,instPicture,sigPicture,selectedCourseName)">Download Certificate</button>
             </div>
             <!-- <h5 *ngIf="selectedQuizProgress.score > selectedQuiz.passMark; else failedText" style="color:blue">
                 {{selectedQuiz.successText}}
