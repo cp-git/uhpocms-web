@@ -64,6 +64,8 @@ import { ReviewAnswerComponent } from './review-answer/components/review-answer/
 
 import { AllCourseComponent } from './teacher-course/components/all-course/all-course.component';
 import { LoginPopupComponent } from './authlogin/components/login-popup/login-popup.component';
+import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
+import { UpdateinstituteComponent } from './admin-institution/components/updateinstitute/updateinstitute.component';
 
 
 
@@ -97,7 +99,8 @@ const routes: Routes = [
   { path: 'teachercourse', component: TeacherCourseComponent },
   { path: 'teacher/:id', component: AssigncoursetoteacherComponent },
   // { path: 'teacher/:id/:userName', component: TeacherCourseComponent },
-
+  //////////////////$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$/////////////////////
+  { path: 'profile/:email', component: ForgotpasswordComponent },
   //category routing
   { path: 'addCategory', component: AddCategoryComponent },
   { path: 'addModule', component: AddModuleComponent },
@@ -131,6 +134,8 @@ const routes: Routes = [
   { path: 'department/:id', component: ViewDepartmentComponent },
   { path: 'addinstitute', component: AddinstituteComponent },
   { path: 'addinstitute/:userName', component: AddinstituteComponent },
+  { path: 'updateinstitute/:id', component: UpdateinstituteComponent},
+
   { path: 'displayinstitute', component: DisplayinstituteComponent },
   { path: 'displayinstitute/:userName', component: DisplayinstituteComponent },
   { path: 'displayinstitute/:adminInstitutionId', component: DisplayinstituteComponent },

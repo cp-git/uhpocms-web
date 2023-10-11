@@ -152,4 +152,16 @@ export class AuthUserService {
   getAuthUserById(authUserId: number): Observable<any> {
     return this._http.get<any>(`${this._baseUrl}/user?id=${authUserId}`);
   }
+
+
+ 
+  //Update AuthUser
+  resetPassword(email:String,password:String) {
+    const url = `${this._baseUrl}/forgotpass/${email}/${password}`;
+  
+    return this._http.put<any>(url, {});
+  }
+
+
+
 }

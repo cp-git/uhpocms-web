@@ -412,7 +412,9 @@ export class ModuleComponent {
 
   }
 
+
   ///////////////////////////   GET MODULE FILE BY MODULE ID    /////////////////////////////////////////
+
   async getModuleFileByModuleId(moduleId: number): Promise<any> {
     try {
       const response: any = await this.moduleFileService.getModuleFilesByModuleId(moduleId).toPromise();
@@ -424,21 +426,29 @@ export class ModuleComponent {
     }
   }
 
+
   ///////////////////////////////////////////// ACTIVATE MODULE BY MODULE ID  ///////////////////////////////
+
+  // For activating Module
   private async activeModule(moduleId: any) {
     try {
+      console.log("Inside activateModule(module: Module)");
+      await this.getModuleFileByModuleId(moduleId);
 
-
-      this.service.activateModuleById(moduleId).subscribe(
-        () => {
-          this.dialogBoxServices.open('Module Activated', 'information');
-          this.ngOnInit();
-        },
-        error => {
-          console.error('Error activating module:', error);
-          this.dialogBoxServices.open('Failed to Activate', 'warning');
-        }
-      );
+      if (this.moduleFilesInModule && this.moduleFilesInModule.length > 0) {
+        this.service.activateModuleById(moduleId).subscribe(
+          () => {
+            this.dialogBoxServices.open('Module Activated', 'information');
+            this.ngOnInit();
+          },
+          error => {
+            console.error('Error activating module:', error);
+            this.dialogBoxServices.open('Failed to Activate', 'warning');
+          }
+        );
+      } else {
+        this.dialogBoxServices.open('Module has no files. Cannot activate without files.', 'warning');
+      }
 
     } catch (error) {
       console.error('Error during module activation:', error);

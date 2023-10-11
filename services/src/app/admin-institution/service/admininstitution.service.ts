@@ -45,7 +45,17 @@ export class AdmininstitutionService {
 
   /////////////////////  SERVICE - INSTITUTION BY PROFILE ID ////////////////////////
   getInstitutionByProfileId(id: number): Observable<AdminInstitution[]> {
-    return this._http.get<AdminInstitution[]>(`${this.institutionUrl}/profile/` + id);
+    return this._http.get<any[]>(`${this.institutionUrl}/profile/` + id);
+  }
+
+
+  // service to delete institution By id
+  // deleteInstitutionById(institutionId: number): Observable<any> {
+  //   return this._http.delete<any>(`${this.institutionUrl}/institutionId/`+institutionId);
+  // }
+  //service to get institution by provided profile id
+  getInstitutionByInstId(id: number): Observable<AdminInstitution> {
+    return this._http.get<any>(`${this.institutionUrl}/instId/` + id);
   }
 
 
@@ -56,6 +66,11 @@ export class AdmininstitutionService {
     return this._http.delete<any>(`${this.institutionUrl}/institutionId/` + adminInstitutionId);
   }
 
+
+
+  updateInstitution(adminInstId: number, formData: FormData): Observable<any> {
+    return this._http.put<any>(`${this.institutionUrl}/` + adminInstId + `/update-image`, formData);
+  }
 
 
 }

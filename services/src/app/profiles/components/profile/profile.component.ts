@@ -10,12 +10,13 @@ import { AdminRole } from 'app/admin-role/class/admin-role';
 import { AdminRoleService } from 'app/admin-role/services/admin-role.service';
 import { AuthUserService } from 'app/auth-user/services/auth-user.service';
 import { Authuser } from 'app/auth-user/class/auth-user';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment.development';
 import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box.service';
 import { AuthUserPermission } from 'app/permissions/class/auth-user-permission';
 import { userModule } from 'app/permissions/enum/user-module.enum';
 import { AuthUserPermissionService } from 'app/permissions/services/authUserPermission/auth-user-permission.service';
+import { EmailRequest } from 'app/profiles/class/emailrequest';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -65,7 +66,7 @@ export class ProfileComponent implements OnInit {
   genders: any;
   sessionData: any;
   data: any;
-
+  emailReq:EmailRequest = new EmailRequest();
   foundMatch: boolean = false;
 
   instituteId!: number;
@@ -502,6 +503,114 @@ export class ProfileComponent implements OnInit {
         if (currentData.activeUser === true) {
           this.authUserService.activateAuthUserById(currentData.userId).subscribe(
             response => {
+
+             console.log("Before Email service")
+             console.log(currentData)
+
+
+              this.authUserService.getAuthUserById(currentData.userId).subscribe(response=>{
+
+                let authUser:Authuser = new Authuser();
+                authUser = response;
+                console.log("AuthUser")
+                console.log(authUser)
+               
+                this.emailReq.subject = "Welcome to LMS\n";
+                this.emailReq.text = this.emailReq.text = "Welcome to LMS Application.\n You are registered to LMS application, and your username and password are as follows:\n\n"
+                + "Username: " + authUser.authUserName + "\n"
+                + "Password: " + authUser.authUserPassword + "\n"
+                +"Click on below link to login" + "\n\n"
+                +"http://localhost:4200/#/";
+
+                ;
+                // this.emailReq.text = `
+                //                       Welcome to LMS Application.\n
+                //                       You are registered to LMS application, and your username and password are as follows:\n\n
+                //                       Username: ${authUser.authUserName}\n
+                //                       Password: ${authUser.authUserPassword}\n\n
+                //                       <a href="http://localhost:4200/#/">Click here to login </a>
+                //                     `;
+
+                // Define the email template HTML content as a multi-line string
+// const emailText = `
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>Welcome to LMS</title>
+// </head>
+// <body>
+//     <p>Welcome to LMS Application.</p>
+//     <p>You are registered to LMS application, and your username and password are as follows:</p>
+//     <p><strong>Username:</strong> [Username Value]</p>
+//     <p><strong>Password:</strong> [Password Value]</p>
+    
+//     <!-- Button with a link -->
+//     <a href="http://localhost:4200/#/" style="display: inline-block; padding: 10px 20px; background-color: #007BFF; color: #ffffff; text-decoration: none;">Click Here</a>
+
+//     <p>Thank you for joining LMS!</p>
+// </body>
+// </html>
+// `;
+
+// ...
+
+// Define the email template HTML content as a multi-line string
+// const emailText = `
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>Welcome to LMS</title>
+// </head>
+// <body>
+//     <p>Welcome to LMS Application.</p>
+//     <p>You are registered to LMS application, and your username and password are as follows:</p>
+//     <p><strong>Username:</strong> ${authUser.authUserName}</p>
+//     <p><strong>Password:</strong> ${authUser.authUserPassword}</p>
+    
+//     <!-- Button with a link -->
+//     <a href="http://localhost:4200/#/" style="display: inline-block; padding: 10px 20px; background-color: #007BFF; color: #ffffff; text-decoration: none;">Click Here</a>
+
+//     <p>Thank you for joining LMS!</p>
+// </body>
+// </html>
+// `;
+
+
+
+// ...
+
+
+
+// Now you can use the emailText variable when sending your email
+
+
+                // this.emailReq.to = "shra11121997@gmail.com";
+                this.emailReq.to = authUser.authUserEmail;
+                // this.emailReq.text = emailText;
+                // Set the content type in the headers of your HTTP request
+              // Set the content type in the headers of your HTTP request
+              // Set the content type in the headers of your HTTP request
+                // Set the content type in the headers of your HTTP request
+                // Set the content type in the headers of your HTTP request
+                // Set the content type in the headers of your HTTP request
+                // Set the content type in the headers of your HTTP request
+                // Set the content type in the headers of your HTTP request
+                // this.emailReq['headers'] = { 'Content-Type': 'text/html' }; // Set the content type to HTML
+                // Create an HTTP request with the email content and headers
+// this.service.sendEmail(this.emailReq, { headers }).subscribe(response => {
+//     console.log("Email Sent");
+// });
+
+                this.service.sendEmail(this.emailReq).subscribe(response=>{console.log("Email Sent")})
+              })
+             
+
               this.dialogBoxService.open("Profile Added Successfully", 'information').then((response) => {
                 if (response) {
                   location.reload(); // Refresh the page
