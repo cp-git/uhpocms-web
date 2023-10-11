@@ -8,4 +8,5 @@ export class AdminInstitution {
     adminInstitutionModifiedBy!: string;
     adminInstitutionModifiedOn!: Date;
     adminInstitutionPicture!: string;
+    instSignature!: string;
 }

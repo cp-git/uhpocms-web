@@ -191,5 +191,9 @@ export class DisplayinstituteComponent {
     this._route.navigate(['displayinstitute/activate', this.userName]);
   }
 
+  updateInstitution(instId:number){
+    this._route.navigate(['updateinstitute/', instId]);
+
+  }
 
 }
