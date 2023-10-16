@@ -23,7 +23,7 @@ import { InstituteServicesService } from 'app/institute-details/services/institu
   styleUrls: ['./assigncoursetoteacher.component.css']
 })
 export class AssigncoursetoteacherComponent {
-  moduleName = 'Assign Course To User';
+  moduleName = 'Assign Course To Teacher';
   _profile = new Profile();
   _disablevar: boolean = false;
   _profileArray: Profile[] = [];
@@ -205,25 +205,27 @@ export class AssigncoursetoteacherComponent {
     this.profileService.getProfileByRoleAndInstitutionId(userRole, instId).subscribe(
       (response: Profile[]) => {
         this._profileArray = response;
+        console.log(response);
+
         this._profileArray.map((i) => { i.fullName = i.firstName + ' ' + i.lastName + ' - ' + i.adminEmail; return i; });
 
         // instId = this._profile.institutionId;
 
         // this.selectAllForDropdownItems(this._profileArray);
 
-        // Fetch student profiles and adding array of profile.
-        userRole = "student";
-        this.profileService.getProfileByRoleAndInstitutionId(userRole, instId).subscribe(
-          (response: Profile[]) => {
-            this._profileArray = this._profileArray.concat(response);
-            this._profileArray.map((i) => { i.fullName = i.firstName + ' ' + i.lastName + ' - ' + i.adminEmail; return i; });
+        // // Fetch student profiles and adding array of profile.
+        // userRole = "student";
+        // this.profileService.getProfileByRoleAndInstitutionId(userRole, instId).subscribe(
+        //   (response: Profile[]) => {
+        //     this._profileArray = this._profileArray.concat(response);
+        //     this._profileArray.map((i) => { i.fullName = i.firstName + ' ' + i.lastName + ' - ' + i.adminEmail; return i; });
 
-            // instId = this._profile.institutionId;
+        //     // instId = this._profile.institutionId;
 
-            this._profileArrCopy = this._profileArray;
-            this.selectAllForDropdownItems(this._profileArray);
-          }
-        );
+        //     this._profileArrCopy = this._profileArray;
+        //     this.selectAllForDropdownItems(this._profileArray);
+        //   }
+        // );
       }
     )
 
