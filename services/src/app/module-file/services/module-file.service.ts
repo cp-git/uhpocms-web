@@ -101,5 +101,12 @@ export class ModuleFileService {
       responseType: 'arraybuffer'
     });
   }
+
+
+  getFileData(fileId: number): Observable<any> {
+    return this._http.get(`http://localhost:8090/modulefile/uhpocms/modulefile/${fileId}`, {
+
+    });
+  }
 }
 

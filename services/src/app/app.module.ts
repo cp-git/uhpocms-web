@@ -89,6 +89,8 @@ import { CategoryModule } from './category/module-name/category.module';
 import { LoginPopupComponent } from './authlogin/components/login-popup/login-popup.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { UpdateinstituteComponent } from './admin-institution/components/updateinstitute/updateinstitute.component';
+import { SafePipe } from './safe.pipe';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 
@@ -131,7 +133,8 @@ import { UpdateinstituteComponent } from './admin-institution/components/updatei
     LoginPopupComponent,
     ForgotpasswordComponent,
     UpdateinstituteComponent,
-      
+    SafePipe
+
   ],
 
   imports: [
@@ -165,6 +168,7 @@ import { UpdateinstituteComponent } from './admin-institution/components/updatei
     StudentModuleModule,
     MatDialogModule,
     PermissionModule,
+    PdfViewerModule
 
   ],
 

@@ -78,8 +78,6 @@
 
     </app-view-allupload>
 
-
-
     <div *ngIf="allData.length==0">
         <h3>No Modules File Content</h3>
     </div>
@@ -104,11 +102,7 @@
     <app-add-updateupload [data]="{currentData:emptyModuleFile , columnNames:allColumnNames}"
         [dropdown]="{courses,modules}" (submitClicked)="onAddModuleSubmit($event)"
         (sentFileData)="onRecievedFiles($event);"></app-add-updateupload>
-
 </ng-template>
-
-
-
 
 <ng-template #viewone>
 
@@ -134,5 +128,5 @@
         <source src="{{displayUrl}}/{{currentData.moduleFileId}}" (click)="display(currentData.moduleFileId)">
     </video>
 
-
+    {{currentData.moduleFile}}
 </ng-template>

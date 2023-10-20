@@ -548,7 +548,7 @@ export class StudentModuleComponent implements OnInit {
     let blob: Blob;
     this.modulefileService.getFile(this.selectedFile.moduleFileId).subscribe(
       (response: ArrayBuffer) => {
-        //.log(response);
+        console.log(this.selectedFile);
         const bytes = new Uint8Array(response);
         // Create an ArrayBuffer
         const arrayBuffer = new ArrayBuffer(4);

@@ -134,7 +134,7 @@ const routes: Routes = [
   { path: 'department/:id', component: ViewDepartmentComponent },
   { path: 'addinstitute', component: AddinstituteComponent },
   { path: 'addinstitute/:userName', component: AddinstituteComponent },
-  { path: 'updateinstitute/:id', component: UpdateinstituteComponent},
+  { path: 'updateinstitute/:id', component: UpdateinstituteComponent },
 
   { path: 'displayinstitute', component: DisplayinstituteComponent },
   { path: 'displayinstitute/:userName', component: DisplayinstituteComponent },

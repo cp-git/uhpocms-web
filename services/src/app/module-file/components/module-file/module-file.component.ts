@@ -33,7 +33,6 @@ export class ModuleFileComponent {
   moduleFilesInModule: ModuleFile[] = [];
   modulesFile: ModuleFile[] = [];
   moduleFile = new ModuleFile();
-  modulesData: Module[] = []; //for all module data
 
   inActivationScreenStatus: boolean = false;
   activationScreenStatus: boolean = false;
@@ -58,10 +57,7 @@ export class ModuleFileComponent {
   readonly primaryIdColumnName: string = 'id';
 
   allData: ModuleFile[] = [];
-  allModuleFileData: ModuleFile[] = [];
   allInActiveData: ModuleFile[] = [];
-
-  dataDemo: [] = [];
 
   sessionData: any;
   data: any;
@@ -128,21 +124,17 @@ export class ModuleFileComponent {
     this.modulefileUrl = `${environment.moduleFileUrl}`;
   }
 
-
-  /////////////////////////////////////////////// ON PAGE LOAD ///////////////////////////////////////////////
   ngOnInit(): void {
-
+    console.log("CALED NGONINT%%%%%%%%%%%%%%%%%")
     this.loadAndLinkUserPermissions();
 
     this.activationScreenStatus = false;
     this.loadDataBasedOnRole(this.userRole)
-    this.loadModules();
-    //  this.getAllModulesFile();
+    // this.getAllModulesFile();
     // this.getAssignedCoursesOfTeacher(this.profileId);
     // this.getInactiveModuleFiles();
 
     // this.displayUrl = this.modulefileUrl + '/files'
-
 
     this.displayUrl = this.modulefileUrl + '/files'
   }
@@ -156,7 +148,7 @@ export class ModuleFileComponent {
 
   submitClicked(eventData: any) {
     // Handle the emitted data here
-
+    console.log("Received event data:", eventData);
   }
   navAddModuleFile() {
     this._route.navigate(['addModuleFile']);
@@ -177,6 +169,7 @@ export class ModuleFileComponent {
 
   // back button functionality
   back() {
+    console.log(this.currentData)
 
     this.currentData = new ModuleFile();
 
@@ -187,7 +180,8 @@ export class ModuleFileComponent {
       // this.ngOnInit();
 
       this.viewAll = true;
-
+      console.log(this.currentData)
+      console.log(this.allData)
       this.viewOne = false;
       this.viewAdd = false;
       this.viewUpdate = false;
@@ -196,7 +190,7 @@ export class ModuleFileComponent {
       // this.buttonsArray.showAddButton = true;
       // this.buttonsArray.showActivateButton = true;
       this.userPermissionService.toggleButtonsPermissions(userModule.MODULE_FILE, this.userAndRolePermissions, this.buttonsArray);
-
+      console.log("Back Button called88888888888888888888")
 
 
     } else {
@@ -265,15 +259,14 @@ export class ModuleFileComponent {
 
   // on addComponents's submit button clicked
   onAddModuleSubmit(receivedArray: any): void {
-
+    console.log("my" + JSON.stringify(receivedArray));
 
     this.addModuleFile(receivedArray);
   }
 
-
-  //////////////////////////////////////  ON SELECTING THE FILE  ////////////////////////////////////////
   onRecievedFiles(recievedFiles: FileList) {
     this.files = recievedFiles;
+    console.log(this.files);
 
 
   }
@@ -284,55 +277,40 @@ export class ModuleFileComponent {
   }
 
 
-  ///////////////////////////////////// LOAD MODULES FROM SESSION STORAGE //////////////////////////////////////
-  public loadModules() {
+  private loadModules() {
     this.modules = [];
     try {
       this.sessionData = sessionStorage.getItem('module');
       this.data = JSON.parse(this.sessionData);
 
-
       for (var module in this.data) {
         this.modules.push(this.data[module]);
       }
-
-
-
-
-
-
-
-
+      console.log(this.courses);
     }
     catch (err) {
       console.log("Error", err);
     }
-
+    console.log(this.courses);
     this.filteredModules = [];
     this.courses.forEach(course => {
       this.modules.forEach(module => {
-
         if (course.courseId == module.courseId_id) {
           this.filteredModules.push(module);
-
         }
-
       })
     })
 
-
+    // console.log(this.filteredModules);
 
 
 
   }
   filteredModules: Module[] = [];
-
-
-  ///////////////////////////////////////// LOAD COURSES FROM SESSION STORAGE ////////////////////////////////////
   private loadCourses() {
     try {
       this.sessionData = sessionStorage.getItem('course');
-
+      // console.log(this.sessionData);
       this.data = JSON.parse(this.sessionData);
       for (var inst in this.data) {
         this.courses.push(this.data[inst]);
@@ -345,10 +323,11 @@ export class ModuleFileComponent {
 
   }
 
-  ////////////////////////////////////////// GET ASSIGNED COURSES OF TEACHER  USED COURSE COMPONENT  ///////////////////////////////////
+  //getting courses assigned to teacher using profileId
   private getAssignedCoursesOfTeacher(teacherId: number) {
     this.service.getAssignedCourseOfTeacher(teacherId).subscribe(
       (data) => {
+        //console.log(data);
 
         this.courses = data;
         this.loadModules();
@@ -360,7 +339,17 @@ export class ModuleFileComponent {
     );
   }
 
-
+  // getCoursesByProfileId(teacherId: any) {
+  //   this.service.getAssignedCourseToTeacher(teacherId).subscribe(
+  //     response => {
+  //       this.courses = response;
+  //       console.log(response);
+  //     },
+  //     error => {
+  //       console.log("failed to fetch data");
+  //     }
+  //   );
+  // }
 
   Home() {
     this.location.back();
@@ -373,10 +362,10 @@ export class ModuleFileComponent {
     location.reload();
   }
 
-  //////////////////////////////////////////////////////  CREATE NEW MODULE FILE //////////////////////////////////////////
+  // Add module file
   addModuleFile(objectReceived: ModuleFile) {
     // objectReceived.moduleFileIsActive = true;
-
+    console.log("view " + JSON.stringify(this.files));
 
 
 
@@ -389,12 +378,13 @@ export class ModuleFileComponent {
 
     this.moduleFileService.addModuleFile(formData).subscribe(
       (data) => {
-
+        //console.log(this.moduleFile)
+        //console.log(data);
         this.uploadfileService.uploadFiles(this.files).subscribe();
 
         this.moduleFile = data;
 
-
+        console.log('File Added successfully');
         this.dialogBoxServices.open("File Added successfully", 'information');
         this.activeModule(objectReceived.moduleId)
 
@@ -405,42 +395,42 @@ export class ModuleFileComponent {
 
       (error) => {
         this.dialogBoxServices.open("File is Already Present pls Select Another file..", 'warning');
-
+        console.log('failed to upload ')
       }
 
     );
   }
-
-  //////////////////////////////////  GET MODULE FILE BY MODULE ID ////////////////////////////////////////////////
   async getModuleFileByModuleId(moduleId: number): Promise<any> {
     try {
       const response: any = await this.moduleFileService.getModuleFilesByModuleId(moduleId).toPromise();
       this.moduleFilesInModule = response;
-
+      console.log(response);
     } catch (error) {
       console.error('Error fetching module files:', error);
       throw error;
     }
   }
-  ////////////////////////////////////// ACTIVATE MODULE FILE BY MODULE FILE ID /////////////////////////////////////
+  // For activating Module
   private async activeModule(moduleId: any) {
     try {
+      console.log("Inside activateModule(module: Module)");
+      await this.getModuleFileByModuleId(moduleId);
 
-
-
-
-      //Calling Service from Module component
-      this.moduleService.activateModuleById(moduleId).subscribe(
-        () => {
-
-          this.ngOnInit();
-        },
-        error => {
-          console.error('Error activating module:', error);
-
-        }
-      );
-
+      if (this.moduleFilesInModule && this.moduleFilesInModule.length > 0) {
+        this.moduleService.activateModuleById(moduleId).subscribe(
+          () => {
+            console.log("Module Activated");
+            //this.dialogBoxServices.open('Module Activated', 'information');
+            this.ngOnInit();
+          },
+          error => {
+            console.error('Error activating module:', error);
+            //this.dialogBoxServices.open('Failed to Activate', 'warning');
+          }
+        );
+      } else {
+        this.dialogBoxServices.open('Module has no files. Cannot activate without files.', 'warning');
+      }
     } catch (error) {
       console.error('Error during module activation:', error);
       this.dialogBoxServices.open('An error occurred during module activation', 'warning');
@@ -448,7 +438,6 @@ export class ModuleFileComponent {
   }
 
 
-  ///////////////////////////////// UPDATE MODULE FILE BY MODULE  FILE ID ////////////////////////////////
   // For updating module files by id
   private updateModuleFileById(currentData: ModuleFile) {
     // calling service for updating data
@@ -460,7 +449,7 @@ export class ModuleFileComponent {
       this.moduleFileService.updateModuleFileJsonById(currentData.moduleFileId, currentData).subscribe(
         response => {
           // this.uploadfileService.uploadFiles(this.files).subscribe();
-
+          console.log('Module File updated successfully !' + response);
           this.dialogBoxServices.open("Module File updated successfully !", 'information');
 
           this.back();
@@ -468,7 +457,7 @@ export class ModuleFileComponent {
         },
         error => {
           this.dialogBoxServices.open("Module File updation failed", 'warning');
-
+          console.log('Module File updation failed !');
         }
 
       );
@@ -497,11 +486,11 @@ export class ModuleFileComponent {
         },
         error => {
           this.dialogBoxServices.open("Module File updation failed", 'warning');
-
+          console.log('Module File updation failed !');
         }
 
       );
-
+      console.log('Module File updated successfully !');
       this.dialogBoxServices.open("Module File updated successfully !", 'information');
 
       this.back();
@@ -511,15 +500,28 @@ export class ModuleFileComponent {
 
 
 
-  ///////////////////////////////////////// GET ALL MODULE FILE AS LIST //////////////////////////////////////////
+  // for getting all module files
   private getAllModulesFile() {
     // calling service to get all data
-
-    this.moduleFileService.fetchModuleFileListActiveModule().subscribe(
+    console.log(this.modules);
+    this.moduleFileService.fetchModuleFileList().subscribe(
       response => {
 
+        this.allData = [];
+        console.log(this.allData);
+        response.forEach((moduleFile: ModuleFile) => {
+          this.filteredModules.find((module: Module) => {
+            if (moduleFile.moduleId == module.moduleId) {
+              this.allData.push({
+                ...moduleFile,
+                courseId: module.courseId_id,
 
-        this.allModuleFileData = response; //assign data to local variable
+              });
+
+            }
+          })
+        })
+        // this.allData = response; //assign data to local variable
 
       },
       error => {
@@ -532,23 +534,22 @@ export class ModuleFileComponent {
 
 
 
-  //////////////////////////////////////  DELETE MODULE FILE BY MODULE FILE ID ///////////////////////////////////////
+
+  // For deleting (soft delete) by Id
   private deleteModuleFileById(moduleFileId: number) {
     this.dialogBoxServices.open('Are you sure you want to delete this ModuleFile ? ', 'decision').then((response) => {
       if (response) {
-
+        console.log('User clicked OK');
         // Do something if the user clicked OK
         // calling service to soft delte
         this.moduleFileService.deleteModuleFileById(moduleFileId).subscribe(
           (response) => {
             this.dialogBoxServices.open("Module File deleted successfully !", 'information');
-            console.log(response);
-
-
+            console.log('Module File deleted successfully');
             this.ngOnInit();
           },
           (error) => {
-
+            console.log('Module File deletion failed');
             this.dialogBoxServices.open("Module File deletion failed", 'warning');
           }
         );
@@ -559,17 +560,13 @@ export class ModuleFileComponent {
     });
   }
 
-  //////////////////////////////////////////  GET LIST OF INACTIVE MODULE FILE AS LIST  /////////////////////////////
   // For getting all inactive module files
   private getInactiveModuleFiles() {
 
     // calling service to get all inactive record
     this.moduleFileService.getInactivemoduleFileList().subscribe(
       response => {
-
-
         this.allInActiveData = response;
-
       },
       error => {
         console.log('No data in table ');
@@ -577,41 +574,35 @@ export class ModuleFileComponent {
     );
 
   }
-  ///////////////////////////////  ACTIVATE MODULE FILE BY MODULE FILE ID   //////////////////////////////////
+  // For activating moduleFile using Id
   private activeModuleFile(moduleFileId: number) {
 
 
     this.moduleFileService.activatemoduleFileById(moduleFileId).subscribe(
       response => {
-
+        console.log("Activated modulefile");
         this.dialogBoxServices.open("Activated modulefile", 'information');
         this.ngOnInit();
-        console.log(response);
-
-
-
       },
       error => {
         this.dialogBoxServices.open("Failed to activate", 'warning');
-
+        console.log("Failed to activate");
       }
     );
   }
 
-
-  /////////////////////////////////////   GET MODULE FILE BY MODULE FILE ID /////////////////////////////////
   display(moduleFileId: number) {
 
     this.moduleFileService.getFile(moduleFileId).subscribe(
       (response) => {
-
+        console.log(response);
       }
     )
   }
 
   // for calling ifferent service based on role
   private async loadDataBasedOnRole(userRole: any) {
-
+    console.log(userRole);
 
     switch (userRole) {
 
@@ -638,12 +629,12 @@ export class ModuleFileComponent {
     }
   }
 
-  ////////////////////////////////////////  GET COURSES ASSIGNED BY PROFILE ID ////////////////////////////////////////
-  //getting courses assigned to teacher using profileId  --Course Service
+
+  //getting courses assigned to teacher using profileId
   private getAssignedCoursesByProfileId(teacherId: number) {
     this.courseService.getAssignedCourseOfTeacher(teacherId).subscribe(
       (data) => {
-
+        console.log("courses " + JSON.stringify(data));
         this.courses = data;
       },
       error => {
@@ -651,15 +642,11 @@ export class ModuleFileComponent {
       }
     );
   }
-
-
-
-  //////////////////////////////////////// GET ENROLLED COURSES BY PROFILE ID //////////////////////////////////// 
-  //getting courses assigned to teacher using profileId  --Course Service
+  //getting courses assigned to teacher using profileId
   private getEnrolledCoursesByProfileId(studentId: number) {
     this.courseService.getCourseByStudentId(studentId).subscribe(
       (data) => {
-
+        console.log("courses " + JSON.stringify(data));
         this.courses = data;
       },
       error => {
@@ -668,89 +655,26 @@ export class ModuleFileComponent {
     );
   }
 
-
-  ////////////////////////////////  GET MODULES ASSIGNED COURSES BY PROFILE ID 1////////////////////////////////
   async getModulesOfAssignedCoursesByProfileId(profileId: number) {
-    // const modules = await this.moduleService.getModulesOfAssignedCoursesByProfileId(profileId).toPromise();
-    // console.log(modules);
-
-
-    this.moduleService.getModulesOfAssignedCoursesByProfileId(profileId).subscribe(
-      response => {
-        console.log(response);
-
-
-
-
-
-
-
-      }
-    )
-
-
-
-
-
-
-
-
-
-
-
-
-
+    const modules = await this.moduleService.getModulesOfAssignedCoursesByProfileId(profileId).toPromise();
+    if (modules !== undefined) {
+      this.modules = modules;
+    }
   }
 
-  /////////////////////////////// GET MODULES ENROLLED COURSES BY PROFILE ID ////////////////////////////////
   async getModulesOfEnrolledCoursesByProfileId(profileId: number) {
     const modules = await this.moduleService.getModulesOfEnrolledCoursesByProfileId(profileId).toPromise();
     if (modules !== undefined) {
       this.modules = modules;
     }
-
-
   }
 
-
-
-  //////////////////////////////////// GET MODULE FILES OF ASSIGNED COURSES MODULES BY PROFILE ID //////////////////////////
   getModuleFilesOfAssignedCoursesOfModulesByProfileId(profileId: number) {
     this.moduleFileService.getModuleFilesOfAssignedCoursesOfModulesByProfileId(profileId).subscribe(
       (response) => {
         this.allData = [];
         this.allInActiveData = [];
-
-
-        this.moduleFileService.fetchModuleFileList().subscribe(
-          response => {
-
-            this.allData = response;
-          }
-        )
-
-        this.moduleFileService.getInactivemoduleFileList().subscribe(
-          data1 => {
-            this.allInActiveData = data1;
-
-          })
-
-      }
-    )
-
-
-
-  }
-
-
-  ////////////////////////////////////////// GET MODULE FILES ENROLLED COURSES OF MODULE BY PROFILE ID ////////////////////////////
-  getModuleFilesOfEnrolledCoursesOfModulesByProfileId(profileId: number) {
-    this.moduleFileService.getModuleFilesOfEnrolledCoursesOfModulesByProfileId(profileId).subscribe(
-      (response) => {
-
-        this.allData = [];
-        this.allInActiveData = [];
-
+        console.log(this.allData);
         response.forEach((moduleFile: ModuleFile) => {
           this.modules.find((module: Module) => {
             if (moduleFile.moduleId == module.moduleId) {
@@ -760,7 +684,7 @@ export class ModuleFileComponent {
                   courseId: module.courseId_id,
 
                 });
-
+                console.log(this.allData);
 
               } else {
                 this.allInActiveData.push({
@@ -768,18 +692,53 @@ export class ModuleFileComponent {
                   courseId: module.courseId_id,
 
                 });
-
+                console.log(this.allInActiveData);
 
               }
-
-
-
 
 
             }
           })
         })
+      }
+    );
 
+  }
+
+  getModuleFilesOfEnrolledCoursesOfModulesByProfileId(profileId: number) {
+    this.moduleFileService.getModuleFilesOfEnrolledCoursesOfModulesByProfileId(profileId).subscribe(
+      (response) => {
+
+        this.allData = [];
+        this.allInActiveData = [];
+        console.log(this.allData);
+        response.forEach((moduleFile: ModuleFile) => {
+          this.modules.find((module: Module) => {
+            if (moduleFile.moduleId == module.moduleId) {
+              if (moduleFile.moduleFileIsActive) {
+                this.allData.push({
+                  ...moduleFile,
+                  courseId: module.courseId_id,
+
+                });
+                console.log(this.allData);
+
+              } else {
+                this.allInActiveData.push({
+                  ...moduleFile,
+                  courseId: module.courseId_id,
+
+                });
+                console.log(this.allInActiveData);
+
+              }
+
+
+            }
+          })
+        })
+        // this.allData = response.filter((data: { moduleFileIsActive: boolean; }) => data.moduleFileIsActive == true);
+        // this.allInActiveData = response.filter((data: { moduleFileIsActive: boolean; }) => data.moduleFileIsActive == false);
 
       }
     );
