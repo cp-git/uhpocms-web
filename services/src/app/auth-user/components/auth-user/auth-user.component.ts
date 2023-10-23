@@ -268,7 +268,7 @@ export class AuthUserComponent implements OnInit {
       (data) => {
         // alert('AuthUser added Successfully');
 
-        this.dialogBoxService.open("user added successfully, but their status is currently listed as inactive.", 'information');
+        this.dialogBoxService.open("User created but profile is inactive.....!", 'information');
         this.emptyAuthUser = {} as Authuser;
         this.ngOnInit();
         this.back();

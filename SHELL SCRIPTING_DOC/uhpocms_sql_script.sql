@@ -9,7 +9,7 @@ CREATE SEQUENCE IF NOT EXISTS public.admin_department_departmentid_seq
     MAXVALUE 2147483647
     CACHE 1;
 
-CREATE SEQUENCE IF NOT EXISTS public."InstituteAdmin_profile_id_seq"
+CREATE SEQUENCE IF NOT EXISTS public.instituteAdmin_profile_id_seq
     INCREMENT 1
     START 1
     MINVALUE 1
@@ -36,10 +36,12 @@ CREATE SEQUENCE IF NOT EXISTS public.admin_institution_institutionid_seq
     MINVALUE 1
     MAXVALUE 2147483647
     CACHE 1;
-	
+
+
+
 CREATE TABLE IF NOT EXISTS public.instituteadmin_profile
 (
-    id integer NOT NULL DEFAULT nextval('"InstituteAdmin_profile_id_seq"'::regclass),
+    id integer NOT NULL DEFAULT nextval('instituteAdmin_profile_id_seq'::regclass),
     isactive boolean,
     address1 character varying(255) COLLATE pg_catalog."default",
     address2 character varying(255) COLLATE pg_catalog."default",
@@ -371,3 +373,187 @@ VALUES(2,1,1,1),(17,1,1,1),(3,1,1,1),(1,1,1,1),(4,1,1,1),(5,1,1,1),(11,1,1,1),(1
 (2,4,1,1),(17,4,1,1),(3,4,1,1),(1,4,1,1),(4,4,1,1),(5,4,1,1),(11,4,1,1),(12,4,1,1),(16,4,1,1),(13,4,1,1),
 (2,5,1,1),(17,5,1,1),(3,5,1,1),(1,5,1,1),(4,5,1,1),(5,5,1,1),(11,5,1,1),(12,5,1,1),(16,5,1,1),(13,5,1,1);
 	
+-- Define the procedure
+CREATE OR REPLACE PROCEDURE public.add_question_with_answers_mcq(
+    IN question json,
+    IN option1 json,
+    IN option2 json,
+    IN option3 json,
+    IN option4 json,
+    OUT generatedid integer)
+LANGUAGE 'plpgsql'
+AS $BODY$
+DECLARE
+    question_id INTEGER;
+    created_on TIMESTAMP := CURRENT_TIMESTAMP;
+    update_on TIMESTAMP := CURRENT_TIMESTAMP;
+BEGIN
+    -- Check if the question ID already exists in the database
+    IF EXISTS (SELECT 1 FROM public.teacher_question WHERE id = (question->>'questionId')::INTEGER) THEN
+        -- Update the existing question
+        UPDATE public.teacher_question SET
+            figure = question->>'questionFigure',
+            content = question->>'questionContent',
+            explanation = question->>'questionExplanation',
+            questionorderno = (question->>'questionOrderNo')::INTEGER,
+            ismcq = (question->>'questionIsMCQ')::BOOLEAN,
+            max_marks = (question->>'maxMarks')::INTEGER,
+            quizid_id = (question->>'questionQuizId')::INTEGER,
+            category_id = (question->>'questionCategoryId')::INTEGER,
+            is_active = (question->>'questionIsActive')::BOOLEAN,
+            modified_by = question->>'questionModifiedBy',
+            modified_on = update_on
+        WHERE id = (question->>'questionId')::INTEGER
+        RETURNING id INTO question_id; -- Return the updated question_id
+    ELSE
+        -- Insert a new question and capture the generated question_id
+        INSERT INTO public.teacher_question (
+            figure,
+            max_marks,
+            content,
+            explanation,
+            questionorderno,
+            ismcq,
+            quizid_id,
+            category_id,
+            is_active,
+            created_by,
+            created_on,
+            modified_by,
+            modified_on
+        ) 
+        VALUES (
+            question->>'questionFigure',
+            (question->>'maxMarks')::INTEGER,
+            question->>'questionContent',
+            question->>'questionExplanation',
+            (question->>'questionOrderNo')::INTEGER,
+            (question->>'questionIsMCQ')::BOOLEAN,
+            (question->>'questionQuizId')::INTEGER,
+            (question->>'questionCategoryId')::INTEGER,
+            (question->>'questionIsActive')::BOOLEAN,
+            question->>'questionCreatedBy',
+            created_on,
+            question->>'questionModifiedBy',
+            update_on
+        )
+        RETURNING id INTO question_id; -- Return the generated question_id
+    END IF;
+    IF question_id IS NULL THEN
+        -- If question insertion fails, set generatedid to 0
+        generatedid := 0;
+    ELSE
+        -- Delete existing answers for the question
+        DELETE FROM public.teacher_answer WHERE questionid = question_id;
+        
+        -- Insert option 1
+        IF option1 IS NOT NULL THEN
+            INSERT INTO public.teacher_answer (
+                content,
+                correct,
+                questionid,
+                questionorderno
+            )
+            VALUES (
+                option1 ->> 'content',
+                (option1 ->> 'correct')::BOOLEAN,
+                question_id,
+                (option1 ->> 'questionorderno')::INTEGER
+            );
+        END IF;
+
+        -- Insert option 2
+        IF option2 IS NOT NULL THEN
+            INSERT INTO public.teacher_answer (
+                content,
+                correct,
+                questionid,
+                questionorderno
+            )
+            VALUES (
+                option2 ->> 'content',
+                (option2 ->> 'correct')::BOOLEAN,
+                question_id,
+                (option2 ->> 'questionorderno')::INTEGER
+            );
+        END IF;
+
+        -- Insert option 3
+        IF option3 IS NOT NULL THEN
+            INSERT INTO public.teacher_answer (
+                content,
+                correct,
+                questionid,
+                questionorderno
+            )
+            VALUES (
+                option3 ->> 'content',
+                (option3 ->> 'correct')::BOOLEAN,
+                question_id,
+                (option3 ->> 'questionorderno')::INTEGER
+            );
+        END IF;
+
+        -- Insert option 4
+        IF option4 IS NOT NULL THEN
+            INSERT INTO public.teacher_answer (
+                content,
+                correct,
+                questionid,
+                questionorderno
+            )
+            VALUES (
+                option4 ->> 'content',
+                (option4 ->> 'correct')::BOOLEAN,
+                question_id,
+                (option4 ->> 'questionorderno')::INTEGER
+            );
+        END IF;
+
+        -- Set generatedid to the question_id
+        generatedid := question_id;
+    END IF;
+END;
+$BODY$;
+ALTER PROCEDURE public.add_question_with_answers_mcq(json, json, json, json, json)
+    OWNER TO postgres;
+
+CREATE OR REPLACE PROCEDURE public.delete_question_with_answers_mcq(
+	IN question_id_to_delete integer,
+	OUT deleted_answers_count integer,
+	OUT deleted_question_id integer)
+LANGUAGE 'plpgsql'
+AS $BODY$
+BEGIN
+    -- Initialize the OUT parameters to 0 and NULL, respectively
+    deleted_answers_count := 0;
+    deleted_question_id := NULL;
+
+    -- Check if the question ID exists in the database
+    IF EXISTS (SELECT 1 FROM public.teacher_question WHERE id = question_id_to_delete) THEN
+
+        -- Delete the answers related to the question and store the count of deleted rows
+        WITH deleted_answers AS (
+            DELETE FROM public.teacher_answer WHERE questionid = question_id_to_delete
+            RETURNING id
+        )
+        SELECT COUNT(*) INTO deleted_answers_count FROM deleted_answers;
+        
+        -- Delete the question and store its ID
+        DELETE FROM public.teacher_question WHERE id = question_id_to_delete
+        RETURNING id INTO deleted_question_id;
+    END IF;
+END;
+$BODY$;
+ALTER PROCEDURE public.delete_question_with_answers_mcq(integer)
+    OWNER TO postgres;
+
+SELECT setval('admin_department_departmentid_seq', (SELECT MAX(departmentid) FROM admin_department)+1);
+
+SELECT setval('instituteAdmin_profile_id_seq', (SELECT MAX(id) FROM instituteadmin_profile)+1);
+
+SELECT setval('admin_role_roleid_seq', (SELECT MAX(role_id) FROM admin_role)+1);
+
+SELECT setval('auth_user_id_seq', (SELECT MAX(id) FROM auth_user)+1);
+
+SELECT setval('admin_institution_institutionid_seq', (SELECT MAX(institutionid) FROM admin_institution)+1);
