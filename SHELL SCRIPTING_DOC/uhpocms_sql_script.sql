@@ -557,3 +557,54 @@ SELECT setval('admin_role_roleid_seq', (SELECT MAX(role_id) FROM admin_role)+1);
 SELECT setval('auth_user_id_seq', (SELECT MAX(id) FROM auth_user)+1);
 
 SELECT setval('admin_institution_institutionid_seq', (SELECT MAX(institutionid) FROM admin_institution)+1);
+
+
+CREATE SEQUENCE IF NOT EXISTS public."Teacher_question_id_seq"
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1
+    ;
+
+	
+
+	
+
+CREATE TABLE public.teacher_question
+(
+    id integer NOT NULL DEFAULT nextval('"Teacher_question_id_seq"'::regclass),
+    figure character varying(100) COLLATE pg_catalog."default",
+    content character varying(1000) COLLATE pg_catalog."default" NOT NULL,
+    explanation text COLLATE pg_catalog."default" NOT NULL,
+    questionorderno integer NOT NULL,
+    ismcq boolean NOT NULL,
+    quizid_id integer NOT NULL,
+    category_id integer,
+    is_active boolean,
+    created_by character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    created_on timestamp without time zone NOT NULL,
+    modified_by character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    modified_on timestamp without time zone NOT NULL,
+    CONSTRAINT "Teacher_question_pkey" PRIMARY KEY (id),
+    CONSTRAINT teacher_question_figure_key UNIQUE (figure)
+);
+
+CREATE SEQUENCE IF NOT EXISTS public."Teacher_answer_id_seq"
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1
+    ;
+
+
+	CREATE TABLE public.teacher_answer
+(
+    id integer NOT NULL DEFAULT nextval('"Teacher_answer_id_seq"'::regclass),
+    content character varying(255) COLLATE pg_catalog."default",
+    correct boolean,
+    questionid integer,
+    questionorderno integer,
+    CONSTRAINT teacher_answer_pkey PRIMARY KEY (id)
+);
