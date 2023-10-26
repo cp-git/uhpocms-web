@@ -1,138 +1,139 @@
 body {
-    background-color: #eee
+  background-color: #eee
 }
 
 .card {
-    height: 200px;
-    border: 5px solid #566787;
-    border-radius: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-right: 10px;
+  height: 200px;
+  border: 5px solid #566787;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .card-body button {
-    margin-top: 30px;
-    font-size: 16px;
+  margin-top: 30px;
+  font-size: 16px;
 }
 
 .card-header {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 .c-details span {
-    font-weight: 300;
-    font-size: 13px
+  font-weight: 300;
+  font-size: 13px
 }
 
 .icon {
-    width: 50px;
-    height: 50px;
-    background-color: #eee;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 39px
+  width: 50px;
+  height: 50px;
+  background-color: #eee;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 39px
 }
 
 .badge span {
-    background-color: #FFFBEC;
-    width: 60px;
-    height: 25px;
-    padding-bottom: 3px;
-    border-radius: 5px;
-    display: flex;
-    color: #FED85D;
-    justify-content: center;
-    align-items: center
+  background-color: #FFFBEC;
+  width: 60px;
+  height: 25px;
+  padding-bottom: 3px;
+  border-radius: 5px;
+  display: flex;
+  color: #FED85D;
+  justify-content: center;
+  align-items: center
 }
 
 .progress {
-    height: 10px;
-    border-radius: 10px
+  height: 10px;
+  border-radius: 10px
 }
 
 .progress div {
-    background-color: red
+  background-color: red
 }
 
 .text1 {
-    font-size: 14px;
-    font-weight: 600
+  font-size: 14px;
+  font-weight: 600
 }
 
 .text2 {
-    color: #A5AEC0
+  color: #A5AEC0
 }
 
 #h2 button {
-    margin-top: 20px;
-    margin-left: 560px;
-    width: 90px;
-    height: 40px;
+  margin-top: 20px;
+  margin-left: 560px;
+  width: 90px;
+  height: 40px;
 }
 
 #sub-head {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 #AuthUsername {
-    text-align: center;
-    size: 20px;
+  text-align: center;
+  size: 20px;
 }
 
 #demo {
-    color: white;
-    background-color: rgba(26, 115, 232, 0.83);
-    margin-left: 190px;
+  color: white;
+  background-color: rgba(26, 115, 232, 0.83);
+  margin-left: 190px;
 }
 
 .heading {
-    margin-left: 30px;
+  margin-left: 30px;
 }
 
 #icon1 {
-    margin-top: 20px;
-    margin-left: 200px;
-    font-size: 60px;
+  margin-top: 20px;
+  margin-left: 200px;
+  font-size: 60px;
 }
 
 .buttons {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .header {
-    margin-top: -15px;
-    margin-bottom: -5px;
+  margin-top: -15px;
+  margin-bottom: -5px;
 }
 
 .app-chartdata-ui {
- 
 
-    font: normal 15px sans-serif;
-    max-width: 99%;
-    /* background-color: rgb(112 123 242 / 14%); */
-    margin: 0 0%;
-    padding: 1rem 0;
-    border-radius: 6px;
-    height: 36rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    border: 5px solid #566787;
-    border-radius: 10px;
-    --chart-width: 300px; /* Set the default width for the horizontal line */
 
-    
+  font: normal 15px sans-serif;
+  max-width: 99%;
+  /* background-color: rgb(112 123 242 / 14%); */
+  margin: 0 0%;
+  padding: 1rem 0;
+  border-radius: 6px;
+  height: 36rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: 5px solid #566787;
+  border-radius: 10px;
+  --chart-width: 300px;
+  /* Set the default width for the horizontal line */
+
+
 }
 
 
 .app-chartdata-ui-stud {
- 
+
 
   font: normal 15px sans-serif;
   max-width: 99%;
@@ -147,10 +148,12 @@ body {
   align-items: center;
   border: 5px solid #566787;
   border-radius: 10px;
-  --chart-width: 300px; /* Set the default width for the horizontal line */
+  --chart-width: 300px;
+  /* Set the default width for the horizontal line */
 
-  
+
 }
+
 #container {
   position: relative;
   display: flex;
@@ -167,89 +170,95 @@ body {
   top: 0;
   right: 0;
 }
-  #prevButton {
-    width: 48px; /* set a fixed width */
-    display: flex;
-    justify-content: flex-start;
-    visibility: visible; /* show the button */
-  }
-  
-  #nextButton {
-    width: 48px; /* set a fixed width */
-    display: flex;
-    justify-content: flex-end;
-    visibility: visible; /* show the button */
-    align-items: center;
-   
-   
-  }
-  
-  .nextButtonchild{
-    
-  }
 
-  
-  /* hide the buttons when they are not needed */
-  #app-chartdata-ui:not(:hover) #prevButton:not(:hover),
-  #app-chartdata-ui:not(:hover) #nextButton:not(:hover) {
-    visibility: hidden;
-  }
+#prevButton {
+  width: 48px;
+  /* set a fixed width */
+  display: flex;
+  justify-content: flex-start;
+  visibility: visible;
+  /* show the button */
+}
 
-  /* .hidden {
+#nextButton {
+  width: 48px;
+  /* set a fixed width */
+  display: flex;
+  justify-content: flex-end;
+  visibility: visible;
+  /* show the button */
+  align-items: center;
+
+
+}
+
+.nextButtonchild {}
+
+
+/* hide the buttons when they are not needed */
+#app-chartdata-ui:not(:hover) #prevButton:not(:hover),
+#app-chartdata-ui:not(:hover) #nextButton:not(:hover) {
+  visibility: hidden;
+}
+
+/* .hidden {
     display: none;
   } */
-  #chart-head{
-    display: flex;
-    align-items: center;
-    justify-content: center; 
-    position : relative;
+#chart-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 
-  }
-  .chart {
-    width: 300px;
-    
-    padding-left: 18px;
-    padding-right: 18px;
-   
-    .color-wrapper {
-      display: grid;
-      margin-right: 10px;
+}
 
-      width: var(--chart-width); /* set the width based on the CSS variable */
+.chart {
+  width: 300px;
 
-    }
-  
-    .color-ref {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      transform: translateY(4px);
-    }
-  
-    .chart-specs {
-      display: grid;
-      grid-template-columns: 20px calc(100% - 75px) 20px;
-      line-height: 23px;
-      margin-top: 30px;
-      margin-left: 20px;
-    }
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+.color-wrapper {
+  display: grid;
+  margin-right: 10px;
+
+  width: var(--chart-width);
+  /* set the width based on the CSS variable */
+
+}
+
+.color-ref {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transform: translateY(4px);
+}
+
+.chart-specs {
+  display: grid;
+  grid-template-columns: 20px calc(100% - 75px) 20px;
+  line-height: 23px;
+  margin-top: 30px;
+  margin-left: 20px;
+}
 
 
-   
-  }
-  /* .vertical {
+
+
+/* .vertical {
     border-left: 6px solid green;
     height: 500px;
   } */
 
-.vertical
-  {
-    position: relative;
-    height: 125px;
-    border-left: 1.6px solid black;
-  
-    top: 20px;
-  }
+.vertical {
+  position: relative;
+  height: 125px;
+  border-left: 1.6px solid black;
+
+  top: 20px;
+}
+
 .vertical::before {
   content: "";
   position: absolute;
@@ -259,6 +268,7 @@ body {
   border-right: 10px solid transparent;
   border-bottom: 10px solid black;
 }
+
 /* .horizontal {
     position: absolute;
     bottom: -20px;
@@ -270,63 +280,68 @@ body {
   
 
   }*/
-  
- 
-  .horizontal {
-    position: absolute;
-    bottom: -20px;
-    right: 0;
-    transform: translateY(-50%);
-    width: 95%; /* Set the width to 100% to span the entire width of the app-chartdata component */
-    height: 1px;
-    background-color: black;
-  }
-  .horizontal::before {
-    content: "";
-    position: absolute;
-    top: -10px;
-    right: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 10px solid black;
-  } 
-  .course-progress {
-    position: absolute;
-    bottom: -40px;
-    left: 45%;
-    right: 0;
-    margin: 0;
-    font-style: bold;
-    font-size: 1.3rem;
-  }
-  .agg-count{
-    width: 10px;
-    font-size: 1.3rem;
-    transform: translateX(-650%);
-  }
 
 
-  /* modal popup css */
-  
+.horizontal {
+  position: absolute;
+  bottom: -20px;
+  right: 0;
+  transform: translateY(-50%);
+  width: 95%;
+  /* Set the width to 100% to span the entire width of the app-chartdata component */
+  height: 1px;
+  background-color: black;
+}
+
+.horizontal::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  right: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid black;
+}
+
+.course-progress {
+  position: absolute;
+  bottom: -40px;
+  left: 45%;
+  right: 0;
+  margin: 0;
+  font-style: bold;
+  font-size: 1.3rem;
+}
+
+.agg-count {
+  width: 10px;
+  font-size: 1.3rem;
+  transform: translateX(-650%);
+}
 
 
-    /* modal popup css  end*/
-    #nocourmsg{ 
-      font-size: 45px;
-  
-      padding-right: 25%;
-      padding-left: 30%;
-    }
+/* modal popup css */
 
-  
-    .studProgTitle{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-    img {
 
-      border-radius: 10px;
-  
-  }
+
+/* modal popup css  end*/
+#nocourmsg {
+  font-size: 45px;
+
+  padding-right: 25%;
+  padding-left: 30%;
+}
+
+
+.studProgTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+img {
+
+  border-radius: 10px;
+
+}
