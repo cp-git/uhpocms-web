@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment.development';
 import { map } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { Authuser } from '../class/auth-user';
-
+import * as https from 'https';
 
 @Injectable({
   providedIn: 'root'
@@ -20,14 +20,38 @@ export class AuthUserService {
   _authUrl: string;
 
   _loginUrl: string;
+  url:string;
+  clientCertPem :string;
+  clientKeyPem:string;
+  
 
   constructor(private _http: HttpClient) {
     this._baseUrl = `${environment.authUserUrl}/authuser`;
     this._authUrl = `${environment.authUserUrl}/basicauth`;
     this._loginUrl = `${environment.authUserUrl}/login`;
+    this.url = this._baseUrl;
+    this.clientCertPem = '../clientCertPem';
+    this.clientKeyPem = '../clientKeyPem';
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    //   httpsAgent: new https.Agent({
+    //     pfx: fs.readFileSync(clientCertPem),
+    //     passphrase: 'your_certificate_passphrase', // if the certificate is password-protected
+    //     key: fs.readFileSync(clientKeyPem),
+    //   }),
+    // };
+  }}
+
+  makeSecureRequest() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      // You do not need to manually configure client certificates here
+    }
   }
-
-
   //Fetching the Auth User List
   authUserList(): Observable<any> {
     return this._http.get<any>(this._baseUrl + '?username=all');
@@ -58,7 +82,13 @@ export class AuthUserService {
 
   //Login Service Using the DB
   loginDataAuthUser(authuser: Authuser): Observable<any> {
-    return this._http.post<any>(this._loginUrl, authuser);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      // You do not need to manually configure client certificates here
+    }
+    return this._http.post<any>(this._loginUrl, authuser,httpOptions);
   }
 
 
@@ -135,3 +165,7 @@ export class AuthUserService {
 
 
 }
+    function makeSecureRequest() {
+      throw new Error('Function not implemented.');
+    }
+

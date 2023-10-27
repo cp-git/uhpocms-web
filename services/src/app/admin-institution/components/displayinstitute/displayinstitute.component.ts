@@ -34,7 +34,9 @@ export class DisplayinstituteComponent {
   // showAddButton: boolean = true;
   // showActivateButton: boolean = true;
 
-  private readonly institutionUrl!: string;
+  // private readonly institutionUrl: string ='';
+ private institutionUrl: string ='';
+
 
   displayUrl: any;
 
@@ -46,7 +48,7 @@ export class DisplayinstituteComponent {
   //constructor
   constructor(private _institutionService: AdmininstitutionService, private _route: Router, private location: Location, private _activatedRoute: ActivatedRoute, private _sanitizer: DomSanitizer, private dialogBoxService: DialogBoxService, private userPermissionService: AuthUserPermissionService) {
     this.admininstitution = new AdminInstitution();
-    this.institutionUrl = `${environment.adminInstitutionUrl}/institution`;
+    // this.institutionUrl = `${environment.adminInstitutionUrl}/institution`;
 
     // Assining default values
     this.buttonsArray = {
@@ -62,6 +64,7 @@ export class DisplayinstituteComponent {
     this.loadAndLinkUserPermissions();
     //if not authenticated route back to login page
     if (sessionStorage.getItem('authenticatedUser') == null) {
+ 
       this._route.navigate(['login']);
     }
 
@@ -70,7 +73,7 @@ export class DisplayinstituteComponent {
       //code to get data from url
       this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
       this.userName = this._activatedRoute.snapshot.params['userName'];
-
+      this.institutionUrl = `${environment.adminInstitutionUrl}/institution`;
       //onload of page this function should be executed
       this.getAllInstitution();
       this.displayUrl = this.institutionUrl + '/getFileById'
