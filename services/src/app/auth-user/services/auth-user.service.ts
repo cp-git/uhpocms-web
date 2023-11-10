@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment.development';
 import { map } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { Authuser } from '../class/auth-user';
-
+import * as https from 'https';
 
 @Injectable({
   providedIn: 'root'
@@ -20,61 +20,87 @@ export class AuthUserService {
   _authUrl: string;
 
   _loginUrl: string;
+  url: string;
+  clientCertPem: string;
+  clientKeyPem: string;
+
 
   constructor(private _http: HttpClient) {
     this._baseUrl = `${environment.authUserUrl}/authuser`;
     this._authUrl = `${environment.authUserUrl}/basicauth`;
     this._loginUrl = `${environment.authUserUrl}/login`;
+    this.url = this._baseUrl;
+    this.clientCertPem = '../clientCertPem';
+    this.clientKeyPem = '../clientKeyPem';
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      //   httpsAgent: new https.Agent({
+      //     pfx: fs.readFileSync(clientCertPem),
+      //     passphrase: 'your_certificate_passphrase', // if the certificate is password-protected
+      //     key: fs.readFileSync(clientKeyPem),
+      //   }),
+      // };
+    }
   }
 
-
-  ////////////////  SERVICE -FETCHING AUTH USER LIST  ///////////////////////////
-
+  makeSecureRequest() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      // You do not need to manually configure client certificates here
+    }
+  }
+  //Fetching the Auth User List
   authUserList(): Observable<any> {
     return this._http.get<any>(this._baseUrl + '?username=all');
   }
 
-
-
-  //////////////  SERVICE -INSERTION OF AUTH USER ///////////////////////////////
-
+  //Adding Auth User
   addAuthUser(authuser: Authuser): Observable<any> {
     return this._http.post<any>(this._baseUrl, authuser);
   }
 
-
-  ////////////  SERVICE - DELETE AUTH USER  ////////////////////////////////////
+  //Deleting the Auth User
   deleteAuthUser(authUserName: string): Observable<any> {
     return this._http.delete<any>(this._baseUrl + "/" + authUserName);
   }
 
 
+  //Inactive Auth Users
 
-  /////////// SERVICE -GET AUTH USER NAME   ///////////////////////////////////////
+  getAllInactiveAuthUsersProfile(): Observable<Authuser[]> {
+    return this._http.get<Authuser[]>(this._baseUrl + '?username=inactiveprofile');
+  }
 
+
+
+
+
+  //Get Authuser by Auth User Name
   getAuthUser(authUserName: string): Observable<any> {
     return this._http.get<any>(this._baseUrl + "/" + authUserName);
   }
 
 
-
-  ////////// SERVICE - UPDATE THE AUTH USER ///////////////////////////////////////
-
+  //Update AuthUser
   updateAuthUser(authUserName: string, authuser: Authuser): Observable<any> {
     return this._http.put<any>(this._baseUrl + "/" + authUserName, authuser);
   }
 
-
-
-  ////////// SERVICE API -LOGIN USING AUTH USER ///////////////////////////////////
-
-
+  //Login Service Using the DB
   loginDataAuthUser(authuser: Authuser): Observable<any> {
-    return this._http.post<any>(this._loginUrl, authuser);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      // You do not need to manually configure client certificates here
+    }
+    return this._http.post<any>(this._loginUrl, authuser, httpOptions);
   }
 
-
-  ////////////////////// BASIC AUTHORIZATION ///////////////////////////////////////
 
   //Authorization
   authenticationService(username: String, password: String) {
@@ -121,47 +147,35 @@ export class AuthUserService {
   }
 
 
-  ////////////////////////  END OF BASIC AUTHORIZATION /////////////////////////
-
-
-
-
-  //////////////////////  SERCVICE - GETTING INACTIVE AUTH USER PROFILE ////////////////////////////
-
-  getAllInactiveAuthUsersProfile(): Observable<Authuser[]> {
-    return this._http.get<Authuser[]>(this._baseUrl + '?username=inactiveprofile');
-  }
-
-
-  //////////////////////// SERVICE -GETTING INACTIVE AUTH USERS /////////////////////////////////////
+  //Get All Inactive Auth Users
   getAllInactiveAuthUsers(): Observable<Authuser[]> {
-    return this._http.get<Authuser[]>(this._baseUrl + '?username=inactive');
+    return this._http.get<Authuser[]>(`${this._baseUrl}?username=inactiveprofile`);
   }
 
 
-
-
-  ///////////////////// SERVICE - ACTIVATE AUTH USER //////////////////////////
+  //Activate Auth Users
   activateAuthUserById(authUserId: number): Observable<any> {
     return this._http.patch<any>(`${this._baseUrl}/activate/` + authUserId, {});
   }
 
-
-
-  /////////////////////// SERVICE - GET AUTH USER  API USED IN PROFILE COMPONENT /////////////
+  //Get Authuser by Auth User Id
   getAuthUserById(authUserId: number): Observable<any> {
     return this._http.get<any>(`${this._baseUrl}/user?id=${authUserId}`);
   }
 
 
- 
+
   //Update AuthUser
-  resetPassword(email:String,password:String) {
+  resetPassword(email: String, password: String) {
     const url = `${this._baseUrl}/forgotpass/${email}/${password}`;
-  
+
     return this._http.put<any>(url, {});
   }
 
 
 
 }
+function makeSecureRequest() {
+  throw new Error('Function not implemented.');
+}
+

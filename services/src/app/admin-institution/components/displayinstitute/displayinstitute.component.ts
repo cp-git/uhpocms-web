@@ -34,7 +34,9 @@ export class DisplayinstituteComponent {
   // showAddButton: boolean = true;
   // showActivateButton: boolean = true;
 
-  private readonly institutionUrl!: string;
+  // private readonly institutionUrl: string ='';
+  private institutionUrl: string = '';
+
 
   displayUrl: any;
 
@@ -46,7 +48,7 @@ export class DisplayinstituteComponent {
   //constructor
   constructor(private _institutionService: AdmininstitutionService, private _route: Router, private location: Location, private _activatedRoute: ActivatedRoute, private _sanitizer: DomSanitizer, private dialogBoxService: DialogBoxService, private userPermissionService: AuthUserPermissionService) {
     this.admininstitution = new AdminInstitution();
-    this.institutionUrl = `${environment.adminInstitutionUrl}/institution`;
+    // this.institutionUrl = `${environment.adminInstitutionUrl}/institution`;
 
     // Assining default values
     this.buttonsArray = {
@@ -57,11 +59,12 @@ export class DisplayinstituteComponent {
     }
   }
 
-  /////////////////////////  DISPLAY WHEN PAGE WILL LOAD ////////////////////////
+  //ngOnint function
   ngOnInit(): void {
     this.loadAndLinkUserPermissions();
     //if not authenticated route back to login page
     if (sessionStorage.getItem('authenticatedUser') == null) {
+
       this._route.navigate(['login']);
     }
 
@@ -70,7 +73,7 @@ export class DisplayinstituteComponent {
       //code to get data from url
       this.adminId = this._activatedRoute.snapshot.paramMap.get('id');
       this.userName = this._activatedRoute.snapshot.params['userName'];
-
+      this.institutionUrl = `${environment.adminInstitutionUrl}/institution`;
       //onload of page this function should be executed
       this.getAllInstitution();
       this.displayUrl = this.institutionUrl + '/getFileById'
@@ -95,12 +98,12 @@ export class DisplayinstituteComponent {
     }
   }
 
-  //////////////////////////  ROUTE THE PAGE /////////////////////////////////
+  //function to route 
   addInstitute() {
     this._route.navigate(['addinstitute', this.userName])
   }
 
-  ////////////////////////// GETTING ALL INSTITUTION /////////////////////////
+  //function to get all institutions
   public getAllInstitution() {
     // fetching all institution
     this._institutionService.fetchAdminInstitutionList().subscribe(
@@ -110,7 +113,7 @@ export class DisplayinstituteComponent {
 
 
         for (let i = 0; i < this.admininstitutions.length; i++) {
-
+          console.log(this.admininstitutions[i].adminInstitutionPicture);
         }
         this.admininstitutions.sort((a, b) => a.adminInstitutionName.toLowerCase() > b.adminInstitutionName.toLowerCase() ? 1 : -1) // order by alphabets for institution name
 
@@ -127,21 +130,37 @@ export class DisplayinstituteComponent {
       },
       (error) => {
         this.displayEmptyRow();
-
+        console.log('No data in table ');
       }
     );
   }
 
 
 
+  // // for deleting institution by name
+  // deleteInstitution(inst: AdminInstitution) {
+  //   // calling service mathod to delete institution
+  //   this._institutionService.deleteInstitution(inst.adminInstitutionName).subscribe(
+  //     (response) => {
+  //       this.admininstitutions.splice(this.admininstitutions.indexOf(inst), 1);
+  //       this.backupInst.splice(this.admininstitutions.indexOf(inst), 1);
+  //       // console.log(inst.adminInstitutionName + ' Institution deleted successfully');
+  //       console.log(inst.adminInstitutionName + ' Institution deleted successfully');
+  //       this.displayEmptyRow();
+  //     },
+  //     (error) => {
+  //       console.log('not able to delete \n' + JSON.stringify(error.error));
+  //     }
+  //   );
+  // }
 
 
 
-  ////////////////////////  DELETE THE INSTITUTION BY ID ///////////////////////////////////////
+  // For deleting (soft delete) by id
   deleteInstitution(adminInstitutionId: number) {
     this.dialogBoxService.open('Are you sure you want to delete this Institute ? ', 'decision').then((response) => {
       if (response) {
-
+        console.log('User clicked OK');
         // Do something if the user clicked OK
         // calling service to soft delte
         this._institutionService.deleteInstitutionById(adminInstitutionId).subscribe(
@@ -160,7 +179,7 @@ export class DisplayinstituteComponent {
           }
         );
       } else {
-
+        console.log('User clicked Cancel');
         // Do something if the user clicked Cancel
       }
     });
@@ -175,7 +194,7 @@ export class DisplayinstituteComponent {
     this._route.navigate(['displayinstitute/activate', this.userName]);
   }
 
-  updateInstitution(instId:number){
+  updateInstitution(instId: number) {
     this._route.navigate(['updateinstitute/', instId]);
 
   }

@@ -100,26 +100,26 @@ export class ProfileService {
     return this.http.get<any>(`${this.profileUrl}/id/${adminId}`);
   }
 
-//add a new course 
-sendEmail(emailReq: EmailRequest): Observable<any> {
-  console.log("sendEmail Service")
-  console.log(this.profileUrl);
-  return this.http.post<any>(`${this.profileUrl}/send-email` ,emailReq);
-}
+  //add a new course 
+  sendEmail(emailReq: EmailRequest): Observable<any> {
+    console.log("sendEmail Service")
+    console.log(this.profileUrl);
+    return this.http.post<any>(`${this.profileUrl}/send-email`, emailReq);
+  }
 
 
-sendCertificateEmail(userId: number, instId: number, instName: string,instImg:string, sigImg:string,courName: string): Observable<string> {
-  // Specify the response type as text to receive the download link as a string
-  return this.http.get<string>(`${this.profileUrl}/generateCertificate/${userId}/${instId}/${instName}/${instImg}/${sigImg}/${courName}`, { responseType: 'json' });
-}
+  sendCertificateEmail(userId: number, instId: number, instName: string, instImg: string, sigImg: string, courName: string): Observable<string> {
+    // Specify the response type as text to receive the download link as a string
+    return this.http.get<string>(`${this.profileUrl}/generateCertificate/${userId}/${instId}/${instName}/${instImg}/${sigImg}/${courName}`, { responseType: 'json' });
+  }
 
 
-downloadCertificateEmail(userId: number, instId: number, instName: string, instImg: string, sigImg:string,  courName: string): Observable<string> {
-  // Specify the response type as text to receive the download link as a string
-  const responseType: 'text' = 'text';
-  const url = `${this.profileUrl}/generateCertificate/${userId}/${instId}/${instName}/${instImg}/${sigImg}/${courName}`;
-  
-  return this.http.get(url, { responseType });
-}
+  downloadCertificateEmail(userId: number, instId: number, instName: string, instImg: string, sigImg: string, courName: string): Observable<string> {
+    // Specify the response type as text to receive the download link as a string
+    const responseType: 'text' = 'text';
+    const url = `${this.profileUrl}/generateCertificate/${userId}/${instId}/${instName}/${instImg}/${sigImg}/${courName}`;
+
+    return this.http.get(url, { responseType });
+  }
 
 }
