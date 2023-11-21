@@ -41,6 +41,7 @@ import { StudentQuiz } from 'app/quiz-progress/class/student-quiz';
 import { ProfileService } from 'app/profiles/services/profile.service';
 import { HttpClient } from '@angular/common/http';
 import { AdminInstitution } from 'app/admin-institution/class/admininstitution';
+import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
 
 
 @Component({
@@ -226,7 +227,8 @@ export class StudentModuleComponent implements OnInit {
     private courseProgServ: CourseProgressService,
     private quizReService: QuizresultService,
     private service: QuestionService, private dialogBoxServices: DialogBoxService,
-    private reviewServ: QuizresultService, private ngZone: NgZone, private router: Router, private http: HttpClient
+    private reviewServ: QuizresultService, private ngZone: NgZone, private router: Router, private http: HttpClient,
+    private SpinnerService: NgxSpinnerService
   ) {
     this.selectedQuizProgress = new QuizProgress();
     this.selectedQuiz = new Quiz();
@@ -943,6 +945,12 @@ export class StudentModuleComponent implements OnInit {
 
 
   changeSelectedFileAndModule(file: any, module: any) {
+    this.SpinnerService.show();
+
+    setTimeout(() => {
+      this.SpinnerService.hide();
+    }, 2000);
+
 
     // for store progress when user change module file
     if (this.currentTime > 0) {
@@ -966,6 +974,7 @@ export class StudentModuleComponent implements OnInit {
     this.fileProgService.getFileProgressByFileIdAndStudentId(this.selectedFile.moduleFileId, this.studentId).subscribe(
       (response) => {
         //.log(response);
+
         this.selectedFileProgress = response;
       }
     );
@@ -1619,6 +1628,11 @@ export class StudentModuleComponent implements OnInit {
   }
 
   onQuizClicked(quiz: Quiz, retake: boolean = false) {
+    this.SpinnerService.show();
+
+    setTimeout(() => {
+      this.SpinnerService.hide();
+    }, 2000);
     this.reviewButtonStat = false;
     //.log("reviewButtonStat in QuizClicked" + this.reviewButtonStat)
     this.cd.stop();

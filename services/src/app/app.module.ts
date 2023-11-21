@@ -91,6 +91,7 @@ import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.compone
 import { UpdateinstituteComponent } from './admin-institution/components/updateinstitute/updateinstitute.component';
 import { SafePipe } from './safe.pipe';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 
 
@@ -168,7 +169,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     StudentModuleModule,
     MatDialogModule,
     PermissionModule,
-    PdfViewerModule
+    PdfViewerModule,
+    NgxSpinnerModule,
 
   ],
 
