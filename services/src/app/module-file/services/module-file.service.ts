@@ -19,7 +19,7 @@ export class ModuleFileService {
 
   /////////////////////////////////////////////// SERVICE - ADD MODULE FILE /////////////////////////////////////////////
   addModuleFile(formData: FormData): Observable<any> {
-    return this._http.post<any>(`http://localhost:8090/modulefile/uhpocms/modulefile`, formData);
+    return this._http.post<any>(`${this.moduleFileUrl}/modulefile `, formData);
   }
 
   /////////////////////////////////////////// SERVICE - GET ALL MODULE FILE ///////////////////////////////////////////
@@ -30,7 +30,7 @@ export class ModuleFileService {
   ////////////////////////////////// SERVICE - FETCH ALL MODULE FILE USING ACTIVE MODULE ////////////////
 
   fetchModuleFileListActiveModule(): Observable<any> {
-    return this._http.get<any>(`http://localhost:8090/modulefile/uhpocms/modulefile?file=all`);
+    return this._http.get<any>(`${this.moduleFileUrl}/modulefile?file=all`);
   }
 
   /////////////////////////////////////// SERVICE - GET ALL INACTIVE MODULE FILE //////////////////////////////
@@ -63,7 +63,7 @@ export class ModuleFileService {
 
   ////////////////////////// SERVICE - UPDATE MODULE FILE BY MODULE ID //////////////////////////////////////////////
   updateModuleFileById(moduleFileId: number, formData: FormData): Observable<any> {
-    return this._http.put<any>(`http://localhost:8090/modulefile/uhpocms/modulefileById/` + moduleFileId, formData);
+    return this._http.put<any>(`${this.moduleFileUrl}/modulefileById/` + moduleFileId, formData);
   }
 
   ////////////////////////////////// SERVICE - UPDATE  MODULE FILE BY MODULE FILE ID ///////////////////////////////
@@ -104,7 +104,7 @@ export class ModuleFileService {
 
 
   getFileData(fileId: number): Observable<any> {
-    return this._http.get(`http://localhost:8090/modulefile/uhpocms/modulefile/${fileId}`, {
+    return this._http.get(`${this.moduleFileUrl}/modulefile/${fileId}`, {
 
     });
   }

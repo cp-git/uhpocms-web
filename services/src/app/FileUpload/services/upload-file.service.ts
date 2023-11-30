@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadFileService {
-  private uploadUrl = 'http://localhost:8090/uploadfile/uhpocms/file/upload';
+
+  uploadUrl = `${environment.uploadFileurl}`
+
 
   constructor(private http: HttpClient) { }
   //test comment

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'environments/environment.development';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 @Injectable({
@@ -18,7 +19,7 @@ export class AuthenticationserviceService {
 
   constructor(private http: HttpClient, private _route: Router) {
     // this._authUrl = `${environment.authUserUrl}/basicauth`;
-    this._authUrl = `http://localhost:8090/authuser/uhpocms/basicauth`;
+    this._authUrl = `${environment.authUserUrl}/basicauth`;
   }
 
   updateUserName(authusername: string) {

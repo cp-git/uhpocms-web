@@ -10,7 +10,7 @@ export class AdminroleserviceService {
   private readonly adminRoleUrl: string;
   constructor(private _http: HttpClient) {
 
-    this.adminRoleUrl = "http://localhost:8090/adminrole/uhpocms/role"
+    this.adminRoleUrl = `${environment.adminRoleUrl}/role`
   }
 
 

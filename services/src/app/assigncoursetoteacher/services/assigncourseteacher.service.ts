@@ -25,7 +25,7 @@ export class AssigncourseteacherService {
     this._loginUrl = `${environment.courseUrl}/basicauth`;
     this.assignTeacherUrl = environment.assignCourseUrl;
 
-    this.assignTeacherUrl = "http://localhost:8090/assigntoteacher/uhpocms/assigntoteacher"
+    this.assignTeacherUrl = `${environment.assignTeacherUrl}`
   }
 
 

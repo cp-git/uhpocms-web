@@ -14,10 +14,13 @@ export class QuizProgressService {
 
   private quizProgressUrl: string;
   studentAnswerUrl: string;
+  quizurlProgress: string;
 
   constructor(private http: HttpClient, private cache: DataServiceCache) {
     this.quizProgressUrl = `${environment.quizProgressUrl}/quizprogress`;
     this.studentAnswerUrl = `${environment.studentAnswerUrl}`;
+    this.quizurlProgress = `${environment.quizProgressUrl}`;
+
   }
 
 
@@ -28,7 +31,7 @@ export class QuizProgressService {
 
   //Used
   addQuizProgressOfStudent(quizProgress: QuizProgress): Observable<QuizProgress> {
-    return this.http.post<QuizProgress>(`http://localhost:8090/quizprogress/uhpocms/quizprogress`, quizProgress);
+    return this.http.post<QuizProgress>(`${this.quizProgressUrl}`, quizProgress);
 
   }
 
@@ -98,7 +101,7 @@ export class QuizProgressService {
 
   //Used
   displayStudentProgress(studentId: number): Observable<QuizProgress[]> {
-    return this.http.get<QuizProgress[]>(`http://localhost:8090/quizprogress/uhpocms/studentprogress/${studentId}`);
+    return this.http.get<QuizProgress[]>(`${this.quizurlProgress}/studentprogress/${studentId}`);
 
   }
 

@@ -11,11 +11,13 @@ import { QuestionAnswer } from '../class/question-answer';
 export class QuestionService {
   questionUrl: string;
   answerUrl: string;
+  quizUrl: string;
 
 
   constructor(private http: HttpClient) {
     this.questionUrl = `${environment.questionUrl}`;
     this.answerUrl = `${environment.answerUrl}`;
+    this.quizUrl = `${environment.quizUrl}`;
 
   }
 
@@ -86,6 +88,6 @@ export class QuestionService {
 
   ////////////////////////////// SERVICE - GET QUIZ DETAILS BY QUIZ ID ////////////////////////////// 
   getQuizDetailsByQuizId(quizId: number): Observable<any> {
-    return this.http.get<any>(`http://localhost:8090/quiz/uhpocms/quiz/info/${quizId}`);
+    return this.http.get<any>(`${this.quizUrl}/quiz/info/${quizId}`);
   }
 }
