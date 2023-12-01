@@ -13,6 +13,7 @@ import { DialogBoxService } from 'app/shared/services/HttpInterceptor/dialog-box
 
 export class AddinstituteComponent {
   file!: File;
+  signaturefile!: File;
 
   //variable declarations
   fileName: string;
@@ -52,6 +53,15 @@ export class AddinstituteComponent {
   onFileSelected(event: any) {
     this.file = event.target.files[0];
     this.admininstitution.adminInstitutionPicture = this.file.name;
+    this.admininstitution.instSignature = this.file.name;
+
+
+  }
+
+
+  onFileSelected1(event: any) {
+    this.signaturefile = event.target.files[0];
+    this.admininstitution.instSignature = this.signaturefile.name;
 
 
   }
@@ -72,6 +82,7 @@ export class AddinstituteComponent {
       const blob = new Blob([instituteJson], { type: 'application/json' });
       let formData = new FormData();
       formData.append("file", this.file);
+      formData.append("signaturefile", this.signaturefile);
       formData.append("admin", new Blob([JSON.stringify(this.admininstitution)], { type: 'application/json' }));
 
       this._institutionService.addInstitution(formData).subscribe(

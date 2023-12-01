@@ -29,11 +29,22 @@
                         class="form-control">
                 </div>
             </div>
-        </div>
-        <div class="card-block row justify-content-between col-sm-12">
-            <div class="col-sm-3">
-                <button type="button" class="btn btn-primary" (click)="addInstitution(admininstitution)">Submit</button>
+
+            <div class="col-sm-12">
+                <div class="col-sm-4">
+                    <label class="float-label">Signature Picture</label>
+                    <div class="form-group">
+                        <input type="file" id="image-name" (change)="onFileSelected1($event)"
+                            (ngModelChange)="checkFields()" class="form-control">
+                    </div>
+
+                </div>
+            </div>
+            <div class="card-block row justify-content-between col-sm-12">
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-primary"
+                        (click)="addInstitution(admininstitution)">Submit</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
