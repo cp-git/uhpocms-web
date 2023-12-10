@@ -584,6 +584,7 @@ export class StudentQuizComponent implements OnInit {
 
     await this.quizProgressService.getAllStudentAnswersByStduentIdAndQuizId(studentId, quizId).toPromise().then(
       (response) => {
+        console.log(response);
 
 
         if (response != undefined) {

@@ -1511,19 +1511,30 @@ export class StudentModuleComponent implements OnInit {
   // }
 
   public getQuizByStudIdAndQuizId(quizId: number) {
+    console.log("IN Function...");
+
     if (this.quizReviewStatusCache[quizId]) {
       // Use the cached result
       this.reviewStatusLocal = this.quizReviewStatusCache[quizId];
+      console.log(this.reviewStatusLocal);
+
     } else {
       this.reviewStatusLocal = [];
       this.quizReService.getAllStudentAnswersByStduentIdAndQuizId(this.studentId, quizId)
         .subscribe(
           (response) => {
+            console.log("IN Empty Column...");
+            console.log(response);
+
             const reviewStat = [...new Set(response.map((studRez) => studRez.reviewStat))];
             this.reviewStatusLocal = this.reviewStatusLocal.concat(reviewStat);
 
+
+
             // Cache the result
             this.quizReviewStatusCache[quizId] = this.reviewStatusLocal;
+
+
           },
           (error) => { }
         );
@@ -1581,28 +1592,37 @@ export class StudentModuleComponent implements OnInit {
 
 
   }
-  onQuizProgressAdded(addeedQuizProgress: any) {
-    //.log(addeedQuizProgress);
+  async onQuizProgressAdded(addeedQuizProgress: any) {
+    console.log(addeedQuizProgress);
     let quizArr: Quiz[] = [];
     let filteredQuizArr: Quiz[] = [];
     let moduleIdArr: number[] = [];
     this.quizService.getAllQuizzes().subscribe(
       (data: Quiz[]) => {
+        console.log(data);
+
         quizArr = data;
         filteredQuizArr = quizArr.filter((array) => array.quizId == addeedQuizProgress.quizId)
+        console.log(filteredQuizArr);
+
 
         // Map the quiz array to an array of quiz IDs
         moduleIdArr = filteredQuizArr.map(quiz => quiz.moduleId);
+        console.log(moduleIdArr);
+
 
         //.log(moduleIdArr[0])
 
 
         //.log(moduleIdArr[0])
         // handle the emitted value here
+        //console.log(addeedQuizProgress);
+
         if (addeedQuizProgress.completed == true) {
           this.moduleProgresscCeateUpdate(moduleIdArr[0]);
           //FUNCTION TO TRACK COURSE PROGRESS
           this.trackCourseProgress(this.selectedCourseId)
+
         }
       }
     )
@@ -1774,7 +1794,7 @@ export class StudentModuleComponent implements OnInit {
 
 
   onSaveQuizProgress(quizProgress: any) {
-    //.log(quizProgress);
+    console.log(quizProgress.id);
 
     this.quizPassedProgresses = this.removeElementFromStringArray(this.quizPassedProgresses, quizProgress.quizId)
     this.quizFailedProgresses = this.removeElementFromStringArray(this.quizFailedProgresses, quizProgress.quizId)
@@ -1783,12 +1803,17 @@ export class StudentModuleComponent implements OnInit {
     this.quizProgressOfStudent = this.removeElementFromArray(this.quizProgressOfStudent, quizProgress.id);
     //.log(this.quizProgressOfStudent);
 
+    console.log(quizProgress);
+
     if (quizProgress.completed == true) {
       this.quizPassedProgresses.push(quizProgress.quizId);
+      console.log(this.quizPassedProgresses);
+
     } else {
       this.quizFailedProgresses.push(quizProgress.quizId);
     }
     this.quizProgressOfStudent.push(quizProgress);
+
     //.log("Passed Data for quiz..." + this.quizProgressOfStudent);
 
     //.log(this.quizPassedProgresses);
@@ -2062,7 +2087,7 @@ export class StudentModuleComponent implements OnInit {
     )
   }
   allQueMarks: any;
-  onQuizSubmit(questionAnswersArray: OneQuestionAnswer[]) {
+  async onQuizSubmit(questionAnswersArray: OneQuestionAnswer[]) {
 
     // alert(this.selectedCategoryName);
     this.questionAnswers = questionAnswersArray;
@@ -2115,10 +2140,14 @@ export class StudentModuleComponent implements OnInit {
       //.log("@@@@@@@@@@@@@@@@@@@@@", this.studentAnswer);
       this.quizProgServ.addStudentAnswers(this.studentAnswer).subscribe(
         (response) => {
+          console.log(response);
+          // location.reload();
+
           // this.studentAnswers.push(response);
           // this.studentAnswers = response;
           //.log("Student answers saved");
           //.log(response);
+
         },
         (error) => {
           //.log("Failed to save student answers");
@@ -2158,14 +2187,15 @@ export class StudentModuleComponent implements OnInit {
       } else if (score >= maxMarks * 0.4) {
         this.grade = 'E';
       }
-      this.getQuizByStudIdAndQuizId(this.selectedQuiz)
+      this.getQuizByStudIdAndQuizId(this.selectedQuiz.quizId)
 
       this.dialogboxService.open(this.selectedQuiz.successText + '  ' + this.grade, 'information');
       //alert("Total score: " + score);
 
+
     } else {
       // show dialog box with red exam fail
-      this.getQuizByStudIdAndQuizId(this.selectedQuiz)
+      this.getQuizByStudIdAndQuizId(this.selectedQuiz.quizId)
 
       this.dialogboxService.open(this.selectedQuiz.failText, 'information');
 
@@ -2177,7 +2207,7 @@ export class StudentModuleComponent implements OnInit {
   }
 
   async addQuizProgress(score: number) {
-    //.log(score);
+    console.log(score);
     //alert(score);
     // adding all value to quizprogress object to store result
     this.quizProgress.studentId = this.studentId;
@@ -2198,7 +2228,17 @@ export class StudentModuleComponent implements OnInit {
 
     this.quizProgServ.addQuizProgressOfStudent(this.quizProgress).subscribe(
       (response) => {
+        console.log(response);
+
         this.addeedQuizProgress = response;
+
+        this.onQuizProgressAdded(this.addeedQuizProgress);
+
+
+
+        // alert("Quiz progress saved");
+        this.onSaveQuizProgress(this.addeedQuizProgress);
+
 
 
 
@@ -2410,9 +2450,7 @@ export class StudentModuleComponent implements OnInit {
 
     // alert("Quiz progress saved");
     //.log("Quiz progress saved");
-    this.onQuizProgressAdded(this.addeedQuizProgress);
-    // alert("Quiz progress saved");
-    this.onSaveQuizProgress(this.addeedQuizProgress);
+
 
 
     this.quizProgServ.getQuizProgressesByStudentId(this.quizProgress.studentId).subscribe(
